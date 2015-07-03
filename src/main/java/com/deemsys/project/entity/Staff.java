@@ -52,7 +52,7 @@ public class Staff implements java.io.Serializable {
 		this.appointmentses = appointmentses;
 		this.callLogses = callLogses;
 	}
-
+	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)

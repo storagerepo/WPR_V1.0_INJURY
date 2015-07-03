@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public class LearnterestConstants {
+public class InjuryConstants {
 	
 	// Convert Date To Year Format
 	public static Date convertYearFormat(String date)
