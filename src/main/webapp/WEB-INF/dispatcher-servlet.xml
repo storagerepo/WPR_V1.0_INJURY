@@ -19,7 +19,16 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<context:annotation-config />
-	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
+	<!-- Angular Configuration Resources-->
+	<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
+	<mvc:resources mapping="/styles/**" location="/WEB-INF/resources/styles/" />
+	<mvc:resources mapping="/scripts/**" location="/WEB-INF/resources/scripts/" />
+	<mvc:resources mapping="/js/**" location="/WEB-INF/resources/js/" />
+	<mvc:resources mapping="/views/**" location="/WEB-INF/resources/views/" />
+	<!-- End Angular Configuration -->
+	
+	
 	<context:component-scan base-package="com.deemsys.project" />
 	
 	<mvc:annotation-driven />
@@ -27,7 +36,7 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="prefix" value="/WEB-INF/angularjs/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 
