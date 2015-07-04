@@ -153,6 +153,10 @@ angular
             templateUrl:'views/add-doctor.html',
             url:'/add-doctor'
         })
+        .state('dashboard.add-patients',{
+            templateUrl:'views/add-patients.html',
+            url:'/add-patients'
+        })
       .state('dashboard.panels-wells',{
           templateUrl:'views/ui-elements/panels-wells.html',
           url:'/panels-wells'
