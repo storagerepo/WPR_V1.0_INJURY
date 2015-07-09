@@ -127,7 +127,7 @@ public class Doctors implements java.io.Serializable {
 		this.officeHours = officeHours;
 	}
 
-	@Column(name = "new field", length = 45)
+	@Column(name = "new_field", length = 45)
 	public String getNewField() {
 		return this.newField;
 	}
