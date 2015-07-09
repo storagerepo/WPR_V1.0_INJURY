@@ -135,7 +135,17 @@ angular
     })
         .state('dashboard.staff',{
         templateUrl:'views/staff.html',
-        url:'/staff'
+        url:'/staff',
+        	controller:'ShowStaffController',
+            resolve: {
+              loadMyFile:function($ocLazyLoad) {
+                
+                $ocLazyLoad.load({
+                    name:'sbAdminApp',
+                    files:['scripts/controllers/staffController.js']
+                })
+              }
+            }
     })
         .state('dashboard.doctor',{
         templateUrl:'views/doctor.html',
@@ -147,7 +157,30 @@ angular
     })
         .state('dashboard.add-staff',{
         templateUrl:'views/add-staff.html',
-        url:'/add-staff'
+        url:'/add-staff',
+        controller:'SaveStaffController',
+        resolve: {
+            loadMyFile:function($ocLazyLoad) {
+              
+              $ocLazyLoad.load({
+                  name:'sbAdminApp',
+                  files:['scripts/controllers/staffController.js']
+              })
+            }
+          }
+    }).state('dashboard.EditStaff/:id',{
+        templateUrl:'views/add-staff.html',
+        url:'/EditStaff/:id',
+        controller:'EditStaffController',
+        resolve: {
+            loadMyFile:function($ocLazyLoad) {
+              
+              $ocLazyLoad.load({
+                  name:'sbAdminApp',
+                  files:['scripts/controllers/staffController.js']
+              })
+            }
+          }
     })
         .state('dashboard.add-doctor',{
             templateUrl:'views/add-doctor.html',

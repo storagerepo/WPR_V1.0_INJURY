@@ -20,25 +20,25 @@
                             <tr>
                                 <td class="col-md-6">
                                     <label>First Name</label>
-                                    <input class="form-control"><br/>
+                                    <input type="text" class="form-control"  ng-model="jsonString.firstName" name="firstName"><br/>
                                     <label>Last Name</label>
-                                    <input class="form-control"><br/>
+                                    <input type="text" class="form-control"  ng-model="jsonString.lastName" name="lastName"><br/>
                                     <label>User Name</label>
-                                    <input class="form-control">
+                                    <input  type="text" class="form-control"  ng-model="jsonString.username" name="username">
                                 </td>
                                 <td class="col-md-6">
                                     <label>Phone Number</label>
-                                    <input class="form-control"><br/>
+                                    <input tyep="text" class="form-control"  ng-model="jsonString.phoneNumber" name="phoneNumber"><br/>
                                     <label>Email ID</label>
-                                    <input class="form-control"><br/>
+                                    <input type="text" class="form-control"  ng-model="jsonString.emailAddress" name="emailAddress"><br/>
                                     <label>Password</label>
-                                    <input class="form-control">
+                                    <input type="password" class="form-control"  ng-model="jsonString.password" name="notes">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-12" colspan="2"><br/>
                                     <label>Notes</label>
-                                    <textarea class="form-control height-100"></textarea>
+                                    <textarea class="form-control height-100"  ng-model="jsonString.notes"></textarea>
                                 </td>
                             </tr>
                         </tbody>
@@ -46,7 +46,10 @@
                 </div>
             </div>
             <div class="text-center">
-                <a class="btn btn-success">Add Staff</a><br/><br/>
+
+
+                <a class="btn btn-success" type="submit" ng-mousedown="save()">Save Staff</a>
+                <a class="btn btn-success" type="submit" ng-mousedown="update()">Update Staff</a><br/><br/>
             </div>
             <!-- /.panel-body -->
         </div>
