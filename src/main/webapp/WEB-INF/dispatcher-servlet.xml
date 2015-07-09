@@ -124,8 +124,8 @@
 	</bean>
 
 	
-	 <!-- <bean id="loginDetailsDAO" class="com.deemsys.learnterest.logindetails.LoginDetailsDAOImpl">    
-     </bean> -->
+	 <bean id="loginDAO" class="com.deemsys.project.login.loginDAOImpl">    
+     </bean>
 	
 
 </beans>

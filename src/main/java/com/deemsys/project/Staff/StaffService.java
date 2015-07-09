@@ -39,7 +39,7 @@ public class StaffService {
 		
 		for (Staff staff : staffs) {
 			//TODO: Fill the List
-			StaffForm staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes());
+			StaffForm staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
 			staffForms.add(staffForm);
 		}
 		
@@ -56,7 +56,7 @@ public class StaffService {
 		//TODO: Convert Entity to Form
 		//Start
 		if(staff!=null){
-		staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes());
+		staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
 		}
 		else{
 		staffForm= new StaffForm();
@@ -73,7 +73,7 @@ public class StaffService {
 		
 		//Logic Starts
 		
-		Staff staff=new Staff(staffForm.getRole(), staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),null,null,null);
+		Staff staff=new Staff(staffForm.getRole(), staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),staffForm.getIsEnable(),null,null,null);
 		staff.setId(staffForm.getId());
 		//Logic Ends
 		
@@ -89,7 +89,7 @@ public class StaffService {
 		
 		//Logic Starts
 		
-		Staff staff=new Staff(staffForm.getRole(), staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),null,null,null);
+		Staff staff=new Staff(staffForm.getRole(), staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),staffForm.getIsEnable(),null,null,null);
 		//Logic Ends
 		
 		staffDAO.save(staff);
@@ -103,7 +103,7 @@ public class StaffService {
 		
 		//Logic Starts
 		
-		Staff staff=new Staff(staffForm.getRole(), staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),null,null,null);
+		Staff staff=new Staff(staffForm.getRole(), staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),staffForm.getIsEnable(),null,null,null);
 		staff.setId(staffForm.getId());
 		//Logic Ends
 		

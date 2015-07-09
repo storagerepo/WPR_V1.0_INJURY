@@ -21,6 +21,7 @@ public class StaffForm {
 	private String phoneNumber;
 	private String emailAddress;
 	private String notes;
+	private Integer isEnable;
 	
 	public Integer getId() {
 		return id;
@@ -83,7 +84,7 @@ public class StaffForm {
 	}
 	public StaffForm(Integer id, String role, String username, String password,
 			String firstName, String lastName, String phoneNumber,
-			String emailAddress, String notes) {
+			String emailAddress, String notes,Integer isEnable) {
 		super();
 		this.id = id;
 		this.role = role;
@@ -94,6 +95,13 @@ public class StaffForm {
 		this.phoneNumber = phoneNumber;
 		this.emailAddress = emailAddress;
 		this.notes = notes;
+		this.isEnable=isEnable;
+	}
+	public Integer getIsEnable() {
+		return isEnable;
+	}
+	public void setIsEnable(Integer isEnable) {
+		this.isEnable = isEnable;
 	}
 	
 	

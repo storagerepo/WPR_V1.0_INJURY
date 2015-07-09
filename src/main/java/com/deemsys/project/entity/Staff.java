@@ -29,6 +29,17 @@ public class Staff implements java.io.Serializable {
 	private String phoneNumber;
 	private String emailAddress;
 	private String notes;
+	private Integer isEnable;
+	
+	@Column(name = "is_enable")
+	public Integer getIsEnable() {
+		return isEnable;
+	}
+
+	public void setIsEnable(Integer isEnable) {
+		this.isEnable = isEnable;
+	}
+
 	private Set<Patients> patientses = new HashSet<Patients>(0);
 	private Set<Appointments> appointmentses = new HashSet<Appointments>(0);
 	private Set<CallLogs> callLogses = new HashSet<CallLogs>(0);
@@ -38,7 +49,7 @@ public class Staff implements java.io.Serializable {
 
 	public Staff(String role, String username, String password,
 			String firstName, String lastName, String phoneNumber,
-			String emailAddress, String notes, Set<Patients> patientses,
+			String emailAddress, String notes,Integer isEnable, Set<Patients> patientses,
 			Set<Appointments> appointmentses, Set<CallLogs> callLogses) {
 		this.role = role;
 		this.username = username;
@@ -51,6 +62,7 @@ public class Staff implements java.io.Serializable {
 		this.patientses = patientses;
 		this.appointmentses = appointmentses;
 		this.callLogses = callLogses;
+		this.isEnable=isEnable;
 	}
 	
 	@Id
