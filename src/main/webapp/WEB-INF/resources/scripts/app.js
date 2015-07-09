@@ -149,7 +149,18 @@ angular
     })
         .state('dashboard.doctor',{
         templateUrl:'views/doctor.html',
-        url:'/doctor'
+        url:'/doctor',
+        controller:'ShowDoctorsCtrl',
+        resolve: {
+            loadMyFiles:function($ocLazyLoad) {
+              return $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:[
+                'scripts/controllers/Doctors.js'
+                    ]
+              })
+            }
+          }
     })
         .state('dashboard.patient',{
         templateUrl:'views/patient.html',
@@ -168,24 +179,37 @@ angular
               })
             }
           }
-    }).state('dashboard.EditStaff/:id',{
-        templateUrl:'views/add-staff.html',
-        url:'/EditStaff/:id',
-        controller:'EditStaffController',
+    })
+ 
+        .state('dashboard.add-doctor',{
+            templateUrl:'views/add-doctor.html',
+            url:'/add-doctor',
+            controller:'AddDoctorsCtrl',
+            resolve: {
+                loadMyFiles:function($ocLazyLoad) {
+                  return $ocLazyLoad.load({
+                    name:'sbAdminApp',
+                    files:[
+                    'scripts/controllers/Doctors.js'
+                        ]
+                  })
+                }
+              }
+        })
+        .state('dashboard.EditDoctor/:id',{
+        templateUrl:'views/add-doctor.html',
+        url:'/EditDoctor/:id',
+        controller:'EditDoctorController',
         resolve: {
             loadMyFile:function($ocLazyLoad) {
               
               $ocLazyLoad.load({
                   name:'sbAdminApp',
-                  files:['scripts/controllers/staffController.js']
+                  files:['scripts/controllers/Doctors.js']
               })
             }
           }
     })
-        .state('dashboard.add-doctor',{
-            templateUrl:'views/add-doctor.html',
-            url:'/add-doctor'
-        })
         .state('dashboard.add-patients',{
             templateUrl:'views/add-patients.html',
             url:'/add-patients'

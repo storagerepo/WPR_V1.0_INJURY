@@ -19,26 +19,34 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-6">
-                                    <label>First Name</label>
-                                    <input class="form-control"><br/>
-                                    <label>Last Name</label>
-                                    <input class="form-control"><br/>
-                                    <label>User Name</label>
-                                    <input class="form-control">
+                                    <label>Name</label>
+                                    <input name="name" class="form-control" ng-model="doctor.name"><br/>
+                                  <label>Address</label>
+                                    <input name="address" class="form-control" ng-model="doctor.address"><br/>
+                                     <label>City</label>
+                                    <input name="city" class="form-control" ng-model="doctor.city"><br/>
+                                     <label>Country</label>
+                                    <input name="country" class="form-control" ng-model="doctor.country"><br/>
+                                    
+                                    
+                                    
                                 </td>
                                 <td class="col-md-6">
-                                    <label>Phone Number</label>
-                                    <input class="form-control"><br/>
-                                    <label>Email ID</label>
-                                    <input class="form-control"><br/>
-                                    <label>Password</label>
-                                    <input class="form-control">
+                                     <label>State</label>
+                                    <input name="state" class="form-control" ng-model="doctor.state"><br/>
+                                     <label>Zip</label>
+                                    <input name="zip" class="form-control" ng-model="doctor.zip"><br/>
+                                     <label>Office Hours</label>
+                                    <input name="officeHours" class="form-control" ng-model="doctor.officeHours"><br/>
+                                     <label>New Field</label>
+                                    <input class="form-control" ng-model="doctor.newField" name="newField" ><br/>
+                                    
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-12" colspan="2"><br/>
                                     <label>Notes</label>
-                                    <textarea class="form-control height-100"></textarea>
+                                    <textarea name="notes" class="form-control height-100" ng-model="doctor.notes"></textarea>
                                 </td>
                             </tr>
                         </tbody>
@@ -46,7 +54,13 @@
                 </div>
             </div>
             <div class="text-center">
-                <a class="btn btn-success">Add Doctor</a><br/><br/>
+                <a ui-sref="dashboard.doctor" ng-show='myFormButton' class="btn btn-success"  ng-mousedown="saveDoctor()">Add Doctor</a>
+            
+                <a ui-sref="dashboard.doctor" ng-show='!myFormButton' class="btn btn-success" ng-mousedown="update()">Edit Doctor</a>
+              <a ui-sref="dashboard.doctor"  class="btn btn-success" >Cancel</a>
+            
+
+    
             </div>
             <!-- /.panel-body -->
         </div>
