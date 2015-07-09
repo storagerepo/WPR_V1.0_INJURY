@@ -8,6 +8,7 @@
 <!-- /.row -->
 <div class="row">
     <div class="col-lg-12">
+    <form id="myForm" name="myForm" novalidate>
         <div class="panel panel-default">
             <div class="panel-heading">
                 Enter Staff Details
@@ -20,25 +21,25 @@
                             <tr>
                                 <td class="col-md-6">
                                     <label>First Name</label>
-                                    <input type="text" class="form-control"  ng-model="jsonString.firstName" name="firstName"><br/>
+                                    <input type="text" class="form-control"  ng-model="staff.firstName" name="firstName"><br/>
                                     <label>Last Name</label>
-                                    <input type="text" class="form-control"  ng-model="jsonString.lastName" name="lastName"><br/>
+                                    <input type="text" class="form-control"  ng-model="staff.lastName" name="lastName"><br/>
                                     <label>User Name</label>
-                                    <input  type="text" class="form-control"  ng-model="jsonString.username" name="username">
+                                    <input  type="text" class="form-control"  ng-model="staff.username" name="username">
                                 </td>
                                 <td class="col-md-6">
                                     <label>Phone Number</label>
-                                    <input tyep="text" class="form-control"  ng-model="jsonString.phoneNumber" name="phoneNumber"><br/>
+                                    <input tyep="text" class="form-control"  ng-model="staff.phoneNumber" name="phoneNumber"><br/>
                                     <label>Email ID</label>
-                                    <input type="text" class="form-control"  ng-model="jsonString.emailAddress" name="emailAddress"><br/>
+                                    <input type="text" class="form-control"  ng-model="staff.emailAddress" name="emailAddress"><br/>
                                     <label>Password</label>
-                                    <input type="password" class="form-control"  ng-model="jsonString.password" name="notes">
+                                    <input type="password" class="form-control"  ng-model="staff.password" name="notes">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-12" colspan="2"><br/>
                                     <label>Notes</label>
-                                    <textarea class="form-control height-100"  ng-model="jsonString.notes"></textarea>
+                                    <textarea class="form-control height-100"  ng-model="staff.notes"></textarea>
                                 </td>
                             </tr>
                         </tbody>
@@ -46,14 +47,17 @@
                 </div>
             </div>
             <div class="text-center">
+            
+             <a class="btn btn-success" type="submit"    ng-show='options' ng-mousedown="save()">Save Staff</a>
+                <a class="btn btn-success" type="submit"    ng-show='!options' ng-mousedown="update()">Update</a><br/><br/>
+                
 
-
-                <a class="btn btn-success" type="submit" ng-mousedown="save()">Save Staff</a>
-                <a class="btn btn-success" type="submit" ng-mousedown="update()">Update Staff</a><br/><br/>
             </div>
             <!-- /.panel-body -->
         </div>
         <!-- /.panel -->
+        </form>
     </div>
     <!-- /.col-lg-12 -->
 </div>
+

@@ -18,7 +18,7 @@
             <div class="panel-body" ng-controller="ShowStaffController">
                 <div class="dataTable_wrapper">
                     <table class="table table-hover" id="dataTables-example">
-                      <input type="text" class="form-control" ng-model="search.$">
+                    
                         <thead>
                             <tr>
                                 <th ng-mousedown="sort('username')">User Name&nbsp&nbsp<span class="glyphicon sort-icon" ng-show="sortKey=='username'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
@@ -27,7 +27,8 @@
                                 <th>Phone Number</th>
                                 <th>Email ID</th>
                                 
-                                <th width="20%">Action</th>
+                                <th width="10%">Action</th>
+                                <th> </th>
                             </tr >
                            
                             <tr >
@@ -47,7 +48,7 @@
                                
                                 <td>{{staff.phoneNumber}}</td>
                                  <td>{{staff.emailAddress}}</td>
-                                <td><a ui-sref="dashboard.EditStaff" class="btn">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit Staff</a></td>
+                                <td><a href= "#/dashboard/EditStaff/{{staff.id}}"  class="btn">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit Staff</a></td>
 		<td><a href="#" class="btn" ng-mousedown="deleteStaff(staff.id)">&nbsp;<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete Staff</a></td>
                             </tr>
                         </tbody>

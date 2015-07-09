@@ -134,7 +134,7 @@ angular
         url:'/appointment'
     })
         .state('dashboard.staff',{
-        templateUrl:'views/staff.html',
+        templateUrl:'views/staff-view/staff.html',
         url:'/staff',
         	controller:'ShowStaffController',
             resolve: {
@@ -149,25 +149,14 @@ angular
     })
         .state('dashboard.doctor',{
         templateUrl:'views/doctor.html',
-        url:'/doctor',
-        controller:'ShowDoctorsCtrl',
-        resolve: {
-            loadMyFiles:function($ocLazyLoad) {
-              return $ocLazyLoad.load({
-                name:'sbAdminApp',
-                files:[
-                'scripts/controllers/Doctors.js'
-                    ]
-              })
-            }
-          }
+        url:'/doctor'
     })
         .state('dashboard.patient',{
         templateUrl:'views/patient.html',
         url:'/patient'
     })
         .state('dashboard.add-staff',{
-        templateUrl:'views/add-staff.html',
+        templateUrl:'views/staff-view/add-staff.html',
         url:'/add-staff',
         controller:'SaveStaffController',
         resolve: {
@@ -179,37 +168,24 @@ angular
               })
             }
           }
-    })
- 
-        .state('dashboard.add-doctor',{
-            templateUrl:'views/add-doctor.html',
-            url:'/add-doctor',
-            controller:'AddDoctorsCtrl',
-            resolve: {
-                loadMyFiles:function($ocLazyLoad) {
-                  return $ocLazyLoad.load({
-                    name:'sbAdminApp',
-                    files:[
-                    'scripts/controllers/Doctors.js'
-                        ]
-                  })
-                }
-              }
-        })
-        .state('dashboard.EditDoctor/:id',{
-        templateUrl:'views/add-doctor.html',
-        url:'/EditDoctor/:id',
-        controller:'EditDoctorController',
+    }).state('dashboard.EditStaff/:id',{
+        templateUrl:'views/staff-view/add-staff.html',
+        url:'/EditStaff/:id',
+        controller:'EditStaffController',
         resolve: {
             loadMyFile:function($ocLazyLoad) {
               
               $ocLazyLoad.load({
                   name:'sbAdminApp',
-                  files:['scripts/controllers/Doctors.js']
+                  files:['scripts/controllers/staffController.js']
               })
             }
           }
     })
+        .state('dashboard.add-doctor',{
+            templateUrl:'views/add-doctor.html',
+            url:'/add-doctor'
+        })
         .state('dashboard.add-patients',{
             templateUrl:'views/add-patients.html',
             url:'/add-patients'

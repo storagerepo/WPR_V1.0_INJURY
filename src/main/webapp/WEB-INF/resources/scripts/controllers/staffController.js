@@ -1,3 +1,4 @@
+
 var adminApp=angular.module('sbAdminApp', []);
 
 adminApp.controller('ShowStaffController', function($scope,$http,$location) {
@@ -32,34 +33,41 @@ adminApp.controller('ShowStaffController', function($scope,$http,$location) {
 });
 
 adminApp.controller('SaveStaffController', function($scope,$http,$location) {
-	 
 	
+	$scope.options=true;
 	$scope.save=function()
 	{
-		alert("called");
-		$http.post("http://localhost:8085/Injury/saveUpdateStaff",$scope.jsonString)
+		
+		$http.post("http://localhost:8085/Injury/saveUpdateStaff",$scope.staff)
 			.success(function(response)
 					{
-				alert("saved");
-
+				
+				
+				 
 				});
+		
+		  $location.path("dashboard/staff");
+		  
 		};
 
 });
 
 
-adminApp.controller('EditStaffController', function($scope,$http,$location,$routeParams) {
+adminApp.controller('EditStaffController', function($scope,$http,$location,$stateParams) {
 	 
-	
-	$http.get('http://localhost:8086/Injury/getStaff.json?id='+ $routeParams.id).success( function(response) {
-	    $scope.jsonString=response;
+	$scope.options=false;
+	$http.get('http://localhost:8085/Injury/getStaff.json?id='+ $stateParams.id).success( function(response) {
+	    $scope.staff=response.staffForm;
 });
 
 	  $scope.update=function(){
-	  $http.post('http://localhost:8085/Injury/saveUpdateStaff.json', {id:$scope.jsonString.id, customer:$scope.jsonString}).success(function (status) {
-	          
-	          $location.path('/ShowOrders');
+		  
+	  $http.post('http://localhost:8085/Injury/saveUpdateStaff.json', $scope.staff).success(function (status) {
+	           
+		  
 	      });
+	  $location.path('dashboard/staff');
+	  
 	};
 });
 
