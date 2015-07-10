@@ -1,6 +1,5 @@
 package com.deemsys.project.entity;
-
-// Generated Jul 3, 2015 12:57:28 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 10, 2015 10:58:57 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -23,8 +22,7 @@ import javax.persistence.TemporalType;
 public class CallLogs implements java.io.Serializable {
 
 	private Integer id;
-	private Staff staff;
-	private Patients patients;
+	private Appointments appointments;
 	private Date timeStamp;
 	private String response;
 	private String notes;
@@ -32,15 +30,13 @@ public class CallLogs implements java.io.Serializable {
 	public CallLogs() {
 	}
 
-	public CallLogs(Staff staff, Patients patients) {
-		this.staff = staff;
-		this.patients = patients;
+	public CallLogs(Appointments appointments) {
+		this.appointments = appointments;
 	}
 
-	public CallLogs(Staff staff, Patients patients, Date timeStamp,
-			String response, String notes) {
-		this.staff = staff;
-		this.patients = patients;
+	public CallLogs(Appointments appointments, Date timeStamp, String response,
+			String notes) {
+		this.appointments = appointments;
 		this.timeStamp = timeStamp;
 		this.response = response;
 		this.notes = notes;
@@ -58,23 +54,13 @@ public class CallLogs implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "caller_id", nullable = false)
-	public Staff getStaff() {
-		return this.staff;
+	@JoinColumn(name = "appointment_id", nullable = false)
+	public Appointments getAppointments() {
+		return this.appointments;
 	}
 
-	public void setStaff(Staff staff) {
-		this.staff = staff;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "patient_id", nullable = false)
-	public Patients getPatients() {
-		return this.patients;
-	}
-
-	public void setPatients(Patients patients) {
-		this.patients = patients;
+	public void setAppointments(Appointments appointments) {
+		this.appointments = appointments;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

@@ -1,6 +1,5 @@
 package com.deemsys.project.entity;
-
-// Generated Jul 3, 2015 12:57:28 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 10, 2015 10:58:57 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,27 +29,15 @@ public class Staff implements java.io.Serializable {
 	private String emailAddress;
 	private String notes;
 	private Integer isEnable;
-	
-	@Column(name = "is_enable")
-	public Integer getIsEnable() {
-		return isEnable;
-	}
-
-	public void setIsEnable(Integer isEnable) {
-		this.isEnable = isEnable;
-	}
-
 	private Set<Patients> patientses = new HashSet<Patients>(0);
-	private Set<Appointments> appointmentses = new HashSet<Appointments>(0);
-	private Set<CallLogs> callLogses = new HashSet<CallLogs>(0);
 
 	public Staff() {
 	}
 
 	public Staff(String role, String username, String password,
 			String firstName, String lastName, String phoneNumber,
-			String emailAddress, String notes,Integer isEnable, Set<Patients> patientses,
-			Set<Appointments> appointmentses, Set<CallLogs> callLogses) {
+			String emailAddress, String notes, Integer isEnable,
+			Set<Patients> patientses) {
 		this.role = role;
 		this.username = username;
 		this.password = password;
@@ -59,12 +46,10 @@ public class Staff implements java.io.Serializable {
 		this.phoneNumber = phoneNumber;
 		this.emailAddress = emailAddress;
 		this.notes = notes;
+		this.isEnable = isEnable;
 		this.patientses = patientses;
-		this.appointmentses = appointmentses;
-		this.callLogses = callLogses;
-		this.isEnable=isEnable;
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -148,6 +133,15 @@ public class Staff implements java.io.Serializable {
 		this.notes = notes;
 	}
 
+	@Column(name = "is_enable")
+	public Integer getIsEnable() {
+		return this.isEnable;
+	}
+
+	public void setIsEnable(Integer isEnable) {
+		this.isEnable = isEnable;
+	}
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "staff")
 	public Set<Patients> getPatientses() {
 		return this.patientses;
@@ -155,24 +149,6 @@ public class Staff implements java.io.Serializable {
 
 	public void setPatientses(Set<Patients> patientses) {
 		this.patientses = patientses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "staff")
-	public Set<Appointments> getAppointmentses() {
-		return this.appointmentses;
-	}
-
-	public void setAppointmentses(Set<Appointments> appointmentses) {
-		this.appointmentses = appointmentses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "staff")
-	public Set<CallLogs> getCallLogses() {
-		return this.callLogses;
-	}
-
-	public void setCallLogses(Set<CallLogs> callLogses) {
-		this.callLogses = callLogses;
 	}
 
 }

@@ -73,7 +73,7 @@ public class DoctorsService {
 		
 		//Logic Starts
 		
-		Doctors doctors=new Doctors(doctorsForm.getName(), doctorsForm.getAddress(), doctorsForm.getCity(), doctorsForm.getCountry(), doctorsForm.getState(), doctorsForm.getZip(), doctorsForm.getOfficeHours(), doctorsForm.getNewField(), doctorsForm.getNotes(), null,null);
+		Doctors doctors=new Doctors(doctorsForm.getName(), doctorsForm.getAddress(), doctorsForm.getCity(), doctorsForm.getCountry(), doctorsForm.getState(), doctorsForm.getZip(), doctorsForm.getOfficeHours(), doctorsForm.getNewField(), doctorsForm.getNotes(), null);
 				doctors.setId(doctorsForm.getId());
 		//Logic Ends
 		
@@ -89,7 +89,7 @@ public class DoctorsService {
 		
 		//Logic Starts
 		
-		Doctors doctors=new Doctors(doctorsForm.getName(), doctorsForm.getAddress(), doctorsForm.getCity(), doctorsForm.getCountry(), doctorsForm.getState(), doctorsForm.getZip(), doctorsForm.getOfficeHours(), doctorsForm.getNewField(), doctorsForm.getNotes(), null,null);	//Logic Ends
+		Doctors doctors=new Doctors(doctorsForm.getName(), doctorsForm.getAddress(), doctorsForm.getCity(), doctorsForm.getCountry(), doctorsForm.getState(), doctorsForm.getZip(), doctorsForm.getOfficeHours(), doctorsForm.getNewField(), doctorsForm.getNotes(), null);	//Logic Ends
 		
 		doctorsDAO.save(doctors);
 		return 1;
@@ -102,7 +102,7 @@ public class DoctorsService {
 		
 		//Logic Starts
 		
-		Doctors doctors=new Doctors(doctorsForm.getName(), doctorsForm.getAddress(), doctorsForm.getCity(), doctorsForm.getCountry(), doctorsForm.getState(), doctorsForm.getZip(), doctorsForm.getOfficeHours(), doctorsForm.getNewField(), doctorsForm.getNotes(), null,null);
+		Doctors doctors=new Doctors(doctorsForm.getName(), doctorsForm.getAddress(), doctorsForm.getCity(), doctorsForm.getCountry(), doctorsForm.getState(), doctorsForm.getZip(), doctorsForm.getOfficeHours(), doctorsForm.getNewField(), doctorsForm.getNotes(), null);
 		doctors.setId(doctorsForm.getId());
 		//Logic Ends
 		

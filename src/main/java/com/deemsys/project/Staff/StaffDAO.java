@@ -8,5 +8,5 @@ import com.deemsys.project.entity.Staff;
  *
  */
 public interface StaffDAO extends IGenericDAO<Staff>{
-
+	public Staff getByUserName(String username);
 }

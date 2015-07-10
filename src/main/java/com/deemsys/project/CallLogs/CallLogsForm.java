@@ -16,8 +16,7 @@ import com.deemsys.project.entity.Staff;
 public class CallLogsForm {
 
 	private Integer id;
-	private Integer staffId;
-	private Integer patientId;
+	private Integer appointmentId;
 	private String timeStamp;
 	private String response;
 	private String notes;
@@ -29,17 +28,12 @@ public class CallLogsForm {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getStaffId() {
-		return staffId;
+	
+	public Integer getAppointmentId() {
+		return appointmentId;
 	}
-	public void setStaffId(Integer staffId) {
-		this.staffId = staffId;
-	}
-	public Integer getPatientId() {
-		return patientId;
-	}
-	public void setPatientId(Integer patientId) {
-		this.patientId = patientId;
+	public void setAppointmentId(Integer appointmentId) {
+		this.appointmentId = appointmentId;
 	}
 	public String getTimeStamp() {
 		return timeStamp;
@@ -59,12 +53,11 @@ public class CallLogsForm {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	public CallLogsForm(Integer id, Integer staffId, Integer patientId,
+	public CallLogsForm(Integer id, Integer appointmentId,
 			String timeStamp, String response, String notes) {
 		super();
 		this.id = id;
-		this.staffId = staffId;
-		this.patientId = patientId;
+		this.appointmentId = appointmentId;
 		this.timeStamp = timeStamp;
 		this.response = response;
 		this.notes = notes;

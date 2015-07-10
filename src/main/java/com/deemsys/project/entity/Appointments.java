@@ -1,8 +1,9 @@
 package com.deemsys.project.entity;
-
-// Generated Jul 3, 2015 12:57:28 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 10, 2015 10:58:57 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,28 +25,26 @@ import javax.persistence.TemporalType;
 public class Appointments implements java.io.Serializable {
 
 	private Integer id;
-	private Staff staff;
-	private Doctors doctors;
 	private Patients patients;
 	private Date scheduledDate;
 	private String notes;
+	private Integer status;
+	private Set<CallLogs> callLogses = new HashSet<CallLogs>(0);
 
 	public Appointments() {
 	}
 
-	public Appointments(Staff staff, Doctors doctors, Patients patients) {
-		this.staff = staff;
-		this.doctors = doctors;
+	public Appointments(Patients patients) {
 		this.patients = patients;
 	}
 
-	public Appointments(Staff staff, Doctors doctors, Patients patients,
-			Date scheduledDate, String notes) {
-		this.staff = staff;
-		this.doctors = doctors;
+	public Appointments(Patients patients, Date scheduledDate, String notes,
+			Integer status, Set<CallLogs> callLogses) {
 		this.patients = patients;
 		this.scheduledDate = scheduledDate;
 		this.notes = notes;
+		this.status = status;
+		this.callLogses = callLogses;
 	}
 
 	@Id
@@ -56,26 +56,6 @@ public class Appointments implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "caller_id", nullable = false)
-	public Staff getStaff() {
-		return this.staff;
-	}
-
-	public void setStaff(Staff staff) {
-		this.staff = staff;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "doctor_id", nullable = false)
-	public Doctors getDoctors() {
-		return this.doctors;
-	}
-
-	public void setDoctors(Doctors doctors) {
-		this.doctors = doctors;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -105,6 +85,24 @@ public class Appointments implements java.io.Serializable {
 
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+
+	@Column(name = "status")
+	public Integer getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "appointments")
+	public Set<CallLogs> getCallLogses() {
+		return this.callLogses;
+	}
+
+	public void setCallLogses(Set<CallLogs> callLogses) {
+		this.callLogses = callLogses;
 	}
 
 }

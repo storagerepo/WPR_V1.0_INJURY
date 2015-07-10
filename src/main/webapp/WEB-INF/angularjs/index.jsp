@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="resources/components/metisMenu/dist/metisMenu.min.css">
     <link rel="stylesheet" href="resources/components/angular-loading-bar/build/loading-bar.min.css">
     <link rel="stylesheet" href="resources/components/font-awesome/css/font-awesome.min.css" type="text/css">
+    <link href="resources/components/ng-table/dist/ng-table.min.css" rel="stylesheet">
     <!-- endbuild -->
     
     <!-- build:js(.) scripts/vendor.js -->
@@ -33,7 +34,10 @@
     <script src="resources/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="resources/components/metisMenu/dist/metisMenu.min.js"></script>
     <script src="resources/components/Chart.js/Chart.min.js"></script>
-    <!-- endbower -->
+    
+    <script src="resources/components/angular-utils-pagination/dirPagination.js"></script> 
+    <script src="resources/components/ng-table/dist/ng-table.min.js"></script>
+	<!-- endbower -->
     <!-- endbuild -->
     
     <!-- build:js({.tmp,app}) scripts/scripts.js -->

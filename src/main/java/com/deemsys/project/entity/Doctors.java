@@ -1,6 +1,5 @@
 package com.deemsys.project.entity;
-
-// Generated Jul 3, 2015 12:57:28 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 10, 2015 10:58:57 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,15 +30,13 @@ public class Doctors implements java.io.Serializable {
 	private String newField;
 	private String notes;
 	private Set<Patients> patientses = new HashSet<Patients>(0);
-	private Set<Appointments> appointmentses = new HashSet<Appointments>(0);
 
 	public Doctors() {
 	}
 
 	public Doctors(String name, String address, String city, String country,
 			String state, String zip, String officeHours, String newField,
-			String notes, Set<Patients> patientses,
-			Set<Appointments> appointmentses) {
+			String notes, Set<Patients> patientses) {
 		this.name = name;
 		this.address = address;
 		this.city = city;
@@ -50,7 +47,6 @@ public class Doctors implements java.io.Serializable {
 		this.newField = newField;
 		this.notes = notes;
 		this.patientses = patientses;
-		this.appointmentses = appointmentses;
 	}
 
 	@Id
@@ -152,15 +148,6 @@ public class Doctors implements java.io.Serializable {
 
 	public void setPatientses(Set<Patients> patientses) {
 		this.patientses = patientses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "doctors")
-	public Set<Appointments> getAppointmentses() {
-		return this.appointmentses;
-	}
-
-	public void setAppointmentses(Set<Appointments> appointmentses) {
-		this.appointmentses = appointmentses;
 	}
 
 }

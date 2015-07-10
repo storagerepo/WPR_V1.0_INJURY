@@ -9,7 +9,7 @@
 
 
 
-angular.module('sbAdminApp').controller('ShowDoctorsCtrl', function($scope,$http,$location) {
+angular.module('sbAdminApp').controller('ShowDoctorsCtrl', function($scope,$http,$location,$state) {
 	 
 	$scope.sort = function(keyname){
         $scope.sortKey = keyname;   //set the sortKey to the param passed
@@ -24,14 +24,15 @@ angular.module('sbAdminApp').controller('ShowDoctorsCtrl', function($scope,$http
     
     $scope.deleteDoctor=function(id)
 	  {
-		  alert(id);
+		
 		  if(confirm("Are you sure to delete Doctor ?")){
 			  $http({
 				  method : "POST",
 				  url : "http://localhost:8080/Injury/deleteDoctors.json?id="+id,
 				  }).success(function(response){
-				 $location.path("dashboard/doctor");
+					  $state.reload("dashboard.doctor");
 				  });
+			  
 			}
 		  
 		 
@@ -53,7 +54,7 @@ $scope.saveDoctor=function()
 
 angular.module('sbAdminApp').controller('EditDoctorController', function($scope,$http,$location,$stateParams) {
 	 
-	alert($stateParams.id);
+
 	 $scope.myFormButton=false;
 	$http.get('http://localhost:8080/Injury/getDoctors.json?id='+ $stateParams.id).success( function(response) {
 		 $scope.doctor = response.doctorsForm;

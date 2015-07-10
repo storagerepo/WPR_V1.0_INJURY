@@ -142,7 +142,11 @@ angular
                 
                 $ocLazyLoad.load({
                     name:'sbAdminApp',
-                    files:['scripts/controllers/staffController.js']
+                    files:['scripts/controllers/staffController.js',
+                           'scripts/directives/timeline/timeline.js',
+                           'scripts/directives/notifications/notifications.js',
+                           'scripts/directives/chat/chat.js',
+                           'scripts/directives/dashboard/stats/stats.js']
                 })
               }
             }

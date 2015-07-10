@@ -91,7 +91,7 @@ public class PatientsService {
 		doctors.setId(patientsForm.getDoctorsId());
 		
 		
-		Patients patients=new Patients(staff,doctors,patientsForm.getFirstName(),patientsForm.getLastName(),patientsForm.getReportNumber(),patientsForm.getPhoneNumber(),patientsForm.getAddress(),patientsForm.getInjury(),new Date(),patientsForm.getNotes(),patientsForm.getOtherPassengers(),null,null);
+		Patients patients=new Patients(staff,doctors,patientsForm.getFirstName(),patientsForm.getLastName(),patientsForm.getReportNumber(),patientsForm.getPhoneNumber(),patientsForm.getAddress(),patientsForm.getInjury(),new Date(),patientsForm.getNotes(),patientsForm.getOtherPassengers(),null);
 		
 		//Logic Ends
 		
@@ -113,7 +113,7 @@ public class PatientsService {
 		Doctors doctors=new Doctors();
 		doctors.setId(patientsForm.getDoctorsId());
 		
-		Patients patients=new Patients(staff,doctors,patientsForm.getFirstName(),patientsForm.getLastName(),patientsForm.getReportNumber(),patientsForm.getPhoneNumber(),patientsForm.getAddress(),patientsForm.getInjury(),new Date(),patientsForm.getNotes(),patientsForm.getOtherPassengers(),null,null);
+		Patients patients=new Patients(staff,doctors,patientsForm.getFirstName(),patientsForm.getLastName(),patientsForm.getReportNumber(),patientsForm.getPhoneNumber(),patientsForm.getAddress(),patientsForm.getInjury(),new Date(),patientsForm.getNotes(),patientsForm.getOtherPassengers(),null);
 		
 		//Logic Ends
 		
@@ -135,7 +135,7 @@ public class PatientsService {
 		Doctors doctors=new Doctors();
 		doctors.setId(patientsForm.getDoctorsId());
 		
-		Patients patients=new Patients(staff,doctors,patientsForm.getFirstName(),patientsForm.getLastName(),patientsForm.getReportNumber(),patientsForm.getPhoneNumber(),patientsForm.getAddress(),patientsForm.getInjury(),new Date(),patientsForm.getNotes(),patientsForm.getOtherPassengers(),null,null);
+		Patients patients=new Patients(staff,doctors,patientsForm.getFirstName(),patientsForm.getLastName(),patientsForm.getReportNumber(),patientsForm.getPhoneNumber(),patientsForm.getAddress(),patientsForm.getInjury(),new Date(),patientsForm.getNotes(),patientsForm.getOtherPassengers(),null);
 		patients.setId(patientsForm.getId());
 		
 		//Logic Ends

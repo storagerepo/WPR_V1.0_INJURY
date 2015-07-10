@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.deemsys.project.Staff.StaffDAO;
 import com.deemsys.project.Staff.StaffForm;
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
 import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
@@ -48,7 +49,7 @@ public class CallLogsService {
 		
 		for (CallLogs callLogs : callLogss) {
 			//TODO: Fill the List
-			CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(), callLogs.getStaff().getId(), callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
+			CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
 			callLogsForms.add(callLogsForm);
 		}
 		
@@ -65,7 +66,7 @@ public class CallLogsService {
 		//TODO: Convert Entity to Form
 		//Start
 		
-		CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(), callLogs.getStaff().getId(), callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
+		CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
 		
 		//End
 		
@@ -79,13 +80,10 @@ public class CallLogsService {
 		
 		//Logic Starts
 		
-		Staff staff = new Staff();
-		staff=staffDAO.get(callLogsForm.getStaffId());
+		Appointments appointments = new Appointments();
+		appointments.setId(callLogsForm.getAppointmentId());
 		
-		Patients patients = new Patients();
-		patients.setId(callLogsForm.getPatientId());
-		
-		CallLogs callLogs=new CallLogs(staff, patients, InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+		CallLogs callLogs=new CallLogs(appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		callLogs.setId(callLogsForm.getId());
 		//Logic Ends
 		
@@ -101,13 +99,10 @@ public class CallLogsService {
 		
 		//Logic Starts
 		
-		Staff staff = new Staff();
-		staff=staffDAO.get(callLogsForm.getStaffId());
+		Appointments appointments = new Appointments();
+		appointments.setId(callLogsForm.getAppointmentId());
 		
-		Patients patients = new Patients();
-		patients.setId(callLogsForm.getPatientId());
-		
-		CallLogs callLogs=new CallLogs(staff, patients, InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+		CallLogs callLogs=new CallLogs(appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		
 		//Logic Ends
 		
@@ -122,13 +117,10 @@ public class CallLogsService {
 		
 		//Logic Starts
 		
-		Staff staff = new Staff();
-		staff=staffDAO.get(callLogsForm.getStaffId());
+		Appointments appointments = new Appointments();
+		appointments.setId(callLogsForm.getAppointmentId());
 		
-		Patients patients = new Patients();
-		patients.setId(callLogsForm.getPatientId());
-		
-		CallLogs callLogs=new CallLogs(staff, patients, InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+		CallLogs callLogs=new CallLogs(appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		callLogs.setId(callLogsForm.getId());
 		//Logic Ends
 		
