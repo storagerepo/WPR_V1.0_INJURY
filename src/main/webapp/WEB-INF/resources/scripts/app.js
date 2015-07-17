@@ -250,9 +250,25 @@ angular
           }
     })//End Doctor
         .state('dashboard.patient',{
-            templateUrl:'views/patient.html',
+            templateUrl:'views/patient/patient.html',
             url:'/patient'
+        }).state('dashboard.add-patient',{
+            templateUrl:'views/patient/add-patients.html',
+            url:'/add-patient'
+        })// End Patient
+        .state('dashboard.appointment',{
+            templateUrl:'views/appointment/appointment.html',
+            url:'/appointment'
+        })// End Appointment
+        .state('dashboard.calllogs',{
+            templateUrl:'views/calllogs/calllogs.html',
+            url:'/calllogs'
         })
+        .state('dashboard.add-calllogs',{
+            templateUrl:'views/calllogs/add-calllogs.html',
+            url:'/add-calllogs'
+        })// End Call logs
+
 
   }]);
 

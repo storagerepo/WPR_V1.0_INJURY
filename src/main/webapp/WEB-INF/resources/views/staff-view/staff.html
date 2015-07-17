@@ -26,21 +26,23 @@
 								<th>Phone Number</th>
 								<th>Email ID</th>
 
-								<th width="25%">Action</th>
-								<th></th>
+								<th width="20%">Action</th>
+						
 							</tr>
 
 							<tr>
 								<th><input class="form-control" type="text"
-									ng-model="search.username"></th>
+									ng-model="search.username" placeholder="User Name"></th>
 								<th><input class="form-control" type="text"
-									ng-model="search.firstName"></th>
+									ng-model="search.firstName" placeholder="First Name"></th>
 								<th><input class="form-control" type="text"
-									ng-model="search.lastName"></th>
+									ng-model="search.lastName" placeholder="Last Name"></th>
+									<th><input class="form-control" type="text"
+									ng-model="search.phoneNumber" placeholder="Phone Number"></th>
 								<th><input class="form-control" type="text"
-									ng-model="search.emailAddress"></th>
-								<th><input class="form-control" type="text"
-									ng-model="search.phoneNumber"></th>
+									ng-model="search.emailAddress" placeholder="Email"></th>
+								<th></th>	
+								
 							</tr>
 						</thead>
 						<tbody dir-paginate="staff in staffs|filter:search|orderBy:sortKey:reverse|itemsPerPage:8">

@@ -25,9 +25,9 @@
               	
                 	 <th ng-mousedown="sort('state')">State <span class="glyphicon sort-icon" ng-show="sortKey=='state'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
-                   	 <th ng-mousedown="sort('officeHours')">Office Hours   <span class="glyphicon sort-icon" ng-show="sortKey=='officeHours'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+                   	 <th ng-mousedown="sort('officeHours')">Office Hours <span class="glyphicon sort-icon" ng-show="sortKey=='officeHours'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
-	                       <th ng-mousedown="sort('notes')">Notes<span class="glyphicon sort-icon" ng-show="sortKey=='notes'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+	                       <th ng-mousedown="sort('notes')">Notes <span class="glyphicon sort-icon" ng-show="sortKey=='notes'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
                       
               <th width="20%">Action</th></tr>
@@ -44,6 +44,7 @@
            </th>
             <th>  <input type="text"  class="form-control"  ng-model="search.notes" placeholder="Notes"></label>
            </th>
+           <th></th>
            </tr>
             </thead>
             
