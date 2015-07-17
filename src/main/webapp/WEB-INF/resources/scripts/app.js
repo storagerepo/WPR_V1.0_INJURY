@@ -12,10 +12,11 @@ angular
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'angularUtils.directives.dirPagination'
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
-    
+
     $ocLazyLoadProvider.config({
       debug:false,
       events:true
@@ -50,22 +51,22 @@ angular
                 {
                   name:'ngAnimate',
                   files:['resources/components/angular-animate/angular-animate.js']
-                }),
+                })
                 $ocLazyLoad.load(
                 {
                   name:'ngCookies',
                   files:['resources/components/angular-cookies/angular-cookies.js']
-                }),
+                })
                 $ocLazyLoad.load(
                 {
                   name:'ngResource',
                   files:['resources/components/angular-resource/angular-resource.js']
-                }),
+                })
                 $ocLazyLoad.load(
                 {
                   name:'ngSanitize',
                   files:['resources/components/angular-sanitize/angular-sanitize.js']
-                }),
+                })
                 $ocLazyLoad.load(
                 {
                   name:'ngTouch',
@@ -94,8 +95,19 @@ angular
         }
       })
       .state('dashboard.form',{
+        controller:'FormCtrl',
         templateUrl:'views/form.html',
-        url:'/form'
+        url:'/form',
+       resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+              'scripts/controllers/form.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.blank',{
         templateUrl:'views/pages/blank.html',
@@ -127,108 +139,9 @@ angular
     })
       .state('dashboard.table',{
         templateUrl:'views/table.html',
+         controller:'tableCtrl',
         url:'/table'
     })
-        .state('dashboard.appointment',{
-        templateUrl:'views/appointment.html',
-        url:'/appointment'
-    })
-        .state('dashboard.staff',{
-        templateUrl:'views/staff-view/staff.html',
-        url:'/staff',
-        	controller:'ShowStaffController',
-            resolve: {
-              loadMyFile:function($ocLazyLoad) {
-                
-                $ocLazyLoad.load({
-                    name:'sbAdminApp',
-                    files:['scripts/controllers/staffController.js',
-                           'scripts/directives/timeline/timeline.js',
-                           'scripts/directives/notifications/notifications.js',
-                           'scripts/directives/chat/chat.js',
-                           'scripts/directives/dashboard/stats/stats.js']
-                })
-              }
-            }
-    })
-        .state('dashboard.doctor',{
-        templateUrl:'views/doctor.html',
-        url:'/doctor',
-        controller:'ShowDoctorsCtrl',
-        resolve: {
-          loadMyFile:function($ocLazyLoad) {
-            
-            $ocLazyLoad.load({
-                name:'sbAdminApp',
-                files:['scripts/controllers/Doctors.js']
-            })
-          }
-        }
-    })
-     .state('dashboard.add-doctor',{
-        templateUrl:'views/add-doctor.html',
-        url:'/add-doctor',
-        controller:'AddDoctorsCtrl',
-        resolve: {
-            loadMyFile:function($ocLazyLoad) {
-              
-              $ocLazyLoad.load({
-                  name:'sbAdminApp',
-                  files:['scripts/controllers/Doctors.js']
-              })
-            }
-          }
-    })
-    .state('dashboard.EditDoctor/:id',{
-        templateUrl:'views/add-doctor.html',
-        url:'/EditDoctor/:id',
-        controller:'EditDoctorController',
-        resolve: {
-            loadMyFile:function($ocLazyLoad) {
-              
-              $ocLazyLoad.load({
-                  name:'sbAdminApp',
-                  files:['scripts/controllers/Doctors.js']
-              })
-            }
-          }
-    })
-        .state('dashboard.patient',{
-        templateUrl:'views/patient.html',
-        url:'/patient'
-    })
-        .state('dashboard.add-staff',{
-        templateUrl:'views/staff-view/add-staff.html',
-        url:'/add-staff',
-        controller:'SaveStaffController',
-        resolve: {
-            loadMyFile:function($ocLazyLoad) {
-              
-              $ocLazyLoad.load({
-                  name:'sbAdminApp',
-                  files:['scripts/controllers/staffController.js']
-              })
-            }
-          }
-    }).state('dashboard.EditStaff/:id',{
-        templateUrl:'views/staff-view/add-staff.html',
-        url:'/EditStaff/:id',
-        controller:'EditStaffController',
-        resolve: {
-            loadMyFile:function($ocLazyLoad) {
-              
-              $ocLazyLoad.load({
-                  name:'sbAdminApp',
-                  files:['scripts/controllers/staffController.js']
-              })
-            }
-          }
-    })
-        
-        .state('dashboard.add-patients',{
-            templateUrl:'views/add-patients.html',
-            url:'/add-patients'
-        })
       .state('dashboard.panels-wells',{
           templateUrl:'views/ui-elements/panels-wells.html',
           url:'/panels-wells'
@@ -252,7 +165,103 @@ angular
       .state('dashboard.grid',{
        templateUrl:'views/ui-elements/grid.html',
        url:'/grid'
-   })
+   })//staff starts
+        .state('dashboard.staff',{
+            templateUrl:'views/staff-view/staff.html',
+            controller:'ShowStaffController',
+            url:'/staff',
+        resolve: {
+            loadMyFile:function($ocLazyLoad) {
+                $ocLazyLoad.load({
+                    name:'sbAdminApp',
+                    files:['scripts/controllers/staffController.js']
+                });
+            }
+        }
+        })
+        .state('dashboard.add-staff',{
+        templateUrl:'views/staff-view/add-staff.html',
+        url:'/add-staff',
+        controller:'SaveStaffController',
+        resolve: {
+            loadMyFile:function($ocLazyLoad) {
+              
+              $ocLazyLoad.load({
+                  name:'sbAdminApp',
+                  files:['scripts/controllers/staffController.js']
+              });
+            }
+          }
+    }).state('dashboard.EditStaff/:id',{
+        templateUrl:'views/staff-view/add-staff.html',
+        url:'/EditStaff/:id',
+        controller:'EditStaffController',
+        resolve: {
+            loadMyFile:function($ocLazyLoad) {
+              
+              $ocLazyLoad.load({
+                  name:'sbAdminApp',
+                  files:['scripts/controllers/staffController.js']
+              });
+            }
+          }
+    })//End Staff
+    //Start Doctor
+    .state('dashboard.doctor',{
+        templateUrl:'views/doctor.html',
+        url:'/doctor',
+        controller:'ShowDoctorsCtrl',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            
+            $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/Doctors.js']
+            });
+          }
+        }
+    })
+     .state('dashboard.add-doctor',{
+        templateUrl:'views/add-doctor.html',
+        url:'/add-doctor',
+        controller:'AddDoctorsCtrl',
+        resolve: {
+            loadMyFile:function($ocLazyLoad) {
+              
+              $ocLazyLoad.load({
+                  name:'sbAdminApp',
+                  files:['scripts/controllers/Doctors.js']
+              });
+            }
+          }
+    })
+    .state('dashboard.EditDoctor/:id',{
+        templateUrl:'views/add-doctor.html',
+        url:'/EditDoctor/:id',
+        controller:'EditDoctorController',
+        resolve: {
+            loadMyFile:function($ocLazyLoad) {
+              
+              $ocLazyLoad.load({
+                  name:'sbAdminApp',
+                  files:['scripts/controllers/Doctors.js']
+              });
+            }
+          }
+    })//End Doctor
+        .state('dashboard.patient',{
+            templateUrl:'views/patient.html',
+            url:'/patient'
+        })
+
   }]);
 
-    
+
+angular.module('sbAdminApp')
+  .controller('tableCtrl', function($scope) {
+
+    $scope.alertFunction=function($scope){
+      alert("sampleLink");
+    };
+
+});

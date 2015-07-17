@@ -26,8 +26,8 @@
     <!-- bower:js -->
     <script src="resources/components/jquery/dist/jquery.min.js"></script>
     <script src="resources/components/angular/angular.min.js"></script>
-    <script src="resources/components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="resources/components/angular-ui-router/release/angular-ui-router.min.js"></script>
+	  <script src="resources/components/bootstrap/dist/js/bootstrap.min.js"></script>
+	     <script src="resources/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="resources/components/json3/lib/json3.min.js"></script>
     <script src="resources/components/oclazyload/dist/ocLazyLoad.min.js"></script>
     <script src="resources/components/angular-loading-bar/build/loading-bar.min.js"></script>

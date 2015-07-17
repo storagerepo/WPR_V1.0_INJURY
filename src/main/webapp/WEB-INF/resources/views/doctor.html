@@ -8,18 +8,12 @@
 </div>
 <!-- /.row -->
 <div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                List of Doctors
-            </div>
+    <div class="col-lg-12">           
             <!-- /.panel-heading -->
-            <div class="panel-body">
+            <div class="col-md-12">
                 <div class="dataTable_wrapper">
                     <table class="table table-hover" id="dataTables-example">
                      
-                    <!--   <input type="text"  class="form-control"  ng-model="search.$" placeholder="Global Search"></label>
-               -->
                           <thead>
 	        <tr>
                 <th ng-mousedown="sort('name')">Name   <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
@@ -54,7 +48,7 @@
             </thead>
             
             
-                         <tbody ng-repeat="doctor in doctors | filter:search | orderBy:sortKey:reverse " >
+                         <tbody dir-paginate="doctor in doctors | filter:search | orderBy:sortKey:reverse|itemsPerPage:8 " >
 	<tr>
 		
 		<td>{{doctor.name}}</td>
@@ -64,15 +58,15 @@
 		<td>{{doctor.officeHours}}</td>
 
 <td>{{doctor.notes}}</td>
-                                   <td><a href="#/dashboard/EditDoctor/{{doctor.id}}"  class="btn">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit</a>
-	<a href="#" ui-sref="dashboard.doctor" class="btn" ng-mousedown="deleteDoctor(doctor.id)">&nbsp;<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete </a>
+                                   <td><a href="#/dashboard/EditDoctor/{{doctor.id}}">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit</a>
+	<a href="#" ui-sref="dashboard.doctor" ng-mousedown="deleteDoctor(doctor.id)">&nbsp;<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete </a>
 	</td></tr>
 </tbody>
               </table>
+              <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
+    					</dir-pagination-controls>   
                 </div>
             </div>
-            <!-- /.panel-body -->
-        </div>
         <!-- /.panel -->
     </div>
     <!-- /.col-lg-12 -->

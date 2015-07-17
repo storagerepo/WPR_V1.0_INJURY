@@ -213,7 +213,13 @@
 			<version>2.7</version>
 		</dependency>
         
-        
+        <!-- Cross Domain -->
+         <dependency>
+   		 <groupId>com.thetransactioncompany</groupId>
+   		 <artifactId>cors-filter</artifactId>
+    	<version>2.4</version>
+		</dependency>
+        <!-- Cross Domain -->
         
         <!-- Spring Security -->
 		<dependency>

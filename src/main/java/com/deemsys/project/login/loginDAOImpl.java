@@ -140,17 +140,17 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 	//OAUTH
 		//Function that overrides the default spring security
 		@Override
-		public User loadUserByUsername(String username){
+		public User loadUserByUsername(String emailAddress){
 			
 			//Load User Who having the User name
-			Staff userLoginDetails=this.getByUserName(username);
+			Staff userLoginDetails=this.getByUserName(emailAddress);
 			
 			List<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
 			
 			if(userLoginDetails!=null)
 				authorities= buildUserAuthority(userLoginDetails.getRole());
 			
-			return buildUserForAuthentication(username,userLoginDetails, authorities);
+			return buildUserForAuthentication(emailAddress,userLoginDetails, authorities);
 		}
 		
 		

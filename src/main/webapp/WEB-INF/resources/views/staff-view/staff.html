@@ -1,63 +1,69 @@
 
 <div class="row">
-    <div class="col-lg-12">
-        <a ui-sref="dashboard.add-staff" class="btn-sm btn-primary pull-right margin-top-40">Add New Staff</a>
-        <h2 class="page-header">Staff</h2>
-    </div>
-    <!-- /.col-lg-12 -->
+	<div class="col-lg-12">
+		<a ui-sref="dashboard.add-staff"
+			class="btn-sm btn-primary pull-right margin-top-40">Add New Staff</a>
+		<h2 class="page-header">Staff</h2>
+	</div>
+	<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
 <div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                List of Staff
-            </div><br/>  
-              
-            <!-- /.panel-heading -->
-            <div class="panel-body" ng-controller="ShowStaffController">
-                <div class="dataTable_wrapper">
-                    <table class="table table-hover" id="dataTables-example">
-                    
-                        <thead>
-                            <tr>
-                                <th ng-mousedown="sort('username')">User Name&nbsp&nbsp<span class="glyphicon sort-icon" ng-show="sortKey=='username'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-                                <th ng-mousedown="sort('firstName')">First Name&nbsp&nbsp<span class="glyphicon sort-icon" ng-show="sortKey=='firstName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-                                <th>Last Name</th>
-                                <th>Phone Number</th>
-                                <th>Email ID</th>
-                                
-                                <th width="10%">Action</th>
-                                <th> </th>
-                            </tr >
-                           
-                            <tr >
-                            <th><input class="form-control" type="text" ng-model="search.username"></th>
-                             <th><input class="form-control" type="text" ng-model="search.firstName"></th>
-                              <th><input class="form-control" type="text" ng-model="search.lastName"></th>
-                               <th><input class="form-control" type="text" ng-model="search.emailAddress"></th>
-                                <th><input class="form-control" type="text" ng-model="search.phoneNumber"></th>
-                            </tr>
-                         </thead>
-                        <tbody ng-repeat="staff in staffs|filter:search|orderBy:sortKey:reverse">
-                            
-                            <tr>
-                                <td>{{staff.username}}</td>
-                                <td>{{staff.firstName}}</td>
-                                <td>{{staff.lastName}}</td>
-                               
-                                <td>{{staff.phoneNumber}}</td>
-                                 <td>{{staff.emailAddress}}</td>
-                                <td><a href= "#/dashboard/EditStaff/{{staff.id}}"  class="btn">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit Staff</a></td>
-		<td><a href="#" class="btn" ng-mousedown="deleteStaff(staff.id)">&nbsp;<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete Staff</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- /.panel-body -->
-        </div>
-        <!-- /.panel -->
-    </div>
-    <!-- /.col-lg-12 -->
+			<!-- /.panel-heading -->
+			<div class="col-md-12" ng-controller="ShowStaffController">
+				
+					<table class="table table-hover">
+
+						<thead>
+							<tr>
+								<th ng-mousedown="sort('username')">User Name&nbsp&nbsp<span
+									class="glyphicon sort-icon" ng-show="sortKey=='username'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+								<th ng-mousedown="sort('firstName')">First Name&nbsp&nbsp<span
+									class="glyphicon sort-icon" ng-show="sortKey=='firstName'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+								<th>Last Name</th>
+								<th>Phone Number</th>
+								<th>Email ID</th>
+
+								<th width="25%">Action</th>
+								<th></th>
+							</tr>
+
+							<tr>
+								<th><input class="form-control" type="text"
+									ng-model="search.username"></th>
+								<th><input class="form-control" type="text"
+									ng-model="search.firstName"></th>
+								<th><input class="form-control" type="text"
+									ng-model="search.lastName"></th>
+								<th><input class="form-control" type="text"
+									ng-model="search.emailAddress"></th>
+								<th><input class="form-control" type="text"
+									ng-model="search.phoneNumber"></th>
+							</tr>
+						</thead>
+						<tbody dir-paginate="staff in staffs|filter:search|orderBy:sortKey:reverse|itemsPerPage:8">
+
+							<tr>
+								<td>{{staff.username}}</td>
+								<td>{{staff.firstName}}</td>
+								<td>{{staff.lastName}}</td>
+
+								<td>{{staff.phoneNumber}}</td>
+								<td>{{staff.emailAddress}}</td>
+								<td><a href="#/dashboard/EditStaff/{{staff.id}}">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;
+										Edit
+								</a>
+								<a href="#" ng-click="deleteStaff(staff.id)">&nbsp;<i
+										class="glyphicon glyphicon-trash"></i>&nbsp; Delete
+								</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
+    					</dir-pagination-controls>   
+			</div>
+		<!-- /.panel -->
+	<!-- /.col-lg-12 -->
 </div>

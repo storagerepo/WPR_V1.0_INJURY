@@ -27,6 +27,11 @@ adminApp.controller('ShowStaffController', function($scope,$http,$location,$stat
 			  });
 		  }
 	}
+    
+    $scope.alertFunction=function()
+    {
+    	alert("Done");
+    };
    
  
 });
