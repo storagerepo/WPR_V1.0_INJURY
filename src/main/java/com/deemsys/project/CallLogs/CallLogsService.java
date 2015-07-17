@@ -135,6 +135,13 @@ public class CallLogsService {
 		return 1;
 	}
 	
-	
+	public CallLogsForm getCallLogsByAppointment(Integer appointmentId){
+		
+		CallLogsForm callLogsForm= new CallLogsForm();
+		CallLogs callLogs=callLogsDAO.getCallLogsByAppointment(appointmentId);
+		callLogsForm = new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
+		
+		return callLogsForm;
+	}
 	
 }

@@ -262,11 +262,18 @@ angular
         })// End Appointment
         .state('dashboard.calllogs',{
             templateUrl:'views/calllogs/calllogs.html',
-            url:'/calllogs'
-        })
-        .state('dashboard.add-calllogs',{
-            templateUrl:'views/calllogs/add-calllogs.html',
-            url:'/add-calllogs'
+            url:'/calllogs',
+            controller:"showCallLogsController",
+            resolve: {
+                loadMyFile:function($ocLazyLoad) {
+                  
+                  $ocLazyLoad.load({
+                      name:'sbAdminApp',
+                      files:['scripts/controllers/callLogsController.js']
+                  });
+                }
+              }
+            
         })// End Call logs
 
 

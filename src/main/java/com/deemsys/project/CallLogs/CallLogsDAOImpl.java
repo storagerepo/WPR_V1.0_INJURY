@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
 
 /**
@@ -135,6 +136,14 @@ public class CallLogsDAOImpl implements CallLogsDAO{
 		return null;
 	}
 
+	@Override
+	public CallLogs getCallLogsByAppointment(Integer appointmentId) {
+		// TODO Auto-generated method stub
+		CallLogs callLogs=(CallLogs) this.sessionFactory.getCurrentSession().createCriteria(CallLogs.class).add(Restrictions.eq("appointments.id", appointmentId)).uniqueResult();
+		return callLogs;
+	}
+
+	
 	
 
 }

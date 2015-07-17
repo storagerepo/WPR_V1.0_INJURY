@@ -67,5 +67,13 @@ public class CallLogsController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+    @RequestMapping(value="/getCallLogsByAppointment",method=RequestMethod.GET)
+   	public String getCallLogsByAppointment(@RequestParam("appointmentId") Integer appointmentId,ModelMap model)
+   	{
+    	model.addAttribute("callLogsForms",callLogsService.getCallLogsByAppointment(appointmentId));
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
 	
 }

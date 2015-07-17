@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="col-lg-12">
+	 	<a ui-sref="#" class="btn-sm btn-primary pull-right margin-top-40" data-toggle="modal" data-target="#myModal">Add Call Logs</a>
+		<h2 class="page-header">Call Logs</h2>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+            <!-- /.panel-heading -->
+            <div class="col-md-12">
+            
+            	<table class="table table-hover">
+				<thead>
+				<tr>
+				<th>Date and Time</th>
+				<th>Response</th>
+				<th>Notes</th>
+				<th width="20%">Actions</th>
+				</tr>
+				<tr>
+				<th><input type="text" class="form-control"/></th>
+				<th><input type="text" class="form-control"/></th>
+				<th><input type="text" class="form-control"/></th>
+				<th></th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+				<td>06/24/2015 11:10:10 AM</td>
+				<td>Need Appointment</td>
+				<td>Book Appointment for Doctor 1</td>
+				<td><a href="" title="View Appointment" class="btn btn-xs btn-primary"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
+				<a href="" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-warning">&nbsp;<i class="glyphicon glyphicon-edit" title="Edit"></i>&nbsp;</a>
+				<a href="" ui-sref="" ng-mousedown="" class="btn btn-xs btn-danger">&nbsp;<i class="glyphicon glyphicon-trash" title="Delete"></i>&nbsp; </a>
+				<a href="" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-success">&nbsp;<i class="glyphicon glyphicon-plus" title="Edit"></i>&nbsp;</a>
+				</td>
+				</tr>
+				<tr>
+				<td>06/24/2015 11:10:10 AM</td>
+				<td>Need Appointment</td>
+				<td>Book Appointment for Doctor 1</td>
+				<td><a href="" title="View Appointment" class="btn btn-xs btn-primary"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
+				<a href="" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-warning">&nbsp;<i class="glyphicon glyphicon-edit" title="Edit"></i>&nbsp;</a>
+				<a href="" ui-sref="" ng-mousedown="" class="btn btn-xs btn-danger">&nbsp;<i class="glyphicon glyphicon-trash" title="Delete"></i>&nbsp; </a>
+				<a href="" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-success">&nbsp;<i class="glyphicon glyphicon-plus" title="Edit"></i>&nbsp;</a>
+				</td>
+				</tr>
+				<tr>
+				<td>06/24/2015 11:10:10 AM</td>
+				<td>Need Appointment</td>
+				<td>Book Appointment for Doctor 1</td>
+				<td><a href="" title="View Appointment" class="btn btn-xs btn-primary"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
+				<a href="" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-warning">&nbsp;<i class="glyphicon glyphicon-edit" title="Edit"></i>&nbsp;</a>
+				<a href="" ui-sref="" ng-mousedown="" class="btn btn-xs btn-danger">&nbsp;<i class="glyphicon glyphicon-trash" title="Delete"></i>&nbsp; </a>
+				<a href="" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-success">&nbsp;<i class="glyphicon glyphicon-plus" title="Edit"></i>&nbsp;</a>
+				</td>
+				</tr>
+				</tbody>
+			</table>
+            </div>
+            <!-- /.panel-body -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+  <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
+      </div>
+      <div class="modal-body">
+	
+                                    <label>Date and Time</label>
+                                    <input name="name" class="form-control" ng-model=""><br/>
+              
+                                 <label>Response</label>
+                                    <textarea name="notes" class="form-control height-100" ng-model=""></textarea>
+                 
+                             	<label>Notes</label>
+                                   <textarea name="notes" class="form-control height-100" ng-model=""></textarea>
+                 
+             
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
