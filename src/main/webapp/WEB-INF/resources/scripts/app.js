@@ -251,10 +251,30 @@ angular
     })//End Doctor
         .state('dashboard.patient',{
             templateUrl:'views/patient/patient.html',
-            url:'/patient'
-        }).state('dashboard.add-patient',{
+            controller: "ShowPatientController",
+            url:'/patient',
+            resolve: {
+                loadMyFile:function($ocLazyLoad) {
+                  
+                  $ocLazyLoad.load({
+                      name:'sbAdminApp',
+                      files:['scripts/controllers/patientController.js']
+                  });
+                }
+              }
+        }).state('dashboard.EditPatient/:id',{
             templateUrl:'views/patient/add-patients.html',
-            url:'/add-patient'
+            controller:"EditPatientController",
+            url:'/EditPatient/:id',
+            resolve: {
+                loadMyFile:function($ocLazyLoad) {
+                  
+                  $ocLazyLoad.load({
+                      name:'sbAdminApp',
+                      files:['scripts/controllers/patientController.js']
+                  });
+                }
+              }
         })// End Patient
         .state('dashboard.appointment',{
             templateUrl:'views/appointment/appointment.html',
@@ -274,7 +294,7 @@ angular
                 }
               }
             
-        })// End Call logs
+        });// End Call logs
 
 
   }]);

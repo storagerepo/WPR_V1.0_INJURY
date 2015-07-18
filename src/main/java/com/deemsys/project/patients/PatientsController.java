@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
+@RequestMapping("/Staff")
 public class PatientsController {
 	
 	@Autowired
@@ -66,5 +67,17 @@ public class PatientsController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+    
+    @RequestMapping(value="/fileUpload",method=RequestMethod.POST)
+   	public String getFileUpload(@RequestParam("path") String path,ModelMap model) throws Exception
+   	{
+    	model.addAttribute("patientsExcelForm",patientsService.addPatientUsingExcel(path));
+    	model.addAttribute("requestSuccess",true);
+    	System.out.println("file upload successfuly.....");
+   		return "/returnPage";
+   	}
+	
+    
 	
 }

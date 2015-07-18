@@ -33,6 +33,9 @@ public class PatientsService {
 	@Autowired
 	PatientsDAO patientsDAO;
 	
+	@Autowired
+	PatientFileUpload patientFileUpload;
+	
 	//Get All Entries
 	public List<PatientsForm> getPatientsList()
 	{
@@ -149,6 +152,20 @@ public class PatientsService {
 	{
 		patientsDAO.delete(id);
 		return 1;
+	}
+	
+	//Add Patient by File Upload
+	public int addPatientUsingExcel(String fileName)
+	{
+		List<Patients> patientsList=patientFileUpload.processUploadFile(fileName);
+		
+		if (patientsList.size()>0) {
+			for (Patients patient : patientsList) {
+				patientsDAO.save(patient);
+			}
+		}
+		
+		return 0;
 	}
 	
 	
