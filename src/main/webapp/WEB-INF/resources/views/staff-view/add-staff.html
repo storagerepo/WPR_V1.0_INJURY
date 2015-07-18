@@ -21,25 +21,65 @@
                             <tr>
                                 <td class="col-md-6">
                                     <label>First Name</label>
-                                    <input type="text" class="form-control"  ng-model="staff.firstName" name="firstName"><br/>
+                                    <input type="text" class="form-control"  ng-model="staff.firstName" name="firstName" placeholder="Enter FIrstName"  required>
+                                    <div class="error-container" ng-show="myForm.firstName.$dirty && myForm.firstName.$invalid">
+                                    <span style="color:red" ng-show="myForm.firstName.$error.required">Please input First Name</span>
+                                     </div><br/>
+                                    
+                                    
+                                    
+                                    
                                     <label>Last Name</label>
-                                    <input type="text" class="form-control"  ng-model="staff.lastName" name="lastName"><br/>
+                                    <input type="text" class="form-control"  ng-model="staff.lastName" name="lastName" placeholder="Enter LastName"  required><br/>
+                                    <div class="error-container" ng-show="myForm.lastName.$dirty && myForm.lastName.$invalid">
+                                      <span style="color:red" ng-show="myForm.lastName.$error.required">Please input Last Name</span>
+                                     </div>
+                                    
+                                    
+                                    
                                     <label>User Name</label>
-                                    <input  type="text" class="form-control"  ng-model="staff.username" name="username">
+                                    <input  type="text" class="form-control"  ng-model="staff.username" name="username" placeholder="Enter UserName"  required>
+                                    <div class="error-container" ng-show="myForm.username.$dirty && myForm.username.$invalid">
+                                       <span style="color:red" ng-show="myForm.username.$error.required">Please input User Name</span>
+                                         </div>
+                                
                                 </td>
                                 <td class="col-md-6">
                                     <label>Phone Number</label>
-                                    <input tyep="text" class="form-control"  ng-model="staff.phoneNumber" name="phoneNumber"><br/>
+                                    <input tyep="text" class="form-control"  ng-model="staff.phoneNumber" name="phoneNumber" placeholder="Enter PhoneNumber"  required><br/>
+                                    <div class="error-container" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
+                                     <span style="color:red" ng-show="myForm.phoneNumber.$error.required">Please input Phone Number</span>
+                                   </div>
+                                    
+                                    
+                                    
                                     <label>Email ID</label>
-                                    <input type="text" class="form-control"  ng-model="staff.emailAddress" name="emailAddress"><br/>
+                                    <input type="email" class="form-control"  ng-model="staff.emailAddress" name="emailAddress" placeholder="Enter EmailId"  required  email>
+                                    <div class="error-container" ng-show="myForm.emailAddress.$dirty && myForm.emailAddress.$invalid">
+                                        <span style="color:red" ng-show="myForm.emailAddress.$error.required">Please input a Email</span>
+                                       <span style="color:red" ng-show="myForm.emailAddress.$error.email">Enter a valid email</span>
+                                    </div> 
+                                    <br/>
+                                    
+                                    
+                                    
+                                    
+                                    
                                     <label>Password</label>
-                                    <input type="password" class="form-control"  ng-model="staff.password" name="notes">
+                                    <input type="password" class="form-control"  ng-model="staff.password" name="password" placeholder="Enter Password"  required>
+                                    <div class="error-container" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+                                      <span style="color:red" ng-show="myForm.password.$error.required">Please input Password</span>
+                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-12" colspan="2"><br/>
                                     <label>Notes</label>
-                                    <textarea class="form-control height-100"  ng-model="staff.notes"></textarea>
+                                    <textarea class="form-control height-100"  ng-model="staff.notes" name="notes" placeholder="Enter Notes"  required></textarea>
+                                <div class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">
+                                <span style="color:red" ng-show="myForm.notes.$error.required">Please input Notes</span>
+                              </div>
+                                
                                 </td>
                             </tr>
                         </tbody>

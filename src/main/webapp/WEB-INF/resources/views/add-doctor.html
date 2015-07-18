@@ -20,33 +20,90 @@
                             <tr>
                                 <td class="col-md-6">
                                     <label>Name</label>
-                                    <input name="name" class="form-control" ng-model="doctor.name"><br/>
+                                    <input name="name" class="form-control" ng-model="doctor.name" required>
+                                    <div class="error-container" ng-show="myForm.name.$dirty && myForm.name.$invalid">
+                                <span style="color:red" ng-show="myForm.name.$error.required">Please input Notes</span>
+                              </div>
+                                    <br/>
+                                    
+                                    
+                                    
                                   <label>Address</label>
-                                    <input name="address" class="form-control" ng-model="doctor.address"><br/>
+                                    <input name="address" class="form-control" ng-model="doctor.address" required>
+                                    <div class="error-container" ng-show="myForm.address.$dirty && myForm.address.$invalid">
+                                <span style="color:red" ng-show="myForm.address.$error.required">Please input Notes</span>
+                              </div>
+                                    <br/>
+                                    
+                                    
+                                    
+                                    
                                      <label>City</label>
-                                    <input name="city" class="form-control" ng-model="doctor.city"><br/>
+                                    <input name="city" class="form-control" ng-model="doctor.city" required>
+                                    <div class="error-container" ng-show="myForm.city.$dirty && myForm.city.$invalid">
+                                <span style="color:red" ng-show="myForm.city.$error.required">Please input Notes</span>
+                              </div>
+                                    <br/>
+                                    
+                                    
+                                    
                                      <label>Country</label>
-                                    <input name="country" class="form-control" ng-model="doctor.country"><br/>
+                                    <input name="country" class="form-control" ng-model="doctor.country" required>
+                                    <div class="error-container" ng-show="myForm.country.$dirty && myForm.country.$invalid">
+                                <span style="color:red" ng-show="myForm.country.$error.required">Please input Notes</span>
+                              </div>
+                                    <br/>
                                     
                                     
                                     
                                 </td>
                                 <td class="col-md-6">
                                      <label>State</label>
-                                    <input name="state" class="form-control" ng-model="doctor.state"><br/>
+                                    <input name="state" class="form-control" ng-model="doctor.state" required>
+                                    <div class="error-container" ng-show="myForm.state.$dirty && myForm.state.$invalid">
+                                <span style="color:red" ng-show="myForm.state.$error.required">Please input Notes</span>
+                              </div>
+                                    <br/>
+                                    
+                                    
+                                    
                                      <label>Zip</label>
-                                    <input name="zip" class="form-control" ng-model="doctor.zip"><br/>
+                                    <input name="zip" class="form-control" ng-model="doctor.zip" required>
+                                    <div class="error-container" ng-show="myForm.zip.$dirty && myForm.zip.$invalid">
+                                <span style="color:red" ng-show="myForm.zip.$error.required">Please input Notes</span>
+                              </div>
+                                    <br/>
+                                    
+                                    
+                                    
                                      <label>Office Hours</label>
-                                    <input name="officeHours" class="form-control" ng-model="doctor.officeHours"><br/>
+                                    <input name="officeHours" class="form-control" ng-model="doctor.officeHours" required>
+                                    <div class="error-container" ng-show="myForm.officeHours.$dirty && myForm.officeHours.$invalid">
+                                <span style="color:red" ng-show="myForm.officeHours.$error.required">Please input Notes</span>
+                              </div>
+                                    <br/>
+                                    
+                                    
                                      <label>New Field</label>
-                                    <input class="form-control" ng-model="doctor.newField" name="newField" ><br/>
+                                    <input class="form-control" ng-model="doctor.newField" name="newField" required>
+                                    <div class="error-container" ng-show="myForm.newField.$dirty && myForm.newField.$invalid">
+                                <span style="color:red" ng-show="myForm.newField.$error.required">Please input Notes</span>
+                              </div>
+                                    <br/>
+                                    
+                                    
+                                    
                                     
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-12" colspan="2"><br/>
                                     <label>Notes</label>
-                                    <textarea name="notes" class="form-control height-100" ng-model="doctor.notes"></textarea>
+                                    <textarea name="notes" class="form-control height-100" ng-model="doctor.notes" required>
+                                    <div class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">
+                                <span style="color:red" ng-show="myForm.notes.$error.required">Please input Notes</span>
+                              </div>
+                                    </textarea>
                                 </td>
                             </tr>
                         </tbody>
