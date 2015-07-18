@@ -1,5 +1,5 @@
 package com.deemsys.project.entity;
-// Generated Jul 10, 2015 10:58:57 AM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 18, 2015 10:49:05 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -37,6 +37,7 @@ public class Patients implements java.io.Serializable {
 	private String otherPassengers;
 	private String notes;
 	private Set<Appointments> appointmentses = new HashSet<Appointments>(0);
+	private Set<CallLogs> callLogses = new HashSet<CallLogs>(0);
 
 	public Patients() {
 	}
@@ -51,7 +52,7 @@ public class Patients implements java.io.Serializable {
 			String lastName, String reportNumber, String phoneNumber,
 			String address, String injury, Date dateOfCrash,
 			String otherPassengers, String notes,
-			Set<Appointments> appointmentses) {
+			Set<Appointments> appointmentses, Set<CallLogs> callLogses) {
 		this.staff = staff;
 		this.doctors = doctors;
 		this.firstName = firstName;
@@ -64,6 +65,7 @@ public class Patients implements java.io.Serializable {
 		this.otherPassengers = otherPassengers;
 		this.notes = notes;
 		this.appointmentses = appointmentses;
+		this.callLogses = callLogses;
 	}
 
 	@Id
@@ -186,6 +188,15 @@ public class Patients implements java.io.Serializable {
 
 	public void setAppointmentses(Set<Appointments> appointmentses) {
 		this.appointmentses = appointmentses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patients")
+	public Set<CallLogs> getCallLogses() {
+		return this.callLogses;
+	}
+
+	public void setCallLogses(Set<CallLogs> callLogses) {
+		this.callLogses = callLogses;
 	}
 
 }

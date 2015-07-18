@@ -211,6 +211,9 @@ background-color: #eee;
 a:hover{
 	text-decoration: none !important;
 }
+.margin-left-10{
+	margin-left: 10px;
+}
 .red{background:#D63333;-webkit-box-shadow:inset -1px -1px 5px 0 rgba(255,255,255,.5);-moz-box-shadow:inset -1px -1px 5px 0 rgba(255,255,255,.5);-o-box-shadow:inset -1px -1px 5px 0 rgba(255,255,255,.5);box-shadow:inset -1px -1px 5px 0 rgba(255,255,255,.5);border-radius:3px;color:#fff;padding:3px 7px}
 .red:active,.red:hover{background:#D63333;color:#fff}
 .green{background:#8AB800;border-radius:3px;color:#fff;-webkit-box-shadow:inset -1px -1px 5px 0 rgba(255,255,255,.5);-moz-box-shadow:inset -1px -1px 5px 0 rgba(255,255,255,.5);-o-box-shadow:inset -1px -1px 5px 0 rgba(255,255,255,.5);box-shadow:inset -1px -1px 5px 0 rgba(255,255,255,.5);padding:3px 7px}

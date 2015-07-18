@@ -49,7 +49,7 @@ public class CallLogsService {
 		
 		for (CallLogs callLogs : callLogss) {
 			//TODO: Fill the List
-			CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
+			CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
 			callLogsForms.add(callLogsForm);
 		}
 		
@@ -66,7 +66,7 @@ public class CallLogsService {
 		//TODO: Convert Entity to Form
 		//Start
 		
-		CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
+		CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
 		
 		//End
 		
@@ -83,7 +83,10 @@ public class CallLogsService {
 		Appointments appointments = new Appointments();
 		appointments.setId(callLogsForm.getAppointmentId());
 		
-		CallLogs callLogs=new CallLogs(appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+		Patients patients = new Patients();
+		patients.setId(callLogsForm.getPatientId());
+		
+		CallLogs callLogs=new CallLogs(patients,appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		callLogs.setId(callLogsForm.getId());
 		//Logic Ends
 		
@@ -102,7 +105,10 @@ public class CallLogsService {
 		Appointments appointments = new Appointments();
 		appointments.setId(callLogsForm.getAppointmentId());
 		
-		CallLogs callLogs=new CallLogs(appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+		Patients patients = new Patients();
+		patients.setId(callLogsForm.getPatientId());
+		
+		CallLogs callLogs=new CallLogs(patients,appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		
 		//Logic Ends
 		
@@ -120,7 +126,10 @@ public class CallLogsService {
 		Appointments appointments = new Appointments();
 		appointments.setId(callLogsForm.getAppointmentId());
 		
-		CallLogs callLogs=new CallLogs(appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+		Patients patients = new Patients();
+		patients.setId(callLogsForm.getPatientId());
+		
+		CallLogs callLogs=new CallLogs(patients,appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		callLogs.setId(callLogsForm.getId());
 		//Logic Ends
 		
@@ -139,7 +148,7 @@ public class CallLogsService {
 		
 		CallLogsForm callLogsForm= new CallLogsForm();
 		CallLogs callLogs=callLogsDAO.getCallLogsByAppointment(appointmentId);
-		callLogsForm = new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
+		callLogsForm = new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
 		
 		return callLogsForm;
 	}

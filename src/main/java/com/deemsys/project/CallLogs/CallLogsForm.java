@@ -17,6 +17,7 @@ public class CallLogsForm {
 
 	private Integer id;
 	private Integer appointmentId;
+	private Integer patientId;
 	private String timeStamp;
 	private String response;
 	private String notes;
@@ -31,6 +32,13 @@ public class CallLogsForm {
 	
 	public Integer getAppointmentId() {
 		return appointmentId;
+	}
+	
+	public Integer getPatientId() {
+		return patientId;
+	}
+	public void setPatientId(Integer patientId) {
+		this.patientId = patientId;
 	}
 	public void setAppointmentId(Integer appointmentId) {
 		this.appointmentId = appointmentId;
@@ -53,11 +61,12 @@ public class CallLogsForm {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	public CallLogsForm(Integer id, Integer appointmentId,
+	public CallLogsForm(Integer id, Integer appointmentId,Integer patientId,
 			String timeStamp, String response, String notes) {
 		super();
 		this.id = id;
 		this.appointmentId = appointmentId;
+		this.patientId = patientId;
 		this.timeStamp = timeStamp;
 		this.response = response;
 		this.notes = notes;
