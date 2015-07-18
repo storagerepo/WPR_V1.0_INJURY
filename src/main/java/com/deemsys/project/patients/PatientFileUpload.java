@@ -67,7 +67,7 @@ public class PatientFileUpload {
 	                	dateOfCrash=row.getCell(8).getDateCellValue();
 	                	otherPassenger=row.getCell(9).getStringCellValue();
 	                	notes=row.getCell(10).getStringCellValue();
-	                    patients.add(new Patients(staff, doctors, firstName,lastName ,reportNumber,phoneNumber,injury ,address,dateOfCrash,otherPassenger,notes,null));
+	                    patients.add(new Patients(staff, doctors, firstName,lastName ,reportNumber,phoneNumber,injury ,address,dateOfCrash,otherPassenger,notes,null,null));
 	                     
 	                }  
 	                   
