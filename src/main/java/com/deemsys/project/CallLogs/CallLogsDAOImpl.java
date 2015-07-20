@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
+import com.deemsys.project.entity.Patients;
 
 /**
  * 
@@ -144,6 +145,10 @@ public class CallLogsDAOImpl implements CallLogsDAO{
 	}
 
 	
-	
+	@Override
+	public List<CallLogs> getCallLogsByPatientsId(Integer id) {
+		// TODO Auto-generated method stub
+		return (List<CallLogs>)this.sessionFactory.getCurrentSession().createCriteria(CallLogs.class).add(Restrictions.eq("patients.id", id)).list();
+	}
 
 }

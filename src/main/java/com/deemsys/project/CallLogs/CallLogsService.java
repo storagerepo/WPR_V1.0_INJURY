@@ -103,7 +103,6 @@ public class CallLogsService {
 		//Logic Starts
 		
 		Appointments appointments = new Appointments();
-		appointments.setId(callLogsForm.getAppointmentId());
 		
 		Patients patients = new Patients();
 		patients.setId(callLogsForm.getPatientId());
@@ -151,6 +150,21 @@ public class CallLogsService {
 		callLogsForm = new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
 		
 		return callLogsForm;
+	}
+	
+	public List<CallLogsForm> getCallLogsByPatientsId(Integer patientId)
+	{
+		
+		List<CallLogsForm> callLogsForm=new ArrayList<CallLogsForm>();
+		List<CallLogs> callLogs=new ArrayList<CallLogs>();
+		callLogs=callLogsDAO.getCallLogsByPatientsId(patientId);
+		for(CallLogs callLogss:callLogs)
+		{
+			CallLogsForm	callLogsForms = new CallLogsForm(callLogss.getId(), callLogss.getAppointments().getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes());
+			callLogsForm.add(callLogsForms);
+		}
+		return callLogsForm;
+		
 	}
 	
 }

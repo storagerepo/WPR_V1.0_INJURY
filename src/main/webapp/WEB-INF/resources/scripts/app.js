@@ -280,16 +280,18 @@ angular
             templateUrl:'views/appointment/appointment.html',
             url:'/appointment'
         })// End Appointment
-        .state('dashboard.calllogs',{
+        
+        
+        .state('dashboard.Calllogs/:id',{
             templateUrl:'views/calllogs/calllogs.html',
-            url:'/calllogs',
+            url:'/Calllogs/:id',
             controller:"showCallLogsController",
             resolve: {
                 loadMyFile:function($ocLazyLoad) {
                   
                   $ocLazyLoad.load({
                       name:'sbAdminApp',
-                      files:['scripts/controllers/callLogsController.js']
+                      files:['scripts/controllers/CallLogsController.js']
                   });
                 }
               }

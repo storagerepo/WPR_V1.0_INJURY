@@ -1,7 +1,8 @@
+
 <div class="row">
     <div class="col-lg-12">
-    <a ui-sref="dashboard.patient" class="btn-sm btn-primary pull-right margin-top-40">Back to Patient</a>
-	 	<a ui-sref="#" class="btn-sm btn-primary pull-right margin-top-40 margin-left-10" data-toggle="modal" data-target="#myModal">Add Call Logs</a>
+    <a ui-sref="dashboard.patient" class="btn-sm btn-primary pull-right margin-top-40">Back to Patient</a>&nbsp;
+	 	<a class="btn-sm btn-primary pull-right margin-top-40 margin-left-10" ng-click="addModel()">Add Call Logs</a>
 	 	<h2 class="page-header">Call Logs</h2>
     </div>
     <!-- /.col-lg-12 -->
@@ -11,53 +12,35 @@
     <div class="col-lg-12">
             <!-- /.panel-heading -->
             <div class="col-md-12">
-            
             	<table class="table table-hover">
 				<thead>
 				<tr>
-				<th>Date and Time</th>
+				<th ng-mousedown="sort('timeStamp')">Date and Time&nbsp&nbsp<span
+									class="glyphicon sort-icon" ng-show="sortKey=='timeStamp'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 				<th>Response</th>
 				<th>Notes</th>
 				<th width="20%">Actions</th>
 				</tr>
 				<tr>
-				<th><input type="text" class="form-control"/></th>
-				<th><input type="text" class="form-control"/></th>
-				<th><input type="text" class="form-control"/></th>
+				<th><input type="text" class="form-control" placeholder="Date and Time" ng-model="search.timeStamp"/></th>
+				<th><input type="text" class="form-control" placeholder="Response" ng-model="search.response"/></th>
+				<th><input type="text" class="form-control" placeholder="Notes" ng-model="search.notes"/></th>
 				<th></th>
 				</tr>
 				</thead>
-				<tbody>
+				<tbody dir-paginate=" callLogss in callLogs|filter:search|orderBy:sortKey:reverse|itemsPerPage:8">
 				<tr>
-				<td>06/24/2015 11:10:10 AM</td>
-				<td>Need Appointment</td>
-				<td>Book Appointment for Doctor 1</td>
-				<td><a href="" title="View Appointment" class="btn btn-xs btn-primary"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
-				<a href="" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-warning">&nbsp;<i class="glyphicon glyphicon-edit" title="Edit"></i>&nbsp;</a>
-				<a href="" ui-sref="" ng-mousedown="" class="btn btn-xs btn-danger">&nbsp;<i class="glyphicon glyphicon-trash" title="Delete"></i>&nbsp; </a>
-				<a href="" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-success">&nbsp;<i class="glyphicon glyphicon-plus" title="Edit"></i>&nbsp;</a>
+				<td>{{callLogss.timeStamp}}</td>
+				<td>{{callLogss.response}}</td>
+				<td>{{callLogss.notes}}</td>
+				<td><a  type="submit" title="View Appointment" class="btn btn-xs btn-primary" ng-click="viewAppointments(callLogss.patientId)"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
+				 <a type="submit" class="btn btn-xs btn-warning" ng-click="editModal(callLogss.id)">&nbsp;<i class="glyphicon glyphicon-edit" title="Edit"></i>&nbsp;</a>
+				<a href="#" ui-sref="" ng-mousedown="deleteCalllogs(callLogss.id)" class="btn btn-xs btn-danger">&nbsp;<i class="glyphicon glyphicon-trash" title="Delete"></i>&nbsp; </a>
+				<a href="" data-toggle="modal" data-target="#AppointmentsModal" class="btn btn-xs btn-success">&nbsp;<i class="glyphicon glyphicon-plus" title="Edit"></i>&nbsp;</a>
 				</td>
 				</tr>
-				<tr>
-				<td>06/24/2015 11:10:10 AM</td>
-				<td>Need Appointment</td>
-				<td>Book Appointment for Doctor 1</td>
-				<td><a href="" title="View Appointment" class="btn btn-xs btn-primary"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
-				<a href="" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-warning">&nbsp;<i class="glyphicon glyphicon-edit" title="Edit"></i>&nbsp;</a>
-				<a href="" ui-sref="" ng-mousedown="" class="btn btn-xs btn-danger">&nbsp;<i class="glyphicon glyphicon-trash" title="Delete"></i>&nbsp; </a>
-				<a href="" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-success">&nbsp;<i class="glyphicon glyphicon-plus" title="Edit"></i>&nbsp;</a>
-				</td>
-				</tr>
-				<tr>
-				<td>06/24/2015 11:10:10 AM</td>
-				<td>Need Appointment</td>
-				<td>Book Appointment for Doctor 1</td>
-				<td><a href="" title="View Appointment" class="btn btn-xs btn-primary"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
-				<a href="" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-warning">&nbsp;<i class="glyphicon glyphicon-edit" title="Edit"></i>&nbsp;</a>
-				<a href="" ui-sref="" ng-mousedown="" class="btn btn-xs btn-danger">&nbsp;<i class="glyphicon glyphicon-trash" title="Delete"></i>&nbsp; </a>
-				<a href="" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-success">&nbsp;<i class="glyphicon glyphicon-plus" title="Edit"></i>&nbsp;</a>
-				</td>
-				</tr>
+
 				</tbody>
 			</table>
             </div>
@@ -67,30 +50,105 @@
 </div>
 
   <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="calllogsModel" tabindex="-1" role="dialog" aria-labelledby="calllogsModelLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
+        <h4 class="modal-title" id="calllogsModelLabel">{{title}}</h4>
       </div>
       <div class="modal-body">
-	
+
                                     <label>Date and Time</label>
-                                    <input name="name" class="form-control" ng-model=""><br/>
+                                    
+                                    <input name="timeStamp" class="form-control"  ng-model="calllogs.timeStamp"><br/>
               
                                  <label>Response</label>
-                                    <textarea name="notes" class="form-control height-100" ng-model=""></textarea>
+                                    <textarea name="response" class="form-control height-100" ng-model="calllogs.response"></textarea>
                  
                              	<label>Notes</label>
-                                   <textarea name="notes" class="form-control height-100" ng-model=""></textarea>
+                                   <textarea name="notes" class="form-control height-100" ng-model="calllogs.notes" ></textarea><br/>
                  
+                                 
              
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Save</button>
+        <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
+             <a type="submit" class="btn btn-success" ng-show="options" ng-click="save()">Save</a>
+             
+             <a type="submit" class="btn btn-success" ng-show='!options' ng-click="update()">update</a> 
+              
       </div>
     </div>
   </div>
 </div>
+
+<!--  Add Appointments Model-->
+
+<div class="modal fade" id="AppointmentsModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Appointments</h4>
+        </div>
+        <div class="modal-body">
+                                  <label>ScheduledDate</label>
+                                    
+                                    <input name="scheduledDate" class="form-control"  ng-model="Appointments.scheduledDate"><br/>
+                                 <label>PatientId</label>
+                                <input name="patientId" class="form-control"  ng-model="Appointments.patientId" ><br>
+                 
+                             	<label>Notes</label>
+                                   <textarea name="notes" class="form-control height-100" ng-model="Appointments.notes" ></textarea><br/>
+        </div>
+        <div class="modal-footer">
+         <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
+             <a type="submit" class="btn btn-success" ng-show="options" ng-click="saveAppointments()">Save</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>   
+    
+    <!--  View Appointments Modal-->
+    
+    <div class="modal fade" id="viewAppointmentsModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">View Appointments</h4>
+        </div>
+        <div class="modal-body">
+                     <table class="table table-hover">
+				<thead>
+				<tr>
+				<th >scheduledDate</th>
+				
+				<th>Notes</th>
+
+				</tr>
+				
+				</thead>
+				<tbody ng-repeat=" appointmentss in appointments">
+				<tr>
+				<td>{{appointmentss.scheduledDate}}</td>
+				
+				<td>{{appointmentss.notes}}</td>
+				
+				</tr>
+
+				</tbody>
+			</table>
+        </div>
+        </div>
+      </div>
+      
+    </div>
+    
+   

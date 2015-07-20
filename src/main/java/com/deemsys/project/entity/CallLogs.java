@@ -70,7 +70,7 @@ public class CallLogs  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="appointment_id", nullable=false)
+    @JoinColumn(name="appointment_id")
     public Appointments getAppointments() {
         return this.appointments;
     }

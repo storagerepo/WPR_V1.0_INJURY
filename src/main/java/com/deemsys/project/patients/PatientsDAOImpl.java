@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.entity.CallLogs;
 import com.deemsys.project.entity.Patients;
 
 /**
@@ -134,6 +135,8 @@ public class PatientsDAOImpl implements PatientsDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 	
 

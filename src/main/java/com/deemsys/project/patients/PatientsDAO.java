@@ -1,5 +1,7 @@
 package com.deemsys.project.patients;
 
+import java.util.List;
+
 import com.deemsys.project.common.IGenericDAO;
 import com.deemsys.project.entity.Patients;
 /**
@@ -8,5 +10,7 @@ import com.deemsys.project.entity.Patients;
  *
  */
 public interface PatientsDAO extends IGenericDAO<Patients>{
+	
+
 
 }
