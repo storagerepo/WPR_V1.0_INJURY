@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +33,7 @@ public class PatientsController {
 	
     
     @RequestMapping(value="/mergePatients",method=RequestMethod.POST)
-   	public String mergePatients(@ModelAttribute("patientsForm") PatientsForm patientsForm,ModelMap model)
+   	public String mergePatients(@RequestBody PatientsForm patientsForm,ModelMap model)
    	{
     	patientsService.mergePatients(patientsForm);
     	model.addAttribute("requestSuccess",true);

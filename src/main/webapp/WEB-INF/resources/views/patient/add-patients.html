@@ -10,17 +10,24 @@
 <!-- /.row -->
 <div class="row">
 	<div class="col-lg-12">
+	<form name="patientForm" novalidate>
 		<div class="panel panel-default">
 			<div class="panel-heading">Edit Patients Details</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<div class="dataTable_wrapper">
-					<table class="col-md-12">
+				<table class="col-md-12">
 						<tbody>
 							<tr>
 								<td class="col-md-4">
+								<input type="hidden" ng-model="patient.id"/>
+								<input type="hidden" ng-model="patient.doctorsId"/>
+								<input type="hidden" ng-model="patient.callerId"/>
 									<label>First Name</label> 
-									<input class="form-control" ng-model="patient.firstName"><br/>
+									<input class="form-control" name="firstName" ng-model="patient.firstName" required><br/>
+									<span ng-show="paientForm.firstName.$dirty && patientForm.firstName.$invalid">
+									<span ng-show="paientForm.firstName.$error.required">Required</span>
+									</span>
 								</td>
 								<td class="col-md-4">
 									<label>Last Name</label>
@@ -63,13 +70,14 @@
 				</div>
 			</div>
 			<div class="text-right" style="margin-right:30px;">
-				<a class="btn btn-success">Save Changes</a>
-				<a class="btn btn-danger">Cancel</a><br />
+				<a class="btn btn-success" ng-click="updatePatient()">Save Changes</a>
+				<a ui-sref="dashboard.patient" class="btn btn-danger">Cancel</a><br />
 				<br />
 				<br />
 			</div>
 			<!-- /.panel-body -->
 		</div>
+	</form>
 		<!-- /.panel -->
 	</div>
 	<!-- /.col-lg-12 -->

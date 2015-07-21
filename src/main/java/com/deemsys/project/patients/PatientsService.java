@@ -95,7 +95,7 @@ public class PatientsService {
 		
 		
 		Patients patients=new Patients(staff,doctors,patientsForm.getFirstName(),patientsForm.getLastName(),patientsForm.getReportNumber(),patientsForm.getPhoneNumber(),patientsForm.getAddress(),patientsForm.getInjury(),new Date(),patientsForm.getNotes(),patientsForm.getOtherPassengers(),null,null);
-		
+		patients.setId(patientsForm.getId());
 		//Logic Ends
 		
 		

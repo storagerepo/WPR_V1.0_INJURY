@@ -36,13 +36,12 @@
 						<td>{{patient.phoneNumber}}</td>
 						<td>{{patient.address}}</td>
 						<td>
-						<a href="#/dashboard/Calllogs/{{patient.id}}">&nbsp;<i
+						<a href="#/dashboard/Calllogs/{{patient.id}}" class="btn btn-xs btn-primary">&nbsp;<i
 								class="glyphicon glyphicon-eye-open"></i>&nbsp; View callLogs
 						</a>
-						<a href="#/dashboard/EditPatient/{{patient.id}}">&nbsp;<i
+						<a href="#/dashboard/EditPatient/{{patient.id}}" class="btn btn-xs btn-warning">&nbsp;<i
 								class="glyphicon glyphicon-edit"></i>&nbsp; Edit
-						</a> <a href="#" ui-sref="dashboard.doctor"
-							ng-mousedown="deleteDoctor(doctor.id)">&nbsp;<i
+						</a> <a href="" ng-click="deletePatient(patient.id)" class="btn btn-xs btn-danger">&nbsp;<i
 								class="glyphicon glyphicon-trash"></i>&nbsp; Delete
 						</a></td>
 					</tr>
