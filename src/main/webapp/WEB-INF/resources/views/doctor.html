@@ -59,8 +59,8 @@
 		<td>{{doctor.officeHours}}</td>
 
 <td>{{doctor.notes}}</td>
-                                   <td><a href="#/dashboard/EditDoctor/{{doctor.id}}">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit</a>
-	<a href="#" ui-sref="dashboard.doctor" ng-mousedown="deleteDoctor(doctor.id)">&nbsp;<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete </a>
+                                   <td><a href="#/dashboard/EditDoctor/{{doctor.id}}"  class="btn btn-xs btn-warning">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit</a>
+	<a href="#" ui-sref="dashboard.doctor" ng-mousedown="deleteDoctor(doctor.id)" class="btn btn-xs btn-danger">&nbsp;<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete </a>
 	</td></tr>
 </tbody>
               </table>

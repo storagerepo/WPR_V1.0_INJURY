@@ -1,8 +1,18 @@
 
+
+<style>
+.btn-margin-left {
+    margin-left: 3px;
+}
+.btn-margin-right {
+    margin-right: 2px;
+}
+</style>
+
 <div class="row">
     <div class="col-lg-12">
-    <a ui-sref="dashboard.patient" class="btn-sm btn-primary pull-right margin-top-40">Back to Patient</a>&nbsp;
-	 	<a class="btn-sm btn-primary pull-right margin-top-40 margin-left-10" ng-click="addModel()">Add Call Logs</a>
+    <a ui-sref="dashboard.patient" class="btn-sm btn-primary pull-right margin-top-40 btn-margin-left">Back to Patient</a>
+	<a class="btn-sm btn-primary pull-right margin-top-40 margin-left-5 btn-margin-left" ng-click="addModel()">Add Call Logs</a>
 	 	<h2 class="page-header">Call Logs</h2>
     </div>
     <!-- /.col-lg-12 -->
@@ -61,13 +71,13 @@
 
                                     <label>Date and Time</label>
                                     
-                                    <input name="timeStamp" class="form-control"  ng-model="calllogs.timeStamp"><br/>
+                                    <input name="timeStamp" id="timeStamp" class="form-control"  ng-model="calllogs.timeStamp"><br/>
               
                                  <label>Response</label>
-                                    <textarea name="response" class="form-control height-100" ng-model="calllogs.response"></textarea>
+                                    <textarea name="response" id="response" class="form-control height-100" ng-model="calllogs.response"></textarea>
                  
                              	<label>Notes</label>
-                                   <textarea name="notes" class="form-control height-100" ng-model="calllogs.notes" ></textarea><br/>
+                                   <textarea name="notes" id="notes" class="form-control height-100" ng-model="calllogs.notes" ></textarea><br/>
                  
                                  
              
@@ -145,6 +155,11 @@
 
 				</tbody>
 			</table>
+			<div class="modal-footer">
+        <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
+            
+              
+      </div>
         </div>
         </div>
       </div>
