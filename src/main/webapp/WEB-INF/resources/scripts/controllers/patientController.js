@@ -78,6 +78,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	};
 	
 	$scope.fileUpload=function(){
+		
 		   alert($scope.files[0]);
 		   console.log($scope.files[0]);
 		        alert($scope.files[0].name);

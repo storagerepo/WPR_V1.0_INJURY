@@ -65,20 +65,16 @@
       </div>
       <div class="modal-body">
 	
-                                    <label>Date and Time</label>
-                                    <input name="name" class="form-control" ng-model=""><br/>
+                                    <label>Select File:</label>
+                                    <input type="file" name="fileName" class="form-control" required><br/>
               
-                                 <label>Response</label>
-                                    <textarea name="notes" class="form-control height-100" ng-model=""></textarea>
-                 
-                             	<label>Notes</label>
-                                   <textarea name="notes" class="form-control height-100" ng-model=""></textarea>
+                                
                  
              
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Save</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success" ng-click="fileUpload()">Submit</button>
       </div>
     </div>
   </div>

@@ -131,16 +131,14 @@ public class AppointmentsService {
 	//Update an Entry
 	public int updateAppointments(AppointmentsForm appointmentsForm)
 	{
-		//TODO: Convert Form to Entity Here	
 		
-		//Logic Starts
 		
 		Patients patients = new Patients();
 		patients.setId(appointmentsForm.getPatientId());
 		
 		Appointments appointments=new Appointments(patients,new Date(), appointmentsForm.getNotes(), appointmentsForm.getStatus(), null);
 		appointments.setId(appointmentsForm.getId());
-		//Logic Ends
+		
 		
 		appointmentsDAO.update(appointments);
 		return 1;
