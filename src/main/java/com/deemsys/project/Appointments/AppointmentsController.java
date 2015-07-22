@@ -2,6 +2,8 @@
 package com.deemsys.project.Appointments;
 
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,7 +32,6 @@ public class AppointmentsController {
 		return "/returnPage";
 	}
 	
-    
     @RequestMapping(value="/mergeAppointments",method=RequestMethod.POST)
    	public String mergeAppointments(@RequestBody AppointmentsForm appointmentsForm,ModelMap model)
    	{
@@ -50,11 +51,9 @@ public class AppointmentsController {
    		return "/returnPage";
    	}
    
-    
     @RequestMapping(value="/deleteAppointments",method=RequestMethod.POST)
    	public String deleteAppointments(@RequestParam("id") Integer id,ModelMap model)
    	{
-    	
     	appointmentsService.deleteAppointments(id);
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
@@ -67,13 +66,15 @@ public class AppointmentsController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
     @RequestMapping(value="/getAllAppointmentsByPatient",method=RequestMethod.GET)
    	public String getAllAppointmentsByPatient(@RequestParam("patientId") Integer patientId,ModelMap model)
    	{
-    	model.addAttribute("appointmentsForms",appointmentsService.getAppointmentsListByPatient(patientId));
+    	model.addAttribute("patientsForms",appointmentsService.getPatientDetails(patientId));
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
     @RequestMapping(value="/updateStatus",method=RequestMethod.POST)
    public String updateStatus(@RequestParam("id") Integer id,@RequestParam("status") Integer status,ModelMap model)
    	{
@@ -82,4 +83,13 @@ public class AppointmentsController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+   @RequestMapping(value="/todaysAppointment",method=RequestMethod.GET)
+   	public String todaysAppointment(ModelMap model)
+   	{
+    	model.addAttribute("appointmentsForms",appointmentsService.todaysAppointment());
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+ 
 }

@@ -277,11 +277,19 @@ angular
               }
         })// End Patient
         .state('dashboard.appointment',{
-            templateUrl:'views/appointment/appointment.html',
-            url:'/appointment'
-        })// End Appointment
-        
-        
+        templateUrl:'views/appointment/appointment.html',
+        url:'/appointment',
+        controller:'ShowAppointmentsCtrl',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            
+            $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/appointmentController.js']
+            });
+          }
+        }
+    })// End Appointment
         .state('dashboard.Calllogs/:id',{
             templateUrl:'views/calllogs/calllogs.html',
             url:'/Calllogs/:id',
@@ -297,6 +305,7 @@ angular
               }
             
         });// End Call logs
+     
 
 
   }]);

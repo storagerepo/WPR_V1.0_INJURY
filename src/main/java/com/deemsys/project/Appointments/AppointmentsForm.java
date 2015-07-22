@@ -67,6 +67,9 @@ public class AppointmentsForm {
 		// TODO Auto-generated constructor stub
 		this.status = status;
 	}
+	public AppointmentsForm() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 }

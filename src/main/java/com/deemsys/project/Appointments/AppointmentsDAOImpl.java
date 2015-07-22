@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.Appointments;
+import com.deemsys.project.entity.Patients;
 
 /**
  * 
@@ -20,7 +21,6 @@ import com.deemsys.project.entity.Appointments;
  */
 @Repository
 public class AppointmentsDAOImpl implements AppointmentsDAO{
-	
 	
 	@Autowired
 	SessionFactory sessionFactory;
@@ -50,13 +50,11 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		return null;
 	}
 	
-
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().delete(this.get(id));
-		
-	}
+		}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -139,22 +137,24 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 	}
 
 	@Override
-	public List<Appointments> getAppointmentsListByPatient(Integer patientId) {
-		// TODO Auto-generated method stub
-		List<Appointments> appointments = new ArrayList<Appointments>();
-		appointments = this.sessionFactory.getCurrentSession().createCriteria(Appointments.class).add(Restrictions.eq("patients.id", patientId)).list();
-		return appointments;
-	}
-
-	
-
-	@Override
 	public Integer updates(Integer id,Integer status) {
-		
 		Query query=sessionFactory.getCurrentSession().createQuery("update Appointments set status="+status+" where id="+id);
 		query.executeUpdate();
 			return 1;
 	}
+	
+	@Override
+	public List<Appointments> todaysAppointment()
+	{
+		List<Appointments> appointments = new ArrayList<Appointments>();
+		  appointments= this.sessionFactory.getCurrentSession().createQuery("FROM Appointments where scheduledDate=CURDATE()").list();
+		  return appointments;
+	}
 
+	@Override
+	public Patients getPatientDetails(Integer patientId) {
+		// TODO Auto-generated method stub
+	return null;
+	}
 
-}
+	}

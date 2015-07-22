@@ -1,46 +1,126 @@
+
 <div class="row">
     <div class="col-lg-12">
-        <h2 class="page-header">Appointments</h2>
+        <h2 class="page-header">Appointment</h2>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12">           
             <!-- /.panel-heading -->
             <div class="col-md-12">
-            <div class="col-md-12">
+                <div class="dataTable_wrapper">
+                 <div class="col-md-12">
             <div class="col-md-4">
-            Select Date :<input type="text" class="form-control"/>
+            Select Date :<input type="text" class="form-control" ng-model="searchDate" ng-change="getByDates()" placeholder="Global Search"/>
             </div>
             </div>
-            	<table class="table table-hover">
-				<thead>
-				<tr>
-				<th>Date</th>
-				<th>Notes</th>
-				<th>Status</th>
-				<th width="20%">Action</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr>
-				<td>05/20/2015</td>
-				<td>Meet Doctor</td>
-				<td>Arrived</td>
-				
-				<td><a href="" class="btn btn-xs btn-warning">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;
-										Edit
-								</a>
-								<a href="" class="btn btn-xs btn-danger">&nbsp;<i
-										class="glyphicon glyphicon-trash" ></i>&nbsp; Delete
-								</a></td>
-				</tr>
-				
-				</tbody>
-			</table>
+                  <table class="table table-hover" id="dataTables-example">
+                     
+                          <thead>
+	        <tr>
+						
+                <th ng-mousedown="sort('scheduledDate')">Date   <span class="glyphicon sort-icon" ng-show="sortKey=='scheduledDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+               
+            	 	 <th ng-mousedown="sort('notes')">Notes   <span class="glyphicon sort-icon" ng-show="sortKey=='notes'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+            
+             	 <th ng-mousedown="sort('status')">Status   <span class="glyphicon sort-icon" ng-show="sortKey=='status'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+            
+              	<th>Action</th>
+                	 <tr>    
+            <th>  <input type="text"  class="form-control"  ng-model="search.scheduledDate" placeholder="Date"></label>
+           </th>
+           			
+            <th>  <input type="text"  class="form-control"  ng-model="search.notes" placeholder="Notes"></label>
+           </th>
+            <th>  <input type="text"  class="form-control"  ng-model="search.status" placeholder="Status"></label>
+           </th>
+           <th></th>
+             </tr>
+            </thead>
+            
+           	 <tbody dir-paginate="appointment in appointments | filter:search | orderBy:sortKey:reverse|itemsPerPage:8 " >
+	<tr>
+		
+		<td>{{appointment.scheduledDate}}</td>
+<td>{{appointment.notes}}</td>
+		 	
+  <td>
+ <div ng-switch on="appointment.status">
+ <div ng-switch-when="1">Availability</div>
+ <div ng-switch-when="2">Cancelled</div>
+ <div ng-switch-default>No availability</div>
+
+  </td><td>
+  <a ng-click="viewPatients(appointment.patientId)" class="btn btn-xs btn-primary"><i
+								class="glyphicon glyphicon-eye-open"></i>&nbsp; View patients
+						
+</a></td>
+		 
+		</tr>
+</tbody>
+              </table>
+              <dir-pagination-controls max-size="2" direction-links="true" boundary-links="true" >
+    					</dir-pagination-controls>  
+    			</div>
             </div>
-            <!-- /.panel-body -->
+        <!-- /.panel -->
     </div>
     <!-- /.col-lg-12 -->
+    
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Patient Details</h4>
+      </div>
+      <div class="modal-body">
+	<table>
+					<tr>
+						<td class="col-md-3">First Name</td>
+						<td class="col-md-9">: {{patients.firstName}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-3">Last Name</td>
+						<td class="col-md-9">: {{patients.lastName}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-3">Report Number</td>
+						<td class="col-md-9">: {{patients.reportNumber}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-3">Phone Number</td>
+						<td class="col-md-9">: {{patients.phoneNumber}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-3">Address</td>
+						<td class="col-md-9">: {{patients.address}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-3">Injury</td>
+						<td class="col-md-9">: {{patients.injury}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-3">Date of Crash</td>
+						<td class="col-md-9">: {{patients.dateOfCrash}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-3">Others</td>
+						<td class="col-md-9">: {{patients.otherPassengers}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-3">Notes</td>
+						<td class="col-md-9">: {{patients.notes}}</td>
+						</tr>
+					
+			</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+         </div>
+    </div>
+  </div>
 </div>
+    

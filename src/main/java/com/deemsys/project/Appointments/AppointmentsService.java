@@ -1,5 +1,6 @@
 package com.deemsys.project.Appointments;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,7 @@ import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
 import com.deemsys.project.patients.PatientsDAO;
+import com.deemsys.project.patients.PatientsForm;
 /**
  * 
  * @author Deemsys
@@ -150,23 +152,46 @@ public class AppointmentsService {
 		appointmentsDAO.delete(id);
 		return 1;
 	}
+
 	
-	//Get All Comments By PaientID
-			public List<AppointmentsForm> getAppointmentsListByPatient(Integer patientId)
+	public PatientsForm getPatientDetails(Integer getId)
+	{
+		Patients patients=new Patients();
+		
+		patients=patientsDAO.get(getId);
+		
+		//TODO: Convert Entity to Form
+		//Start
+		PatientsForm patientsForm = new PatientsForm();
+		if(patients==null){
+			
+		}
+		else{
+			patientsForm=new PatientsForm(patients.getId(),patients.getDoctors().getId(),patients.getStaff().getId(),patients.getFirstName(),patients.getLastName(),patients.getReportNumber(),patients.getPhoneNumber(),patients.getAddress(),patients.getInjury(),patients.getDateOfCrash().toString(),patients.getOtherPassengers(),patients.getNotes());
+		}
+		
+		//End
+		
+		//End
+		
+		return patientsForm;
+	}
+			
+			public List<AppointmentsForm> todaysAppointment()
 			{
-				List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();
+			List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();
 				
 				List<Appointments> appointmentss=new ArrayList<Appointments>();
 				
-				appointmentss=appointmentsDAO.getAppointmentsListByPatient(patientId);
-				
+				appointmentss=appointmentsDAO.todaysAppointment();
 				for (Appointments appointments : appointmentss) {
 					//TODO: Fill the List
 					AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
 					appointmentsForms.add(appointmentsForm);
 				}
-				
+
 				return appointmentsForms;
-			}
-	
+			
+			
+}
 }
