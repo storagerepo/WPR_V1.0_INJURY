@@ -34,7 +34,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
    
 	 $scope.alertFunction=function()
    {
-   	alert("Done");
+
    };
    $scope.addModel=function()
 	{
@@ -47,7 +47,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		$("#calllogsModel").modal("show");
 		$scope.calllogs={};
 		 $scope.calllogs.patientId =$stateParams.id;
-		    alert($scope.calllogs.patientId);
+
 		$scope.options=true;
 		$scope.save=function()
 		{
@@ -66,7 +66,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	
 	$scope.editModal=function(id)
 	{
-		alert(id);
+
 		$scope.title="Edit CallLogs";
 		$scope.options=false;
 		$http.get('http://localhost:8080/Injury/getCallLogs.json?id='+ id).success( function(response) {
@@ -94,11 +94,11 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	
 	$scope.Appointments={};
 	 $scope.Appointments.patientId =$stateParams.id;
-	    alert($scope.Appointments.patientId);
+
 	
 	$scope.saveAppointments=function()
 	{
-		alert( $scope.Appointments.patientId);
+
 		
 		$http.post("http://localhost:8080/Injury/saveUpdateAppointments.json",$scope.Appointments)
 			.success(function(response)

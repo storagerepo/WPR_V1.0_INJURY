@@ -79,10 +79,10 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	
 	$scope.fileUpload=function(){
 		
-		   alert($scope.files[0]);
+		  
 		   console.log($scope.files[0]);
-		        alert($scope.files[0].name);
-		        alert($('#fileUploadId').val());
+		        
+		        
 		             /* $http.post('http://localhost:8080/Injury/fileUpload.json?path='+$scope.files[0].name).success(function (results) {
 		          
 		          alert("ok");
