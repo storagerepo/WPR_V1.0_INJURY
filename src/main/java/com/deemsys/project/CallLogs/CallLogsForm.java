@@ -15,6 +15,15 @@ import com.deemsys.project.entity.Staff;
  */
 public class CallLogsForm {
 
+	public CallLogsForm(Integer id, Integer patientId, String timeStamp,
+			String response, String notes) {
+		super();
+		this.id = id;
+		this.patientId = patientId;
+		this.timeStamp = timeStamp;
+		this.response = response;
+		this.notes = notes;
+	}
 	private Integer id;
 	private Integer appointmentId;
 	private Integer patientId;

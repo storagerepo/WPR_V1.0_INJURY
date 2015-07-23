@@ -66,7 +66,7 @@ public class CallLogsService {
 		//TODO: Convert Entity to Form
 		//Start
 		
-		CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
+		CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
 		
 		//End
 		
@@ -107,7 +107,7 @@ public class CallLogsService {
 		Patients patients = new Patients();
 		patients.setId(callLogsForm.getPatientId());
 		
-		CallLogs callLogs=new CallLogs(patients,appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+		CallLogs callLogs=new CallLogs(patients,null,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		
 		//Logic Ends
 		
@@ -158,10 +158,26 @@ public class CallLogsService {
 		List<CallLogsForm> callLogsForm=new ArrayList<CallLogsForm>();
 		List<CallLogs> callLogs=new ArrayList<CallLogs>();
 		callLogs=callLogsDAO.getCallLogsByPatientsId(patientId);
+		CallLogsForm callLogsForms=new CallLogsForm();
 		for(CallLogs callLogss:callLogs)
 		{
-			CallLogsForm	callLogsForms = new CallLogsForm(callLogss.getId(), callLogss.getAppointments().getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes());
+			try{
+			if(callLogss.getAppointments()==null)
+			{
+
+				callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes());
+			}
+			else{
+				callLogsForms = new CallLogsForm(callLogss.getId(), callLogss.getAppointments().getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes());
+				
+			}
 			callLogsForm.add(callLogsForms);
+			System.out.println(callLogsForm.size());
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 		return callLogsForm;
 		

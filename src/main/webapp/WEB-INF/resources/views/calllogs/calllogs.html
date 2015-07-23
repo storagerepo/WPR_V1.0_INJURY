@@ -1,13 +1,5 @@
 
 
-<style>
-.btn-margin-left {
-    margin-left: 3px;
-}
-.btn-margin-right {
-    margin-right: 2px;
-}
-</style>
 
 <div class="row">
     <div class="col-lg-12">
@@ -46,12 +38,12 @@
 				<td>{{callLogss.notes}}</td>
 				<td><a  type="submit" title="View Appointment" class="btn btn-xs btn-primary" ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
 				 <a type="submit" class="btn btn-xs btn-warning" ng-click="editModal(callLogss.id)">&nbsp;<i class="glyphicon glyphicon-edit" title="Edit"></i>&nbsp;</a>
-				<a href="#" ui-sref="" ng-mousedown="deleteCalllogs(callLogss.id)" class="btn btn-xs btn-danger">&nbsp;<i class="glyphicon glyphicon-trash" title="Delete"></i>&nbsp; </a>
+				<a href="#" ui-sref="" ng-click="deleteCalllogs(callLogss.id)" class="btn btn-xs btn-danger">&nbsp;<i class="glyphicon glyphicon-trash" title="Delete"></i>&nbsp; </a>
 				<a href="" data-toggle="modal" data-target="#AppointmentsModal" class="btn btn-xs btn-success">&nbsp;<i class="glyphicon glyphicon-plus" title="Edit"></i>&nbsp;</a>
 				</td>
 				</tr>
-
 				</tbody>
+				
 			</table>
             </div>
             <!-- /.panel-body -->
@@ -72,6 +64,10 @@
                                     <label>Date and Time</label>
                                     
                                     <input name="timeStamp" id="timeStamp" class="form-control"  ng-model="calllogs.timeStamp"><br/>
+                                    
+                
+                                    
+                                    <input  type="hidden" patientId" id="patientId" class="form-control" ng-model="calllogs.patientId"><br/>
               
                                  <label>Response</label>
                                     <textarea name="response" id="response" class="form-control height-100" ng-model="calllogs.response"></textarea>
@@ -108,15 +104,15 @@
                                   <label>ScheduledDate</label>
                                     
                                     <input name="scheduledDate" class="form-control"  ng-model="Appointments.scheduledDate"><br/>
-                                 <label>PatientId</label>
-                                <input name="patientId" class="form-control"  ng-model="Appointments.patientId" ><br>
+                                 
+                                <input type="hidden" name="patientId" class="form-control"  ng-model="Appointments.patientId" ><br>
                  
                              	<label>Notes</label>
                                    <textarea name="notes" class="form-control height-100" ng-model="Appointments.notes" ></textarea><br/>
         </div>
         <div class="modal-footer">
          <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
-             <a type="submit" class="btn btn-success" ng-show="options" ng-click="saveAppointments()">Save</a>
+             <a type="submit" class="btn btn-success"  ng-click="saveAppointments()">Save</a>
         </div>
       </div>
       
