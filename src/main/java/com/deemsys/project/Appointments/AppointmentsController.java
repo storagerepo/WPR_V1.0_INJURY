@@ -91,5 +91,13 @@ public class AppointmentsController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+   
+   @RequestMapping(value="/getByDates",method=RequestMethod.GET)
+ 	public String getAppointments(@RequestParam("date") String date,ModelMap model)
+ 	{
+     	model.addAttribute("appointmentsForms",appointmentsService.getByDates(date));
+     	model.addAttribute("requestSuccess",true);
+ 		return "/returnPage";
+ 	}
  
 }

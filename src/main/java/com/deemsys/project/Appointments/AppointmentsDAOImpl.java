@@ -157,4 +157,13 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 	return null;
 	}
 
+	@Override
+	public List<Appointments> getByDates(String date) {
+		// TODO Auto-generated method stub
+		List<Appointments> appointments = new ArrayList<Appointments>();
+		
+		appointments= this.sessionFactory.getCurrentSession().createQuery("FROM Appointments where scheduledDate='"+date+"'").list();
+		return appointments;
+	}
+	
 	}

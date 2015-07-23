@@ -194,4 +194,27 @@ public class AppointmentsService {
 			
 			
 }
+			
+			public List<AppointmentsForm> getByDates(String date)
+			{
+				List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();
+				
+				List<Appointments> appointmentss=new ArrayList<Appointments>();
+					
+				appointmentss=appointmentsDAO.getByDates(date);
+				
+				//TODO: Convert Entity to Form
+				//Start
+				
+				for (Appointments appointments : appointmentss) {
+					//TODO: Fill the List
+					AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
+					appointmentsForms.add(appointmentsForm);
+				}
+		
+				//End
+				
+				return appointmentsForms;
+			}
+			
 }
