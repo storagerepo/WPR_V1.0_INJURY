@@ -62,13 +62,24 @@ public class CallLogsService {
 		CallLogs callLogs=new CallLogs();
 		
 		callLogs=callLogsDAO.get(getId);
-		
+		CallLogsForm callLogsForm=new CallLogsForm ();
 		//TODO: Convert Entity to Form
 		//Start
-		
-		CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
-		
-		//End
+
+		try{
+		if(callLogs.getAppointments()==null)
+		{
+		callLogsForm=new CallLogsForm(callLogs.getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
+		}
+		else{
+			callLogsForm = new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
+			
+		}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 		return callLogsForm;
 	}

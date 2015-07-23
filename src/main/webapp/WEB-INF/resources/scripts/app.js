@@ -251,7 +251,7 @@ angular
     })//End Doctor
         .state('dashboard.patient',{
             templateUrl:'views/patient/patient.html',
-            controller: "ShowPatientController",
+            controller: 'ShowPatientController',
             url:'/patient',
             resolve: {
                 loadMyFile:function($ocLazyLoad) {

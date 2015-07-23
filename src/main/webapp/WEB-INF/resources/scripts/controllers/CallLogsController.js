@@ -39,6 +39,11 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
    $scope.addModel=function()
 	{
 		$scope.title="Add CallLogs";
+		$("#timeStamp").val("");
+		$("#response").val("");
+		$("#notes").val("");
+		
+
 		$("#calllogsModel").modal("show");
 		$scope.calllogs={};
 		 $scope.calllogs.patientId =$stateParams.id;
