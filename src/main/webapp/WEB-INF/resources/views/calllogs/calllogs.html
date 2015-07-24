@@ -1,6 +1,3 @@
-
-
-
 <div class="row">
     <div class="col-lg-12">
     <a ui-sref="dashboard.patient" class="btn-sm btn-primary pull-right margin-top-40 btn-margin-left">Back to Patient</a>
@@ -52,6 +49,7 @@
 </div>
 
   <!-- Modal -->
+  <form id="myForm" name="myForm" novalidate>
 <div class="modal fade" id="calllogsModel" tabindex="-1" role="dialog" aria-labelledby="calllogsModelLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -62,35 +60,42 @@
       <div class="modal-body">
 
                                     <label>Date and Time</label>
-                                    
-                                    <input name="timeStamp" id="timeStamp" class="form-control"  ng-model="calllogs.timeStamp"><br/>
-                                    
+                             <input type="text" name="timeStamp" id="timeStamp" class="form-control"  ng-model="calllogs.timeStamp" placeholder="Enter Time and Date" required>
+                                     <span class="error-container" ng-show="myForm.timeStamp.$dirty && myForm.timeStamp.$invalid">
+                                <span style="color:red" ng-show="myForm.timeStamp.$error.required">Please Enter the Date and Time</span>
+                              </span>
+                                    <br/>
                 
                                     
-                                    <input  type="hidden" patientId" id="patientId" class="form-control" ng-model="calllogs.patientId"><br/>
+                                    <input  type="hidden" id="patientId" class="form-control" ng-model="calllogs.patientId">
               
-                                 <label>Response</label>
-                                    <textarea name="response" id="response" class="form-control height-100" ng-model="calllogs.response"></textarea>
-                 
-                             	<label>Notes</label>
-                                   <textarea name="notes" id="notes" class="form-control height-100" ng-model="calllogs.notes" ></textarea><br/>
-                 
-                                 
+        							<label>Response</label>
+                                    <textarea name="response" id="response" class="form-control height-100" ng-model="calllogs.response" placeholder="Enter the Response" required></textarea>
+                 <span class="error-container" ng-show="myForm.response.$dirty && myForm.response.$invalid">
+                                <span style="color:red" ng-show="myForm.response.$error.required">Please Enter the Response</span>
+                              </span>
+                                    <br/>
+                                    
+                             	<label>Note</label>
+                                   <textarea name="notes" id="notes" class="form-control height-100" ng-model="calllogs.notes" placeholder="Enter the notes" required></textarea> 
+                                   <span class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">
+                                <span style="color:red" ng-show="myForm.notes.$error.required">Please Enter the Notes</span>
+                              </span>
+                                    <br/>
              
       </div>
       <div class="modal-footer">
         <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
              <a type="submit" class="btn btn-success" ng-show="options" ng-click="save()">Save</a>
-             
              <a type="submit" class="btn btn-success" ng-show='!options' ng-click="update()">update</a> 
               
       </div>
     </div>
   </div>
 </div>
-
+</form>
 <!--  Add Appointments Model-->
-
+ <form id="myForms" name="myForms" novalidate>
 <div class="modal fade" id="AppointmentsModal" role="dialog">
     <div class="modal-dialog">
     
@@ -101,15 +106,25 @@
           <h4 class="modal-title">Add Appointments</h4>
         </div>
         <div class="modal-body">
-                                  <label>ScheduledDate</label>
+             
+              <label>ScheduledDate</label>
                                     
-                                    <input name="scheduledDate" class="form-control"  ng-model="Appointments.scheduledDate"><br/>
-                                 
-                                <input type="hidden" name="patientId" class="form-control"  ng-model="Appointments.patientId" ><br>
+                                    <input type="text" name="scheduledDate" id="scheduledDate" class="form-control"  ng-model="Appointments.scheduledDate" placeholder="Enter Date" required>
+                                     <span class="error-container" ng-show="myForms.scheduledDate.$dirty && myForms.scheduledDate.$invalid">
+                                <span style="color:red" ng-show="myForms.scheduledDate.$error.required">Please Enter the Date</span>
+                              </span>
+                                    <br/>
+                
+                                <input type="hidden" name="patientId" class="form-control"  ng-model="Appointments.patientId" >
                  
                              	<label>Notes</label>
-                                   <textarea name="notes" class="form-control height-100" ng-model="Appointments.notes" ></textarea><br/>
+                                   <textarea name="notes" class="form-control height-100" ng-model="Appointments.notes" placeholder="Enter Notes" required></textarea>
+                                    <span class="error-container" ng-show="myForms.notes.$dirty && myForms.notes.$invalid">
+                                <span style="color:red" ng-show="myForms.notes.$error.required">Please Enter the Notes</span>
+                              </span>
+                                    <br/>
         </div>
+       
         <div class="modal-footer">
          <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
              <a type="submit" class="btn btn-success"  ng-click="saveAppointments()">Save</a>
@@ -118,7 +133,7 @@
       
     </div>
  </div>   
-    
+    </form>
     <!--  View Appointments Modal-->
     
     <div class="modal fade" id="viewAppointmentsModal" role="dialog">
