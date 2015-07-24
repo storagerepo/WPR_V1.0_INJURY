@@ -39,8 +39,9 @@ angular.module('sbAdminApp').controller('ShowDoctorsCtrl', function($scope,$http
 	}
    
 });
-angular.module('sbAdminApp').controller('AddDoctorsCtrl', function($scope,$http) {
+angular.module('sbAdminApp').controller('AddDoctorsCtrl', function($scope,$http,$state) {
 	$scope.myFormButton=true;
+	 $scope.title=$state.current.title;
 $scope.saveDoctor=function()
   {
 	$http.post('http://localhost:8080/Injury/saveUpdateDoctors.json', $scope.doctor).then(function (results) {
@@ -52,10 +53,11 @@ $scope.saveDoctor=function()
 }
 });
 
-angular.module('sbAdminApp').controller('EditDoctorController', function($scope,$http,$location,$stateParams) {
+angular.module('sbAdminApp').controller('EditDoctorController', function($scope,$http,$location,$stateParams,$state) {
 	 
 
 	 $scope.myFormButton=false;
+	 $scope.title=$state.current.title;
 	$http.get('http://localhost:8080/Injury/getDoctors.json?id='+ $stateParams.id).success( function(response) {
 		 $scope.doctor = response.doctorsForm;
 });

@@ -213,6 +213,7 @@ angular
         templateUrl:'views/doctor.html',
         url:'/doctor',
         controller:'ShowDoctorsCtrl',
+       
         resolve: {
           loadMyFile:function($ocLazyLoad) {
             
@@ -227,6 +228,7 @@ angular
         templateUrl:'views/add-doctor.html',
         url:'/add-doctor',
         controller:'AddDoctorsCtrl',
+        title:'Add Doctor',
         resolve: {
             loadMyFile:function($ocLazyLoad) {
               
@@ -241,6 +243,7 @@ angular
         templateUrl:'views/add-doctor.html',
         url:'/EditDoctor/:id',
         controller:'EditDoctorController',
+        title:'Edit Doctor',
         resolve: {
             loadMyFile:function($ocLazyLoad) {
               
