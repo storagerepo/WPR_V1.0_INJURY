@@ -217,4 +217,30 @@ public class AppointmentsService {
 				return appointmentsForms;
 			}
 			
+			
+			
+			
+			
+			public Integer getNoOfAppointments()
+			{
+				Integer count=0;
+				
+				
+				List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();
+				
+				List<Appointments> appointmentss=new ArrayList<Appointments>();
+				
+				appointmentss=appointmentsDAO.getAll();
+				
+				for (Appointments appointments : appointmentss) {
+					//TODO: Fill the List
+					AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
+					appointmentsForms.add(appointmentsForm);
+					count++;
+				}
+				
+				return count;
+				
+			}
+			
 }

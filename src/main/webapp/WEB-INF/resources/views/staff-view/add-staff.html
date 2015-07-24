@@ -85,8 +85,8 @@
             </div>
             <div class="text-center">
             
-             <a class="btn btn-success" ng-show='options' ng-mousedown="save()">Save</a>
-             <a class="btn btn-success" ng-show='!options' ng-mousedown="update()">Update</a>
+             <a class="btn btn-success"     ng-disabled='myForm.$invalid'  ng-show='options' ng-click="save()">Save</a>
+             <a class="btn btn-success"    ng-disabled='myForm.$invalid'   ng-show='!options' ng-click="update()">Update</a>
              <a ui-sref="dashboard.staff" class="btn btn-danger">Cancel</a><br/><br/>
              </div>
             <!-- /.panel-body -->

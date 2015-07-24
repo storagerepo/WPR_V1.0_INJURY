@@ -81,4 +81,14 @@ public class PatientsController {
 	
     
 	
+    
+    
+    @RequestMapping(value="/getNoOfPatients",method=RequestMethod.GET)
+   	public String getNoOfPatients(ModelMap model)
+   	{
+    	model.addAttribute("patientsForms",patientsService.getNoOfPatients());
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+    
 }

@@ -119,5 +119,27 @@ public class StaffService {
 	}
 	
 	
+	public Integer getNoOfStaffs()
+	{
+		Integer count=0;
+		
+List<StaffForm> staffForms=new ArrayList<StaffForm>();
+		
+		List<Staff> staffs=new ArrayList<Staff>();
+		
+		staffs=staffDAO.getAll();
+		
+		for (Staff staff : staffs) {
+			//TODO: Fill the List
+			StaffForm staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
+			staffForms.add(staffForm);
+			count++;
+		}
+		System.out.println("count:"+count);
+		
+		return count;
+		
+	}
+	
 	
 }

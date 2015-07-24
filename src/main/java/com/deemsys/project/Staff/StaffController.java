@@ -68,5 +68,16 @@ public class StaffController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+    
+    
+    
+    @RequestMapping(value="/getNoOfStaffs",method=RequestMethod.GET)
+   	public String getNoOfStaffs(ModelMap model)
+   	{
+    	model.addAttribute("staffForms",staffService.getNoOfStaffs());
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
 	
 }

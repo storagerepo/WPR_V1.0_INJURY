@@ -170,4 +170,26 @@ public class PatientsService {
 	
 	
 	
+	public Integer getNoOfPatients()
+	{
+		Integer count=0;
+		
+List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
+		
+		List<Patients> patientss=new ArrayList<Patients>();
+		
+		patientss=patientsDAO.getAll();
+		
+		for (Patients patients : patientss) {
+			//TODO: Fill the List
+			PatientsForm patientsForm=new PatientsForm(patients.getId(),patients.getDoctors().getId(),patients.getStaff().getId(),patients.getFirstName(),patients.getLastName(),patients.getReportNumber(),patients.getPhoneNumber(),patients.getAddress(),patients.getInjury(),patients.getDateOfCrash().toString(),patients.getOtherPassengers(),patients.getNotes());
+			patientsForms.add(patientsForm);
+			count++;
+		}
+		
+		return count;
+		
+	}
+	
+	
 }

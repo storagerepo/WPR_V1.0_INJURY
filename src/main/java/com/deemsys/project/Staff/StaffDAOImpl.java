@@ -196,5 +196,7 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 		// TODO Auto-generated method stub
 		return (Staff) this.sessionFactory.getCurrentSession().createCriteria(Staff.class).add(Restrictions.eq("username", username)).uniqueResult();
 	}
+
+	
 	
 }

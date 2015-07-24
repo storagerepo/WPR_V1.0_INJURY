@@ -116,9 +116,9 @@
                 </div>
             </div>
             <div class="text-center">
-                <a ui-sref="dashboard.doctor"  class="btn btn-success" ng-show='myFormButton'  ng-mousedown="saveDoctor()">Save</a>
+                <a ui-sref="dashboard.doctor"  class="btn btn-success" ng-show='myFormButton' ng-disabled='myForm.$invalid'  ng-click="saveDoctor()">Save</a>
             
-                <a ui-sref="dashboard.doctor" class="btn btn-success" ng-show='!myFormButton' ng-mousedown="update()">Update</a>
+                <a ui-sref="dashboard.doctor" class="btn btn-success" ng-show='!myFormButton' ng-disabled='myForm.$invalid' ng-click="update()">Update</a>
               <a ui-sref="dashboard.doctor"  class="btn btn-danger" >Cancel</a>
             
 

@@ -117,6 +117,26 @@ public class DoctorsService {
 		return 1;
 	}
 	
-	
+	public Integer getNoOfDoctors()
+	{
+		Integer count=0;
+		
+List<DoctorsForm> doctorsForms=new ArrayList<DoctorsForm>();
+		
+		List<Doctors> doctorss=new ArrayList<Doctors>();
+		
+		doctorss=doctorsDAO.getAll();
+		
+		for (Doctors doctors : doctorss) {
+			//TODO: Fill the List
+			DoctorsForm doctorsForm=new DoctorsForm(doctors.getId(), doctors.getName(), doctors.getAddress(), doctors.getCity(), doctors.getCountry(), doctors.getState(), doctors.getZip(), doctors.getOfficeHours(), doctors.getNewField(), doctors.getNotes());
+			doctorsForms.add(doctorsForm);
+			count++;
+		}
+		
+		
+		return count;
+		
+	}
 	
 }

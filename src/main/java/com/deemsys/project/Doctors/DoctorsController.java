@@ -67,5 +67,14 @@ public class DoctorsController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+    
+    @RequestMapping(value="/getNoOfDoctors",method=RequestMethod.GET)
+   	public String getNoOfDoctors(ModelMap model)
+   	{
+    	model.addAttribute("doctorsForms",doctorsService.getNoOfDoctors());
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
 	
 }

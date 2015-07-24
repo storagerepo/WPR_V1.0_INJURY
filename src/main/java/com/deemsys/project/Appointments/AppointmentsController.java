@@ -99,5 +99,14 @@ public class AppointmentsController {
      	model.addAttribute("requestSuccess",true);
  		return "/returnPage";
  	}
+   
+   
+   @RequestMapping(value="/getNoOfAppointments",method=RequestMethod.GET)
+  	public String getNoOfAppointments(ModelMap model)
+  	{
+   	model.addAttribute("appointmentsForms",appointmentsService.getNoOfAppointments());
+   	model.addAttribute("requestSuccess",true);
+  		return "/returnPage";
+  	}
  
 }
