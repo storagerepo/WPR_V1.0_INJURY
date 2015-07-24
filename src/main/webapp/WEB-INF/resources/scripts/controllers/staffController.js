@@ -36,9 +36,10 @@ adminApp.controller('ShowStaffController', function($scope,$http,$location,$stat
  
 });
 
-adminApp.controller('SaveStaffController', function($scope,$http,$location) {
-	
+adminApp.controller('SaveStaffController', function($scope,$http,$location,$state) {
+
 	$scope.options=true;
+	$scope.title=$state.current.title;
 	$scope.save=function()
 	{
 		
@@ -57,9 +58,10 @@ adminApp.controller('SaveStaffController', function($scope,$http,$location) {
 });
 
 
-adminApp.controller('EditStaffController', function($scope,$http,$location,$stateParams) {
-	 
+adminApp.controller('EditStaffController', function($scope,$http,$location,$stateParams,$state) {
+	
 	$scope.options=false;
+	$scope.title=$state.current.title;
 	$http.get('http://localhost:8080/Injury/Staff/getStaff.json?id='+ $stateParams.id).success( function(response) {
 	    $scope.staff=response.staffForm;
 });

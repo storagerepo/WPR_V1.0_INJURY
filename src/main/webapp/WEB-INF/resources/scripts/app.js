@@ -182,6 +182,7 @@ angular
         .state('dashboard.add-staff',{
         templateUrl:'views/staff-view/add-staff.html',
         url:'/add-staff',
+        title:'Add Staff',
         controller:'SaveStaffController',
         resolve: {
             loadMyFile:function($ocLazyLoad) {
@@ -195,6 +196,7 @@ angular
     }).state('dashboard.EditStaff/:id',{
         templateUrl:'views/staff-view/add-staff.html',
         url:'/EditStaff/:id',
+        title:'Eidt Staff',
         controller:'EditStaffController',
         resolve: {
             loadMyFile:function($ocLazyLoad) {
