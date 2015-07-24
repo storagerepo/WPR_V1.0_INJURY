@@ -132,6 +132,7 @@ public class CallLogsService {
 		//TODO: Convert Form to Entity Here	
 		
 		//Logic Starts
+
 		
 		Appointments appointments = new Appointments();
 		appointments.setId(callLogsForm.getAppointmentId());
@@ -139,7 +140,7 @@ public class CallLogsService {
 		Patients patients = new Patients();
 		patients.setId(callLogsForm.getPatientId());
 		
-		CallLogs callLogs=new CallLogs(patients,appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+		CallLogs callLogs=new CallLogs(patients,null,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		callLogs.setId(callLogsForm.getId());
 		//Logic Ends
 		
@@ -183,7 +184,7 @@ public class CallLogsService {
 				
 			}
 			callLogsForm.add(callLogsForms);
-			System.out.println(callLogsForm.size());
+
 			}
 			catch(Exception e)
 			{
