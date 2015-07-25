@@ -6,7 +6,7 @@ myApp.factory("requestHandler",['$http',function($http){
 
     requestObj.getRequest=function(requestURL,params){
 
-         requestURL="http://localhost:8081/Injury/"+requestURL;
+         requestURL="http://localhost:8080/Injury/"+requestURL;
          return $http.get(requestURL,params).then(function (results) {  
             return results;   
          });
@@ -14,7 +14,7 @@ myApp.factory("requestHandler",['$http',function($http){
 
     requestObj.postRequest=function(requestURL,params){      
        
-        requestURL="http://localhost:8081/Injury/"+requestURL;
+        requestURL="http://localhost:8080/Injury/"+requestURL;
       
         return $http.post(requestURL,params).then(function (results) {
                 return results;
@@ -22,7 +22,7 @@ myApp.factory("requestHandler",['$http',function($http){
     };
 
     requestObj.deletePostRequest=function(requestURL,params){
-    	 requestURL="http://localhost:8081/Injury/"+requestURL+params;
+    	 requestURL="http://localhost:8080/Injury/"+requestURL+params;
     	 return $http({
 			  method : "POST",
 			  url : requestURL,

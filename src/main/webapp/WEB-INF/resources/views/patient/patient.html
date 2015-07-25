@@ -56,27 +56,34 @@
 </div>
 
   <!-- Add/Edit Model -->
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
+
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
       </div>
+          <form id="myForm" name="myForm" novalidate>
       <div class="modal-body">
 	
                                     <label>Select File:</label>
-                                    <input type="file" name="fileName" class="form-control" required><br/>
-              
+                                    <input type="file" name="fileName" class="form-control" ng-model="patient.fileName"" required><br/>
+                                  <div class="error-container" ng-show="myForm.fileName.$dirty && myForm.fileName.$invalid">
+                                  <span style="color:red" ng-show="myForm.fileName.$error.required"> Please Select File</span>
+                                 </div>
                                 
                  
              
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-success" ng-click="fileUpload()">Submit</button>
+        <button type="submit" class="btn btn-success" ng-click="fileUpload()" ng-disabled='myForm.$invalid'>Submit</button>
       </div>
+      </form>
     </div>
+    
   </div>
 </div>
 

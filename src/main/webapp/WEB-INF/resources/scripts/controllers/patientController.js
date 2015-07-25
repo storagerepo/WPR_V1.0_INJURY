@@ -1,4 +1,4 @@
-var adminApp=angular.module('sbAdminApp', []);
+var adminApp=angular.module('sbAdminApp', ['requestModule']);
 
 adminApp.directive('fileChange', function () {
 
@@ -21,15 +21,15 @@ adminApp.directive('fileChange', function () {
 
 });
 
-adminApp.controller('ShowPatientController', function($scope,$http,$location,$state) {
+adminApp.controller('ShowPatientController', function($scope,$http,$location,$state,requestHandler) {
 	
 	$scope.title="Add Patient";
 	
 	$scope.files = [];
 	// In Onload get Patient Details
-	$http.get("http://localhost:8081/Injury/Staff/getAllPatientss.json").success( function(response) {
+	 requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 		//alert(JSON.stringify(response));
-	     $scope.patients= response.patientsForms;
+	     $scope.patients= response.data.patientsForms;
 	     $scope.sort("firstName");
 	     });
 	
@@ -41,14 +41,14 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	
 	$scope.getPatientList=function(){
 		
-		$http.get("http://localhost:8081/Injury/Staff/getAllPatientss.json").success( function(response) {
+		 requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 		     $scope.patients= response.patientsForms;
 		     });
 	};
 	
 	$scope.deletePatient=function(id){
 		if(confirm("Are you sure to delete patient?")){
-		$http.post("http://localhost:8081/Injury/Staff/deletePatients.json?id="+id).then(function() {
+			  requestHandler.deletePostRequest("Staff/deletePatients.json?id=",id).then(function(response){
 			 $state.reload('dashboard.patient');
 		});
 		
@@ -70,7 +70,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	$scope.viewPatientModal=function(id){
 		$scope.viewPatientTitle="View Patient";
 		$("#viewPatientModal").modal("show");
-		$http.get("http://localhost:8081/Injury/Staff/getPatients.json?id="+id).success( function(response) {
+		  requestHandler.deletePostRequest("Staff/getPatients.json?id="+id).success( function(response) {
 			$scope.patients= response.patientsForm;
 		  });
 

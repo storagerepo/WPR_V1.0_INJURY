@@ -196,7 +196,7 @@ angular
     }).state('dashboard.EditStaff/:id',{
         templateUrl:'views/staff-view/add-staff.html',
         url:'/EditStaff/:id',
-        title:'Eidt Staff',
+        title:'Edit Staff',
         controller:'EditStaffController',
         resolve: {
             loadMyFile:function($ocLazyLoad) {

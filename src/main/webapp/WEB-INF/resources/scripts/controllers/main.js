@@ -6,29 +6,30 @@
  * # MainCtrl
  * Controller of the sbAdminApp
  */
-angular.module('sbAdminApp')
-  .controller('MainCtrl', function($scope,$position,$http) {
+angular.module('sbAdminApp', ['requestModule'])
+  .controller('MainCtrl', function($scope,$position,$http,requestHandler) {
 	
 	
 	
-	$http.get('http://localhost:8081/Injury/Admin/getNoOfStaffs.json').success( function(response) {
-	     $scope.staff= response.staffForms;
+	  requestHandler.getRequest("Admin/getNoOfStaffs.json","").then( function(response) {
+	     $scope.staff= response.data.staffForms;
 	     
 	     $scope.numberStaff=$scope.staff;
+	     
 	     });
 	
 	
 	
 	
-	 $http.get('http://localhost:8081/Injury/Admin/getNoOfDoctors.json').success( function(response) {
-	     $scope.doctors= response.doctorsForms;
+	  requestHandler.getRequest("Admin/getNoOfDoctors.json","").then( function(response) {
+	     $scope.doctors= response.data.doctorsForms;
 	     
 	     $scope.numberDoctors=$scope.doctors;
 	     });
   
 	 
-	 $http.get('http://localhost:8081/Injury/Staff/getNoOfPatients.json').success( function(response) {
-	     $scope.patients= response.patientsForms;
+	  requestHandler.getRequest("Staff/getNoOfPatients.json","").then( function(response) {
+	     $scope.patients= response.data.patientsForms;
 	   
 
 	     $scope.numberPatients=$scope.patients;
@@ -38,8 +39,8 @@ angular.module('sbAdminApp')
 	
 	
 	  
-	  $http.get('http://localhost:8081/Injury/Staff/getNoOfAppointments.json').success( function(response) {
-		     $scope.appointments= response.appointmentsForms;
+	  requestHandler.getRequest("Staff/getNoOfAppointments.json","").then( function(response) {
+		     $scope.appointments= response.data.appointmentsForms;
 
 		     
 		     $scope.numberappointments=$scope.appointments;

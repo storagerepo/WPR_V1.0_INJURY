@@ -94,7 +94,7 @@
                     </table>		</div>
 			</div>
 			<div class="text-right" style="margin-right:30px;">
-				<a class="btn btn-success" ng-click="updatePatient()">Save Changes</a>
+				<a class="btn btn-success" ng-click="updatePatient()" ng-disabled='myForm.$invalid'>Save Changes</a>
 				<a ui-sref="dashboard.patient" class="btn btn-danger">Cancel</a><br />
 				<br />
 				<br />
