@@ -24,6 +24,7 @@
 	<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
 	<mvc:resources mapping="/styles/**" location="/WEB-INF/resources/styles/" />
 	<mvc:resources mapping="/scripts/**" location="/WEB-INF/resources/scripts/" />
+	<mvc:resources mapping="/components/**" location="/WEB-INF/resources/components/" />
 	<mvc:resources mapping="/js/**" location="/WEB-INF/resources/js/" />
 	<mvc:resources mapping="/views/**" location="/WEB-INF/resources/views/" />
 	<!-- End Angular Configuration -->

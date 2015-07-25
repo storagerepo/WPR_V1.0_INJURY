@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
+@RequestMapping("/Staff")
 public class CallLogsController {
 	
 	@Autowired

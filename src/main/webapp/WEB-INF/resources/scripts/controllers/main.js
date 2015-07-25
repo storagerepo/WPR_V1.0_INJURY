@@ -11,7 +11,7 @@ angular.module('sbAdminApp')
 	
 	
 	
-	$http.get('http://localhost:8080/Injury/Staff/getNoOfStaffs.json').success( function(response) {
+	$http.get('http://localhost:8081/Injury/Admin/getNoOfStaffs.json').success( function(response) {
 	     $scope.staff= response.staffForms;
 	     
 	     $scope.numberStaff=$scope.staff;
@@ -20,14 +20,14 @@ angular.module('sbAdminApp')
 	
 	
 	
-	 $http.get('http://localhost:8080/Injury/getNoOfDoctors.json').success( function(response) {
+	 $http.get('http://localhost:8081/Injury/Admin/getNoOfDoctors.json').success( function(response) {
 	     $scope.doctors= response.doctorsForms;
 	     
 	     $scope.numberDoctors=$scope.doctors;
 	     });
   
 	 
-	 $http.get('http://localhost:8080/Injury/Staff/getNoOfPatients.json').success( function(response) {
+	 $http.get('http://localhost:8081/Injury/Staff/getNoOfPatients.json').success( function(response) {
 	     $scope.patients= response.patientsForms;
 	   
 
@@ -38,7 +38,7 @@ angular.module('sbAdminApp')
 	
 	
 	  
-	  $http.get('http://localhost:8080/Injury/getNoOfAppointments.json').success( function(response) {
+	  $http.get('http://localhost:8081/Injury/Staff/getNoOfAppointments.json').success( function(response) {
 		     $scope.appointments= response.appointmentsForms;
 
 		     
@@ -53,4 +53,14 @@ angular.module('sbAdminApp')
 	  
 	  
 	 
+	  
+
+			  $scope.saveStaff=function($scope){
+				  console.log("ok");
+				  alert("sdsds");
+			};  
+			 $scope.newStaff=function($scope){
+				  console.log("ok");
+				  alert("sdsds");
+			};  
   });

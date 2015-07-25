@@ -13,7 +13,13 @@
                 <div class="dataTable_wrapper">
                  <div class="col-md-12">
             <div class="col-md-4">
-         Select Date :<input type="text" class="form-control" ng-model="searchDate" ng-change="getByDates()" placeholder="Global Search"/>
+         Select Date :
+         <div class='input-group'>
+         <input type="text" class="form-control" ng-model="searchDate" ng-change="getByDates()" placeholder="Global Search" id='datetimepicker8'/>
+         <span class="input-group-addon white-color-bg"> <span
+																class="glyphicon glyphicon-calendar"></span>
+															</span>
+															</div>
          </div>
             </div>
                   <table class="table table-hover" id="dataTables-example">
@@ -123,4 +129,11 @@
     </div>
   </div>
 </div>
-    
+<script>
+$('#datetimepicker8').datetimepicker(
+		{
+			pickTime : false,
+			format:'YYYY-MM-DD',
+			maxDate : new Date()
+		});
+</script>    

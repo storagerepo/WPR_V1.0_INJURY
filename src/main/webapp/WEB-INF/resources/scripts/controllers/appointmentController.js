@@ -17,31 +17,30 @@ angular.module('sbAdminApp').controller('ShowAppointmentsCtrl', function($scope,
     };
     
     
-    $http.get("http://localhost:8080/Injury/todaysAppointment.json").success( function(response) {
+    $http.get("http://localhost:8081/Injury/Staff/todaysAppointment.json").success( function(response) {
         $scope.appointments = response.appointmentsForms;
        $scope.appointments.status = true;
        });
     
 $scope.viewPatients=function(id)
 {
-	$http.get('http://localhost:8080/Injury/getAllAppointmentsByPatient.json?patientId='+id).success( function(response) {
+	$http.get('http://localhost:8081/Injury/Staff/getAllAppointmentsByPatient.json?patientId='+id).success( function(response) {
 	    $scope.patients=response.patientsForms;
 	      $("#myModal").modal("show");
      });
 }
 $scope.getByDates=function()
 {
-	
 if($scope.searchDate)
 	{
-	$http.get("http://localhost:8080/Injury/getByDates.json?date="+$scope.searchDate).then(function (response) {
+	$http.get("http://localhost:8081/Injury/Staff/getByDates.json?date="+$scope.searchDate).then(function (response) {
 			$scope.appointments=response.data.appointmentsForms;
 	});
 	 }
 
 else
 {
-	$http.get("http://localhost:8080/Injury/todaysAppointment.json").success( function(response) {
+	$http.get("http://localhost:8081/Injury/Staff/todaysAppointment.json").success( function(response) {
 	     $scope.appointments = response.appointmentsForms;
 	    $scope.appointments.status = true;
 	    });
@@ -49,3 +48,4 @@ else
 
 }
 });
+

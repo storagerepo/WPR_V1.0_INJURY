@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
+@RequestMapping("/Admin")
 public class DoctorsController {
 	
 	@Autowired

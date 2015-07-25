@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -141,5 +143,21 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 		
 	}
 	
+	// Get Current User Role
+		public String getCurrentRole(){
+			
+			String currentRole="";
+			User user = (User) SecurityContextHolder.getContext()
+					.getAuthentication().getPrincipal();
+			Object[] role = user.getAuthorities().toArray();
+			
+			if(role[0].toString().equals("ROLE_STAFF")){
+				currentRole="ROLE_STAFF";
+			}
+			else if(role[0].toString().equals("ROLE_ADMIN")){
+				currentRole="ROLE_ADMIN";
+			}
+			return currentRole;
+		}
 	
 }

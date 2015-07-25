@@ -17,13 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
-@RequestMapping("/Staff")
 public class StaffController {
 	
 	@Autowired
 	StaffService staffService;
 
-    @RequestMapping(value="/getStaff",method=RequestMethod.GET)
+    @RequestMapping(value="/Admin/getStaff",method=RequestMethod.GET)
 	public String getStaff(@RequestParam("id") Integer id,ModelMap model)
 	{
     	model.addAttribute("staffForm",staffService.getStaff(id));
@@ -32,7 +31,7 @@ public class StaffController {
 	}
 	
     
-    @RequestMapping(value="/mergeStaff",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/mergeStaff",method=RequestMethod.POST)
    	public String mergeStaff(@RequestBody StaffForm staffForm,ModelMap model)
    	{
     	staffService.mergeStaff(staffForm);
@@ -40,7 +39,7 @@ public class StaffController {
    		return "/returnPage";
    	}
     
-    @RequestMapping(value="/saveUpdateStaff",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/saveUpdateStaff",method=RequestMethod.POST)
    	public String saveStaff(@RequestBody StaffForm staffForm,ModelMap model)
    	{
     	if(staffForm.getId()==null)
@@ -52,7 +51,7 @@ public class StaffController {
    	}
    
     
-    @RequestMapping(value="/deleteStaff",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/deleteStaff",method=RequestMethod.POST)
    	public String deleteStaff(@RequestParam("id") Integer id,ModelMap model)
    	{
     	
@@ -61,7 +60,7 @@ public class StaffController {
    		return "/returnPage";
    	}
     
-    @RequestMapping(value="/getAllStaffs",method=RequestMethod.GET)
+    @RequestMapping(value="/Admin/getAllStaffs",method=RequestMethod.GET)
    	public String getAllStaffs(ModelMap model)
    	{
     	model.addAttribute("staffForms",staffService.getStaffList());
@@ -72,7 +71,7 @@ public class StaffController {
     
     
     
-    @RequestMapping(value="/getNoOfStaffs",method=RequestMethod.GET)
+    @RequestMapping(value="/Admin/getNoOfStaffs",method=RequestMethod.GET)
    	public String getNoOfStaffs(ModelMap model)
    	{
     	model.addAttribute("staffForms",staffService.getNoOfStaffs());
@@ -80,4 +79,12 @@ public class StaffController {
    		return "/returnPage";
    	}
 	
+    @RequestMapping(value="/Staff/getCurrentRole",method=RequestMethod.POST)
+    public String getCurrentRole(ModelMap model){
+    	
+    	String role=staffService.getCurrentRole();
+    	model.addAttribute("role", role);
+    	model.addAttribute("requestSuccess",true);
+    	return "/returnPage";
+    }
 }

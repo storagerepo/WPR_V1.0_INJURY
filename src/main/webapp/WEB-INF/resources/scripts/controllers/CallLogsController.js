@@ -6,7 +6,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
 	    };
 	   
-   $http.post("http://localhost:8080/Injury/getCallLogsById.json?id="+ $stateParams.id).success( function(response) {
+   $http.post("http://localhost:8081/Injury/Staff/getCallLogsById.json?id="+ $stateParams.id).success( function(response) {
 	   
 	   $scope.callLogs= response.callLogsForms;
 	   
@@ -23,10 +23,10 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		  if(confirm("Are you sure to delete CallLogs ?")){
 		  $http({
 			  method : "POST",
-			  url : "http://localhost:8080/Injury/deleteCallLogs.json?id="+id,
+			  url : "http://localhost:8081/Injury/Staff/deleteCallLogs.json?id="+id,
 			  }).success(function(response){
 			 
-				  $state.reload('dashboard.Calllogs');
+				  $state.reload('dashboard/Calllogs');
 			 
 			  });
 		  }
@@ -53,7 +53,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		{
 			
 			
-			$http.post("http://localhost:8080/Injury/saveUpdateCallLogs.json",$scope.calllogs)
+			$http.post("http://localhost:8081/Injury/Staff/saveUpdateCallLogs.json",$scope.calllogs)
 				.success(function(response)
 						{
 					$("#calllogsModel").modal("hide");
@@ -69,13 +69,13 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 
 		$scope.title="Edit CallLogs";
 		$scope.options=false;
-		$http.get('http://localhost:8080/Injury/getCallLogs.json?id='+ id).success( function(response) {
+		$http.get('http://localhost:8081/Injury/Staff/getCallLogs.json?id='+ id).success( function(response) {
 		    $scope.calllogs=response.callLogsForm;
-		    
-	});
-		$("#calllogsModel").modal("show");
+		    $("#calllogsModel").modal("show");
+		});
 		
-		 $state.reload('dashboard.Calllogs');
+		
+		
 	
 	};
 	
@@ -84,7 +84,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	
 	  $scope.update=function(){
 		  
-	  $http.post("http://localhost:8080/Injury/saveUpdateCallLogs.json",$scope.calllogs).success(function (status) {
+	  $http.post("http://localhost:8081/Injury/Staff/saveUpdateCallLogs.json",$scope.calllogs).success(function (status) {
 		  $("#calllogsModel").modal("hide");
 			 $state.reload("dashboard/Calllogs");
 		  
@@ -100,7 +100,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	{
 
 		
-		$http.post("http://localhost:8080/Injury/saveUpdateAppointments.json",$scope.Appointments)
+		$http.post("http://localhost:8081/Injury/Staff/saveUpdateAppointments.json",$scope.Appointments)
 			.success(function(response)
 					{
 
@@ -112,7 +112,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		$scope.viewAppointments=function(id)
 		{
 		
-			$http.get('http://localhost:8080/Injury/getAppointments.json?id='+ id).success( function(response) {
+			$http.get('http://localhost:8081/Injury/Staff/getAppointments.json?id='+ id).success( function(response) {
 			    $scope.appointments=response.appointmentsForm;
 			   
 			   

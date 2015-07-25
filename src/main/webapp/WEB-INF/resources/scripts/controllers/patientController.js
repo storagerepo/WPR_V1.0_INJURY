@@ -27,7 +27,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	
 	$scope.files = [];
 	// In Onload get Patient Details
-	$http.get("http://localhost:8080/Injury/Staff/getAllPatientss.json").success( function(response) {
+	$http.get("http://localhost:8081/Injury/Staff/getAllPatientss.json").success( function(response) {
 		//alert(JSON.stringify(response));
 	     $scope.patients= response.patientsForms;
 	     $scope.sort("firstName");
@@ -41,14 +41,14 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	
 	$scope.getPatientList=function(){
 		
-		$http.get("http://localhost:8080/Injury/Staff/getAllPatientss.json").success( function(response) {
+		$http.get("http://localhost:8081/Injury/Staff/getAllPatientss.json").success( function(response) {
 		     $scope.patients= response.patientsForms;
 		     });
 	};
 	
 	$scope.deletePatient=function(id){
 		if(confirm("Are you sure to delete patient?")){
-		$http.post("http://localhost:8080/Injury/Staff/deletePatients.json?id="+id).then(function() {
+		$http.post("http://localhost:8081/Injury/Staff/deletePatients.json?id="+id).then(function() {
 			 $state.reload('dashboard.patient');
 		});
 		
@@ -70,7 +70,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	$scope.viewPatientModal=function(id){
 		$scope.viewPatientTitle="View Patient";
 		$("#viewPatientModal").modal("show");
-		$http.get("http://localhost:8080/Injury/Staff/getPatients.json?id="+id).success( function(response) {
+		$http.get("http://localhost:8081/Injury/Staff/getPatients.json?id="+id).success( function(response) {
 			$scope.patients= response.patientsForm;
 		  });
 
@@ -83,7 +83,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 		   console.log($scope.files[0]);
 		        
 		        
-		             /* $http.post('http://localhost:8080/Injury/fileUpload.json?path='+$scope.files[0].name).success(function (results) {
+		             /* $http.post('http://localhost:8081/Injury/fileUpload.json?path='+$scope.files[0].name).success(function (results) {
 		          
 		          alert("ok");
 		    });
@@ -98,14 +98,14 @@ adminApp.controller('EditPatientController', function($scope,$http,$location,$st
 	
 	$scope.patientid=$stateParams.id;
 	
-		$http.get("http://localhost:8080/Injury/Staff/getPatients.json?id="+$stateParams.id).success( function(response) {
+		$http.get("http://localhost:8081/Injury/Staff/getPatients.json?id="+$stateParams.id).success( function(response) {
 		
 		     $scope.patient= response.patientsForm;
 		  
 		     });
 		
 		$scope.updatePatient=function(){
-			$http.post('http://localhost:8080/Injury/Staff/mergePatients.json',$scope.patient).then(function(response) {
+			$http.post('http://localhost:8081/Injury/Staff/mergePatients.json',$scope.patient).then(function(response) {
 				$location.path("dashboard/patient");
 			});
 		};

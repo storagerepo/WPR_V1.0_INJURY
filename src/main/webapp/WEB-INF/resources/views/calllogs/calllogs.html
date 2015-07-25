@@ -60,7 +60,10 @@
       <div class="modal-body">
 
                                     <label>Date and Time</label>
+                                    <div class="input-group">
                              <input type="text" name="timeStamp" id="timeStamp" class="form-control"  ng-model="calllogs.timeStamp" placeholder="Enter Time and Date" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+                              </div>
                                      <span class="error-container" ng-show="myForm.timeStamp.$dirty && myForm.timeStamp.$invalid">
                                 <span style="color:red" ng-show="myForm.timeStamp.$error.required">Please Enter the Date and Time</span>
                               </span>
@@ -108,8 +111,10 @@
         <div class="modal-body">
              
               <label>ScheduledDate</label>
-                                    
+                                  <div class="input-group">   
                                     <input type="text" name="scheduledDate" id="scheduledDate" class="form-control"  ng-model="Appointments.scheduledDate" placeholder="Enter Date" required>
+                                     <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+                              </div>
                                      <span class="error-container" ng-show="myForms.scheduledDate.$dirty && myForms.scheduledDate.$invalid">
                                 <span style="color:red" ng-show="myForms.scheduledDate.$error.required">Please Enter the Date</span>
                               </span>
@@ -176,5 +181,16 @@
       </div>
       
     </div>
-    
+     <script>
+$('#timeStamp').datetimepicker({
+			pickTime : true,
+			format:'MM/DD/YYYY HH:mm:ss',
+			maxDate : new Date()
+		});
+$('#scheduledDate').datetimepicker({
+	pickTime : false,
+	format:'MM/DD/YYYY',
+	minDate : new Date()
+});
+</script> 
    

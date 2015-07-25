@@ -290,7 +290,11 @@ angular
             
             $ocLazyLoad.load({
                 name:'sbAdminApp',
-                files:['scripts/controllers/appointmentController.js']
+                files:['components/datetime/datetimepicker.css',
+                       'components/datetime/moment.js',
+                       'components/datetime/datetimepicker.js',
+                       'scripts/controllers/appointmentController.js'
+                       ]
             });
           }
         }
@@ -304,7 +308,10 @@ angular
                   
                   $ocLazyLoad.load({
                       name:'sbAdminApp',
-                      files:['scripts/controllers/CallLogsController.js']
+                      files:['components/datetime/datetimepicker.css',
+                             'components/datetime/moment.js',
+                             'components/datetime/datetimepicker.js',
+                             'scripts/controllers/CallLogsController.js']
                   });
                 }
               }
@@ -317,10 +324,44 @@ angular
 
 
 angular.module('sbAdminApp')
-  .controller('tableCtrl', function($scope) {
+  .controller('roleController', function($scope,$http,$location) {
+  /* $http.post('http://localhost:8081/Injury/Staff/getCurrentRole.json').then(function(response) {
+	  
+	   $scope.admin=false;
+	   $scope.staff=false;
+	   if(response.data.role=="ROLE_ADMIN"){
+		   $scope.admin=true;
+		   $scope.staff=true;
+	   }
+	   else if(response.data.role=="ROLE_STAFF"){
+		   $scope.staff=true;
+	   }
+	   else{
+		   $location.path('/logout');
+	   }
+	   
+   	});	
+*/
+});
 
-    $scope.alertFunction=function($scope){
-      alert("sampleLink");
-    };
-
+angular.module('sbAdminApp').factory('loginFactory',function(){
+	var isRole={};
+	
+	isRole.isAdmin=function(role){
+		alert(role);
+		if(role=="ROLE_ADMIN"){
+			return true;
+		}
+		else{
+			return false;
+		}
+	};
+	
+	isRole.isStaff=function(role){
+		if(role=="ROLE_STAFF"){
+			return true;
+		}
+	};
+	
+	return isRole;
 });
