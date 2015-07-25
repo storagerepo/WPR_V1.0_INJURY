@@ -1,30 +1,25 @@
 
-var adminApp=angular.module('sbAdminApp', []);
+var adminApp=angular.module('sbAdminApp', ['requestModule']);
 
-adminApp.controller('ShowStaffController', function($scope,$http,$location,$state) {
+adminApp.controller('ShowStaffController', function($scope,$http,$location,$state,requestHandler) {
 	 
 	 $scope.sort = function(keyname){
 	        $scope.sortKey = keyname;   //set the sortKey to the param passed
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
 	    };
-
-    $http.get("http://localhost:8081/Injury/Admin/getAllStaffs.json").success( function(response) {
-     $scope.staffs= response.staffForms;
-     $scope.sort('username');
-     
+	    
+    requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
+    	 $scope.staffs= results.data.staffForms;
+         $scope.sort('username');
      });
+    
     $scope.deleteStaff=function(id)
 	  {
 		
 		  if(confirm("Are you sure to delete Staff ?")){
-		  $http({
-			  method : "POST",
-			  url : "http://localhost:8081/Injury/Admin/deleteStaff.json?id="+id,
-			  }).success(function(response){
-			 
-				  $state.reload('dashboard.staff');
-			 
-			  });
+		  requestHandler.deletePostRequest("Admin/deleteStaff.json?id=",id).then(function(results){
+			  $state.reload('dashboard.staff');
+		     });
 		  }
 	}
     
@@ -43,36 +38,30 @@ adminApp.controller('SaveStaffController', function($scope,$http,$location,$stat
 	$scope.save=function()
 	{
 		
-		$http.post("http://localhost:8081/Injury/Admin/saveUpdateStaff",$scope.staff)
-			.success(function(response)
-					{
-				
-				
-				 
-				});
 		
-		  $location.path("dashboard/staff");
-		  
-		};
+		  requestHandler.postRequest("Admin/saveUpdateStaff.json",$scope.staff).then(function(response){
+			  $location.path('dashboard/staff');
+			});
+	};
 
 });
 
 
-adminApp.controller('EditStaffController', function($scope,$http,$location,$stateParams,$state) {
+adminApp.controller('EditStaffController', function($scope,$http,$location,$stateParams,$state,requestHandler) {
 	
 	$scope.options=false;
 	$scope.title=$state.current.title;
-	$http.get('http://localhost:8081/Injury/Admin/getStaff.json?id='+ $stateParams.id).success( function(response) {
-	    $scope.staff=response.staffForm;
-});
+	
+	requestHandler.getRequest("Admin/getStaff.json?id="+$stateParams.id,"").then(function(response){
+		$scope.staff=response.data.staffForm;
+	});
+	
 
 	  $scope.update=function(){
-		  
-	  $http.post('http://localhost:8081/Injury/Admin/saveUpdateStaff.json', $scope.staff).success(function (status) {
-	           
-		  
-	      });
-	  $location.path('dashboard/staff');
+		  requestHandler.postRequest("Admin/saveUpdateStaff.json",$scope.staff).then(function(response){
+			  $location.path('dashboard/staff');
+			});
+			
 	  
 	};
 });

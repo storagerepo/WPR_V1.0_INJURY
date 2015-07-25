@@ -44,7 +44,8 @@
         <script src="scripts/app.js"></script>
         <script src="js/sb-admin-2.js"></script>
     <!-- endbuild -->
-
+	
+	<script src="resources/scripts/services/requestHandler.js"></script>
 
 
     <script>
