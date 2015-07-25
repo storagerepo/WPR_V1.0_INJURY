@@ -1,72 +1,59 @@
-'use strict';
-/**
- * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the sbAdminApp
- */
 
 
+var adminApp=angular.module('sbAdminApp', ['requestModule']);
 
-angular.module('sbAdminApp').controller('ShowDoctorsCtrl', function($scope,$http,$location,$state) {
+adminApp.controller('ShowDoctorsCtrl', function($scope,$http,$location,$state,requestHandler) {
 	 
 	$scope.sort = function(keyname){
         $scope.sortKey = keyname;   //set the sortKey to the param passed
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
     };	
+    requestHandler.getRequest("Admin/getAllDoctorss.json","").then(function(response){
+    	 $scope.doctors = response.data.doctorsForms;
+         $scope.sort('name');
+        });
 	
-    $http.get("http://localhost:8081/Injury/Admin/getAllDoctorss.json").success( function(response) {
-     $scope.doctors = response.doctorsForms;
-     $scope.sort('name');
    
-     });
-    
     $scope.deleteDoctor=function(id)
 	  {
-		
-		  if(confirm("Are you sure to delete Doctor ?")){
-			  $http({
-				  method : "POST",
-				  url : "http://localhost:8081/Injury/Admin/deleteDoctors.json?id="+id,
-				  }).success(function(response){
-					  $state.reload("dashboard.doctor");
-				  });
-			  
-			}
-		  
-		 
+if(confirm("Are you sure to delete Doctor ?")){
+		  requestHandler.deletePostRequest("Admin/deleteDoctors.json?id=",id).then(function(results){
+			  $state.reload('dashboard.doctor');
+		     });
+	}
 	}
    
 });
-angular.module('sbAdminApp').controller('AddDoctorsCtrl', function($scope,$http,$state) {
+
+adminApp.controller('AddDoctorsCtrl', function($scope,$http,$location,$state) {
+
 	$scope.myFormButton=true;
-	 $scope.title=$state.current.title;
-$scope.saveDoctor=function()
-  {
-	$http.post('http://localhost:8081/Injury/Admin/saveUpdateDoctors.json', $scope.doctor).then(function (results) {
-        
-        $location.path('/dashboard/doctor');
-  });
-		
-		 
-}
+	$scope.title=$state.current.title;
+	$scope.saveDoctor=function()
+	{
+		requestHandler.postRequest("Admin/saveUpdateDoctors.json",$scope.doctor).then(function(response){
+			  $location.path('dashboard/doctor');
+			});
+	};
+
 });
 
-angular.module('sbAdminApp').controller('EditDoctorController', function($scope,$http,$location,$stateParams,$state) {
-	 
-
-	 $scope.myFormButton=false;
-	 $scope.title=$state.current.title;
-	$http.get('http://localhost:8081/Injury/Admin/getDoctors.json?id='+ $stateParams.id).success( function(response) {
-		 $scope.doctor = response.doctorsForm;
-});
+adminApp.controller('EditDoctorController', function($scope,$http,$location,$stateParams,$state,requestHandler) {
+	
+	$scope.myFormButton=false;
+	$scope.title=$state.current.title;
+	
+	requestHandler.getRequest("Admin/getDoctors.json?id="+$stateParams.id,"").then(function(response){
+		 $scope.doctor = response.data.doctorsForm;
+	});
+	
 
 	  $scope.update=function(){
-	  $http.post('http://localhost:8081/Injury/Admin/saveUpdateDoctors.json', $scope.doctor).success(function (status) {
-	         
-	         
-	      });
+		  requestHandler.postRequest("Admin/saveUpdateDoctors.json",$scope.doctor).then(function(response){
+			  $location.path('dashboard/doctor');
+			});
+			
+	  
 	};
 });
 

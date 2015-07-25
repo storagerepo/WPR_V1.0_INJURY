@@ -1,31 +1,23 @@
-'use strict';
-/**
- * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the sbAdminApp
- */
+var adminApp=angular.module('sbAdminApp', ['requestModule']);
 
-
-
-angular.module('sbAdminApp').controller('ShowAppointmentsCtrl', function($scope,$http,$state) {
+adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$state,requestHandler) {
 	 
 	$scope.sort = function(keyname){
         $scope.sortKey = keyname;   //set the sortKey to the param passed
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
     };
     
-    
-    $http.get("http://localhost:8081/Injury/Staff/todaysAppointment.json").success( function(response) {
-        $scope.appointments = response.appointmentsForms;
-       $scope.appointments.status = true;
-       });
-    
+    requestHandler.getRequest("Staff/todaysAppointment.json","").then(function(response){
+		//alert(JSON.stringify(response));
+    	 $scope.appointments = response.data.appointmentsForms;
+         $scope.appointments.status = true;
+          $scope.sort("scheduledDate");
+	     });
+ 
 $scope.viewPatients=function(id)
 {
-	$http.get('http://localhost:8081/Injury/Staff/getAllAppointmentsByPatient.json?patientId='+id).success( function(response) {
-	    $scope.patients=response.patientsForms;
+	requestHandler.getRequest("Staff/getAllAppointmentsByPatient.json?patientId="+id,"").then( function(response) {
+	    $scope.patients=response.data.patientsForms;
 	      $("#myModal").modal("show");
      });
 }
@@ -33,15 +25,15 @@ $scope.getByDates=function()
 {
 if($scope.searchDate)
 	{
-	$http.get("http://localhost:8081/Injury/Staff/getByDates.json?date="+$scope.searchDate).then(function (response) {
+	requestHandler.getRequest("Staff/getByDates.json?date="+$scope.searchDate,"").then(function (response) {
 			$scope.appointments=response.data.appointmentsForms;
 	});
 	 }
 
 else
 {
-	$http.get("http://localhost:8081/Injury/Staff/todaysAppointment.json").success( function(response) {
-	     $scope.appointments = response.appointmentsForms;
+	requestHandler.getRequest("Staff/todaysAppointment.json").then( function(response) {
+	     $scope.appointments = response.data.appointmentsForms;
 	    $scope.appointments.status = true;
 	    });
 	}
