@@ -80,9 +80,6 @@ public class PatientsController {
    	}
 	
     
-	
-    
-    
     @RequestMapping(value="/getNoOfPatients",method=RequestMethod.GET)
    	public String getNoOfPatients(ModelMap model)
    	{
@@ -90,5 +87,13 @@ public class PatientsController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+    @RequestMapping(value="/getPatientListByStaffId",method=RequestMethod.GET)
+ 	public String getPatientListByStaffId(@RequestParam("callerId") Integer staffId,ModelMap model)
+ 	{
+     	model.addAttribute("patientsForms",patientsService.getPatientListByStaffId(staffId));
+     	model.addAttribute("requestSuccess",true);
+ 		return "/returnPage";
+ 	}
     
 }

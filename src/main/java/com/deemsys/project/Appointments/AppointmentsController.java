@@ -78,7 +78,6 @@ public class AppointmentsController {
     @RequestMapping(value="/updateStatus",method=RequestMethod.POST)
    public String updateStatus(@RequestParam("id") Integer id,@RequestParam("status") Integer status,ModelMap model)
    	{
-    		
     	appointmentsService.updateStatu(id,status);
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
@@ -100,7 +99,6 @@ public class AppointmentsController {
  		return "/returnPage";
  	}
    
-   
    @RequestMapping(value="/getNoOfAppointments",method=RequestMethod.GET)
   	public String getNoOfAppointments(ModelMap model)
   	{
@@ -109,4 +107,12 @@ public class AppointmentsController {
   		return "/returnPage";
   	}
  
+   @RequestMapping(value="/getAppointmentListByStaffId",method=RequestMethod.GET)
+	public String getAppointmentListByStaffId(@RequestParam("callerId") Integer staffId,ModelMap model)
+	{
+    	model.addAttribute("appointmentsForms",appointmentsService.getAppointmentListByStaffId(staffId));
+    	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
+   
 }

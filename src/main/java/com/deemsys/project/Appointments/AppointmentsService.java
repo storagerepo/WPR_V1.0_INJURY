@@ -242,5 +242,17 @@ public class AppointmentsService {
 				return count;
 				
 			}
+
+	
+			
+			public List<AppointmentsForm> getAppointmentListByStaffId(Integer staffId){
+				// TODO Auto-generated method stub
+				List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();
+				
+					appointmentsForms=patientsDAO.getAppointmentListByStaffId(staffId);
+
+				return appointmentsForms;
+				
+			}
 			
 }

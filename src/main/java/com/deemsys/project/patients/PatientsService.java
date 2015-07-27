@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import com.deemsys.project.Appointments.AppointmentsForm;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
 import com.deemsys.project.entity.Doctors;
@@ -188,6 +189,23 @@ List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
 		}
 		
 		return count;
+		
+	}
+
+		public List<PatientsForm> getPatientListByStaffId(Integer staffId){
+	
+		List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
+		
+		List<Patients> patientss=new ArrayList<Patients>();
+			
+		patientss=patientsDAO.getPatientListByStaffId(staffId);
+		for (Patients patients : patientss) {
+			
+			PatientsForm patientsForm=new PatientsForm(patients.getId(),patients.getDoctors().getId(),patients.getStaff().getId(),patients.getFirstName(),patients.getLastName(),patients.getReportNumber(),patients.getPhoneNumber(),patients.getAddress(),patients.getInjury(),patients.getDateOfCrash().toString(),patients.getOtherPassengers(),patients.getNotes());
+			patientsForms.add(patientsForm);
+		}
+
+		return patientsForms;
 		
 	}
 	
