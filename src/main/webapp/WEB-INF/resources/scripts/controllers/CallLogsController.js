@@ -12,7 +12,11 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	   
     $scope.sort('notes');
     
-   
+    requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
+		
+	     $scope.patient= response.data.patientsForm;
+	  
+	     });
   
     
     

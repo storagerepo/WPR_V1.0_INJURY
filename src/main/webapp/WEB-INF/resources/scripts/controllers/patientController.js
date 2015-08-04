@@ -94,18 +94,18 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 });
 
 
-adminApp.controller('EditPatientController', function($scope,$http,$location,$stateParams){
+adminApp.controller('EditPatientController', function($scope,$http,$location,$stateParams,requestHandler){
 	
 	$scope.patientid=$stateParams.id;
 	
-		$http.get("http://localhost:8081/Injury/Staff/getPatients.json?id="+$stateParams.id).success( function(response) {
+	requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
 		
-		     $scope.patient= response.patientsForm;
+		     $scope.patient= response.data.patientsForm;
 		  
 		     });
 		
 		$scope.updatePatient=function(){
-			$http.post('http://localhost:8081/Injury/Staff/mergePatients.json',$scope.patient).then(function(response) {
+			requestHandler.getRequest('Staff/mergePatients.json',$scope.patient).then(function(response) {
 				$location.path("dashboard/patient");
 			});
 		};

@@ -41,8 +41,14 @@ public class StaffService {
 		
 		for (Staff staff : staffs) {
 			//TODO: Fill the List
+			if(staff.getRole().equalsIgnoreCase("ROLE_ADMIN"))
+			{
+			
+			}
+			else{
 			StaffForm staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
 			staffForms.add(staffForm);
+			}
 		}
 		
 		return staffForms;

@@ -3,7 +3,7 @@
 		<a ui-sref="dashboard.patient"
 			class="btn-sm btn-primary pull-right margin-top-40">Back to the
 			list</a>
-		<h2 class="page-header">Edit Patients {{patientid}}</h2>
+		<h2 class="page-header" ng-controller="EditPatientController">Edit Patients&nbsp;-&nbsp;{{patient.firstName}}&nbsp;{{patient.lastName}}</h2>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -24,13 +24,13 @@
                                     <input type="text" class="form-control"  ng-model="patient.firstName" name="firstName" placeholder="Enter FIrstName"  required>
                                     <div class="error-container" ng-show="myForm.firstName.$dirty && myForm.firstName.$invalid">
                                     <span style="color:red" ng-show="myForm.firstName.$error.required">Please Enter First Name</span>
-                                     </div></td>
+                                     </div><br></td>
                             <td class="col-md-4">    
                                     <label>Last Name</label>
                                     <input type="text" class="form-control"  ng-model="patient.lastName" name="lastName" placeholder="Enter LastName"  required>
                                     <div class="error-container" ng-show="myForm.lastName.$dirty && myForm.lastName.$invalid">
                                       <span style="color:red" ng-show="myForm.lastName.$error.required">Please Enter Last Name</span>
-                                     </div>
+                                     </div><br>
                                     </td>
                                     
                                      <td class="col-md-4">
@@ -38,7 +38,7 @@
                                     <input  type="text" class="form-control"  ng-model="patient.reportNumber" name="reportNumber" placeholder="Enter UserName"  required>
                                     <div class="error-container" ng-show="myForm.reportNumber.$dirty && myForm.reportNumber.$invalid">
                                        <span style="color:red" ng-show="myForm.reportNumber.$error.required">Please Enter Report Number</span>
-                                         </div>
+                                         </div><br>
                                </td>
                                          
                                 </tr>
@@ -51,14 +51,14 @@
                                     <input  type="text" class="form-control"  ng-model="patient.phoneNumber" name="phoneNumber" placeholder="Enter UserName"  required>
                                     <div class="error-container" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
                                        <span style="color:red" ng-show="myForm.phoneNumber.$error.required">Please Enter Phone Number</span>
-                                         </div>
+                                         </div><br>
                                          </td>
                                           <td class="col-md-4">
                                     <label>Injury</label>
                                     <input tyep="text" class="form-control"  ng-model="patient.injury" name="injury" placeholder="Enter PhoneNumber"  required>
                                     <div class="error-container" ng-show="myForm.injury.$dirty && myForm.injury.$invalid">
                                      <span style="color:red" ng-show="myForm.injury.$error.required">Please Enter Injury</span>
-                                   </div>
+                                   </div><br>
                                   </td>
                                    <td class="col-md-4">
                                  
@@ -66,7 +66,7 @@
                                     <input type="text" class="form-control"  ng-model="patient.dateOfCrash" name="dateOfCrash" placeholder="Enter Password"  required>
                                     <div class="error-container" ng-show="myForm.dateOfCrash.$dirty && myForm.dateOfCrash.$invalid">
                                       <span style="color:red" ng-show="myForm.dateOfCrash.$error.required">Please Enter Date Of Crash</span>
-                                     </div>
+                                     </div><br>
                                       </td>
                             </tr>
                             <tr>
@@ -76,7 +76,7 @@
 									<textarea class="form-control height-100" ng-model="patient.address" name="address" placeholder="Enter Password"  required></textarea>
 								 <div class="error-container" ng-show="myForm.address.$dirty && myForm.address.$invalid">
                                       <span style="color:red" ng-show="myForm.address.$error.required">Please Enter Address</span>
-                                     </div>
+                                     </div><br>
                                 
 								</td>
 								<td class="col-md-6" colspan="2">
@@ -84,7 +84,7 @@
 									<textarea class="form-control height-100" ng-model="patient.notes" name="notes" placeholder="Enter Notes"  required></textarea>
 								<div class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">
                                 <span style="color:red" ng-show="myForm.notes.$error.required">Please Enter Notes</span>
-                              </div>
+                              </div><br>
                               
 								</td>
 								
