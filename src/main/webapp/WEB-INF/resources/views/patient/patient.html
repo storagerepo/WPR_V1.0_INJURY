@@ -66,20 +66,25 @@
         <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
       </div>
           <form id="myForm" name="myForm" novalidate>
-      <div class="modal-body">
+      <div class="modal-body" ng-controller="ShowPatientController">
 	
                                     <label>Select File:</label>
-                                    <input type="file" name="fileName" class="form-control" ng-model="patient.fileName"" required><br/>
+                                    <input type="file" name="path" class="form-control" file-change   ng-model="patient.path" required><br/>
                                   <div class="error-container" ng-show="myForm.fileName.$dirty && myForm.fileName.$invalid">
-                                  <span style="color:red" ng-show="myForm.fileName.$error.required"> Please Select File</span>
+                                  <span style="color:red" ng-show="path.$error.required"> Please Select File</span>
                                  </div>
+                                 <label> FileName:</label>
+                                    <input type="text" name="file" class="form-control" ng-model="patient.file"" required><br/>
+                                  <div class="error-container" ng-show="myForm.file.$dirty && myForm.file.$invalid">
+                                  <span style="color:red" ng-show="myForm.file.$error.required"> Please Select File</span>
+                                 
                                 
                  
              
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-success" ng-click="fileUpload()" ng-disabled='myForm.$invalid'>Submit</button>
+        <button type="submit" class="btn btn-success" ng-click="fileUpload()" >Submit</button>
       </div>
       </form>
     </div>

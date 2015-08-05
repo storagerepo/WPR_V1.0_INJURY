@@ -21,14 +21,16 @@ adminApp.directive('fileChange', function () {
 
 });
 
-adminApp.controller('ShowPatientController', function($scope,$http,$location,$state,requestHandler) {
+adminApp.controller('ShowPatientController', function($scope,$http,$location,$state,$rootScope,requestHandler) {
 	
 	$scope.title="Add Patient";
 	
-	$scope.files = [];
-	// In Onload get Patient Details
+	
+	
+	
+	
 	 requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
-		//alert(JSON.stringify(response));
+		
 	     $scope.patients= response.data.patientsForms;
 	     $scope.sort("firstName");
 	     });
@@ -59,6 +61,17 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	{
 		$scope.title="Add Patient";
 		$("#myModal").modal("show");
+		
+		$scope.files = [];
+		
+		$scope.fileUpload=function()
+		  {
+			alert("ll");
+			  requestHandler.deletePostRequest("Staff/uploadFile.json?file=",id).then(function(results){
+				  $state.reload('dashboard.staff');
+			     });
+			  
+		}
 	};
 	
 	$scope.editModal=function()
