@@ -1,18 +1,15 @@
 package com.deemsys.project.entity;
-// Generated Jul 18, 2015 10:49:05 AM by Hibernate Tools 3.4.0.CR1
+// Generated Aug 6, 2015 11:26:19 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
+
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,45 +24,75 @@ public class Patients implements java.io.Serializable {
 	private Integer id;
 	private Staff staff;
 	private Doctors doctors;
-	private String firstName;
-	private String lastName;
-	private String reportNumber;
-	private String phoneNumber;
-	private String address;
-	private String injury;
-	private Date dateOfCrash;
-	private String otherPassengers;
-	private String notes;
-	private Set<Appointments> appointmentses = new HashSet<Appointments>(0);
-	private Set<CallLogs> callLogses = new HashSet<CallLogs>(0);
+	private String localReportNumber;
+	private Integer crashSeverity;
+	private String reportingAgencyName;
+	private Integer numberOfUnits;
+	private Integer unitInError;
+	private Integer country;
+	private String cityVillageTownship;
+	private Date crashDate;
+	private Date timeOfCrash;
+	private String localReportNumber1;
+	private Integer unitNumber;
+	private String name;
+	private Date dateOfBirth;
+	private Integer gender;
+	private Integer injuries;
+	private String emsAgency;
+	private String medicalFacility;
+	private String localReportNumber2;
+	private Integer unitInError1;
+	private Integer unitNumber1;
+	private String ownerName;
+	private String ownerPhoneNumber;
+	private Integer damageScale;
+	private Integer proofOfInsurance;
+	private String insuranceCompany;
+	private String policyNumber;
 
 	public Patients() {
 	}
 
-	public Patients(Staff staff, Doctors doctors, String reportNumber) {
+	public Patients(Staff staff, Doctors doctors,
+			String localReportNumber, Integer crashSeverity,
+			String reportingAgencyName, Integer numberOfUnits,
+			Integer unitInError, Integer country, String cityVillageTownship,
+			Date crashDate, Date timeOfCrash, String localReportNumber1,
+			Integer unitNumber, String name, Date dateOfBirth, Integer gender,
+			Integer injuries, String emsAgency, String medicalFacility,
+			String localReportNumber2, Integer unitInError1,
+			Integer unitNumber1, String ownerName, String ownerPhoneNumber,
+			Integer damageScale, Integer proofOfInsurance,
+			String insuranceCompany, String policyNumber) {
 		this.staff = staff;
 		this.doctors = doctors;
-		this.reportNumber = reportNumber;
-	}
-
-	public Patients(Staff staff, Doctors doctors, String firstName,
-			String lastName, String reportNumber, String phoneNumber,
-			String address, String injury, Date dateOfCrash,
-			String otherPassengers, String notes,
-			Set<Appointments> appointmentses, Set<CallLogs> callLogses) {
-		this.staff = staff;
-		this.doctors = doctors;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.reportNumber = reportNumber;
-		this.phoneNumber = phoneNumber;
-		this.address = address;
-		this.injury = injury;
-		this.dateOfCrash = dateOfCrash;
-		this.otherPassengers = otherPassengers;
-		this.notes = notes;
-		this.appointmentses = appointmentses;
-		this.callLogses = callLogses;
+		this.localReportNumber = localReportNumber;
+		this.crashSeverity = crashSeverity;
+		this.reportingAgencyName = reportingAgencyName;
+		this.numberOfUnits = numberOfUnits;
+		this.unitInError = unitInError;
+		this.country = country;
+		this.cityVillageTownship = cityVillageTownship;
+		this.crashDate = crashDate;
+		this.timeOfCrash = timeOfCrash;
+		this.localReportNumber1 = localReportNumber1;
+		this.unitNumber = unitNumber;
+		this.name = name;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.injuries = injuries;
+		this.emsAgency = emsAgency;
+		this.medicalFacility = medicalFacility;
+		this.localReportNumber2 = localReportNumber2;
+		this.unitInError1 = unitInError1;
+		this.unitNumber1 = unitNumber1;
+		this.ownerName = ownerName;
+		this.ownerPhoneNumber = ownerPhoneNumber;
+		this.damageScale = damageScale;
+		this.proofOfInsurance = proofOfInsurance;
+		this.insuranceCompany = insuranceCompany;
+		this.policyNumber = policyNumber;
 	}
 
 	@Id
@@ -79,8 +106,8 @@ public class Patients implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "caller_id", nullable = false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@Column(name = "caller_id")
 	public Staff getStaff() {
 		return this.staff;
 	}
@@ -89,8 +116,8 @@ public class Patients implements java.io.Serializable {
 		this.staff = staff;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "doctor_id", nullable = false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@Column(name = "doctor_id")
 	public Doctors getDoctors() {
 		return this.doctors;
 	}
@@ -99,104 +126,241 @@ public class Patients implements java.io.Serializable {
 		this.doctors = doctors;
 	}
 
-	@Column(name = "first_name", length = 60)
-	public String getFirstName() {
-		return this.firstName;
+	@Column(name = "local_report_number", length = 50)
+	public String getLocalReportNumber() {
+		return this.localReportNumber;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setLocalReportNumber(String localReportNumber) {
+		this.localReportNumber = localReportNumber;
 	}
 
-	@Column(name = "last_name", length = 60)
-	public String getLastName() {
-		return this.lastName;
+	@Column(name = "crash_severity")
+	public Integer getCrashSeverity() {
+		return this.crashSeverity;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setCrashSeverity(Integer crashSeverity) {
+		this.crashSeverity = crashSeverity;
 	}
 
-	@Column(name = "report_number", nullable = false, length = 50)
-	public String getReportNumber() {
-		return this.reportNumber;
+	@Column(name = "reporting_agency_name", length = 60)
+	public String getReportingAgencyName() {
+		return this.reportingAgencyName;
 	}
 
-	public void setReportNumber(String reportNumber) {
-		this.reportNumber = reportNumber;
+	public void setReportingAgencyName(String reportingAgencyName) {
+		this.reportingAgencyName = reportingAgencyName;
 	}
 
-	@Column(name = "phone_number", length = 15)
-	public String getPhoneNumber() {
-		return this.phoneNumber;
+	@Column(name = "number_of_units")
+	public Integer getNumberOfUnits() {
+		return this.numberOfUnits;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setNumberOfUnits(Integer numberOfUnits) {
+		this.numberOfUnits = numberOfUnits;
 	}
 
-	@Column(name = "address", length = 200)
-	public String getAddress() {
-		return this.address;
+	@Column(name = "unit_in_error")
+	public Integer getUnitInError() {
+		return this.unitInError;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setUnitInError(Integer unitInError) {
+		this.unitInError = unitInError;
 	}
 
-	@Column(name = "injury", length = 45)
-	public String getInjury() {
-		return this.injury;
+	@Column(name = "country")
+	public Integer getCountry() {
+		return this.country;
 	}
 
-	public void setInjury(String injury) {
-		this.injury = injury;
+	public void setCountry(Integer country) {
+		this.country = country;
+	}
+
+	@Column(name = "city_village_township", length = 50)
+	public String getCityVillageTownship() {
+		return this.cityVillageTownship;
+	}
+
+	public void setCityVillageTownship(String cityVillageTownship) {
+		this.cityVillageTownship = cityVillageTownship;
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "date_of_crash", length = 10)
-	public Date getDateOfCrash() {
-		return this.dateOfCrash;
+	@Column(name = "crash_date", length = 10)
+	public Date getCrashDate() {
+		return this.crashDate;
 	}
 
-	public void setDateOfCrash(Date dateOfCrash) {
-		this.dateOfCrash = dateOfCrash;
+	public void setCrashDate(Date crashDate) {
+		this.crashDate = crashDate;
 	}
 
-	@Column(name = "other_passengers", length = 45)
-	public String getOtherPassengers() {
-		return this.otherPassengers;
+	@Temporal(TemporalType.TIME)
+	@Column(name = "time_of_crash", length = 8)
+	public Date getTimeOfCrash() {
+		return this.timeOfCrash;
 	}
 
-	public void setOtherPassengers(String otherPassengers) {
-		this.otherPassengers = otherPassengers;
+	public void setTimeOfCrash(Date timeOfCrash) {
+		this.timeOfCrash = timeOfCrash;
 	}
 
-	@Column(name = "notes", length = 600)
-	public String getNotes() {
-		return this.notes;
+	@Column(name = "local_report_number1", length = 50)
+	public String getLocalReportNumber1() {
+		return this.localReportNumber1;
 	}
 
-	public void setNotes(String notes) {
-		this.notes = notes;
+	public void setLocalReportNumber1(String localReportNumber1) {
+		this.localReportNumber1 = localReportNumber1;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patients")
-	public Set<Appointments> getAppointmentses() {
-		return this.appointmentses;
+	@Column(name = "unit_number")
+	public Integer getUnitNumber() {
+		return this.unitNumber;
 	}
 
-	public void setAppointmentses(Set<Appointments> appointmentses) {
-		this.appointmentses = appointmentses;
+	public void setUnitNumber(Integer unitNumber) {
+		this.unitNumber = unitNumber;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patients")
-	public Set<CallLogs> getCallLogses() {
-		return this.callLogses;
+	@Column(name = "name", length = 60)
+	public String getName() {
+		return this.name;
 	}
 
-	public void setCallLogses(Set<CallLogs> callLogses) {
-		this.callLogses = callLogses;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "date_of_birth", length = 10)
+	public Date getDateOfBirth() {
+		return this.dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	@Column(name = "gender")
+	public Integer getGender() {
+		return this.gender;
+	}
+
+	public void setGender(Integer gender) {
+		this.gender = gender;
+	}
+
+	@Column(name = "injuries")
+	public Integer getInjuries() {
+		return this.injuries;
+	}
+
+	public void setInjuries(Integer injuries) {
+		this.injuries = injuries;
+	}
+
+	@Column(name = "ems_agency", length = 45)
+	public String getEmsAgency() {
+		return this.emsAgency;
+	}
+
+	public void setEmsAgency(String emsAgency) {
+		this.emsAgency = emsAgency;
+	}
+
+	@Column(name = "medical_facility", length = 45)
+	public String getMedicalFacility() {
+		return this.medicalFacility;
+	}
+
+	public void setMedicalFacility(String medicalFacility) {
+		this.medicalFacility = medicalFacility;
+	}
+
+	@Column(name = "local_report_number2", length = 50)
+	public String getLocalReportNumber2() {
+		return this.localReportNumber2;
+	}
+
+	public void setLocalReportNumber2(String localReportNumber2) {
+		this.localReportNumber2 = localReportNumber2;
+	}
+
+	@Column(name = "unit_in_error1")
+	public Integer getUnitInError1() {
+		return this.unitInError1;
+	}
+
+	public void setUnitInError1(Integer unitInError1) {
+		this.unitInError1 = unitInError1;
+	}
+
+	@Column(name = "unit_number1")
+	public Integer getUnitNumber1() {
+		return this.unitNumber1;
+	}
+
+	public void setUnitNumber1(Integer unitNumber1) {
+		this.unitNumber1 = unitNumber1;
+	}
+
+	@Column(name = "owner_name", length = 60)
+	public String getOwnerName() {
+		return this.ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	@Column(name = "owner_phone_number", length = 15)
+	public String getOwnerPhoneNumber() {
+		return this.ownerPhoneNumber;
+	}
+
+	public void setOwnerPhoneNumber(String ownerPhoneNumber) {
+		this.ownerPhoneNumber = ownerPhoneNumber;
+	}
+
+	@Column(name = "damage_scale")
+	public Integer getDamageScale() {
+		return this.damageScale;
+	}
+
+	public void setDamageScale(Integer damageScale) {
+		this.damageScale = damageScale;
+	}
+
+	@Column(name = "proof_of_insurance")
+	public Integer getProofOfInsurance() {
+		return this.proofOfInsurance;
+	}
+
+	public void setProofOfInsurance(Integer proofOfInsurance) {
+		this.proofOfInsurance = proofOfInsurance;
+	}
+
+	@Column(name = "insurance_company", length = 45)
+	public String getInsuranceCompany() {
+		return this.insuranceCompany;
+	}
+
+	public void setInsuranceCompany(String insuranceCompany) {
+		this.insuranceCompany = insuranceCompany;
+	}
+
+	@Column(name = "policy_number", length = 45)
+	public String getPolicyNumber() {
+		return this.policyNumber;
+	}
+
+	public void setPolicyNumber(String policyNumber) {
+		this.policyNumber = policyNumber;
 	}
 
 }
