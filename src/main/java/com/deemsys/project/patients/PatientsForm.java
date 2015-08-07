@@ -22,7 +22,7 @@ public class PatientsForm {
 	private String reportingAgencyName;
 	private Integer numberOfUnits;
 	private Integer unitInError;
-	private Integer country;
+	private String country;
 	private String cityVillageTownship;
 	private String crashDate;
 	private String timeOfCrash;
@@ -30,7 +30,7 @@ public class PatientsForm {
 	private Integer unitNumber;
 	private String name;
 	private String dateOfBirth;
-	private Integer gender;
+	private String gender;
 	private String address;
 	private String phoneNumber;
 	private Integer injuries;
@@ -42,7 +42,7 @@ public class PatientsForm {
 	private String ownerName;
 	private String ownerPhoneNumber;
 	private Integer damageScale;
-	private Integer proofOfInsurance;
+	private String proofOfInsurance;
 	private String insuranceCompany;
 	private String policyNumber;
 	
@@ -95,10 +95,10 @@ public class PatientsForm {
 	public void setUnitInError(Integer unitInError) {
 		this.unitInError = unitInError;
 	}
-	public Integer getCountry() {
+	public String getCountry() {
 		return country;
 	}
-	public void setCountry(Integer country) {
+	public void setCountry(String country) {
 		this.country = country;
 	}
 	public String getCityVillageTownship() {
@@ -143,10 +143,10 @@ public class PatientsForm {
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	public Integer getGender() {
+	public String getGender() {
 		return gender;
 	}
-	public void setGender(Integer gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	public String getAddress() {
@@ -215,10 +215,10 @@ public class PatientsForm {
 	public void setDamageScale(Integer damageScale) {
 		this.damageScale = damageScale;
 	}
-	public Integer getProofOfInsurance() {
+	public String getProofOfInsurance() {
 		return proofOfInsurance;
 	}
-	public void setProofOfInsurance(Integer proofOfInsurance) {
+	public void setProofOfInsurance(String proofOfInsurance) {
 		this.proofOfInsurance = proofOfInsurance;
 	}
 	public String getInsuranceCompany() {
@@ -238,15 +238,15 @@ public class PatientsForm {
 
 	public PatientsForm(Integer id, Integer callerId, Integer doctorId, String localReportNumber,
 			Integer crashSeverity, String reportingAgencyName,
-			Integer numberOfUnits, Integer unitInError, Integer country,
+			Integer numberOfUnits, Integer unitInError, String country,
 			String cityVillageTownship, String crashDate, String timeOfCrash,
 			String localReportNumber1, Integer unitNumber, String name,
-			String dateOfBirth, Integer gender, String address,
+			String dateOfBirth, String gender, String address,
 			String phoneNumber, Integer injuries, String emsAgency,
 			String medicalFacility, String localReportNumber2,
 			Integer unitInError1, Integer unitNumber1, String ownerName,
 			String ownerPhoneNumber, Integer damageScale,
-			Integer proofOfInsurance, String insuranceCompany, String policyNumber) {
+			String proofOfInsurance, String insuranceCompany, String policyNumber) {
 		super();
 		this.id = id;
 		this.callerId = callerId;

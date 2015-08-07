@@ -9,31 +9,41 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.Doctors;
 import com.deemsys.project.entity.Patients;
+import com.deemsys.project.entity.Staff;
 @Service
 public class PatientsFileRead {
 
-	public String[] readPatientUsingExcel(String fileName)
+	public List<Patients> readPatientUsingExcel(String fileName)
 	{
 			
 		BufferedReader br = null;
 		String line = "";
-		String cvsSplitBy = ",";
-		String[] patients={};
+		String csvSplitBy = ",";
+		String[] patientArray=new String[30];
+		String[] patientHeader=new String[30];
+		List<Patients> patients=new ArrayList<Patients>();
 		try {
 
 			br = new BufferedReader(new FileReader(fileName));
+			Integer lineNumber=1;
 			while ((line = br.readLine()) != null) {
-
-				patients=line.split(cvsSplitBy);
-
-					System.out.println("" + patients[5] 
-		                                 + "" + patients[13] );
-					
+				if(lineNumber>1)
+				{
+					patientArray=line.split(csvSplitBy);
+					patients.add(new Patients(null, null, patientArray[0], Integer.parseInt(patientArray[1]), patientArray[2],Integer.parseInt(patientArray[3]), Integer.parseInt(patientArray[4]),patientArray[5], patientArray[6], InjuryConstants.convertYearFormat(patientArray[7]), patientArray[8], patientArray[9],Integer.parseInt(patientArray[10]), patientArray[11], InjuryConstants.convertYearFormat(patientArray[12]), patientArray[13].trim(), patientArray[14], patientArray[15], Integer.parseInt(patientArray[16]), patientArray[17], patientArray[18], patientArray[19],Integer.parseInt(patientArray[20]),Integer.parseInt(patientArray[21]), patientArray[22], patientArray[23], Integer.parseInt(patientArray[24]), patientArray[25], patientArray[26], patientArray[27]));
+				}					
+				else
+				{
+					patientHeader=line.split(csvSplitBy);
+					lineNumber++;
+				}
 			}
 
 		}
-		catch (FileNotFoundException e) {
+		catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -49,10 +59,6 @@ public class PatientsFileRead {
 			}
 		
 		}
-		for(int i = 0; i < patients.length; i++)
-			System.out.println(patients[i]);
-
-		System.out.println("Done");
 		return patients;
 	 }
 }

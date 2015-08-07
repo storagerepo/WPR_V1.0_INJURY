@@ -33,15 +33,15 @@ public class Patients implements java.io.Serializable {
 	private String reportingAgencyName;
 	private Integer numberOfUnits;
 	private Integer unitInError;
-	private Integer country;
+	private String country;
 	private String cityVillageTownship;
 	private Date crashDate;
-	private Date timeOfCrash;
+	private String timeOfCrash;
 	private String localReportNumber1;
 	private Integer unitNumber;
 	private String name;
 	private Date dateOfBirth;
-	private Integer gender;
+	private String gender;
 	private String address;
 	private String phoneNumber;
 	private Integer injuries;
@@ -53,7 +53,7 @@ public class Patients implements java.io.Serializable {
 	private String ownerName;
 	private String ownerPhoneNumber;
 	private Integer damageScale;
-	private Integer proofOfInsurance;
+	private String proofOfInsurance;
 	private String insuranceCompany;
 	private String policyNumber;
 	private Set<Appointments> appointmentses = new HashSet<Appointments>(0);
@@ -64,17 +64,15 @@ public class Patients implements java.io.Serializable {
 
 	public Patients(Staff staff, Doctors doctors, String localReportNumber,
 			Integer crashSeverity, String reportingAgencyName,
-			Integer numberOfUnits, Integer unitInError, Integer country,
-			String cityVillageTownship, Date crashDate, Date timeOfCrash,
+			Integer numberOfUnits, Integer unitInError, String country,
+			String cityVillageTownship, Date crashDate, String timeOfCrash,
 			String localReportNumber1, Integer unitNumber, String name,
-			Date dateOfBirth, Integer gender, String address,
+			Date dateOfBirth, String gender, String address,
 			String phoneNumber, Integer injuries, String emsAgency,
 			String medicalFacility, String localReportNumber2,
 			Integer unitInError1, Integer unitNumber1, String ownerName,
 			String ownerPhoneNumber, Integer damageScale,
-			Integer proofOfInsurance,String insuranceCompany,String policyNumber,
-			Set<Appointments> appointmentses,
-			Set<CallLogs> callLogses) {
+			String proofOfInsurance,String insuranceCompany,String policyNumber) {
 		this.staff = staff;
 		this.doctors = doctors;
 		this.localReportNumber = localReportNumber;
@@ -105,8 +103,6 @@ public class Patients implements java.io.Serializable {
 		this.proofOfInsurance = proofOfInsurance;
 		this.insuranceCompany = insuranceCompany;
 		this.policyNumber = policyNumber;
-		this.appointmentses = appointmentses;
-		this.callLogses = callLogses;
 	}
 
 	@Id
@@ -185,12 +181,12 @@ public class Patients implements java.io.Serializable {
 		this.unitInError = unitInError;
 	}
 
-	@Column(name = "country")
-	public Integer getCountry() {
+	@Column(name = "country",length=100)
+	public String getCountry() {
 		return this.country;
 	}
 
-	public void setCountry(Integer country) {
+	public void setCountry(String country) {
 		this.country = country;
 	}
 
@@ -213,13 +209,12 @@ public class Patients implements java.io.Serializable {
 		this.crashDate = crashDate;
 	}
 
-	@Temporal(TemporalType.TIME)
 	@Column(name = "time_of_crash", length = 8)
-	public Date getTimeOfCrash() {
+	public String getTimeOfCrash() {
 		return this.timeOfCrash;
 	}
 
-	public void setTimeOfCrash(Date timeOfCrash) {
+	public void setTimeOfCrash(String timeOfCrash) {
 		this.timeOfCrash = timeOfCrash;
 	}
 
@@ -260,12 +255,12 @@ public class Patients implements java.io.Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	@Column(name = "gender")
-	public Integer getGender() {
+	@Column(name = "gender",length=1)
+	public String getGender() {
 		return this.gender;
 	}
 
-	public void setGender(Integer gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
@@ -368,12 +363,12 @@ public class Patients implements java.io.Serializable {
 		this.damageScale = damageScale;
 	}
 
-	@Column(name = "proof_of_insurance")
-	public Integer getProofOfInsurance() {
+	@Column(name = "proof_of_insurance",length=15)
+	public String getProofOfInsurance() {
 		return this.proofOfInsurance;
 	}
 
-	public void setProofOfInsurance(Integer proofOfInsurance) {
+	public void setProofOfInsurance(String proofOfInsurance) {
 		this.proofOfInsurance = proofOfInsurance;
 	}
 	

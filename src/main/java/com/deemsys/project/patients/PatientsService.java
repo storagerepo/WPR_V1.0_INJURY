@@ -1,5 +1,8 @@
 package com.deemsys.project.patients;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Doctors;
@@ -96,7 +100,7 @@ public class PatientsService {
 		doctors.setId(patientsForm.getDoctorId());
 
 			
-		Patients patients=new Patients(staff,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),InjuryConstants.convertYearFormat(patientsForm.getCrashDate()),new Date(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),InjuryConstants.convertYearFormat(patientsForm.getDateOfBirth()),patientsForm.getGender(),patientsForm.getAddress(),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber(),null,null);
+		Patients patients=new Patients(staff,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),InjuryConstants.convertYearFormat(patientsForm.getCrashDate()),patientsForm.getTimeOfCrash(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),InjuryConstants.convertYearFormat(patientsForm.getDateOfBirth()),patientsForm.getGender(),patientsForm.getAddress(),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber());
 			patients.setId(patientsForm.getId());
 		
 		//Logic Ends
@@ -112,32 +116,61 @@ public class PatientsService {
 		return 1;
 	}
 	
-	//Add Patient by File Upload
-		public List<Patients> addPatientUsingExcel(String fileName)
-		{
-			
-			String[] patientsList=patientsFileRead.readPatientUsingExcel(fileName);
-			System.out.println("sun");
-			List<PatientsForm> patientsForm = new ArrayList<PatientsForm>();
-			PatientsForm patient = new PatientsForm();
-			for(int i = 0; i < patientsList.length; i++){
-				System.out.println(patientsList[i]);
-				
-				
-				patient.setReportingAgencyName(patientsList[2]);
-				patient.setCityVillageTownship(patientsList[6]);
-			}
-			
-			patientsForm.add(patient); 
-		/*
-					if (patientsList.size()>0) {
-			for (Patients patient : patientsList) {
-				patientsDAO.save(patient);
-			}
-
-				*/
-			return null;
+	//Hanndling Upload File
+	public int addPatientFromFile(MultipartFile file)
+	{
+		
+		File serverFile=null;
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+ 
+                // Creating the directory to store file
+                String rootPath = System.getProperty("catalina.home");
+                File dir = new File(rootPath + File.separator + "tmpFiles");
+                if (!dir.exists())
+                    dir.mkdirs();
+ 
+                // Create the file on server
+                serverFile = new File(dir.getAbsolutePath()
+                        + File.separator + file.getOriginalFilename());
+                BufferedOutputStream stream = new BufferedOutputStream(
+                        new FileOutputStream(serverFile));
+                stream.write(bytes);
+                stream.close();
+ 
+                System.out.println("Server File Location="
+                        + serverFile.getAbsolutePath());
+                String fileName=serverFile.getAbsolutePath();
+                
+                //Read the Content
+                List<Patients> patients=new ArrayList<Patients>();
+                patients=patientsFileRead.readPatientUsingExcel(fileName);
+                
+                //Now add the patients in DB
+                addPatients(patients);
+                
+                serverFile.delete();
+               
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        } 
+		return 1;
+	}
 	
+	
+	
+	//Add Patient by File Upload
+		public void addPatients(List<Patients> patients)
+		{
+			for (Patients patient : patients) {
+				patientsDAO.save(patient);	
+			}		
 		}
+		
+		
+		
+		
 	
 }

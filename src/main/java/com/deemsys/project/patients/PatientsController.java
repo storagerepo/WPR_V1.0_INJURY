@@ -61,46 +61,14 @@ public class PatientsController {
    	}
    
  
-    @RequestMapping(value = "/uploadFile" ,method = RequestMethod.POST)
-    public @ResponseBody
-    String uploadFileHandler(
+    @RequestMapping(value = "/addPatientFromFile" ,method = RequestMethod.POST)
+    public String uploadFileHandler(
             @RequestParam("file") MultipartFile file,ModelMap model) {
-    	File serverFile=null;
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
- 
-                // Creating the directory to store file
-                String rootPath = System.getProperty("catalina.home");
-                File dir = new File(rootPath + File.separator + "tmpFiles");
-                if (!dir.exists())
-                    dir.mkdirs();
- 
-                // Create the file on server
-                 serverFile = new File(dir.getAbsolutePath()
-                        + File.separator + file.getOriginalFilename());
-                BufferedOutputStream stream = new BufferedOutputStream(
-                        new FileOutputStream(serverFile));
-                stream.write(bytes);
-                stream.close();
- 
-                System.out.println("Server File Location="
-                        + serverFile.getAbsolutePath());
-                String fileName=serverFile.getAbsolutePath();
-                
-                model.addAttribute("patientsExcelForm",patientsService.addPatientUsingExcel(fileName));
-                
-                return "You successfully uploaded file=" + fileName;
-            } catch (Exception e) {
-                return "You failed to upload  => " + e.getMessage();
-            }
-        } else {
-        	
-        	
-            return "You failed to upload " 
-                    + " because the file was empty.";
-        }
-        
+    
+    	patientsService.addPatientFromFile(file);
+    	model.addAttribute("requestSuccess",true);
+    	return "/returnPage";
+    
     }
     
 }
