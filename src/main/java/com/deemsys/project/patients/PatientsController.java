@@ -1,7 +1,6 @@
 
 package com.deemsys.project.patients;
 
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,6 +27,14 @@ public class PatientsController {
 	
 	@Autowired
 	PatientsService patientsService;
+	
+	@RequestMapping(value="/getAllPatientss",method=RequestMethod.GET)
+   	public String getAllPatientss(ModelMap model)
+   	{
+    	model.addAttribute("patientsForms",patientsService.getPatientsList());
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
 
     @RequestMapping(value="/getPatients",method=RequestMethod.GET)
 	public String getPatients(@RequestParam("id") Integer id,ModelMap model)
@@ -36,71 +43,27 @@ public class PatientsController {
     	model.addAttribute("requestSuccess",true);
 		return "/returnPage";
 	}
-	
-    
-    @RequestMapping(value="/mergePatients",method=RequestMethod.POST)
-   	public String mergePatients(@RequestBody PatientsForm patientsForm,ModelMap model)
+	 
+  @RequestMapping(value="/updatePatients",method=RequestMethod.POST)
+   	public String updatePatients(@ModelAttribute("patientsForm") PatientsForm patientsForm,ModelMap model)
    	{
-    	patientsService.mergePatients(patientsForm);
+    	patientsService.updatePatients(patientsForm);
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
-    
-    @RequestMapping(value="/saveUpdatePatients",method=RequestMethod.POST)
-   	public String savePatients(@ModelAttribute("patientsForm") PatientsForm patientsForm,ModelMap model)
-   	{
-    	if(patientsForm.getId().equals(""))
-    		patientsService.savePatients(patientsForm);
-    	else
-    		patientsService.updatePatients(patientsForm);
-    	model.addAttribute("requestSuccess",true);
-   		return "/returnPage";
-   	}
-   
-    
+
     @RequestMapping(value="/deletePatients",method=RequestMethod.POST)
    	public String deletePatients(@RequestParam("id") Integer id,ModelMap model)
    	{
-    	
     	patientsService.deletePatients(id);
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
-    
-    @RequestMapping(value="/getAllPatientss",method=RequestMethod.GET)
-   	public String getAllPatientss(ModelMap model)
-   	{
-    	model.addAttribute("patientsForms",patientsService.getPatientsList());
-    	model.addAttribute("requestSuccess",true);
-   		return "/returnPage";
-   	}
-    
-    
    
-	
-    
-    @RequestMapping(value="/getNoOfPatients",method=RequestMethod.GET)
-   	public String getNoOfPatients(ModelMap model)
-   	{
-    	model.addAttribute("patientsForms",patientsService.getNoOfPatients());
-    	model.addAttribute("requestSuccess",true);
-   		return "/returnPage";
-   	}
-    
-    @RequestMapping(value="/getPatientListByStaffId",method=RequestMethod.GET)
- 	public String getPatientListByStaffId(@RequestParam("callerId") Integer staffId,ModelMap model)
- 	{
-     	model.addAttribute("patientsForms",patientsService.getPatientListByStaffId(staffId));
-     	model.addAttribute("requestSuccess",true);
- 		return "/returnPage";
- 	}
-    
-    
-    
-  
-    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+ 
+    @RequestMapping(value = "/uploadFile" ,method = RequestMethod.POST)
     public @ResponseBody
-    String uploadFileHandler(@RequestParam("name") String name,
+    String uploadFileHandler(
             @RequestParam("file") MultipartFile file,ModelMap model) {
     	File serverFile=null;
         if (!file.isEmpty()) {
@@ -127,14 +90,14 @@ public class PatientsController {
                 
                 model.addAttribute("patientsExcelForm",patientsService.addPatientUsingExcel(fileName));
                 
-                return "You successfully uploaded file=" + name;
+                return "You successfully uploaded file=" + fileName;
             } catch (Exception e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
+                return "You failed to upload  => " + e.getMessage();
             }
         } else {
         	
         	
-            return "You failed to upload " + name
+            return "You failed to upload " 
                     + " because the file was empty.";
         }
         

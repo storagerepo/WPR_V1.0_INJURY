@@ -1,4 +1,4 @@
-package com.deemsys.project.patients;
+/*package com.deemsys.project.patients;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -82,3 +82,4 @@ public class PatientFileUpload {
 	}
 
 }
+*/

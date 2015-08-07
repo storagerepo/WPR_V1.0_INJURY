@@ -54,6 +54,8 @@ public class Patients implements java.io.Serializable {
 	private String ownerPhoneNumber;
 	private Integer damageScale;
 	private Integer proofOfInsurance;
+	private String insuranceCompany;
+	private String policyNumber;
 	private Set<Appointments> appointmentses = new HashSet<Appointments>(0);
 	private Set<CallLogs> callLogses = new HashSet<CallLogs>(0);
 
@@ -70,7 +72,8 @@ public class Patients implements java.io.Serializable {
 			String medicalFacility, String localReportNumber2,
 			Integer unitInError1, Integer unitNumber1, String ownerName,
 			String ownerPhoneNumber, Integer damageScale,
-			Integer proofOfInsurance, Set<Appointments> appointmentses,
+			Integer proofOfInsurance,String insuranceCompany,String policyNumber,
+			Set<Appointments> appointmentses,
 			Set<CallLogs> callLogses) {
 		this.staff = staff;
 		this.doctors = doctors;
@@ -100,6 +103,8 @@ public class Patients implements java.io.Serializable {
 		this.ownerPhoneNumber = ownerPhoneNumber;
 		this.damageScale = damageScale;
 		this.proofOfInsurance = proofOfInsurance;
+		this.insuranceCompany = insuranceCompany;
+		this.policyNumber = policyNumber;
 		this.appointmentses = appointmentses;
 		this.callLogses = callLogses;
 	}
@@ -370,6 +375,23 @@ public class Patients implements java.io.Serializable {
 
 	public void setProofOfInsurance(Integer proofOfInsurance) {
 		this.proofOfInsurance = proofOfInsurance;
+	}
+	
+	@Column(name = "insurance_company", length = 45)
+	public String getInsuranceCompany() {
+		return this.insuranceCompany;
+	}
+
+	public void setInsuranceCompany(String insuranceCompany) {
+		this.insuranceCompany = insuranceCompany;
+	}
+	@Column(name = "policy_number", length = 45)
+	public String getPolicyNumber() {
+		return this.policyNumber;
+	}
+
+	public void setPolicyNumber(String policyNumber) {
+		this.policyNumber = policyNumber;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patients")

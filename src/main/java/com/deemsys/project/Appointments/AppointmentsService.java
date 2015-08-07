@@ -167,8 +167,9 @@ public class AppointmentsService {
 			
 		}
 		else{
-			patientsForm=new PatientsForm(patients.getId(),patients.getDoctors().getId(),patients.getStaff().getId(),patients.getFirstName(),patients.getLastName(),patients.getReportNumber(),patients.getPhoneNumber(),patients.getAddress(),patients.getInjury(),patients.getDateOfCrash().toString(),patients.getOtherPassengers(),patients.getNotes());
-		}
+			patientsForm=new PatientsForm(patients.getId(),patients.getStaff().getId(),patients.getDoctors().getId(),patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate().toString(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth().toString(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
+
+				}
 		
 		//End
 		

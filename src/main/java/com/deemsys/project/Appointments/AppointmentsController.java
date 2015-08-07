@@ -1,4 +1,4 @@
-
+/*
 package com.deemsys.project.Appointments;
 
 
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/**
+*//**
  * 
- * @author Deemsys
+ * @author Deemsyas
  *
- */
+ *//*
 @Controller
 @RequestMapping("/Staff")
 public class AppointmentsController {
@@ -116,3 +116,4 @@ public class AppointmentsController {
 	}
    
 }
+*/

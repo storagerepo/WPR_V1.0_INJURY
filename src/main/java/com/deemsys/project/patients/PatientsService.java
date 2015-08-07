@@ -8,13 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import com.deemsys.project.Appointments.AppointmentsForm;
-import com.deemsys.project.entity.Appointments;
-import com.deemsys.project.entity.CallLogs;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Doctors;
 import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
+
+
 /**
  * 
  * @author Deemsys
@@ -35,7 +34,7 @@ public class PatientsService {
 	PatientsDAO patientsDAO;
 	
 	@Autowired
-	PatientFileUpload patientFileUpload;
+	PatientsFileRead patientsFileRead;
 	
 	//Get All Entries
 	public List<PatientsForm> getPatientsList()
@@ -48,8 +47,8 @@ public class PatientsService {
 		
 		for (Patients patients : patientss) {
 			//TODO: Fill the List
-			PatientsForm patientsForm=new PatientsForm(patients.getId(),patients.getDoctors().getId(),patients.getStaff().getId(),patients.getFirstName(),patients.getLastName(),patients.getReportNumber(),patients.getPhoneNumber(),patients.getAddress(),patients.getInjury(),patients.getDateOfCrash().toString(),patients.getOtherPassengers(),patients.getNotes());
-			patientsForms.add(patientsForm);
+			PatientsForm patientsForm=new PatientsForm(patients.getId(),patients.getStaff().getId(),patients.getDoctors().getId(),patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),InjuryConstants.convertMonthFormat(patients.getCrashDate()),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),InjuryConstants.convertMonthFormat(patients.getDateOfBirth()),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
+		patientsForms.add(patientsForm);
 		}
 		
 		return patientsForms;
@@ -69,8 +68,9 @@ public class PatientsService {
 			
 		}
 		else{
-			patientsForm=new PatientsForm(patients.getId(),patients.getDoctors().getId(),patients.getStaff().getId(),patients.getFirstName(),patients.getLastName(),patients.getReportNumber(),patients.getPhoneNumber(),patients.getAddress(),patients.getInjury(),patients.getDateOfCrash().toString(),patients.getOtherPassengers(),patients.getNotes());
-		}
+			patientsForm=new PatientsForm(patients.getId(),patients.getStaff().getId(),patients.getDoctors().getId(),patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),InjuryConstants.convertMonthFormat(patients.getCrashDate()),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),InjuryConstants.convertMonthFormat(patients.getDateOfBirth()),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
+			
+				}
 		
 		//End
 		
@@ -79,51 +79,7 @@ public class PatientsService {
 		return patientsForm;
 	}
 	
-	//Merge an Entry (Save or Update)
-	public int mergePatients(PatientsForm patientsForm)
-	{
-		//TODO: Convert Form to Entity Here
-		
-		//Logic Starts
-		
-		
-		Staff staff=new Staff();
-		staff.setId(patientsForm.getCallerId());
-		
-		
-		Doctors doctors=new Doctors();
-		doctors.setId(patientsForm.getDoctorsId());
-		
-		
-		Patients patients=new Patients(staff,doctors,patientsForm.getFirstName(),patientsForm.getLastName(),patientsForm.getReportNumber(),patientsForm.getPhoneNumber(),patientsForm.getAddress(),patientsForm.getInjury(),new Date(),patientsForm.getNotes(),patientsForm.getOtherPassengers(),null,null);
-		patients.setId(patientsForm.getId());
-		//Logic Ends
-		
-		
-		patientsDAO.merge(patients);
-		return 1;
-	}
 	
-	//Save an Entry
-	public int savePatients(PatientsForm patientsForm)
-	{
-		//TODO: Convert Form to Entity Here	
-		
-		//Logic Starts
-		Staff staff=new Staff();
-		staff.setId(patientsForm.getCallerId());
-		
-		
-		Doctors doctors=new Doctors();
-		doctors.setId(patientsForm.getDoctorsId());
-		
-		Patients patients=new Patients(staff,doctors,patientsForm.getFirstName(),patientsForm.getLastName(),patientsForm.getReportNumber(),patientsForm.getPhoneNumber(),patientsForm.getAddress(),patientsForm.getInjury(),new Date(),patientsForm.getNotes(),patientsForm.getOtherPassengers(),null,null);
-		
-		//Logic Ends
-		
-		patientsDAO.save(patients);
-		return 1;
-	}
 	
 	//Update an Entry
 	public int updatePatients(PatientsForm patientsForm)
@@ -137,10 +93,11 @@ public class PatientsService {
 		
 		
 		Doctors doctors=new Doctors();
-		doctors.setId(patientsForm.getDoctorsId());
-		
-		Patients patients=new Patients(staff,doctors,patientsForm.getFirstName(),patientsForm.getLastName(),patientsForm.getReportNumber(),patientsForm.getPhoneNumber(),patientsForm.getAddress(),patientsForm.getInjury(),new Date(),patientsForm.getNotes(),patientsForm.getOtherPassengers(),null,null);
-		patients.setId(patientsForm.getId());
+		doctors.setId(patientsForm.getDoctorId());
+
+			
+		Patients patients=new Patients(staff,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),InjuryConstants.convertYearFormat(patientsForm.getCrashDate()),new Date(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),InjuryConstants.convertYearFormat(patientsForm.getDateOfBirth()),patientsForm.getGender(),patientsForm.getAddress(),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber(),null,null);
+			patients.setId(patientsForm.getId());
 		
 		//Logic Ends
 		
@@ -156,58 +113,31 @@ public class PatientsService {
 	}
 	
 	//Add Patient by File Upload
-	public int addPatientUsingExcel(String fileName)
-	{
-		List<Patients> patientsList=patientFileUpload.processUploadFile(fileName);
-		
-		if (patientsList.size()>0) {
+		public List<Patients> addPatientUsingExcel(String fileName)
+		{
+			
+			String[] patientsList=patientsFileRead.readPatientUsingExcel(fileName);
+			System.out.println("sun");
+			List<PatientsForm> patientsForm = new ArrayList<PatientsForm>();
+			PatientsForm patient = new PatientsForm();
+			for(int i = 0; i < patientsList.length; i++){
+				System.out.println(patientsList[i]);
+				
+				
+				patient.setReportingAgencyName(patientsList[2]);
+				patient.setCityVillageTownship(patientsList[6]);
+			}
+			
+			patientsForm.add(patient); 
+		/*
+					if (patientsList.size()>0) {
 			for (Patients patient : patientsList) {
 				patientsDAO.save(patient);
 			}
-		}
-		
-		return 0;
-	}
-	
-	
-	
-	public Integer getNoOfPatients()
-	{
-		Integer count=0;
-		
-List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
-		
-		List<Patients> patientss=new ArrayList<Patients>();
-		
-		patientss=patientsDAO.getAll();
-		
-		for (Patients patients : patientss) {
-			//TODO: Fill the List
-			PatientsForm patientsForm=new PatientsForm(patients.getId(),patients.getDoctors().getId(),patients.getStaff().getId(),patients.getFirstName(),patients.getLastName(),patients.getReportNumber(),patients.getPhoneNumber(),patients.getAddress(),patients.getInjury(),patients.getDateOfCrash().toString(),patients.getOtherPassengers(),patients.getNotes());
-			patientsForms.add(patientsForm);
-			count++;
-		}
-		
-		return count;
-		
-	}
 
-		public List<PatientsForm> getPatientListByStaffId(Integer staffId){
+				*/
+			return null;
 	
-		List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
-		
-		List<Patients> patientss=new ArrayList<Patients>();
-			
-		patientss=patientsDAO.getPatientListByStaffId(staffId);
-		for (Patients patients : patientss) {
-			
-			PatientsForm patientsForm=new PatientsForm(patients.getId(),patients.getDoctors().getId(),patients.getStaff().getId(),patients.getFirstName(),patients.getLastName(),patients.getReportNumber(),patients.getPhoneNumber(),patients.getAddress(),patients.getInjury(),patients.getDateOfCrash().toString(),patients.getOtherPassengers(),patients.getNotes());
-			patientsForms.add(patientsForm);
 		}
-
-		return patientsForms;
-		
-	}
-	
 	
 }

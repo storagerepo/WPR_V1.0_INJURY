@@ -31,7 +31,10 @@ public class PatientsDAOImpl implements PatientsDAO{
 	@Override
 	public void save(Patients entity) {
 		// TODO Auto-generated method stub
-		this.sessionFactory.getCurrentSession().save(entity);
+		System.out.println("checking4");
+			this.sessionFactory.getCurrentSession().save(entity);
+			System.out.println("checking5");
+			
 	}
 
 	@Override
@@ -167,6 +170,12 @@ public class PatientsDAOImpl implements PatientsDAO{
 			return forms;
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Patients> patientFileRead(String fileName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
