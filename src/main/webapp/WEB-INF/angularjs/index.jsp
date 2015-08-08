@@ -36,6 +36,7 @@
     <script src="resources/components/Chart.js/Chart.min.js"></script>
     
     <script src="resources/components/angular-utils-pagination/dirPagination.js"></script> 
+     <script src="resources/components/angular-file-upload/angular-file-upload.min.js"></script>
     <script src="resources/components/ng-table/dist/ng-table.min.js"></script>
 	<!-- endbower -->
     <!-- endbuild -->
@@ -75,5 +76,25 @@
     </div>
 
     </body>
-
+<style type="text/css">
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+</style>
 </html>

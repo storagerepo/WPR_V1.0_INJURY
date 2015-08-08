@@ -1,4 +1,4 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','angularFileUpload']);
 
 adminApp.directive('fileChange', function () {
 
@@ -60,18 +60,12 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	$scope.addModel=function()
 	{
 		$scope.title="Add Patient";
+$("#uploadSuccessAlert").hide();
 		$("#myModal").modal("show");
 		
 		$scope.files = [];
 		
-		$scope.fileUpload=function()
-		  {
-			alert("ll");
-			  requestHandler.deletePostRequest("Staff/uploadFile.json?file=",id).then(function(results){
-				  $state.reload('dashboard.staff');
-			     });
-			  
-		}
+		
 	};
 	
 	$scope.editModal=function()
@@ -90,21 +84,77 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 		
 	};
 	
+	$scope.uploadFile=function($files){
+		alert("upload File");
+		alert($files[0]);
+	};
+	
 	$scope.fileUpload=function(){
 		
-		  
-		   console.log($scope.files[0]);
-		        
-		        
-		             /* $http.post('http://localhost:8081/Injury/fileUpload.json?path='+$scope.files[0].name).success(function (results) {
-		          
-		          alert("ok");
-		    });
-*/
-		};
+		alert("ok");
+		alert($scope.path);
+	};
 		   
 
 });
+
+
+adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader) {
+    var uploader = $scope.uploader = new FileUploader({
+        url: 'http://localhost:8089/Injury/Staff/addPatientFromFile.json',
+        queueLimit: 1
+    });
+
+    // FILTERS
+
+    uploader.filters.push({
+        name: 'customFilter',
+        fn: function(item /*{File|FileLikeObject}*/, options) {
+            return this.queue.length < 10;
+        }
+    });
+
+    // CALLBACKS
+
+    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+        console.info('onWhenAddingFileFailed', item, filter, options);
+    };
+    uploader.onAfterAddingFile = function(fileItem) {
+        console.info('onAfterAddingFile', fileItem);
+    };
+    uploader.onAfterAddingAll = function(addedFileItems) {
+        console.info('onAfterAddingAll', addedFileItems);
+    };
+    uploader.onBeforeUploadItem = function(item) {
+        console.info('onBeforeUploadItem', item);
+    };
+    uploader.onProgressItem = function(fileItem, progress) {
+        console.info('onProgressItem', fileItem, progress);
+    };
+    uploader.onProgressAll = function(progress) {
+        console.info('onProgressAll', progress);
+    };
+    uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        console.info('onSuccessItem', fileItem, response, status, headers);
+    };
+    uploader.onErrorItem = function(fileItem, response, status, headers) {
+        console.info('onErrorItem', fileItem, response, status, headers);
+    };
+    uploader.onCancelItem = function(fileItem, response, status, headers) {
+        console.info('onCancelItem', fileItem, response, status, headers);
+    };
+    uploader.onCompleteItem = function(fileItem, response, status, headers) {
+        console.info('onCompleteItem', fileItem, response, status, headers);
+    };
+    uploader.onCompleteAll = function() {
+        console.info('onCompleteAll');
+        $scope.upload_status="File Processed Successfully!";
+        $("#uploadSuccessAlert").show();
+    };
+
+    console.info('uploader', uploader);
+}]);
+
 
 
 adminApp.controller('EditPatientController', function($scope,$http,$location,$stateParams,requestHandler){
