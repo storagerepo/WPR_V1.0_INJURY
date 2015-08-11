@@ -25,7 +25,7 @@ if(confirm("Are you sure to delete Doctor ?")){
    
 });
 
-adminApp.controller('AddDoctorsCtrl', function($scope,$http,$location,$state) {
+adminApp.controller('AddDoctorsCtrl', function($scope,$http,$location,$state,requestHandler) {
 
 	$scope.myFormButton=true;
 	$scope.title=$state.current.title;

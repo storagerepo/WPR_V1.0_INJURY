@@ -12,6 +12,20 @@ myApp.factory("requestHandler",['$http',function($http){
          });
     };
 
+    
+requestObj.postFileUpload=function(requestURL,data,params){      
+        
+        requestURL="http://localhost:8080/Injury/"+requestURL;
+        transformRequest: angular.identity,
+        headers={'Content-Type': undefined},
+        data= data;
+        
+
+        return $http.post(requestURL,data,params).then(function (results) {
+                return results;
+         });
+    };
+    
     requestObj.postRequest=function(requestURL,params){      
        
         requestURL="http://localhost:8080/Injury/"+requestURL;
@@ -21,6 +35,12 @@ myApp.factory("requestHandler",['$http',function($http){
          });
     };
 
+    
+    
+   
+    
+    
+    
     requestObj.deletePostRequest=function(requestURL,params){
     	 requestURL="http://localhost:8080/Injury/"+requestURL+params;
     	 return $http({

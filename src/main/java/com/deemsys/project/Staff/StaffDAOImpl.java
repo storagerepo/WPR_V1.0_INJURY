@@ -6,8 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -195,6 +198,18 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 	public Staff getByUserName(String username) {
 		// TODO Auto-generated method stub
 		return (Staff) this.sessionFactory.getCurrentSession().createCriteria(Staff.class).add(Restrictions.eq("username", username)).uniqueResult();
+	}
+
+	@Override
+	public List<Staff> getStaffId() {
+		 Criteria cr = sessionFactory.getCurrentSession().createCriteria(Staff.class)
+				    .setProjection(Projections.projectionList()
+				      .add(Projections.property("id"), "id")
+				      .add(Projections.property("username"), "username"))
+				    .setResultTransformer(Transformers.aliasToBean(Staff.class));
+
+				  List<Staff> list = cr.list();
+		return list;
 	}
 
 	

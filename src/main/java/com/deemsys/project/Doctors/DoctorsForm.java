@@ -127,4 +127,11 @@ public class DoctorsForm {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	public DoctorsForm(Integer id)
+	{
+		this.id=id;
+
+	}
+	
 }

@@ -21,7 +21,7 @@ adminApp.directive('fileChange', function () {
 
 });
 
-adminApp.controller('ShowPatientController', function($scope,$http,$location,$state,$rootScope,requestHandler) {
+adminApp.controller('ShowPatientController', function($scope,$http,$location,$state,$rootScope,requestHandler,$http) {
 	
 	$scope.title="Add Patient";
 	
@@ -31,8 +31,8 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	
 	 requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 		
-	     $scope.patients= response.data.patientsForms;
-	     $scope.sort("firstName");
+	     $scope.patientss= response.data.patientsForms;
+	     
 	     });
 	
 	$scope.sort = function(keyname){
@@ -45,6 +45,8 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 		
 		 requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 		     $scope.patients= response.patientsForms;
+		     $scope.sort('name');
+
 		     });
 	};
 	
@@ -60,10 +62,13 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	$scope.addModel=function()
 	{
 		$scope.title="Add Patient";
+			
+		
+		
 $("#uploadSuccessAlert").hide();
+$("#file").val(""); 
 		$("#myModal").modal("show");
 		
-		$scope.files = [];
 		
 		
 	};
@@ -71,6 +76,7 @@ $("#uploadSuccessAlert").hide();
 	$scope.editModal=function()
 	{
 		$scope.title="Edit Patient";
+		
 		$("#myModal").modal("show");
 	};
 	
@@ -90,7 +96,7 @@ $("#uploadSuccessAlert").hide();
 	};
 	
 	$scope.fileUpload=function(){
-		
+	
 		alert("ok");
 		alert($scope.path);
 	};
@@ -101,9 +107,16 @@ $("#uploadSuccessAlert").hide();
 
 adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader) {
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://localhost:8089/Injury/Staff/addPatientFromFile.json',
+        url: 'http://localhost:8080/Injury/Staff/addPatientFromFile.json',
         queueLimit: 1
     });
+    
+    $scope.close=function(){
+    	
+    	
+    	 uploader.clearQueue();
+    	
+    };
 
     // FILTERS
 
@@ -150,6 +163,9 @@ adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope,
         console.info('onCompleteAll');
         $scope.upload_status="File Processed Successfully!";
         $("#uploadSuccessAlert").show();
+        uploader.clearQueue();
+
+        
     };
 
     console.info('uploader', uploader);
@@ -164,11 +180,30 @@ adminApp.controller('EditPatientController', function($scope,$http,$location,$st
 	requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
 		
 		     $scope.patient= response.data.patientsForm;
+		     
+		     
 		  
 		     });
+	requestHandler.getRequest("Staff/getCallLogsId.json","").then( function(response) {
+		
+	     $scope.callLogs= response.data.callLogsForms;
+	     
+	     
+	  
+	     });
+	requestHandler.getRequest("Admin/getDoctorId.json","").then( function(response) {
+		
+	     $scope.doctor= response.data.doctorsForms;
+	     
+	     
+	  
+	     });
 		
 		$scope.updatePatient=function(){
-			requestHandler.getRequest('Staff/mergePatients.json',$scope.patient).then(function(response) {
+			
+			
+			requestHandler.postRequest('Staff/updatePatients.json',$scope.patient).then(function(response) {
+				
 				$location.path("dashboard/patient");
 			});
 		};

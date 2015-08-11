@@ -45,7 +45,7 @@ public class PatientsController {
 	}
 	 
   @RequestMapping(value="/updatePatients",method=RequestMethod.POST)
-   	public String updatePatients(@ModelAttribute("patientsForm") PatientsForm patientsForm,ModelMap model)
+   	public String updatePatients(@RequestBody  PatientsForm patientsForm,ModelMap model)
    	{
     	patientsService.updatePatients(patientsForm);
     	model.addAttribute("requestSuccess",true);
@@ -61,7 +61,7 @@ public class PatientsController {
    	}
    
  
-    @RequestMapping(value = "/addPatientFromFile" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/addPatientFromFile" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
     public String uploadFileHandler(
             @RequestParam("file") MultipartFile file,ModelMap model) {
     
@@ -70,5 +70,16 @@ public class PatientsController {
     	return "/returnPage";
     
     }
+    @RequestMapping(value="/getNoOfPatientss",method=RequestMethod.GET)
+   	public String getNoOfPatientss(ModelMap model)
+   	{
+    	model.addAttribute("patientsForms",patientsService.getNoOfPatientss());
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+    
+    
+    
+   
     
 }

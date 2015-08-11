@@ -195,4 +195,23 @@ public class CallLogsService {
 		
 	}
 	
+	
+	public List<CallLogsForm> getCallLogsId()
+	{
+		List<CallLogsForm> callLogsForms=new ArrayList<CallLogsForm>();
+		
+		List<CallLogs> callLogss=new ArrayList<CallLogs>();
+		
+		callLogss=callLogsDAO.getCallLogsId();
+		
+		for (CallLogs callLogs : callLogss) {
+			//TODO: Fill the List
+			CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId());
+			callLogsForms.add(callLogsForm);
+		}
+		
+		return callLogsForms;
+	}
+	
+	
 }

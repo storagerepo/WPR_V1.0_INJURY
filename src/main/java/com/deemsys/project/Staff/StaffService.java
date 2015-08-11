@@ -166,4 +166,25 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 			return currentRole;
 		}
 	
+		
+		
+		public List<StaffForm> getStaffId()
+		{
+			List<StaffForm> staffForms=new ArrayList<StaffForm>();
+			
+			List<Staff> staffs=new ArrayList<Staff>();
+			
+			staffs=staffDAO.getStaffId();
+			
+			for (Staff staff : staffs) {
+				//TODO: Fill the List
+				
+				StaffForm staffForm=new StaffForm(staff.getId(), staff.getUsername());
+				staffForms.add(staffForm);
+				
+			}
+			
+			return staffForms;
+		}
+		
 }

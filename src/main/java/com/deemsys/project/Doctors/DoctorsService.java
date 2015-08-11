@@ -139,4 +139,24 @@ List<DoctorsForm> doctorsForms=new ArrayList<DoctorsForm>();
 		
 	}
 	
+	
+	
+	
+	public List<DoctorsForm> getDoctorId()
+	{
+		List<DoctorsForm> doctorsForms=new ArrayList<DoctorsForm>();
+		
+		List<Doctors> doctorss=new ArrayList<Doctors>();
+		
+		doctorss=doctorsDAO.getDoctorId();
+		
+		for (Doctors doctors : doctorss) {
+			//TODO: Fill the List
+			DoctorsForm doctorsForm=new DoctorsForm(doctors.getId());
+			doctorsForms.add(doctorsForm);
+		}
+		
+		return doctorsForms;
+	}
+	
 }

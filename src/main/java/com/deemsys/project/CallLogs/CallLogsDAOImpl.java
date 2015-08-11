@@ -3,8 +3,11 @@ package com.deemsys.project.CallLogs;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +15,7 @@ import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
 import com.deemsys.project.entity.Patients;
+import com.deemsys.project.entity.Staff;
 
 /**
  * 
@@ -149,6 +153,18 @@ public class CallLogsDAOImpl implements CallLogsDAO{
 	public List<CallLogs> getCallLogsByPatientsId(Integer id) {
 		// TODO Auto-generated method stub
 		return (List<CallLogs>)this.sessionFactory.getCurrentSession().createCriteria(CallLogs.class).add(Restrictions.eq("patients.id", id)).list();
+	}
+
+	@Override
+	public List<CallLogs> getCallLogsId() {
+		Criteria cr = sessionFactory.getCurrentSession().createCriteria(CallLogs.class)
+			    .setProjection(Projections.projectionList()
+			      .add(Projections.property("id"), "id"))
+			      
+			    .setResultTransformer(Transformers.aliasToBean(CallLogs.class));
+
+			  List<CallLogs> list = cr.list();
+		return list;
 	}
 
 }

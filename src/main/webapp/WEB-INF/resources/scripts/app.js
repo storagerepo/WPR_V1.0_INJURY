@@ -258,6 +258,7 @@ angular
             templateUrl:'views/patient/patient.html',
             controller: 'ShowPatientController',
             url:'/patient',
+            
             resolve: {
                 loadMyFile:function($ocLazyLoad) {
                   

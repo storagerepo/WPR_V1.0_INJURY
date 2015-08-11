@@ -77,5 +77,15 @@ public class DoctorsController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+    
+    
+    @RequestMapping(value="/getDoctorId",method=RequestMethod.GET)
+   	public String getDoctorId(ModelMap model)
+   	{
+    	model.addAttribute("doctorsForms",doctorsService.getDoctorId());
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
 	
 }

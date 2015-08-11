@@ -31,7 +31,7 @@ adminApp.controller('ShowStaffController', function($scope,$http,$location,$stat
  
 });
 
-adminApp.controller('SaveStaffController', function($scope,$http,$location,$state) {
+adminApp.controller('SaveStaffController', function($scope,$http,$location,$state,requestHandler) {
 
 	$scope.options=true;
 	$scope.title=$state.current.title;

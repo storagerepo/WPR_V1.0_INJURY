@@ -284,5 +284,11 @@ public class PatientsForm {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	public PatientsForm(Integer callerId ,Integer doctorId)
+	{
+		this.callerId=callerId;
+		this.doctorId=doctorId;
+	}
+	
 	
 	}

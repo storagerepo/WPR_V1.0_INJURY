@@ -84,6 +84,9 @@ public class CallLogsForm {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+	public CallLogsForm(Integer id)
+	{
+		this.id=id;
+	}
 	
 }

@@ -187,4 +187,45 @@ public class PatientsService {
 		
 		
 	
+		
+		public Integer getNoOfPatientss()
+		{
+			Integer count=0;
+			List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
+			
+			List<Patients> patientss=new ArrayList<Patients>();
+			
+			patientss=patientsDAO.getAll();
+			
+			Integer staffId=0,doctorId=0;
+			
+			
+			for (Patients patients : patientss) {
+				//TODO: Fill the List
+				staffId=0;doctorId=0;
+				if(patients.getStaff()!=null)
+					staffId=patients.getStaff().getId();
+				if(patients.getDoctors()!=null)
+					doctorId=patients.getDoctors().getId();
+					
+				
+				PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),InjuryConstants.convertMonthFormat(patients.getCrashDate()),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),InjuryConstants.convertMonthFormat(patients.getDateOfBirth()),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
+			patientsForms.add(patientsForm);
+			count++;
+			}
+
+			return count;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }

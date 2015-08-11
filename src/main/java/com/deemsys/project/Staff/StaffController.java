@@ -87,4 +87,15 @@ public class StaffController {
     	model.addAttribute("requestSuccess",true);
     	return "/returnPage";
     }
+    
+    
+    
+    
+    @RequestMapping(value="/Admin/getStaffId",method=RequestMethod.GET)
+   	public String getStaffId(ModelMap model)
+   	{
+    	model.addAttribute("staffForms",staffService.getStaffId());
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
 }

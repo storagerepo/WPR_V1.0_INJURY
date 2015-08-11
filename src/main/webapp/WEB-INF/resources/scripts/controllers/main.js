@@ -28,7 +28,7 @@ angular.module('sbAdminApp', ['requestModule'])
 	     });
   
 	 
-	  requestHandler.getRequest("Staff/getNoOfPatients.json","").then( function(response) {
+	  requestHandler.getRequest("Staff/getNoOfPatientss.json","").then( function(response) {
 	     $scope.patients= response.data.patientsForms;
 	   
 

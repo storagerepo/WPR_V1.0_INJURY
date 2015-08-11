@@ -18,6 +18,8 @@ public interface PatientsDAO extends IGenericDAO<Patients>{
 
 	public List<Patients> patientFileRead(String fileName);
 	
+	
+
 
 
 }

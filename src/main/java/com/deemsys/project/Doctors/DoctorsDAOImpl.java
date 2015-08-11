@@ -3,9 +3,13 @@ package com.deemsys.project.Doctors;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.Projection;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
@@ -133,6 +137,20 @@ public class DoctorsDAOImpl implements DoctorsDAO{
 	public List<Doctors> getActiveList() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Doctors> getDoctorId() {
+		// TODO Auto-generated method stubCriteria
+		 Criteria cr = sessionFactory.getCurrentSession().createCriteria(Doctors.class)
+				    .setProjection(Projections.projectionList()
+				      .add(Projections.property("id"), "id"))
+
+				    .setResultTransformer(Transformers.aliasToBean(Doctors.class));
+
+				  List<Doctors> list = cr.list();
+		
+		return list;
 	}
 
 	
