@@ -1,4 +1,3 @@
-
 package com.deemsys.project.patients;
 
 import java.io.BufferedOutputStream;
@@ -60,16 +59,32 @@ public class PatientsController {
    		return "/returnPage";
    	}
    
- 
-    @RequestMapping(value = "/addPatientFromFile" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
+ @RequestMapping(value = "/addPatientFromFile" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
     public String uploadFileHandler(
             @RequestParam("file") MultipartFile file,ModelMap model) {
-    
-    	patientsService.addPatientFromFile(file);
-    	model.addAttribute("requestSuccess",true);
-    	return "/returnPage";
-    
+	 if(!patientsService.addPatientFromFile((file)).equals("")){
+		 String errors = patientsService.addPatientFromFile(file);
+    	 if(!errors.equals("")){
+    	 String errorArray[] = errors.split("=");
+    	 for(int i=0;i<errorArray.length;i++){
+    	     model.addAttribute("msg"+i,errorArray[i]);
+    	      	 
+    	 }}
+    	      	 
+    	    }
+    	 
+    	 
+    	
+	else
+	{
+		model.addAttribute("requestSuccess",true);
+		
+	}
+	return "/returnPage";
+
+
     }
+    
     @RequestMapping(value="/getNoOfPatientss",method=RequestMethod.GET)
    	public String getNoOfPatientss(ModelMap model)
    	{
@@ -77,9 +92,5 @@ public class PatientsController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
-    
-    
-    
-   
     
 }

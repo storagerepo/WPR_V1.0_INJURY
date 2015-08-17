@@ -105,7 +105,7 @@ $("#file").val("");
 });
 
 
-adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader) {
+adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader,requestHandler) {
     var uploader = $scope.uploader = new FileUploader({
         url: 'http://localhost:8080/Injury/Staff/addPatientFromFile.json',
         queueLimit: 1
@@ -158,10 +158,76 @@ adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope,
     };
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
+       
+        $scope.us= response.msg1;
+        $scope.u= response.msg0;
+        
+        
+        if($scope.us== null && $scope.u== null)
+        	{
+        	$scope.a= "File Processed Successfully!";
+            
+        	}
+        else
+        	{
+        	$scope.a="File Upload Failed!";
+            $scope.b="Reason:";
+        	$scope.upload_status= response.msg1;
+        	$scope.upload_1= response.msg2;
+        	$scope.upload_2= response.msg3;
+        	$scope.upload_3= response.msg4;
+        	$scope.upload_4= response.msg5;
+        	$scope.upload_5= response.msg6;
+        	$scope.upload_6= response.msg7;
+        	$scope.upload_7= response.msg8;
+        	$scope.upload_8= response.msg9;
+        	$scope.upload_9= response.msg10;
+        	$scope.upload_10= response.ms11;
+        	$scope.upload_11= response.msg12;
+        	$scope.upload_12= response.msg13;
+        	$scope.upload_13= response.msg14;
+        	$scope.upload_14= response.msg15;
+        	$scope.upload_15= response.msg16;
+        	$scope.upload_16= response.msg17;
+        	$scope.upload_17= response.msg18;
+        	$scope.upload_18= response.msg19;
+        	$scope.upload_19= response.msg20;
+        	$scope.upload_20= response.msg21;
+        	$scope.upload_21= response.msg22;
+        	$scope.upload_22= response.msg23;
+        	$scope.upload_23= response.msg24;
+        	$scope.upload_24= response.msg25;
+        	$scope.upload_25= response.msg26;
+        	$scope.upload_26= response.msg27;
+        	$scope.upload_27= response.msg28;
+        	$scope.upload_28= response.msg29;
+        	$scope.upload_29= response.msg30;
+        	$scope.upload_30= response.msg31;
+        	$scope.upload_31= response.msg32;
+        	$scope.upload_32= response.msg33;
+        	$scope.upload_33= response.msg34;
+        	$scope.upload_34= response.msg35;
+        	$scope.upload_35= response.msg36;
+        	$scope.upload_36= response.msg37;
+        	$scope.upload_37= response.msg38;
+        	$scope.upload_38= response.msg39;
+        	$scope.upload_39= response.msg40;
+        	$scope.upload_40= response.msg41;
+        	$scope.upload_41= response.msg42;
+        	$scope.upload_42= response.msg43;
+        	$scope.upload_43= response.msg44;
+        	$scope.upload_44= response.msg45;
+        	$scope.upload_45= response.msg46;
+        	$scope.upload_46= response.msg47;
+        	$scope.upload_47= response.msg48;
+        	$scope.upload_48= response.msg49;
+        	$scope.upload_49= response.msg0;
+        	  	}
+      
     };
     uploader.onCompleteAll = function() {
         console.info('onCompleteAll');
-        $scope.upload_status="File Processed Successfully!";
+      
         $("#uploadSuccessAlert").show();
         uploader.clearQueue();
 
