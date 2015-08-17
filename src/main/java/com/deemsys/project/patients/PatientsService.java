@@ -183,7 +183,10 @@ public String addPatientFromFile(MultipartFile file)
         	    	   if(trimmedLastName.equals(","))
         	    	      {
         	    	     a="- Empty data is not allowed in POLICY NUMBER";
-        	    	      }if(lineNumber>1)
+        	    	      }
+        	    	  
+        	    	   if(lineNumber>1)
+        	    		   
         				{
         					patientArray=line.split(csvSplitBy);
         					System.out.println(patientArray[1]);
@@ -307,18 +310,15 @@ public String addPatientFromFile(MultipartFile file)
                 			        }
         							
 					
-					try
-					{
+					
        					if(i == 0)
 							   {
-							boolean q=patientArray[i].equals("");
-							a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
+       						if(patientArray[i].equals(""))
+       						{	a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
 						     
 							   }
 					}
-					catch (Exception e) {
-						System.out.println(i);
-					     }
+					
 
 				
 				if(i == 1)
@@ -503,13 +503,7 @@ public String addPatientFromFile(MultipartFile file)
 				 a=a+ " = - Empty data is not allowed in INSURANCE COMPANY";
 				   }
 			   }
-				if(i == 27)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in POLICY NUMBER";
-				   }
-				   }
+				
 				
 							   }
         					// validation ends
@@ -562,9 +556,9 @@ public String addPatientFromFile(MultipartFile file)
 	//Add Patient by File Upload
 		public void addPatients(List<Patients> patients)
 		{
-		for (Patients patient : patients) {
+		/*for (Patients patient : patients) {
 				patientsDAO.save(patient);	
-			}
+			}*/
 		}
 
 		
