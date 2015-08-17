@@ -180,7 +180,7 @@ public String addPatientFromFile(MultipartFile file)
         				System.out.println("note");
         				 System.out.println(line);
         				String trimmedLastName = line.substring(line.length() - 1);
-        	    	      if(trimmedLastName.equals(","))
+        	    	   if(trimmedLastName.equals(","))
         	    	      {
         	    	     a="- Empty data is not allowed in POLICY NUMBER";
         	    	      }if(lineNumber>1)
@@ -307,205 +307,356 @@ public String addPatientFromFile(MultipartFile file)
                 			        }
         							
 					
-					
+					try
+					{
        					if(i == 0)
 							   {
-							if(patientArray[i].equals(""))
-							{
-						   a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
+							boolean q=patientArray[i].equals("");
+							a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
+						     
 							   }
-							   }
+					}
+					catch (Exception e) {
+						System.out.println(i);
+					     }
 
-				
+					try
+					{
 				if(i == 1)
 						   {
-					if(patientArray[i].equals(""))
-					{
+					boolean q=patientArray[i].equals("");
+				
 						 a=a+ " = - Empty data is not allowed in CRASH SEVERITY";
 						   }
 						   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 2)
-				   {
-			if(patientArray[i].equals(""))
-			{
+				 {
+					boolean q=patientArray[i].equals("");
 				 a=a+ " = - Empty data is not allowed in REPORTING AGENCY NAME";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 3)
 				   {
-			if(patientArray[i].equals(""))
-			{
+					boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in NUMBER OF UNITS";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 4)
 				   {
-			if(patientArray[i].equals(""))
-			{
+			
+				boolean q=patientArray[i].equals("");
+				
+			
 				 a=a+ " = - Empty data is not allowed in UNIT IN ERROR";
 				   }
 				   }
+				catch (Exception e) {
+					System.out.println(i);
+				     }
+				
+					try
+					{
 				if(i == 5)
 				   {
-			if(patientArray[i].equals(""))
-			{
+					boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in COUNTY ";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 6)
 				   {
-	if(patientArray[i].equals(""))
-			{
+					boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in CITY VILLAGE TOWNSHIP *";
 				   }
 			   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{	
 				if(i == 7)
-				   {
-			if(patientArray[i].equals(""))
-			{
+				   {boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in CRASH DATE";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{	
 				if(i == 8)
 				   {
-			if(patientArray[i].equals(""))
-			{
+					boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in TIME OF CRASH";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 9)
 				   {
-			if(patientArray[i].equals(""))
-			{
+					boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 10)
 				   {
-			if(patientArray[i].equals(""))
-			{
+					boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in UNIT NUMBER";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 11)
-			   {
-			if(patientArray[i].equals(""))
-			{
+			   {boolean q=patientArray[i].equals("");
+				
 				 a=a+ " = - Empty data is not allowed in NAME: LAST FIRST MIDDLE";
 			}
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 12)
 				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in DATE OF BIRTH";
+					boolean q=patientArray[i].equals("");
+						 a=a+ " = - Empty data is not allowed in DATE OF BIRTH";
 			}
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+
+					try
+					{
 				if(i == 13)
 				   {
-			if(patientArray[i].equals(""))
-			{
+					boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in GENDER";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 14)
 				   {
-			if(patientArray[i].equals(""))
-			{
+					boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in ADDRESS CITY STATE ZIP";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 15)
 				   {
-			if(patientArray[i].equals(""))
-			{
+					boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in CONTACT PHONE - INCLUDE AREA CODE";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{	
 			if(i == 16)
 				   {
-			if(patientArray[i].equals(""))
-			{
+				boolean q=patientArray[i].equals("");
+				
 				 a=a+ " = - Empty data is not allowed in INJURIES";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 17)
 				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in EMS AGENCY";
+					boolean q=patientArray[i].equals("");
+						 a=a+ " = - Empty data is not allowed in EMS AGENCY";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 18)
-				   {
-			if(patientArray[i].equals(""))
-			{
+				   {boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in MEDICAL FACILITY INJURED TAKEN TO";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 19)
 				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
+					boolean q=patientArray[i].equals("");
+						 a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
 			   }
 			   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i ==20)
-				   {
-			if(patientArray[i].equals(""))
-			{
+				   {boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in UNIT IN ERROR";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 21)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in UNIT NUMBER";
+				   {boolean q=patientArray[i].equals("");
+						 a=a+ " = - Empty data is not allowed in UNIT NUMBER";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+				
+					try
+					{
 		if(i == 22)
-				   {
-			if(patientArray[i].equals(""))
-			{
+		  {boolean q=patientArray[i].equals("");
+			
 				 a=a+ " = - Empty data is not allowed in OWNER NAME";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 23)
-				   {
-			if(patientArray[i].equals(""))
-			{
+				 {boolean q=patientArray[i].equals("");
+					
 				 a=a+ " = - Empty data is not allowed in OWNER PHONE NUMBER";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 24)
-				   {
-			if(patientArray[i].equals(""))
-			{
+				{boolean q=patientArray[i].equals("");
+				
 				 a=a+ " = - Empty data is not allowed in DAMAGE SCALE";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 25)
-				   {
-			if(patientArray[i].equals(""))
-			{
+				{boolean q=patientArray[i].equals("");
+				
 				 a=a+ " = - Empty data is not allowed in PROOF OF INSURANCE";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 26)
-				   {
-			if(patientArray[i].equals(""))
-			{
+				{boolean q=patientArray[i].equals("");
+				
 				 a=a+ " = - Empty data is not allowed in INSURANCE COMPANY";
 				   }
 			   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+					
+					try
+					{
 				if(i == 27)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in POLICY NUMBER";
+				{boolean q=patientArray[i].equals("");
+					 a=a+ " = - Empty data is not allowed in POLICY NUMBER";
 				   }
 				   }
+					catch (Exception e) {
+						System.out.println(i);
+					     }
+				
 							   }
         					// validation ends
         					patients.add(new Patients(null, null, patientArray[0], Integer.parseInt(patientArray[1]), patientArray[2],Integer.parseInt(patientArray[3]), Integer.parseInt(patientArray[4]),patientArray[5], patientArray[6], InjuryConstants.convertYearFormat(patientArray[7]), patientArray[8], patientArray[9],Integer.parseInt(patientArray[10]), patientArray[11], InjuryConstants.convertYearFormat(patientArray[12]), patientArray[13].trim(), patientArray[14], patientArray[15], Integer.parseInt(patientArray[16]), patientArray[17], patientArray[18], patientArray[19],Integer.parseInt(patientArray[20]),Integer.parseInt(patientArray[21]), patientArray[22], patientArray[23], Integer.parseInt(patientArray[24]), patientArray[25], patientArray[26], patientArray[27]));
@@ -540,7 +691,7 @@ public String addPatientFromFile(MultipartFile file)
         		//try ends
         		if(a == ""){
                 //Now add the patients in DB
-                addPatients(patients);
+               addPatients(patients);
             }
                 serverFile.delete();
                
