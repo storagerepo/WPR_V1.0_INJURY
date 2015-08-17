@@ -152,7 +152,7 @@ List<DoctorsForm> doctorsForms=new ArrayList<DoctorsForm>();
 		
 		for (Doctors doctors : doctorss) {
 			//TODO: Fill the List
-			DoctorsForm doctorsForm=new DoctorsForm(doctors.getId());
+			DoctorsForm doctorsForm=new DoctorsForm(doctors.getId(),doctors.getName());
 			doctorsForms.add(doctorsForm);
 		}
 		

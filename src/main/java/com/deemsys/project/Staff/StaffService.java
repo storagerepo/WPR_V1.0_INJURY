@@ -5,12 +5,17 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
+import com.deemsys.project.patients.PatientsForm;
 /**
  * 
  * @author Deemsys
@@ -41,13 +46,20 @@ public class StaffService {
 		
 		for (Staff staff : staffs) {
 			//TODO: Fill the List
+			try{
 			if(staff.getRole().equalsIgnoreCase("ROLE_ADMIN"))
 			{
-			
+				StaffForm staffForm=new StaffForm();
+				
 			}
 			else{
 			StaffForm staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
 			staffForms.add(staffForm);
+			}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
 			}
 		}
 		
@@ -156,6 +168,7 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 			User user = (User) SecurityContextHolder.getContext()
 					.getAuthentication().getPrincipal();
 			Object[] role = user.getAuthorities().toArray();
+		
 			
 			if(role[0].toString().equals("ROLE_STAFF")){
 				currentRole="ROLE_STAFF";
@@ -174,17 +187,80 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 			
 			List<Staff> staffs=new ArrayList<Staff>();
 			
-			staffs=staffDAO.getStaffId();
+			staffs=staffDAO.getAll();
 			
 			for (Staff staff : staffs) {
 				//TODO: Fill the List
-				
-				StaffForm staffForm=new StaffForm(staff.getId(), staff.getUsername());
+				try{
+				if(staff.getRole().equals("ROLE_STAFF"))
+				{
+				StaffForm staffForm=new StaffForm(staff.getId(), staff.getFirstName());
 				staffForms.add(staffForm);
-				
+				}
+				else
+				{
+					StaffForm staffForm=new StaffForm ();
+				}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			}
 			
 			return staffForms;
 		}
+		
+		
+		public List<PatientsForm> getPatientsByAccessToken()
+		{
+			
+			User user = (User) SecurityContextHolder.getContext()
+					.getAuthentication().getPrincipal();
+			String username=user.getUsername();
+			System.out.println(username);
+			Staff staff=staffDAO.getByUserName(username);
+						Integer id=staff.getId();
+						
+						
+						
+			List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
+			
+			List<Patients> patientss=new ArrayList<Patients>();
+			
+			if(id!=null)
+			{
+			patientss=staffDAO.getPatientsByAccessToken(id);
+			
+			Integer staffId=0,doctorId=0;
+			
+			
+			for (Patients patients : patientss) {
+				//TODO: Fill the List
+				staffId=0;doctorId=0;
+				if(patients.getStaff()!=null)
+					staffId=patients.getStaff().getId();
+				if(patients.getDoctors()!=null)
+					doctorId=patients.getDoctors().getId();
+					
+				
+				PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),InjuryConstants.convertMonthFormat(patients.getCrashDate()),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),InjuryConstants.convertMonthFormat(patients.getDateOfBirth()),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
+			patientsForms.add(patientsForm);
+			}
+			}
+			else
+			{
+				PatientsForm patientsForm=new  PatientsForm	();
+			}
+			
+			return patientsForms;
+		}
+		
+		
+				
+		
+		
+		
+		
 		
 }

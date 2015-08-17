@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
 
 /**
@@ -205,11 +206,20 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 		 Criteria cr = sessionFactory.getCurrentSession().createCriteria(Staff.class)
 				    .setProjection(Projections.projectionList()
 				      .add(Projections.property("id"), "id")
-				      .add(Projections.property("username"), "username"))
+				      .add(Projections.property("firstName"), "firstName"))
 				    .setResultTransformer(Transformers.aliasToBean(Staff.class));
 
 				  List<Staff> list = cr.list();
 		return list;
+	}
+
+	
+	
+	
+	@Override
+	public List<Patients> getPatientsByAccessToken(Integer callerId) {
+		// TODO Auto-generated method stub
+		return (List<Patients>)this.sessionFactory.getCurrentSession().createCriteria(Patients.class).add(Restrictions.eq("staff.id", callerId)).list();
 	}
 
 	

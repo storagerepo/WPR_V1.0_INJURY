@@ -250,9 +250,9 @@ adminApp.controller('EditPatientController', function($scope,$http,$location,$st
 		     
 		  
 		     });
-	requestHandler.getRequest("Staff/getCallLogsId.json","").then( function(response) {
+	requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {
 		
-	     $scope.callLogs= response.data.callLogsForms;
+	     $scope.staff= response.data.staffForms;
 	     
 	     
 	  

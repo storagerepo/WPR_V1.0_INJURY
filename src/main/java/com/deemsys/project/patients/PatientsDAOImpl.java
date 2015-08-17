@@ -15,6 +15,7 @@ import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
 import com.deemsys.project.entity.Patients;
+import com.deemsys.project.entity.Staff;
 
 /**
  * 
@@ -178,6 +179,7 @@ public class PatientsDAOImpl implements PatientsDAO{
 		return null;
 	}
 
+	
 
 	
 	

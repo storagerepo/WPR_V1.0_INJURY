@@ -128,9 +128,11 @@ public class DoctorsForm {
 	}
 	
 	
-	public DoctorsForm(Integer id)
+	public DoctorsForm(Integer id,String name)
 	{
 		this.id=id;
+		this.name=name;
+		
 
 	}
 	

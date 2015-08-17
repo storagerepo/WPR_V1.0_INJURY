@@ -85,6 +85,10 @@ public class PatientsController {
 
     }
     
+    
+    
+    
+    
     @RequestMapping(value="/getNoOfPatientss",method=RequestMethod.GET)
    	public String getNoOfPatientss(ModelMap model)
    	{

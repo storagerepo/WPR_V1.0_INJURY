@@ -106,9 +106,9 @@ public class StaffForm {
 	
 	
 	
-	public StaffForm(Integer id, String username)
+	public StaffForm(Integer id, String firstName)
 	{
 		this.id=id;
-		this.username=username;
+		this.firstName=firstName;
 	}
 }

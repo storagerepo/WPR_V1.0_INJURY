@@ -98,4 +98,14 @@ public class StaffController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+    
+    @RequestMapping(value="/Staff/getPatientsByAccessToken",method=RequestMethod.GET)
+   	public String getPatientsByAccessToken(ModelMap model)
+   	{
+       	model.addAttribute("patientsForm",staffService.getPatientsByAccessToken());
+       	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+    
 }

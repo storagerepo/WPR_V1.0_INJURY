@@ -144,7 +144,8 @@ public class DoctorsDAOImpl implements DoctorsDAO{
 		// TODO Auto-generated method stubCriteria
 		 Criteria cr = sessionFactory.getCurrentSession().createCriteria(Doctors.class)
 				    .setProjection(Projections.projectionList()
-				      .add(Projections.property("id"), "id"))
+				      .add(Projections.property("id"), "id")
+				      .add(Projections.property("name"), "name"))
 
 				    .setResultTransformer(Transformers.aliasToBean(Doctors.class));
 
