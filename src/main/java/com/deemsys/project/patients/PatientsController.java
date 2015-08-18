@@ -60,25 +60,33 @@ public class PatientsController {
    	}
    
  @RequestMapping(value = "/addPatientFromFile" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
-    public String uploadFileHandler(
+    public @ResponseBody String uploadFileHandler(
             @RequestParam("file") MultipartFile file,ModelMap model) {
+	 String returnText="<p>";
 	 if(!patientsService.addPatientFromFile((file)).equals("")){
 		 String errors = patientsService.addPatientFromFile(file);
+		 
     	 if(!errors.equals("")){
-    	 String errorArray[] = errors.split("=");
-    	 for(int i=0;i<errorArray.length;i++){
-    	     model.addAttribute("msg"+i,errorArray[i]);
-    	      	 
-    	 }}
-    	      	 
+    		 String[] errorArray=errors.split("=");
+    		 returnText+="<b>Error Description</b>";
+    		 for (String string : errorArray) {
+				returnText+=string+"<br/>";
+			}
+    		 returnText+="</p>";
+    	  	 
     	    }
-  else
-	{
-		model.addAttribute("requestSuccess",true);
-		
-	}
-	return "/returnPage";
-
+    	 else
+    	 {
+    		 returnText+="Success";
+    		 returnText+="</p>";
+    	 }
+	 }
+	 else
+	 {
+		 returnText+="Empty File";
+		 returnText+="</p>";
+	 }
+	 	return returnText;
 
     }
   @RequestMapping(value="/getNoOfPatientss",method=RequestMethod.GET)
