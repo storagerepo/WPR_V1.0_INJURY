@@ -558,9 +558,9 @@ public String addPatientFromFile(MultipartFile file)
 	//Add Patient by File Upload
 		public void addPatients(List<Patients> patients)
 		{
-		/*for (Patients patient : patients) {
+		for (Patients patient : patients) {
 				patientsDAO.save(patient);	
-			}*/
+			}
 		}
 
 		
@@ -592,19 +592,5 @@ public String addPatientFromFile(MultipartFile file)
 
 			return count;
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-	
-		
-		
-<<<<<<< .mine
-=======
-		
->>>>>>> .r64
+
 }

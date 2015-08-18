@@ -24,7 +24,7 @@
                                 <td class="col-md-4">
                                     <label>Local&nbsp;&nbsp;&nbsp; ReportNumber:</label>
                                     <input type="text" class="form-control"  ng-model="patient.localReportNumber" name="localReportNumber" placeholder="Enter LocalReportNumber"  required>
-                                    <div class="error-container" ng-show="myForm.localReportNumber.$dirty && myForm.localReportNumbere.$invalid">
+                                    <div class="error-container" ng-show="myForm.localReportNumber.$dirty && myForm.localReportNumber.$invalid">
                                     <span style="color:red" ng-show="myForm.localReportNumber.$error.required">Please Enter LocalReportNumber</span>
                                      </div><br></td>
                                      
@@ -67,7 +67,7 @@
                                          
                                           <td class="col-md-4">
                                     <label>Unit  &nbsp;&nbsp;&nbsp; InError:</label>
-                                    <input tyep="text" class="form-control"  ng-model="patient.unitInError" name="injury" placeholder="Enter UnitInError"  required>
+                                    <input tyep="text" class="form-control"  ng-model="patient.unitInError" name="unitInError" placeholder="Enter UnitInError"  required>
                                     <div class="error-container" ng-show="myForm.unitInError.$dirty && myForm.unitInError.$invalid">
                                      <span style="color:red" ng-show="myForm.unitInError.$error.required">Please Enter UnitInError</span>
                                    </div><br>
@@ -95,21 +95,23 @@
                                       <span style="color:red" ng-show="myForm.cityVillageTownship.$error.required">Please Enter CityVillageTownship</span>
                                      </div><br></td>
                                 
+                                <td class="col-md-4">
+                                 <label>CrashDate:</label>
+                                    <input  type="text" class="form-control"  ng-model="patient.crashDate" name="crashDate" placeholder="Enter CrashDate"  required>
+                                    <div class="error-container" ng-show="myForm.crashDate.$dirty && myForm.crashDate.$invalid">
+                                       <span style="color:red" ng-show="myForm.crashDate.$error.required">Please Enter CrashDate</span>
+                                         </div><br>
+                                         </td>
 								
-								<td class="col-md-4" >
-									<label>CrashDate:</label>
-                                 <input type="text" class="form-control"  ng-model="patient.crashDate" name="crashDate" placeholder="Enter CrashDate"  required>								<div class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">
-                               <div class="error-container" ng-show="myForm.crashDate.$dirty && myForm.crashDate.$invalid">
-                                      <span style="color:red" ng-show="myForm.crashDate.$error.required">Please Enter CrashDate</span>
-                                     </div><br></td>
+				
                               
-                              
-                              <td class="col-md-4" >
-									<label>Time &nbsp;&nbsp;Of&nbsp;&nbsp; Crash:</label>
-                                  <input type="text" class="form-control"  ng-model="patient.timeOfCrash" name="timeOfCrash" placeholder="Enter TimeOfCrash"  required>								<div class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">
-                                 <div class="error-container" ng-show="myForm.timeOfCrash.$dirty && myForm.timeOfCrash.$invalid">
-                                      <span style="color:red" ng-show="myForm.timeOfCrash.$error.required">Please Enter TimeOfCrash</span>
-                                     </div><br></td></tr>
+                              <td class="col-md-4">
+                                 <label>Time &nbsp;&nbsp;Of&nbsp;&nbsp; Crash:</label>
+                                    <input  type="text" class="form-control"  ng-model="patient.timeOfCrash" name="timeOfCrash" placeholder="Enter TimeOfCrash"  required>
+                                    <div class="error-container" ng-show="myForm.timeOfCrash.$dirty && myForm.timeOfCrash.$invalid">
+                                       <span style="color:red" ng-show="myForm.timeOfCrash.$error.required">Please Enter TimeOfCrash</span>
+                                         </div><br>
+                                         </td></tr>
 								
 								
 								
@@ -276,7 +278,7 @@
                                  <td class="col-md-4">
                                  <label>Damage &nbsp;&nbsp;&nbsp;  Scale:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.damageScale" name="damageScale" placeholder="Enter DamageScale"  required>
-                                    <div class="error-container" ng-show="myForm.damageScale.$dirty && myForm.pdamageScale.$invalid">
+                                    <div class="error-container" ng-show="myForm.damageScale.$dirty && myForm.damageScale.$invalid">
                                        <span style="color:red" ng-show="myForm.damageScale.$error.required">Please Enter DamageScale</span>
                                          </div><br>
                                          </td>
@@ -324,8 +326,8 @@
                                          <option  ng-repeat="staffs in staff" value="{{staffs.id}}">{{staffs.firstName}}</option>
                                         
                                   </select>
-                                    <div class="error-container" ng-show="myForm.dateOfCrash.$dirty && myForm.dateOfCrash.$invalid">
-                                      <span style="color:red" ng-show="myForm.dateOfCrash.$error.required">Please Enter Date Of Crash</span>
+                                    <div class="error-container" ng-show="myForm.callerId.$dirty && myForm.callerId.$invalid">
+                                      <span style="color:red" ng-show="myForm.callerId.$error.required">Please Enter Caller Id</span>
                                      </div></div><br>
                                       </td>
                                   
@@ -341,8 +343,8 @@
                                          <option  ng-repeat="doctors in doctor" value="{{doctors.id}}">{{doctors.name}}</option>
                                         
                                   </select>
-                                    <div class="error-container" ng-show="myForm.dateOfCrash.$dirty && myForm.dateOfCrash.$invalid">
-                                      <span style="color:red" ng-show="myForm.dateOfCrash.$error.required">Please Enter Date Of Crash</span>
+                                    <div class="error-container" ng-show="myForm.doctorId.$dirty && myForm.doctorId.$invalid">
+                                      <span style="color:red" ng-show="myForm.doctorId.$error.required">Please Enter Doctor Id</span>
                                      </div></div><br>
                                       </td>
 								</tr>

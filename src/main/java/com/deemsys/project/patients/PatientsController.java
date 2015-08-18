@@ -72,10 +72,7 @@ public class PatientsController {
     	 }}
     	      	 
     	    }
-    	 
-    	 
-    	
-	else
+  else
 	{
 		model.addAttribute("requestSuccess",true);
 		
@@ -84,12 +81,7 @@ public class PatientsController {
 
 
     }
-    
-    
-    
-    
-    
-    @RequestMapping(value="/getNoOfPatientss",method=RequestMethod.GET)
+  @RequestMapping(value="/getNoOfPatientss",method=RequestMethod.GET)
    	public String getNoOfPatientss(ModelMap model)
    	{
     	model.addAttribute("patientsForms",patientsService.getNoOfPatientss());
