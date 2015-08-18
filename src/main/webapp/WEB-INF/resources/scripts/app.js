@@ -321,7 +321,7 @@ angular
      
 
 
-  }]);
+ 
 
 
 angular.module('sbAdminApp')
@@ -366,3 +366,52 @@ angular.module('sbAdminApp').factory('loginFactory',function(){
 	
 	return isRole;
 });
+
+
+
+angular.module('sbAdminApp').factory('UserService', function () {
+
+	  var currentUser = null;
+
+	  var adminRoles = ['ROLE_STAFF', 'editor'];
+	  var otherRoles = ['ROLE_ADMIN'];
+
+	  return {
+	    // some code that gets and sets the user to the singleton variable...
+
+	    validateRoleAdmin: function () {
+	      return _.contains(adminRoles, currentUser.role);
+	    },
+
+	    validateRoleOther: function () {
+	      return _.contains(otherRoles, currentUser.role);
+	    }
+	  };
+	});
+
+
+angular.module('sbAdminApp').run(function ($rootScope, $location, AuthenticationService, UserService) {
+
+	  var routesThatDontRequireAuth = ['/login'];
+	  var routesThatForAdmins = ['/staff'];
+
+	 
+	  var routeClean = function(route) { }
+	  
+	  var routeAdmin = function(route) { }
+
+	  $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
+	    if (!routeClean($location.url()) && !AuthenticationService.isLoggedIn()) {
+	    
+	      $location.path('/login');
+	    }
+	    else if (routeAdmin($location.url())&& !UserService.validateRoleAdmin()) {
+	      // redirect to error page
+	      $location.path('/login');
+	    }
+	  
+	  });
+	});
+
+
+  }]);
