@@ -190,22 +190,10 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 			staffs=staffDAO.getAll();
 			
 			for (Staff staff : staffs) {
-				//TODO: Fill the List
-				try{
-				if(staff.getRole().equals("ROLE_STAFF"))
-				{
-				StaffForm staffForm=new StaffForm(staff.getId(), staff.getFirstName());
+				
+				StaffForm staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
 				staffForms.add(staffForm);
-				}
-				else
-				{
-					StaffForm staffForm=new StaffForm ();
-				}
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
+				
 			}
 			
 			return staffForms;

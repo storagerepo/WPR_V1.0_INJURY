@@ -70,7 +70,7 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 	@Override
 	public List<Staff> getAll() {
 		// TODO Auto-generated method stub
-		return this.sessionFactory.getCurrentSession().createCriteria(Staff.class).list();
+		return this.sessionFactory.getCurrentSession().createCriteria(Staff.class).add(Restrictions.eq("role", "ROLE_STAFF")).list();
 	}
 
 	@Override
