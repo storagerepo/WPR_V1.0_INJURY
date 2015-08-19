@@ -18,6 +18,7 @@ public class AppointmentsForm {
 	
 	private Integer id;
 	private Integer patientId;
+	private String patientName;
 	private String scheduledDate;
 	private String notes;
 	private Integer status;
@@ -52,11 +53,12 @@ public class AppointmentsForm {
 		this.status = status;
 	}
 	
-	public AppointmentsForm(Integer id, Integer patientId,
+	public AppointmentsForm(Integer id, Integer patientId,String patientName,
 			String scheduledDate, String notes, Integer status) {
 		super();
 		this.id = id;
 		this.patientId = patientId;
+		this.patientName=patientName;
 		this.scheduledDate = scheduledDate;
 		this.notes = notes;
 		this.status = status;
@@ -69,6 +71,12 @@ public class AppointmentsForm {
 	}
 	public AppointmentsForm() {
 		// TODO Auto-generated constructor stub
+	}
+	public String getPatientName() {
+		return patientName;
+	}
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
 	}
 	
 	

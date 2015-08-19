@@ -12,8 +12,6 @@
 <div class="row">
     <div class="col-lg-12">           
             <!-- /.panel-heading -->
-            <div class="col-md-12">
-          <div class="col-md-12">
             <div class="col-md-4">
          Select Date :
          <div class='input-group'>
@@ -22,15 +20,15 @@
 																class="glyphicon glyphicon-calendar"></span>
 															</span>
 															</div>
-         </div>
-            </div>
+        </div>
+        
                   <table class="table table-hover" id="dataTables-example">
                      
                           <thead>
 	        <tr>
 						
                 <th ng-mousedown="sort('scheduledDate')">Date   <span class="glyphicon sort-icon" ng-show="sortKey=='scheduledDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-               
+               <th ng-mousedown="sort('patientName')">Patient Name   <span class="glyphicon sort-icon" ng-show="sortKey=='patientName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
             	 	 <th ng-mousedown="sort('notes')">Notes   <span class="glyphicon sort-icon" ng-show="sortKey=='notes'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
              	 <th ng-mousedown="sort('status')">Status   <span class="glyphicon sort-icon" ng-show="sortKey=='status'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
@@ -39,7 +37,8 @@
                 	 <tr>    
             <th>  <input type="text"  class="form-control"  ng-model="search.scheduledDate" placeholder="Date"></label>
            </th>
-           			
+           	<th>  <input type="text"  class="form-control"  ng-model="search.patientName" placeholder="Patient Name"></label>
+           </th>		
             <th>  <input type="text"  class="form-control"  ng-model="search.notes" placeholder="Notes"></label>
            </th>
             <th>  <input type="text"  class="form-control"  ng-model="search.status" placeholder="Status"></label>
@@ -52,6 +51,7 @@
 	<tr>
 		
 		<td>{{appointment.scheduledDate}}</td>
+		<td>{{appointment.patientName}}</td>
 <td>{{appointment.notes}}</td>
 		 	
   <td>
@@ -62,7 +62,7 @@
 
   </td><td>
   <a ng-click="viewPatients(appointment.patientId)" class="btn btn-xs btn-primary"><i
-								class="glyphicon glyphicon-eye-open"></i>&nbsp; View patients
+								class="glyphicon glyphicon-eye-open"></i>&nbsp; View patients details
 						
 </a></td>
 		 

@@ -123,7 +123,6 @@ $("#file").val("");
 	$scope.assignCaller=function(id,callerId)
 	{
 		$scope.title="Assign Caller";
-		alert(id);
 		$scope.assignPatientId=id;
 		$scope.selectedCaller=callerId;
 		requestHandler.getRequest("Staff/getPatients.json?id="+$scope.assignPatientId).then( function(response) {
@@ -159,16 +158,15 @@ $("#file").val("");
 	$scope.assignDoctor=function(id,callerId)
 	{
 		$scope.title="Assign Doctor";
-		alert(id);
 		$scope.assignPatientId=id;
 		$scope.selectedCaller=callerId;
 		requestHandler.getRequest("Staff/getPatients.json?id="+$scope.assignPatientId).then( function(response) {
 			$scope.patients= response.data.patientsForm;
 		});
 		
-			requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {			
-			     $scope.staffs= response.data.staffForms;
-			     $("#assignCallerModel").modal("show");
+			requestHandler.getRequest("/Staff/getAllDoctorss.json","").then( function(response) {			
+			     $scope.doctors= response.data.doctorsForms;
+			     $("#assignDoctorModel").modal("show");
 			});
 		
 		
@@ -179,11 +177,12 @@ $("#file").val("");
 	$scope.updateDoctor=function()
 	{
 		var doUpdate=requestHandler.postRequest('Staff/updatePatients.json',$scope.patients).then(function(response) {
-			$("#assignCallerModel").modal("hide");
+			$("#assignDoctorModel").modal("hide");
 			
 		});
 		
 		doUpdate.then(function(){
+			$("#assignDoctorModel").modal("hide");
 			requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 			     $scope.patients= response.patientsForms;
 			     });
@@ -197,7 +196,7 @@ $("#file").val("");
 
 adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader,requestHandler,$state) {
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://localhost:8081/Injury/Staff/addPatientFromFile.json',
+        url: 'http://192.168.1.236:8089/Injury/Staff/addPatientFromFile.json',
         queueLimit: 1
     });
     

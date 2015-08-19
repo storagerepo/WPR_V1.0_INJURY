@@ -53,7 +53,7 @@ public class AppointmentsService {
 		
 		for (Appointments appointments : appointmentss) {
 			//TODO: Fill the List
-			AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
+			AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
 			appointmentsForms.add(appointmentsForm);
 		}
 		
@@ -70,7 +70,7 @@ public class AppointmentsService {
 		//TODO: Convert Entity to Form
 		//Start
 		
-		AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
+		AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
 			
 		//End
 		
@@ -187,7 +187,7 @@ public class AppointmentsService {
 				appointmentss=appointmentsDAO.todaysAppointment();
 				for (Appointments appointments : appointmentss) {
 					//TODO: Fill the List
-					AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
+					AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
 					appointmentsForms.add(appointmentsForm);
 				}
 
@@ -209,7 +209,7 @@ public class AppointmentsService {
 				
 				for (Appointments appointments : appointmentss) {
 					//TODO: Fill the List
-					AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
+					AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
 					appointmentsForms.add(appointmentsForm);
 				}
 		
@@ -235,7 +235,7 @@ public class AppointmentsService {
 				
 				for (Appointments appointments : appointmentss) {
 					//TODO: Fill the List
-					AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
+					AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
 					appointmentsForms.add(appointmentsForm);
 					count++;
 				}

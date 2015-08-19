@@ -60,11 +60,11 @@
 						</a>
 						</span>
 						<span ng-hide="isAdmin">
-						<a title="doctor" ng-hide="{{patients.callerId}}==''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-success">&nbsp;<i
-								class="glyphicon glyphicon-plus"></i>
+						<a title="doctor" ng-hide="{{patients.doctorId}}==''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" class="btn btn-xs btn-success">&nbsp;<i
+								class="glyphicon glyphicon-correct"></i>
 						</a>
-						<a title="doctor" ng-hide="{{patients.callerId}}!=''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-danger">&nbsp;<i
-								class="glyphicon glyphicon-plus"></i>
+						<a title="doctor" ng-hide="{{patients.doctorId}}!=''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" class="btn btn-xs btn-danger">&nbsp;<i
+								class="glyphicon glyphicon-cross"></i>
 						</a>
 						</span>
 						
@@ -84,8 +84,7 @@
 
 <!--  Assign Modal -->
 <div class="modal fade" id="assignCallerModel" role="dialog">
-    <div class="modal-dialog">
-    
+    <div class="modal-dialog">    
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -100,9 +99,7 @@
   							  <option value="">-- Select Caller --</option>
 						  </select>   
                            </div>
-                                 
         </div>
-       
         <div class="modal-footer">
          <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
              <a type="submit" class="btn btn-success"  ng-disabled='myForm.$invalid' ng-click="updateCaller()">Assign</a>
@@ -111,8 +108,36 @@
       
     </div>
  </div>
-
 <!-- End Assign Model -->
+
+<!--  Doctor Assign Modal -->
+<div class="modal fade" id="assignDoctorModel" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Assign Doctor - Patient - {{assignPatientId}}</h4>
+        </div>
+        <div class="modal-body">
+             
+              <label>Select the Doctor</label>
+                          <div class="col-md-12 input-group">
+                           <select class="form-control" ng-model="patients.doctorId" name="doctorId" id="doctorId" ng-options="doctor.id as doctor.name for doctor in doctors">
+  							  <option value="">-- Select Doctor --</option>
+						  </select>   
+                           </div>
+        </div>
+        <div class="modal-footer">
+         <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
+             <a type="submit" class="btn btn-success"  ng-disabled='myForm.$invalid' ng-click="updateDoctor()">Assign</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+<!-- End Assign Model -->
+
 
 
 

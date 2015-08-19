@@ -3,10 +3,11 @@ var myApp=angular.module("requestModule",[]);
 myApp.factory("requestHandler",['$http',function($http){
     
     var requestObj={};
+    var appURL="http://192.168.1.236:8089";
 
     requestObj.getRequest=function(requestURL,params){
 
-         requestURL="http://localhost:8081/Injury/"+requestURL;
+         requestURL=appURL+"/Injury/"+requestURL;
          return $http.get(requestURL,params).then(function (results) {  
             return results;   
          });
@@ -15,7 +16,7 @@ myApp.factory("requestHandler",['$http',function($http){
     
 requestObj.postFileUpload=function(requestURL,data,params){      
         
-        requestURL="http://localhost:8081/Injury/"+requestURL;
+        requestURL=appURL+"/Injury/"+requestURL;
         transformRequest: angular.identity,
         headers={'Content-Type': undefined},
         data= data;
@@ -28,7 +29,7 @@ requestObj.postFileUpload=function(requestURL,data,params){
     
     requestObj.postRequest=function(requestURL,params){      
        
-        requestURL="http://localhost:8081/Injury/"+requestURL;
+        requestURL=appURL+"/Injury/"+requestURL;
       
         return $http.post(requestURL,params).then(function (results) {
                 return results;
@@ -37,7 +38,7 @@ requestObj.postFileUpload=function(requestURL,data,params){
  
     
     requestObj.deletePostRequest=function(requestURL,params){
-    	 requestURL="http://localhost:8081/Injury/"+requestURL+params;
+    	 requestURL=appURL+"Injury/"+requestURL+params;
     	 return $http({
 			  method : "POST",
 			  url : requestURL,

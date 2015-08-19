@@ -17,13 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
-@RequestMapping("/Admin")
 public class DoctorsController {
 	
 	@Autowired
 	DoctorsService doctorsService;
 
-    @RequestMapping(value="/getDoctors",method=RequestMethod.GET)
+    @RequestMapping(value="/Admin/getDoctors",method=RequestMethod.GET)
 	public String getDoctors(@RequestParam("id") Integer id,ModelMap model)
 	{
     	model.addAttribute("doctorsForm",doctorsService.getDoctors(id));
@@ -32,7 +31,7 @@ public class DoctorsController {
 	}
 	
     
-    @RequestMapping(value="/mergeDoctors",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/mergeDoctors",method=RequestMethod.POST)
    	public String mergeDoctors(@RequestBody DoctorsForm doctorsForm,ModelMap model)
    	{
     	doctorsService.mergeDoctors(doctorsForm);
@@ -40,7 +39,7 @@ public class DoctorsController {
    		return "/returnPage";
    	}
     
-    @RequestMapping(value="/saveUpdateDoctors",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/saveUpdateDoctors",method=RequestMethod.POST)
    	public String saveDoctors(@RequestBody DoctorsForm doctorsForm,ModelMap model)
    	{
     	if(doctorsForm.getId()==null)
@@ -52,7 +51,7 @@ public class DoctorsController {
    	}
    
     
-    @RequestMapping(value="/deleteDoctors",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/deleteDoctors",method=RequestMethod.POST)
    	public String deleteDoctors(@RequestParam("id") Integer id,ModelMap model)
    	{
     	
@@ -61,7 +60,7 @@ public class DoctorsController {
    		return "/returnPage";
    	}
     
-    @RequestMapping(value="/getAllDoctorss",method=RequestMethod.GET)
+    @RequestMapping(value="/Staff/getAllDoctorss",method=RequestMethod.GET)
    	public String getAllDoctorss(ModelMap model)
    	{
     	model.addAttribute("doctorsForms",doctorsService.getDoctorsList());
@@ -70,7 +69,7 @@ public class DoctorsController {
    	}
     
     
-    @RequestMapping(value="/getNoOfDoctors",method=RequestMethod.GET)
+    @RequestMapping(value="/Staff/getNoOfDoctors",method=RequestMethod.GET)
    	public String getNoOfDoctors(ModelMap model)
    	{
     	model.addAttribute("doctorsForms",doctorsService.getNoOfDoctors());
@@ -80,7 +79,7 @@ public class DoctorsController {
     
     
     
-    @RequestMapping(value="/getDoctorId",method=RequestMethod.GET)
+    @RequestMapping(value="/Staff/getDoctorId",method=RequestMethod.GET)
    	public String getDoctorId(ModelMap model)
    	{
     	model.addAttribute("doctorsForms",doctorsService.getDoctorId());
