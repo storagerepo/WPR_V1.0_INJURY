@@ -31,7 +31,7 @@ public class CommonController {
 		return "/login";
 	}
 	
-    @RequestMapping(value="/home",method=RequestMethod.GET)
+    @RequestMapping(value="/dashboard",method=RequestMethod.GET)
 	public String getDashboard(ModelMap model)
 	{
     	model.addAttribute("Success",true);

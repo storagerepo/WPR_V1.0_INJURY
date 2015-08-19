@@ -15,7 +15,7 @@
                     <form role="form" action="j_spring_security_check" method="post">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="user name" name="username" type="text" autofocus>
+                                <input class="form-control" placeholder="Username" name="username" type="text" autofocus>
                             </div>
                             <div class="form-group">
                                 <input class="form-control" placeholder="Password" name="password" type="password" value="">

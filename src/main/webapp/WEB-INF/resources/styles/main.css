@@ -240,3 +240,12 @@ a:hover{
 .skyblue:active,.skyblue:hover{background:#19A3FF;color:#fff}
 .blue{-webkit-box-shadow:inset -1px -1px 5px 0 rgba(255,255,255,.5);-moz-box-shadow:inset -1px -1px 5px 0 rgba(255,255,255,.5);-o-box-shadow:inset -1px -1px 5px 0 rgba(255,255,255,.5);box-shadow:inset -1px -1px 5px 0 rgba(255,255,255,.5);background:#939;border-radius:3px;color:#fff;padding:3px 7px}
 .blue:active,.blue:hover{background:#A347A3;color:#fff}
+
+<!-- Panel -->
+.userPanel{
+font-size: 14px !important;
+padding:5px !important;
+background-color:grey !important;
+border-radius:4px !important;	
+}
+

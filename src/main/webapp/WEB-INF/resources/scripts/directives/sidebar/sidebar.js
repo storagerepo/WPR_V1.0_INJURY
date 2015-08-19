@@ -6,9 +6,10 @@
  * @description
  * # adminPosHeader
  */
+var roleApp=angular.module('sbAdminApp');
 
-angular.module('sbAdminApp')
-  .directive('sidebar',['$location',function() {
+
+roleApp.directive('sidebar',['$rootScope',function($rootScope) {
     return {
       templateUrl:'scripts/directives/sidebar/sidebar.html',
       restrict: 'E',
@@ -38,3 +39,4 @@ angular.module('sbAdminApp')
       }
     }
   }]);
+

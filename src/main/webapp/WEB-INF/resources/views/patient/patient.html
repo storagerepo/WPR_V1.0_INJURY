@@ -1,6 +1,7 @@
+<div>
 <div class="row">
 	<div class="col-lg-12">
-	<a  ng-click="addModel()" class="btn-sm btn-primary pull-right margin-top-40">Upload Excel</a>
+	<a  ng-click="addModel()" class="btn-sm btn-primary pull-right margin-top-40" ng-show="isAdmin">Upload Excel</a>
 		<h2 class="page-header">Patients</h2>
 	</div>
 	<!-- /.col-lg-12 -->
@@ -15,12 +16,9 @@
 				<thead>
 					<tr>
 						<th ng-mousedown="sort('name')" class="text-center">Name <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					  <th ng-mousedown="sort('dateOfBirth')" class="text-center">DateOfBirth&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='dateOfBirth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					   <th ng-mousedown="sort('gender')" class="text-center">Gender&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='gender'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-						<th ng-mousedown="sort('address')" class="text-center">Address&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-						<th ng-mousedown="sort('phoneNumber')" class="text-center">PhoneNumber&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='phoneNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-						<th ng-mousedown="sort('localReportNumber1')" class="text-center">LocalReportNumber&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='localReportNumber1'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-
+					  <th ng-mousedown="sort('dateOfBirth')" class="text-center">Date Of Birth&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='dateOfBirth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					  <th ng-mousedown="sort('address')" class="text-center">Address&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-mousedown="sort('phoneNumber')" class="text-center">Phone Number&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='phoneNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 						<th class="text-center" >Actions</th>
 						
 						
@@ -28,47 +26,48 @@
 						
 						<tr>
 						<th><input type="text" class="form-control" ng-model="search.name" placeholder="Name"/></th>
-						<th><input type="text" class="form-control" ng-model="search.dateOfBirth" placeholder="DateOfBirth"/></th>
-						
-						
-						<th><input type="text" class="form-control" ng-model="search.gender" placeholder="Gender"/></th>
+						<th><input type="text" class="form-control" ng-model="search.dateOfBirth" placeholder="Date Of Birth"/></th>
 						<th><input type="text" class="form-control" ng-model="search.address" placeholder="Address"/></th>
-						<th><input type="text" class="form-control" ng-model="search.phoneNumber" placeholder="Phonenumber"/></th>
-						
-						
-						<th><input type="text" class="form-control" ng-model="search.localReportNumber" placeholder="LocalReportNumber"/></th>
-						
-						
-						
-						
-						
-						
+						<th><input type="text" class="form-control" ng-model="search.phoneNumber" placeholder="Phone Number"/></th>
 						<th></th>
 					</tr>
 				</thead>
-				<tbody dir-paginate="patients in patientss | filter:search | orderBy:sortKey:reverse|itemsPerPage:8 ">
+				<tbody dir-paginate="patients in patientss | filter:search | orderBy:sortKey:reverse|itemsPerPage:5 ">
 					<tr>
 						
 
-						<td style="width:300px!important; display:inline-block">{{patients.name}}</td>
+						<td style="width:200px!important; display:inline-block"><a href="#/dashboard/Calllogs/{{patients.id}}">{{patients.name}}</a></td>
 						<td>{{patients.dateOfBirth}}</td>
-						<td>{{patients.gender}}</td>
-						<td style="width:300px!important; display:inline-block">{{patients.address}}</td>
+						<td style="width:200px!important; display:inline-block" class="word-wrap">{{patients.address}}</td>
 						<td>{{patients.phoneNumber}}</td>
-						<td>{{patients.localReportNumber}}</td>
-						
-						
-						
-						<td style="width:300px!important; display:inline-block">
+						<td style="width:150px!important; display:inline-block">
 						<span>
 						<a href="#/dashboard/Calllogs/{{patients.id}}" class="btn btn-xs btn-primary"><i
-								class="glyphicon glyphicon-eye-open"></i>&nbsp; View callLogs
+								class="glyphicon glyphicon-eye-open"></i>
 						</a>
 						<a href="#/dashboard/EditPatient/{{patients.id}}" class="btn btn-xs btn-warning">&nbsp;<i
-								class="glyphicon glyphicon-edit"></i>&nbsp; Edit
-						</a> <a href="" ng-click="deletePatient(patients.id)" class="btn btn-xs btn-danger">&nbsp;<i
-								class="glyphicon glyphicon-trash"></i>&nbsp; Delete
+								class="glyphicon glyphicon-edit"></i>
 						</a>
+						<a href="" ng-click="deletePatient(patients.id)" class="btn btn-xs btn-danger" ng-show="admin">&nbsp;<i
+								class="glyphicon glyphicon-trash"></i>
+						</a>
+						<span ng-show="isAdmin">
+						<a ng-hide="{{patients.callerId}}==''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-success">&nbsp;<i
+								class="glyphicon glyphicon-saved"></i>
+						</a>
+						<a ng-hide="{{patients.callerId}}!=''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-danger">&nbsp;<i
+								class="glyphicon glyphicon-saved"></i>
+						</a>
+						</span>
+						<span ng-hide="isAdmin">
+						<a title="doctor" ng-hide="{{patients.callerId}}==''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-success">&nbsp;<i
+								class="glyphicon glyphicon-plus"></i>
+						</a>
+						<a title="doctor" ng-hide="{{patients.callerId}}!=''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-danger">&nbsp;<i
+								class="glyphicon glyphicon-plus"></i>
+						</a>
+						</span>
+						
 						</span>
 						
 						</td>
@@ -82,6 +81,40 @@
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
+
+<!--  Assign Modal -->
+<div class="modal fade" id="assignCallerModel" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Assign Caller - Patient - {{assignPatientId}}</h4>
+        </div>
+        <div class="modal-body">
+             
+              <label>Select the Caller</label>
+                          <div class="col-md-12 input-group">
+                           <select class="form-control" ng-model="patients.callerId" name="callerId" id="callerId" ng-change="changeCaller()" ng-options="staff.id as staff.firstName for staff in staffs">
+  							  <option value="">-- Select Caller --</option>
+						  </select>   
+                           </div>
+                                 
+        </div>
+       
+        <div class="modal-footer">
+         <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
+             <a type="submit" class="btn btn-success"  ng-disabled='myForm.$invalid' ng-click="updateCaller()">Assign</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+
+<!-- End Assign Model -->
+
+
 
   <!-- Add/Edit Model -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -98,60 +131,7 @@
                     <input class="btn btn-primary" type="file" nv-file-select="" uploader="uploader" name="file"/>
                    </div><br/><br/>
              <div id="uploadSuccessAlert" class="panel well" style="color:green;font-weight:bold;">
-                              
-    <p>   {{a}}</p>
-          <p>   {{b}}</p>
-        <p>   {{upload_status}}</p>
-          <p>      {{upload_1}}</p>
-         <p>      {{upload_2}}</p>
-          <p>      {{upload_3}}</p>
-          <p>      {{upload_4}}</p>
-          <p>      {{upload_5}}</p>
-          <p>      {{upload_6}}</p>
-      <p>      {{upload_7}}</p>
-          <p>      {{upload_8}}</p>
-          <p>      {{upload_9}}</p>
-          <p>      {{upload_10}}</p>
-          <p>      {{upload_11}}</p>
-          <p>      {{upload_12}}</p>
-          <p>      {{upload_13}}</p>
-          <p>      {{upload_14}}</p>
-          <p>      {{upload_15}}</p>
-          <p>      {{upload_16}}</p>
-          <p>      {{upload_17}}</p>
-          <p>      {{upload_18}}</p>
-        <p>      {{upload_19}}</p>
-          <p>      {{upload_20}}</p>
-          <p>      {{upload_21}}</p>
-          <p>      {{upload_22}}</p>
-          <p>      {{upload_23}}</p>
-          <p>      {{upload_24}}</p>
-        <p>      {{upload_25}}</p>
-          <p>      {{upload_26}}</p>
-          <p>      {{upload_27}}</p>
-          <p>      {{upload_28}}</p>
-          <p>      {{upload_29}}</p>
-          <p>      {{upload_30}}</p>
-         <p>      {{upload_31}}</p>
-          <p>      {{upload_32}}</p>
-          <p>      {{upload_33}}</p>
-          <p>      {{upload_34}}</p>
-          <p>      {{upload_35}}</p>
-         <p>      {{upload_36}}</p>
-         <p>      {{upload_37}}</p>
-          <p>      {{upload_38}}</p>
-          <p>      {{upload_39}}</p>
-          <p>      {{upload_40}}</p>
-          <p>      {{upload_41}}</p>
-          <p>      {{upload_42}}</p>
-         <p>      {{upload_43}}</p>
-          <p>      {{upload_44}}</p>
-         <p>      {{upload_45}}</p>
-          <p>      {{upload_46}}</p>
-          <p>      {{upload_47}}</p>
-          <p>      {{upload_48}}</p>
-         <p>      {{upload_49}}</p>
-
+            <span id="errorDescription"></span>
                         </div>
                     <table class="table">
                         <thead>
@@ -195,4 +175,5 @@
     </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<!-- /.modal -->
+</div>

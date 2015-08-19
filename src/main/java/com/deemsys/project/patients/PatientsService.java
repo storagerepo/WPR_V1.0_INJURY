@@ -182,11 +182,11 @@ public String addPatientFromFile(MultipartFile file)
         				System.out.println("note");
         				 System.out.println(line);
         				String trimmedLastName = line.substring(line.length() - 1);
-        	    	   if(trimmedLastName.equals(","))
+        	    	   /*if(trimmedLastName.equals(","))
         	    	      {
         	    	     a="- Empty data is not allowed in POLICY NUMBER";
         	    	      }
-        	    	  
+        	    	  */
         	    	   if(lineNumber>1)
         	    		   
         				{
@@ -503,6 +503,13 @@ public String addPatientFromFile(MultipartFile file)
 			if(patientArray[i].equals(""))
 			{
 				 a=a+ " = - Empty data is not allowed in INSURANCE COMPANY";
+				   }
+			   }
+				if(i == 27)
+				   {
+			if(patientArray[i].equals(""))
+			{
+				 a=a+ " = - Empty data is not allowed in POLICY NUMBER";
 				   }
 			   }
 				

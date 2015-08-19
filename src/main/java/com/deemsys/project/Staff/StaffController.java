@@ -2,6 +2,8 @@
 package com.deemsys.project.Staff;
 
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -80,10 +82,11 @@ public class StaffController {
    	}
 	
     @RequestMapping(value="/Staff/getCurrentRole",method=RequestMethod.POST)
-    public String getCurrentRole(ModelMap model){
+    public String getCurrentRole(ModelMap model,Principal principal){
     	
     	String role=staffService.getCurrentRole();
     	model.addAttribute("role", role);
+    	model.addAttribute("username",principal.getName());
     	model.addAttribute("requestSuccess",true);
     	return "/returnPage";
     }

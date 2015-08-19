@@ -25,16 +25,35 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	
 	$scope.title="Add Patient";
 	
+		$scope.admin=false;
+	   $scope.staff=false;
 	
+	  requestHandler.postRequest("Staff/getCurrentRole.json","").then(function(response) {
+			 
+		    if(response.data.role=="ROLE_ADMIN"){
+			   $scope.admin=true;
+			   $scope.staff=true;
+			   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
+					
+				     $scope.patientss= response.data.patientsForms;
+				     
+				     });
+		   }
+		   else if(response.data.role=="ROLE_STAFF"){
+			   $scope.staff=true;
+			   requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
+					
+				     $scope.patientss= response.data.patientsForm;
+				     
+				     });
+		   }
+		   else{
+			   $location.path('/logout');
+		   }
+		   
+	 	});	
 	
-	
-	
-	 requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
-		
-	     $scope.patientss= response.data.patientsForms;
-	     
-	     });
-	
+	  
 	$scope.sort = function(keyname){
 	        $scope.sortKey = keyname;   //set the sortKey to the param passed
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
@@ -100,14 +119,85 @@ $("#file").val("");
 		alert("ok");
 		alert($scope.path);
 	};
-		   
+		
+	$scope.assignCaller=function(id,callerId)
+	{
+		$scope.title="Assign Caller";
+		alert(id);
+		$scope.assignPatientId=id;
+		$scope.selectedCaller=callerId;
+		requestHandler.getRequest("Staff/getPatients.json?id="+$scope.assignPatientId).then( function(response) {
+			$scope.patients= response.data.patientsForm;
+		});
+		
+			requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {			
+			     $scope.staffs= response.data.staffForms;
+			     $("#assignCallerModel").modal("show");
+			});
+		
+		
+		
+	};
+	
+	//Update the caller
+	$scope.updateCaller=function()
+	{
+		var doUpdate=requestHandler.postRequest('Staff/updatePatients.json',$scope.patients).then(function(response) {
+			$("#assignCallerModel").modal("hide");
+			
+		});
+		
+		doUpdate.then(function(){
+			requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
+			     $scope.patients= response.patientsForms;
+			     });
+		});
+		
+		
+	};
+	
+	$scope.assignDoctor=function(id,callerId)
+	{
+		$scope.title="Assign Doctor";
+		alert(id);
+		$scope.assignPatientId=id;
+		$scope.selectedCaller=callerId;
+		requestHandler.getRequest("Staff/getPatients.json?id="+$scope.assignPatientId).then( function(response) {
+			$scope.patients= response.data.patientsForm;
+		});
+		
+			requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {			
+			     $scope.staffs= response.data.staffForms;
+			     $("#assignCallerModel").modal("show");
+			});
+		
+		
+		
+	};
+	
+	//Update the Doctor
+	$scope.updateDoctor=function()
+	{
+		var doUpdate=requestHandler.postRequest('Staff/updatePatients.json',$scope.patients).then(function(response) {
+			$("#assignCallerModel").modal("hide");
+			
+		});
+		
+		doUpdate.then(function(){
+			requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
+			     $scope.patients= response.patientsForms;
+			     });
+		});
+		
+		
+	};
 
 });
 
 
-adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader,requestHandler) {
+adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader,requestHandler,$state) {
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://localhost:8080/Injury/Staff/addPatientFromFile.json',
+        url: 'http://localhost:8081/Injury/Staff/addPatientFromFile.json',
         queueLimit: 1
     });
     
@@ -230,7 +320,8 @@ adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope,
       
         $("#uploadSuccessAlert").show();
         uploader.clearQueue();
-
+       
+        
         
     };
 
@@ -275,4 +366,25 @@ adminApp.controller('EditPatientController', function($scope,$http,$location,$st
 		};
 		
 	
+});
+
+adminApp.controller('roleController', function($scope,$http,$location,requestHandler) {
+	 
+	  requestHandler.postRequest("Staff/getCurrentRole.json","").then(function(response) {
+		 
+	   $scope.admin=false;
+	   $scope.staff=false;
+	   if(response.data.role=="ROLE_ADMIN"){
+		   $scope.admin=true;
+		   $scope.staff=true;
+	   }
+	   else if(response.data.role=="ROLE_STAFF"){
+		   $scope.staff=true;
+	   }
+	   else{
+		   $location.path('/logout');
+	   }
+	   
+ 	});	
+
 });

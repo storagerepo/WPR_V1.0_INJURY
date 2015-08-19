@@ -13,10 +13,52 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
-    'angularUtils.directives.dirPagination'
+    'angularUtils.directives.dirPagination',
+    'requestModule'
   ])
-  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
+  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"$httpProvider",function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,$httpProvider) {
 
+	  $httpProvider.defaults.withCredentials = true;
+
+      $httpProvider.interceptors.push(['$q','$location','$injector',function ($q, $location,$injector) {
+              return {
+                  'request': function(request) {
+
+                      return request;
+                  },
+                  'response': function (response) {
+                      return response;
+                  },
+                  'responseError': function (rejection) {
+                      switch (rejection.status) {
+                          case 400: {
+                              break;
+                          }
+                          case 401:{
+                            alert("restricted");
+                          }
+                          case 403: {
+                            
+                            alert("Access Denied!!!");
+                              break;
+                          }
+                          case 500: {
+                        	  alert("Some thing went wrong :(");
+                              break;
+                          }
+                          default : {
+                             
+
+                              break;
+                          }
+                      }
+
+                      return $q.reject(rejection);
+                  }
+              };
+          }]);  
+	  
+	  
     $ocLazyLoadProvider.config({
       debug:false,
       events:true
@@ -34,10 +76,7 @@ angular
                 {
                     name:'sbAdminApp',
                     files:[
-                    'scripts/directives/header/header.js',
-                    'scripts/directives/header/header-notification/header-notification.js',
-                    'scripts/directives/sidebar/sidebar.js',
-                    'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
+                    'scripts/directives/header/header-notification/header-notification.js'
                     ]
                 }),
                 $ocLazyLoad.load(
@@ -84,13 +123,9 @@ angular
             return $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
-              'scripts/controllers/main.js',
-              'scripts/directives/timeline/timeline.js',
-              'scripts/directives/notifications/notifications.js',
-              'scripts/directives/chat/chat.js',
-              'scripts/directives/dashboard/stats/stats.js'
+              'scripts/controllers/main.js'
               ]
-            })
+            });
           }
         }
       })
@@ -105,7 +140,7 @@ angular
               files:[
               'scripts/controllers/form.js'
               ]
-            })
+            });
           }
         }
     })
@@ -169,16 +204,17 @@ angular
    })//staff starts
         .state('dashboard.staff',{
             templateUrl:'views/staff-view/staff.html',
+            resolve: {
+                loadMyFile:function($ocLazyLoad) {
+                    $ocLazyLoad.load({
+                        name:'sbAdminApp',
+                        files:['scripts/controllers/staffController.js']
+                    });
+                }
+            },
             controller:'ShowStaffController',
-            url:'/staff',
-        resolve: {
-            loadMyFile:function($ocLazyLoad) {
-                $ocLazyLoad.load({
-                    name:'sbAdminApp',
-                    files:['scripts/controllers/staffController.js']
-                });
-            }
-        }
+            url:'/staff'
+        
         })
         .state('dashboard.add-staff',{
         templateUrl:'views/staff-view/add-staff.html',
@@ -213,17 +249,18 @@ angular
     .state('dashboard.doctor',{
         templateUrl:'views/doctor.html',
         url:'/doctor',
-        controller:'ShowDoctorsCtrl',
-       
         resolve: {
-          loadMyFile:function($ocLazyLoad) {
-            
-            $ocLazyLoad.load({
-                name:'sbAdminApp',
-                files:['scripts/controllers/Doctors.js']
-            });
-          }
-        }
+            loadMyFile:function($ocLazyLoad) {
+              
+              $ocLazyLoad.load({
+                  name:'sbAdminApp',
+                  files:['scripts/controllers/Doctors.js']
+              });
+            }
+          },
+        controller:'ShowDoctorsCtrl'
+       
+        
     })
      .state('dashboard.add-doctor',{
         templateUrl:'views/add-doctor.html',
@@ -257,9 +294,6 @@ angular
     })//End Doctor
         .state('dashboard.patient',{
             templateUrl:'views/patient/patient.html',
-            controller: 'ShowPatientController',
-            url:'/patient',
-            
             resolve: {
                 loadMyFile:function($ocLazyLoad) {
                   
@@ -268,7 +302,11 @@ angular
                       files:['scripts/controllers/patientController.js']
                   });
                 }
-              }
+              },
+            controller: 'ShowPatientController',
+            url:'/patient'
+            
+            
         }).state('dashboard.EditPatient/:id',{
             templateUrl:'views/patient/add-patients.html',
             controller:"EditPatientController",
@@ -292,10 +330,11 @@ angular
             
             $ocLazyLoad.load({
                 name:'sbAdminApp',
-                files:['components/datetime/datetimepicker.css',
+                files:[
+                       'scripts/controllers/appointmentController.js',
+                       'components/datetime/datetimepicker.css',
                        'components/datetime/moment.js',
-                       'components/datetime/datetimepicker.js',
-                       'scripts/controllers/appointmentController.js'
+                       'components/datetime/datetimepicker.js'
                        ]
             });
           }
@@ -310,66 +349,38 @@ angular
                   
                   $ocLazyLoad.load({
                       name:'sbAdminApp',
-                      files:['components/datetime/datetimepicker.css',
+                      files:['scripts/controllers/CallLogsController.js',
+                             'components/datetime/datetimepicker.css',
                              'components/datetime/moment.js',
-                             'components/datetime/datetimepicker.js',
-                             'scripts/controllers/CallLogsController.js']
+                             'components/datetime/datetimepicker.js']
                   });
                 }
               }
             
         });// End Call logs
      
+  }]).controller('authenticationController', function($rootScope,$scope,$http,$location,requestHandler) {
+     var authenticate=function(){
+       requestHandler.postRequest("Staff/getCurrentRole.json","").then(function(response) {
+       
+        if(response.data.role=="ROLE_ADMIN"){
+            $rootScope.authenticated=true;
+            $rootScope.isAdmin=true;
+            $rootScope.username=response.data.username;
+         }
+       else if(response.data.role=="ROLE_STAFF"){
+            $rootScope.authenticated=true;
+            $rootScope.isAdmin=false;
+            $rootScope.username=response.data.username;
+         }
+      else
+         {
+            $rootScope.authenticated=false;
+            $rootScope.isAdmin=false;
+            
+         }
+       });
+     };
 
-
- 
-
-
-angular.module('sbAdminApp')
-  .controller('roleController', function($scope,$http,$location) {
-  /* $http.post('http://localhost:8081/Injury/Staff/getCurrentRole.json').then(function(response) {
-	  
-	   $scope.admin=false;
-	   $scope.staff=false;
-	   if(response.data.role=="ROLE_ADMIN"){
-		   $scope.admin=true;
-		   $scope.staff=true;
-	   }
-	   else if(response.data.role=="ROLE_STAFF"){
-		   $scope.staff=true;
-	   }
-	   else{
-		   $location.path('/logout');
-	   }
-	   
-   	});	
-*/
-});
-
-angular.module('sbAdminApp').factory('loginFactory',function(){
-	var isRole={};
-	
-	isRole.isAdmin=function(role){
-		alert(role);
-		if(role=="ROLE_ADMIN"){
-			return true;
-		}
-		else{
-			return false;
-		}
-	};
-	
-	isRole.isStaff=function(role){
-		if(role=="ROLE_STAFF"){
-			return true;
-		}
-	};
-	
-	return isRole;
-});
-
-
-
-
-
-  }]);
+     authenticate(); 
+  });

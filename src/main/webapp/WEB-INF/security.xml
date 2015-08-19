@@ -64,7 +64,7 @@
 		<access-denied-handler error-page="/redirect" />
 		<form-login 
 		    login-page="/user-login" 
-		    default-target-url="/home"
+		    default-target-url="/dashboard"
 			authentication-failure-url="/login-failed" 
 			username-parameter="username"
 			password-parameter="password" />

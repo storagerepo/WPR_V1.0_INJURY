@@ -37,9 +37,8 @@
     
     <script src="resources/components/angular-utils-pagination/dirPagination.js"></script> 
      <script src="resources/components/angular-file-upload/angular-file-upload.min.js"></script>
-  
 
-     <script  src="resources/components/prettify/prettify.js"></script>
+     <!-- <script  src="resources/components/prettify/prettify.js"></script> -->
 	<!-- endbower  error-->
     <!-- endbuild -->
     
@@ -48,8 +47,13 @@
         <script src="js/sb-admin-2.js"></script>
     <!-- endbuild -->
 	
+	<!-- Load For Menu -->
 	<script src="resources/scripts/services/requestHandler.js"></script>
-
+	<script src='resources/scripts/directives/sidebar/sidebar.js'></script>
+    <script src='resources/scripts/directives/sidebar/sidebar-search/sidebar-search.js'></script>
+ 	<script src="resources/scripts/directives/header/header.js"></script>
+    <script src="resources/scripts/directives/header/header-notification/header-notification.js"></script>
+    <script src="resources/scripts/directives/dashboard/stats/stats.js"></script>
 
     <script>
        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,11 +74,11 @@
     </head>
    
     <body>
-
+	
     <div class="margin-top-30" ng-app="sbAdminApp">
 
         <div ui-view></div>
-
+		<div ng-controller="authenticationController"></div>
     </div>
 
     </body>

@@ -1,8 +1,10 @@
 
 var adminApp=angular.module('sbAdminApp', ['requestModule']);
 
-adminApp.controller('ShowStaffController', function($scope,$http,$location,$state,requestHandler) {
+adminApp.controller('ShowStaffController', function($rootScope,$scope,$http,$location,$state,requestHandler) {
 	 
+	
+	
 	 $scope.sort = function(keyname){
 	        $scope.sortKey = keyname;   //set the sortKey to the param passed
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
@@ -66,4 +68,23 @@ adminApp.controller('EditStaffController', function($scope,$http,$location,$stat
 	};
 });
 
+adminApp.controller('roleController', function($scope,$http,$location,requestHandler) {
+	 
+	  requestHandler.postRequest("Staff/getCurrentRole.json","").then(function(response) {
+	  
+	   $scope.admin=false;
+	   $scope.staff=false;
+	   if(response.data.role=="ROLE_ADMIN"){
+		   $scope.admin=true;
+		   $scope.staff=true;
+	   }
+	   else if(response.data.role=="ROLE_STAFF"){
+		   $scope.staff=true;
+	   }
+	   else{
+		   $location.path('/logout');
+	   }
+	   
+	});	
 
+});
