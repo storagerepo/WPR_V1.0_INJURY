@@ -522,6 +522,7 @@ public String addPatientFromFile(MultipartFile file)
         					
         					
         					System.out.println(line);
+        					lineNumber++;
         				}
         			
         				else
