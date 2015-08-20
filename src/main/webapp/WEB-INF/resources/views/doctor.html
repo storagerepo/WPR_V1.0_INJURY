@@ -1,7 +1,7 @@
 <script src="resources/scripts/controllers/Doctors.js"></script>
 <div class="row">
     <div class="col-lg-12">
-        <a ui-sref="dashboard.add-doctor" class="btn-sm btn-primary pull-right margin-top-40">Add Doctor</a>
+        <a ui-sref="dashboard.add-doctor" class="btn-sm btn-primary pull-right margin-top-40" ng-show="isAdmin">Add Doctor</a>
         <h2 class="page-header">Doctor</h2>
     </div>
     <!-- /.col-lg-12 -->
@@ -30,7 +30,7 @@
 	                       <th ng-mousedown="sort('notes')">Notes <span class="glyphicon sort-icon" ng-show="sortKey=='notes'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
                       
-              <th width="20%">Action</th></tr>
+              <th width="20%" ng-show="isAdmin">Action</th></tr>
         <tr>    
             <th>  <input type="text"  class="form-control"  ng-model="search.name" placeholder="Name"></label>
            </th>
@@ -59,8 +59,8 @@
 		<td>{{doctor.officeHours}}</td>
 
 <td>{{doctor.notes}}</td>
-                                   <td><a href="#/dashboard/EditDoctor/{{doctor.id}}"  class="btn btn-xs btn-warning">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit</a>
-	<a href="#" ui-sref="dashboard.doctor" ng-mousedown="deleteDoctor(doctor.id)" class="btn btn-xs btn-danger">&nbsp;<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete </a>
+                                   <td ng-show="isAdmin"><a href="#/dashboard/EditDoctor/{{doctor.id}}"  class="btn btn-xs btn-warning" ng-show="isAdmin">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit</a>
+	<a href="#" ui-sref="dashboard.doctor" ng-mousedown="deleteDoctor(doctor.id)" class="btn btn-xs btn-danger" ng-show="isAdmin">&nbsp;<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete </a>
 	</td></tr>
 </tbody>
               </table>

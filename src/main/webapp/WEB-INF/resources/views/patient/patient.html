@@ -45,7 +45,7 @@
 						<a href="#/dashboard/Calllogs/{{patients.id}}" class="btn btn-xs btn-primary"><i
 								class="glyphicon glyphicon-eye-open"></i>
 						</a>
-						<a href="#/dashboard/EditPatient/{{patients.id}}" class="btn btn-xs btn-warning">&nbsp;<i
+						<a href="#/dashboard/EditPatient/{{patients.id}}" class="btn btn-xs btn-warning" ng-show="isAdmin">&nbsp;<i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
 						<a href="" ng-click="deletePatient(patients.id)" class="btn btn-xs btn-danger" ng-show="admin">&nbsp;<i
@@ -61,10 +61,10 @@
 						</span>
 						<span ng-hide="isAdmin">
 						<a title="doctor" ng-hide="{{patients.doctorId}}==''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" class="btn btn-xs btn-success">&nbsp;<i
-								class="glyphicon glyphicon-correct"></i>
+								class="glyphicon glyphicon-ok"></i>
 						</a>
 						<a title="doctor" ng-hide="{{patients.doctorId}}!=''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" class="btn btn-xs btn-danger">&nbsp;<i
-								class="glyphicon glyphicon-cross"></i>
+								class="glyphicon glyphicon-remove"></i>
 						</a>
 						</span>
 						
@@ -156,7 +156,7 @@
                     <input class="btn btn-primary" type="file" nv-file-select="" uploader="uploader" name="file"/>
                    </div><br/><br/>
              <div id="uploadSuccessAlert" class="panel well" style="color:green;font-weight:bold;">
-            <span id="errorDescription"></span>
+            <span id="uploadSuccessStatus"></span>
                         </div>
                     <table class="table">
                         <thead>

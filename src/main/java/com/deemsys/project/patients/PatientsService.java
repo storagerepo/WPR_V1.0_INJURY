@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.deemsys.project.Staff.StaffService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Doctors;
 import com.deemsys.project.entity.Patients;
@@ -43,6 +44,9 @@ public class PatientsService {
 
 	@Autowired
 	PatientsDAO patientsDAO;
+	
+	@Autowired
+	StaffService staffService;
 	
 	/*@Autowired
 	PatientsFileRead patientsFileRead;*/
@@ -178,19 +182,17 @@ public String addPatientFromFile(MultipartFile file)
 
         			br = new BufferedReader(new FileReader(fileName));
         			Integer lineNumber=1;
+        				
         			while ((line = br.readLine()) != null) {
         				System.out.println("note");
         				 System.out.println(line);
-        				String trimmedLastName = line.substring(line.length() - 1);
-        	    	   /*if(trimmedLastName.equals(","))
-        	    	      {
-        	    	     a="- Empty data is not allowed in POLICY NUMBER";
-        	    	      }
-        	    	  */
+        				
         	    	   if(lineNumber>1)
         	    		   
         				{
+        	    		   
         					patientArray=line.split(csvSplitBy);
+        					
         					System.out.println(patientArray[1]);
         				// validation
         					for(int i=0;i<28;i++)
@@ -520,7 +522,8 @@ public String addPatientFromFile(MultipartFile file)
         					
         					
         					System.out.println(line);
-        				}					
+        				}
+        			
         				else
         				{
         					patientHeader=line.split(csvSplitBy);
@@ -528,7 +531,11 @@ public String addPatientFromFile(MultipartFile file)
         				}
         			}
 
-        		}
+   				if(lineNumber==2){
+  					 a=a+" = Empty Data";
+  				}
+       		}
+       		
         		catch (NumberFormatException e) {
         			e.printStackTrace();
         		} catch (IOException e) {
@@ -578,8 +585,15 @@ public String addPatientFromFile(MultipartFile file)
 			
 			List<Patients> patientss=new ArrayList<Patients>();
 			
-			patientss=patientsDAO.getAll();
-		
+			String role=staffService.getCurrentRole();
+			if(role=="ROLE_ADMIN"){
+				patientss=patientsDAO.getAll();
+			}
+			else if(role=="ROLE_STAFF"){
+				Integer staffId=staffService.getCurrentUserId();
+				patientss=patientsDAO.getPatientListByStaffId(staffId);
+			}
+				
 			Integer staffId=0,doctorId=0;
 			
 			

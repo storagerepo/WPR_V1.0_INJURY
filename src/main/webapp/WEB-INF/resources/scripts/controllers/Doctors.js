@@ -8,7 +8,7 @@ adminApp.controller('ShowDoctorsCtrl', function($scope,$http,$location,$state,re
         $scope.sortKey = keyname;   //set the sortKey to the param passed
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
     };	
-    requestHandler.getRequest("Admin/getAllDoctorss.json","").then(function(response){
+    requestHandler.getRequest("Staff/getAllDoctorss.json","").then(function(response){
     	 $scope.doctors = response.data.doctorsForms;
          $scope.sort('name');
         });
@@ -57,23 +57,3 @@ adminApp.controller('EditDoctorController', function($scope,$http,$location,$sta
 	};
 });
 
-adminApp.controller('roleController', function($scope,$http,$location,requestHandler) {
-	 
-	  requestHandler.postRequest("Staff/getCurrentRole.json","").then(function(response) {
-	  
-	   $scope.admin=false;
-	   $scope.staff=false;
-	   if(response.data.role=="ROLE_ADMIN"){
-		   $scope.admin=true;
-		   $scope.staff=true;
-	   }
-	   else if(response.data.role=="ROLE_STAFF"){
-		   $scope.staff=true;
-	   }
-	   else{
-		   $location.path('/logout');
-	   }
-	   
-	});	
-
-});

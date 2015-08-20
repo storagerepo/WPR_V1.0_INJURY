@@ -244,7 +244,15 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 			return patientsForms;
 		}
 		
-		
+		public Integer getCurrentUserId(){
+			User user = (User) SecurityContextHolder.getContext()
+					.getAuthentication().getPrincipal();
+			String username=user.getUsername();
+			System.out.println(username);
+			Staff staff=staffDAO.getByUserName(username);
+						
+				return staff.getId();
+		}
 				
 		
 		

@@ -63,8 +63,8 @@ public class PatientsController {
     public @ResponseBody String uploadFileHandler(
             @RequestParam("file") MultipartFile file,ModelMap model) {
 	 String returnText="<p>";
-	 if(!patientsService.addPatientFromFile((file)).equals("")){
-		 String errors = patientsService.addPatientFromFile(file);
+	
+	 String errors = patientsService.addPatientFromFile(file);
 		 
     	 if(!errors.equals("")){
     		 String[] errorArray=errors.split("=");
@@ -80,12 +80,7 @@ public class PatientsController {
     		 returnText+="Success";
     		 returnText+="</p>";
     	 }
-	 }
-	 else
-	 {
-		 returnText+="Empty File";
-		 returnText+="</p>";
-	 }
+	
 	 	return returnText;
 
     }

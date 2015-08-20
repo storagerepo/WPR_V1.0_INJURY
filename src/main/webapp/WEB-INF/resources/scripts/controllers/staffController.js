@@ -67,24 +67,3 @@ adminApp.controller('EditStaffController', function($scope,$http,$location,$stat
 	  
 	};
 });
-
-adminApp.controller('roleController', function($scope,$http,$location,requestHandler) {
-	 
-	  requestHandler.postRequest("Staff/getCurrentRole.json","").then(function(response) {
-	  
-	   $scope.admin=false;
-	   $scope.staff=false;
-	   if(response.data.role=="ROLE_ADMIN"){
-		   $scope.admin=true;
-		   $scope.staff=true;
-	   }
-	   else if(response.data.role=="ROLE_STAFF"){
-		   $scope.staff=true;
-	   }
-	   else{
-		   $location.path('/logout');
-	   }
-	   
-	});	
-
-});

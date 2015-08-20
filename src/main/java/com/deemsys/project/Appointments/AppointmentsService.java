@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.deemsys.project.CallLogs.CallLogsForm;
 import com.deemsys.project.Staff.StaffDAO;
 import com.deemsys.project.Staff.StaffForm;
+import com.deemsys.project.Staff.StaffService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.Appointments;
@@ -41,7 +42,8 @@ public class AppointmentsService {
 	@Autowired
 	PatientsDAO patientsDAO;
 	
-	
+	@Autowired
+	StaffService staffService;
 	//Get All Entries
 	public List<AppointmentsForm> getAppointmentsList()
 	{
@@ -230,8 +232,13 @@ public class AppointmentsService {
 				List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();
 				
 				List<Appointments> appointmentss=new ArrayList<Appointments>();
-				
-				appointmentss=appointmentsDAO.getAll();
+				String role = staffService.getCurrentRole();
+				if(role=="ROLE_ADMIN"){
+					appointmentss=appointmentsDAO.getAll();
+				}else if(role=="ROLE_STAFF"){
+					Integer staffId = staffService.getCurrentUserId();
+					count=patientsDAO.getAppointmentListByStaffId(staffId).size();
+				}
 				
 				for (Appointments appointments : appointmentss) {
 					//TODO: Fill the List

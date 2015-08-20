@@ -56,9 +56,9 @@
 		 	
   <td>
  <div ng-switch on="appointment.status">
- <div ng-switch-when="1">Availability</div>
+ <div ng-switch-when="1">Arrived</div>
  <div ng-switch-when="2">Cancelled</div>
- <div ng-switch-default>No availability</div>
+ <div ng-switch-default>Not Arrived</div>
 
   </td><td>
   <a ng-click="viewPatients(appointment.patientId)" class="btn btn-xs btn-primary"><i
