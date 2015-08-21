@@ -254,7 +254,8 @@ angular
               
               $ocLazyLoad.load({
                   name:'sbAdminApp',
-                  files:['scripts/controllers/Doctors.js']
+                  files:[
+                         'scripts/controllers/Doctors.js']
               });
             }
           },

@@ -3,7 +3,8 @@
 		<a ui-sref="dashboard.patient"
 			class="btn-sm btn-primary pull-right margin-top-40">Back to the
 			list</a>
-		<h2 class="page-header" >Edit Patients&nbsp;-&nbsp;{{patient.name}}</h2>
+		<h2 class="page-header" >Edit Patients<span ng-hide="title=='Add Patient'">&nbsp;-&nbsp;{{patient.name}}</span></h2>
+		
 	</div>
 	<!-- /.col-lg-12 -->
 </div>

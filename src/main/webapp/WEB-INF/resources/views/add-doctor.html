@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
         <a ui-sref="dashboard.doctor" class="btn-sm btn-primary pull-right margin-top-40">Back to the list</a>
-        <h2 class="page-header" ng-controller="EditDoctorController">{{title}}&nbsp;-&nbsp;{{doctor.name}}</h2>
+        <h2 class="page-header" ng-controller="EditDoctorController">{{title}}<span ng-hide="title=='Add Doctor'">&nbsp;-&nbsp;{{doctor.name}}</span></h2>
     </div>
     <!-- /.col-lg-12 -->
 </div>

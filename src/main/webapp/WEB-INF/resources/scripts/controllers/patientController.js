@@ -21,11 +21,13 @@ adminApp.directive('fileChange', function () {
 
 });
 
-adminApp.controller('ShowPatientController', function($scope,$http,$location,$state,$rootScope,requestHandler,$http) {
+adminApp.controller('ShowPatientController', function($scope,$http,$location,$state,$rootScope,requestHandler,$http,successMessageService) {
 	
+	$scope.errorMessage=successMessageService.getMessage();
+	$scope.isError=successMessageService.getIsError();
+	$scope.isSuccess=successMessageService.getIsSuccess();
+    successMessageService.reset();
 	$scope.title="Add Patient";
-	
-	
 		    if($rootScope.isAdmin){
 			   $scope.admin=true;
 			   $scope.staff=true;
@@ -64,6 +66,9 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	$scope.deletePatient=function(id){
 		if(confirm("Are you sure to delete patient?")){
 			  requestHandler.deletePostRequest("Staff/deletePatients.json?id=",id).then(function(response){
+				  successMessageService.setMessage("You have Successfully Deleted!");
+		            successMessageService.setIsError(0);
+		            successMessageService.setIsSuccess(1);
 			 $state.reload('dashboard.patient');
 		});
 		
@@ -120,8 +125,7 @@ $("#file").val("");
 		requestHandler.getRequest("Staff/getPatients.json?id="+$scope.assignPatientId).then( function(response) {
 			$scope.patients= response.data.patientsForm;
 		});
-		
-			requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {			
+		requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {			
 			     $scope.staffs= response.data.staffForms;
 			     $("#assignCallerModel").modal("show");
 			});
@@ -139,6 +143,9 @@ $("#file").val("");
 		});
 		
 		doUpdate.then(function(){
+            $scope.errorMessage="You have Successfully Assigned!";
+        	$scope.isError=0;
+        	$scope.isSuccess=1;
 			requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 			     $scope.patients= response.patientsForms;
 			     });
@@ -175,6 +182,9 @@ $("#file").val("");
 		
 		doUpdate.then(function(){
 			$("#assignDoctorModel").modal("hide");
+			$scope.errorMessage="You have Successfully Assigned!";
+        	$scope.isError=0;
+        	$scope.isSuccess=1;
 			requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 			     $scope.patients= response.patientsForms;
 			     });
@@ -258,7 +268,7 @@ adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope,
 
 
 
-adminApp.controller('EditPatientController', function($scope,$http,$location,$stateParams,requestHandler){
+adminApp.controller('EditPatientController', function($scope,$http,$location,$stateParams,requestHandler,successMessageService){
 	
 	$scope.patientid=$stateParams.id;
 	
@@ -288,7 +298,9 @@ adminApp.controller('EditPatientController', function($scope,$http,$location,$st
 			
 			
 			requestHandler.postRequest('Staff/updatePatients.json',$scope.patient).then(function(response) {
-				
+				successMessageService.setMessage("You have Successfully updated!");
+	            successMessageService.setIsError(0);
+	            successMessageService.setIsSuccess(1);
 				$location.path("dashboard/patient");
 			});
 		};

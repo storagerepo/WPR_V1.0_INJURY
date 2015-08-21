@@ -38,7 +38,7 @@ requestObj.postFileUpload=function(requestURL,data,params){
  
     
     requestObj.deletePostRequest=function(requestURL,params){
-    	 requestURL=appURL+"Injury/"+requestURL+params;
+    	 requestURL=appURL+"/Injury/"+requestURL+params;
     	 return $http({
 			  method : "POST",
 			  url : requestURL,

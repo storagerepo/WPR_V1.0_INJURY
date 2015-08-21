@@ -46,21 +46,10 @@ public class StaffService {
 		
 		for (Staff staff : staffs) {
 			//TODO: Fill the List
-			try{
-			if(staff.getRole().equalsIgnoreCase("ROLE_ADMIN"))
-			{
-				StaffForm staffForm=new StaffForm();
-				
-			}
-			else{
+			
 			StaffForm staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
 			staffForms.add(staffForm);
-			}
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
+			
 		}
 		
 		return staffForms;
@@ -109,7 +98,7 @@ public class StaffService {
 		
 		//Logic Starts
 		
-		Staff staff=new Staff(staffForm.getRole(), staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),staffForm.getIsEnable(),null);
+		Staff staff=new Staff("ROLE_STAFF", staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),staffForm.getIsEnable(),null);
 		//Logic Ends
 		
 		staffDAO.save(staff);

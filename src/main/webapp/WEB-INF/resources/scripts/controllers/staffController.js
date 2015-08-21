@@ -1,9 +1,13 @@
 
 var adminApp=angular.module('sbAdminApp', ['requestModule']);
 
-adminApp.controller('ShowStaffController', function($rootScope,$scope,$http,$location,$state,requestHandler) {
+adminApp.controller('ShowStaffController', function($rootScope,$scope,$http,$location,$state,requestHandler,successMessageService) {
 	 
-	
+	$scope.errorMessage=successMessageService.getMessage();
+	$scope.isError=successMessageService.getIsError();
+	$scope.isSuccess=successMessageService.getIsSuccess();
+    successMessageService.reset();
+ 
 	
 	 $scope.sort = function(keyname){
 	        $scope.sortKey = keyname;   //set the sortKey to the param passed
@@ -20,10 +24,13 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$http,$loc
 		
 		  if(confirm("Are you sure to delete Staff ?")){
 		  requestHandler.deletePostRequest("Admin/deleteStaff.json?id=",id).then(function(results){
+			  successMessageService.setMessage("You have Successfully Added!");
+	          successMessageService.setIsError(0);
+	          successMessageService.setIsSuccess(1);
 			  $state.reload('dashboard.staff');
 		     });
 		  }
-	}
+	};
     
     $scope.alertFunction=function()
     {
@@ -33,15 +40,16 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$http,$loc
  
 });
 
-adminApp.controller('SaveStaffController', function($scope,$http,$location,$state,requestHandler) {
+adminApp.controller('SaveStaffController', function($scope,$http,$location,$state,requestHandler,successMessageService) {
 
 	$scope.options=true;
 	$scope.title=$state.current.title;
 	$scope.save=function()
 	{
-		
-		
-		  requestHandler.postRequest("Admin/saveUpdateStaff.json",$scope.staff).then(function(response){
+		 requestHandler.postRequest("Admin/saveUpdateStaff.json",$scope.staff).then(function(response){
+			  successMessageService.setMessage("You have Successfully Added!");
+	          successMessageService.setIsError(0);
+	          successMessageService.setIsSuccess(1);
 			  $location.path('dashboard/staff');
 			});
 	};
@@ -49,7 +57,7 @@ adminApp.controller('SaveStaffController', function($scope,$http,$location,$stat
 });
 
 
-adminApp.controller('EditStaffController', function($scope,$http,$location,$stateParams,$state,requestHandler) {
+adminApp.controller('EditStaffController', function($scope,$http,$location,$stateParams,$state,requestHandler,successMessageService) {
 	
 	$scope.options=false;
 	$scope.title=$state.current.title;
@@ -61,6 +69,9 @@ adminApp.controller('EditStaffController', function($scope,$http,$location,$stat
 
 	  $scope.update=function(){
 		  requestHandler.postRequest("Admin/saveUpdateStaff.json",$scope.staff).then(function(response){
+			  successMessageService.setMessage("You have Successfully Updated!");
+	          successMessageService.setIsError(0);
+	          successMessageService.setIsSuccess(1);
 			  $location.path('dashboard/staff');
 			});
 			
