@@ -276,7 +276,7 @@ adminApp.controller('EditPatientController', function($scope,$http,$location,$st
 	     
 	  
 	     });
-	requestHandler.getRequest("Admin/getDoctorId.json","").then( function(response) {
+	requestHandler.getRequest("Staff/getDoctorId.json","").then( function(response) {
 		
 	     $scope.doctor= response.data.doctorsForms;
 	     

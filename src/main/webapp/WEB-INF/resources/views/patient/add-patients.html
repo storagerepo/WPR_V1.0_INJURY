@@ -314,41 +314,27 @@
                                          </div><br>
                                          </td>
                                          
-                                         
-                                         
                                    <td class=" col-md-4">
-                                 
                                  <label>Select Caller:</label>
-                                 <div class="dropdown"  >
-                                
-                                    <select class="form-control"  name="callerId" id="callerId"   ng-model="patient.callerId" required>
-                                    <option >--Select Caller--</option>
-                                         <option  ng-repeat="staffs in staff" value="{{staffs.id}}">{{staffs.firstName}}</option>
-                                        
-                                  </select>
-                                    <div class="error-container" ng-show="myForm.callerId.$dirty && myForm.callerId.$invalid">
-                                      <span style="color:red" ng-show="myForm.callerId.$error.required">Please Enter Caller</span>
-                                     </div></div><br>
+                                           <div class="col-md-12 input-group">
+                           <select class="form-control" ng-model="patient.callerId" name="callerId" id="callerId" ng-options="staffs.id as staffs.firstName for staffs in staff">
+  							  <option value="">-- Select Caller --</option>
+                                      </select>   
+                           </div>
+                                     <br>
                                       </td>
                                   
-                                  
-                                  
-                                   <td class=" col-md-4">
-                                 
-                                 <label >Select Doctor:</label>
-                                 <div class="dropdown"  >
-                                <select class="form-control" id="docotrId"  name="doctorId" ng-model="patient.doctorId" required>
-                                    <option >--Select Doctor--</option>
-                                         <option  ng-repeat="doctors in doctor" value="{{doctors.id}}">{{doctors.name}}</option>
-                                         </select>
-                                    <div class="error-container" ng-show="myForm.doctorId.$dirty && myForm.doctorId.$invalid">
-                                      <span style="color:red" ng-show="myForm.doctorId.$error.required">Please Enter Doctor </span>
-                                     </div></div><br>
+                  <td class=" col-md-4">
+                                 <label>Select Doctor:</label>
+                                        <div class="col-md-12 input-group">
+                           <select class="form-control" ng-model="patient.doctorId" name="doctorId" id="doctorId" ng-options="doctors.id as doctors.name for doctors in doctor">
+  							  <option value="">-- Select Doctor --</option>
+                                      </select>   
+                           </div>
+                                     <br>
                                       </td>
-								</tr>
+                         </tr>
 								
-                                
-                            
                         </tbody>
                     </table></div>
 			</div>
