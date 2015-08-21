@@ -77,7 +77,7 @@ public class PatientsController {
     	    }
     	 else
     	 {
-    		 returnText+="Success";
+    		 returnText+="File Upload Successfully!!";
     		 returnText+="</p>";
     	 }
 	

@@ -46,7 +46,12 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 				     });
 		   }
 			
-	
+	$scope.updateList=function(){
+		
+		requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
+		     $scope.patientss= response.data.patientsForms;
+		     });
+	};
 	  
 	$scope.sort = function(keyname){
 	        $scope.sortKey = keyname;   //set the sortKey to the param passed
@@ -69,7 +74,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 				  successMessageService.setMessage("You have Successfully Deleted!");
 		            successMessageService.setIsError(0);
 		            successMessageService.setIsSuccess(1);
-			 $state.reload('dashboard.patient');
+		            $scope.updateList();
 		});
 		
 		}
@@ -147,7 +152,7 @@ $("#file").val("");
         	$scope.isError=0;
         	$scope.isSuccess=1;
 			requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
-			     $scope.patients= response.patientsForms;
+			     $scope.patientss= response.data.patientsForms;
 			     });
 		});
 		
@@ -198,7 +203,7 @@ $("#file").val("");
 
 adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader,requestHandler,$state) {
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://localhost:8081/Injury/Staff/addPatientFromFile.json',
+        url: 'http://192.168.1.236:8089/Injury/Staff/addPatientFromFile.json',
         queueLimit: 1
     });
     

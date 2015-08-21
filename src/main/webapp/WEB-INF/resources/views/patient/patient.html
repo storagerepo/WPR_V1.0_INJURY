@@ -17,11 +17,11 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th ng-mousedown="sort('name')" class="text-center">Name <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					  <th ng-mousedown="sort('dateOfBirth')" class="text-center">Date Of Birth&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='dateOfBirth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					  <th ng-mousedown="sort('address')" class="text-center">Address&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-						<th ng-mousedown="sort('phoneNumber')" class="text-center">Phone Number&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='phoneNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-						<th class="text-center" >Actions</th>
+						<th ng-mousedown="sort('name')">Name <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					  <th ng-mousedown="sort('dateOfBirth')">Date Of Birth&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='dateOfBirth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					  <th ng-mousedown="sort('address')">Address&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-mousedown="sort('phoneNumber')">Phone Number&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='phoneNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th>Actions</th>
 						
 						
 					</tr>
@@ -34,7 +34,7 @@
 						<th></th>
 					</tr>
 				</thead>
-				<tbody dir-paginate="patients in patientss | filter:search | orderBy:sortKey:reverse|itemsPerPage:5 ">
+				<tbody ng-show="patientss.length>0" dir-paginate="patients in patientss | filter:search | orderBy:sortKey:reverse|itemsPerPage:5 ">
 					<tr>
 						
 
@@ -74,6 +74,11 @@
 						
 						</td>
 					</tr>
+				</tbody>
+				<tbody ng-show="patientss.length==0">
+				<tr>
+				<td colspan="5" align="center">No Record Found</td>
+				</tr>
 				</tbody>
 			</table>
 			<dir-pagination-controls max-size="5" direction-links="true"
