@@ -98,7 +98,7 @@ public class StaffService {
 		
 		//Logic Starts
 		
-		Staff staff=new Staff("ROLE_STAFF", staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),staffForm.getIsEnable(),null);
+		Staff staff=new Staff("ROLE_STAFF", staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),1,null);
 		//Logic Ends
 		
 		staffDAO.save(staff);

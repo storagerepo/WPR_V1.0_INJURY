@@ -37,9 +37,9 @@
 				<td>{{callLogss.response}}</td>
 				<td>{{callLogss.notes}}</td>
 				<td><a  type="submit" title="View Appointment" class="btn btn-xs btn-primary" ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
-				 <a type="submit" class="btn btn-xs btn-warning" ng-click="editModal(callLogss.id)">&nbsp;<i class="glyphicon glyphicon-edit" title="Edit"></i>&nbsp;</a>
+				 <a type="submit" class="btn btn-xs btn-warning" ng-click="editModal(callLogss.id,callLogss.appointmentId)">&nbsp;<i class="glyphicon glyphicon-edit" title="Edit"></i>&nbsp;</a>
 				<a href="#" ui-sref="" ng-click="deleteCalllogs(callLogss.id)" class="btn btn-xs btn-danger">&nbsp;<i class="glyphicon glyphicon-trash" title="Delete"></i>&nbsp; </a>
-				<a href="#" data-toggle="modal" data-target="#AppointmentsModal" class="btn btn-xs btn-success">&nbsp;<i class="glyphicon glyphicon-plus" title="Edit"></i>&nbsp;</a>
+				<a ng-click="addAppointment(callLogss.id)" class="btn btn-xs btn-success">&nbsp;<i class="glyphicon glyphicon-plus" title="Edit"></i>&nbsp;</a>
 				</td>
 				</tr>
 				</tbody>
@@ -74,7 +74,7 @@
                 
                                     
                                     <input  type="hidden" id="patientId" class="form-control" ng-model="calllogs.patientId">
-              
+              						<input  type="hidden" id="appointmentId" class="form-control" ng-model="calllogs.appointmentId">
         							<label>Response</label>
                                     <textarea name="response" id="response" class="form-control height-100" ng-model="calllogs.response" placeholder="Enter the Response" required></textarea>
                  <span class="error-container" ng-show="myForm.response.$dirty && myForm.response.$invalid">
@@ -124,7 +124,7 @@
                                     <br/>
                 
                                 <input type="hidden" name="patientId" class="form-control"  ng-model="Appointments.patientId" >
-                 
+                 				<input type="hidden" name="callLogId" class="form-control"  ng-model="Appointments.callLogId" >
                              	<label>Notes</label>
                                    <textarea name="notes" class="form-control height-100" ng-model="Appointments.notes" placeholder="Enter Notes" required></textarea>
                                     <span class="error-container" ng-show="myForms.notes.$dirty && myForms.notes.$invalid">
@@ -135,7 +135,7 @@
        
         <div class="modal-footer">
          <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
-             <a type="submit" class="btn btn-success"  ng-disabled='myForm.$invalid' ng-click="saveAppointments()">Save</a>
+             <a type="submit" class="btn btn-success"  ng-disabled='myForms.$invalid' ng-click="saveAppointments()">Save</a>
         </div>
       </div>
       

@@ -66,9 +66,10 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 
 	};
 	
-	$scope.editModal=function(id)
+	$scope.editModal=function(id,appointmentId)
 	{
-
+		$scope.calllogs={};
+		$scope.calllogs.appointmentId = appointmentId;
 		$scope.title="Edit CallLogs";
 		$scope.options=false;
 		
@@ -90,7 +91,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		  
 		  requestHandler.postRequest("Staff/saveUpdateCallLogs.json",$scope.calllogs).then(function (status) {
 		  $("#calllogsModel").modal("hide");
-			 $state.reload("dashboard/Calllogs");
+		  $state.reload("dashboard.Calllogs:"+$stateParams.id);
 		  
 	      });
 	 
@@ -100,6 +101,11 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	 $scope.Appointments.patientId =$stateParams.id;
 
 	
+	$scope.addAppointment=function(callLogId){
+		$scope.Appointments.callLogId =callLogId;
+		$("#AppointmentsModal").modal("show");
+	};
+	 
 	$scope.saveAppointments=function()
 	{
 
@@ -107,9 +113,9 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		  requestHandler.postRequest("Staff/saveUpdateAppointments.json",$scope.Appointments)
 			.then(function(response)
 					{
-
+				
 				$("#AppointmentsModal").modal("hide");
-				 $state.reload("dashboard/Calllogs");
+				 $state.reload("/dashboard/Calllogs/"+$stateParams.id);
 				});
 		};
 	

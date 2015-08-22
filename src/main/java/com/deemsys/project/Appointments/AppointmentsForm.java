@@ -22,6 +22,7 @@ public class AppointmentsForm {
 	private String scheduledDate;
 	private String notes;
 	private Integer status;
+	private Integer callLogId;
 	public Integer getId() {
 		return id;
 	}
@@ -53,6 +54,12 @@ public class AppointmentsForm {
 		this.status = status;
 	}
 	
+	public Integer getCallLogId() {
+		return callLogId;
+	}
+	public void setCallLogId(Integer callLogId) {
+		this.callLogId = callLogId;
+	}
 	public AppointmentsForm(Integer id, Integer patientId,String patientName,
 			String scheduledDate, String notes, Integer status) {
 		super();

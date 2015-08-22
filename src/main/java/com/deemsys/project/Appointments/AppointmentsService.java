@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.CallLogs.CallLogsDAO;
 import com.deemsys.project.CallLogs.CallLogsForm;
 import com.deemsys.project.Staff.StaffDAO;
 import com.deemsys.project.Staff.StaffForm;
@@ -16,6 +17,7 @@ import com.deemsys.project.Staff.StaffService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.Appointments;
+import com.deemsys.project.entity.CallLogs;
 import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
 import com.deemsys.project.patients.PatientsDAO;
@@ -44,6 +46,9 @@ public class AppointmentsService {
 	
 	@Autowired
 	StaffService staffService;
+	
+	@Autowired
+	CallLogsDAO callLogsDAO;
 	//Get All Entries
 	public List<AppointmentsForm> getAppointmentsList()
 	{
@@ -108,11 +113,15 @@ public class AppointmentsService {
 		Patients patients = new Patients();
 		patients.setId(appointmentsForm.getPatientId());
 		
-		Appointments appointments=new Appointments(patients,new Date(), appointmentsForm.getNotes(), appointmentsForm.getStatus(), null);
+		Appointments appointments=new Appointments(patients,new Date(), appointmentsForm.getNotes(), 0, null);
 		
 		//Logic Ends
 		
-		appointmentsDAO.save(appointments);
+		CallLogs callLogs = callLogsDAO.get(appointmentsForm.getCallLogId());
+		
+		callLogs.setAppointments(appointments);
+		callLogsDAO.update(callLogs);
+		
 		return 1;
 	}
 	

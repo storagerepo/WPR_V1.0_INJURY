@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.Appointments.AppointmentsDAO;
 import com.deemsys.project.Staff.StaffDAO;
 import com.deemsys.project.Staff.StaffForm;
 import com.deemsys.project.common.InjuryConstants;
@@ -36,6 +37,9 @@ public class CallLogsService {
 	
 	@Autowired
 	StaffDAO staffDAO;
+	
+	@Autowired
+	AppointmentsDAO appointmentsDAO;
 	
 	
 	//Get All Entries
@@ -134,14 +138,24 @@ public class CallLogsService {
 		//Logic Starts
 
 		
-		Appointments appointments = new Appointments();
-		appointments.setId(callLogsForm.getAppointmentId());
 		
 		Patients patients = new Patients();
 		patients.setId(callLogsForm.getPatientId());
 		
-		CallLogs callLogs=new CallLogs(patients,null,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
-		callLogs.setId(callLogsForm.getId());
+		Appointments appointments=new Appointments();
+		CallLogs callLogs=new CallLogs();
+		if(callLogsForm.getAppointmentId()!=null){
+			appointments = appointmentsDAO.get(callLogsForm.getAppointmentId());
+			appointments.setPatients(patients);
+			callLogs=new CallLogs(patients,appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+			callLogs.setId(callLogsForm.getId());
+		}
+		else{
+			callLogs=new CallLogs(patients,null,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+			callLogs.setId(callLogsForm.getId());
+		}
+		
+		
 		//Logic Ends
 		
 		callLogsDAO.update(callLogs);
