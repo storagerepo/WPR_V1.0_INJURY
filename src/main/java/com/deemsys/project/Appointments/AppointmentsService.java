@@ -194,13 +194,20 @@ public class AppointmentsService {
 			List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();
 				
 				List<Appointments> appointmentss=new ArrayList<Appointments>();
-				
-				appointmentss=appointmentsDAO.todaysAppointment();
-				for (Appointments appointments : appointmentss) {
-					//TODO: Fill the List
-					AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
-					appointmentsForms.add(appointmentsForm);
+				String role = staffService.getCurrentRole();
+				if(role=="ROLE_ADMIN"){
+					appointmentss=appointmentsDAO.todaysAppointment();
+					for (Appointments appointments : appointmentss) {
+						//TODO: Fill the List
+						AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
+						appointmentsForms.add(appointmentsForm);
+					}
 				}
+				else if(role=="ROLE_STAFF"){
+					Integer staffId = staffService.getCurrentUserId();
+					appointmentsForms=patientsDAO.getTodayAppointmentListByStaffId(staffId);
+				}
+				
 
 				return appointmentsForms;
 			
@@ -212,18 +219,23 @@ public class AppointmentsService {
 				List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();
 				
 				List<Appointments> appointmentss=new ArrayList<Appointments>();
-					
-				appointmentss=appointmentsDAO.getByDates(date);
-				
 				//TODO: Convert Entity to Form
 				//Start
-				
-				for (Appointments appointments : appointmentss) {
-					//TODO: Fill the List
-					AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
-					appointmentsForms.add(appointmentsForm);
+				String role = staffService.getCurrentRole();
+				if(role=="ROLE_ADMIN"){
+					appointmentss=appointmentsDAO.getByDates(date);
+
+					for (Appointments appointments : appointmentss) {
+						//TODO: Fill the List
+						AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
+						appointmentsForms.add(appointmentsForm);
+					}
 				}
-		
+				else if(role=="ROLE_STAFF"){
+					Integer staffId = staffService.getCurrentUserId();
+					appointmentsForms=patientsDAO.getParticularDayAppointmentListByStaffId(date, staffId);
+				}
+				
 				//End
 				
 				return appointmentsForms;
