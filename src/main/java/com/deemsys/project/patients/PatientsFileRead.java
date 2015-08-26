@@ -33,7 +33,7 @@ public class PatientsFileRead {
 				if(lineNumber>1)
 				{
 					patientArray=line.split(csvSplitBy);
-					patients.add(new Patients(null, null, patientArray[0], Integer.parseInt(patientArray[1]), patientArray[2],Integer.parseInt(patientArray[3]), Integer.parseInt(patientArray[4]),patientArray[5], patientArray[6], InjuryConstants.convertYearFormat(patientArray[7]), patientArray[8], patientArray[9],Integer.parseInt(patientArray[10]), patientArray[11], InjuryConstants.convertYearFormat(patientArray[12]), patientArray[13].trim(), patientArray[14], patientArray[15], Integer.parseInt(patientArray[16]), patientArray[17], patientArray[18], patientArray[19],Integer.parseInt(patientArray[20]),Integer.parseInt(patientArray[21]), patientArray[22], patientArray[23], Integer.parseInt(patientArray[24]), patientArray[25], patientArray[26], patientArray[27]));
+					patients.add(new Patients(null, null, patientArray[0], patientArray[1], patientArray[2],patientArray[3], patientArray[4],patientArray[5], patientArray[6], patientArray[7], patientArray[8], patientArray[9],patientArray[10], patientArray[11], patientArray[12], patientArray[13].trim(), patientArray[14], patientArray[15], patientArray[16], patientArray[17], patientArray[18], patientArray[19],patientArray[20],patientArray[21], patientArray[22], patientArray[23], patientArray[24], patientArray[25], patientArray[26], patientArray[27]));
 				}					
 				else
 				{
