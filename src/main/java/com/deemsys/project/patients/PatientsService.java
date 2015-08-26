@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Payload;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -72,7 +74,7 @@ public class PatientsService {
 				doctorId=patients.getDoctors().getId();
 				
 			
-			PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),InjuryConstants.convertMonthFormat(patients.getCrashDate()),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),InjuryConstants.convertMonthFormat(patients.getDateOfBirth()),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
+			PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
 		patientsForms.add(patientsForm);
 		}
 		
@@ -99,7 +101,7 @@ public class PatientsService {
 		if(patients.getDoctors()!=null)
 			doctorId=patients.getDoctors().getId();
 		
-		patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),InjuryConstants.convertMonthFormat(patients.getCrashDate()),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),InjuryConstants.convertMonthFormat(patients.getDateOfBirth()),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
+		patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
 		}
 			
 		
@@ -125,7 +127,8 @@ public class PatientsService {
 		doctors.setId(patientsForm.getDoctorId());
 
 			
-		Patients patients=new Patients(staff,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),InjuryConstants.convertYearFormat(patientsForm.getCrashDate()),patientsForm.getTimeOfCrash(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),InjuryConstants.convertYearFormat(patientsForm.getDateOfBirth()),patientsForm.getGender(),patientsForm.getAddress(),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber());
+		Patients patients=new Patients(staff,doctors,patientsForm.getLocalReportNumber(),
+				patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber());
 			patients.setId(patientsForm.getId());
 			
 		//Logic Ends
@@ -142,7 +145,7 @@ public class PatientsService {
 	}
 	
 	//Hanndling Upload File
-public String addPatientFromFile(MultipartFile file)
+	public String addPatientFromFile(MultipartFile file)
 	{
 	String a = "";
 		File serverFile=null;
@@ -175,367 +178,280 @@ public String addPatientFromFile(MultipartFile file)
         		
         		
         		String[] patientArray=new String[30];
-       		String[] patientHeader=new String[30];
+        		String[] patientHeader=new String[30];
         		List<Patients> patients=new ArrayList<Patients>();
         		// try starts
        		try {
-
-        			br = new BufferedReader(new FileReader(fileName));
-        			Integer lineNumber=1;
+       			
+       			br = new BufferedReader(new FileReader(fileName));
+        		Integer lineNumber=1;
         				
-        			while ((line = br.readLine()) != null) {
-        				System.out.println("note");
-        				 System.out.println(line);
-        				
-        	    	   if(lineNumber>1)
-        	    		   
-        				{
-        	    		   
-        					patientArray=line.split(csvSplitBy);
-        					
-        					System.out.println(patientArray[1]);
-        				// validation
-        					for(int i=0;i<28;i++)
-        					{
-        					try {
-        								if(i == 7 ){
-              						 SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");
-            						 Date dateformat=new Date();
-        								dateformat = monthFormat.parse(patientArray[i]);
-        									} 
-                                               }catch (ParseException e) {
-        								// TODO Auto-generated catch block
-                                                                                       
-                                       a=a+" = - Only Date is allowed in CRASH DATE";
-        							}
-                                             try {
-        								if(i == 12 ){
-               						 SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");
-            						 Date dateformat=new Date();
-        								dateformat = monthFormat.parse(patientArray[i]);
-        									} 
-                                            }catch (ParseException e) {
-        								// TODO Auto-generated catch block
-                                                                                           
-                                      a=a+ " = - Only Date is allowed in DATE OF BIRTH";
-                                  
-        							}
-
-        							try
-            						{
-            						if(i == 1)
-                					{
-            					int y = Integer.parseInt(patientArray[i]);
-                					}
-            						}
-        							catch (Exception e) {
-                						System.out.println(i);
-                			            a=a+ " = - Only integer is allowed in CRASH SEVERITY";
-               			        }
-        							
-        							try
-            						{
-            						if(i == 3)
-                					{
-            					int y = Integer.parseInt(patientArray[i]);
-                					}
-            						}
-       							catch (Exception e) {
-               						System.out.println(i);
-                						a=a+ " = - Only integer is allowed in NUMBER OF UNITS";
-               			        }
-        							
-        							try
-            						{
-            						if(i == 4)
-                					{
-            					int y = Integer.parseInt(patientArray[i]);
-                					}
-           						}
-        							catch (Exception e) {
-                						System.out.println(i);
-                						a=a+ " = - Only integer is allowed in UNIT IN ERROR";
-                			        }
-        							try
-            						{
-            						if(i == 10)
-                					{
-            					int y = Integer.parseInt(patientArray[i]);
-                					}
-            						}
-        							catch (Exception e) {
-                						System.out.println(i);
-                						a=a+ " = - Only integer is allowed in UNIT NUMBER";
-                			        }
-
-        							try
-            						{
-            						if(i == 16)
-                					{
-            					int y = Integer.parseInt(patientArray[i]);
-                					}
-            						}
-        							catch (Exception e) {
-                						System.out.println(i);
-                						a=a+ " = - Only integer is allowed in INJURIES";
-                			        }
-        							try
-            						{
-            						if(i == 20)
-               					{
-            					int y = Integer.parseInt(patientArray[i]);
-               					}
-            						}
-        							catch (Exception e) {
-                						System.out.println(i);
-                						a=a+ " = - Only integer is allowed in UNIT IN ERROR";
-                			        }
-        							try
-            						{
-            						if(i == 21)
-                					{
-            					int y = Integer.parseInt(patientArray[i]);
-                					}
-            						}
-        							catch (Exception e) {
-                						System.out.println(i);
-                						a=a+ " = - Only integer is allowed in UNIT NUMBER";
-                			        }
-        							try
-            						{
-            						if(i == 24)
-                					{
-            					int y = Integer.parseInt(patientArray[i]);
-                					}
-            						}
-        							catch (Exception e) {
-                						System.out.println(i);
-                						a=a+ " = - Only integer is allowed in DAMAGE SCALE";
-                			        }
-        							
-					
-					
-       					if(i == 0)
-							   {
-       						if(patientArray[i].equals(""))
-       						{	a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
-						     
-							   }
-					}
-					
-
-				
-				if(i == 1)
-						   {
-					if(patientArray[i].equals(""))
-					{
-						 a=a+ " = - Empty data is not allowed in CRASH SEVERITY";
-						   }
-						   }
-				if(i == 2)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in REPORTING AGENCY NAME";
-				   }
-				   }
-				if(i == 3)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in NUMBER OF UNITS";
-				   }
-				   }
-				if(i == 4)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in UNIT IN ERROR";
-				   }
-				   }
-				if(i == 5)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in COUNTY ";
-				   }
-				   }
-				if(i == 6)
-				   {
-	if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in CITY VILLAGE TOWNSHIP *";
-				   }
-			   }
-				if(i == 7)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in CRASH DATE";
-				   }
-				   }
-				if(i == 8)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in TIME OF CRASH";
-				   }
-				   }
-				if(i == 9)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
-				   }
-				   }
-				if(i == 10)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in UNIT NUMBER";
-				   }
-				   }
-				if(i == 11)
-			   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in NAME: LAST FIRST MIDDLE";
-			}
-				   }
-				if(i == 12)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in DATE OF BIRTH";
-			}
-				   }
-				if(i == 13)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in GENDER";
-				   }
-				   }
-				if(i == 14)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in ADDRESS CITY STATE ZIP";
-				   }
-				   }
-				if(i == 15)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in CONTACT PHONE - INCLUDE AREA CODE";
-				   }
-				   }
-			if(i == 16)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in INJURIES";
-				   }
-				   }
-				if(i == 17)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in EMS AGENCY";
-				   }
-				   }
-				if(i == 18)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in MEDICAL FACILITY INJURED TAKEN TO";
-				   }
-				   }
-				if(i == 19)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
-			   }
-			   }
-				if(i ==20)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in UNIT IN ERROR";
-				   }
-				   }
-				if(i == 21)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in UNIT NUMBER";
-				   }
-				   }
-		if(i == 22)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in OWNER NAME";
-				   }
-				   }
-				if(i == 23)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in OWNER PHONE NUMBER";
-				   }
-				   }
-				if(i == 24)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in DAMAGE SCALE";
-				   }
-				   }
-				if(i == 25)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in PROOF OF INSURANCE";
-				   }
-				   }
-				if(i == 26)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in INSURANCE COMPANY";
-				   }
-			   }
-				if(i == 27)
-				   {
-			if(patientArray[i].equals(""))
-			{
-				 a=a+ " = - Empty data is not allowed in POLICY NUMBER";
-				   }
-			   }
-				
-				
-							   }
-        					// validation ends
-        					patients.add(new Patients(null, null, patientArray[0], Integer.parseInt(patientArray[1]), patientArray[2],Integer.parseInt(patientArray[3]), Integer.parseInt(patientArray[4]),patientArray[5], patientArray[6], InjuryConstants.convertYearFormat(patientArray[7]), patientArray[8], patientArray[9],Integer.parseInt(patientArray[10]), patientArray[11], InjuryConstants.convertYearFormat(patientArray[12]), patientArray[13].trim(), patientArray[14], patientArray[15], Integer.parseInt(patientArray[16]), patientArray[17], patientArray[18], patientArray[19],Integer.parseInt(patientArray[20]),Integer.parseInt(patientArray[21]), patientArray[22], patientArray[23], Integer.parseInt(patientArray[24]), patientArray[25], patientArray[26], patientArray[27]));
-        					
-        					
-        					System.out.println(line);
-        					lineNumber++;
-        				}
+        		while ((line = br.readLine()) != null) {
         			
-        				else
-        				{
-        					patientHeader=line.split(csvSplitBy);
-        					lineNumber++;
+        			System.out.println("note");
+        			System.out.println(line);
+        			
+        			if(lineNumber>1){
+        				
+        				patientArray=line.split(csvSplitBy);
+        					
+        				System.out.println(patientArray[1]);
+        				// validation
+        				for(int i=0;i<28;i++){
+        					
+	       					if(i == 0){
+	       						
+	       						if(patientArray[i].equals(""))
+	       						{
+	       							a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
+							    }
+	       					}
+	       					
+	       					if(i == 1){
+	       						
+	       						if(patientArray[i].equals("")){
+	       							
+	       							a=a+ " = - Empty data is not allowed in CRASH SEVERITY";
+	       						}
+	       					}
+	       					
+	       					if(i == 2){
+	       						
+	       						if(patientArray[i].equals("")){
+	       							
+	       							a=a+ " = - Empty data is not allowed in REPORTING AGENCY NAME";
+	       						}
+	       					}
+	       					
+	       					if(i == 3){
+	       						
+	       						if(patientArray[i].equals("")){
+	       							
+	       							a=a+ " = - Empty data is not allowed in NUMBER OF UNITS";
+	       						}
+	       					}
+	       					
+	       					if(i == 4){
+	       						
+	       						if(patientArray[i].equals("")){
+	       							
+	       							a=a+ " = - Empty data is not allowed in UNIT IN ERROR";
+	       						}
+	       					}
+	       					
+	       					if(i == 5){
+	       						
+	       						if(patientArray[i].equals("")){
+	       							
+	       							a=a+ " = - Empty data is not allowed in COUNTY ";
+	       						}
+	       					}
+	       					
+	       					if(i == 6){
+	       						
+	       						if(patientArray[i].equals("")){
+	       							
+	       							a=a+ " = - Empty data is not allowed in CITY VILLAGE TOWNSHIP *";
+	       						}
+	       					}
+	       					
+	       					if(i == 7){
+	       						
+	       						if(patientArray[i].equals("")){
+	       							
+	       							a=a+ " = - Empty data is not allowed in CRASH DATE";
+	       						}
+	       					}
+	       					
+	       					if(i == 8){
+	       						
+	       						if(patientArray[i].equals("")){
+	       							
+	       							a=a+ " = - Empty data is not allowed in TIME OF CRASH";
+	       						}
+	       					}
+	       					
+	       					if(i == 9){
+	       						
+	       						if(patientArray[i].equals("")){
+	       							
+	       							a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
+	       						}
+	       					}
+	       					
+	       					if(i == 10){
+	       						
+	       						if(patientArray[i].equals("")){
+	       							
+	       							a=a+ " = - Empty data is not allowed in UNIT NUMBER";
+	       						}
+	       					}
+	       					
+	       					if(i == 11){
+	       						
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in NAME: LAST FIRST MIDDLE";
+	       						}
+	       					}
+	       					
+	       					if(i == 12){
+	       						
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in DATE OF BIRTH";
+	       						}
+	       					}
+					
+	       					if(i == 13){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in GENDER";
+	       						}
+	       					}
+					
+	       					if(i == 14){
+				
+	       						if(patientArray[i].equals("")){
+	       							
+	       							a=a+ " = - Empty data is not allowed in ADDRESS CITY STATE ZIP";
+	       						}
+	       					}
+	       					
+	       					if(i == 15){
+	       						
+	       						if(patientArray[i].equals("")){
+	       							
+	       							a=a+ " = - Empty data is not allowed in CONTACT PHONE - INCLUDE AREA CODE";
+	       						}
+	       					}
+	       					
+	       					if(i == 16){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in INJURIES";
+	       						}
+	       					}
+	       					
+	       					if(i == 17){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in EMS AGENCY";
+	       						}
+	       					}
+	       					
+	       					if(i == 18){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in MEDICAL FACILITY INJURED TAKEN TO";
+	       						}
+	       					}
+	       					
+	       					if(i == 19){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
+	       						}
+	       					}
+	
+	       					if(i ==20){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in UNIT IN ERROR";
+	       						}
+	       					}
+	
+	       					if(i == 21){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in UNIT NUMBER";
+	       						}
+	       					}
+			
+	       					if(i == 22){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in OWNER NAME";
+	       						}
+	       					}
+	       					
+	       					if(i == 23){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in OWNER PHONE NUMBER";
+	       						}
+	       					}
+	       					
+	       					if(i == 24){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in DAMAGE SCALE";
+	       						}
+	       					}
+	       					
+	       					if(i == 25){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in PROOF OF INSURANCE";
+	       						}
+	       					}
+	
+	       					if(i == 26){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in INSURANCE COMPANY";
+	       						}
+	       					}
+	
+	       					if(i == 27){
+				
+	       						if(patientArray[i].equals("")){
+					 
+	       							a=a+ " = - Empty data is not allowed in POLICY NUMBER";
+	       						}
+	       					}
+	       					
         				}
+        				
+        				// validation ends
+        				
+        				patients.add(new Patients(null, null,patientArray[0].trim(), patientArray[1].trim(), patientArray[2].trim(),
+	        							patientArray[3].trim(), patientArray[4].trim(),patientArray[5].trim(), patientArray[6].trim(), patientArray[7].trim(), 
+	        							patientArray[8].trim(), patientArray[9].trim(),patientArray[10].trim(), patientArray[11].trim(), patientArray[12].trim(), 
+	        							patientArray[13].trim(), patientArray[14].trim(), patientArray[15].trim(), patientArray[16].trim(), 
+	        							patientArray[17].trim(), patientArray[18].trim(), patientArray[19].trim(),patientArray[20].trim(),patientArray[21].trim(), 
+	        							patientArray[22].trim(), patientArray[23].trim(), patientArray[24].trim(), patientArray[25].trim(), 
+	        							patientArray[26].trim(),patientArray[27].trim()));
+        				
+        				System.out.println(line);
+        				
+        				lineNumber++;
+        				
         			}
+	        			
+	        				else
+	        				{
+	        					patientHeader=line.split(csvSplitBy);
+	        					lineNumber++;
+	        				}
+        				}
 
-   				if(lineNumber==2){
-  					 a=a+" = Empty Data";
-  				}
-       		}
+	   				if(lineNumber==2){
+	  					 a=a+" = Empty Data";
+	  				}
+       			}
        		
         		catch (NumberFormatException e) {
         			e.printStackTrace();
@@ -607,7 +523,7 @@ public String addPatientFromFile(MultipartFile file)
 					doctorId=patients.getDoctors().getId();
 					
 			
-				PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),InjuryConstants.convertMonthFormat(patients.getCrashDate()),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),InjuryConstants.convertMonthFormat(patients.getDateOfBirth()),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
+				PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
 		patientsForms.add(patientsForm);
 			count++;
 			}

@@ -18,30 +18,30 @@ public class PatientsForm {
 	private Integer callerId;
 	private Integer doctorId;
 	private String localReportNumber;
-	private Integer crashSeverity;
+	private String crashSeverity;
 	private String reportingAgencyName;
-	private Integer numberOfUnits;
-	private Integer unitInError;
+	private String numberOfUnits;
+	private String unitInError;
 	private String country;
 	private String cityVillageTownship;
 	private String crashDate;
 	private String timeOfCrash;
 	private String localReportNumber1;
-	private Integer unitNumber;
+	private String unitNumber;
 	private String name;
 	private String dateOfBirth;
 	private String gender;
 	private String address;
 	private String phoneNumber;
-	private Integer injuries;
+	private String injuries;
 	private String emsAgency;
 	private String medicalFacility;
 	private String localReportNumber2;
-	private Integer unitInError1;
-	private Integer unitNumber1;
+	private String unitInError1;
+	private String unitNumber1;
 	private String ownerName;
 	private String ownerPhoneNumber;
-	private Integer damageScale;
+	private String damageScale;
 	private String proofOfInsurance;
 	private String insuranceCompany;
 	private String policyNumber;
@@ -71,10 +71,10 @@ public class PatientsForm {
 	public void setLocalReportNumber(String localReportNumber) {
 		this.localReportNumber = localReportNumber;
 	}
-	public Integer getCrashSeverity() {
+	public String getCrashSeverity() {
 		return crashSeverity;
 	}
-	public void setCrashSeverity(Integer crashSeverity) {
+	public void setCrashSeverity(String crashSeverity) {
 		this.crashSeverity = crashSeverity;
 	}
 	public String getReportingAgencyName() {
@@ -83,16 +83,16 @@ public class PatientsForm {
 	public void setReportingAgencyName(String reportingAgencyName) {
 		this.reportingAgencyName = reportingAgencyName;
 	}
-	public Integer getNumberOfUnits() {
+	public String getNumberOfUnits() {
 		return numberOfUnits;
 	}
-	public void setNumberOfUnits(Integer numberOfUnits) {
+	public void setNumberOfUnits(String numberOfUnits) {
 		this.numberOfUnits = numberOfUnits;
 	}
-	public Integer getUnitInError() {
+	public String getUnitInError() {
 		return unitInError;
 	}
-	public void setUnitInError(Integer unitInError) {
+	public void setUnitInError(String unitInError) {
 		this.unitInError = unitInError;
 	}
 	public String getCountry() {
@@ -125,10 +125,10 @@ public class PatientsForm {
 	public void setLocalReportNumber1(String localReportNumber1) {
 		this.localReportNumber1 = localReportNumber1;
 	}
-	public Integer getUnitNumber() {
+	public String getUnitNumber() {
 		return unitNumber;
 	}
-	public void setUnitNumber(Integer unitNumber) {
+	public void setUnitNumber(String unitNumber) {
 		this.unitNumber = unitNumber;
 	}
 	public String getName() {
@@ -161,10 +161,10 @@ public class PatientsForm {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public Integer getInjuries() {
+	public String getInjuries() {
 		return injuries;
 	}
-	public void setInjuries(Integer injuries) {
+	public void setInjuries(String injuries) {
 		this.injuries = injuries;
 	}
 	public String getEmsAgency() {
@@ -185,16 +185,16 @@ public class PatientsForm {
 	public void setLocalReportNumber2(String localReportNumber2) {
 		this.localReportNumber2 = localReportNumber2;
 	}
-	public Integer getUnitInError1() {
+	public String getUnitInError1() {
 		return unitInError1;
 	}
-	public void setUnitInError1(Integer unitInError1) {
+	public void setUnitInError1(String unitInError1) {
 		this.unitInError1 = unitInError1;
 	}
-	public Integer getUnitNumber1() {
+	public String getUnitNumber1() {
 		return unitNumber1;
 	}
-	public void setUnitNumber1(Integer unitNumber1) {
+	public void setUnitNumber1(String unitNumber1) {
 		this.unitNumber1 = unitNumber1;
 	}
 	public String getOwnerName() {
@@ -209,10 +209,10 @@ public class PatientsForm {
 	public void setOwnerPhoneNumber(String ownerPhoneNumber) {
 		this.ownerPhoneNumber = ownerPhoneNumber;
 	}
-	public Integer getDamageScale() {
+	public String getDamageScale() {
 		return damageScale;
 	}
-	public void setDamageScale(Integer damageScale) {
+	public void setDamageScale(String damageScale) {
 		this.damageScale = damageScale;
 	}
 	public String getProofOfInsurance() {
@@ -237,15 +237,15 @@ public class PatientsForm {
 	}
 
 	public PatientsForm(Integer id, Integer callerId, Integer doctorId, String localReportNumber,
-			Integer crashSeverity, String reportingAgencyName,
-			Integer numberOfUnits, Integer unitInError, String country,
+			String crashSeverity, String reportingAgencyName,
+			String numberOfUnits, String unitInError, String country,
 			String cityVillageTownship, String crashDate, String timeOfCrash,
-			String localReportNumber1, Integer unitNumber, String name,
+			String localReportNumber1, String unitNumber, String name,
 			String dateOfBirth, String gender, String address,
-			String phoneNumber, Integer injuries, String emsAgency,
+			String phoneNumber, String injuries, String emsAgency,
 			String medicalFacility, String localReportNumber2,
-			Integer unitInError1, Integer unitNumber1, String ownerName,
-			String ownerPhoneNumber, Integer damageScale,
+			String unitInError1, String unitNumber1, String ownerName,
+			String ownerPhoneNumber, String damageScale,
 			String proofOfInsurance, String insuranceCompany, String policyNumber) {
 		super();
 		this.id = id;

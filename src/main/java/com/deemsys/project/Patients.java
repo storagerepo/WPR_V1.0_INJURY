@@ -1,19 +1,13 @@
-package com.deemsys.project.entity;
+package com.deemsys.project;
 
-// Generated Aug 6, 2015 2:51:18 PM by Hibernate Tools 3.4.0.CR1
+// Generated Aug 26, 2015 2:23:40 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,55 +20,54 @@ import javax.persistence.TemporalType;
 public class Patients implements java.io.Serializable {
 
 	private Integer id;
-	private Staff staff;
-	private Doctors doctors;
+	private Integer callerId;
+	private Integer doctorId;
 	private String localReportNumber;
-	private String crashSeverity;
+	private Integer crashSeverity;
 	private String reportingAgencyName;
-	private String numberOfUnits;
-	private String unitInError;
+	private Integer numberOfUnits;
+	private Integer unitInError;
 	private String country;
 	private String cityVillageTownship;
-	private String crashDate;
+	private Date crashDate;
 	private String timeOfCrash;
 	private String localReportNumber1;
-	private String unitNumber;
+	private Integer unitNumber;
 	private String name;
-	private String dateOfBirth;
+	private Date dateOfBirth;
 	private String gender;
 	private String address;
 	private String phoneNumber;
-	private String injuries;
+	private Integer injuries;
 	private String emsAgency;
 	private String medicalFacility;
 	private String localReportNumber2;
-	private String unitInError1;
-	private String unitNumber1;
+	private Integer unitInError1;
+	private Integer unitNumber1;
 	private String ownerName;
 	private String ownerPhoneNumber;
-	private String damageScale;
+	private Integer damageScale;
 	private String proofOfInsurance;
 	private String insuranceCompany;
 	private String policyNumber;
-	private Set<Appointments> appointmentses = new HashSet<Appointments>(0);
-	private Set<CallLogs> callLogses = new HashSet<CallLogs>(0);
 
 	public Patients() {
 	}
 
-	public Patients(Staff staff, Doctors doctors, String localReportNumber,
-			String crashSeverity, String reportingAgencyName,
-			String numberOfUnits, String unitInError, String country,
-			String cityVillageTownship, String crashDate, String timeOfCrash,
-			String localReportNumber1, String unitNumber, String name,
-			String dateOfBirth, String gender, String address,
-			String phoneNumber, String injuries, String emsAgency,
-			String medicalFacility, String localReportNumber2,
-			String unitInError1, String unitNumber1, String ownerName,
-			String ownerPhoneNumber, String damageScale,
-			String proofOfInsurance,String insuranceCompany,String policyNumber) {
-		this.staff = staff;
-		this.doctors = doctors;
+	public Patients(Integer callerId, Integer doctorId,
+			String localReportNumber, Integer crashSeverity,
+			String reportingAgencyName, Integer numberOfUnits,
+			Integer unitInError, String country, String cityVillageTownship,
+			Date crashDate, String timeOfCrash, String localReportNumber1,
+			Integer unitNumber, String name, Date dateOfBirth, String gender,
+			String address, String phoneNumber, Integer injuries,
+			String emsAgency, String medicalFacility,
+			String localReportNumber2, Integer unitInError1,
+			Integer unitNumber1, String ownerName, String ownerPhoneNumber,
+			Integer damageScale, String proofOfInsurance,
+			String insuranceCompany, String policyNumber) {
+		this.callerId = callerId;
+		this.doctorId = doctorId;
 		this.localReportNumber = localReportNumber;
 		this.crashSeverity = crashSeverity;
 		this.reportingAgencyName = reportingAgencyName;
@@ -116,24 +109,22 @@ public class Patients implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "caller_id")
-	public Staff getStaff() {
-		return this.staff;
+	@Column(name = "caller_id")
+	public Integer getCallerId() {
+		return this.callerId;
 	}
 
-	public void setStaff(Staff staff) {
-		this.staff = staff;
+	public void setCallerId(Integer callerId) {
+		this.callerId = callerId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "doctor_id")
-	public Doctors getDoctors() {
-		return this.doctors;
+	@Column(name = "doctor_id")
+	public Integer getDoctorId() {
+		return this.doctorId;
 	}
 
-	public void setDoctors(Doctors doctors) {
-		this.doctors = doctors;
+	public void setDoctorId(Integer doctorId) {
+		this.doctorId = doctorId;
 	}
 
 	@Column(name = "local_report_number", length = 50)
@@ -146,11 +137,11 @@ public class Patients implements java.io.Serializable {
 	}
 
 	@Column(name = "crash_severity")
-	public String getCrashSeverity() {
+	public Integer getCrashSeverity() {
 		return this.crashSeverity;
 	}
 
-	public void setCrashSeverity(String crashSeverity) {
+	public void setCrashSeverity(Integer crashSeverity) {
 		this.crashSeverity = crashSeverity;
 	}
 
@@ -164,24 +155,24 @@ public class Patients implements java.io.Serializable {
 	}
 
 	@Column(name = "number_of_units")
-	public String getNumberOfUnits() {
+	public Integer getNumberOfUnits() {
 		return this.numberOfUnits;
 	}
 
-	public void setNumberOfUnits(String numberOfUnits) {
+	public void setNumberOfUnits(Integer numberOfUnits) {
 		this.numberOfUnits = numberOfUnits;
 	}
 
 	@Column(name = "unit_in_error")
-	public String getUnitInError() {
+	public Integer getUnitInError() {
 		return this.unitInError;
 	}
 
-	public void setUnitInError(String unitInError) {
+	public void setUnitInError(Integer unitInError) {
 		this.unitInError = unitInError;
 	}
 
-	@Column(name = "country",length=100)
+	@Column(name = "country", length = 100)
 	public String getCountry() {
 		return this.country;
 	}
@@ -199,17 +190,17 @@ public class Patients implements java.io.Serializable {
 		this.cityVillageTownship = cityVillageTownship;
 	}
 
-
+	@Temporal(TemporalType.DATE)
 	@Column(name = "crash_date", length = 10)
-	public String getCrashDate() {
+	public Date getCrashDate() {
 		return this.crashDate;
 	}
 
-	public void setCrashDate(String crashDate) {
+	public void setCrashDate(Date crashDate) {
 		this.crashDate = crashDate;
 	}
 
-	@Column(name = "time_of_crash", length = 8)
+	@Column(name = "time_of_crash", length = 10)
 	public String getTimeOfCrash() {
 		return this.timeOfCrash;
 	}
@@ -228,11 +219,11 @@ public class Patients implements java.io.Serializable {
 	}
 
 	@Column(name = "unit_number")
-	public String getUnitNumber() {
+	public Integer getUnitNumber() {
 		return this.unitNumber;
 	}
 
-	public void setUnitNumber(String unitNumber) {
+	public void setUnitNumber(Integer unitNumber) {
 		this.unitNumber = unitNumber;
 	}
 
@@ -245,16 +236,17 @@ public class Patients implements java.io.Serializable {
 		this.name = name;
 	}
 
+	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_birth", length = 10)
-	public String getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return this.dateOfBirth;
 	}
 
-	public void setDateOfBirth(String dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	@Column(name = "gender",length=1)
+	@Column(name = "gender", length = 1)
 	public String getGender() {
 		return this.gender;
 	}
@@ -282,11 +274,11 @@ public class Patients implements java.io.Serializable {
 	}
 
 	@Column(name = "injuries")
-	public String getInjuries() {
+	public Integer getInjuries() {
 		return this.injuries;
 	}
 
-	public void setInjuries(String injuries) {
+	public void setInjuries(Integer injuries) {
 		this.injuries = injuries;
 	}
 
@@ -318,20 +310,20 @@ public class Patients implements java.io.Serializable {
 	}
 
 	@Column(name = "unit_in_error1")
-	public String getUnitInError1() {
+	public Integer getUnitInError1() {
 		return this.unitInError1;
 	}
 
-	public void setUnitInError1(String unitInError1) {
+	public void setUnitInError1(Integer unitInError1) {
 		this.unitInError1 = unitInError1;
 	}
 
 	@Column(name = "unit_number1")
-	public String getUnitNumber1() {
+	public Integer getUnitNumber1() {
 		return this.unitNumber1;
 	}
 
-	public void setUnitNumber1(String unitNumber1) {
+	public void setUnitNumber1(Integer unitNumber1) {
 		this.unitNumber1 = unitNumber1;
 	}
 
@@ -354,15 +346,15 @@ public class Patients implements java.io.Serializable {
 	}
 
 	@Column(name = "damage_scale")
-	public String getDamageScale() {
+	public Integer getDamageScale() {
 		return this.damageScale;
 	}
 
-	public void setDamageScale(String damageScale) {
+	public void setDamageScale(Integer damageScale) {
 		this.damageScale = damageScale;
 	}
 
-	@Column(name = "proof_of_insurance",length=15)
+	@Column(name = "proof_of_insurance", length = 15)
 	public String getProofOfInsurance() {
 		return this.proofOfInsurance;
 	}
@@ -370,7 +362,7 @@ public class Patients implements java.io.Serializable {
 	public void setProofOfInsurance(String proofOfInsurance) {
 		this.proofOfInsurance = proofOfInsurance;
 	}
-	
+
 	@Column(name = "insurance_company", length = 45)
 	public String getInsuranceCompany() {
 		return this.insuranceCompany;
@@ -379,6 +371,7 @@ public class Patients implements java.io.Serializable {
 	public void setInsuranceCompany(String insuranceCompany) {
 		this.insuranceCompany = insuranceCompany;
 	}
+
 	@Column(name = "policy_number", length = 45)
 	public String getPolicyNumber() {
 		return this.policyNumber;
@@ -386,24 +379,6 @@ public class Patients implements java.io.Serializable {
 
 	public void setPolicyNumber(String policyNumber) {
 		this.policyNumber = policyNumber;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patients")
-	public Set<Appointments> getAppointmentses() {
-		return this.appointmentses;
-	}
-
-	public void setAppointmentses(Set<Appointments> appointmentses) {
-		this.appointmentses = appointmentses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patients")
-	public Set<CallLogs> getCallLogses() {
-		return this.callLogses;
-	}
-
-	public void setCallLogses(Set<CallLogs> callLogses) {
-		this.callLogses = callLogses;
 	}
 
 }
