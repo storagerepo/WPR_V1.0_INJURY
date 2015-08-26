@@ -44,20 +44,20 @@
 						<td>{{patients.phoneNumber}}</td>
 						<td style="width:150px!important; display:inline-block">
 						<span>
-						<a href="#/dashboard/Calllogs/{{patients.id}}" class="btn btn-xs btn-primary"><i
+						<a href="#/dashboard/Calllogs/{{patients.id}}" class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs"><i
 								class="glyphicon glyphicon-eye-open"></i>
 						</a>
-						<a href="#/dashboard/EditPatient/{{patients.id}}" class="btn btn-xs btn-warning" ng-show="isAdmin">&nbsp;<i
+						<a href="#/dashboard/EditPatient/{{patients.id}}" class="btn btn-xs btn-warning hint--top" data-hint="Edit Call Logs" ng-show="isAdmin">&nbsp;<i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
-						<a href="" ng-click="deletePatient(patients.id)" class="btn btn-xs btn-danger" ng-show="admin">&nbsp;<i
+						<a href="" ng-click="deletePatient(patients.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Call Logs" ng-show="admin">&nbsp;<i
 								class="glyphicon glyphicon-trash"></i>
 						</a>
 						<span ng-show="isAdmin">
-						<a ng-hide="{{patients.callerId}}==''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-success">&nbsp;<i
+						<a ng-hide="{{patients.callerId}}==''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-success hint--top" data-hint="Change Caller">&nbsp;<i
 								class="glyphicon glyphicon-saved"></i>
 						</a>
-						<a ng-hide="{{patients.callerId}}!=''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-danger">&nbsp;<i
+						<a ng-hide="{{patients.callerId}}!=''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-danger hint--top" data-hint="Assign Caller">&nbsp;<i
 								class="glyphicon glyphicon-saved"></i>
 						</a>
 						</span>
