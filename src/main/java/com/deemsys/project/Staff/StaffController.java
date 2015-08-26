@@ -56,11 +56,26 @@ public class StaffController {
     @RequestMapping(value="/Admin/deleteStaff",method=RequestMethod.POST)
    	public String deleteStaff(@RequestParam("id") Integer id,ModelMap model)
    	{
+    	int i=0;
+    	try{
+    	i= staffService.deleteStaff(id);
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    	}
     	
-    	staffService.deleteStaff(id);
+    	if(i>0)
+    	{
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
-   	}
+    	}
+    	else
+    	{
+    		model.addAttribute("requestSuccess",false);
+       		return "/returnPage";
+    		
+    	}
+    	}
     
     @RequestMapping(value="/Admin/getAllStaffs",method=RequestMethod.GET)
    	public String getAllStaffs(ModelMap model)
@@ -108,6 +123,14 @@ public class StaffController {
    	{
        	model.addAttribute("patientsForm",staffService.getPatientsByAccessToken());
        	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+    
+    @RequestMapping(value="/Admin/getUsername",method=RequestMethod.GET)
+   	public String getUsername(@RequestParam("username") String username,ModelMap model)
+   	{
+    	model.addAttribute("staffForms",staffService.getUsername(username));
+    	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
     

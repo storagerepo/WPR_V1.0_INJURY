@@ -34,7 +34,8 @@
     <script src="resources/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="resources/components/metisMenu/dist/metisMenu.min.js"></script>
     <script src="resources/components/Chart.js/Chart.min.js"></script>
-    
+    <script type="text/javascript" src="jquery-1.2.6.min.js"></script>
+    <script src="jquery-1.8.0.min.js"></script>
     <script src="resources/components/angular-utils-pagination/dirPagination.js"></script> 
      <script src="resources/components/angular-file-upload/angular-file-upload.min.js"></script>
 

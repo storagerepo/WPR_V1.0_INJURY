@@ -219,6 +219,13 @@ public class PatientsDAOImpl implements PatientsDAO{
 		return null;
 	}
 
+	@Override
+	public void deletePatientsByStaffId(Integer id) {
+		// TODO Auto-generated method stub
+		Query query=this.sessionFactory.getCurrentSession().createQuery("update Patients set staff.id = NULL where id="+id);
+		query.executeUpdate();
+	}
+
 	
 
 	

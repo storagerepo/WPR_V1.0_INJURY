@@ -14,7 +14,10 @@ public interface StaffDAO extends IGenericDAO<Staff>{
 	public Staff getByUserName(String username);
 	public List<Staff> getStaffId();
 	
+	public void deleteStaff(Integer id);
+	public List<Patients> getPatientsByStaffId(Integer id);
 	
+
 	
 	public List<Patients> getPatientsByAccessToken(Integer callerId);
 

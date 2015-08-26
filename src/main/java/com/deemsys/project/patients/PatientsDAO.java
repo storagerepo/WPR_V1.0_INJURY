@@ -21,7 +21,7 @@ public interface PatientsDAO extends IGenericDAO<Patients>{
 	public List<Patients> patientFileRead(String fileName);
 	
 	
-	
+	public void deletePatientsByStaffId(Integer id);
 
 	
 	

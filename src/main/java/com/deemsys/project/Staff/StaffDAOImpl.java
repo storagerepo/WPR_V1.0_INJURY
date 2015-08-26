@@ -222,6 +222,20 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 		return (List<Patients>)this.sessionFactory.getCurrentSession().createCriteria(Patients.class).add(Restrictions.eq("staff.id", callerId)).list();
 	}
 
+	@Override
+	public void deleteStaff(Integer id) {
+		// TODO Auto-generated method stub
+		this.sessionFactory.getCurrentSession().delete(this.get(id));
+	 
+	}
+
+	@Override
+	public List<Patients> getPatientsByStaffId(Integer id) {
+		// TODO Auto-generated method stub
+		return (List<Patients>)this.sessionFactory.getCurrentSession().createCriteria(Patients.class).add(Restrictions.eq("staff.id", id)).list();
+	}
+
+	
 	
 	
 }

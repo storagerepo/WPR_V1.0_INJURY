@@ -119,7 +119,7 @@ public class PatientsService {
 		
 		Staff staff=new Staff();
 		staff.setId(patientsForm.getCallerId());
-		
+		staff.setIsEnable(1);
 		
 		Doctors doctors=new Doctors();
 		doctors.setId(patientsForm.getDoctorId());
@@ -127,7 +127,7 @@ public class PatientsService {
 			
 		Patients patients=new Patients(staff,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),InjuryConstants.convertYearFormat(patientsForm.getCrashDate()),patientsForm.getTimeOfCrash(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),InjuryConstants.convertYearFormat(patientsForm.getDateOfBirth()),patientsForm.getGender(),patientsForm.getAddress(),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber());
 			patients.setId(patientsForm.getId());
-		
+			
 		//Logic Ends
 		
 		patientsDAO.update(patients);
@@ -615,4 +615,20 @@ public String addPatientFromFile(MultipartFile file)
 			return count;
 		}
 
+		
+		
+		
+		
+		public Integer deletePatientsByStaffId(Integer id) {
+			List<Patients> patients=patientsDAO.getPatientListByStaffId(id);
+			for (Patients patientss : patients) {
+				int patientsId=patientss.getId();
+				System.out.println("patientsid:"+patientsId);
+				patientsDAO.deletePatientsByStaffId(patientsId);
+				
+			}
+			return 1;
+			
+		}
+		
 }

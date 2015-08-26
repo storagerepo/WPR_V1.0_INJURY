@@ -111,4 +111,9 @@ public class StaffForm {
 		this.id=id;
 		this.firstName=firstName;
 	}
+	public StaffForm(String username)
+	{
+		this.username=username;
+		
+	}
 }

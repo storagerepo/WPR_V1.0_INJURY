@@ -91,5 +91,13 @@ public class PatientsController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+  
+  @RequestMapping(value="/deletePatientsByStaffId",method=RequestMethod.POST)
+ 	public String deletePatientsByStaffId(@RequestParam("id") Integer id,ModelMap model)
+ 	{
+  	patientsService.deletePatientsByStaffId(id);
+  	model.addAttribute("requestSuccess",true);
+ 		return "/returnPage";
+ 	}
     
 }

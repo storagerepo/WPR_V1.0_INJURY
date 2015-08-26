@@ -38,9 +38,11 @@
                                     
                                     
                                     <label>User Name</label>
-                                    <input  type="text" class="form-control"  ng-model="staff.username" name="username" placeholder="Enter UserName"  required>
+                                    <input  type="text" class="form-control"   ng-model="staff.username" name="username" placeholder="Enter UserName"  userexists required>
+    
                                     <span class="error-container" ng-show="myForm.username.$dirty && myForm.username.$invalid">
                                        <span style="color:red" ng-show="myForm.username.$error.required">Please input User Name</span>
+                                       <span style="color:red" ng-show="myForm.username.$error.userexists">UserName allready exists</span>
                                          </span><br/>
                                 
                                 </td>

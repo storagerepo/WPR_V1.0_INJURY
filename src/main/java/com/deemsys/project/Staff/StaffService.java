@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
+import com.deemsys.project.patients.PatientsDAO;
 import com.deemsys.project.patients.PatientsForm;
 /**
  * 
@@ -34,6 +35,7 @@ public class StaffService {
 
 	@Autowired
 	StaffDAO staffDAO;
+	
 	
 	//Get All Entries
 	public List<StaffForm> getStaffList()
@@ -99,6 +101,7 @@ public class StaffService {
 		//Logic Starts
 		
 		Staff staff=new Staff("ROLE_STAFF", staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),1,null);
+		staff.setIsEnable(1);
 		//Logic Ends
 		
 		staffDAO.save(staff);
@@ -123,8 +126,19 @@ public class StaffService {
 	//Delete an Entry
 	public int deleteStaff(Integer id)
 	{
+		List<Patients> patientss=new ArrayList<Patients>();
+		
+		patientss=staffDAO.getPatientsByStaffId(id);
+		if(patientss.size()==0)
+		{
+			
 		staffDAO.delete(id);
 		return 1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 	
 	
@@ -246,6 +260,29 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 		
 		
 		
+		
+		
+		public Integer getUsername(String username)
+		{
+			Integer count=0;
+			
+			Staff staff=new Staff();
+			
+			staff=staffDAO.getByUserName(username);
+			StaffForm staffForm=new StaffForm();
+			//TODO: Convert Entity to Form
+			//Start
+			if(staff!=null){
+				System.out.println(count++);
+				return count++;
+			//staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
+			}
+			else{
+			//staffForm= new StaffForm();
+				return count;
+			}
+			//End
+			}
 		
 		
 }
