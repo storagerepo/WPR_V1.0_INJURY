@@ -93,7 +93,7 @@ public class PatientsService {
 	{
 		Patients patients=new Patients();
 		
-	patients=patientsDAO.get(getId);
+		patients=patientsDAO.get(getId);
 		
 		//TODO: Convert Entity to Form
 		//Start
@@ -212,11 +212,16 @@ public class PatientsService {
         		
         		
         		String[] patientArray=new String[30];
-        		String[] patientHeader=new String[30];
         		List<Patients> patients=new ArrayList<Patients>();
         		// try starts
        		try {
+       			/*
+       			File localDir = new File("E:\\CRASHREPORT_Individual\\");
        			
+       			File [] files = localDir.listFiles();
+       		    for (int i = 0; i < files.length; i++){
+       		        if (files[i].isFile()){*/
+       		          
        			br = new BufferedReader(new FileReader(fileName));
         		Integer lineNumber=1;
         				
@@ -228,239 +233,8 @@ public class PatientsService {
         			if(lineNumber>1){
         				
         				patientArray=line.split(csvSplitBy);
-        					
-        				System.out.println(patientArray[1]);
-        				// validation
-        				for(int i=0;i<28;i++){
-        					
-	       					if(i == 0){
-	       						
-	       						if(patientArray[i].equals(""))
-	       						{
-	       							a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
-							    }
-	       					}
-	       					
-	       					if(i == 1){
-	       						
-	       						if(patientArray[i].equals("")){
-	       							
-	       							a=a+ " = - Empty data is not allowed in CRASH SEVERITY";
-	       						}
-	       					}
-	       					
-	       					if(i == 2){
-	       						
-	       						if(patientArray[i].equals("")){
-	       							
-	       							a=a+ " = - Empty data is not allowed in REPORTING AGENCY NAME";
-	       						}
-	       					}
-	       					
-	       					if(i == 3){
-	       						
-	       						if(patientArray[i].equals("")){
-	       							
-	       							a=a+ " = - Empty data is not allowed in NUMBER OF UNITS";
-	       						}
-	       					}
-	       					
-	       					if(i == 4){
-	       						
-	       						if(patientArray[i].equals("")){
-	       							
-	       							a=a+ " = - Empty data is not allowed in UNIT IN ERROR";
-	       						}
-	       					}
-	       					
-	       					if(i == 5){
-	       						
-	       						if(patientArray[i].equals("")){
-	       							
-	       							a=a+ " = - Empty data is not allowed in COUNTY ";
-	       						}
-	       					}
-	       					
-	       					if(i == 6){
-	       						
-	       						if(patientArray[i].equals("")){
-	       							
-	       							a=a+ " = - Empty data is not allowed in CITY VILLAGE TOWNSHIP *";
-	       						}
-	       					}
-	       					
-	       					if(i == 7){
-	       						
-	       						if(patientArray[i].equals("")){
-	       							
-	       							a=a+ " = - Empty data is not allowed in CRASH DATE";
-	       						}
-	       					}
-	       					
-	       					if(i == 8){
-	       						
-	       						if(patientArray[i].equals("")){
-	       							
-	       							a=a+ " = - Empty data is not allowed in TIME OF CRASH";
-	       						}
-	       					}
-	       					
-	       					if(i == 9){
-	       						
-	       						if(patientArray[i].equals("")){
-	       							
-	       							a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
-	       						}
-	       					}
-	       					
-	       					if(i == 10){
-	       						
-	       						if(patientArray[i].equals("")){
-	       							
-	       							a=a+ " = - Empty data is not allowed in UNIT NUMBER";
-	       						}
-	       					}
-	       					
-	       					if(i == 11){
-	       						
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in NAME: LAST FIRST MIDDLE";
-	       						}
-	       					}
-	       					
-	       					if(i == 12){
-	       						
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in DATE OF BIRTH";
-	       						}
-	       					}
-					
-	       					if(i == 13){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in GENDER";
-	       						}
-	       					}
-					
-	       					if(i == 14){
-				
-	       						if(patientArray[i].equals("")){
-	       							
-	       							a=a+ " = - Empty data is not allowed in ADDRESS CITY STATE ZIP";
-	       						}
-	       					}
-	       					
-	       					if(i == 15){
-	       						
-	       						if(patientArray[i].equals("")){
-	       							
-	       							a=a+ " = - Empty data is not allowed in CONTACT PHONE - INCLUDE AREA CODE";
-	       						}
-	       					}
-	       					
-	       					if(i == 16){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in INJURIES";
-	       						}
-	       					}
-	       					
-	       					if(i == 17){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in EMS AGENCY";
-	       						}
-	       					}
-	       					
-	       					if(i == 18){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in MEDICAL FACILITY INJURED TAKEN TO";
-	       						}
-	       					}
-	       					
-	       					if(i == 19){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
-	       						}
-	       					}
-	
-	       					if(i ==20){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in UNIT IN ERROR";
-	       						}
-	       					}
-	
-	       					if(i == 21){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in UNIT NUMBER";
-	       						}
-	       					}
-			
-	       					if(i == 22){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in OWNER NAME";
-	       						}
-	       					}
-	       					
-	       					if(i == 23){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in OWNER PHONE NUMBER";
-	       						}
-	       					}
-	       					
-	       					if(i == 24){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in DAMAGE SCALE";
-	       						}
-	       					}
-	       					
-	       					if(i == 25){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in PROOF OF INSURANCE";
-	       						}
-	       					}
-	
-	       					if(i == 26){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in INSURANCE COMPANY";
-	       						}
-	       					}
-	
-	       					if(i == 27){
-				
-	       						if(patientArray[i].equals("")){
-					 
-	       							a=a+ " = - Empty data is not allowed in POLICY NUMBER";
-	       						}
-	       					}
-	       					
-        				}
         				
         				// validation ends
-        				
         				patients.add(new Patients(null, null,patientArray[0].trim(), patientArray[1].trim(), patientArray[2].trim(),
 	        							patientArray[3].trim(), patientArray[4].trim(),patientArray[5].trim(), patientArray[6].trim(), patientArray[7].trim(), 
 	        							patientArray[8].trim(), patientArray[9].trim(),patientArray[10].trim(), patientArray[11].trim(), patientArray[12].trim(), 
@@ -469,25 +243,24 @@ public class PatientsService {
 	        							patientArray[22].trim(), patientArray[23].trim(), patientArray[24].trim(), patientArray[25].trim(), 
 	        							patientArray[26].trim(),patientArray[27].trim()));
         				
-        				System.out.println(line);
-        				
         				lineNumber++;
         				
         			}
-	        			
-	        				else
-	        				{
-	        					patientHeader=line.split(csvSplitBy);
+	        		else{
+	        					//patientHeader=line.split(csvSplitBy);
 	        					lineNumber++;
 	        				}
         				}
+        		/*
+        		  System.out.println(files[i]);
+       		        }
+       		    }
+       			*/
 
-	   				if(lineNumber==2){
-	  					 a=a+" = Empty Data";
-	  				}
        			}
        		
         		catch (NumberFormatException e) {
+        			System.out.println(e.toString());
         			e.printStackTrace();
         		} catch (IOException e) {
         			e.printStackTrace();
@@ -580,5 +353,238 @@ public class PatientsService {
 			return 1;
 			
 		}
+
+		
+		// Validation for patient file upload
+		/*// validation
+		for(int i=0;i<28;i++){
+			
+				if(i == 0){
+					
+					if(patientArray[i].equals(""))
+					{
+						a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
+			    }
+				}
+				
+				if(i == 1){
+					
+					if(patientArray[i].equals("")){
+						
+						a=a+ " = - Empty data is not allowed in CRASH SEVERITY";
+					}
+				}
+				
+				if(i == 2){
+					
+					if(patientArray[i].equals("")){
+						
+						a=a+ " = - Empty data is not allowed in REPORTING AGENCY NAME";
+					}
+				}
+				
+				if(i == 3){
+					
+					if(patientArray[i].equals("")){
+						
+						a=a+ " = - Empty data is not allowed in NUMBER OF UNITS";
+					}
+				}
+				
+				if(i == 4){
+					
+					if(patientArray[i].equals("")){
+						
+						a=a+ " = - Empty data is not allowed in UNIT IN ERROR";
+					}
+				}
+				
+				if(i == 5){
+					
+					if(patientArray[i].equals("")){
+						
+						a=a+ " = - Empty data is not allowed in COUNTY ";
+					}
+				}
+				
+				if(i == 6){
+					
+					if(patientArray[i].equals("")){
+						
+						a=a+ " = - Empty data is not allowed in CITY VILLAGE TOWNSHIP *";
+					}
+				}
+				
+				if(i == 7){
+					
+					if(patientArray[i].equals("")){
+						
+						a=a+ " = - Empty data is not allowed in CRASH DATE";
+					}
+				}
+				
+				if(i == 8){
+					
+					if(patientArray[i].equals("")){
+						
+						a=a+ " = - Empty data is not allowed in TIME OF CRASH";
+					}
+				}
+				
+				if(i == 9){
+					
+					if(patientArray[i].equals("")){
+						
+						a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
+					}
+				}
+				
+				if(i == 10){
+					
+					if(patientArray[i].equals("")){
+						
+						a=a+ " = - Empty data is not allowed in UNIT NUMBER";
+					}
+				}
+				
+				if(i == 11){
+					
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in NAME: LAST FIRST MIDDLE";
+					}
+				}
+				
+				if(i == 12){
+					
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in DATE OF BIRTH";
+					}
+				}
+	
+				if(i == 13){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in GENDER";
+					}
+				}
+	
+				if(i == 14){
+
+					if(patientArray[i].equals("")){
+						
+						a=a+ " = - Empty data is not allowed in ADDRESS CITY STATE ZIP";
+					}
+				}
+				
+				if(i == 15){
+					
+					if(patientArray[i].equals("")){
+						
+						a=a+ " = - Empty data is not allowed in CONTACT PHONE - INCLUDE AREA CODE";
+					}
+				}
+				
+				if(i == 16){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in INJURIES";
+					}
+				}
+				
+				if(i == 17){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in EMS AGENCY";
+					}
+				}
+				
+				if(i == 18){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in MEDICAL FACILITY INJURED TAKEN TO";
+					}
+				}
+				
+				if(i == 19){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in LOCAL REPORT NUMBER";
+					}
+				}
+
+				if(i ==20){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in UNIT IN ERROR";
+					}
+				}
+
+				if(i == 21){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in UNIT NUMBER";
+					}
+				}
+
+				if(i == 22){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in OWNER NAME";
+					}
+				}
+				
+				if(i == 23){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in OWNER PHONE NUMBER";
+					}
+				}
+				
+				if(i == 24){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in DAMAGE SCALE";
+					}
+				}
+				
+				if(i == 25){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in PROOF OF INSURANCE";
+					}
+				}
+
+				if(i == 26){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in INSURANCE COMPANY";
+					}
+				}
+
+				if(i == 27){
+
+					if(patientArray[i].equals("")){
+	 
+						a=a+ " = - Empty data is not allowed in POLICY NUMBER";
+					}
+				}
+				
+		}
+		*/
+		
 		
 }

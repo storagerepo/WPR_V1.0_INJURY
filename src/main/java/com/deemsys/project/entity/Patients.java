@@ -117,7 +117,7 @@ public class Patients implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "caller_id")
+	@JoinColumn(name = "caller_id",nullable=true)
 	public Staff getStaff() {
 		return this.staff;
 	}
@@ -127,7 +127,7 @@ public class Patients implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "doctor_id")
+	@JoinColumn(name = "doctor_id", nullable=true)
 	public Doctors getDoctors() {
 		return this.doctors;
 	}
@@ -136,7 +136,7 @@ public class Patients implements java.io.Serializable {
 		this.doctors = doctors;
 	}
 
-	@Column(name = "local_report_number", length = 50)
+	@Column(name = "local_report_number", length = 100)
 	public String getLocalReportNumber() {
 		return this.localReportNumber;
 	}
@@ -154,7 +154,7 @@ public class Patients implements java.io.Serializable {
 		this.crashSeverity = crashSeverity;
 	}
 
-	@Column(name = "reporting_agency_name", length = 60)
+	@Column(name = "reporting_agency_name", length = 100)
 	public String getReportingAgencyName() {
 		return this.reportingAgencyName;
 	}
@@ -190,7 +190,7 @@ public class Patients implements java.io.Serializable {
 		this.country = country;
 	}
 
-	@Column(name = "city_village_township", length = 50)
+	@Column(name = "city_village_township", length = 100)
 	public String getCityVillageTownship() {
 		return this.cityVillageTownship;
 	}
@@ -200,7 +200,7 @@ public class Patients implements java.io.Serializable {
 	}
 
 
-	@Column(name = "crash_date", length = 10)
+	@Column(name = "crash_date", length = 100)
 	public String getCrashDate() {
 		return this.crashDate;
 	}
@@ -209,7 +209,7 @@ public class Patients implements java.io.Serializable {
 		this.crashDate = crashDate;
 	}
 
-	@Column(name = "time_of_crash", length = 8)
+	@Column(name = "time_of_crash", length = 100)
 	public String getTimeOfCrash() {
 		return this.timeOfCrash;
 	}
@@ -218,7 +218,7 @@ public class Patients implements java.io.Serializable {
 		this.timeOfCrash = timeOfCrash;
 	}
 
-	@Column(name = "local_report_number1", length = 50)
+	@Column(name = "local_report_number1", length = 100)
 	public String getLocalReportNumber1() {
 		return this.localReportNumber1;
 	}
@@ -236,7 +236,7 @@ public class Patients implements java.io.Serializable {
 		this.unitNumber = unitNumber;
 	}
 
-	@Column(name = "name", length = 60)
+	@Column(name = "name", length = 100)
 	public String getName() {
 		return this.name;
 	}
@@ -245,7 +245,7 @@ public class Patients implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "date_of_birth", length = 10)
+	@Column(name = "date_of_birth", length = 100)
 	public String getDateOfBirth() {
 		return this.dateOfBirth;
 	}
@@ -254,7 +254,7 @@ public class Patients implements java.io.Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	@Column(name = "gender",length=1)
+	@Column(name = "gender",length = 100)
 	public String getGender() {
 		return this.gender;
 	}
@@ -263,7 +263,7 @@ public class Patients implements java.io.Serializable {
 		this.gender = gender;
 	}
 
-	@Column(name = "address", length = 200)
+	@Column(name = "address", length = 300)
 	public String getAddress() {
 		return this.address;
 	}
@@ -272,7 +272,7 @@ public class Patients implements java.io.Serializable {
 		this.address = address;
 	}
 
-	@Column(name = "phone_number", length = 15)
+	@Column(name = "phone_number", length = 100)
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
@@ -290,7 +290,7 @@ public class Patients implements java.io.Serializable {
 		this.injuries = injuries;
 	}
 
-	@Column(name = "ems_agency", length = 45)
+	@Column(name = "ems_agency", length = 100)
 	public String getEmsAgency() {
 		return this.emsAgency;
 	}
@@ -299,7 +299,7 @@ public class Patients implements java.io.Serializable {
 		this.emsAgency = emsAgency;
 	}
 
-	@Column(name = "medical_facility", length = 45)
+	@Column(name = "medical_facility", length = 100)
 	public String getMedicalFacility() {
 		return this.medicalFacility;
 	}
@@ -308,7 +308,7 @@ public class Patients implements java.io.Serializable {
 		this.medicalFacility = medicalFacility;
 	}
 
-	@Column(name = "local_report_number2", length = 50)
+	@Column(name = "local_report_number2", length = 100)
 	public String getLocalReportNumber2() {
 		return this.localReportNumber2;
 	}
@@ -335,7 +335,7 @@ public class Patients implements java.io.Serializable {
 		this.unitNumber1 = unitNumber1;
 	}
 
-	@Column(name = "owner_name", length = 60)
+	@Column(name = "owner_name", length = 100)
 	public String getOwnerName() {
 		return this.ownerName;
 	}
@@ -344,7 +344,7 @@ public class Patients implements java.io.Serializable {
 		this.ownerName = ownerName;
 	}
 
-	@Column(name = "owner_phone_number", length = 15)
+	@Column(name = "owner_phone_number", length = 100)
 	public String getOwnerPhoneNumber() {
 		return this.ownerPhoneNumber;
 	}
@@ -362,7 +362,7 @@ public class Patients implements java.io.Serializable {
 		this.damageScale = damageScale;
 	}
 
-	@Column(name = "proof_of_insurance",length=15)
+	@Column(name = "proof_of_insurance",length = 100)
 	public String getProofOfInsurance() {
 		return this.proofOfInsurance;
 	}
@@ -371,7 +371,7 @@ public class Patients implements java.io.Serializable {
 		this.proofOfInsurance = proofOfInsurance;
 	}
 	
-	@Column(name = "insurance_company", length = 45)
+	@Column(name = "insurance_company", length = 100)
 	public String getInsuranceCompany() {
 		return this.insuranceCompany;
 	}
@@ -379,7 +379,7 @@ public class Patients implements java.io.Serializable {
 	public void setInsuranceCompany(String insuranceCompany) {
 		this.insuranceCompany = insuranceCompany;
 	}
-	@Column(name = "policy_number", length = 45)
+	@Column(name = "policy_number", length = 100)
 	public String getPolicyNumber() {
 		return this.policyNumber;
 	}
