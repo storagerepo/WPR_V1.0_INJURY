@@ -71,6 +71,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	$scope.deletePatient=function(id){
 		if(confirm("Are you sure to delete patient?")){
 			  requestHandler.deletePostRequest("Staff/deletePatients.json?id=",id).then(function(response){
+				
 				  successMessageService.setMessage("You have Successfully Deleted!");
 		            successMessageService.setIsError(0);
 		            successMessageService.setIsSuccess(1);

@@ -21,8 +21,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.deemsys.project.Appointments.AppointmentsDAO;
+import com.deemsys.project.CallLogs.CallLogsDAO;
 import com.deemsys.project.Staff.StaffService;
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.Appointments;
+import com.deemsys.project.entity.CallLogs;
 import com.deemsys.project.entity.Doctors;
 import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
@@ -46,10 +50,13 @@ public class PatientsService {
 
 	@Autowired
 	PatientsDAO patientsDAO;
+	@Autowired
+	CallLogsDAO callLogsDAO;
 	
 	@Autowired
 	StaffService staffService;
-	
+	@Autowired
+	AppointmentsDAO appointmentsDAO;
 	/*@Autowired
 	PatientsFileRead patientsFileRead;*/
 	
@@ -140,7 +147,34 @@ public class PatientsService {
 	//Delete an Entry
 	public int deletePatients(Integer id)
 	{
-		patientsDAO.delete(id);
+		List<Appointments> appointments=patientsDAO.getAppointmentsListByPatientsId(id);
+		List<CallLogs> callLogs=patientsDAO.getCallLogsListByPatientsId(id);
+		if(appointments.size()==0 && callLogs.size()==0)
+		{
+			System.out.println(appointments.size());
+				System.out.println(callLogs.size());
+				patientsDAO.delete(id);
+				
+			
+		}
+		
+			else
+			{
+				for(Appointments appointmentss:appointments)
+				{
+					Integer appointmentsId=appointmentss.getId();
+					appointmentsDAO.delete(appointmentsId);
+				}
+				for(CallLogs callLogss:callLogs)
+				{
+					Integer callerId=callLogss.getId();
+				callLogsDAO.delete(callerId);
+				}
+				patientsDAO.delete(id);
+				
+			}
+		
+		
 		return 1;
 	}
 	
