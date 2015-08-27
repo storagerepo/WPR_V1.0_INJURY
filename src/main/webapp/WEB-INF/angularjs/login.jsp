@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="resources/components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="styles/sb-admin-2.css">
     <link rel="stylesheet" href="styles/timeline.css">
@@ -20,6 +21,8 @@
                             <div class="form-group">
                                 <input class="form-control" placeholder="Password" name="password" type="password" value="">
                             </div>
+                             <c:if test="${failed=='true'}"><div style="color:#FF0000"> Invalid Username or Password</div> </c:if>
+                            
                             <!-- Change this to a button or input when using this as a form -->
                             <input type="submit" value="Login" class="btn btn-success pull-right"> 
                          </fieldset>
