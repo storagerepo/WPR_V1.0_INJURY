@@ -18,9 +18,10 @@
 				<thead>
 					<tr>
 						<th ng-mousedown="sort('name')">Name <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					  <th ng-mousedown="sort('dateOfBirth')">Date Of Birth&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='dateOfBirth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					  <th ng-mousedown="sort('address')">Address&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-						<th ng-mousedown="sort('phoneNumber')">Phone Number&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='phoneNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					 <th ng-mousedown="sort('phoneNumber')">Phone Number&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='phoneNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						 <th ng-mousedown="sort('dateOfBirth')">Local Report Number&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='dateOfBirth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					  <th ng-mousedown="sort('address')">Caller Name&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						
 						<th>Actions</th>
 						
 						
@@ -28,9 +29,9 @@
 						
 						<tr>
 						<th><input type="text" class="form-control" ng-model="search.name" placeholder="Search by Name"/></th>
-						<th><input type="text" class="form-control" ng-model="search.dateOfBirth" placeholder="Search by Date Of Birth"/></th>
-						<th><input type="text" class="form-control" ng-model="search.address" placeholder="Search by Address"/></th>
 						<th><input type="text" class="form-control" ng-model="search.phoneNumber" placeholder="Search by Phone Number"/></th>
+						<th><input type="text" class="form-control" ng-model="search.localReportNumber" placeholder="Search by Local Report Number"/></th>
+						<th><input type="text" class="form-control" ng-model="search.callerName" placeholder="Search by Caller Name"/></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -39,18 +40,18 @@
 						
 
 						<td style="width:200px!important; display:inline-block"><a href="#/dashboard/Calllogs/{{patients.id}}">{{patients.name}}</a></td>
-						<td>{{patients.dateOfBirth}}</td>
-						<td style="width:200px!important; display:inline-block" class="word-wrap">{{patients.address}}</td>
 						<td>{{patients.phoneNumber}}</td>
+						<td style="width:200px!important; display:inline-block">{{patients.localReportNumber}}</td>
+						<td>{{patients.callerName}}</td>
 						<td style="width:150px!important; display:inline-block">
 						<span>
 						<a href="#/dashboard/Calllogs/{{patients.id}}" class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs"><i
 								class="glyphicon glyphicon-eye-open"></i>
 						</a>
-						<a href="#/dashboard/EditPatient/{{patients.id}}" class="btn btn-xs btn-warning hint--top" data-hint="Edit Call Logs" ng-show="isAdmin">&nbsp;<i
+						<a href="#/dashboard/EditPatient/{{patients.id}}" class="btn btn-xs btn-warning hint--top" data-hint="Edit Patient" ng-show="isAdmin">&nbsp;<i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
-						<a href="" ng-click="deletePatient(patients.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Call Logs" ng-show="admin">&nbsp;<i
+						<a href="" ng-click="deletePatient(patients.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Patient" ng-show="admin">&nbsp;<i
 								class="glyphicon glyphicon-trash"></i>
 						</a>
 						<span ng-show="isAdmin">

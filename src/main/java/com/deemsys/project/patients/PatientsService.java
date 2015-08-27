@@ -70,19 +70,29 @@ public class PatientsService {
 		patientss=patientsDAO.getAll();
 		
 		Integer staffId=0,doctorId=0;
+		String staffName="N/A";
+		String doctorName="N/A";
 		
 		
 		for (Patients patients : patientss) {
 			//TODO: Fill the List
 			staffId=0;doctorId=0;
+			staffName="N/A";doctorName="N/A";
 			if(patients.getStaff()!=null)
+			{
 				staffId=patients.getStaff().getId();
-			if(patients.getDoctors()!=null)
+				staffName=patients.getStaff().getFirstName()+" "+patients.getStaff().getLastName();
+			}
+			if(patients.getDoctors()!=null){
 				doctorId=patients.getDoctors().getId();
+				doctorName=patients.getDoctors().getName();
+			}
 				
 			
 			PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
-		patientsForms.add(patientsForm);
+			patientsForm.setCallerName(staffName);
+			patientsForm.setDoctorName(doctorName);
+			patientsForms.add(patientsForm);
 		}
 		
 		return patientsForms;
@@ -99,16 +109,27 @@ public class PatientsService {
 		//Start
 		PatientsForm patientsForm = new PatientsForm();
 		Integer staffId = 0,doctorId = 0;
-		
+		String staffName="N/A";
+		String doctorName="N/A";
 		if(patients!=null)
 		{
 			staffId=0;doctorId=0;
 		if(patients.getStaff()!=null)
+		{
 			staffId=patients.getStaff().getId();
-		if(patients.getDoctors()!=null)
+			staffName=patients.getStaff().getFirstName()+" "+patients.getStaff().getLastName();
+		}
+		if(patients.getDoctors()!=null){
 			doctorId=patients.getDoctors().getId();
+			doctorName=patients.getDoctors().getName();
+		}
+			
 		
 		patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
+		patientsForm.setCallerName(staffName);
+		patientsForm.setDoctorName(doctorName);
+		
+		
 		}
 			
 		

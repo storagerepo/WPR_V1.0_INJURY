@@ -16,6 +16,8 @@ public class PatientsForm {
 
 	private Integer id;
 	private Integer callerId;
+	private String callerName;
+	private String doctorName;
 	private Integer doctorId;
 	private String localReportNumber;
 	private String crashSeverity;
@@ -288,6 +290,18 @@ public class PatientsForm {
 	{
 		this.callerId=callerId;
 		this.doctorId=doctorId;
+	}
+	public String getCallerName() {
+		return callerName;
+	}
+	public void setCallerName(String callerName) {
+		this.callerName = callerName;
+	}
+	public String getDoctorName() {
+		return doctorName;
+	}
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
 	}
 	
 	

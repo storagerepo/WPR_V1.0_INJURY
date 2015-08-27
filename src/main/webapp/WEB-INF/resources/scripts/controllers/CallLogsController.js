@@ -21,6 +21,15 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
     
     
     });
+	    
+	    $scope.viewPatients=function(id)
+	    {
+	    	requestHandler.getRequest("/Staff/getPatients.json?id="+id,"").then( function(response) {
+	    		$scope.patients=response.data.patientsForm;
+	    	      $("#myModal").modal("show");
+	         });
+	    };
+	    
    $scope.deleteCalllogs=function(id)
 	  {
 		
