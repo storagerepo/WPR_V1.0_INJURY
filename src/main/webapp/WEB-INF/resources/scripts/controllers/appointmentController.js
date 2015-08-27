@@ -16,8 +16,8 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
  
 $scope.viewPatients=function(id)
 {
-	requestHandler.getRequest("Staff/getAllAppointmentsByPatient.json?patientId="+id,"").then( function(response) {
-	    $scope.patients=response.data.patientsForms;
+	requestHandler.getRequest("/Staff/getPatients.json?id="+id,"").then( function(response) {
+		$scope.patients=response.data.patientsForm;
 	      $("#myModal").modal("show");
      });
 }
