@@ -43,7 +43,7 @@ angular
                               break;
                           }
                           case 500: {
-                        	  alert("Some thing went wrong :(");
+                        	  alert("Please try again!");
                               break;
                           }
                           default : {
@@ -203,63 +203,65 @@ angular
        url:'/grid'
    })//staff starts
         .state('dashboard.staff',{
-            templateUrl:'views/staff-view/staff.html',
-            resolve: {
-                loadMyFile:function($ocLazyLoad) {
-                    $ocLazyLoad.load({
-                        name:'sbAdminApp',
-                        files:['scripts/controllers/staffController.js']
-                    });
-                }
-            },
+        	 resolve: {
+                 loadMyFile:function($ocLazyLoad) {
+                   return $ocLazyLoad.load({
+                       name:'sbAdminApp',
+                       files:['scripts/controllers/staffController.js']
+                   });
+                 }
+               },
             controller:'ShowStaffController',
+            templateUrl:'views/staff-view/staff.html',
             url:'/staff'
         
         })
         .state('dashboard.add-staff',{
-        templateUrl:'views/staff-view/add-staff.html',
-        url:'/add-staff',
-        title:'Add Staff',
-        controller:'SaveStaffController',
+       
         resolve: {
             loadMyFile:function($ocLazyLoad) {
-              
-              $ocLazyLoad.load({
+              return $ocLazyLoad.load({
                   name:'sbAdminApp',
                   files:['scripts/controllers/staffController.js']
               });
             }
-          }
+          },
+          controller:'SaveStaffController',
+          templateUrl:'views/staff-view/add-staff.html',
+          url:'/add-staff',
+          title:'Add Staff'
     }).state('dashboard.EditStaff/:id',{
-        templateUrl:'views/staff-view/add-staff.html',
-        url:'/EditStaff/:id',
-        title:'Edit Staff',
-        controller:'EditStaffController',
+        
         resolve: {
             loadMyFile:function($ocLazyLoad) {
               
-              $ocLazyLoad.load({
+              return $ocLazyLoad.load({
                   name:'sbAdminApp',
                   files:['scripts/controllers/staffController.js']
               });
             }
-          }
+          },
+          controller:'EditStaffController',
+          templateUrl:'views/staff-view/add-staff.html',
+          url:'/EditStaff/:id',
+          title:'Edit Staff'
     })//End Staff
     //Start Doctor
     .state('dashboard.doctor',{
-        templateUrl:'views/doctor.html',
-        url:'/doctor',
+        
         resolve: {
             loadMyFile:function($ocLazyLoad) {
               
-              $ocLazyLoad.load({
+              return $ocLazyLoad.load({
                   name:'sbAdminApp',
                   files:[
                          'scripts/controllers/Doctors.js']
               });
             }
           },
-        controller:'ShowDoctorsCtrl'
+        controller:'ShowDoctorsCtrl',
+        templateUrl:'views/doctor.html',
+        url:'/doctor'
        
         
     })
@@ -271,7 +273,7 @@ angular
         resolve: {
             loadMyFile:function($ocLazyLoad) {
               
-              $ocLazyLoad.load({
+              return $ocLazyLoad.load({
                   name:'sbAdminApp',
                   files:['scripts/controllers/Doctors.js']
               });
@@ -286,7 +288,7 @@ angular
         resolve: {
             loadMyFile:function($ocLazyLoad) {
               
-              $ocLazyLoad.load({
+            	return $ocLazyLoad.load({
                   name:'sbAdminApp',
                   files:['scripts/controllers/Doctors.js']
               });
@@ -298,7 +300,7 @@ angular
             resolve: {
                 loadMyFile:function($ocLazyLoad) {
                   
-                  $ocLazyLoad.load({
+                  return $ocLazyLoad.load({
                       name:'sbAdminApp',
                       files:['scripts/controllers/patientController.js']
                   });
@@ -315,7 +317,7 @@ angular
             resolve: {
                 loadMyFile:function($ocLazyLoad) {
                   
-                  $ocLazyLoad.load({
+                  return $ocLazyLoad.load({
                       name:'sbAdminApp',
                       files:['scripts/controllers/patientController.js']
                   });
@@ -329,7 +331,7 @@ angular
         resolve: {
           loadMyFile:function($ocLazyLoad) {
             
-            $ocLazyLoad.load({
+            return $ocLazyLoad.load({
                 name:'sbAdminApp',
                 files:[
                        'scripts/controllers/appointmentController.js',
@@ -348,7 +350,7 @@ angular
             resolve: {
                 loadMyFile:function($ocLazyLoad) {
                   
-                  $ocLazyLoad.load({
+                  return $ocLazyLoad.load({
                       name:'sbAdminApp',
                       files:['scripts/controllers/CallLogsController.js',
                              'components/datetime/datetimepicker.css',
