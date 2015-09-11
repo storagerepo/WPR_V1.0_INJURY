@@ -43,7 +43,7 @@
                               </span>
                                     <br/>
                                     
-                                    
+                                     
                                     
                                     
                                      <label>City</label>
@@ -53,25 +53,135 @@
                               </span>
                                     <br/>
                                     
-                                    
-                                    
-                                     <label>Country</label>
-                                    <input type="text" name="country" class="form-control" ng-model="doctor.country" placeholder="Enter Country" required>
-                                    <span class="error-container" ng-show="myForm.country.$dirty && myForm.country.$invalid">
-                                <span style="color:red" ng-show="myForm.country.$error.required">Please Enter the Country</span>
-                              </span>
-                                    <br/>
-                                    
-                                    
-                                    
+                                    <label>Country</label>
+                                        <div class="col-md-12 input-group">
+                           <select class="form-control" ng-model="doctor.country" name="country" id="country" required>
+  							  <option value="">-- Select Country --</option>
+  							  <option value="UnitedStates">United States</option>
+                              
+                                      </select>
+                                        <span class="error-container" ng-show="myForm.country.$dirty && myForm.country.$invalid">
+                              
+                                       <span style="color:red" ng-show="myForm.country.$error.required">Please Select the Country</span>
+                                     </span>  
+                           </div>
+                                
                                 </td>
                                 <td class="col-md-6">
-                                     <label>State</label>
-                                    <input type="text" name="state" class="form-control" ng-model="doctor.state" placeholder="Enter State" required>
-                                    <span class="error-container" ng-show="myForm.state.$dirty && myForm.state.$invalid">
-                                <span style="color:red" ng-show="myForm.state.$error.required">Please Enter the State</span>
-                              </span>
-                                    <br/>
+                                <label>State</label>
+                                        <div class="col-md-12 input-group">
+                           <select class="form-control" ng-model="doctor.state" name="state" id="state" required>
+  							  <option value="">-- Select State --</option>
+  							  <option value="Ohio">Ohio</option>
+                              
+                                      </select>   
+                              <span class="error-container" ng-show="myForm.state.$dirty && myForm.state.$invalid">
+                              
+                                       <span style="color:red" ng-show="myForm.state.$error.required">Please Select the State</span>
+                              </span>        
+                           </div>
+                                     <br>
+                                   
+                                    <label>County</label>
+                                        <div class="col-md-12 input-group">
+                           <select class="form-control" ng-model="doctor.county" name="county" id="county" required>
+  							  <option value="">-- Select County --</option>
+  							  <option value="Adams">Adams</option>
+                              <option value="Allen">Allen</option>
+                               <option value="Ashland">Ashland</option>
+                             <option value="Ashtabula">Ashtabula</option>
+                             <option value="Athens">Athens</option>
+                             <option value="Auglaize">Auglaize</option>
+                             <option value="Belmont">Belmont</option>
+                             <option value="Brown">Brown</option>
+                              <option value="Butler">Butler</option>
+                              <option value="Carroll">Carroll</option>
+                              <option value="Champaign">Champaign</option>
+                              <option value="Clark">Clark</option>
+                              <option value="Clermont">Clermont</option>
+                              <option value="Clinton">Clinton</option>
+                               <option value="Columbiana">Columbiana</option>
+                              <option value="Coshocton">Coshocton</option>
+                             <option value="Crawford">Crawford</option>
+                              <option value="Cuyahoga">Cuyahoga</option>
+                              <option value="Darke">Darke</option>
+                              <option value="Defiance">Defiance</option>
+                              <option value="Delaware">Delaware</option>
+                              <option value="Erie">Erie</option>
+                              <option value="Fairfield">Fairfield</option>
+                              <option value="Fayette">Fayette</option>
+                              <option value="Franklin">Franklin</option>
+                              <option value="Fulton">Fulton</option>
+                              <option value="Gallia">Gallia</option>
+                               <option value="Geauga">Geauga</option>
+                                <option value="Greene">Greene</option>
+                                <option value="Guernsey">Guernsey</option>
+                                <option value="Hamilton">Hamilton</option>
+                                <option value="Hancock">Hancock</option>
+                                <option value="Hardin">Hardin</option>
+                                <option value="Harrison">Harrison</option>
+                                <option value="Henry">Henry</option>
+                                <option value="Highland">Highland</option>
+                                <option value="Hocking">Hocking</option>
+                                <option value="Holmes">Holmes</option>
+                                <option value="Huron">Huron</option>
+                                <option value="Jackson">Jackson</option>
+                                <option value="Jefferson">Jefferson</option>
+                                <option value="Knox">Knox</option>
+                                <option value="Lake">Lake</option>
+                                <option value="Lawrence">Lawrence</option>
+                                <option value="Licking">Licking</option>
+                                <option value="Logan">Logan</option>
+                                <option value="Lorain">Lorain</option>
+                                <option value="Lucas">Lucas</option>
+                                <option value="Madison">Madison</option>
+                                <option value="Mahoning">Mahoning</option>
+                                <option value="Marion">Marion</option>
+                                <option value="Medina">Medina</option>
+                                <option value="Miegs">Miegs</option>
+                                <option value="Mercer">Mercer</option>
+                                <option value="Miami">Miami</option>
+                                <option value="Monroe">Monroe</option>
+                                <option value="Montgomery">Montgomery</option>
+                                <option value="Morgan">Morgan</option>
+                                <option value="Morrow">Morrow</option>
+                                <option value="Muskingum">Muskingum</option>
+                                <option value="Noble">Noble</option>
+                                <option value="Ottawa">Ottawa</option>
+                                <option value="Paulding">Paulding</option>
+                                <option value="Perry">Perry</option>
+                                <option value="Pickaway">Pickaway</option>
+                                <option value="Pike">Pike</option>
+                                <option value="Portage">Portage</option>
+                                <option value="Preble">Preble</option>
+                                <option value="Putnam">Putnam</option>
+                                <option value="Richland">Richland</option>
+                                <option value="Ross">Ross</option>
+                                <option value="Sandusky">Sandusky</option>
+                                <option value="Scioto">Scioto</option>
+                                <option value="Seneca">Seneca</option>
+                                <option value="Shelby">Shelby</option>
+                                <option value="Stark">Stark</option>
+                                <option value="Summit">Summit</option>
+                                <option value="Trumbull">Trumbull</option>
+                                <option value="Tuscarawas">Tuscarawas</option>
+                                <option value="Union">Union</option>
+                                <option value="VanWert">Van Wert</option>
+                                <option value="Vinton">Vinton</option>
+                                <option value="Warren">Warren</option>
+                                <option value="Washington">Washington</option>
+                                <option value="Wayne">Wayne</option>
+                                <option value="Williams">Williams</option>
+                                <option value="Wood">Wood</option>
+                                <option value="Wyandot">Wyandot</option>
+                                
+                                      </select>  
+                                      <span class="error-container" ng-show="myForm.county.$dirty && myForm.county.$invalid">
+                              
+                                       <span style="color:red" ng-show="myForm.county.$error.required">Please Select the County</span>
+                                       </span>
+                           </div>
+                                     <br>
                                     
                                      <label>Zip</label>
                                     <input type="text" name="zip" class="form-control" ng-model="doctor.zip" placeholder="Enter Zip" required>
@@ -81,7 +191,7 @@
                                     <br/>
                                   
                                     
-                                   <div class="col-md-6" >
+                                    <div class="col-md-6" >
                                         <span class="label-text" >Choose Weekly Workingday</span>
                                             
                                                    <div style="width:120%; height: 50px;background: #fff;border:1px solid #ccc;border-radius:4px;padding: 3px 0px 0px 3px;">
@@ -99,32 +209,34 @@
                                             </table>
 										</div>
                                         <span class="error-text"></span>
-                                    </div>
-                             
+                                    </div>                             
                            
- <br/><br/><br/>  <br/>                                  
-                                    <label>Office Hours From Time</label>
+ <br/><br/><br/>  <br/>                  
+                 <div class="col-md-4" >
+                                    <label>OfficeHoursFromTime</label>
                                     <div class="input-group">
-                             <input type="text" name="officeHoursFromTime" id="officeHoursFromTime" class="form-control"  ng-model="doctor.officeHoursFromTime" placeholder="Enter OfficeHoursFromTime" required>
+                             <input type="text" style="width:100px; "name="officeHoursFromTime" id="officeHoursFromTime" class="form-control"  ng-model="doctor.officeHoursFromTime" placeholder="Enter OfficeHoursFromTime" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
                                      <span class="error-container" ng-show="myForm.officeHoursFromTime.$dirty && myForm.officeHoursFromTime.$invalid">
                                 <span style="color:red" ng-show="myForm.officeHoursFromTime.$error.required">Please Enter the OfficeHoursFromTime</span>
                               </span>
-                                    <br/>
+                                   </div>
                                     
-                                    
-                                                       
-                                    <label>Office Hours To Time</label>
+                                   <div class="col-md-4" >
+                                    <label>OfficeHoursToTime</label>
                                     <div class="input-group">
-                             <input type="text" name="officeHoursToTime" id="officeHoursToTime" class="form-control"  ng-model="doctor.officeHoursToTime" placeholder="Enter OfficeHoursToTime" required>
+                             <input type="text" style="width:100px;" name="officeHoursToTime" id="officeHoursToTime" class="form-control"  ng-model="doctor.officeHoursToTime" placeholder="Enter OfficeHoursToTime" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
                                      <span class="error-container" ng-show="myForm.officeHoursToTime.$dirty && myForm.officeHoursToTime.$invalid">
                                 <span style="color:red" ng-show="myForm.officeHoursToTime.$error.required">Please Enter the OfficeHoursToTime</span>
                               </span>
+                              </div>
                                     <br/>
-                                    
+                                          
+                                                    
+                                  
                                     
                                      
                                     
@@ -275,11 +387,13 @@
  <script>
 $('#officeHoursFromTime').datetimepicker({
 			pickTime : true,
+			pickDate:false,
 			format:'HH:mm:ss',
 			
 		});
-$('#officeHoursToTim').datetimepicker({
+$('#officeHoursToTime').datetimepicker({
 	pickTime : true,
+	pickDate:false,
 	format:'HH:mm:ss',
 	
 });
