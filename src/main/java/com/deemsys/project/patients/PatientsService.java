@@ -89,7 +89,7 @@ public class PatientsService {
 			}
 				
 			
-			PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
+			PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber(),patients.getCrashReportFileName());
 			patientsForm.setCallerName(staffName);
 			patientsForm.setDoctorName(doctorName);
 			patientsForms.add(patientsForm);
@@ -125,7 +125,7 @@ public class PatientsService {
 		}
 			
 		
-		patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
+		patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber(),patients.getCrashReportFileName());
 		patientsForm.setCallerName(staffName);
 		patientsForm.setDoctorName(doctorName);
 		
@@ -165,8 +165,8 @@ public class PatientsService {
 		}
 	
 		Patients patients=new Patients(staff,doctors,patientsForm.getLocalReportNumber(),
-				patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber());
-			patients.setId(patientsForm.getId());
+				patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber(),patientsForm.getCrashReportFileName());
+		patients.setId(patientsForm.getId());
 			
 		//Logic Ends
 		
@@ -226,14 +226,24 @@ public class PatientsService {
                 // Create the file on server
                 serverFile = new File(dir.getAbsolutePath()
                         + File.separator + file.getOriginalFilename());
+                
+                Integer uniqueFileId=1;
+                while(serverFile.exists()){
+                	serverFile=new File(dir.getAbsolutePath()
+                            + File.separator + file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf("."))+'-'+uniqueFileId+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+                	uniqueFileId++;
+                }
+                
+                
                 BufferedOutputStream stream = new BufferedOutputStream(
                         new FileOutputStream(serverFile));
                 stream.write(bytes);
                 stream.close();
  
-                System.out.println("Server File Location="
-                        + serverFile.getAbsolutePath());
+                
+                
                 String fileName=serverFile.getAbsolutePath();
+                String crashReportFileName=serverFile.getName();
                 
                 //Read the Content
                 BufferedReader br = null;
@@ -271,7 +281,7 @@ public class PatientsService {
 	        							patientArray[13].trim(), patientArray[14].trim(), patientArray[15].trim(), patientArray[16].trim(), 
 	        							patientArray[17].trim(), patientArray[18].trim(), patientArray[19].trim(),patientArray[20].trim(),patientArray[21].trim(), 
 	        							patientArray[22].trim(), patientArray[23].trim(), patientArray[24].trim(), patientArray[25].trim(), 
-	        							patientArray[26].trim(),patientArray[27].trim()));
+	        							patientArray[26].trim(),patientArray[27].trim(),crashReportFileName));
         				
         				lineNumber++;
         				
@@ -311,7 +321,7 @@ public class PatientsService {
                 //Now add the patients in DB
                addPatients(patients);
             }
-                serverFile.delete();
+               // serverFile.delete();
                
             } catch (Exception e) {
                 System.out.println(e.toString());
@@ -360,7 +370,7 @@ public class PatientsService {
 					doctorId=patients.getDoctors().getId();
 					
 			
-				PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber());
+				PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber(),patients.getCrashReportFileName());
 		patientsForms.add(patientsForm);
 			count++;
 			}

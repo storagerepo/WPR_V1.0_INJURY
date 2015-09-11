@@ -47,6 +47,7 @@ public class PatientsForm {
 	private String proofOfInsurance;
 	private String insuranceCompany;
 	private String policyNumber;
+	private String crashReportFileName;
 	
 	public Integer getId() {
 		return id;
@@ -248,7 +249,7 @@ public class PatientsForm {
 			String medicalFacility, String localReportNumber2,
 			String unitInError1, String unitNumber1, String ownerName,
 			String ownerPhoneNumber, String damageScale,
-			String proofOfInsurance, String insuranceCompany, String policyNumber) {
+			String proofOfInsurance, String insuranceCompany, String policyNumber,String crashReportFileName) {
 		super();
 		this.id = id;
 		this.callerId = callerId;
@@ -281,6 +282,7 @@ public class PatientsForm {
 		this.proofOfInsurance = proofOfInsurance;
 		this.insuranceCompany=insuranceCompany;
 		this.policyNumber=policyNumber;
+		this.crashReportFileName=crashReportFileName;
 	}
 	public PatientsForm() {
 		super();
@@ -302,6 +304,12 @@ public class PatientsForm {
 	}
 	public void setDoctorName(String doctorName) {
 		this.doctorName = doctorName;
+	}
+	public String getCrashReportFileName() {
+		return crashReportFileName;
+	}
+	public void setCrashReportFileName(String crashReportFileName) {
+		this.crashReportFileName = crashReportFileName;
 	}
 	
 	

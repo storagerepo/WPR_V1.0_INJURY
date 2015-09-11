@@ -56,6 +56,7 @@ public class Patients implements java.io.Serializable {
 	private String proofOfInsurance;
 	private String insuranceCompany;
 	private String policyNumber;
+	private String crashReportFileName;
 	private Set<Appointments> appointmentses = new HashSet<Appointments>(0);
 	private Set<CallLogs> callLogses = new HashSet<CallLogs>(0);
 
@@ -72,7 +73,7 @@ public class Patients implements java.io.Serializable {
 			String medicalFacility, String localReportNumber2,
 			String unitInError1, String unitNumber1, String ownerName,
 			String ownerPhoneNumber, String damageScale,
-			String proofOfInsurance,String insuranceCompany,String policyNumber) {
+			String proofOfInsurance,String insuranceCompany,String policyNumber,String crashReportFileName) {
 		this.staff = staff;
 		this.doctors = doctors;
 		this.localReportNumber = localReportNumber;
@@ -103,6 +104,7 @@ public class Patients implements java.io.Serializable {
 		this.proofOfInsurance = proofOfInsurance;
 		this.insuranceCompany = insuranceCompany;
 		this.policyNumber = policyNumber;
+		this.crashReportFileName=crashReportFileName;
 	}
 
 	@Id
@@ -379,9 +381,19 @@ public class Patients implements java.io.Serializable {
 	public void setInsuranceCompany(String insuranceCompany) {
 		this.insuranceCompany = insuranceCompany;
 	}
+	
 	@Column(name = "policy_number", length = 100)
 	public String getPolicyNumber() {
 		return this.policyNumber;
+	}
+
+	@Column(name = "crash_report_file_name", length = 800)
+	public String getCrashReportFileName() {
+		return crashReportFileName;
+	}
+
+	public void setCrashReportFileName(String crashReportFileName) {
+		this.crashReportFileName = crashReportFileName;
 	}
 
 	public void setPolicyNumber(String policyNumber) {
