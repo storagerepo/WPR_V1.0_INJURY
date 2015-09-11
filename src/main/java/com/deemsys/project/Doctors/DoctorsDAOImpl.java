@@ -145,7 +145,7 @@ public class DoctorsDAOImpl implements DoctorsDAO{
 		 Criteria cr = sessionFactory.getCurrentSession().createCriteria(Doctors.class)
 				    .setProjection(Projections.projectionList()
 				      .add(Projections.property("id"), "id")
-				      .add(Projections.property("name"), "name"))
+				      .add(Projections.property("doctorName"), "doctorName"))
 
 				    .setResultTransformer(Transformers.aliasToBean(Doctors.class));
 

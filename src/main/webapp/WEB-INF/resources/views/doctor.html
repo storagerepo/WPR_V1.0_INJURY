@@ -18,7 +18,7 @@
                      
                           <thead>
 	        <tr>
-                <th ng-mousedown="sort('name')">Name   <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                <th  ng-mousedown="sort('doctorName')">Name   <span class="glyphicon sort-icon" ng-show="sortKey=='doctorName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
                
             	 	 <th ng-mousedown="sort('address')">Address   <span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
@@ -27,14 +27,16 @@
               	
                 	 <th ng-mousedown="sort('state')">State <span class="glyphicon sort-icon" ng-show="sortKey=='state'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
-                   	 <th ng-mousedown="sort('officeHours')">Office Hours <span class="glyphicon sort-icon" ng-show="sortKey=='officeHours'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
-            
-	                       <th ng-mousedown="sort('notes')">Notes <span class="glyphicon sort-icon" ng-show="sortKey=='notes'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+                   	 <th ng-mousedown="sort('officeHoursFromTime')">Office Hours From Time <span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursFromTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+             <th ng-mousedown="sort('officeHoursToTime')">Office Hours To Time <span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursToTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+          
+	               
+	                       <th  ng-mousedown="sort('notes')">Notes <span class="glyphicon sort-icon" ng-show="sortKey=='notes'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
                       
               <th width="20%" ng-show="isAdmin">Action</th></tr>
-        <tr>    
-            <th>  <input type="text"  class="form-control"  ng-model="search.name" placeholder="Search by Name"></label>
+ <tr>    
+            <th>  <input type="text"  class="form-control"  ng-model="search.doctorName" placeholder="Search by Name"></label>
            </th>
             <th>  <input type="text"  class="form-control"  ng-model="search.address" placeholder="Search by Address"></label>
            </th>
@@ -42,7 +44,9 @@
            </th>
              <th>  <input type="text"  class="form-control"  ng-model="search.state" placeholder="Search by State"></label>
            </th>
-             <th>  <input type="text"  class="form-control"  ng-model="search.officeHours" placeholder="Search by Office Hours"></label>
+             <th>  <input type="text"  class="form-control"  ng-model="search.officeHoursFromTime" placeholder="Search by Office Hours From Time"></label>
+           </th>
+ <th>  <input type="text"  class="form-control"  ng-model="search.officeHoursToTime" placeholder="Search by Office Hours To Time"></label>
            </th>
             <th>  <input type="text"  class="form-control"  ng-model="search.notes" placeholder="Search by Notes"></label>
            </th>
@@ -50,22 +54,24 @@
            </tr>
             </thead>
             
-            
+          
                          <tbody dir-paginate="doctor in doctors | filter:search | orderBy:sortKey:reverse|itemsPerPage:8 " >
 	<tr>
+	
 		
-		<td>{{doctor.name}}</td>
+		<td>{{doctor.doctorName}}</td>
 <td>{{doctor.address}}</td>
 		<td>{{doctor.city}}</td>
 			<td>{{doctor.state}}</td>
-		<td>{{doctor.officeHours}}</td>
-
+		<td>{{doctor.officeHoursFromTime}}</td>
+<td>{{doctor.officeHoursToTime}}</td>
 <td>{{doctor.notes}}</td>
                                    <td ng-show="isAdmin"><a href="#/dashboard/EditDoctor/{{doctor.id}}"  class="btn btn-xs btn-warning" ng-show="isAdmin">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit</a>
 	<a href="#" ui-sref="dashboard.doctor" ng-mousedown="deleteDoctor(doctor.id)" class="btn btn-xs btn-danger" ng-show="isAdmin">&nbsp;<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete </a>
 	</td></tr>
 </tbody>
 
+  
 <tbody ng-show="doctors.length==0">
 				<tr>
 				<td colspan="5" align="center">No Record Found</td>

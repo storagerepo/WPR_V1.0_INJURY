@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="col-lg-12">
 		<a ui-sref="dashboard.add-staff"
-			class="btn-sm btn-primary pull-right margin-top-40">Add Staff</a>
-		<h2 class="page-header">Staff</h2>
+			class="btn-sm btn-primary pull-right margin-top-40">Add Caller</a>
+		<h2 class="page-header">Caller</h2>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -54,12 +54,25 @@
 
 								<td>{{staff.phoneNumber}}</td>
 								<td>{{staff.emailAddress}}</td>
-								<td><a href="#/dashboard/EditStaff/{{staff.id}}" class="btn btn-xs btn-warning">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;
-										Edit
-								</a>
-								<a href="#" ng-click="deleteStaff(staff.id)" class="btn btn-xs btn-danger">&nbsp;<i
-										class="glyphicon glyphicon-trash" ></i>&nbsp; Delete
-								</a></td>
+								
+								<td>
+								<a href="#/dashboard/EditStaff/{{staff.id}}}" class="btn btn-xs btn-warning hint--top" data-hint="Edit Caller">&nbsp;<i
+								class="glyphicon glyphicon-edit"></i>
+						</a>
+						<a href="#" ng-click="deleteStaff(staff.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Caller">&nbsp;<i
+								class="glyphicon glyphicon-trash"></i>
+						</a>
+								
+							
+								<a href="" ng-show="staff.isEnable==1" ng-click="disableStaff(staff.id)" class="btn btn-xs btn-success hint--top" data-hint="Disable Caller">&nbsp;<i
+								class="fa fa-unlock"></i>
+						</a>
+								<a href="" ng-show="staff.isEnable==0" ng-click="enableStaff(staff.id)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Caller">&nbsp;<i
+								class="fa fa-lock"></i>
+						</a>
+								
+								
+							 </td>
 							</tr>
 						</tbody>
 						<tbody ng-show="!staffs.length">
@@ -87,9 +100,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Delete staff </h4>
+          <h4 class="modal-title">Delete caller </h4>
         </div>
-        <div class="modal-body">Some patients are assigned to this staff. Do you still want to delete?
+        <div class="modal-body">Some patients are assigned to this caller. Do you still want to delete?
               
         </div>
         <div class="modal-footer" >
@@ -101,3 +114,43 @@
     </div>
  </div>
 <!-- End Assign Model -->
+
+<div class="modal fade" id="disableStaff" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmation</h4>
+        </div>
+        <div class="modal-body">Do you want to Disable Caller?
+              
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-disabled='myForm.$invalid' ng-click="disable()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+ 
+ <div class="modal fade" id="enableStaff" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmation </h4>
+        </div>
+        <div class="modal-body">Do you want to Enable Caller?
+              
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-disabled='myForm.$invalid' ng-click="enable()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>

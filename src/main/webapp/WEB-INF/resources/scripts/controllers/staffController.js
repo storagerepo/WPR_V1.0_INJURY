@@ -1,7 +1,7 @@
 
 var adminApp=angular.module('sbAdminApp', ['requestModule']);
 
-adminApp.controller('ShowStaffController', function($rootScope,$scope,$http,$location,$state,requestHandler,successMessageService) {
+adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$http,$stateParams,$location,$state,requestHandler,successMessageService) {
 	 
 	$scope.errorMessage=successMessageService.getMessage();
 	$scope.isError=successMessageService.getIsError();
@@ -14,15 +14,73 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$http,$loc
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
 	    };
 	    
+	    
+	    
     requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
     	 $scope.staffs= results.data.staffForms;
          $scope.sort('username');
      });
     
+    $scope.disableStaff=function(id)
+    {
+    	  $("#disableStaff").modal("show");
+    	  $scope.disable=function()
+		   {
+    	  requestHandler.getRequest("Admin/disableStaff.json?id="+id,"").then(function(results){
+ $scope.response=results.data.requestSuccess;
+			  
+			  if($scope.response==true)
+				  {
+				  successMessageService.setMessage("You have Successfully Enabled!");
+					 successMessageService.setIsError(0);
+			          successMessageService.setIsSuccess(1);
+					$state.reload('dashboard.staff');
+
+				  }
+			  if($scope.response==false)
+			  {
+			  successMessageService.setMessage("You have Successfully Disabled!");
+				 successMessageService.setIsError(0);
+		          successMessageService.setIsSuccess(1);
+				$state.reload('dashboard.staff');
+
+			  }
+    	     });
+		   }    	  
+    };
+    
+    $scope.enableStaff=function(id)
+    {
+    	  $("#enableStaff").modal("show");
+    	  $scope.enable=function()
+		   {
+    	  requestHandler.getRequest("Admin/disableStaff.json?id="+id,"").then(function(results){
+ $scope.result=results.data.requestSuccess;
+			  
+			  if($scope.result==true)
+				  {
+				  successMessageService.setMessage("You have Successfully Enabled!");
+					 successMessageService.setIsError(0);
+			          successMessageService.setIsSuccess(1);
+					$state.reload('dashboard.staff');
+
+				  }
+			  if($scope.result==false)
+			  {
+			  successMessageService.setMessage("You have Successfully Disabled!");
+				 successMessageService.setIsError(0);
+		          successMessageService.setIsSuccess(1);
+				$state.reload('dashboard.staff');
+
+			  }
+    	     });
+		   }    	  
+    };
+    
     $scope.deleteStaff=function(id)
 	  {
 		
-		  if(confirm("Are you sure to delete Staff ?")){
+		  if(confirm("Are you sure to delete Caller ?")){
 		  requestHandler.deletePostRequest("Admin/deleteStaff.json?id=",id).then(function(results){
 			  $scope.value=results.data.requestSuccess;
 			  
@@ -63,6 +121,9 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$http,$loc
    
  
 });
+
+
+
 
 
 adminApp.controller('SaveStaffController', function($scope,$http,$location,$state,requestHandler,successMessageService) {

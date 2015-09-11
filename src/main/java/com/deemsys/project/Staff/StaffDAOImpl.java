@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -235,7 +236,48 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 		return (List<Patients>)this.sessionFactory.getCurrentSession().createCriteria(Patients.class).add(Restrictions.eq("staff.id", id)).list();
 	}
 
+	@Override
+	public Integer changePassword(String oldPassword,String userName) {
+		// TODO Auto-generated method stub
+		Query query=sessionFactory.getCurrentSession().createQuery("update Staff set password='"+oldPassword+"' where userName='"+userName+"'");
+		query.executeUpdate();
+			return 1;
+	}
+
+
+	@Override
+	public List<Staff> checkPassword(String newPassword, String userName) {
+		// TODO Auto-generated method stub
+		List<Staff> staff=(List<Staff>) this.sessionFactory.getCurrentSession().createQuery("FROM  Staff WHERE password='"+newPassword+"' and userName='"+userName+"'").list();
+		return staff;
+		
+	}
 	
+	@Override
+	public Staff getDetails(String userName) {
+		// TODO Auto-generated method stub
+		return (Staff) this.sessionFactory.getCurrentSession().createQuery("FROM Staff where userName='"+userName+"'").uniqueResult();
+		
+	
+	}
+
+	@Override
+	public Integer isDisable(Integer getId) {
+		// TODO Auto-generated method stub
+		Query query=sessionFactory.getCurrentSession().createQuery("update Staff set isEnable='0' where id='"+getId+"'");
+		query.executeUpdate();
+			return 0;
+	
+	}
+	@Override
+	public Integer isEnable(Integer getId) {
+		// TODO Auto-generated method stub
+		Query query=sessionFactory.getCurrentSession().createQuery("update Staff set isEnable='1' where id='"+getId+"'");
+		query.executeUpdate();
+			return 1;
+	
+	}
+
 	
 	
 }

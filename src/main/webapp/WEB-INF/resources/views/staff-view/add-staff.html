@@ -11,7 +11,7 @@
     <form id="myForm" name="myForm" novalidate>
        <div class="panel panel-default">
             <div class="panel-heading">
-                Enter Staff Details
+                Enter Caller Details
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -58,8 +58,7 @@
                                     <label>Email ID</label>
                                     <input type="email" class="form-control"  ng-model="staff.emailAddress" name="emailAddress" placeholder="Enter EmailId"  required  email>
                                     <span class="error-container" ng-show="myForm.emailAddress.$dirty && myForm.emailAddress.$invalid">
-                                        <span style="color:red" ng-show="myForm.emailAddress.$error.required">Please input a Email</span>
-                                       <span style="color:red" ng-show="myForm.emailAddress.$error.email">Enter a valid email</span>
+                                            <span style="color:red" ng-show="myForm.emailAddress.$error.email">Enter a valid email</span>
                                     </span> 
                                     <br/>
                                     
@@ -79,9 +78,7 @@
                                     <label>Notes</label>
                                     <textarea class="form-control height-100"  ng-model="staff.notes" name="notes" placeholder="Enter Notes"  required></textarea>
                                 <span class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">
-                                <span style="color:red" ng-show="myForm.notes.$error.required">Please input Notes</span>
-                              </span>
-                                
+                                       
                                 </td>
                             </tr>
                         </tbody>

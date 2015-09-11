@@ -284,5 +284,68 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 			//End
 			}
 		
+
+public String[] getusers() {
+	String[] currentuser = new String[100];
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		currentuser[0] = user.getUsername();
+		return currentuser;
+	}
+	
+
+	public Integer checkPassword(String oldPassword) {
+		// TODO Auto-generated method stub
+		Integer status=0;
+		String[] users=getusers();
+		List<Staff> staff=staffDAO.checkPassword(oldPassword,users[0]);
+		 if(staff.size()>0){
+			 status=1;
+		 }
+		 else{
+			 status=0;
+		 }
+		return status;
+	}
+
+	public Integer changePassword(String newPassword) {
+		// TODO Auto-generated method stub
+		String[] users=getusers();
+		staffDAO.changePassword(newPassword,users[0]);
+		return 1;
+	}
+	
+	public StaffForm getDetails() {
+		// TODO Auto-generated method stub
 		
-}
+		
+			Staff staff=new Staff();
+			String[] users=getusers();
+				staff=staffDAO.getDetails(users[0]);
+
+				StaffForm staffForm=new StaffForm();
+			if(staff!=null){
+			staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
+			}
+			else{
+			staffForm= new StaffForm();
+			}
+			return staffForm;
+		}
+
+	public Integer disableStaff(Integer getId)
+	{
+		Integer status=0;
+		Staff staff=new Staff();
+		
+		staff=staffDAO.get(getId);
+		
+		if(staff.getIsEnable()==1){
+			status=staffDAO.isDisable(getId);
+		}
+		if(staff.getIsEnable()==0){
+			status=staffDAO.isEnable(getId);
+		}
+		System.out.println(status);
+		return status;
+	}
+	}

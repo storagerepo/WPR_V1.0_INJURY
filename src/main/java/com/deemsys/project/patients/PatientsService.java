@@ -85,7 +85,7 @@ public class PatientsService {
 			}
 			if(patients.getDoctors()!=null){
 				doctorId=patients.getDoctors().getId();
-				doctorName=patients.getDoctors().getName();
+				doctorName=patients.getDoctors().getDoctorName();
 			}
 				
 			
@@ -121,7 +121,7 @@ public class PatientsService {
 		}
 		if(patients.getDoctors()!=null){
 			doctorId=patients.getDoctors().getId();
-			doctorName=patients.getDoctors().getName();
+			doctorName=patients.getDoctors().getDoctorName();
 		}
 			
 		

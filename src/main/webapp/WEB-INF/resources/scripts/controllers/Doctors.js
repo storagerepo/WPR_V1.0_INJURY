@@ -13,7 +13,7 @@ adminApp.controller('ShowDoctorsCtrl', function($scope,$http,$location,$state,re
     };	
     requestHandler.getRequest("Staff/getAllDoctorss.json","").then(function(response){
     	 $scope.doctors = response.data.doctorsForms;
-         $scope.sort('name');
+         $scope.sort('doctorName');
         });
 	
    
@@ -36,6 +36,17 @@ if(confirm("Are you sure to delete Doctor ?")){
 adminApp.controller('AddDoctorsCtrl', function($scope,$http,$location,$state,requestHandler,successMessageService) {
 
 	$scope.myFormButton=true;
+
+	
+	
+	$scope.sun=["1"];
+	$scope.mon=["2"];
+	$scope.tue=["3"];
+	$scope.wed=["4"];
+	$scope.thu=["5"];
+	$scope.fri=["6"];
+	$scope.sat=["7"];
+	
 	$scope.title=$state.current.title;
 	$scope.saveDoctor=function()
 	{
@@ -52,6 +63,16 @@ adminApp.controller('AddDoctorsCtrl', function($scope,$http,$location,$state,req
 adminApp.controller('EditDoctorController', function($scope,$http,$location,$stateParams,$state,requestHandler,successMessageService) {
 	
 	$scope.myFormButton=false;
+
+	$scope.sun=1;
+	$scope.mon=2;
+	$scope.tue=3;
+	$scope.wed=4;
+	$scope.thu=5;
+	$scope.fri=6;
+	$scope.sat=7;
+
+	
 	$scope.title=$state.current.title;
 	
 	requestHandler.getRequest("Admin/getDoctors.json?id="+$stateParams.id,"").then(function(response){
@@ -101,4 +122,5 @@ angular.module('sbAdminApp').service('successMessageService', function() {
 	    };
 
 });
+
 

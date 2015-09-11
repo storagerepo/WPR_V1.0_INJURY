@@ -229,7 +229,7 @@ angular
           controller:'SaveStaffController',
           templateUrl:'views/staff-view/add-staff.html',
           url:'/add-staff',
-          title:'Add Staff'
+          title:'Add Caller'
     }).state('dashboard.EditStaff/:id',{
         
         resolve: {
@@ -244,7 +244,7 @@ angular
           controller:'EditStaffController',
           templateUrl:'views/staff-view/add-staff.html',
           url:'/EditStaff/:id',
-          title:'Edit Staff'
+          title:'Edit Caller'
     })//End Staff
     //Start Doctor
     .state('dashboard.doctor',{
@@ -275,7 +275,10 @@ angular
               
               return $ocLazyLoad.load({
                   name:'sbAdminApp',
-                  files:['scripts/controllers/Doctors.js']
+                  files:['scripts/controllers/Doctors.js',
+                        'components/datetime/datetimepicker.css',
+                         'components/datetime/moment.js',
+                         'components/datetime/datetimepicker.js']
               });
             }
           }
@@ -290,7 +293,10 @@ angular
               
             	return $ocLazyLoad.load({
                   name:'sbAdminApp',
-                  files:['scripts/controllers/Doctors.js']
+                  files:['scripts/controllers/Doctors.js',
+                         'components/datetime/datetimepicker.css',
+                         'components/datetime/moment.js',
+                         'components/datetime/datetimepicker.js']
               });
             }
           }
@@ -343,6 +349,8 @@ angular
           }
         }
     })// End Appointment
+    
+ 
         .state('dashboard.Calllogs/:id',{
             templateUrl:'views/calllogs/calllogs.html',
             url:'/Calllogs/:id',
@@ -360,7 +368,22 @@ angular
                 }
               }
             
-        });// End Call logs
+        })// End Call logs
+        .state('dashboard.Changepassword',{
+            templateUrl:'views/changepassword/changepassword.html',
+            url:'/Changepassword',
+            controller:"changePasswordController",
+            resolve: {
+                loadMyFile:function($ocLazyLoad) {
+                  
+                  return $ocLazyLoad.load({
+                      name:'sbAdminApp',
+                      files:['scripts/controllers/changePasswordController.js']
+                  });
+                }
+              }
+            
+        });// End Change password
      
   }]).controller('authenticationController', function($rootScope,$scope,$http,$location,requestHandler) {
      var authenticate=function(){

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.deemsys.project.entity.Staff;
+
 /**
  * 
  * @author Deemsys
@@ -134,4 +136,56 @@ public class StaffController {
    		return "/returnPage";
    	}
     
+ 
+    @RequestMapping(value="/Admin/getDetails",method=RequestMethod.GET)
+   	public String getAdminDetails(ModelMap model)
+   	{
+    	model.addAttribute("adminDetails",staffService.getDetails());
+    	model.addAttribute("requestSuccess",true);
+    	return "/returnPage";
+   	}
+    
+    @RequestMapping(value="/Staff/getDetails",method=RequestMethod.GET)
+   	public String getStaffDetails(ModelMap model)
+   	{
+    	model.addAttribute("staffDetails",staffService.getDetails());
+    	model.addAttribute("requestSuccess",true);
+    	return "/returnPage";
+   	}
+    
+    
+    @RequestMapping(value="/checkPassword",method=RequestMethod.POST)
+   	public String checkPassword(@RequestParam("oldPassword") String oldPassword,ModelMap model)
+   	{
+	 if(staffService.checkPassword(oldPassword)== 1){
+		 model.addAttribute("requestSuccess",true);
+		   }
+		   else
+		   {
+			   model.addAttribute("requestSuccess",false);
+		   }
+	return "/returnPage";
+   	}
+    
+    @RequestMapping(value="/changePassword",method=RequestMethod.POST)
+   	public String changePassword(@RequestParam("newPassword") String newPassword,ModelMap model)
+   	{
+    	staffService.changePassword(newPassword);
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+    
+    @RequestMapping(value="/Admin/disableStaff",method=RequestMethod.GET)
+   	public String disableStaff(@RequestParam("id") Integer id,ModelMap model)
+   	{
+       	Integer status=staffService.disableStaff(id);
+       	if(status==0){
+       		model.addAttribute("requestSuccess",false);
+       		
+       	}else{
+       		model.addAttribute("requestSuccess",true);
+           		
+       	}
+       return "/returnPage";
+   	}
 }
