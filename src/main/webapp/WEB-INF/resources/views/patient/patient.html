@@ -17,18 +17,18 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th ng-mousedown="sort('name')">Name <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					 <th ng-mousedown="sort('phoneNumber')">Phone Number&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='phoneNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-						 <th ng-mousedown="sort('dateOfBirth')">Local Report Number&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='dateOfBirth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					  <th ng-mousedown="sort('address')">Caller Name&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th  style="width:100px!important;" ng-mousedown="sort('name')">Name <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					 <th  style="width:80px!important;" ng-mousedown="sort('phoneNumber')">Phone Number&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='phoneNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						 <th   style="width:80px!important;"ng-mousedown="sort('dateOfBirth')">Local Report Number&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='dateOfBirth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					  <th  style="width:80px!important;" ng-mousedown="sort('address')">Caller Name&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 						
-						<th>Actions</th>
+						<th style="width:120px!important;">Actions</th>
 						
 						
 					</tr>
 						
 						<tr>
-						<th><input type="text" class="form-control" ng-model="search.name" placeholder="Search by Name"/></th>
+						<th ><input type="text" class="form-control" ng-model="search.name" placeholder="Search by Name"/></th>
 						<th><input type="text" class="form-control" ng-model="search.phoneNumber" placeholder="Search by Phone Number"/></th>
 						<th><input type="text" class="form-control" ng-model="search.localReportNumber" placeholder="Search by Local Report Number"/></th>
 						<th><input type="text" class="form-control" ng-model="search.callerName" placeholder="Search by Caller Name"/></th>
@@ -39,11 +39,11 @@
 					<tr>
 						
 
-						<td style="width:200px!important; display:inline-block"><a href="#/dashboard/Calllogs/{{patients.id}}">{{patients.name}}</a></td>
-						<td>{{patients.phoneNumber}}</td>
-						<td style="width:200px!important; display:inline-block">{{patients.localReportNumber}}</td>
+						<td><a href="#/dashboard/Calllogs/{{patients.id}}">{{patients.name}}</a></td>
+						<td>{{patients.phoneNumber==""?'N/A':patients.phoneNumber}}</td>
+						<td>{{patients.localReportNumber}}</td>
 						<td>{{patients.callerName}}</td>
-						<td style="width:150px!important; display:inline-block">
+						<td>
 						<span>
 						<a href="#/dashboard/Calllogs/{{patients.id}}" class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs"><i
 								class="glyphicon glyphicon-eye-open"></i>
@@ -63,13 +63,15 @@
 						</a>
 						</span>
 						<span ng-hide="isAdmin">
-						<a title="doctor" ng-hide="{{patients.doctorId}}==''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" class="btn btn-xs btn-success">&nbsp;<i
+						<a title="doctor" ng-hide="{{patients.doctorId}}==''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Change Caller" class="btn btn-xs btn-success hint--top">&nbsp;<i
 								class="glyphicon glyphicon-ok"></i>
 						</a>
-						<a title="doctor" ng-hide="{{patients.doctorId}}!=''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" class="btn btn-xs btn-danger">&nbsp;<i
+						<a title="doctor" ng-hide="{{patients.doctorId}}!=''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Assign Caller" class="btn btn-xs btn-danger hint--top">&nbsp;<i
 								class="glyphicon glyphicon-remove"></i>
 						</a>
 						</span>
+						<a target="_self" class="btn btn-xs btn-primary hint--lefter"  data-hint="Download Crash Report" href="/Injury/Report/{{patients.crashReportFileName}}" download="{{patients.crashReportFileName}}"><i
+								class="glyphicon glyphicon-download-alt"></i></a>
 						
 						</span>
 						
