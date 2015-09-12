@@ -34,6 +34,7 @@ public class Doctors implements java.io.Serializable {
 	private String city;
 	private String country;
 	private String state;
+	private String county;
 	private String zip;
 	private String officeNumber;
 	private String faxNumber;
@@ -47,7 +48,7 @@ public class Doctors implements java.io.Serializable {
 	}
 
 	public Doctors(String clinicName, String doctorName, String address,
-			String city, String country, String state, String zip,
+			String city, String country, String state, String county, String zip,
 			String officeNumber, String faxNumber, String workingDays,
 			Date officeHoursFromTime, Date officeHoursToTime, String direction,
 			String notes, Set<Patients> patientses) {
@@ -57,6 +58,7 @@ public class Doctors implements java.io.Serializable {
 		this.city = city;
 		this.country = country;
 		this.state = state;
+		this.county = county;
 		this.zip = zip;
 		this.officeNumber = officeNumber;
 		this.faxNumber = faxNumber;
@@ -133,6 +135,15 @@ public class Doctors implements java.io.Serializable {
 		this.state = state;
 	}
 
+	@Column(name = "county", length = 45)
+	public String getCounty() {
+		return this.county;
+	}
+
+	public void setCounty(String county) {
+		this.county = county;
+	}
+	
 	@Column(name = "zip", length = 10)
 	public String getZip() {
 		return this.zip;

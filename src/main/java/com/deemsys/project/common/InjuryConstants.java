@@ -91,6 +91,51 @@ public class InjuryConstants {
 		return dateformat;
 	}
 	
+	// Convert String Time To  Date Format Time
+	public static Date convertToDateFormatTime(String time)
+	{
+			SimpleDateFormat monthFormat = new SimpleDateFormat("HH:mm:ss");
+			SimpleDateFormat yearFormat = new SimpleDateFormat("HH:mm:ss");
+			Date dateformat=new Date();
+			try {
+				dateformat = monthFormat.parse(time);
+				dateformat=yearFormat.parse(yearFormat.format(dateformat));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return dateformat;
+	}
 	
-	
+	// Convert String Time To  Date Format Time
+		public static Date convertToDateFormatTimeAMPM(String time)
+		{
+				SimpleDateFormat monthFormat = new SimpleDateFormat("hh:mm a");
+				SimpleDateFormat yearFormat = new SimpleDateFormat("hh:mm a");
+				Date dateformat=new Date();
+				try {
+					dateformat = monthFormat.parse(time);
+					dateformat=yearFormat.parse(yearFormat.format(dateformat));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				return dateformat;
+		}
+		
+		// Convert Date Time To String Time
+			public static String convertToStringFormatTime(Date time) 
+			{
+					SimpleDateFormat monthFormat = new SimpleDateFormat("hh:mm a");
+					String convertedTime="";
+					try{
+					convertedTime=monthFormat.format(time);
+					}
+					catch(Exception e){
+						e.printStackTrace();
+					}
+					return convertedTime;
+			}
 }

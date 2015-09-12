@@ -21,6 +21,7 @@ public class DoctorsForm {
 	private String city;
 	private String country;
 	private String state;
+	private String county;
 	private String zip;
 	private String officeNumber;
 	private String faxNumber;
@@ -99,7 +100,15 @@ public class DoctorsForm {
 	public void setState(String state) {
 		this.state = state;
 	}
+	
+	public String getCounty() {
+		return county;
+	}
 
+
+	public void setCounty(String county) {
+		this.county = county;
+	}
 
 	public String getZip() {
 		return zip;
@@ -182,7 +191,7 @@ public class DoctorsForm {
 
 
 	public DoctorsForm(Integer id, String clinicName, String doctorName,
-			String address, String city, String country, String state,
+			String address, String city, String country, String state,String county,
 			String zip, String officeNumber, String faxNumber,
 			String[] workingDays, String officeHoursFromTime,
 			String officeHoursToTime, String direction, String notes) {
@@ -194,6 +203,7 @@ public class DoctorsForm {
 		this.city = city;
 		this.country = country;
 		this.state = state;
+		this.county = county;
 		this.zip = zip;
 		this.officeNumber = officeNumber;
 		this.faxNumber = faxNumber;

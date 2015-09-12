@@ -105,7 +105,7 @@
       <div class="modal-footer">
         <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
              <a type="submit" class="btn btn-success" ng-disabled='myForm.$invalid' ng-show="options" ng-click="save()">Save</a>
-             <a type="submit" class="btn btn-success" ng-disabled='myForm.$invalid' ng-show='!options' ng-click="update()">update</a> 
+             <a type="submit" class="btn btn-success" ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-show='!options' ng-click="update()">update</a> 
               
       </div>
     </div>
@@ -121,7 +121,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Add Appointments</h4>
+          <h4 class="modal-title">Add Appointment</h4>
         </div>
         <div class="modal-body">
              
@@ -147,7 +147,7 @@
        
         <div class="modal-footer">
          <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
-             <a type="submit" class="btn btn-success"  ng-disabled='myForms.$invalid' ng-click="saveAppointments()">Save</a>
+             <a type="submit" class="btn btn-success" ng-class="{'button-disable':myForms.$invalid}" ng-disabled='myForms.$invalid' ng-click="saveAppointments()">Save</a>
         </div>
       </div>
       

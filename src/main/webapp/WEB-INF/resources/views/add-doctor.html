@@ -1,3 +1,6 @@
+<script src="resources/components/datetime/datetimepicker.css"></script>
+            <script src="resources/components/datetime/moment.js"></script>
+             <script src="resources/components/datetime/datetimepicker.js"></script>
 <div class="row">
     <div class="col-lg-12">
         <a ui-sref="dashboard.doctor" class="btn-sm btn-primary pull-right margin-top-40">Back to the list</a>
@@ -42,11 +45,7 @@
                                 <span style="color:red" ng-show="myForm.address.$error.required">Please Enter the Address</span>
                               </span>
                                     <br/>
-                                    
-                                     
-                                    
-                                    
-                                     <label>City</label>
+                      <label>City</label>
                                     <input type="text" name="city" class="form-control" ng-model="doctor.city" placeholder="Enter City" required>
                                     <span class="error-container" ng-show="myForm.city.$dirty && myForm.city.$invalid">
                                 <span style="color:red" ng-show="myForm.city.$error.required">Please Enter the City</span>
@@ -64,11 +63,8 @@
                               
                                        <span style="color:red" ng-show="myForm.country.$error.required">Please Select the Country</span>
                                      </span>  
-                           </div>
-                                
-                                </td>
-                                <td class="col-md-6">
-                                <label>State</label>
+                           </div><br>
+                                 <label>State</label>
                                         <div class="col-md-12 input-group">
                            <select class="form-control" ng-model="doctor.state" name="state" id="state" required>
   							  <option value="">-- Select State --</option>
@@ -80,9 +76,9 @@
                                        <span style="color:red" ng-show="myForm.state.$error.required">Please Select the State</span>
                               </span>        
                            </div>
-                                     <br>
-                                   
-                                    <label>County</label>
+                                </td>
+                                <td class="col-md-6">
+                               <label>County</label>
                                         <div class="col-md-12 input-group">
                            <select class="form-control" ng-model="doctor.county" name="county" id="county" required>
   							  <option value="">-- Select County --</option>
@@ -176,11 +172,11 @@
                                 <option value="Wyandot">Wyandot</option>
                                 
                                       </select>  
-                                      <span class="error-container" ng-show="myForm.county.$dirty && myForm.county.$invalid">
+                            </div>
+                            <span class="error-container" ng-show="myForm.county.$dirty && myForm.county.$invalid">
                               
                                        <span style="color:red" ng-show="myForm.county.$error.required">Please Select the County</span>
                                        </span>
-                           </div>
                                      <br>
                                     
                                      <label>Zip</label>
@@ -189,21 +185,32 @@
                                 <span style="color:red" ng-show="myForm.zip.$error.required">Please Enter the Zip</span>
                               </span>
                                     <br/>
-                                  
+                                   <label>Office Number</label>
+                                    <input type="text" name="officeNumber" class="form-control" ng-model="doctor.officeNumber" placeholder="Enter Office Number" required>
+                                    <span class="error-container" ng-show="myForm.officeNumber.$dirty && myForm.officeNumber.$invalid">
+                                <span style="color:red" ng-show="myForm.officeNumber.$error.required">Please Enter the Office Number</span>
+                              </span>
+                                    <br/>
+                                    <label>Fax Number</label>
+                                    <input type="text" name="faxNumber" class="form-control" ng-model="doctor.faxNumber" placeholder="Enter Fax Number" required>
+                                    <span class="error-container" ng-show="myForm.faxNumber.$dirty && myForm.faxNumber.$invalid">
+                                <span style="color:red" ng-show="myForm.faxNumber.$error.required">Please Enter the Fax Number</span>
+                              </span>
+                                    <br/>
                                     
                                     <div class="col-md-6" >
-                                        <span class="label-text" >Choose Weekly Workingday</span>
+                                        <label>Choose Weekly Workingday</label>
                                             
                                                    <div style="width:120%; height: 50px;background: #fff;border:1px solid #ccc;border-radius:4px;padding: 3px 0px 0px 3px;">
                                             <table class="table" style="table-layout: fixed;width: 99%">
                                                 <tr>
-                                                	<td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Sun<span id = "sun"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="doctor.workingDays!=sun " ng-model="doctor.workingDays" class="fa fa-times fa-fw" style="color:#CC0000"></i><i ng-hide="doctor.workingDays!=sun " class="fa fa-check fa-fw" style="color:green"></i></span></td>
-                                                   	<td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Mon<span id = "mon"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="doctor.workingDays!=mon " ng-model="doctor.workingDays" class="fa fa-times fa-fw" style="color:#CC0000" ></i><i ng-hide="doctor.workingDays!=mon" class="fa fa-check fa-fw" style="color:green"></i></span></td>
-                                                    <td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Tue<span id = "tue"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="doctor.workingDays!=tue " ng-model="doctor.workingDays" class="fa fa-times fa-fw" style="color:#CC0000"></i><i ng-hide="doctor.workingDays!=tue" class="fa fa-check fa-fw" style="color:green"></i></span></td>
-                                                    <td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Wed<span id = "wed"class="holiday-check">&nbsp;&nbsp;&nbsp;<i ng-show="doctor.workingDays!=wed" ng-model="doctor.workingDays" class="fa fa-times fa-fw" style="color:#CC0000"></i><i ng-hide="doctor.workingDays!=wed" class="fa fa-check fa-fw" style="color:green"></i></span></td>
-                                                    <td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Thu<span id = "thu"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="doctor.workingDays!=thu" ng-model="doctor.workingDays" class="fa fa-times fa-fw" style="color:#CC0000" ></i><i ng-hide="doctor.workingDays!=thu" class="fa fa-check fa-fw" style="color:green"></i></span></td>
-                                                    <td style="padding: 0px;border:none;width: 14.2%;line-height: 15px">Fri<span id = "fri"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="doctor.workingDays!=fri" ng-model="doctor.workingDays" class="fa fa-times fa-fw" style="color:#CC0000"></i><i ng-hide="doctor.workingDays!=fri" class="fa fa-check fa-fw" style="color:green"></i></span></td>
-                                                    <td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Sat<span id = "sat"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="doctor.workingDays!=sat" ng-model="doctor.workingDays" class="fa fa-times fa-fw" style="color:#CC0000"></i><i ng-hide="doctor.workingDays!=sat" class="fa fa-check fa-fw" style="color:green"></i></span></td>
+                                                	<td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Sun<span id = "sun"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="sun" class="fa fa-times fa-fw" style="color:#CC0000" ng-click="addWorkingDays(0)"></i><i ng-hide="sun" class="fa fa-check fa-fw" style="color:green" ng-click="removeWorkingDays(0)"></i></span></td>
+                                                   	<td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Mon<span id = "mon"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="mon" class="fa fa-times fa-fw" style="color:#CC0000" ng-click="addWorkingDays(1)"></i><i ng-hide="mon" class="fa fa-check fa-fw" style="color:green" ng-click="removeWorkingDays(1)"></i></span></td>
+                                                    <td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Tue<span id = "tue"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="tue" class="fa fa-times fa-fw" style="color:#CC0000" ng-click="addWorkingDays(2)"></i><i ng-hide="tue" class="fa fa-check fa-fw" style="color:green" ng-click="removeWorkingDays(2)"></i></span></td>
+                                                    <td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Wed<span id = "wed"class="holiday-check">&nbsp;&nbsp;&nbsp;<i ng-show="wed" class="fa fa-times fa-fw" style="color:#CC0000" ng-click="addWorkingDays(3)"></i><i ng-hide="wed" class="fa fa-check fa-fw" style="color:green" ng-click="removeWorkingDays(3)"></i></span></td>
+                                                    <td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Thu<span id = "thu"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="thu" class="fa fa-times fa-fw" style="color:#CC0000" ng-click="addWorkingDays(4)"></i><i ng-hide="thu" class="fa fa-check fa-fw" style="color:green" ng-click="removeWorkingDays(4)"></i></span></td>
+                                                    <td style="padding: 0px;border:none;width: 14.2%;line-height: 15px">Fri<span id = "fri"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="fri" class="fa fa-times fa-fw" style="color:#CC0000" ng-click="addWorkingDays(5)"></i><i ng-hide="fri" class="fa fa-check fa-fw" style="color:green" ng-click="removeWorkingDays(5)"></i></span></td>
+                                                    <td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Sat<span id = "sat"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="sat" class="fa fa-times fa-fw" style="color:#CC0000" ng-click="addWorkingDays(6)"></i><i ng-hide="sat" class="fa fa-check fa-fw" style="color:green" ng-click="removeWorkingDays(6)"></i></span></td>
 
                                                </tr>
                                             </table>
@@ -212,37 +219,27 @@
                                     </div>                             
                            
  <br/><br/><br/>  <br/>                  
-                 <div class="col-md-4" >
-                                    <label>OfficeHoursFromTime</label>
+                 <div class="col-md-5">
+                                    <label>Office Hours Start Time</label>
                                     <div class="input-group">
-                             <input type="text" style="width:100px; "name="officeHoursFromTime" id="officeHoursFromTime" class="form-control"  ng-model="doctor.officeHoursFromTime" placeholder="Enter OfficeHoursFromTime" required>
-                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+                             <input type="text" style="width:150px; "name="officeHoursFromTime" id="officeHoursFromTime" class="form-control"  ng-model="doctor.officeHoursFromTime" placeholder="Enter OfficeHoursFromTime" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                                     <span class="error-container" ng-show="myForm.officeHoursFromTime.$dirty && myForm.officeHoursFromTime.$invalid">
-                                <span style="color:red" ng-show="myForm.officeHoursFromTime.$error.required">Please Enter the OfficeHoursFromTime</span>
-                              </span>
-                                   </div>
-                                    
-                                   <div class="col-md-4" >
-                                    <label>OfficeHoursToTime</label>
+                              <span class="error-container" ng-show="myForm.officeHoursFromTime.$dirty && myForm.officeHoursFromTime.$invalid">
+                                <span style="color:red" ng-show="myForm.officeHoursFromTime.$error.required">Please Enter the Start Time</span>
+                              </span> 
+                           </div>
+                               <div class="col-md-5" >
+                                    <label>Office Hours End Time</label>
                                     <div class="input-group">
-                             <input type="text" style="width:100px;" name="officeHoursToTime" id="officeHoursToTime" class="form-control"  ng-model="doctor.officeHoursToTime" placeholder="Enter OfficeHoursToTime" required>
-                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+                             <input type="text" style="width:150px;" name="officeHoursToTime" id="officeHoursToTime" class="form-control"  ng-model="doctor.officeHoursToTime" placeholder="Enter OfficeHoursToTime" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                                     <span class="error-container" ng-show="myForm.officeHoursToTime.$dirty && myForm.officeHoursToTime.$invalid">
-                                <span style="color:red" ng-show="myForm.officeHoursToTime.$error.required">Please Enter the OfficeHoursToTime</span>
+                              <span class="error-container" ng-show="myForm.officeHoursToTime.$dirty && myForm.officeHoursToTime.$invalid">
+                                <span style="color:red" ng-show="myForm.officeHoursToTime.$error.required">Please Enter the End Time</span>
                               </span>
                               </div>
-                                    <br/>
-                                          
-                                                    
-                                  
-                                    
-                                     
-                                    
-                                    
-                                    
-                                </td>
+                                  </td>
                             </tr>
                             
                             <tr>
@@ -276,8 +273,8 @@
                 </div>
             </div>
             <div class="text-right" style="margin-right:30px;">
-                <a class="btn btn-success" ng-show='myFormButton' ng-disabled='myForm.$invalid'  ng-click="saveDoctor()">Save</a>
-            	 <a class="btn btn-success" ng-show='!myFormButton' ng-disabled='myForm.$invalid' ng-click="update()">Update</a>
+                <a class="btn btn-success" ng-show='myFormButton' ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid'  ng-click="saveDoctor()">Save</a>
+            	 <a class="btn btn-success" ng-show='!myFormButton' ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-click="update()">Update</a>
               <a ui-sref="dashboard.doctor"  class="btn btn-danger" >Cancel</a><br/><br/>
            </div>
             <!-- /.panel-body -->
@@ -293,108 +290,18 @@
  border-bottom: 1px solid green;
 }
 </style>
-<script type='text/javascript'>//<![CDATA[
-    $(window).load(function(){
-        
-    	
-        $("#choose").click(function() {
-            $("#my_file").click();
-        });
-        var s=m=t=w=th=f=sat= 1;
-        $('#sun').click(function() {
-           
-            s++;
-           
-            if(s%2!==0)
-            {
-            	 
-                $('#sun').html('<i class="fa fa-check fa-fw" style="color:green"></i>');
-                
-               
-            } else
-            {
-                $('#sun').html('<i class="fa fa-times fa-fw" style="color:#CC0000"></i>');
-              
-            }
-           
-        });
-        $('#mon').click(function() {
-            m++;
-          
-            if(m%2!==0)
-            {
-                $('#mon').html('<i class="fa fa-check fa-fw" style="color:green"></i>');
-            } else
-            {
-                $('#mon').html('<i class="fa fa-times fa-fw" style="color:#CC0000"></i>');
-            }
-        });
-        $('#tue').click(function() {
-            t++;
-            if(t%2!==0)
-            {
-                $('#tue').html('<i class="fa fa-check fa-fw" style="color:green"></i>');
-                    } else
-            {
-                $('#tue').html('<i class="fa fa-times fa-fw" style="color:#CC0000"></i>');
-                  }
-        });
-        $('#wed').click(function() {
-            w++;
-            if(w%2!==0)
-            {
-                $('#wed').html('<i class="fa fa-check fa-fw" style="color:green"></i>');
-                 } else
-            {
-                $('#wed').html('<i class="fa fa-times fa-fw" style="color:#CC0000"></i>');
-                 }
-        });
-        $('#thu').click(function() {
-            th++;
-            if(th%2!==0)
-            {
-                $('#thu').html('<i class="fa fa-check fa-fw" style="color:green"></i>');
-                } else
-            {
-                $('#thu').html('<i class="fa fa-times fa-fw" style="color:#CC0000"></i>');
-                  }
-        });
-        $('#fri').click(function() {
-            f++;
-            if(f%2!==0)
-            {
-                $('#fri').html('<i class="fa fa-check fa-fw" style="color:green"></i>');
-                } else
-            {
-                $('#fri').html('<i class="fa fa-times fa-fw" style="color:#CC0000"></i>');
-                }
-        });
-        $('#sat').click(function() {
-            sat++;
-            if(sat%2!==0)
-            {
-                $('#sat').html('<i class="fa fa-check fa-fw" style="color:green"></i>');
-                } else
-            {
-                $('#sat').html('<i class="fa fa-times fa-fw" style="color:#CC0000"></i>');
-                          }
-        });
 
-
-    });//]]>
-
-</script>
  <script>
 $('#officeHoursFromTime').datetimepicker({
 			pickTime : true,
 			pickDate:false,
-			format:'HH:mm:ss',
+			format:'HH:mm'
 			
 		});
 $('#officeHoursToTime').datetimepicker({
 	pickTime : true,
 	pickDate:false,
-	format:'HH:mm:ss',
+	format:'HH:mm'
 	
 });
 </script> 

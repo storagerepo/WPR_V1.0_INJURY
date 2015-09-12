@@ -26,30 +26,26 @@
             
               	
                 	 <th ng-mousedown="sort('state')">State <span class="glyphicon sort-icon" ng-show="sortKey=='state'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
-            
-                   	 <th ng-mousedown="sort('officeHoursFromTime')">Office Hours From Time <span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursFromTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
-             <th ng-mousedown="sort('officeHoursToTime')">Office Hours To Time <span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursToTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+            <th  ng-mousedown="sort('county')">County <span class="glyphicon sort-icon" ng-show="sortKey=='county'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+                   	 <th ng-mousedown="sort('officeHoursFromTime')">Office Hours Start Time <span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursFromTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+             <th ng-mousedown="sort('officeHoursToTime')">Office Hours End Time <span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursToTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
           
-	               
-	                       <th  ng-mousedown="sort('notes')">Notes <span class="glyphicon sort-icon" ng-show="sortKey=='notes'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
-            
-                      
-              <th width="20%" ng-show="isAdmin">Action</th></tr>
+	           <th width="20%" ng-show="isAdmin">Action</th></tr>
  <tr>    
-            <th>  <input type="text"  class="form-control"  ng-model="search.doctorName" placeholder="Search by Name"></label>
+            <th>  <input type="text"  class="form-control"  ng-model="search.doctorName" placeholder="Search by Name">
            </th>
-            <th>  <input type="text"  class="form-control"  ng-model="search.address" placeholder="Search by Address"></label>
+            <th>  <input type="text"  class="form-control"  ng-model="search.address" placeholder="Search by Address">
            </th>
-            <th>  <input type="text"  class="form-control"  ng-model="search.city" placeholder="Search by City"></label>
+            <th>  <input type="text"  class="form-control"  ng-model="search.city" placeholder="Search by City">
            </th>
-             <th>  <input type="text"  class="form-control"  ng-model="search.state" placeholder="Search by State"></label>
+             <th>  <input type="text"  class="form-control"  ng-model="search.state" placeholder="Search by State">
            </th>
+           <th>  <input type="text"  class="form-control"  ng-model="search.county" placeholder="Search by County"></th>
              <th>  <input type="text"  class="form-control"  ng-model="search.officeHoursFromTime" placeholder="Search by Office Hours From Time"></label>
            </th>
- <th>  <input type="text"  class="form-control"  ng-model="search.officeHoursToTime" placeholder="Search by Office Hours To Time"></label>
+ <th>  <input type="text"  class="form-control"  ng-model="search.officeHoursToTime" placeholder="Search by Office Hours To Time">
            </th>
-            <th>  <input type="text"  class="form-control"  ng-model="search.notes" placeholder="Search by Notes"></label>
-           </th>
+            
            <th></th>
            </tr>
             </thead>
@@ -63,9 +59,10 @@
 <td>{{doctor.address}}</td>
 		<td>{{doctor.city}}</td>
 			<td>{{doctor.state}}</td>
+			<td>{{doctor.county}}</td>
 		<td>{{doctor.officeHoursFromTime}}</td>
 <td>{{doctor.officeHoursToTime}}</td>
-<td>{{doctor.notes}}</td>
+
                                    <td ng-show="isAdmin"><a href="#/dashboard/EditDoctor/{{doctor.id}}"  class="btn btn-xs btn-warning" ng-show="isAdmin">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit</a>
 	<a href="#" ui-sref="dashboard.doctor" ng-mousedown="deleteDoctor(doctor.id)" class="btn btn-xs btn-danger" ng-show="isAdmin">&nbsp;<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete </a>
 	</td></tr>

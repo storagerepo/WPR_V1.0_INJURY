@@ -63,10 +63,10 @@
 						</a>
 						</span>
 						<span ng-hide="isAdmin">
-						<a title="doctor" ng-hide="{{patients.doctorId}}==''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Change Caller" class="btn btn-xs btn-success hint--top">&nbsp;<i
+						<a title="doctor" ng-hide="{{patients.doctorId}}==''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Change Doctor" class="btn btn-xs btn-success hint--top">&nbsp;<i
 								class="glyphicon glyphicon-ok"></i>
 						</a>
-						<a title="doctor" ng-hide="{{patients.doctorId}}!=''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Assign Caller" class="btn btn-xs btn-danger hint--top">&nbsp;<i
+						<a title="doctor" ng-hide="{{patients.doctorId}}!=''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Assign Doctor" class="btn btn-xs btn-danger hint--top">&nbsp;<i
 								class="glyphicon glyphicon-remove"></i>
 						</a>
 						</span>
@@ -133,7 +133,7 @@
              
               <label>Select the Doctor</label>
                           <div class="col-md-12 input-group">
-                           <select class="form-control" ng-model="patients.doctorId" name="doctorId" id="doctorId" ng-options="doctor.id as doctor.name for doctor in doctors">
+                           <select class="form-control" ng-model="patients.doctorId" name="doctorId" id="doctorId" ng-options="doctor.id as doctor.doctorName for doctor in doctors">
   							  <option value="">-- Select Doctor --</option>
 						  </select>   
                            </div>
