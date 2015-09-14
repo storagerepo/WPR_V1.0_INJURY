@@ -112,6 +112,8 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	
 	$scope.addAppointment=function(callLogId){
 		$scope.Appointments.callLogId =callLogId;
+		$("#scheduledDate").val("");
+		$("#appointmentNotes").val("");
 		$("#AppointmentsModal").modal("show");
 	};
 	 

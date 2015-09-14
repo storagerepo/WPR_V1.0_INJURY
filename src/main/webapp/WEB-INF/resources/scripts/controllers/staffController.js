@@ -128,17 +128,29 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 
 adminApp.controller('SaveStaffController', function($scope,$http,$location,$state,requestHandler,successMessageService) {
 	
-	
+	$("#username_exists").text("");
 	$scope.options=true;
 	$scope.title=$state.current.title;
 	$scope.save=function()
 	{
-		 requestHandler.postRequest("Admin/saveUpdateStaff.json",$scope.staff).then(function(response){
-			  successMessageService.setMessage("You have Successfully Added!");
-	          successMessageService.setIsError(0);
-	          successMessageService.setIsSuccess(1);
-			  $location.path('dashboard/staff');
-			});
+		$("#username_exists").text("");
+		requestHandler.getRequest("Admin/getUsername.json?username="+$scope.staff.username,"").then(function(response){
+			var isNew=response.data.staffForms;
+			if(isNew==0){
+				$("#username_exists").text("");
+			 requestHandler.postRequest("Admin/saveUpdateStaff.json",$scope.staff).then(function(response){
+				  successMessageService.setMessage("You have Successfully Added!");
+		          successMessageService.setIsError(0);
+		          successMessageService.setIsSuccess(1);
+				  $location.path('dashboard/staff');
+				});
+			}
+			else{
+				$("#username_exists").text("UserName already exists");
+			}
+		});
+		
+		
 	};
 
 });

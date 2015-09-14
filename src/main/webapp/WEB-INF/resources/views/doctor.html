@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-lg-12">
         <a ui-sref="dashboard.add-doctor" class="btn-sm btn-primary pull-right margin-top-40" ng-show="isAdmin">Add Doctor</a>
-        <h2 class="page-header">Doctor</h2>
+        <h2 class="page-header">Doctors</h2>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -18,19 +18,23 @@
                      
                           <thead>
 	        <tr>
-                <th  ng-mousedown="sort('doctorName')">Name   <span class="glyphicon sort-icon" ng-show="sortKey=='doctorName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                <th  style="width:100px!important;" ng-mousedown="sort('doctorName')">Name   <span class="glyphicon sort-icon" ng-show="sortKey=='doctorName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
                
-            	 	 <th ng-mousedown="sort('address')">Address   <span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+            	 	 <th style="width:100px!important;" ng-mousedown="sort('address')">Address   <span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
-             	 <th ng-mousedown="sort('city')">City   <span class="glyphicon sort-icon" ng-show="sortKey=='city'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+             	 <th style="width:100px!important;" ng-mousedown="sort('city')">City   <span class="glyphicon sort-icon" ng-show="sortKey=='city'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
               	
-                	 <th ng-mousedown="sort('state')">State <span class="glyphicon sort-icon" ng-show="sortKey=='state'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
-            <th  ng-mousedown="sort('county')">County <span class="glyphicon sort-icon" ng-show="sortKey=='county'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
-                   	 <th ng-mousedown="sort('officeHoursFromTime')">Office Hours Start Time <span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursFromTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
-             <th ng-mousedown="sort('officeHoursToTime')">Office Hours End Time <span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursToTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
-          
-	           <th width="20%" ng-show="isAdmin">Action</th></tr>
+                	 <th style="width:100px!important;" ng-mousedown="sort('state')">State <span class="glyphicon sort-icon" ng-show="sortKey=='state'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+            <th style="width:80px!important;" ng-mousedown="sort('county')">County <span class="glyphicon sort-icon" ng-show="sortKey=='county'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+                   	 <th style="width:80px!important;text-align:center;" colspan="2">Office Hours</th>
+             <th width="120px!important" ng-show="isAdmin">Action</th></tr>
+	           <tr>
+	           <th colspan="5"></th>
+	           <th style="width:80px!important;" ng-mousedown="sort('officeHoursFromTime')">Office Hours Start Time <span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursFromTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+	           <th style="width:100px!important;" ng-mousedown="sort('officeHoursToTime')">Office Hours End Time<span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursToTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+	           <th ng-show="isAdmin"></th>
+	           </tr>
  <tr>    
             <th>  <input type="text"  class="form-control"  ng-model="search.doctorName" placeholder="Search by Name">
            </th>
@@ -46,7 +50,7 @@
  <th>  <input type="text"  class="form-control"  ng-model="search.officeHoursToTime" placeholder="Search by Office Hours To Time">
            </th>
             
-           <th></th>
+           <th ng-show="isAdmin"></th>
            </tr>
             </thead>
             
@@ -63,8 +67,8 @@
 		<td>{{doctor.officeHoursFromTime}}</td>
 <td>{{doctor.officeHoursToTime}}</td>
 
-                                   <td ng-show="isAdmin"><a href="#/dashboard/EditDoctor/{{doctor.id}}"  class="btn btn-xs btn-warning" ng-show="isAdmin">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit</a>
-	<a href="#" ui-sref="dashboard.doctor" ng-mousedown="deleteDoctor(doctor.id)" class="btn btn-xs btn-danger" ng-show="isAdmin">&nbsp;<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete </a>
+                                   <td ng-show="isAdmin"><a href="#/dashboard/EditDoctor/{{doctor.id}}" data-hint="Edit Doctor" class="btn btn-xs btn-warning hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-edit"></i></a>
+	<a href="#" ui-sref="dashboard.doctor" ng-mousedown="deleteDoctor(doctor.id)" data-hint="Delete Doctor" class="btn btn-xs btn-danger hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-trash"></i></a>
 	</td></tr>
 </tbody>
 

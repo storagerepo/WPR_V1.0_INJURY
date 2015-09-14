@@ -1,4 +1,4 @@
-<script src="resources/components/datetime/datetimepicker.css"></script>
+<link rel="stylesheet" href="resources/components/datetime/datetimepicker.css"></link>
             <script src="resources/components/datetime/moment.js"></script>
              <script src="resources/components/datetime/datetimepicker.js"></script>
 <div class="row">
@@ -192,10 +192,7 @@
                               </span>
                                     <br/>
                                     <label>Fax Number</label>
-                                    <input type="text" name="faxNumber" class="form-control" ng-model="doctor.faxNumber" placeholder="Enter Fax Number" required>
-                                    <span class="error-container" ng-show="myForm.faxNumber.$dirty && myForm.faxNumber.$invalid">
-                                <span style="color:red" ng-show="myForm.faxNumber.$error.required">Please Enter the Fax Number</span>
-                              </span>
+                                    <input type="text" name="faxNumber" class="form-control" ng-model="doctor.faxNumber" placeholder="Enter Fax Number">
                                     <br/>
                                     
                                     <div class="col-md-6" >

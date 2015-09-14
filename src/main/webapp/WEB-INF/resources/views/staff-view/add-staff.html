@@ -1,7 +1,8 @@
+<script src="resources/js/mask.js"></script>
 <div class="row">
     <div class="col-lg-12">
         <a ui-sref="dashboard.staff" class="btn-sm btn-primary pull-right margin-top-40">Back to the list</a>
-        <h2 class="page-header" ng-controller="EditStaffController">{{title}}&nbsp;-&nbsp;{{staff.firstName}}&nbsp;{{staff.lastName}}</h2>
+        <h2 class="page-header">{{title}}&nbsp;-&nbsp;{{staff.firstName}}&nbsp;{{staff.lastName}}</h2>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -21,7 +22,7 @@
                             <tr>
                                 <td class="col-md-6">
                                     <label>First Name</label>
-                                    <input type="text" class="form-control"  ng-model="staff.firstName" name="firstName" placeholder="Enter FIrstName"  required>
+                                    <input type="text" class="form-control inputclass"  ng-model="staff.firstName" name="firstName" placeholder="Enter First Name" data-mask=""  required>
                                     <span class="error-container" ng-show="myForm.firstName.$dirty && myForm.firstName.$invalid">
                                     <span style="color:red" ng-show="myForm.firstName.$error.required">Please input First Name</span>
                                      </span><br/>
@@ -30,7 +31,7 @@
                                     
                                     
                                     <label>Last Name</label>
-                                    <input type="text" class="form-control"  ng-model="staff.lastName" name="lastName" placeholder="Enter LastName"  required>
+                                    <input type="text" class="form-control"  ng-model="staff.lastName" name="lastName" placeholder="Enter Last Name"  required>
                                     <span class="error-container" ng-show="myForm.lastName.$dirty && myForm.lastName.$invalid">
                                       <span style="color:red" ng-show="myForm.lastName.$error.required">Please input Last Name</span>
                                      </span><br/>
@@ -38,17 +39,17 @@
                                     
                                     
                                     <label>User Name</label>
-                                    <input  type="text" class="form-control"   ng-model="staff.username" name="username" placeholder="Enter UserName"  userexists required>
-    
+                                    <input  type="text" class="form-control inputclass" ng-show='options' ng-model="staff.username" name="username" id="username" data-mask="usernameinput" placeholder="Enter UserName" required>
+    								<input  type="text" readonly="readonly" class="form-control" ng-show='!options' ng-model="staff.username" placeholder="Enter UserName">
+                                    <span style="color:red" id="username_exists"></span>
                                     <span class="error-container" ng-show="myForm.username.$dirty && myForm.username.$invalid">
                                        <span style="color:red" ng-show="myForm.username.$error.required">Please input User Name</span>
-                                       <span style="color:red" ng-show="myForm.username.$error.userexists">UserName allready exists</span>
-                                         </span><br/>
+                                       </span><br/>
                                 
                                 </td>
                                 <td class="col-md-6">
                                     <label>Phone Number</label>
-                                    <input type="text" class="form-control"  ng-model="staff.phoneNumber" name="phoneNumber" placeholder="Enter PhoneNumber"  required>
+                                    <input type="text" class="form-control inputclass"  ng-model="staff.phoneNumber" name="phoneNumber" placeholder="Enter PhoneNumber" data-mask="" required>
                                     <span class="error-container" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
                                      <span style="color:red" ng-show="myForm.phoneNumber.$error.required">Please input Phone Number</span>
                                    </span><br/>
@@ -56,7 +57,7 @@
                                     
                                     
                                     <label>Email ID</label>
-                                    <input type="email" class="form-control"  ng-model="staff.emailAddress" name="emailAddress" placeholder="Enter EmailId"  required  email>
+                                    <input type="email" class="form-control"  ng-model="staff.emailAddress" name="emailAddress" placeholder="Enter EmailId" email>
                                     <span class="error-container" ng-show="myForm.emailAddress.$dirty && myForm.emailAddress.$invalid">
                                             <span style="color:red" ng-show="myForm.emailAddress.$error.email">Enter a valid email</span>
                                     </span> 
@@ -67,7 +68,7 @@
                                     
                                     
                                     <label>Password</label>
-                                    <input type="password" class="form-control"  ng-model="staff.password" name="password" placeholder="Enter Password"  required>
+                                    <input type="text" class="form-control"  ng-model="staff.password" name="password" placeholder="Enter Password"  required>
                                     <span class="error-container" ng-show="myForm.password.$dirty && myForm.password.$invalid">
                                       <span style="color:red" ng-show="myForm.password.$error.required">Please input Password</span>
                                      </span><br/>
@@ -76,10 +77,8 @@
                             <tr>
                                 <td class="col-md-12" colspan="2"><br/>
                                     <label>Notes</label>
-                                    <textarea class="form-control height-100"  ng-model="staff.notes" name="notes" placeholder="Enter Notes"  required></textarea>
-                                <span class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">
-                                       
-                                </td>
+                                    <textarea class="form-control height-100"  ng-model="staff.notes" name="notes" placeholder="Enter Notes"></textarea>
+                         	</td>
                             </tr>
                         </tbody>
                     </table>

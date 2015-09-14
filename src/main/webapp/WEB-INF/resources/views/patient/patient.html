@@ -48,25 +48,25 @@
 						<a href="#/dashboard/Calllogs/{{patients.id}}" class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs"><i
 								class="glyphicon glyphicon-eye-open"></i>
 						</a>
-						<a href="#/dashboard/EditPatient/{{patients.id}}" class="btn btn-xs btn-warning hint--top" data-hint="Edit Patient" ng-show="isAdmin">&nbsp;<i
+						<a href="#/dashboard/EditPatient/{{patients.id}}" class="btn btn-xs btn-warning hint--top" data-hint="Edit Patient" ng-show="isAdmin"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
-						<a href="" ng-click="deletePatient(patients.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Patient" ng-show="admin">&nbsp;<i
+						<a href="" ng-click="deletePatient(patients.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Patient" ng-show="admin"><i
 								class="glyphicon glyphicon-trash"></i>
 						</a>
 						<span ng-show="isAdmin">
-						<a ng-hide="{{patients.callerId}}==''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-success hint--top" data-hint="Change Caller">&nbsp;<i
+						<a ng-hide="{{patients.callerId}}==''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-success hint--top" data-hint="Change Caller"><i
 								class="glyphicon glyphicon-saved"></i>
 						</a>
-						<a ng-hide="{{patients.callerId}}!=''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-danger hint--top" data-hint="Assign Caller">&nbsp;<i
+						<a ng-hide="{{patients.callerId}}!=''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-danger hint--top" data-hint="Assign Caller"><i
 								class="glyphicon glyphicon-saved"></i>
 						</a>
 						</span>
 						<span ng-hide="isAdmin">
-						<a title="doctor" ng-hide="{{patients.doctorId}}==''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Change Doctor" class="btn btn-xs btn-success hint--top">&nbsp;<i
+						<a title="doctor" ng-hide="{{patients.doctorId}}==''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Change Doctor" class="btn btn-xs btn-success hint--top"><i
 								class="glyphicon glyphicon-ok"></i>
 						</a>
-						<a title="doctor" ng-hide="{{patients.doctorId}}!=''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Assign Doctor" class="btn btn-xs btn-danger hint--top">&nbsp;<i
+						<a title="doctor" ng-hide="{{patients.doctorId}}!=''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Assign Doctor" class="btn btn-xs btn-danger hint--top"><i
 								class="glyphicon glyphicon-remove"></i>
 						</a>
 						</span>

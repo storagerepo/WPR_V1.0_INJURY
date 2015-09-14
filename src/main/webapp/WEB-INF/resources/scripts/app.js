@@ -207,7 +207,8 @@ angular
                  loadMyFile:function($ocLazyLoad) {
                    return $ocLazyLoad.load({
                        name:'sbAdminApp',
-                       files:['scripts/controllers/staffController.js']
+                       files:['scripts/controllers/staffController.js',
+                              'js/mask.js']
                    });
                  }
                },
@@ -219,10 +220,11 @@ angular
         .state('dashboard.add-staff',{
        
         resolve: {
-            loadMyFile:function($ocLazyLoad) {
+            loadMyFiles:function($ocLazyLoad) {
               return $ocLazyLoad.load({
                   name:'sbAdminApp',
-                  files:['scripts/controllers/staffController.js']
+                  files:['scripts/controllers/staffController.js',
+                         'js/mask.js']
               });
             }
           },

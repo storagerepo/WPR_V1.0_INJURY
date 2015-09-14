@@ -1,4 +1,4 @@
-<script src="resources/components/datetime/datetimepicker.css"></script>
+<link rel="stylesheet" href="resources/components/datetime/datetimepicker.css"></link>
             <script src="resources/components/datetime/moment.js"></script>
              <script src="resources/components/datetime/datetimepicker.js"></script>
 <div class="row">
@@ -43,7 +43,7 @@
 				<td>{{callLogss.notes}}</td>
 				<td><a  type="submit" title="" class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs" ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
 				 <a type="submit" class="btn btn-xs btn-warning hint--top" data-hint="Edit Call Logs" ng-click="editModal(callLogss.id,callLogss.appointmentId)">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;</a>
-				<a href="#" ui-sref="" ng-click="deleteCalllogs(callLogss.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Call Logs">&nbsp;<i class="glyphicon glyphicon-trash" ></i>&nbsp; </a>
+				<a href="#" ng-click="deleteCalllogs(callLogss.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Call Logs">&nbsp;<i class="glyphicon glyphicon-trash" ></i>&nbsp; </a>
 				<a ng-click="addAppointment(callLogss.id)" class="btn btn-xs btn-success hint--top"  data-hint="Add Appointment">&nbsp;<i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
 				</td>
 				</tr>
@@ -80,7 +80,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
                                      <span class="error-container" ng-show="myForm.timeStamp.$dirty && myForm.timeStamp.$invalid">
-                                <span style="color:red" ng-show="myForm.timeStamp.$error.required">Please Enter the Date and Time</span>
+                                <span style="color:red" ng-show="myForm.timeStamp.$error.required" id="dateTimeError">Please Enter the Date and Time</span>
                               </span>
                                     <br/>
                 
@@ -90,21 +90,21 @@
         							<label>Response</label>
                                     <textarea name="response" id="response" class="form-control height-100" ng-model="calllogs.response" placeholder="Enter the Response" required></textarea>
                  <span class="error-container" ng-show="myForm.response.$dirty && myForm.response.$invalid">
-                                <span style="color:red" ng-show="myForm.response.$error.required">Please Enter the Response</span>
+                                <span style="color:red" ng-show="myForm.response.$error.required" id="responseError">Please Enter the Response</span>
                               </span>
                                     <br/>
                                     
                              	<label>Note</label>
                                    <textarea name="notes" id="notes" class="form-control height-100" ng-model="calllogs.notes" placeholder="Enter the notes" required></textarea> 
                                    <span class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">
-                                <span style="color:red" ng-show="myForm.notes.$error.required">Please Enter the Notes</span>
+                                <span style="color:red" ng-show="myForm.notes.$error.required" id="calllogsNotesError">Please Enter the Notes</span>
                               </span>
                                     <br/>
              
       </div>
       <div class="modal-footer">
         <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
-             <a type="submit" class="btn btn-success" ng-disabled='myForm.$invalid' ng-show="options" ng-click="save()">Save</a>
+             <a type="submit" class="btn btn-success" ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-show="options" ng-click="save()">Save</a>
              <a type="submit" class="btn btn-success" ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-show='!options' ng-click="update()">update</a> 
               
       </div>
@@ -138,7 +138,7 @@
                                 <input type="hidden" name="patientId" class="form-control"  ng-model="Appointments.patientId" >
                  				<input type="hidden" name="callLogId" class="form-control"  ng-model="Appointments.callLogId" >
                              	<label>Notes</label>
-                                   <textarea name="notes" class="form-control height-100" ng-model="Appointments.notes" placeholder="Enter Notes" required></textarea>
+                                   <textarea name="notes" id="appointmentNotes" class="form-control height-100" ng-model="Appointments.notes" placeholder="Enter Notes" required></textarea>
                                     <span class="error-container" ng-show="myForms.notes.$dirty && myForms.notes.$invalid">
                                 <span style="color:red" ng-show="myForms.notes.$error.required">Please Enter the Notes</span>
                               </span>

@@ -4,7 +4,7 @@
 	<div class="col-lg-12">
 		<a ui-sref="dashboard.add-staff"
 			class="btn-sm btn-primary pull-right margin-top-40">Add Caller</a>
-		<h2 class="page-header">Caller</h2>
+		<h2 class="page-header">Callers</h2>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -58,18 +58,18 @@
 								<td>{{staff.emailAddress}}</td>
 								
 								<td>
-								<a href="#/dashboard/EditStaff/{{staff.id}}" class="btn btn-xs btn-warning hint--top" data-hint="Edit Caller">&nbsp;<i
+								<a href="#/dashboard/EditStaff/{{staff.id}}" class="btn btn-xs btn-warning hint--top" data-hint="Edit Caller"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
-						<a href="#" ng-click="deleteStaff(staff.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Caller">&nbsp;<i
+						<a href="#" ng-click="deleteStaff(staff.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Caller"><i
 								class="glyphicon glyphicon-trash"></i>
 						</a>
 								
 							
-								<a href="" ng-show="staff.isEnable==1" ng-click="disableStaff(staff.id)" class="btn btn-xs btn-success hint--top" data-hint="Disable Caller">&nbsp;<i
+								<a href="" ng-show="staff.isEnable==1" ng-click="disableStaff(staff.id)" class="btn btn-xs btn-success hint--top" data-hint="Disable Caller"><i
 								class="fa fa-unlock"></i>
 						</a>
-								<a href="" ng-show="staff.isEnable==0" ng-click="enableStaff(staff.id)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Caller">&nbsp;<i
+								<a href="" ng-show="staff.isEnable==0" ng-click="enableStaff(staff.id)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Caller"><i
 								class="fa fa-lock"></i>
 						</a>
 								
