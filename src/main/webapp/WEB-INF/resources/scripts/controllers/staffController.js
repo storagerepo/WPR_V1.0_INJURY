@@ -34,7 +34,9 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 				  successMessageService.setMessage("You have Successfully Enabled!");
 					 successMessageService.setIsError(0);
 			          successMessageService.setIsSuccess(1);
-					$state.reload('dashboard.staff');
+			          requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
+					    	 $scope.staffs= results.data.staffForms;
+					     });
 
 				  }
 			  if($scope.response==false)
@@ -42,11 +44,14 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 			  successMessageService.setMessage("You have Successfully Disabled!");
 				 successMessageService.setIsError(0);
 		          successMessageService.setIsSuccess(1);
-				$state.reload('dashboard.staff');
+		          requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
+				    	 $scope.staffs= results.data.staffForms;
+				     });
 
 			  }
     	     });
-		   }    	  
+		   };
+		   
     };
     
     $scope.enableStaff=function(id)
@@ -62,7 +67,9 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 				  successMessageService.setMessage("You have Successfully Enabled!");
 					 successMessageService.setIsError(0);
 			          successMessageService.setIsSuccess(1);
-					$state.reload('dashboard.staff');
+			          requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
+					    	 $scope.staffs= results.data.staffForms;
+					     });
 
 				  }
 			  if($scope.result==false)
@@ -70,11 +77,14 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 			  successMessageService.setMessage("You have Successfully Disabled!");
 				 successMessageService.setIsError(0);
 		          successMessageService.setIsSuccess(1);
-				$state.reload('dashboard.staff');
+		          requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
+				    	 $scope.staffs= results.data.staffForms;
+				     });
 
 			  }
     	     });
-		   }    	  
+		   };
+		   
     };
     
     $scope.deleteStaff=function(id)
