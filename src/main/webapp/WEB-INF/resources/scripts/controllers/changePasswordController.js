@@ -17,7 +17,7 @@ adminApp.controller('changePasswordController', function($scope,$state,requestHa
 			  
 			  if($scope.value==true)
 				  {
-				  successMessageService.setMessage("You have Successfully Updated!");
+				  successMessageService.setMessage("Password Changed Successfully!");
 					 successMessageService.setIsError(0);
 			          successMessageService.setIsSuccess(1);
 					$state.reload('dashboard.Changepassword');

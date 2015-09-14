@@ -180,7 +180,7 @@
                                      <br>
                                     
                                      <label>Zip</label>
-                                    <input type="text" name="zip" class="form-control" ng-model="doctor.zip" placeholder="Enter Zip" required>
+                                    <input type="text" name="zip" class="form-control" ng-model="doctor.zip" placeholder="Enter Zip" required maxlength="5">
                                     <span class="error-container" ng-show="myForm.zip.$dirty && myForm.zip.$invalid">
                                 <span style="color:red" ng-show="myForm.zip.$error.required">Please Enter the Zip</span>
                               </span>
