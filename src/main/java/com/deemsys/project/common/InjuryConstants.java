@@ -94,8 +94,8 @@ public class InjuryConstants {
 	// Convert String Time To  Date Format Time
 	public static Date convertToDateFormatTime(String time)
 	{
-			SimpleDateFormat monthFormat = new SimpleDateFormat("HH:mm:ss");
-			SimpleDateFormat yearFormat = new SimpleDateFormat("HH:mm:ss");
+			SimpleDateFormat monthFormat = new SimpleDateFormat("HH:mm");
+			SimpleDateFormat yearFormat = new SimpleDateFormat("HH:mm");
 			Date dateformat=new Date();
 			try {
 				dateformat = monthFormat.parse(time);
