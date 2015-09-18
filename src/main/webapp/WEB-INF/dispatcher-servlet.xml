@@ -93,7 +93,7 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
 		p:url="${jdbc.databaseurl}" p:username="${jdbc.username}" p:password="${jdbc.password}"
-		p:testWhileIdle="true" p:validationQuery="SELECT count(*) FROM learnterest.user_details"
+		p:testWhileIdle="true" p:validationQuery="SELECT count(*) FROM injurytest.Staff"
 		p:testOnBorrow="true" p:removeAbandoned="true"
 		p:removeAbandonedTimeout="300000" />
 
