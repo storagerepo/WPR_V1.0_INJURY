@@ -405,3 +405,11 @@ border-radius:4px !important;
   .hint:after, [data-hint]:after {
     text-shadow: 0 -1px 0px black;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3); }
+/* Div Padding Left  */
+.whole-div{
+	background:#fff;padding-left:0!important;
+}
+/* Space Between Two Div */
+.bottomspace{
+	padding-bottom:20px!important
+}

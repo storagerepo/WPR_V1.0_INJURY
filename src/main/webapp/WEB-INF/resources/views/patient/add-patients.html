@@ -1,4 +1,4 @@
-<div class="row" ng-controller="EditPatientController">
+<div class="row">
 	<div class="col-lg-12">
 		<a ui-sref="dashboard.patient"
 			class="btn-sm btn-primary pull-right margin-top-40">Back to the
@@ -17,327 +17,240 @@
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<div class="dataTable_wrapper">
-				<table class="col-md-12">
-                        <tbody>
-                            <tr>
-                            
-                            
-                                <td class="col-md-4">
+                            <div class="col-md-12">
+                            <div class="col-md-4">
                                     <label>Local Report Number:</label>
                                     <input type="text" class="form-control"  ng-model="patient.localReportNumber" name="localReportNumber" placeholder="Enter LocalReportNumber"  required>
-                                    <div class="error-container" ng-show="myForm.localReportNumber.$dirty && myForm.localReportNumber.$invalid">
+                                    <span class="error-container" ng-show="myForm.localReportNumber.$dirty && myForm.localReportNumber.$invalid">
                                     <span style="color:red" ng-show="myForm.localReportNumber.$error.required">Please Enter LocalReportNumber</span>
-                                     </div><br></td>
-                                     
-                                     
-                                     
-                            <td class="col-md-4">    
+                                     </span><br><br>
+                                 </div>
+                                <div class="col-md-4">    
                                     <label>Crash Severity:</label>
                                     <input type="text" class="form-control"  ng-model="patient.crashSeverity" name="crashSeverity" placeholder="Enter CrashSeverity"  required>
-                                    <div class="error-container" ng-show="myForm.crashSeverity.$dirty && myForm.crashSeverity.$invalid">
+                                    <span class="error-container" ng-show="myForm.crashSeverity.$dirty && myForm.crashSeverity.$invalid">
                                       <span style="color:red" ng-show="myForm.crashSeverity.$error.required">Please Enter CrashSeverity</span>
-                                     </div><br>
-                                    </td>
-                                    
-                                    
-                                    
-                                    
-                                     <td class="col-md-4">
+                                     </span><br><br>
+                                    </div>
+                                  <div class="col-md-4">
                                     <label>Reporting Agency Name:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.reportingAgencyName" name="reportingAgencyName" placeholder="Enter ReportingAgencyName"  required>
-                                    <div class="error-container" ng-show="myForm.reportingAgencyName.$dirty && myForm.reportingAgencyName.$invalid">
+                                    <span class="error-container" ng-show="myForm.reportingAgencyName.$dirty && myForm.reportingAgencyName.$invalid">
                                        <span style="color:red" ng-show="myForm.reportingAgencyName.$error.required">Please Enter Report Number</span>
-                                         </div><br>
-                                          </td>
+                                         </span><br><br>
+                                          </div>
                                          
-                                </tr>
-                                <tr>
-                                                               
-                                
-                                
-                                 <td class="col-md-4">
+                                </div>
+                                <div class="col-md-12">
+                                 <div class="col-md-4">
                                  <label>Number Of Units:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.numberOfUnits" name="numberOfUnits" placeholder="Enter NumberOfUnits"  required>
-                                    <div class="error-container" ng-show="myForm.numberOfUnits.$dirty && myForm.numberOfUnits.$invalid">
+                                    <span class="error-container" ng-show="myForm.numberOfUnits.$dirty && myForm.numberOfUnits.$invalid">
                                        <span style="color:red" ng-show="myForm.numberOfUnits.$error.required">Please Enter NumberOfUnits</span>
-                                         </div><br>
-                                         </td>
-                                         
-                                         
-                                         
-                                         
-                                          <td class="col-md-4">
+                                         </span><br><br>
+                                   	</div>
+                                    <div class="col-md-4">
                                     <label>Unit  InError:</label>
                                     <input tyep="text" class="form-control"  ng-model="patient.unitInError" name="unitInError" placeholder="Enter UnitInError"  required>
-                                    <div class="error-container" ng-show="myForm.unitInError.$dirty && myForm.unitInError.$invalid">
+                                    <span class="error-container" ng-show="myForm.unitInError.$dirty && myForm.unitInError.$invalid">
                                      <span style="color:red" ng-show="myForm.unitInError.$error.required">Please Enter UnitInError</span>
-                                   </div><br>
-                                  </td>
-                                  
-                                  
-                                  
-                                   <td class="col-md-4">
-                                 
-                                 <label>Country:</label>
+                                   </span><br><br>
+                                  </div>
+                                  <div class="col-md-4">
+                                 	<label>Country:</label>
                                     <input type="text" class="form-control"  ng-model="patient.country" name="country" placeholder="Enter Country"  required>
-                                    <div class="error-container" ng-show="myForm.country.$dirty && myForm.country.$invalid">
+                                    <span class="error-container" ng-show="myForm.country.$dirty && myForm.country.$invalid">
                                       <span style="color:red" ng-show="myForm.country.$error.required">Please Enter Country</span>
-                                     </div><br>
-                                      </td>
-                                      
-                                      
-                            </tr>
-                            <tr>
-                        
-                                <td class="col-md-4">
+                                     </span><br><br>
+                                      </div>
+                               </div>
+                            <div class="col-md-12">
+                        		<div class="col-md-4">
 									<label>City Village Township:</label>
 									<input type="text" class="form-control"  ng-model="patient.cityVillageTownship" name="cityVillageTownship" placeholder="Enter CityVillageTownship"  required>
-								 <div class="error-container" ng-show="myForm.cityVillageTownship.$dirty && myForm.cityVillageTownship.$invalid">
+								 <span class="error-container" ng-show="myForm.cityVillageTownship.$dirty && myForm.cityVillageTownship.$invalid">
                                       <span style="color:red" ng-show="myForm.cityVillageTownship.$error.required">Please Enter CityVillageTownship</span>
-                                     </div><br></td>
-                                
-                                <td class="col-md-4">
+                                     </span><br><br>
+                                     </div>
+                                <div class="col-md-4">
                                  <label>CrashDate:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.crashDate" name="crashDate" placeholder="Enter CrashDate"  required>
-                                    <div class="error-container" ng-show="myForm.crashDate.$dirty && myForm.crashDate.$invalid">
+                                    <span class="error-container" ng-show="myForm.crashDate.$dirty && myForm.crashDate.$invalid">
                                        <span style="color:red" ng-show="myForm.crashDate.$error.required">Please Enter CrashDate</span>
-                                         </div><br>
-                                         </td>
-								
-				
-                              
-                              <td class="col-md-4">
+                                         </span><br><br>
+                                         </div>
+								<div class="col-md-4">
                                  <label>Time Of  Crash:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.timeOfCrash" name="timeOfCrash" placeholder="Enter TimeOfCrash"  required>
-                                    <div class="error-container" ng-show="myForm.timeOfCrash.$dirty && myForm.timeOfCrash.$invalid">
+                                    <span class="error-container" ng-show="myForm.timeOfCrash.$dirty && myForm.timeOfCrash.$invalid">
                                        <span style="color:red" ng-show="myForm.timeOfCrash.$error.required">Please Enter TimeOfCrash</span>
-                                         </div><br>
-                                         </td></tr>
-								
-								
-								
-								  <tr>                              
-                                 <td class="col-md-4">
-                                 <label>Local  Report  Number1:</label>
+                                         </span><br><br>
+                                         </div>
+                                   </div>
+							<div class="col-md-12">                              
+                                 <div class="col-md-4">
+                                 <label>Local Report Number1:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.localReportNumber1" name="localReportNumber1" placeholder="Enter LocalReportNumber1"  required>
-                                    <div class="error-container" ng-show="myForm.localReportNumber1.$dirty && myForm.localReportNumber1.$invalid">
+                                    <span class="error-container" ng-show="myForm.localReportNumber1.$dirty && myForm.localReportNumber1.$invalid">
                                        <span style="color:red" ng-show="myForm.localReportNumber1.$error.required">Please Enter LocalReportNumber1</span>
-                                         </div><br>
-                                         </td>
-                                         
-                                         
-                                         
-                                         
-                                          <td class="col-md-4">
-                                    <label>Unit  Number:</label>
+                                         </span><br><br>
+                                   </div>
+                                  <div class="col-md-4">
+                                    <label>Unit Number:</label>
                                     <input tyep="text" class="form-control"  ng-model="patient.unitNumber" name="unitNumber" placeholder="Enter UnitNumber"  required>
-                                    <div class="error-container" ng-show="myForm.unitNumber.$dirty && myForm.unitNumber.$invalid">
+                                    <span class="error-container" ng-show="myForm.unitNumber.$dirty && myForm.unitNumber.$invalid">
                                      <span style="color:red" ng-show="myForm.unitNumber.$error.required">Please Enter UnitNumber</span>
-                                   </div><br>
-                                  </td>
-                                  
-                                  
-                                  
-                                   <td class="col-md-4">
-                                 
-                                 <label>Name:</label>
+                                   </span><br><br>
+                                  </div>
+                                  <div class="col-md-4">
+                                 	<label>Name:</label>
                                     <input type="text" class="form-control"  ng-model="patient.name" name="name" placeholder="Enter Name"  required>
-                                    <div class="error-container" ng-show="myForm.name.$dirty && myForm.name.$invalid">
+                                    <span class="error-container" ng-show="myForm.name.$dirty && myForm.name.$invalid">
                                       <span style="color:red" ng-show="myForm.name.$error.required">Please Enter Name</span>
-                                     </div><br>
-                                      </td>
-								</tr>
-								 <tr>                              
-                                 <td class="col-md-4">
+                                     </span><br><br>
+                                      </div>
+								</div>
+								<div class="col-md-12">                              
+                                 <div class="col-md-4">
                                  <label>Date  Of  Birth:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.dateOfBirth" name="dateOfBirth" placeholder="Enter DateOfBirth"  required>
-                                    <div class="error-container" ng-show="myForm.dateOfBirth.$dirty && myForm.dateOfBirth.$invalid">
+                                    <span class="error-container" ng-show="myForm.dateOfBirth.$dirty && myForm.dateOfBirth.$invalid">
                                        <span style="color:red" ng-show="myForm.dateOfBirth.$error.required">Please Enter DateOfBirth</span>
-                                         </div><br>
-                                         </td>
-                                         
-                                         
-                                         
-                                         
-                                          <td class="col-md-4">
+                                         </span><br><br>
+                                         </div>
+                                   <div class="col-md-4">
                                     <label>Gender:</label>
                                     <input tyep="text" class="form-control"  ng-model="patient.gender" name="gender" placeholder="Enter Gender"  required>
-                                    <div class="error-container" ng-show="myForm.gender.$dirty && myForm.gender.$invalid">
+                                    <span class="error-container" ng-show="myForm.gender.$dirty && myForm.gender.$invalid">
                                      <span style="color:red" ng-show="myForm.gender.$error.required">Please Enter Gender</span>
-                                   </div><br>
-                                  </td>
-                                  
-                                  
-                                  
-                                   <td class="col-md-4">
-                                 
-                                 <label>Address:</label>
+                                   </span><br><br>
+                                  </div>
+                                  <div class="col-md-4">
+                                 	 <label>Address:</label>
                                     <input type="text" class="form-control"  ng-model="patient.address" name="address" placeholder="Enter Address"  required>
-                                    <div class="error-container" ng-show="myForm.address.$dirty && myForm.address.$invalid">
+                                    <span class="error-container" ng-show="myForm.address.$dirty && myForm.address.$invalid">
                                       <span style="color:red" ng-show="myForm.address.$error.required">Please Enter Address</span>
-                                     </div><br>
-                                      </td>
-								</tr>
-								
-								
-								
-								
-								 <tr>                              
-                                 <td class="col-md-4">
+                                     </span><br><br>
+                                      </div>
+								</div>
+							<div class="col-md-12">                              
+                                 <div class="col-md-4">
                                  <label>Phone Number:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.phoneNumber" name="phoneNumber" placeholder="Enter PhoneNumber"  required>
-                                    <div class="error-container" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
+                                    <span class="error-container" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
                                        <span style="color:red" ng-show="myForm.phoneNumber.$error.required">Please Enter Phone Number</span>
-                                         </div><br>
-                                         </td>
-                                         
-                                         
-                                         
-                                         
-                                          <td class="col-md-4">
+                                         </span><br><br>
+                                         </div>
+                                  <div class="col-md-4">
                                     <label>Injuries:</label>
                                     <input tyep="text" class="form-control"  ng-model="patient.injuries" name="injuries" placeholder="Enter Injuries"  required>
-                                    <div class="error-container" ng-show="myForm.injuries.$dirty && myForm.injuries.$invalid">
+                                    <span class="error-container" ng-show="myForm.injuries.$dirty && myForm.injuries.$invalid">
                                      <span style="color:red" ng-show="myForm.injuries.$error.required">Please Enter Injury</span>
-                                   </div><br>
-                                  </td>
-                                  
-                                  
-                                  
-                                   <td class="col-md-4">
-                                 
-                                 <label>Ems Agency:</label>
+                                   </span><br><br>
+                                  </div>
+                                  <div class="col-md-4">
+                                 	 <label>Ems Agency:</label>
                                     <input type="text" class="form-control"  ng-model="patient.emsAgency" name="emsAgency" placeholder="Enter EmsAgency"  required>
-                                    <div class="error-container" ng-show="myForm.emsAgency.$dirty && myForm.emsAgency.$invalid">
+                                    <span class="error-container" ng-show="myForm.emsAgency.$dirty && myForm.emsAgency.$invalid">
                                       <span style="color:red" ng-show="myForm.emsAgency.$error.required">Please Enter EmsAgency</span>
-                                     </div><br>
-                                      </td>
-								</tr>
-								 <tr>                              
-                                 <td class="col-md-4">
-                                 <label>Medical  Facility:</label>
+                                     </span><br><br>
+                                      </div>
+								</div>
+								 <div class="col-md-12">                              
+                                 <div class="col-md-4">
+                                 <label>Medical Facility:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.medicalFacility" name="medicalFacility" placeholder="Enter MedicalFacility"  required>
-                                    <div class="error-container" ng-show="myForm.medicalFacility.$dirty && myForm.medicalFacility.$invalid">
+                                    <span class="error-container" ng-show="myForm.medicalFacility.$dirty && myForm.medicalFacility.$invalid">
                                        <span style="color:red" ng-show="myForm.medicalFacility.$error.required">Please Enter MedicalFacility</span>
-                                         </div><br>
-                                         </td>
-                                         
-                                         
-                                         
-                                         
-                                          <td class="col-md-4">
-                                    <label>Local   Report  Number2:</label>
+                                         </span><br><br>
+                                     </div>
+                                   <div class="col-md-4">
+                                    <label>Local Report Number2:</label>
                                     <input tyep="text" class="form-control"  ng-model="patient.localReportNumber2" name="localReportNumber2" placeholder="Enter LocalReportNumber2"  required>
-                                    <div class="error-container" ng-show="myForm.localReportNumber2.$dirty && myForm.localReportNumber2.$invalid">
+                                    <span class="error-container" ng-show="myForm.localReportNumber2.$dirty && myForm.localReportNumber2.$invalid">
                                      <span style="color:red" ng-show="myForm.localReportNumber2.$error.required">Please Enter LocalReportNumber2</span>
-                                   </div><br>
-                                  </td>
-                                  
-                                  
-                                  
-                                   <td class="col-md-4">
-                                 
-                                 <label>Unit    InError1:</label>
+                                   </span><br><br>
+                                  </div>
+                                  <div class="col-md-4">
+                                 	<label>Unit InError1:</label>
                                     <input type="text" class="form-control"  ng-model="patient.unitInError1" name="unitInError1" placeholder="Enter UnitInError1"  required>
-                                    <div class="error-container" ng-show="myForm.unitInError1.$dirty && myForm.unitInError1.$invalid">
+                                    <span class="error-container" ng-show="myForm.unitInError1.$dirty && myForm.unitInError1.$invalid">
                                       <span style="color:red" ng-show="myForm.unitInError1.$error.required">Please Enter UnitInError1</span>
-                                     </div><br>
-                                      </td>
-								</tr>
-								 <tr>                              
-                                 <td class="col-md-4">
-                                 <label>Unit  Number1:</label>
+                                     </span><br><br>
+                                      </div>
+								</div>
+								 <div class="col-md-12">                              
+                                 <div class="col-md-4">
+                                 <label>Unit Number1:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.unitNumber1" name="unitNumber1" placeholder="Enter UnitNumber1"  required>
-                                    <div class="error-container" ng-show="myForm.unitNumber1.$dirty && myForm.unitNumber1.$invalid">
+                                    <span class="error-container" ng-show="myForm.unitNumber1.$dirty && myForm.unitNumber1.$invalid">
                                        <span style="color:red" ng-show="myForm.unitNumber1.$error.required">Please Enter UnitNumber1</span>
-                                         </div><br>
-                                         </td>
-                                         
-                                         
-                                         
-                                         
-                                          <td class="col-md-4">
-                                    <label>Owner   Name:</label>
+                                         </span><br><br>
+                                     </div>
+                                    <div class="col-md-4">
+                                    <label>Owner Name:</label>
                                     <input tyep="text" class="form-control"  ng-model="patient.ownerName" name="ownerName" placeholder="Enter OwnerName"  required>
-                                    <div class="error-container" ng-show="myForm.ownerName.$dirty && myForm.ownerName.$invalid">
+                                    <span class="error-container" ng-show="myForm.ownerName.$dirty && myForm.ownerName.$invalid">
                                      <span style="color:red" ng-show="myForm.ownerName.$error.required">Please Enter OwnerName</span>
-                                   </div><br>
-                                  </td>
-                                  
-                                  
-                                  
-                                   <td class="col-md-4">
-                                 
-                                 <label>Owner  Phone Number:</label>
+                                   </span><br><br>
+                                  </div>
+                                  <div class="col-md-4">
+	                                 <label>Owner Phone Number:</label>
                                     <input type="text" class="form-control"  ng-model="patient.ownerPhoneNumber" name="ownerPhoneNumber" placeholder="Enter OwnerPhoneNumber"  required>
-                                    <div class="error-container" ng-show="myForm.ownerPhoneNumber.$dirty && myForm.ownerPhoneNumber.$invalid">
+                                    <span class="error-container" ng-show="myForm.ownerPhoneNumber.$dirty && myForm.ownerPhoneNumber.$invalid">
                                       <span style="color:red" ng-show="myForm.ownerPhoneNumber.$error.required">Please Enter OwnerPhoneNumber</span>
-                                     </div><br>
-                                      </td>
-								</tr>
-								 <tr>                              
-                                 <td class="col-md-4">
-                                 <label>Damage   Scale:</label>
+                                     </span><br><br>
+                                      </div>
+								</div>
+								 <div class="col-md-12">                              
+                                 <div class="col-md-4">
+                                 <label>Damage Scale:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.damageScale" name="damageScale" placeholder="Enter DamageScale"  required>
-                                    <div class="error-container" ng-show="myForm.damageScale.$dirty && myForm.damageScale.$invalid">
+                                    <span class="error-container" ng-show="myForm.damageScale.$dirty && myForm.damageScale.$invalid">
                                        <span style="color:red" ng-show="myForm.damageScale.$error.required">Please Enter DamageScale</span>
-                                         </div><br>
-                                         </td>
-                                         
-                                         
-                                         
-                                         
-                                          <td class="col-md-4">
-                                    <label>Proof Of  Insurance:</label>
+                                         </span><br><br>
+                                         </div>
+                                    <div class="col-md-4">
+                                    <label>Proof Of Insurance:</label>
                                     <input tyep="text" class="form-control"  ng-model="patient.proofOfInsurance" name="proofOfInsurance" placeholder="Enter proofOfInsurance"  required>
-                                    <div class="error-container" ng-show="myForm.proofOfInsurance.$dirty && myForm.proofOfInsurance.$invalid">
+                                    <span class="error-container" ng-show="myForm.proofOfInsurance.$dirty && myForm.proofOfInsurance.$invalid">
                                      <span style="color:red" ng-show="myForm.proofOfInsurance.$error.required">Please Enter ProofOfInsurance</span>
-                                   </div><br>
-                                  </td>
-                                  
-                                  
-                                  
-                                   <td class="col-md-4">
-                                 
-                                 <label>Insurance  Company:</label>
+                                   </span><br><br>
+                                  </div>
+                                  <div class="col-md-4">
+	                                 <label>Insurance Company:</label>
                                     <input type="text" class="form-control"  ng-model="patient.insuranceCompany" name="insuranceCompany" placeholder="Enter InsuranceCompany"  required>
-                                    <div class="error-container" ng-show="myForm.insuranceCompany.$dirty && myForm.insuranceCompany.$invalid">
+                                    <span class="error-container" ng-show="myForm.insuranceCompany.$dirty && myForm.insuranceCompany.$invalid">
                                       <span style="color:red" ng-show="myForm.insuranceCompany.$error.required">Please Enter InsuranceCompany</span>
-                                     </div><br>
-                                      </td>
-								</tr>
-								 <tr>                              
-                                 <td class="col-md-4">
-                                 <label>Policy  Number:</label>
+                                     </span><br><br>
+                                      </div>
+								</div>
+								 <div class="col-md-12">                              
+                                 <div class="col-md-4">
+                                 <label>Policy Number:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.policyNumber" name="policyNumber" placeholder="Enter PolicyNumber"  required>
-                                    <div class="error-container" ng-show="myForm.policyNumber.$dirty && myForm.policyNumber.$invalid">
+                                    <span class="error-container" ng-show="myForm.policyNumber.$dirty && myForm.policyNumber.$invalid">
                                        <span style="color:red" ng-show="myForm.policyNumber.$error.required">Please Enter PolicyNumber</span>
-                                         </div><br>
-                                         </td>
-                                         
-                                   <td class=" col-md-4">
-                                 <label>Select Caller:</label>
-                                           <div class="col-md-12 input-group">
-                           <select class="form-control" ng-model="patient.callerId" name="callerId" id="callerId" ng-options="staffs.id as staffs.firstName for staffs in staff">
-  							  <option value="">-- Select Caller --</option>
-                                      </select>   
-                           </div>
+                                         </span><br>
+                                         </div>
+                                  <div class=" col-md-4">
+                                	<label>Select Caller:</label>
+                           			<select class="form-control" ng-model="patient.callerId" name="callerId" id="callerId" ng-options="staffs.id as staffs.firstName for staffs in staff">
+  							 		 <option value="">-- Select Caller --</option>
+                                     </select>
                                      <br>
-                                      </td>
+                                  </div>
                                   
-                  <td class=" col-md-4">
+                  			<div class=" col-md-4">
                                  <label>Select Doctor:</label>
-                                        <div class="col-md-12 input-group">
-                           <select class="form-control" ng-model="patient.doctorId" name="doctorId" id="doctorId" ng-options="doctors.id as doctors.doctorName for doctors in doctor">
-  							  <option value="">-- Select Doctor --</option>
-                                      </select>   
-                           </div>
+		                           <select class="form-control" ng-model="patient.doctorId" name="doctorId" id="doctorId" ng-options="doctors.id as doctors.doctorName for doctors in doctor">
+		  							  <option value="">-- Select Doctor --</option>
+		                             </select> 
                                      <br>
-                                      </td>
-                         </tr>
-								
-                        </tbody>
-                    </table></div>
+                                      </div>
+                         </div>
+						
+                   </div>
 			</div>
 			<div class="text-right" style="margin-right:30px;">
 				<a class="btn btn-success" ng-click="updatePatient()" ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid'>Save Changes</a>

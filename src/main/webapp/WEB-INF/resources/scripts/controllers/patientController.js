@@ -145,16 +145,15 @@ $("#file").val("");
 	{
 		var doUpdate=requestHandler.postRequest('Staff/updatePatients.json',$scope.patients).then(function(response) {
 			$("#assignCallerModel").modal("hide");
-			
+			$('.modal-backdrop').hide();
 		});
 		
 		doUpdate.then(function(){
-            $scope.errorMessage="You have Successfully Assigned!";
-        	$scope.isError=0;
-        	$scope.isSuccess=1;
-			requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
-			     $scope.patientss= response.data.patientsForms;
-			     });
+			successMessageService.setMessage("You have Successfully Assigned!");
+            successMessageService.setIsError(0);
+            successMessageService.setIsSuccess(1);
+        	$state.reload("dashboard.patient");
+			
 		});
 		
 		
@@ -183,17 +182,15 @@ $("#file").val("");
 	{
 		var doUpdate=requestHandler.postRequest('Staff/updatePatients.json',$scope.patients).then(function(response) {
 			$("#assignDoctorModel").modal("hide");
-			
+			$('.modal-backdrop').hide();
 		});
 		
 		doUpdate.then(function(){
 			$("#assignDoctorModel").modal("hide");
-			$scope.errorMessage="You have Successfully Assigned!";
-        	$scope.isError=0;
-        	$scope.isSuccess=1;
-			requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
-			     $scope.patients= response.patientsForms;
-			     });
+        	successMessageService.setMessage("You have Successfully Assigned!");
+            successMessageService.setIsError(0);
+            successMessageService.setIsSuccess(1);
+			$state.reload("dashboard.patient");
 		});
 		
 		
@@ -204,7 +201,7 @@ $("#file").val("");
 
 adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader,requestHandler,$state) {
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://192.168.1.236:8086/Injury/Staff/addPatientFromFile.json',
+        url: 'http://192.168.1.122:8081/Injury/Staff/addPatientFromFile.json',
         queueLimit: 1
     });
     

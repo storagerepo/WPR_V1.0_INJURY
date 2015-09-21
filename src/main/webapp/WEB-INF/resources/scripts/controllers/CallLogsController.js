@@ -1,6 +1,11 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule']);
-adminApp.controller('showCallLogsController', function($scope,$http,$location,$stateParams,$state,requestHandler) {
-	 
+adminApp.controller('showCallLogsController', function($scope,$http,$location,$stateParams,$state,requestHandler,successMessageService) {
+	$scope.errorMessage=successMessageService.getMessage();
+	$scope.isError=successMessageService.getIsError();
+	$scope.isSuccess=successMessageService.getIsSuccess();
+    successMessageService.reset();
+	
+	$("#calllogsModel").modal("hide");
 	 $scope.sort = function(keyname){
 	        $scope.sortKey = keyname;   //set the sortKey to the param passed
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
@@ -36,8 +41,10 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		  if(confirm("Are you sure to delete CallLogs ?")){
 			  requestHandler.deletePostRequest("Staff/deleteCallLogs.json?id=",id)
 			  .success(function(response){
-			 
-				  $state.reload('dashboard/Calllogs');
+				  successMessageService.setMessage("You have Successfully Deleted!");
+		          successMessageService.setIsError(0);
+		          successMessageService.setIsSuccess(1); 
+				  $state.transitionTo($state.current, $stateParams, { reload: true, inherit: true, notify: true });
 			 
 			  });
 		  }
@@ -62,13 +69,15 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		$scope.options=true;
 		$scope.save=function()
 		{
-			
-			
-			  requestHandler.postRequest("Staff/saveUpdateCallLogs.json",$scope.calllogs)
+			$("#calllogsModel").modal("hide");
+			$('.modal-backdrop').hide();
+			requestHandler.postRequest("Staff/saveUpdateCallLogs.json",$scope.calllogs)
 				.then(function(response)
-						{
-					$("#calllogsModel").modal("hide");
-					 $state.reload("dashboard/Calllogs");
+					{
+					successMessageService.setMessage("You have Successfully Added!");
+			          successMessageService.setIsError(0);
+			          successMessageService.setIsSuccess(1); 
+					$state.transitionTo($state.current, $stateParams, { reload: true, inherit: true, notify: true });
 					});
 			
 		};
@@ -85,6 +94,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		
 		requestHandler.getRequest("Staff/getCallLogs.json?id="+id,"").then( function(response) {
 		    $scope.calllogs=response.data.callLogsForm;
+		    $('#timeStamp').data("DateTimePicker").setDate($scope.calllogs.timeStamp);
 		    $("#calllogsModel").modal("show");
 		});
 		
@@ -97,12 +107,14 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	
 	
 	  $scope.update=function(){
-		  
-		  requestHandler.postRequest("Staff/saveUpdateCallLogs.json",$scope.calllogs).then(function (status) {
 		  $("#calllogsModel").modal("hide");
-		  $state.reload("dashboard.Calllogs:"+$stateParams.id);
-		  
-	      });
+		  $('.modal-backdrop').hide();
+		  requestHandler.postRequest("Staff/saveUpdateCallLogs.json",$scope.calllogs).then(function (status) {
+			  successMessageService.setMessage("You have Successfully Updated!");
+	          successMessageService.setIsError(0);
+	          successMessageService.setIsSuccess(1); 
+			 $state.transitionTo($state.current, $stateParams, { reload: true, inherit: true, notify: true });
+			});
 	 
 	};
 	
@@ -120,13 +132,15 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	$scope.saveAppointments=function()
 	{
 
-		
+		$("#AppointmentsModal").modal("hide");
+		  $('.modal-backdrop').hide();
 		  requestHandler.postRequest("Staff/saveUpdateAppointments.json",$scope.Appointments)
 			.then(function(response)
 					{
-				
-				$("#AppointmentsModal").modal("hide");
-				 $state.reload("/dashboard/Calllogs/"+$stateParams.id);
+				successMessageService.setMessage("You have Successfully Added!");
+		          successMessageService.setIsError(0);
+		          successMessageService.setIsSuccess(1); 
+				$state.transitionTo($state.current, $stateParams, { reload: true, inherit: true, notify: true });
 				});
 		};
 	

@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-lg-12">
     <a ui-sref="dashboard.patient" class="btn-sm btn-primary pull-right margin-top-40 btn-margin-left">Back to Patient</a>
-	<a class="btn-sm btn-primary pull-right margin-top-40 margin-left-5 btn-margin-left" ng-click="addModel()">Add Call Logs</a>
+	<a ng-click="addModel()" href="" class="btn-sm btn-primary pull-right margin-top-40 margin-left-5 btn-margin-left">Add Call Logs</a>
 	 	<h2 class="page-header" >Call Logs<br></h2>
 	 	<h4>Patient Name: {{patient.name}} | PhoneNumber&nbsp;-&nbsp;{{patient.phoneNumber}} |  	 <a ng-click="viewPatients(patient.id)" class="btn btn-xs btn-primary"><i
 								class="glyphicon glyphicon-eye-open"></i>&nbsp; View More Details
@@ -15,6 +15,7 @@
 </div>
 <!-- /.row -->
 <div class="row">
+<errordisplay message="errorMessage" error="isError" success="isSuccess"></errordisplay>
     <div class="col-lg-12">
             <!-- /.panel-heading -->
             <div class="col-md-12">
@@ -41,7 +42,7 @@
 				<td>{{callLogss.timeStamp}}</td>
 				<td>{{callLogss.response}}</td>
 				<td>{{callLogss.notes}}</td>
-				<td><a  type="submit" title="" class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs" ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
+				<td><a  type="submit" title="" class="btn btn-xs btn-primary hint--top" data-hint="View Appointment" ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
 				 <a type="submit" class="btn btn-xs btn-warning hint--top" data-hint="Edit Call Logs" ng-click="editModal(callLogss.id,callLogss.appointmentId)">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;</a>
 				<a href="#" ng-click="deleteCalllogs(callLogss.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Call Logs">&nbsp;<i class="glyphicon glyphicon-trash" ></i>&nbsp; </a>
 				<a ng-click="addAppointment(callLogss.id)" class="btn btn-xs btn-success hint--top"  data-hint="Add Appointment">&nbsp;<i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
@@ -103,9 +104,9 @@
              
       </div>
       <div class="modal-footer">
-        <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
-             <a type="submit" class="btn btn-success" ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-show="options" ng-click="save()">Save</a>
-             <a type="submit" class="btn btn-success" ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-show='!options' ng-click="update()">update</a> 
+        <button class="btn btn-danger" data-dismiss="modal">Close</button>
+             <button type="button" class="btn btn-success" data-dismiss="modal" ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-show="options" ng-click="save()">Save</button>
+             <button type="button" class="btn btn-success" data-dismiss="modal" ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-show='!options' ng-click="update()">update</button> 
               
       </div>
     </div>
@@ -146,8 +147,8 @@
         </div>
        
         <div class="modal-footer">
-         <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
-             <a type="submit" class="btn btn-success" ng-class="{'button-disable':myForms.$invalid}" ng-disabled='myForms.$invalid' ng-click="saveAppointments()">Save</a>
+         <button class="btn btn-danger" data-dismiss="modal">Close</button>
+             <button class="btn btn-success" data-dismiss="modal" ng-class="{'button-disable':myForms.$invalid}" ng-disabled='myForms.$invalid' ng-click="saveAppointments()">Save</button>
         </div>
       </div>
       
@@ -163,7 +164,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">View Appointments</h4>
+          <h4 class="modal-title">View Appointment</h4>
         </div>
         <div class="modal-body">
                      <table class="table table-hover">
@@ -322,7 +323,7 @@
 </div>
     
     
-     <script>
+ <script>
 $('#timeStamp').datetimepicker({
 			pickTime : true,
 			format:'MM/DD/YYYY HH:mm:ss',

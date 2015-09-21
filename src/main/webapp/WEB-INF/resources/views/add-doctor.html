@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="resources/components/datetime/datetimepicker.css"></link>
-            <script src="resources/components/datetime/moment.js"></script>
-             <script src="resources/components/datetime/datetimepicker.js"></script>
+<script src="resources/components/datetime/datetimepicker.js"></script>
+<script src="resources/components/datetime/moment.js"></script>
+
 <div class="row">
     <div class="col-lg-12">
         <a ui-sref="dashboard.doctor" class="btn-sm btn-primary pull-right margin-top-40">Back to the list</a>
@@ -20,66 +21,66 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <div class="dataTable_wrapper">
-                    <table class="col-md-12">
-                        <tbody>
-                            <tr>
-                                <td class="col-md-6">
+                    <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label>Clinic Name</label>
                                     <input type="text" name="clinicName" class="form-control" ng-model="doctor.clinicName" placeholder="Enter ClinicName" required>
                                     <span class="error-container" ng-show="myForm.clinicName.$dirty && myForm.clinicName.$invalid">
                                 <span style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter the ClinicName</span>
-                              </span>
-                                    <br/>
-                                    
+                              </span><br>
+                                 </div>   
+                                 <div class="col-md-6">
                                      <label>Doctor Name</label>
                                     <input type="text" name="doctorName" class="form-control" ng-model="doctor.doctorName" placeholder="Enter DoctorName" required>
                                     <span class="error-container" ng-show="myForm.doctorName.$dirty && myForm.doctorName.$invalid">
                                 <span style="color:red" ng-show="myForm.doctorName.$error.required">Please Enter the Doctor Name</span>
-                              </span>
-                                    <br/>
-                                    
-                                    
-                                  <label>Address</label>
+                              </span><br>
+                               </div>
+                           </div>
+                           <div class="col-md-12">
+                           <div class="col-md-6">
+                               <label>Address</label>
                                     <input type="text" name="address" class="form-control" ng-model="doctor.address" placeholder="Enter Address" required>
                                     <span class="error-container" ng-show="myForm.address.$dirty && myForm.address.$invalid">
                                 <span style="color:red" ng-show="myForm.address.$error.required">Please Enter the Address</span>
-                              </span>
-                                    <br/>
-                      <label>City</label>
+                              </span><br/>
+                              </div>
+                            <div class="col-md-6">
+                      			<label>City</label>
                                     <input type="text" name="city" class="form-control" ng-model="doctor.city" placeholder="Enter City" required>
                                     <span class="error-container" ng-show="myForm.city.$dirty && myForm.city.$invalid">
                                 <span style="color:red" ng-show="myForm.city.$error.required">Please Enter the City</span>
                               </span>
-                                    <br/>
-                                    
+                                    <br/></div>
+                                 </div>
+                                 <div class="col-md-12">  
+                                 <div class="col-md-6">
                                     <label>Country</label>
-                                        <div class="col-md-12 input-group">
-                           <select class="form-control" ng-model="doctor.country" name="country" id="country" required>
+                           <select class="form-control" ng-init="doctor.country='United States'" ng-model="doctor.country" name="country" id="country" required>
   							  <option value="">-- Select Country --</option>
-  							  <option value="UnitedStates">United States</option>
-                              
-                                      </select>
-                                        <span class="error-container" ng-show="myForm.country.$dirty && myForm.country.$invalid">
-                              
-                                       <span style="color:red" ng-show="myForm.country.$error.required">Please Select the Country</span>
-                                     </span>  
-                           </div><br>
+  							  <option value="United States">United States</option>
+                              	</select>
+                             <span class="error-container" ng-show="myForm.country.$dirty && myForm.country.$invalid">
+                              				<span style="color:red" ng-show="myForm.country.$error.required">Please Select the Country</span>
+                                     </span>
+                           <br>
+                           </div>
+                           <div class="col-md-6">
                                  <label>State</label>
-                                        <div class="col-md-12 input-group">
-                           <select class="form-control" ng-model="doctor.state" name="state" id="state" required>
+                           <select class="form-control" ng-init="doctor.state='Ohio'" ng-model="doctor.state" name="state" id="state" required>
   							  <option value="">-- Select State --</option>
   							  <option value="Ohio">Ohio</option>
-                              
-                                      </select>   
-                              <span class="error-container" ng-show="myForm.state.$dirty && myForm.state.$invalid">
+                              </select> 
+                             <span class="error-container" ng-show="myForm.state.$dirty && myForm.state.$invalid">
                               
                                        <span style="color:red" ng-show="myForm.state.$error.required">Please Select the State</span>
-                              </span>        
+                              </span>  
+                           <br>
                            </div>
-                                </td>
-                                <td class="col-md-6">
+                           </div>
+                         <div class="col-md-12">
+                         <div class="col-md-6">
                                <label>County</label>
-                                        <div class="col-md-12 input-group">
                            <select class="form-control" ng-model="doctor.county" name="county" id="county" required>
   							  <option value="">-- Select County --</option>
   							  <option value="Adams">Adams</option>
@@ -170,35 +171,40 @@
                                 <option value="Williams">Williams</option>
                                 <option value="Wood">Wood</option>
                                 <option value="Wyandot">Wyandot</option>
-                                
-                                      </select>  
-                            </div>
+                                </select>
                             <span class="error-container" ng-show="myForm.county.$dirty && myForm.county.$invalid">
                               
                                        <span style="color:red" ng-show="myForm.county.$error.required">Please Select the County</span>
                                        </span>
                                      <br>
-                                    
-                                     <label>Zip</label>
+                              </div>
+                                <div class="col-md-6">
+                                <label>Zip</label>
                                     <input type="text" name="zip" class="form-control" ng-model="doctor.zip" placeholder="Enter Zip" required maxlength="5">
                                     <span class="error-container" ng-show="myForm.zip.$dirty && myForm.zip.$invalid">
                                 <span style="color:red" ng-show="myForm.zip.$error.required">Please Enter the Zip</span>
                               </span>
-                                    <br/>
+                                    <br/></div>
+                              </div>
+                              <div class="col-md-12">
+                              <div class="col-md-6">
                                    <label>Office Number</label>
                                     <input type="text" name="officeNumber" class="form-control" ng-model="doctor.officeNumber" placeholder="Enter Office Number" required>
                                     <span class="error-container" ng-show="myForm.officeNumber.$dirty && myForm.officeNumber.$invalid">
                                 <span style="color:red" ng-show="myForm.officeNumber.$error.required">Please Enter the Office Number</span>
                               </span>
-                                    <br/>
+                                    <br/></div>
+                                   <div class="col-md-6">
                                     <label>Fax Number</label>
                                     <input type="text" name="faxNumber" class="form-control" ng-model="doctor.faxNumber" placeholder="Enter Fax Number">
                                     <br/>
-                                    
+                                    </div>
+                              </div>
+                              <div class="col-md-12">
                                     <div class="col-md-6" >
                                         <label>Choose Weekly Workingday</label>
                                             
-                                                   <div style="width:120%; height: 50px;background: #fff;border:1px solid #ccc;border-radius:4px;padding: 3px 0px 0px 3px;">
+                                                   <div style="width:80%; height: 40px;background: #fff;border:1px solid #ccc;border-radius:4px;padding: 3px 0px 0px 3px;">
                                             <table class="table" style="table-layout: fixed;width: 99%">
                                                 <tr>
                                                 	<td style="padding: 0px;border:none;width: 14.3%;line-height: 15px">Sun<span id = "sun"class="holiday-check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i ng-show="sun" class="fa fa-times fa-fw" style="color:#CC0000" ng-click="addWorkingDays(0)"></i><i ng-hide="sun" class="fa fa-check fa-fw" style="color:green" ng-click="removeWorkingDays(0)"></i></span></td>
@@ -213,60 +219,50 @@
                                             </table>
 										</div>
                                         <span class="error-text"></span>
-                                    </div>                             
-                           
- <br/><br/><br/>  <br/>                  
-                 <div class="col-md-5">
+                                    </div>
+ 			<div class="col-md-6">          
+                 <div class="col-md-6 whole-div">
                                     <label>Office Hours Start Time</label>
-                                    <div class="input-group">
-                             <input type="text" style="width:150px; "name="officeHoursFromTime" id="officeHoursFromTime" class="form-control"  ng-model="doctor.officeHoursFromTime" placeholder="Enter OfficeHoursFromTime" required>
+                               <div class="input-group">
+                             <input type="text" style="" name="officeHoursFromTime" id="officeHoursFromTime" class="form-control"  ng-model="doctor.officeHoursFromTime" placeholder="Enter Start Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.officeHoursFromTime.$dirty && myForm.officeHoursFromTime.$invalid">
                                 <span style="color:red" ng-show="myForm.officeHoursFromTime.$error.required">Please Enter the Start Time</span>
                               </span> 
                            </div>
-                               <div class="col-md-5" >
+                               <div class="col-md-6">
                                     <label>Office Hours End Time</label>
                                     <div class="input-group">
-                             <input type="text" style="width:150px;" name="officeHoursToTime" id="officeHoursToTime" class="form-control"  ng-model="doctor.officeHoursToTime" placeholder="Enter OfficeHoursToTime" required>
+                             <input type="text" style="" name="officeHoursToTime" id="officeHoursToTime" class="form-control"  ng-model="doctor.officeHoursToTime" placeholder="Enter End Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.officeHoursToTime.$dirty && myForm.officeHoursToTime.$invalid">
                                 <span style="color:red" ng-show="myForm.officeHoursToTime.$error.required">Please Enter the End Time</span>
-                              </span>
+                              </span><br>
                               </div>
-                                  </td>
-                            </tr>
-                            
-                            <tr>
-                                <td class="col-md-12" colspan="2"><br/>
+                         </div>
+                        </div>
+                            <div class="col-md-12">
+                            <div class="col-md-12">
                                     <label>Direction</label>
                                      <textarea class="form-control height-100" ng-model="doctor.direction" name="direction" placeholder="Enter Direction" required> </textarea>
                                
                                     <span class="error-container" ng-show="myForm.direction.$dirty && myForm.direction.$invalid">
                                 <span style="color:red" ng-show="myForm.direction.$error.required">Please Enter the Direction</span>
-                              </span>
-                                   
-                                </td>
-                               
-                                
-                            </tr>
-                            <tr>
-                                <td class="col-md-12" colspan="2"><br/>
+                              </span><br>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                            <div class="col-md-12">
                                     <label>Notes</label>
                                      <textarea class="form-control height-100" ng-model="doctor.notes" name="notes" placeholder="Enter Notes" required> </textarea>
                                
                                     <span class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">
                                 <span style="color:red" ng-show="myForm.notes.$error.required">Please Enter the Notes</span>
                               </span>
-                                   
-                                </td>
-                               
-                                
-                            </tr>
-                        </tbody>
-                    </table>
+                              </div>
+                             </div>
                 </div>
             </div>
             <div class="text-right" style="margin-right:30px;">
@@ -287,14 +283,12 @@
  border-bottom: 1px solid green;
 }
 </style>
-
  <script>
 $('#officeHoursFromTime').datetimepicker({
 			pickTime : true,
 			pickDate:false,
 			format:'HH:mm'
-			
-		});
+	});
 $('#officeHoursToTime').datetimepicker({
 	pickTime : true,
 	pickDate:false,

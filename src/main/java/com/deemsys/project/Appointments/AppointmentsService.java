@@ -60,7 +60,7 @@ public class AppointmentsService {
 		
 		for (Appointments appointments : appointmentss) {
 			//TODO: Fill the List
-			AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
+			AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),InjuryConstants.convertMonthFormat(appointments.getScheduledDate()), appointments.getNotes(), appointments.getStatus());
 			appointmentsForms.add(appointmentsForm);
 		}
 		
@@ -77,7 +77,7 @@ public class AppointmentsService {
 		//TODO: Convert Entity to Form
 		//Start
 		
-		AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
+		AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),InjuryConstants.convertMonthFormat(appointments.getScheduledDate()), appointments.getNotes(), appointments.getStatus());
 			
 		//End
 		
@@ -94,7 +94,7 @@ public class AppointmentsService {
 		Patients patients = new Patients();
 		patients.setId(appointmentsForm.getPatientId());
 		
-		Appointments appointments=new Appointments(patients,new Date(),appointmentsForm.getNotes(), appointmentsForm.getStatus(), null);
+		Appointments appointments=new Appointments(patients,InjuryConstants.convertYearFormat(appointmentsForm.getScheduledDate()),appointmentsForm.getNotes(), appointmentsForm.getStatus(), null);
 		appointments.setId(appointmentsForm.getId());
 		//Logic Ends
 		
@@ -113,7 +113,7 @@ public class AppointmentsService {
 		Patients patients = new Patients();
 		patients.setId(appointmentsForm.getPatientId());
 		
-		Appointments appointments=new Appointments(patients,new Date(), appointmentsForm.getNotes(), 0, null);
+		Appointments appointments=new Appointments(patients,InjuryConstants.convertYearFormat(appointmentsForm.getScheduledDate()), appointmentsForm.getNotes(), 0, null);
 		
 		//Logic Ends
 		
@@ -149,7 +149,7 @@ public class AppointmentsService {
 		Patients patients = new Patients();
 		patients.setId(appointmentsForm.getPatientId());
 		
-		Appointments appointments=new Appointments(patients,new Date(), appointmentsForm.getNotes(), appointmentsForm.getStatus(), null);
+		Appointments appointments=new Appointments(patients,InjuryConstants.convertYearFormat(appointmentsForm.getScheduledDate()), appointmentsForm.getNotes(), appointmentsForm.getStatus(), null);
 		appointments.setId(appointmentsForm.getId());
 		
 		

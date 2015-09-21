@@ -32,21 +32,21 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 			  if($scope.response==true)
 				  {
 				  successMessageService.setMessage("You have Successfully Enabled!");
-					 successMessageService.setIsError(0);
-			          successMessageService.setIsSuccess(1);
-			          requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
-					    	 $scope.staffs= results.data.staffForms;
-					     });
+		          successMessageService.setIsError(0);
+		          successMessageService.setIsSuccess(1);  
+		          $("#disableStaff").modal("hide");
+		          $('.modal-backdrop').hide();
+		          	$state.reload('dashboard.staff');;
 
 				  }
 			  if($scope.response==false)
 			  {
-			  successMessageService.setMessage("You have Successfully Disabled!");
-				 successMessageService.setIsError(0);
-		          successMessageService.setIsSuccess(1);
-		          requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
-				    	 $scope.staffs= results.data.staffForms;
-				     });
+				  successMessageService.setMessage("You have Successfully Disabled!");
+		          successMessageService.setIsError(0);
+		          successMessageService.setIsSuccess(1); 
+		          $("#disableStaff").modal("hide");
+		          $('.modal-backdrop').hide();
+		          $state.reload('dashboard.staff');
 
 			  }
     	     });
@@ -65,21 +65,21 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 			  if($scope.result==true)
 				  {
 				  successMessageService.setMessage("You have Successfully Enabled!");
-					 successMessageService.setIsError(0);
-			          successMessageService.setIsSuccess(1);
-			          requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
-					    	 $scope.staffs= results.data.staffForms;
-					     });
+		          successMessageService.setIsError(0);
+		          successMessageService.setIsSuccess(1);
+		          $("#enableStaff").modal("hide");
+		          $('.modal-backdrop').hide();
+		          $state.reload('dashboard.staff');
 
 				  }
 			  if($scope.result==false)
 			  {
-			  successMessageService.setMessage("You have Successfully Disabled!");
-				 successMessageService.setIsError(0);
-		          successMessageService.setIsSuccess(1);
-		          requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
-				    	 $scope.staffs= results.data.staffForms;
-				     });
+				  successMessageService.setMessage("You have Successfully Disabled!");
+		          successMessageService.setIsError(0);
+		          successMessageService.setIsSuccess(1); 
+		          $("#enableStaff").modal("hide");
+		          $('.modal-backdrop').hide();
+		          $state.reload('dashboard.staff');
 
 			  }
     	     });

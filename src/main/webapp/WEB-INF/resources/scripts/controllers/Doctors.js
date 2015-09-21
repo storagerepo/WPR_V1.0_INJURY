@@ -203,6 +203,9 @@ adminApp.controller('EditDoctorController', function($scope,$http,$location,$sta
 				}
 		 }
 		$scope.doctor.workingDays= $scope.workingDays;
+
+		$('#officeHoursFromTime').data("DateTimePicker").setDate($scope.doctor.officeHoursFromTime);
+		$('#officeHoursToTime').data("DateTimePicker").setDate($scope.doctor.officeHoursToTime);
 	});
 	
 	$scope.addWorkingDays=function(value){

@@ -8,16 +8,14 @@
  */
 var adminApp=angular.module('sbAdminApp',['requestModule']);
 adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$rootScope) {
-	
-		   if($rootScope.isAdmin){
-			   requestHandler.getRequest("Admin/getNoOfStaffs.json","").then( function(response) {
-				     $scope.staff= response.data.staffForms;
-				     
-				     $scope.numberStaff=$scope.staff;
-				     
-				     });
-				
-					requestHandler.getRequest("Staff/getNoOfDoctors.json","").then( function(response) {
+	requestHandler.getRequest("Staff/getNoOfStaffs.json","").then( function(response) {
+	     $scope.staff= response.data.staffForms;
+	     
+	     $scope.numberStaff=$scope.staff;
+	     
+	     });
+		if($rootScope.isAdmin){
+			   	requestHandler.getRequest("Staff/getNoOfDoctors.json","").then( function(response) {
 				     $scope.doctors= response.data.doctorsForms;
 				     
 				     $scope.numberDoctors=$scope.doctors;
@@ -60,37 +58,5 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 		   }
 		   
 	
-	  
-	     
-	  
-	  
-			  $scope.saveStaff=function($scope){
-				  console.log("ok");
-				  alert("sdsds");
-			};  
-			 $scope.newStaff=function($scope){
-				  console.log("ok");
-				  alert("sdsds");
-			};  
   });
 
-adminApp.controller('roleController', function($scope,$http,$location,requestHandler) {
-	 
-	  requestHandler.postRequest("Staff/getCurrentRole.json","").then(function(response) {
-	  
-	   $scope.admin=false;
-	   $scope.staff=false;
-	   if(response.data.role=="ROLE_ADMIN"){
-		   $scope.admin=true;
-		   $scope.staff=true;
-	   }
-	   else if(response.data.role=="ROLE_STAFF"){
-		   $scope.staff=true;
-	   }
-	   else{
-		   $location.path('/logout');
-	   }
-	   
-	});	
-
-});

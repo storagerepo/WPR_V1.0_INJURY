@@ -90,7 +90,7 @@ public class StaffController {
     
     
     
-    @RequestMapping(value="/Admin/getNoOfStaffs",method=RequestMethod.GET)
+    @RequestMapping(value="/Staff/getNoOfStaffs",method=RequestMethod.GET)
    	public String getNoOfStaffs(ModelMap model)
    	{
     	model.addAttribute("staffForms",staffService.getNoOfStaffs());
