@@ -28,12 +28,12 @@
                 	 <th style="width:100px!important;" ng-mousedown="sort('state')">State <span class="glyphicon sort-icon" ng-show="sortKey=='state'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             <th style="width:80px!important;" ng-mousedown="sort('county')">County <span class="glyphicon sort-icon" ng-show="sortKey=='county'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
                    	 <th style="width:80px!important;text-align:center;" colspan="2">Office Hours</th>
-             <th width="120px!important" ng-show="isAdmin">Action</th></tr>
+             <th width="120px!important">Action</th></tr>
 	           <tr>
 	           <th colspan="5"></th>
-	           <th style="width:80px!important;" ng-mousedown="sort('officeHoursFromTime')">Start Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursFromTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-	           <th style="width:100px!important;" ng-mousedown="sort('officeHoursToTime')">End Time<span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursToTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-	           <th ng-show="isAdmin"></th>
+	           <th style="width:80px!important;" ng-mousedown="sort('officeHoursFromTime')">&nbsp;Start Time<span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursFromTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+	           <th style="width:100px!important;" ng-mousedown="sort('officeHoursToTime')">|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;End Time<span class="glyphicon sort-icon" ng-show="sortKey=='officeHoursToTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+	           <th ></th>
 	           </tr>
  <tr>    
             <th>  <input type="text"  class="form-control"  ng-model="search.doctorName" placeholder="Search by Name">
@@ -50,7 +50,7 @@
  <th>  <input type="text"  class="form-control"  ng-model="search.officeHoursToTime" placeholder="Search by Office Hours To Time">
            </th>
             
-           <th ng-show="isAdmin"></th>
+           <th></th>
            </tr>
             </thead>
             
@@ -59,7 +59,7 @@
 	<tr>
 	
 		
-		<td>{{doctor.doctorName}}</td>
+		<td><a href="" ng-click="viewDoctors(doctor.id)">{{doctor.doctorName}}</td>
 <td>{{doctor.address}}</td>
 		<td>{{doctor.city}}</td>
 			<td>{{doctor.state}}</td>
@@ -67,7 +67,11 @@
 		<td>{{doctor.officeHoursFromTime}}</td>
 <td>{{doctor.officeHoursToTime}}</td>
 
-                                   <td ng-show="isAdmin"><a href="#/dashboard/EditDoctor/{{doctor.id}}" data-hint="Edit Doctor" class="btn btn-xs btn-warning hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-edit"></i></a>
+                                   <td >
+                                   <a href="" ng-click="viewDoctors(doctor.id)" class="btn btn-xs btn-primary hint--top" data-hint="View Doctor"><i
+								class="glyphicon glyphicon-eye-open"></i>
+						</a>
+                                   <a href="#/dashboard/EditDoctor/{{doctor.id}}" data-hint="Edit Doctor" class="btn btn-xs btn-warning hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-edit"></i></a>
 	<a href="#" ui-sref="dashboard.doctor" ng-mousedown="deleteDoctor(doctor.id)" data-hint="Delete Doctor" class="btn btn-xs btn-danger hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-trash"></i></a>
 	</td></tr>
 </tbody>
@@ -88,4 +92,126 @@
         <!-- /.panel -->
     </div>
     <!-- /.col-lg-12 -->
+</div>
+
+
+
+<!-- Doctors View  -->
+      <div class="modal fade" id="myModall" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Doctor Details</h4>
+      </div>
+      <div class="modal-body">
+	<table class="table table-striped table-bordered" >
+			<tr>
+					
+						<td class="col-md-3" ><b>Clinic Name</b></td>
+					<td class="col-md-3" ng-hide="doctorDetails.clinicName.length==0">{{doctorDetails.clinicName}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.clinicName.length==0">-</td>
+					
+					<td class="col-md-3"><b>Zip</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.zip.length==0">{{doctorDetails.zip}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.zip.length==0">-</td>
+						
+					
+						
+						
+			</tr>
+			
+				<tr>
+				<td class="col-md-3"><b>Doctor Name</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.doctorName.length==0">{{doctorDetails.doctorName}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.doctorName.length==0">-</td>
+			
+			<td class="col-md-3"><b>Office Number</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.officeNumber.length==0">{{doctorDetails.officeNumber}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.officeNumber.length==0">-</td>
+						
+						
+						
+				</tr>
+				<tr>
+				<td class="col-md-3"><b>Address</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.address.length==0">{{doctorDetails.address}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.address.length==0">-</td>
+			
+			
+			<td class="col-md-3"><b>Fax Number</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.faxNumber.length==0">{{doctorDetails.faxNumber}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.faxNumber.length==0">-</td>
+						
+			
+				</tr>
+				<tr>
+				<td class="col-md-3"><b>City</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.city.length==0">{{doctorDetails.city}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.city.length==0">-</td>
+			
+			<td class="col-md-3"><b>Working Days</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.workingDays.length==0">{{doctorDetails.workingDays}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.workingDays.length==0">-</td>
+									
+						
+						
+				</tr>
+				<tr>
+				<td class="col-md-3"><b>Country</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.country.length==0">{{doctorDetails.country}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.country.length==0">-</td>
+			
+			
+					
+					<td class="col-md-3"><b>Office Hours Start Time</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.officeHoursFromTime.length==0">{{doctorDetails.officeHoursFromTime}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.officeHoursFromTime.length==0">-</td>
+			
+			
+					
+							
+				</tr>
+				<tr>
+				<td class="col-md-3"><b>State</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.state.length==0">{{doctorDetails.state}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.state.length==0">-</td>
+			
+					<td class="col-md-3"><b>Office Hours End Time</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.officeHoursToTime.length==0">{{doctorDetails.officeHoursToTime}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.officeHoursToTime.length==0">-</td>
+					
+								
+				</tr>
+				<tr>
+				<td class="col-md-3"><b>County</b></td>
+					
+						<td class="col-md-3" ng-hide="doctorDetails.county.length==0">{{doctorDetails.county}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.county.length==0">-</td>
+					
+					<td colspan="2"></td>
+						
+				</tr>
+	<tr>
+<td class="col-md-3"><b>Direction</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.direction.length==0" colspan="3">{{doctorDetails.direction}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.direction.length==0" colspan="3">-</td>
+				
+</tr>
+
+
+<tr>
+<td class="col-md-3"><b>Notes</b></td>
+						<td class="col-md-3" ng-hide="doctorDetails.notes.length==0" colspan="3">{{doctorDetails.notes}}</td>
+						<td class="col-md-3" ng-show="doctorDetails.notes.length==0" colspan="3">-</td>
+	</tr>					
+			</table>
+     
+      </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+         </div>
+    </div>
+  </div>
 </div>

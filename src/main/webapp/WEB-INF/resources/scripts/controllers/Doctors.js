@@ -16,6 +16,52 @@ adminApp.controller('ShowDoctorsCtrl', function($scope,$http,$location,$state,re
          $scope.sort('doctorName');
         });
 	
+    $scope.viewDoctors=function(id)
+    {
+    	 requestHandler.getRequest("viewDoctors.json?id="+id,"").then( function(response) {
+    		 	$scope.doctorDetails=response.data.doctorsForm;
+    	
+    		$scope.workingDays="";
+    			 var workingDaysArray=$scope.doctorDetails.workingDays;
+    			
+    			 for ( var i = 0; i < workingDaysArray.length; i++) {
+    				 	if(workingDaysArray[i]==1){
+    				 		$scope.workingDays="Sun,";
+    						
+    					}
+    					else if(workingDaysArray[i]==2){
+    						$scope.workingDays=$scope.workingDays+"Mon,";
+    						
+    					}
+    					else if(workingDaysArray[i]==3){
+    						$scope.workingDays=$scope.workingDays+"Tue,";
+    		    			
+    					}
+    					else if(workingDaysArray[i]==4){
+    						$scope.workingDays=$scope.workingDays+"Wed,";
+    		    			
+    					}
+    					else if(workingDaysArray[i]==5){
+    						$scope.workingDays=$scope.workingDays+"Thu,";
+    		    			
+    					
+    					}
+    					else if(workingDaysArray[i]==6){
+    						$scope.workingDays=$scope.workingDays+"Fri,";
+    		    			
+    					}
+    					else if(workingDaysArray[i]==7){
+    						$scope.workingDays=$scope.workingDays+"Sat,";
+    		    					
+    					}
+    			 }
+    			$scope.doctorDetails.workingDays= $scope.workingDays;
+    			$scope.doctorDetails.workingDays= $scope.doctorDetails.workingDays.substring(0, $scope.doctorDetails.workingDays.length - 1);
+    			$("#myModall").modal("show");
+       	      
+         });
+    };
+    
    
     $scope.deleteDoctor=function(id)
 	  {
@@ -31,6 +77,8 @@ if(confirm("Are you sure to delete Doctor ?")){
 	}
 	}
    
+    
+ 
 });
 
 adminApp.controller('AddDoctorsCtrl', function($scope,$http,$location,$state,requestHandler,successMessageService) {
@@ -251,5 +299,6 @@ angular.module('sbAdminApp').service('successMessageService', function() {
 	    };
 
 });
+
 
 
