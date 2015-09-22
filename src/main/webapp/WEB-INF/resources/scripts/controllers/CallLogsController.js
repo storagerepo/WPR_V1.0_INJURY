@@ -144,6 +144,20 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 				});
 		};
 	
+		$scope.removeAppointment=function(id)
+		{
+			if(confirm("Are you sure to cancel appointment ?")){
+			  requestHandler.deletePostRequest("Staff/removeAppointment.json?appointmentId=",id)
+				.then(function(response)
+						{
+					successMessageService.setMessage("You have Successfully Cancelled!");
+			          successMessageService.setIsError(0);
+			          successMessageService.setIsSuccess(1); 
+					$state.transitionTo($state.current, $stateParams, { reload: true, inherit: true, notify: true });
+					});
+			}
+		};
+		
 		$scope.viewAppointments=function(id)
 		{
 		

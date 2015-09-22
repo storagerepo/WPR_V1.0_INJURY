@@ -75,7 +75,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 				  successMessageService.setMessage("You have Successfully Deleted!");
 		            successMessageService.setIsError(0);
 		            successMessageService.setIsSuccess(1);
-		            $scope.updateList();
+		            $state.reload("dashboard.patient");
 		});
 		
 		}

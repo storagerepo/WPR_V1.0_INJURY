@@ -234,11 +234,12 @@
                                <div class="col-md-6">
                                     <label>Office Hours End Time</label>
                                     <div class="input-group">
-                             <input type="text" style="" name="officeHoursToTime" id="officeHoursToTime" class="form-control"  ng-model="doctor.officeHoursToTime" placeholder="Enter End Time" required>
+                             <input type="text" style="" name="officeHoursToTime" id="officeHoursToTime" class="form-control" higher-than="doctor.officeHoursFromTime"  ng-model="doctor.officeHoursToTime" placeholder="Enter End Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.officeHoursToTime.$dirty && myForm.officeHoursToTime.$invalid">
                                 <span style="color:red" ng-show="myForm.officeHoursToTime.$error.required">Please Enter the End Time</span>
+                                <span style="color:red" ng-show="myForm.officeHoursToTime.$error.higherThan">End Time Should be greater</span>
                               </span><br>
                               </div>
                          </div>

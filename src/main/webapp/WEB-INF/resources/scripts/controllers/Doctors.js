@@ -63,19 +63,45 @@ adminApp.controller('ShowDoctorsCtrl', function($scope,$http,$location,$state,re
     };
     
    
-    $scope.deleteDoctor=function(id)
-	  {
-if(confirm("Are you sure to delete Doctor ?")){
-		  requestHandler.deletePostRequest("Admin/deleteDoctors.json?id=",id).then(function(results){
-			  successMessageService.setMessage("You have Successfully Deleted!");
-	            successMessageService.setIsError(0);
-	            successMessageService.setIsSuccess(1);
-	        
-			  $state.reload('dashboard.doctor');
-			  
+	// Delete Doctor
+	$scope.deleteDoctor=function(id)
+	{
+		
+		  if(confirm("Are you sure to delete Doctor ?")){
+			 
+			requestHandler.deletePostRequest("Admin/deleteDoctors.json?id=",id).then(function(results){
+			  $scope.value=results.data.requestSuccess;
+			  console.log($scope.value);
+			  if($scope.value==true)
+				  {
+					successMessageService.setMessage("You have Successfully Deleted!");
+			        successMessageService.setIsError(0);
+			        successMessageService.setIsSuccess(1);
+			        $state.reload('dashboard.doctor');
+				  }
+			  else
+				  {
+				  $("#deleteDoctorModal").modal("show");
+				    $scope.deleteDoctorFromPatients=function()
+				    {
+				    	requestHandler.postRequest("Admin/removeAssignedDoctors.json?id="+id).then(function(response){
+				    		
+				    		requestHandler.deletePostRequest("Admin/deleteDoctors.json?id=",id).then(function(results){
+				    			$("#deleteDoctorModal").modal("hide");
+				    			$('.modal-backdrop').hide();
+				    			 successMessageService.setMessage("You have Successfully Deleted!");
+						          successMessageService.setIsError(0);
+						          successMessageService.setIsSuccess(1);   
+								  $state.reload('dashboard.doctor');
+				    		 });
+				    		 
+							});
+				    };
+				  
+				  }
 		     });
-	}
-	}
+		  }
+	};
    
     
  
@@ -272,6 +298,26 @@ adminApp.controller('EditDoctorController', function($scope,$http,$location,$sta
 	};
 });
 
+
+adminApp.directive('higherThan',function() {
+return {
+require: "ngModel",
+scope: {
+otherModelValue: "=higherThan"
+},
+link: function(scope, element, attributes, ngModel) {
+
+ngModel.$validators.higherThan = function(modelValue) {
+	
+return modelValue > scope.otherModelValue;
+};
+
+scope.$watch("otherModelValue", function() {
+ngModel.$validate();
+});
+}
+};
+});
 
 //Service for exchange success message
 angular.module('sbAdminApp').service('successMessageService', function() {

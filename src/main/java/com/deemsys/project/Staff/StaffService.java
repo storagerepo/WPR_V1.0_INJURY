@@ -127,18 +127,20 @@ public class StaffService {
 	public int deleteStaff(Integer id)
 	{
 		List<Patients> patientss=new ArrayList<Patients>();
-		
+		int status=0;
 		patientss=staffDAO.getPatientsByStaffId(id);
 		if(patientss.size()==0)
 		{
 			
 		staffDAO.delete(id);
-		return 1;
+		status=1;
 		}
 		else
 		{
-			return 0;
+		status=0;
 		}
+		
+		return status;
 	}
 	
 	

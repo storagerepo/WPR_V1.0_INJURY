@@ -45,7 +45,8 @@
 				<td><a  type="submit" title="" class="btn btn-xs btn-primary hint--top" data-hint="View Appointment" ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
 				 <a type="submit" class="btn btn-xs btn-warning hint--top" data-hint="Edit Call Logs" ng-click="editModal(callLogss.id,callLogss.appointmentId)">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;</a>
 				<a href="#" ng-click="deleteCalllogs(callLogss.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Call Logs">&nbsp;<i class="glyphicon glyphicon-trash" ></i>&nbsp; </a>
-				<a ng-click="addAppointment(callLogss.id)" class="btn btn-xs btn-success hint--top"  data-hint="Add Appointment">&nbsp;<i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
+				<a ng-click="addAppointment(callLogss.id)" class="btn btn-xs btn-success hint--top"  data-hint="Add Appointment" ng-show="callLogss.appointmentId==null">&nbsp;<i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
+				<a ng-click="removeAppointment(callLogss.appointmentId)" class="btn btn-xs btn-danger hint--top"  data-hint="Cancel Appointment" ng-show="callLogss.appointmentId!=null">&nbsp;<i class="glyphicon glyphicon-minus"></i>&nbsp;</a>
 				</td>
 				</tr>
 				</tbody>
@@ -280,7 +281,7 @@
 						
 						</tr>
 						<tr>
-						<td class="col-md-3"><b>Country</b></td>
+						<td class="col-md-3"><b>County</b></td>
 						<td class="col-md-3">{{patients.country}}</td>
 						<td class="col-md-3"><b>Owner Phone Number</b></td>
 						<td class="col-md-3">{{patients.ownerPhoneNumber}}</td>

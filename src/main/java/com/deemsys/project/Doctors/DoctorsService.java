@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Doctors;
+import com.deemsys.project.entity.Patients;
+import com.deemsys.project.patients.PatientsDAO;
 /**
  * 
  * @author Deemsys
@@ -29,6 +31,9 @@ public class DoctorsService {
 
 	@Autowired
 	DoctorsDAO doctorsDAO;
+	
+	@Autowired
+	PatientsDAO patientsDAO;
 	
 	//Get All Entries
 	public List<DoctorsForm> getDoctorsList()
@@ -131,8 +136,21 @@ return doctorsForm;
 	//Delete an Entry
 	public int deleteDoctors(Integer id)
 	{
-		doctorsDAO.delete(id);
-		return 1;
+		int status=0;
+		List<Patients> patientss=new ArrayList<Patients>();
+		
+		patientss=patientsDAO.getpatientsByDoctorId(id);
+		if(patientss.size()==0)
+		{
+			doctorsDAO.delete(id);
+			status=1;
+		}
+		else
+		{
+			status=0;
+		}
+		
+		return status;
 	}
 	
 	public Integer getNoOfDoctors()
@@ -177,6 +195,20 @@ return doctorsForm;
 		}
 		
 		return doctorsForms;
+	}
+	
+	// Remove Assigned Doctor
+	public Integer removeAssignedDoctor(Integer doctorId) {
+		
+		Integer status=0;
+		List<Patients> patients=patientsDAO.getpatientsByDoctorId(doctorId);
+		for (Patients patients2 : patients) {
+			patientsDAO.removeAssignedDoctor(patients2.getId());
+			
+			status=1;
+		}
+		
+		return status;
 	}
 	
 }

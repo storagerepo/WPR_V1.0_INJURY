@@ -13,5 +13,4 @@ public interface DoctorsDAO extends IGenericDAO<Doctors>{
 	
 	public List<Doctors> getDoctorId();
 	
-
 }

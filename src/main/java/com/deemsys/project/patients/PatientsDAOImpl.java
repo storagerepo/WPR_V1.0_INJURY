@@ -238,6 +238,20 @@ public class PatientsDAOImpl implements PatientsDAO{
 		return (List<CallLogs>)this.sessionFactory.getCurrentSession().createCriteria(CallLogs.class).add(Restrictions.eq("patients.id", patientId)).list();
 	}
 
+	@Override
+	public List<Patients> getpatientsByDoctorId(Integer doctorId) {
+		// TODO Auto-generated method stub
+		List<Patients> patientss=this.sessionFactory.getCurrentSession().createCriteria(Patients.class).add(Restrictions.eq("doctors.id", doctorId)).list();
+		return patientss;
+	}
+
+	@Override
+	public void removeAssignedDoctor(Integer patientId) {
+		// TODO Auto-generated method stub
+		Query query=this.sessionFactory.getCurrentSession().createQuery("update Patients set doctors.id=NULL where id="+patientId);
+		query.executeUpdate();
+	}
+
 	
 
 	

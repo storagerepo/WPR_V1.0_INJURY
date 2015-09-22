@@ -54,8 +54,23 @@ public class DoctorsController {
     @RequestMapping(value="/Admin/deleteDoctors",method=RequestMethod.POST)
    	public String deleteDoctors(@RequestParam("id") Integer id,ModelMap model)
    	{
+    	int status=0;
+    	status=doctorsService.deleteDoctors(id);
     	
-    	doctorsService.deleteDoctors(id);
+    	if(status>0){
+    		model.addAttribute("requestSuccess",true);
+    	}
+    	else{
+    		model.addAttribute("requestSuccess",false);
+    	}
+   		return "/returnPage";
+   	}
+    
+    @RequestMapping(value="/Admin/removeAssignedDoctors",method=RequestMethod.POST)
+   	public String removeAssignedDoctors(@RequestParam("id") Integer id,ModelMap model)
+   	{
+    	
+    	doctorsService.removeAssignedDoctor(id);
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
@@ -86,7 +101,6 @@ public class DoctorsController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
-   
 
     @RequestMapping(value="/viewDoctors",method=RequestMethod.GET)
    	public String viewDoctors(@RequestParam("id") Integer id,ModelMap model)

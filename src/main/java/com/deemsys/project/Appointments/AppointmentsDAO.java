@@ -14,5 +14,4 @@ public interface AppointmentsDAO extends IGenericDAO<Appointments>{
 	public Integer updates(Integer id,Integer status);
 	public List<Appointments> todaysAppointment();
 	public List<Appointments> getByDates(String date);
-		
 }

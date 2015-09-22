@@ -272,8 +272,6 @@ public class AppointmentsService {
 				
 			}
 
-	
-			
 			public List<AppointmentsForm> getAppointmentListByStaffId(Integer staffId){
 				// TODO Auto-generated method stub
 				List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();
@@ -284,4 +282,17 @@ public class AppointmentsService {
 				
 			}
 			
+			public Integer removeAppointment(Integer appointmentId){
+				// TODO Auto-generated method stub
+				Integer status=0;
+				CallLogs callLogs=callLogsDAO.getCallLogsByAppointment(appointmentId);
+				callLogs.setAppointments(null);
+				callLogsDAO.update(callLogs);
+				
+				appointmentsDAO.delete(appointmentId);
+				status=1;
+
+				return status;
+				
+			}
 }

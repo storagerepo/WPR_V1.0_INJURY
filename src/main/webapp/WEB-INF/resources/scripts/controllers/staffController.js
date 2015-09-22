@@ -106,10 +106,12 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 				  $("#deleteStaffModal").modal("show");
 				    $scope.deleteStaffFromPatients=function()
 				    {
+				    	
 				    	requestHandler.postRequest("Staff/deletePatientsByStaffId.json?id="+id).then(function(response){
 				    		
 				    		 requestHandler.deletePostRequest("Admin/deleteStaff.json?id=",id).then(function(results){
-				    			 
+				    			 $("#deleteStaffModal").modal("hide");
+							    	$('.modal-backdrop').hide();
 				    			 successMessageService.setMessage("You have Successfully Deleted!");
 						          successMessageService.setIsError(0);
 						          successMessageService.setIsSuccess(1);   

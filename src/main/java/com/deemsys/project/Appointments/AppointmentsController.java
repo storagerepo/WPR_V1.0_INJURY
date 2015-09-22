@@ -114,5 +114,17 @@ public class AppointmentsController {
     	model.addAttribute("requestSuccess",true);
 		return "/returnPage";
 	}
-   
+ 
+   @RequestMapping(value="/removeAppointment",method=RequestMethod.POST)
+	public String removeAppointment(@RequestParam("appointmentId") Integer appointmentId,ModelMap model)
+	{
+	  Integer status =appointmentsService.removeAppointment(appointmentId);
+	  if(status>0){
+		  model.addAttribute("requestSuccess",true);  
+	  }
+	  else{
+		  model.addAttribute("requestSuccess",false);
+	  }
+		return "/returnPage";
+	}
 }
