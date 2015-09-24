@@ -23,6 +23,7 @@ public class AppointmentsForm {
 	private String notes;
 	private Integer status;
 	private Integer callLogId;
+	private Integer doctorId;
 	public Integer getId() {
 		return id;
 	}
@@ -31,6 +32,12 @@ public class AppointmentsForm {
 	}
 	public Integer getPatientId() {
 		return patientId;
+	}
+	public Integer getDoctorId() {
+		return doctorId;
+	}
+	public void setDoctorId(Integer doctorId) {
+		this.doctorId = doctorId;
 	}
 	public void setPatientId(Integer patientId) {
 		this.patientId = patientId;

@@ -34,7 +34,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 			   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 					
 				     $scope.patientss= response.data.patientsForms;
-				     
+				     $scope.sort('name');
 				     });
 		   }
 		   else if(!$rootScope.isAdmin){

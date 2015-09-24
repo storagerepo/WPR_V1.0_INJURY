@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.CallLogs.CallLogsDAO;
 import com.deemsys.project.CallLogs.CallLogsForm;
+import com.deemsys.project.Doctors.DoctorsDAO;
 import com.deemsys.project.Staff.StaffDAO;
 import com.deemsys.project.Staff.StaffForm;
 import com.deemsys.project.Staff.StaffService;
@@ -18,6 +19,7 @@ import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
+import com.deemsys.project.entity.Doctors;
 import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
 import com.deemsys.project.patients.PatientsDAO;
@@ -49,6 +51,10 @@ public class AppointmentsService {
 	
 	@Autowired
 	CallLogsDAO callLogsDAO;
+	
+	@Autowired
+	DoctorsDAO doctorsDAO ;
+	
 	//Get All Entries
 	public List<AppointmentsForm> getAppointmentsList()
 	{
@@ -109,19 +115,20 @@ public class AppointmentsService {
 		//TODO: Convert Form to Entity Here	
 		
 		//Logic Starts
+		Doctors doctors = doctorsDAO.get(appointmentsForm.getDoctorId());
 		
-		Patients patients = new Patients();
-		patients.setId(appointmentsForm.getPatientId());
+		Patients patients = patientsDAO.get(appointmentsForm.getPatientId());
+		patients.setDoctors(doctors);
+		
 		
 		Appointments appointments=new Appointments(patients,InjuryConstants.convertYearFormat(appointmentsForm.getScheduledDate()), appointmentsForm.getNotes(), 0, null);
 		
 		//Logic Ends
-		
-		CallLogs callLogs = callLogsDAO.get(appointmentsForm.getCallLogId());
-		
+	    CallLogs callLogs = callLogsDAO.get(appointmentsForm.getCallLogId());
 		callLogs.setAppointments(appointments);
 		callLogsDAO.update(callLogs);
 		
+		patientsDAO.update(patients);
 		return 1;
 	}
 	

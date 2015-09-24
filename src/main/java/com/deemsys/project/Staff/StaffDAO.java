@@ -26,6 +26,7 @@ public interface StaffDAO extends IGenericDAO<Staff>{
 	public Staff getDetails(String userName);
 	public Integer isDisable(Integer getId);
 	public Integer isEnable(Integer getId);
+	public Integer resetPassword(Integer id);
 	
 
 }

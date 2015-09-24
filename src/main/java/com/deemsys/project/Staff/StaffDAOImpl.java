@@ -278,6 +278,14 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 	
 	}
 
+	@Override
+	public Integer resetPassword(Integer id) {
+		// TODO Auto-generated method stub11
+		Query query=sessionFactory.getCurrentSession().createQuery("update Staff set password=userName where id='"+id+"'");
+		query.executeUpdate();
+			return 0;
+	}
+
 	
 	
 }

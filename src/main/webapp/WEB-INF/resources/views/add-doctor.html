@@ -28,7 +28,7 @@
                                     <span class="error-container" ng-show="myForm.clinicName.$dirty && myForm.clinicName.$invalid">
                                 <span style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter the ClinicName</span>
                               </span><br>
-                                 </div>   
+                                 </div>    
                                  <div class="col-md-6">
                                      <label>Doctor Name</label>
                                     <input type="text" name="doctorName" class="form-control" ng-model="doctor.doctorName" placeholder="Enter DoctorName" required>
@@ -64,7 +64,7 @@
                               				<span style="color:red" ng-show="myForm.country.$error.required">Please Select the Country</span>
                                      </span>
                            <br>
-                           </div>
+                           </div> 
                            <div class="col-md-6">
                                  <label>State</label>
                            <select class="form-control" ng-init="doctor.state='Ohio'" ng-model="doctor.state" name="state" id="state" required>
@@ -247,22 +247,15 @@
                             <div class="col-md-12">
                             <div class="col-md-12">
                                     <label>Direction</label>
-                                     <textarea class="form-control height-100" ng-model="doctor.direction" name="direction" placeholder="Enter Direction" required> </textarea>
-                               
-                                    <span class="error-container" ng-show="myForm.direction.$dirty && myForm.direction.$invalid">
-                                <span style="color:red" ng-show="myForm.direction.$error.required">Please Enter the Direction</span>
-                              </span><br>
+                                     <textarea class="form-control height-100" ng-model="doctor.direction" name="direction" placeholder="Enter Direction"> </textarea>
+                               <br>
                               </div>
                             </div>
                             <div class="col-md-12">
                             <div class="col-md-12">
                                     <label>Notes</label>
-                                     <textarea class="form-control height-100" ng-model="doctor.notes" name="notes" placeholder="Enter Notes" required> </textarea>
-                               
-                                    <span class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">
-                                <span style="color:red" ng-show="myForm.notes.$error.required">Please Enter the Notes</span>
-                              </span>
-                              </div>
+                                     <textarea class="form-control height-100" ng-model="doctor.notes" name="notes" placeholder="Enter Notes"> </textarea>
+                               </div>
                              </div>
                 </div>
             </div>

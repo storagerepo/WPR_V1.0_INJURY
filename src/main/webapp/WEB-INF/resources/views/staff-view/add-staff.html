@@ -43,30 +43,25 @@
                                        <span style="color:red" ng-show="myForm.username.$error.required">Please input User Name</span>
                                        </span><br/>
                                       </div>
-                                <div class="col-md-6">
-                                <label>Password</label>
-                                    <input type="text" class="form-control"  ng-model="staff.password" name="password" placeholder="Enter Password"  required>
-                                    <span class="error-container" ng-show="myForm.password.$dirty && myForm.password.$invalid">
-                                      <span style="color:red" ng-show="myForm.password.$error.required">Please input Password</span>
-                                     </span><br/>
-                                   </div>
-                                  </div>
-                                <div class="col-md-12">
-                                  <div class="col-md-6">
-                                  <label>Email ID</label>
-                                    <input type="email" class="form-control"  ng-model="staff.emailAddress" name="emailAddress" placeholder="Enter EmailId" email>
-                                    <span class="error-container" ng-show="myForm.emailAddress.$dirty && myForm.emailAddress.$invalid">
-                                            <span style="color:red" ng-show="myForm.emailAddress.$error.email">Enter a valid email</span>
-                                    </span> 
-                                    <br/>
-                                    </div>
-                                    <div class="col-md-6">
-                                    <label>Phone Number</label>
+                               <div class="col-md-6">
+                               <label>Phone Number</label>
                                     <input type="text" class="form-control inputclass"  ng-model="staff.phoneNumber" name="phoneNumber" placeholder="Enter PhoneNumber" data-mask="" required>
                                     <span class="error-container" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
                                      <span style="color:red" ng-show="myForm.phoneNumber.$error.required">Please input Phone Number</span>
-                                   </span><br/>
-                                     </div>
+                                   </span>
+                                     <br/>
+                                   </div> 
+                                  </div>
+                                <div class="col-md-12">
+                                  <div class="col-md-6">
+                                 <label>Email ID</label>
+                                    <input type="email" class="form-control"  ng-model="staff.emailAddress" name="emailAddress" placeholder="Enter EmailId" email>
+                                    <span class="error-container" ng-show="myForm.emailAddress.$dirty && myForm.emailAddress.$invalid">
+                                            <span style="color:red" ng-show="myForm.emailAddress.$error.email">Enter a valid email</span>
+                                    </span>                                    
+                                    <br/>
+                                    </div>
+                                    
                                    </div>
                             <div class="col-md-12">
                                 <div class="col-md-12">

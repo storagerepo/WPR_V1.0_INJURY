@@ -126,8 +126,13 @@
           <h4 class="modal-title">Add Appointment</h4>
         </div>
         <div class="modal-body">
+             <label>Select Doctor:</label>
              
-              <label>ScheduledDate</label>
+		                           <select class="form-control" ng-model="Appointments.doctorId" name="doctorId" id="doctorId" ng-options="doctors.id as doctors.doctorName for doctors in doctor">
+		  							  <option value="">-- Select Doctor --</option>
+		                             </select> 
+		                             <br>
+              <label>Scheduled Date</label>
                                   <div class="input-group">   
                                     <input type="text" name="scheduledDate" id="scheduledDate" class="form-control"  ng-model="Appointments.scheduledDate" placeholder="Enter Date" required>
                                      <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>

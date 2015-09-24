@@ -87,6 +87,31 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 		   
     };
     
+    
+    
+    $scope.resetPassword=function(id)
+    {
+    	  $("#resetPassword").modal("show");
+    	  $scope.reset=function()
+		   {
+    	  requestHandler.getRequest("Admin/resetPassword.json?id="+id,"").then(function(results){
+ $scope.response=results.data.requestSuccess;
+ if($scope.response==true)
+ {
+ successMessageService.setMessage("You have Successfully Reseted the Password!");
+ successMessageService.setIsError(0);
+ successMessageService.setIsSuccess(1);
+ $("#resetPassword").modal("hide");
+ $('.modal-backdrop').hide();
+ $state.reload('dashboard.staff');
+
+ }
+			     	     });
+		   };
+		   
+    };
+    
+    
     $scope.deleteStaff=function(id)
 	  {
 		

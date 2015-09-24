@@ -100,7 +100,7 @@ public class StaffService {
 		
 		//Logic Starts
 		
-		Staff staff=new Staff("ROLE_STAFF", staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),1,null);
+		Staff staff=new Staff("ROLE_STAFF", staffForm.getUsername(), staffForm.getUsername(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),1,null);
 		staff.setIsEnable(1);
 		//Logic Ends
 		
@@ -348,6 +348,15 @@ public String[] getusers() {
 			status=staffDAO.isEnable(getId);
 		}
 		System.out.println(status);
+		return status;
+	}
+	
+	public Integer resetPassword(Integer getId)
+	{
+		Integer status=1;
+		
+		
+		status=staffDAO.resetPassword(getId);
 		return status;
 	}
 	}

@@ -188,4 +188,15 @@ public class StaffController {
        	}
        return "/returnPage";
    	}
+    
+    @RequestMapping(value="/Admin/resetPassword",method=RequestMethod.GET)
+   	public String resetPassword(@RequestParam("id") Integer id,ModelMap model)
+   	{
+    	Integer status=staffService.resetPassword(id);
+    	if(status==0){
+       		model.addAttribute("requestSuccess",true);
+    	}
+       return "/returnPage";
+   	}
+    
 }
