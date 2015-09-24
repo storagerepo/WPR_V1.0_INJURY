@@ -298,7 +298,7 @@ adminApp.controller('EditDoctorController', function($scope,$http,$location,$sta
 	};
 });
 
-
+// Directive For Comapre From and To Time
 adminApp.directive('higherThan',function() {
 return {
 require: "ngModel",

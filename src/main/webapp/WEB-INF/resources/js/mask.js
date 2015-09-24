@@ -121,7 +121,7 @@ if("undefined"==typeof jQuery)throw new Error("Jasny Bootstrap's JavaScript requ
  'alphaspace':/[a-z ]/i,
  'alphanumspace':/[a-z0-9_ ]/i,
  'alphanumspacelower':/[a-z0-9_ ]/,
- 'usernameinput':/[a-z0-9@\._]/,
+ 'usernameinput':/[a-z0-9@\._]/i,
  'qualificationinput':/[a-z)(&,.\- ]/i
  };
 

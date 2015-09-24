@@ -15,7 +15,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	  
 	   $scope.callLogs= response.data.callLogsForms;
 	   
-    $scope.sort('notes');
+    $scope.sort('timeStamp');
     
     requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
 		
@@ -60,7 +60,6 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		$("#timeStamp").val("");
 		$("#response").val("");
 		$("#notes").val("");
-		
 
 		$("#calllogsModel").modal("show");
 		$scope.calllogs={};
