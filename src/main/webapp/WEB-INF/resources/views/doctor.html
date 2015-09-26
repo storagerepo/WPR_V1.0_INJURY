@@ -8,7 +8,7 @@
 </div>
 <!-- /.row -->
 <div class="row">
-<errordisplay message="errorMessage" error="isError" success="isSuccess"></errordisplay>
+<div flash-message="2000" class="col-md-5 pull-right"></div>
     <div class="col-lg-12">           
     
             <!-- /.panel-heading -->
@@ -18,11 +18,9 @@
                      
                           <thead>
 	        <tr>
+	            	 <th  style="width:100px!important;" ng-mousedown="sort('doctorName')">Name   <span class="glyphicon sort-icon" ng-show="sortKey=='doctorName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 	            	 <th style="width:100px!important;" ng-mousedown="sort('clinicName')">Clinic Name <span class="glyphicon sort-icon" ng-show="sortKey=='clinicName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
-         
-                <th  style="width:100px!important;" ng-mousedown="sort('doctorName')">Name   <span class="glyphicon sort-icon" ng-show="sortKey=='doctorName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-               
-            	 	 <th style="width:100px!important;" ng-mousedown="sort('address')">Address   <span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+         			 <th style="width:100px!important;" ng-mousedown="sort('address')">Address   <span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
              	 <th style="width:100px!important;" ng-mousedown="sort('city')">City   <span class="glyphicon sort-icon" ng-show="sortKey=='city'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
@@ -37,12 +35,11 @@
 	           <th ></th>
 	           </tr>
  <tr>    
-     <th>  <input type="text"  class="form-control"  ng-model="search.clinicName" placeholder="Search by Clinic Name">
+ <th>  <input type="text"  class="form-control"  ng-model="search.doctorName" placeholder="Search by Name">
            </th>
-         
-            <th>  <input type="text"  class="form-control"  ng-model="search.doctorName" placeholder="Search by Name">
+    	 <th>  <input type="text"  class="form-control"  ng-model="search.clinicName" placeholder="Search by Clinic Name">
            </th>
-            <th>  <input type="text"  class="form-control"  ng-model="search.address" placeholder="Search by Address">
+         	<th>  <input type="text"  class="form-control"  ng-model="search.address" placeholder="Search by Address">
            </th>
             <th>  <input type="text"  class="form-control"  ng-model="search.city" placeholder="Search by City">
            </th>
@@ -60,9 +57,8 @@
                          <tbody dir-paginate="doctor in doctors | filter:search | orderBy:sortKey:reverse|itemsPerPage:8 " >
 	<tr>
 	
+	<td><a href="" ng-click="viewDoctors(doctor.id)">{{doctor.doctorName}}</td>
 	<td>{{doctor.clinicName}}</td>
-		
-		<td><a href="" ng-click="viewDoctors(doctor.id)">{{doctor.doctorName}}</td>
 <td>{{doctor.address}}</td>
 		<td>{{doctor.city}}</td>
 			<td>{{doctor.county}}</td>

@@ -108,6 +108,21 @@ public class InjuryConstants {
 			return dateformat;
 	}
 	
+	// Convert Date Time To  String Format Time
+		public static String convertToStringFormatTime(Date time)
+		{
+				SimpleDateFormat monthFormat = new SimpleDateFormat("HH:mm");
+				SimpleDateFormat yearFormat = new SimpleDateFormat("HH:mm");
+				String dateformat="";
+				try{
+				dateformat=yearFormat.format(time);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				return dateformat;
+		}
+	
 	// Convert String Time To  Date Format Time
 		public static Date convertToDateFormatTimeAMPM(String time)
 		{
@@ -126,7 +141,7 @@ public class InjuryConstants {
 		}
 		
 		// Convert Date Time To String Time
-			public static String convertToStringFormatTime(Date time) 
+			public static String convertToStringFormatTimeAm(Date time) 
 			{
 					SimpleDateFormat monthFormat = new SimpleDateFormat("hh:mm a");
 					String convertedTime="";

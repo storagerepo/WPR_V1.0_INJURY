@@ -1,12 +1,9 @@
 
 
-var adminApp=angular.module('sbAdminApp', ['requestModule']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
 
-adminApp.controller('ShowDoctorsCtrl', function($scope,$http,$location,$state,requestHandler,successMessageService) {
-	$scope.errorMessage=successMessageService.getMessage();
-	$scope.isError=successMessageService.getIsError();
-	$scope.isSuccess=successMessageService.getIsSuccess();
-    successMessageService.reset();
+adminApp.controller('ShowDoctorsCtrl', function($scope,$http,$location,$state,requestHandler,successMessageService,Flash) {
+
 	$scope.sort = function(keyname){
         $scope.sortKey = keyname;   //set the sortKey to the param passed
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
@@ -16,6 +13,12 @@ adminApp.controller('ShowDoctorsCtrl', function($scope,$http,$location,$state,re
          $scope.sort('doctorName');
         });
 	
+    $scope.getDoctorList=function(){
+    	requestHandler.getRequest("Staff/getAllDoctorss.json","").then(function(response){
+       	 $scope.doctors = response.data.doctorsForms;
+           });
+    };
+    
     $scope.viewDoctors=function(id)
     {
     	 requestHandler.getRequest("viewDoctors.json?id="+id,"").then( function(response) {
@@ -74,10 +77,8 @@ adminApp.controller('ShowDoctorsCtrl', function($scope,$http,$location,$state,re
 			  console.log($scope.value);
 			  if($scope.value==true)
 				  {
-					successMessageService.setMessage("You have Successfully Deleted!");
-			        successMessageService.setIsError(0);
-			        successMessageService.setIsSuccess(1);
-			        $state.reload('dashboard.doctor');
+			        Flash.create('success', "You have Successfully Deleted!");
+			        $scope.getDoctorList();
 				  }
 			  else
 				  {
@@ -89,10 +90,8 @@ adminApp.controller('ShowDoctorsCtrl', function($scope,$http,$location,$state,re
 				    		requestHandler.deletePostRequest("Admin/deleteDoctors.json?id=",id).then(function(results){
 				    			$("#deleteDoctorModal").modal("hide");
 				    			$('.modal-backdrop').hide();
-				    			 successMessageService.setMessage("You have Successfully Deleted!");
-						          successMessageService.setIsError(0);
-						          successMessageService.setIsSuccess(1);   
-								  $state.reload('dashboard.doctor');
+				    			Flash.create('success', "You have Successfully Deleted!");  
+				    			$scope.getDoctorList();
 				    		 });
 				    		 
 							});
@@ -107,7 +106,7 @@ adminApp.controller('ShowDoctorsCtrl', function($scope,$http,$location,$state,re
  
 });
 
-adminApp.controller('AddDoctorsCtrl', function($scope,$http,$location,$state,requestHandler,successMessageService) {
+adminApp.controller('AddDoctorsCtrl', function($scope,$http,$location,$state,requestHandler,successMessageService,Flash) {
 
 	$scope.myFormButton=true;
 	$scope.doctor={};
@@ -173,16 +172,15 @@ adminApp.controller('AddDoctorsCtrl', function($scope,$http,$location,$state,req
 	$scope.saveDoctor=function()
 	{
 		requestHandler.postRequest("Admin/saveUpdateDoctors.json",$scope.doctor).then(function(response){
-			successMessageService.setMessage("You have Successfully Added Doctor");
-            successMessageService.setIsError(0);
-            successMessageService.setIsSuccess(1);
+			Flash.create('success', "You have Successfully Added Doctor!");
+            
 			$location.path('dashboard/doctor');
 		});
 	};
 
 });
 
-adminApp.controller('EditDoctorController', function($scope,$http,$location,$stateParams,$state,requestHandler,successMessageService) {
+adminApp.controller('EditDoctorController', function($scope,$http,$location,$stateParams,$state,requestHandler,successMessageService,Flash) {
 	
 	$scope.myFormButton=false;
 	$scope.sun=true;
@@ -288,9 +286,7 @@ adminApp.controller('EditDoctorController', function($scope,$http,$location,$sta
 	
 	  $scope.update=function(){
 		  requestHandler.postRequest("Admin/saveUpdateDoctors.json",$scope.doctor).then(function(response){
-			  successMessageService.setMessage("You have Successfully updated!");
-	            successMessageService.setIsError(0);
-	            successMessageService.setIsSuccess(1);
+			  Flash.create('success', "You have Successfully Updated!");
 			  $location.path('dashboard/doctor');
 			});
 			

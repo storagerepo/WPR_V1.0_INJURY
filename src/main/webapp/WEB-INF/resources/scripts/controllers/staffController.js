@@ -1,12 +1,8 @@
 
-var adminApp=angular.module('sbAdminApp', ['requestModule']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
 
-adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$http,$stateParams,$location,$state,requestHandler,successMessageService) {
-	 
-	$scope.errorMessage=successMessageService.getMessage();
-	$scope.isError=successMessageService.getIsError();
-	$scope.isSuccess=successMessageService.getIsSuccess();
-    successMessageService.reset();
+adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$http,$stateParams,$location,$state,requestHandler,successMessageService,Flash) {
+	
  
 	
 	 $scope.sort = function(keyname){
@@ -14,39 +10,40 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
 	    };
 	    
+	    requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
+	    	 $scope.staffs= results.data.staffForms;
+	         $scope.sort('username');
+	     });
 	    
-	    
+	$scope.getStaffList=function() {
     requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
     	 $scope.staffs= results.data.staffForms;
-         $scope.sort('username');
      });
-    
+	};
+	
     $scope.disableStaff=function(id)
     {
     	  $("#disableStaff").modal("show");
     	  $scope.disable=function()
 		   {
     	  requestHandler.getRequest("Admin/disableStaff.json?id="+id,"").then(function(results){
+    		 
  $scope.response=results.data.requestSuccess;
 			  
 			  if($scope.response==true)
 				  {
-				  successMessageService.setMessage("You have Successfully Enabled!");
-		          successMessageService.setIsError(0);
-		          successMessageService.setIsSuccess(1);  
 		          $("#disableStaff").modal("hide");
 		          $('.modal-backdrop').hide();
-		          	$state.reload('dashboard.staff');;
+		          Flash.create('success', "You have Successfully Enabled!");
+		          $scope.getStaffList();
 
 				  }
 			  if($scope.response==false)
 			  {
-				  successMessageService.setMessage("You have Successfully Disabled!");
-		          successMessageService.setIsError(0);
-		          successMessageService.setIsSuccess(1); 
-		          $("#disableStaff").modal("hide");
+				  $("#disableStaff").modal("hide");
 		          $('.modal-backdrop').hide();
-		          $state.reload('dashboard.staff');
+		          Flash.create('success', "You have Successfully Disabled!");
+		          $scope.getStaffList();
 
 			  }
     	     });
@@ -64,12 +61,10 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 			  
 			  if($scope.result==true)
 				  {
-				  successMessageService.setMessage("You have Successfully Enabled!");
-		          successMessageService.setIsError(0);
-		          successMessageService.setIsSuccess(1);
-		          $("#enableStaff").modal("hide");
+				  $("#enableStaff").modal("hide");
 		          $('.modal-backdrop').hide();
-		          $state.reload('dashboard.staff');
+		          Flash.create('success', "You have Successfully Updated!");
+		          $scope.getStaffList();
 
 				  }
 			  if($scope.result==false)
@@ -95,18 +90,17 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
     	  $scope.reset=function()
 		   {
     	  requestHandler.getRequest("Admin/resetPassword.json?id="+id,"").then(function(results){
- $scope.response=results.data.requestSuccess;
- if($scope.response==true)
- {
- successMessageService.setMessage("You have Successfully Reseted the Password!");
- successMessageService.setIsError(0);
- successMessageService.setIsSuccess(1);
- $("#resetPassword").modal("hide");
- $('.modal-backdrop').hide();
- $state.reload('dashboard.staff');
-
- }
-			     	     });
+			 $scope.response=results.data.requestSuccess;
+			 if($scope.response==true)
+			 {
+			 
+			 $("#resetPassword").modal("hide");
+			 $('.modal-backdrop').hide();
+			 Flash.create('success', "You have Successfully Reset the Password!");
+			 $scope.getStaffList();
+			
+			 }
+			});
 		   };
 		   
     };
@@ -121,9 +115,8 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 			  
 			  if($scope.value==true)
 				  {
-			  successMessageService.setMessage("You have Successfully Deleted!");
-	          successMessageService.setIsError(0);
-	          successMessageService.setIsSuccess(1);
+				  Flash.create('success', "You have Successfully Deleted!");
+		          $scope.getStaffList();
 			  $state.reload('dashboard.staff');
 				  }
 			  else
@@ -137,10 +130,8 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 				    		 requestHandler.deletePostRequest("Admin/deleteStaff.json?id=",id).then(function(results){
 				    			 $("#deleteStaffModal").modal("hide");
 							    	$('.modal-backdrop').hide();
-				    			 successMessageService.setMessage("You have Successfully Deleted!");
-						          successMessageService.setIsError(0);
-						          successMessageService.setIsSuccess(1);   
-								  $state.reload('dashboard.staff');
+						          Flash.create('success', "You have Successfully Deleted!");
+						          $scope.getStaffList();
 				    		 });
 				    		 
 							});
@@ -168,7 +159,7 @@ adminApp.controller('SaveStaffController', function($scope,$http,$location,$stat
 	$("#username_exists").text("");
 	$scope.options=true;
 	$scope.title=$state.current.title;
-	$scope.save=function()
+	$scope.save=function() 
 	{
 		$("#username_exists").text("");
 		requestHandler.getRequest("Admin/getUsername.json?username="+$scope.staff.username,"").then(function(response){
@@ -193,26 +184,27 @@ adminApp.controller('SaveStaffController', function($scope,$http,$location,$stat
 });
 
 
-adminApp.controller('EditStaffController', function($scope,$http,$location,$stateParams,$state,requestHandler,successMessageService) {
+adminApp.controller('EditStaffController', function($scope,$http,$location,$stateParams,$state,requestHandler,successMessageService,Flash) {
 	
 	$scope.options=false;
 	$scope.title=$state.current.title;
-	
+	var staffOriginal="";
 	requestHandler.getRequest("Admin/getStaff.json?id="+$stateParams.id,"").then(function(response){
+		staffOriginal=angular.copy(response.data.staffForm);
 		$scope.staff=response.data.staffForm;
 	});
 	
 
 	  $scope.update=function(){
 		  requestHandler.postRequest("Admin/saveUpdateStaff.json",$scope.staff).then(function(response){
-			  successMessageService.setMessage("You have Successfully Updated!");
-	          successMessageService.setIsError(0);
-	          successMessageService.setIsSuccess(1);
+			  Flash.create('success', "You have Successfully Updated!");
 			  $location.path('dashboard/staff');
 			});
-			
-	  
-	};
+		};
+		
+	$scope.isClean = function() {
+	        return angular.equals (staffOriginal, $scope.staff);
+	    };
 });
 
 

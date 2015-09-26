@@ -6,7 +6,13 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
         $scope.sortKey = keyname;   //set the sortKey to the param passed
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
     };
-    
+    var date=new Date();
+    if(date.getMonth()<=8){
+    	$scope.searchDate=date.getFullYear()+"-0"+(date.getMonth()+1)+"-"+date.getDate();
+    }
+    else{
+    	$scope.searchDate=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+    }
     requestHandler.getRequest("Staff/todaysAppointment.json","").then(function(response){
 		//alert(JSON.stringify(response));
     	 $scope.appointments = response.data.appointmentsForms;
@@ -38,5 +44,5 @@ else
 	    });
 	}
 
-}
+};
 });

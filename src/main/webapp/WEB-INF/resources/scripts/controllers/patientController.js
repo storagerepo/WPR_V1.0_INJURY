@@ -1,4 +1,4 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule','angularFileUpload']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','angularFileUpload','flash']);
 
 adminApp.directive('fileChange', function () {
 
@@ -21,12 +21,8 @@ adminApp.directive('fileChange', function () {
 
 });
 
-adminApp.controller('ShowPatientController', function($scope,$http,$location,$state,$rootScope,requestHandler,$http,successMessageService) {
+adminApp.controller('ShowPatientController', function($scope,$http,$location,$state,$rootScope,requestHandler,$http,successMessageService,Flash) {
 	
-	$scope.errorMessage=successMessageService.getMessage();
-	$scope.isError=successMessageService.getIsError();
-	$scope.isSuccess=successMessageService.getIsSuccess();
-    successMessageService.reset();
 	$scope.title="Add Patient";
 		    if($rootScope.isAdmin){
 			   $scope.admin=true;
@@ -36,6 +32,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 				     $scope.patientss= response.data.patientsForms;
 				     $scope.sort('name');
 				     });
+			   
 		   }
 		   else if(!$rootScope.isAdmin){
 			   $scope.staff=true;
@@ -46,13 +43,21 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 				     });
 		   }
 			
+	
+		    
 	$scope.updateList=function(){
 		
 		requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 		     $scope.patientss= response.data.patientsForms;
 		     });
 	};
-	  
+	 
+	$scope.staffGetPatientList=function(){
+		requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
+			$scope.patientss= response.data.patientsForm;
+		     });
+	};
+	
 	$scope.sort = function(keyname){
 	        $scope.sortKey = keyname;   //set the sortKey to the param passed
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
@@ -71,11 +76,14 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	$scope.deletePatient=function(id){
 		if(confirm("Are you sure to delete patient?")){
 			  requestHandler.deletePostRequest("Staff/deletePatients.json?id=",id).then(function(response){
-				
-				  successMessageService.setMessage("You have Successfully Deleted!");
-		            successMessageService.setIsError(0);
-		            successMessageService.setIsSuccess(1);
-		            $state.reload("dashboard.patient");
+				  Flash.create('success', "You have Successfully Deleted!");  
+				  if($rootScope.isAdmin){
+					  $scope.updateList();
+				  }
+				  else if(!$rootScope.isAdmin){
+					  $scope.staffGetPatientList();
+				  }
+		         
 		});
 		
 		}
@@ -146,13 +154,17 @@ $("#file").val("");
 		var doUpdate=requestHandler.postRequest('Staff/updatePatients.json',$scope.patients).then(function(response) {
 			$("#assignCallerModel").modal("hide");
 			$('.modal-backdrop').hide();
+
+			 Flash.create('success', "You have Successfully Assigned!"); 
 		});
 		
-		doUpdate.then(function(){
-			successMessageService.setMessage("You have Successfully Assigned!");
-            successMessageService.setIsError(0);
-            successMessageService.setIsSuccess(1);
-        	$state.reload("dashboard.patient");
+		doUpdate.then(function(){ 
+			  if($rootScope.isAdmin){
+				  $scope.updateList();
+			  }
+			  else if(!$rootScope.isAdmin){
+				  $scope.staffGetPatientList();
+			  }
 			
 		});
 		
@@ -187,10 +199,13 @@ $("#file").val("");
 		
 		doUpdate.then(function(){
 			$("#assignDoctorModel").modal("hide");
-        	successMessageService.setMessage("You have Successfully Assigned!");
-            successMessageService.setIsError(0);
-            successMessageService.setIsSuccess(1);
-			$state.reload("dashboard.patient");
+			Flash.create('success', "You have Successfully Assigned!");  
+			  if($rootScope.isAdmin){
+				  $scope.updateList();
+			  }
+			  else if(!$rootScope.isAdmin){
+				  $scope.staffGetPatientList();
+			  }
 		});
 		
 		
@@ -201,7 +216,7 @@ $("#file").val("");
 
 adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader,requestHandler,$state) {
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://192.168.1.236:8086/Injury/Staff/addPatientFromFile.json',
+        url: 'http://192.168.1.122:8081/Injury/Staff/addPatientFromFile.json',
         queueLimit: 1
     });
     
@@ -272,7 +287,7 @@ adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope,
 
 
 
-adminApp.controller('EditPatientController', function($scope,$http,$location,$stateParams,requestHandler,successMessageService){
+adminApp.controller('EditPatientController', function($scope,$http,$location,$stateParams,requestHandler,Flash){
 	
 	$scope.patientid=$stateParams.id;
 	
@@ -302,9 +317,7 @@ adminApp.controller('EditPatientController', function($scope,$http,$location,$st
 			
 			
 			requestHandler.postRequest('Staff/updatePatients.json',$scope.patient).then(function(response) {
-				successMessageService.setMessage("You have Successfully updated!");
-	            successMessageService.setIsError(0);
-	            successMessageService.setIsSuccess(1);
+	            Flash.create("success","You have Successfully updated!");
 				$location.path("dashboard/patient");
 			});
 		};

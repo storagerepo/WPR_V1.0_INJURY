@@ -1,9 +1,6 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule']);
-adminApp.controller('showCallLogsController', function($scope,$http,$location,$stateParams,$state,requestHandler,successMessageService) {
-	$scope.errorMessage=successMessageService.getMessage();
-	$scope.isError=successMessageService.getIsError();
-	$scope.isSuccess=successMessageService.getIsSuccess();
-    successMessageService.reset();
+var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
+adminApp.controller('showCallLogsController', function($scope,$http,$location,$stateParams,$state,requestHandler,Flash) {
+
 	
 	$("#calllogsModel").modal("hide");
 	 $scope.sort = function(keyname){
@@ -11,21 +8,20 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
 	    };
 	    
-	    requestHandler.postRequest("Staff/getCallLogsById.json?id="+$stateParams.id,"").then( function(response) {
-	  
-	   $scope.callLogs= response.data.callLogsForms;
+	   $scope.getCallLogsList=function(){
+		    requestHandler.postRequest("Staff/getCallLogsById.json?id="+$stateParams.id,"").then( function(response) {
+		    	$scope.callLogs= response.data.callLogsForms;
+		    });
+	   };
 	   
-    $scope.sort('timeStamp');
-    
-    requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
-		
-	     $scope.patient= response.data.patientsForm;
-	  
-	     });
-  
-    
-    
-    });
+	    requestHandler.postRequest("Staff/getCallLogsById.json?id="+$stateParams.id,"").then( function(response) {
+	    	$scope.callLogs= response.data.callLogsForms;
+	    	$scope.sort('timeStamp');
+	   
+	    	requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
+	    		$scope.patient= response.data.patientsForm;
+	    	});
+	  });
 	    
 	    $scope.viewPatients=function(id)
 	    {
@@ -41,46 +37,38 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		  if(confirm("Are you sure to delete CallLogs ?")){
 			  requestHandler.deletePostRequest("Staff/deleteCallLogs.json?id=",id)
 			  .success(function(response){
-				  successMessageService.setMessage("You have Successfully Deleted!");
-		          successMessageService.setIsError(0);
-		          successMessageService.setIsSuccess(1); 
-				  $state.transitionTo($state.current, $stateParams, { reload: true, inherit: true, notify: true });
-			 
+				  Flash.create("success","You have Successfully Deleted!");
+				  $scope.getCallLogsList();
+				 
 			  });
 		  }
-	}
+	};
    
-	 $scope.alertFunction=function()
-   {
-
-   };
+	
    $scope.addModel=function()
 	{
 		$scope.title="Add CallLogs";
+		$scope.options=true;
+		$scope.calllogs={};
+		 $scope.calllogs.patientId =$stateParams.id;
 		$("#timeStamp").val("");
 		$("#response").val("");
 		$("#notes").val("");
 
 		$("#calllogsModel").modal("show");
-		$scope.calllogs={};
-		 $scope.calllogs.patientId =$stateParams.id;
-
-		$scope.options=true;
-		$scope.save=function()
-		{
-			$("#calllogsModel").modal("hide");
-			$('.modal-backdrop').hide();
-			requestHandler.postRequest("Staff/saveUpdateCallLogs.json",$scope.calllogs)
-				.then(function(response)
-					{
-					successMessageService.setMessage("You have Successfully Added!");
-			          successMessageService.setIsError(0);
-			          successMessageService.setIsSuccess(1); 
-					$state.transitionTo($state.current, $stateParams, { reload: true, inherit: true, notify: true });
-					});
-			
-		};
-
+	};
+	
+	$scope.save=function()
+	{
+		$("#calllogsModel").modal("hide");
+		$('.modal-backdrop').hide();
+		requestHandler.postRequest("Staff/saveUpdateCallLogs.json",$scope.calllogs)
+			.then(function(response)
+				{
+				Flash.create("success","You have Successfully Added!");
+				  $scope.getCallLogsList();
+				});
+		
 	};
 	
 	$scope.editModal=function(id,appointmentId)
@@ -109,10 +97,8 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		  $("#calllogsModel").modal("hide");
 		  $('.modal-backdrop').hide();
 		  requestHandler.postRequest("Staff/saveUpdateCallLogs.json",$scope.calllogs).then(function (status) {
-			  successMessageService.setMessage("You have Successfully Updated!");
-	          successMessageService.setIsError(0);
-	          successMessageService.setIsSuccess(1); 
-			 $state.transitionTo($state.current, $stateParams, { reload: true, inherit: true, notify: true });
+			  Flash.create("success","You have Successfully Updated!");
+			  $scope.getCallLogsList();
 			});
 	 
 	};
@@ -147,10 +133,8 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		  requestHandler.postRequest("Staff/saveUpdateAppointments.json",$scope.Appointments)
 			.then(function(response)
 					{
-				successMessageService.setMessage("You have Successfully Added!");
-		          successMessageService.setIsError(0);
-		          successMessageService.setIsSuccess(1); 
-				$state.transitionTo($state.current, $stateParams, { reload: true, inherit: true, notify: true });
+				Flash.create("success","You have Successfully Added!");
+				  $scope.getCallLogsList();
 				});
 		};
 	
@@ -160,10 +144,8 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 			  requestHandler.deletePostRequest("Staff/removeAppointment.json?appointmentId=",id)
 				.then(function(response)
 						{
-					successMessageService.setMessage("You have Successfully Cancelled!");
-			          successMessageService.setIsError(0);
-			          successMessageService.setIsSuccess(1); 
-					$state.transitionTo($state.current, $stateParams, { reload: true, inherit: true, notify: true });
+					Flash.create("success","You have Successfully Cancelled!");
+					  $scope.getCallLogsList();
 					});
 			}
 		};
@@ -174,10 +156,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 			requestHandler.getRequest("Staff/getAppointments.json?id="+id,"").then( function(response) {
 				
 			    $scope.appointments=response.data.appointmentsForm;
-			    
-			   
-			   
-		     });
+			  });
 			
 			 $("#viewAppointmentsModal").modal("show");
 			 

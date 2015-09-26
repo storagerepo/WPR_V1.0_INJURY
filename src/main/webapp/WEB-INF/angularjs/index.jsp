@@ -30,6 +30,7 @@
 	     <script src="resources/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="resources/components/json3/lib/json3.min.js"></script>
     <script src="resources/components/oclazyload/dist/ocLazyLoad.min.js"></script>
+    <script src="resources/components/angular-animate/angular-animate.min.js"></script>
     <script src="resources/components/angular-loading-bar/build/loading-bar.min.js"></script>
     <script src="resources/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="resources/components/metisMenu/dist/metisMenu.min.js"></script>
@@ -38,7 +39,9 @@
     <script src="jquery-1.8.0.min.js"></script>
     <script src="resources/components/angular-utils-pagination/dirPagination.js"></script> 
      <script src="resources/components/angular-file-upload/angular-file-upload.min.js"></script>
-
+	<!-- Flash -->
+	<script src="resources/components/angular-flash/angular-flash.min.js"></script>
+	<link rel="stylesheet" href="resources/components/angular-flash/angular-flash.css">
      <!-- <script  src="resources/components/prettify/prettify.js"></script> -->
 	<!-- endbower  error-->
     <!-- endbuild -->

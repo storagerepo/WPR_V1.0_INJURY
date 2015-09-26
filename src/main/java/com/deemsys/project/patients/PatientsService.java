@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.validation.Payload;
 
@@ -626,5 +628,13 @@ public class PatientsService {
 		}
 		*/
 		
+		//Remove More than One White Space
+		 public String replaceWithWhiteSpacePattern(String str,String replace){
+	         
+		        Pattern ptn = Pattern.compile("\\s+");
+		        Matcher mtch = ptn.matcher(str);
+		        return mtch.replaceAll(replace);
+		    }
+
 		
 }

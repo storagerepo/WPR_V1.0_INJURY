@@ -14,7 +14,8 @@ angular
     'ui.bootstrap',
     'angular-loading-bar',
     'angularUtils.directives.dirPagination',
-    'requestModule'
+    'requestModule',
+    'flash'
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"$httpProvider",function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,$httpProvider) {
 
