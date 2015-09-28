@@ -67,11 +67,8 @@ public class PatientsController {
 	 String errors = patientsService.addPatientFromFile(file);
 		 
     	 if(!errors.equals("")){
-    		 String[] errorArray=errors.split("=");
     		 returnText+="<b>Error Description</b>";
-    		 for (String string : errorArray) {
-				returnText+=string+"<br/>";
-			}
+    		returnText+=errors;
     		 returnText+="</p>";
     	  	 
     	    }
