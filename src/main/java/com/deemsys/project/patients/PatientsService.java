@@ -302,7 +302,6 @@ public class PatientsService {
        			}
        		
         		catch (NumberFormatException e) {
-        			System.out.println(e.toString());
         			e.printStackTrace();
         		} catch (IOException e) {
         			e.printStackTrace();
