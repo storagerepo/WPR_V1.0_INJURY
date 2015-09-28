@@ -89,7 +89,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		});
 		
 		 $scope.isClean = function() {
-			  return angular.equals (callLogsOriginal, $scope.calllogs);
+			  return angular.equals(callLogsOriginal, $scope.calllogs);
 		    };
 		
 	

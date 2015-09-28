@@ -300,8 +300,14 @@ public String[] getusers() {
 		Integer status=0;
 		String[] users=getusers();
 		List<Staff> staff=staffDAO.checkPassword(oldPassword,users[0]);
+		
 		 if(staff.size()>0){
-			 status=1;
+			if(oldPassword.equals(staff.get(0).getPassword())){
+				status=1;
+			}
+			else{
+				status=0;
+			}
 		 }
 		 else{
 			 status=0;

@@ -154,7 +154,12 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 		
 		//Load User Who having the User name
 		Staff staff=this.getByUserName(username);
-		
+		if(username.equals(staff.getUsername())){
+			username=staff.getUsername();
+		}
+		else{
+			username="";
+		}
 		List<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
 		
 		if(staff!=null)
