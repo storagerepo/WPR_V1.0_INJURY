@@ -77,15 +77,20 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		$scope.calllogs.appointmentId = appointmentId;
 		$scope.title="Edit CallLogs";
 		$scope.options=false;
+		var callLogsOriginal="";
 		
 		
 		requestHandler.getRequest("Staff/getCallLogs.json?id="+id,"").then( function(response) {
+			callLogsOriginal=angular.copy(response.data.callLogsForm);
+			
 		    $scope.calllogs=response.data.callLogsForm;
 		    $('#timeStamp').data("DateTimePicker").setDate($scope.calllogs.timeStamp);
 		    $("#calllogsModel").modal("show");
 		});
 		
-		
+		 $scope.isClean = function() {
+			  return angular.equals (callLogsOriginal, $scope.calllogs);
+		    };
 		
 	
 	};
@@ -100,8 +105,10 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 			  Flash.create("success","You have Successfully Updated!");
 			  $scope.getCallLogsList();
 			});
-	 
+		 		 
 	};
+	 
+	
 	
 	$scope.Appointments={};
 	 $scope.Appointments.patientId =$stateParams.id;

@@ -288,16 +288,15 @@ adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope,
 
 
 adminApp.controller('EditPatientController', function($scope,$http,$location,$stateParams,requestHandler,Flash){
+	var patientOriginal="";
 	
 	$scope.patientid=$stateParams.id;
 	
 	requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
-		
-		     $scope.patient= response.data.patientsForm;
+		patientOriginal=angular.copy(response.data.patientsForm);
+		  $scope.patient= response.data.patientsForm;
 		     
-		     
-		  
-		     });
+		});
 	requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {
 		
 	     $scope.staff= response.data.staffForms;
@@ -322,7 +321,12 @@ adminApp.controller('EditPatientController', function($scope,$http,$location,$st
 			});
 		};
 		
-	
+		
+		$scope.isClean = function() {
+	        return angular.equals (patientOriginal, $scope.patient);
+	    
+	    };
+	   
 });
 
 adminApp.controller('roleController', function($scope,$http,$location,requestHandler) {

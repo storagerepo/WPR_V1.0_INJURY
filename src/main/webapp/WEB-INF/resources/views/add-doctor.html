@@ -261,7 +261,7 @@
             </div>
             <div class="text-right" style="margin-right:30px;">
                 <a class="btn btn-success" ng-show='myFormButton' ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid'  ng-click="saveDoctor()">Save</a>
-            	 <a class="btn btn-success" ng-show='!myFormButton' ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-click="update()">Update</a>
+            	 <a class="btn btn-success" ng-show='!myFormButton' ng-class="{'button-disable':myForm.$invalid || isClean()}" ng-disabled='isClean() || myForm.$invalid' ng-click="update()">Update</a>
               <a ui-sref="dashboard.doctor"  class="btn btn-danger" >Cancel</a><br/><br/>
            </div>
             <!-- /.panel-body -->

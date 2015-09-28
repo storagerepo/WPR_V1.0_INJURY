@@ -107,7 +107,7 @@
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">Close</button>
              <button type="button" class="btn btn-success" data-dismiss="modal" ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-show="options" ng-click="save()">Save</button>
-             <button type="button" class="btn btn-success" data-dismiss="modal" ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-show='!options' ng-click="update()">update</button> 
+             <button type="button" class="btn btn-success" data-dismiss="modal" ng-class="{'button-disable':myForm.$invalid || isClean()}" ng-disabled='isClean() || myForm.$invalid' ng-show='!options' ng-click="update()">update</button> 
               
       </div>
     </div>
@@ -128,9 +128,13 @@
         <div class="modal-body">
              <label>Select Doctor:</label>
              
-		                           <select class="form-control" ng-model="Appointments.doctorId" name="doctorId" id="doctorId" ng-options="doctors.id as doctors.doctorName for doctors in doctor">
+		                           <select class="form-control" ng-model="Appointments.doctorId" name="doctorId" id="doctorId" ng-options="doctors.id as doctors.doctorName for doctors in doctor" required>
 		  							  <option value="">-- Select Doctor --</option>
 		                             </select> 
+		                              <span class="error-container" ng-show="myForms.doctorId.$dirty && myForms.doctorId.$invalid">
+                                <span style="color:red" ng-show="myForms.doctorId.$error.required">Please Select the Doctor</span>
+                              </span>
+                             
 		                             <br>
               <label>Scheduled Date</label>
                                   <div class="input-group">   

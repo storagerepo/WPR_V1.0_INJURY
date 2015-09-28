@@ -192,6 +192,7 @@ adminApp.controller('EditDoctorController', function($scope,$http,$location,$sta
 	$scope.sat=true;
 	$scope.workingDays=["","","","","","",""];
 	$scope.title=$state.current.title;
+	var doctorOriginal="";
 	
 	requestHandler.getRequest("Admin/getDoctors.json?id="+$stateParams.id,"").then(function(response){
 		 $scope.doctor = response.data.doctorsForm;
@@ -227,7 +228,8 @@ adminApp.controller('EditDoctorController', function($scope,$http,$location,$sta
 				}
 		 }
 		$scope.doctor.workingDays= $scope.workingDays;
-
+		doctorOriginal=angular.copy(response.data.doctorsForm);
+		
 		$('#officeHoursFromTime').data("DateTimePicker").setDate($scope.doctor.officeHoursFromTime);
 		$('#officeHoursToTime').data("DateTimePicker").setDate($scope.doctor.officeHoursToTime);
 	});
@@ -292,6 +294,10 @@ adminApp.controller('EditDoctorController', function($scope,$http,$location,$sta
 			
 	  
 	};
+
+	$scope.isClean = function() {
+        return angular.equals (doctorOriginal, $scope.doctor);
+    };
 });
 
 // Directive For Comapre From and To Time
