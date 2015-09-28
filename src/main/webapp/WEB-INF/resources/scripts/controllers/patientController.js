@@ -216,32 +216,36 @@ $("#file").val("");
 
 adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader,requestHandler,$state) {
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://192.168.1.122:8081/Injury/Staff/addPatientFromFile.json',
+        url: 'http://192.168.1.236:8086/Injury/Staff/addPatientFromFile.json',
         queueLimit: 1
     });
     
     $scope.close=function(){
-    	
-    	
-    	 uploader.clearQueue();
-    	
-    };
+    	$("#error_msg").text("");
+    	uploader.clearQueue();
+     };
 
+     $scope.isError=true;
     // FILTERS
-
-    uploader.filters.push({
+     uploader.filters.push({
         name: 'customFilter',
         fn: function(item /*{File|FileLikeObject}*/, options) {
             return this.queue.length < 10;
         }
     });
 
+     $('.modal-backdrop .fade').click(function(){
+    	 alert("dd");
+    	 uploader.clearQueue();
+     });
+     
     // CALLBACKS
 
     uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-        console.info('onWhenAddingFileFailed', item, filter, options);
+    	console.info('onWhenAddingFileFailed', item, filter, options);
     };
     uploader.onAfterAddingFile = function(fileItem) {
+    	$scope.isError=false;
         console.info('onAfterAddingFile', fileItem);
     };
     uploader.onAfterAddingAll = function(addedFileItems) {
@@ -264,21 +268,18 @@ adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope,
     };
     uploader.onCancelItem = function(fileItem, response, status, headers) {
         console.info('onCancelItem', fileItem, response, status, headers);
+        $("#uploadSuccessAlert").hide();
     };
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
-       
         $("#uploadSuccessStatus").html(response);
         $scope.updateList();
       
     };
     uploader.onCompleteAll = function() {
         console.info('onCompleteAll');
-      
-        $("#uploadSuccessAlert").show();
+       $("#uploadSuccessAlert").show();
         uploader.clearQueue();
-       
-        
         
     };
 

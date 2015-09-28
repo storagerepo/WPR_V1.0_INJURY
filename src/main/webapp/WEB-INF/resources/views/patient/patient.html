@@ -156,14 +156,14 @@
   <div class="modal-dialog">
     <div class="modal-content"  ng-controller="AppController" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Add Patient</h4>
       </div>
       <div class="modal-body" >
 
       <div class="btn btn-primary btn-file" >
        Browse .CSV File to Upload
-                    <input class="btn btn-primary" type="file" nv-file-select="" uploader="uploader" name="file"/>
+                    <input class="btn btn-primary" type="file" nv-file-select="" uploader="uploader" name="file" id="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
                    </div><br/><br/>
              <div id="uploadSuccessAlert" class="panel well" style="color:green;font-weight:bold;">
             <span id="uploadSuccessStatus"></span>
@@ -175,31 +175,36 @@
                                 <th ng-show="uploader.isHTML5" >Size</th>
                                 <th ng-show="uploader.isHTML5" >Progress</th>
                                 <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="item in uploader.queue" >
                                 <td><strong >{{ item.file.name }}</strong></td>
-                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:3 }} MB</td>
                                 <td ng-show="uploader.isHTML5">
                                     <div class="progress" style="margin-bottom: 0;">
                                         <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
                                  </div>
                                 </td>
                                 <td class="text-center">
-                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    <span ng-show="uploader.queue[0].isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span ng-show="uploader.queue[0].isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span><i class="glyphicon glyphicon-remove"></i></span>
                                 </td>
+                                <td><button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                    </button></td>
                             </tr>
                         </tbody>
+                        <span id="error_msg" class="error-text" ng-show="!uploader.getNotUploadedItems().length"></span>
                     </table>
       </div>
       <div class="modal-footer">
-      				<button type="button" class="btn btn-success" ng-click="uploader.queue[0].upload()" ng-disabled="uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue[0].isSuccess">
+      				<button type="button" class="btn btn-success" ng-click="uploader.queue[0].upload()" ng-class="{'button-disable':!uploader.getNotUploadedItems().length}" ng-disabled="!uploader.getNotUploadedItems().length">
                     <span class="glyphicon glyphicon-upload"></span> Upload
                     </button>
-                    <button type="button" class="btn btn-warning"  data-dismiss="modal" ng-click="uploader.queue[0].cancel()" >
+                    <button type="button" class="btn btn-warning" ng-click="uploader.queue[0].cancel()"  ng-class="{'button-disable':!uploader.queue[0].isUploading}" ng-disabled="!uploader.queue[0].isUploading" >
                     <span class="glyphicon glyphicon-ban-circle"></span> Cancel
                     </button>
                     <button type="button" class="btn btn-danger" ng-click="close()" data-dismiss="modal" >
@@ -212,3 +217,28 @@
   </div><!-- /.modal-dialog -->
 <!-- /.modal -->
 </div>
+<script>
+$(function(){
+	$("html,body").scrollTop(0);
+});
+$("#file").change(function(e) {
+	var ext = $("input#file").val().split(".").pop().toLowerCase();
+	
+
+	if($.inArray(ext, ["csv"]) == -1) {
+	
+		document.getElementById('error_msg').innerHTML = "Invalid file!";
+
+		var file=invalid;
+	return false;
+	}
+	else{
+		document.getElementById('error_msg').innerHTML = "";
+	}
+	    
+		return false;
+
+	});
+
+
+</script>
