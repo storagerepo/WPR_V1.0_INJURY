@@ -120,9 +120,16 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
 			$scope.patient= response.data.patientsForm;
 		 });
-		//setting doctor id from patient  
+		//setting doctor id from patient 
+		if($scope.patient.doctorId==0)
+			{
+		$scope.Appointments.doctorId="";
+		}
+	else
+		{
 		$scope.Appointments.doctorId=$scope.patient.doctorId;
-		$("#scheduledDate").val("");
+		}
+	$("#scheduledDate").val("");
 		$("#appointmentNotes").val("");
 		//getting doctor id
 		requestHandler.getRequest("Staff/getDoctorId.json","").then( function(response) {
