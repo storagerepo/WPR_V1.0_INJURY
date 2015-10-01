@@ -18,5 +18,7 @@
         <mapping class="com.deemsys.project.entity.CallLogs" />
         <mapping class="com.deemsys.project.entity.Patients" />
         <mapping class="com.deemsys.project.entity.CrashReports" />
+        <mapping class="com.deemsys.project.entity.Clinics" />
+        <mapping class="com.deemsys.project.entity.ClinicTimings" />
     </session-factory>
 </hibernate-configuration>

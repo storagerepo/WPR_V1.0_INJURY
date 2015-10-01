@@ -48,6 +48,7 @@ public class PatientsForm {
 	private String insuranceCompany;
 	private String policyNumber;
 	private String crashReportFileName;
+	private Integer patientStatus;
 	
 	public Integer getId() {
 		return id;
@@ -238,7 +239,12 @@ public class PatientsForm {
 	public void setPolicyNumber(String policyNumber) {
 		this.policyNumber = policyNumber;
 	}
-
+	public Integer getPatientStatus() {
+		return patientStatus;
+	}
+	public void setPatientStatus(Integer patientStatus) {
+		this.patientStatus = patientStatus;
+	}
 	public PatientsForm(Integer id, Integer callerId, Integer doctorId, String localReportNumber,
 			String crashSeverity, String reportingAgencyName,
 			String numberOfUnits, String unitInError, String country,
@@ -249,7 +255,7 @@ public class PatientsForm {
 			String medicalFacility, String localReportNumber2,
 			String unitInError1, String unitNumber1, String ownerName,
 			String ownerPhoneNumber, String damageScale,
-			String proofOfInsurance, String insuranceCompany, String policyNumber,String crashReportFileName) {
+			String proofOfInsurance, String insuranceCompany, String policyNumber,String crashReportFileName,Integer patientStatus) {
 		super();
 		this.id = id;
 		this.callerId = callerId;
@@ -283,6 +289,7 @@ public class PatientsForm {
 		this.insuranceCompany=insuranceCompany;
 		this.policyNumber=policyNumber;
 		this.crashReportFileName=crashReportFileName;
+		this.patientStatus=patientStatus;
 	}
 	public PatientsForm() {
 		super();

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.Clinics;
 import com.deemsys.project.entity.Doctors;
 import com.deemsys.project.entity.Patients;
 import com.deemsys.project.patients.PatientsDAO;
@@ -42,17 +43,9 @@ public class DoctorsService {
 		doctorss = doctorsDAO.getAll();
 		for (Doctors doctors : doctorss) {
 			// TODO: Fill the List
-			String workingDayEntity = doctors.getWorkingDays();
-			String[] workingDaysString = workingDayEntity.split(",");
-
 			DoctorsForm doctorsForm = new DoctorsForm(doctors.getId(),
-					doctors.getClinicName(), doctors.getDoctorName(),
-					doctors.getAddress(), doctors.getCity(),
-					doctors.getCountry(), doctors.getState(),
-					doctors.getCounty(), doctors.getZip(),
-					doctors.getOfficeNumber(), doctors.getFaxNumber(),
-					workingDaysString, InjuryConstants.convertToStringFormatTime(doctors.getOfficeHoursFromTime()), 
-					InjuryConstants.convertToStringFormatTime(doctors.getOfficeHoursToTime()), doctors.getDirection(),
+					doctors.getClinics().getClinicId(), doctors.getDoctorName(),
+					doctors.getEmailId(), doctors.getContactNumber(),doctors.getSpecialistIn(),
 					doctors.getNotes());
 			doctorsForms.add(doctorsForm);
 		}
@@ -66,18 +59,11 @@ public class DoctorsService {
 		doctors = doctorsDAO.get(getId);
 
 		DoctorsForm doctorsForm = new DoctorsForm();
-		String workingDayEntity = doctors.getWorkingDays();
-		String[] workingDaysString = workingDayEntity.split(",");
 
 		if (doctors != null) {
 			doctorsForm = new DoctorsForm(doctors.getId(),
-					doctors.getClinicName(), doctors.getDoctorName(),
-					doctors.getAddress(), doctors.getCity(),
-					doctors.getCountry(), doctors.getState(),
-					doctors.getCounty(), doctors.getZip(),
-					doctors.getOfficeNumber(), doctors.getFaxNumber(),
-					workingDaysString, InjuryConstants.convertToStringFormatTime(doctors.getOfficeHoursFromTime()), 
-					InjuryConstants.convertToStringFormatTime(doctors.getOfficeHoursToTime()), doctors.getDirection(),
+					doctors.getClinics().getClinicId(), doctors.getDoctorName(),
+					doctors.getEmailId(), doctors.getContactNumber(), doctors.getSpecialistIn(),
 					doctors.getNotes());
 		} else {
 			doctorsForm = new DoctorsForm();
@@ -90,22 +76,11 @@ public class DoctorsService {
 		// TODO: Convert Form to Entity Here
 
 		// Logic Starts
-		String[] workingDays = doctorsForm.getWorkingDays();
-		String workingDaysString = "";
-		for (int i = 0; i < workingDays.length; i++) {
-			if (!workingDays[i].trim().equals(""))
-				workingDaysString = workingDaysString + "," + workingDays[i];
-		}
-		Doctors doctors = new Doctors(doctorsForm.getClinicName(),
-				doctorsForm.getDoctorName(), doctorsForm.getAddress(),
-				doctorsForm.getCity(), doctorsForm.getCountry(),
-				doctorsForm.getState(), doctorsForm.getCounty(),
-				doctorsForm.getZip(), doctorsForm.getOfficeNumber(),
-				doctorsForm.getFaxNumber(), workingDaysString,
-				InjuryConstants.convertToDateFormatTime(doctorsForm
-						.getOfficeHoursFromTime()),
-				InjuryConstants.convertToDateFormatTime(doctorsForm
-						.getOfficeHoursToTime()), doctorsForm.getDirection(),
+		Clinics clinics= new Clinics();
+		clinics.setClinicId(doctorsForm.getClinicId());
+		Doctors doctors = new Doctors(clinics,
+				doctorsForm.getDoctorName(), doctorsForm.getEmailId(),
+				doctorsForm.getContactNumber(), doctorsForm.getSpecialistIn(),
 				doctorsForm.getNotes(), null);
 		doctors.setId(doctorsForm.getId());
 		// Logic Ends
@@ -118,22 +93,11 @@ public class DoctorsService {
 	public int saveDoctors(DoctorsForm doctorsForm)
 
 	{
-		String[] workingDays = doctorsForm.getWorkingDays();
-		String workingDaysString = "";
-		for (int i = 0; i < workingDays.length; i++) {
-			if (!workingDays[i].trim().equals(""))
-				workingDaysString = workingDaysString + "," + workingDays[i];
-		}
-		Doctors doctors = new Doctors(doctorsForm.getClinicName(),
-				doctorsForm.getDoctorName(), doctorsForm.getAddress(),
-				doctorsForm.getCity(), doctorsForm.getCountry(),
-				doctorsForm.getState(), doctorsForm.getCounty(),
-				doctorsForm.getZip(), doctorsForm.getOfficeNumber(),
-				doctorsForm.getFaxNumber(), workingDaysString,
-				InjuryConstants.convertToDateFormatTime(doctorsForm
-						.getOfficeHoursFromTime()),
-				InjuryConstants.convertToDateFormatTime(doctorsForm
-						.getOfficeHoursToTime()), doctorsForm.getDirection(),
+		Clinics clinics= new Clinics();
+		clinics.setClinicId(doctorsForm.getClinicId());
+		Doctors doctors = new Doctors(clinics,
+				doctorsForm.getDoctorName(), doctorsForm.getEmailId(),
+				doctorsForm.getContactNumber(), doctorsForm.getSpecialistIn(),
 				doctorsForm.getNotes(), null);
 
 		doctorsDAO.save(doctors);
@@ -145,22 +109,11 @@ public class DoctorsService {
 		// TODO: Convert Form to Entity Here
 
 		// Logic Starts
-		String[] workingDays = doctorsForm.getWorkingDays();
-		String workingDaysString = "";
-		for (int i = 0; i < workingDays.length; i++) {
-			if (!workingDays[i].trim().equals(""))
-				workingDaysString = workingDaysString + "," + workingDays[i];
-		}
-		Doctors doctors = new Doctors(doctorsForm.getClinicName(),
-				doctorsForm.getDoctorName(), doctorsForm.getAddress(),
-				doctorsForm.getCity(), doctorsForm.getCountry(),
-				doctorsForm.getState(), doctorsForm.getCounty(),
-				doctorsForm.getZip(), doctorsForm.getOfficeNumber(),
-				doctorsForm.getFaxNumber(), workingDaysString,
-				InjuryConstants.convertToDateFormatTime(doctorsForm
-						.getOfficeHoursFromTime()),
-				InjuryConstants.convertToDateFormatTime(doctorsForm
-						.getOfficeHoursToTime()), doctorsForm.getDirection(),
+		Clinics clinics= new Clinics();
+		clinics.setClinicId(doctorsForm.getClinicId());
+		Doctors doctors = new Doctors(clinics,
+				doctorsForm.getDoctorName(), doctorsForm.getEmailId(),
+				doctorsForm.getContactNumber(), doctorsForm.getSpecialistIn(),
 				doctorsForm.getNotes(), null);
 		doctors.setId(doctorsForm.getId());
 		// Logic Ends
@@ -194,19 +147,12 @@ public class DoctorsService {
 
 		doctorss = doctorsDAO.getAll();
 		for (Doctors doctors : doctorss) {
-			String workingDayEntity = doctors.getWorkingDays();
-			String[] workingDaysString = workingDayEntity.split(",");
-
+			
 			// TODO: Fill the List
 			DoctorsForm doctorsForm = new DoctorsForm(doctors.getId(),
-					doctors.getClinicName(), doctors.getDoctorName(),
-					doctors.getAddress(), doctors.getCity(),
-					doctors.getCountry(), doctors.getState(),
-					doctors.getCounty(), doctors.getZip(),
-					doctors.getOfficeNumber(), doctors.getFaxNumber(),
-					workingDaysString, doctors.getOfficeHoursFromTime()
-							.toString(), doctors.getOfficeHoursToTime()
-							.toString(), doctors.getDirection(),
+					doctors.getClinics().getClinicId(), doctors.getDoctorName(),
+					doctors.getEmailId(), doctors.getContactNumber(),
+					doctors.getSpecialistIn(), 
 					doctors.getNotes());
 			doctorsForms.add(doctorsForm);
 			count++;
