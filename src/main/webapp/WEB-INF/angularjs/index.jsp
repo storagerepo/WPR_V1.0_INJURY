@@ -12,6 +12,7 @@
     <!-- endbower -->
     <!-- endbuild -->
     
+    
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/sb-admin-2.css">
@@ -35,8 +36,6 @@
     <script src="resources/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="resources/components/metisMenu/dist/metisMenu.min.js"></script>
     <script src="resources/components/Chart.js/Chart.min.js"></script>
-    <script type="text/javascript" src="jquery-1.2.6.min.js"></script>
-    <script src="jquery-1.8.0.min.js"></script>
     <script src="resources/components/angular-utils-pagination/dirPagination.js"></script> 
      <script src="resources/components/angular-file-upload/angular-file-upload.min.js"></script>
 	<!-- Flash -->
@@ -50,6 +49,10 @@
         <script src="scripts/app.js"></script>
         <script src="js/sb-admin-2.js"></script>
     <!-- endbuild -->
+	
+	<!-- Bootstrap Toggle -->
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
 	
 	<!-- Load For Menu -->
 	<script src="resources/scripts/services/requestHandler.js"></script>

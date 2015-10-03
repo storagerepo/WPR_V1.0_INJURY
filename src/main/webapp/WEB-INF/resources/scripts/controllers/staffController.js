@@ -154,7 +154,7 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 
 
 
-adminApp.controller('SaveStaffController', function($scope,$http,$location,$state,requestHandler,successMessageService) {
+adminApp.controller('SaveStaffController', function($scope,$http,$location,$state,requestHandler,successMessageService,Flash) {
 	
 	$("#username_exists").text("");
 	$scope.options=true;
@@ -167,9 +167,7 @@ adminApp.controller('SaveStaffController', function($scope,$http,$location,$stat
 			if(isNew==0){
 				$("#username_exists").text("");
 			 requestHandler.postRequest("Admin/saveUpdateStaff.json",$scope.staff).then(function(response){
-				  successMessageService.setMessage("You have Successfully Added!");
-		          successMessageService.setIsError(0);
-		          successMessageService.setIsSuccess(1);
+				  Flash.create('success', "You have Successfully Added!");
 				  $location.path('dashboard/staff');
 				});
 			}

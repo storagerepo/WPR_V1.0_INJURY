@@ -249,6 +249,58 @@ angular
           url:'/EditStaff/:id',
           title:'Edit Caller'
     })//End Staff
+    .state('dashboard.clinic',{
+    	resolve: {
+            loadMyFile:function($ocLazyLoad) {
+              return $ocLazyLoad.load({
+                  name:'sbAdminApp',
+                  files:['scripts/controllers/clinicController.js',
+                         'https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css',
+                         'https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js']
+              });
+            }
+          },
+       controller:'ShowClinicController',
+       templateUrl:'views/clinic/clinic.html',
+       url:'/clinic'
+    })
+    .state('dashboard.add-clinic',{
+    	 resolve: {
+            loadMyFile:function($ocLazyLoad) {
+              
+              return $ocLazyLoad.load({
+                  name:'sbAdminApp',
+                  files:[
+                         'scripts/controllers/clinicController.js',
+                         'components/datetime/datetimepicker.css',
+                         'components/datetime/moment.js',
+                         'components/datetime/datetimepicker.js']
+              });
+            }
+          },
+        controller:'SaveClinicController',
+        templateUrl:'views/clinic/add-clinic.html',
+        url:'/add-clinic'
+       
+    }).state('dashboard.edit-clinic/:id',{
+   	 resolve: {
+         loadMyFile:function($ocLazyLoad) {
+           
+           return $ocLazyLoad.load({
+               name:'sbAdminApp',
+               files:[
+                      'scripts/controllers/clinicController.js',
+                      'components/datetime/datetimepicker.css',
+                      'components/datetime/moment.js',
+                      'components/datetime/datetimepicker.js']
+           });
+         }
+       },
+     controller:'EditClinicController',
+     templateUrl:'views/clinic/add-clinic.html',
+     url:'/edit-clinic/:id'
+    
+ })
     //Start Doctor
     .state('dashboard.doctor',{
         

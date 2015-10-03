@@ -118,26 +118,7 @@ adminApp.controller('EditDoctorController', function($scope,$http,$location,$sta
     };
 });
 
-// Directive For Comapre From and To Time
-adminApp.directive('higherThan',function() {
-return {
-require: "ngModel",
-scope: {
-otherModelValue: "=higherThan"
-},
-link: function(scope, element, attributes, ngModel) {
 
-ngModel.$validators.higherThan = function(modelValue) {
-	
-return modelValue > scope.otherModelValue;
-};
-
-scope.$watch("otherModelValue", function() {
-ngModel.$validate();
-});
-}
-};
-});
 
 //Service for exchange success message
 angular.module('sbAdminApp').service('successMessageService', function() {

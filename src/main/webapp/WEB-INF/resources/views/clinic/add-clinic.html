@@ -1,0 +1,442 @@
+<link rel="stylesheet" href="resources/components/datetime/datetimepicker.css"></link>
+<script src="resources/components/datetime/datetimepicker.js"></script>
+<script src="resources/components/datetime/moment.js"></script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <a ui-sref="dashboard.clinic" class="btn-sm btn-primary pull-right margin-top-40">Back to the list</a>
+        <h2 class="page-header">{{title}}<span ng-hide="title=='Add Doctor'">&nbsp;-&nbsp;{{clinic.clinicName}}</span></h2>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+     <form id="myForm" name="myForm" novalidate>
+   
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Enter Clinic Details
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label>Clinic Name</label>
+                                    <input type="text" name="clinicName" class="form-control" ng-model="clinic.clinicName" placeholder="Enter ClinicName" required>
+                                    <span class="error-container" ng-show="myForm.clinicName.$dirty && myForm.clinicName.$invalid">
+                                <span style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter the ClinicName</span>
+                              </span><br>
+                                 </div>    
+                                 <div class="col-md-6">
+                                <label>Address</label>
+                                    <input type="text" name="address" class="form-control" ng-model="clinic.address" placeholder="Enter Address" required>
+                                    <span class="error-container" ng-show="myForm.address.$dirty && myForm.address.$invalid">
+                                <span style="color:red" ng-show="myForm.address.$error.required">Please Enter the Address</span>
+                              </span><br/>
+                               </div>
+                           </div>
+                           <div class="col-md-12">
+                           <div class="col-md-6">
+                               <label>City</label>
+                                    <input type="text" name="city" class="form-control" ng-model="clinic.city" placeholder="Enter City" required>
+                                    <span class="error-container" ng-show="myForm.city.$dirty && myForm.city.$invalid">
+                                <span style="color:red" ng-show="myForm.city.$error.required">Please Enter the City</span>
+                              </span>
+                                    <br/>
+                              </div>
+                            <div class="col-md-6">
+                      			<label>Country</label>
+                           <select class="form-control" ng-init="clinic.country='United States'" ng-model="clinic.country" name="country" id="country" required>
+  							  <option value="">-- Select Country --</option>
+  							  <option value="United States">United States</option>
+                              	</select>
+                             <span class="error-container" ng-show="myForm.country.$dirty && myForm.country.$invalid">
+                              				<span style="color:red" ng-show="myForm.country.$error.required">Please Select the Country</span>
+                                     </span>
+                           <br>
+                      		</div>
+                                 </div>
+                                 <div class="col-md-12">  
+                                 <div class="col-md-6">
+                                   <label>State</label>
+                           <select class="form-control" ng-init="clinic.state='Ohio'" ng-model="clinic.state" name="state" id="state" required>
+  							  <option value="">-- Select State --</option>
+  							  <option value="Ohio">Ohio</option>
+                              </select> 
+                             <span class="error-container" ng-show="myForm.state.$dirty && myForm.state.$invalid">
+                              
+                                       <span style="color:red" ng-show="myForm.state.$error.required">Please Select the State</span>
+                              </span>  
+                           <br> 
+                           </div> 
+                           <div class="col-md-6">
+                                 <label>County</label>
+                           <select class="form-control" ng-model="clinic.county" name="county" id="county" required>
+  							  <option value="">-- Select County --</option>
+  							  <option value="Adams">Adams</option>
+                              <option value="Allen">Allen</option>
+                               <option value="Ashland">Ashland</option>
+                             <option value="Ashtabula">Ashtabula</option>
+                             <option value="Athens">Athens</option>
+                             <option value="Auglaize">Auglaize</option>
+                             <option value="Belmont">Belmont</option>
+                             <option value="Brown">Brown</option>
+                              <option value="Butler">Butler</option>
+                              <option value="Carroll">Carroll</option>
+                              <option value="Champaign">Champaign</option>
+                              <option value="Clark">Clark</option>
+                              <option value="Clermont">Clermont</option>
+                              <option value="Clinton">Clinton</option>
+                               <option value="Columbiana">Columbiana</option>
+                              <option value="Coshocton">Coshocton</option>
+                             <option value="Crawford">Crawford</option>
+                              <option value="Cuyahoga">Cuyahoga</option>
+                              <option value="Darke">Darke</option>
+                              <option value="Defiance">Defiance</option>
+                              <option value="Delaware">Delaware</option>
+                              <option value="Erie">Erie</option>
+                              <option value="Fairfield">Fairfield</option>
+                              <option value="Fayette">Fayette</option>
+                              <option value="Franklin">Franklin</option>
+                              <option value="Fulton">Fulton</option>
+                              <option value="Gallia">Gallia</option>
+                               <option value="Geauga">Geauga</option>
+                                <option value="Greene">Greene</option>
+                                <option value="Guernsey">Guernsey</option>
+                                <option value="Hamilton">Hamilton</option>
+                                <option value="Hancock">Hancock</option>
+                                <option value="Hardin">Hardin</option>
+                                <option value="Harrison">Harrison</option>
+                                <option value="Henry">Henry</option>
+                                <option value="Highland">Highland</option>
+                                <option value="Hocking">Hocking</option>
+                                <option value="Holmes">Holmes</option>
+                                <option value="Huron">Huron</option>
+                                <option value="Jackson">Jackson</option>
+                                <option value="Jefferson">Jefferson</option>
+                                <option value="Knox">Knox</option>
+                                <option value="Lake">Lake</option>
+                                <option value="Lawrence">Lawrence</option>
+                                <option value="Licking">Licking</option>
+                                <option value="Logan">Logan</option>
+                                <option value="Lorain">Lorain</option>
+                                <option value="Lucas">Lucas</option>
+                                <option value="Madison">Madison</option>
+                                <option value="Mahoning">Mahoning</option>
+                                <option value="Marion">Marion</option>
+                                <option value="Medina">Medina</option>
+                                <option value="Miegs">Miegs</option>
+                                <option value="Mercer">Mercer</option>
+                                <option value="Miami">Miami</option>
+                                <option value="Monroe">Monroe</option>
+                                <option value="Montgomery">Montgomery</option>
+                                <option value="Morgan">Morgan</option>
+                                <option value="Morrow">Morrow</option>
+                                <option value="Muskingum">Muskingum</option>
+                                <option value="Noble">Noble</option>
+                                <option value="Ottawa">Ottawa</option>
+                                <option value="Paulding">Paulding</option>
+                                <option value="Perry">Perry</option>
+                                <option value="Pickaway">Pickaway</option>
+                                <option value="Pike">Pike</option>
+                                <option value="Portage">Portage</option>
+                                <option value="Preble">Preble</option>
+                                <option value="Putnam">Putnam</option>
+                                <option value="Richland">Richland</option>
+                                <option value="Ross">Ross</option>
+                                <option value="Sandusky">Sandusky</option>
+                                <option value="Scioto">Scioto</option>
+                                <option value="Seneca">Seneca</option>
+                                <option value="Shelby">Shelby</option>
+                                <option value="Stark">Stark</option>
+                                <option value="Summit">Summit</option>
+                                <option value="Trumbull">Trumbull</option>
+                                <option value="Tuscarawas">Tuscarawas</option>
+                                <option value="Union">Union</option>
+                                <option value="VanWert">Van Wert</option>
+                                <option value="Vinton">Vinton</option>
+                                <option value="Warren">Warren</option>
+                                <option value="Washington">Washington</option>
+                                <option value="Wayne">Wayne</option>
+                                <option value="Williams">Williams</option>
+                                <option value="Wood">Wood</option>
+                                <option value="Wyandot">Wyandot</option>
+                                </select>
+                            <span class="error-container" ng-show="myForm.county.$dirty && myForm.county.$invalid">
+                              
+                                       <span style="color:red" ng-show="myForm.county.$error.required">Please Select the County</span>
+                                       </span>
+                                     <br>  
+                           </div>
+                           </div>
+                         <div class="col-md-12">
+                         <div class="col-md-6">
+                             <label>Zip</label>
+                                    <input type="text" name="zip" class="form-control" ng-model="clinic.zipcode" placeholder="Enter Zip" required maxlength="5">
+                                    <span class="error-container" ng-show="myForm.zip.$dirty && myForm.zip.$invalid">
+                                <span style="color:red" ng-show="myForm.zip.$error.required">Please Enter the Zip</span>
+                              </span>
+                                    <br/>
+                              </div>
+                                <div class="col-md-6">
+                                 <label>Office Number</label>
+                                    <input type="text" name="officeNumber" class="form-control" ng-model="clinic.officeNumber" placeholder="Enter Office Number" required>
+                                    <span class="error-container" ng-show="myForm.officeNumber.$dirty && myForm.officeNumber.$invalid">
+                                <span style="color:red" ng-show="myForm.officeNumber.$error.required">Please Enter the Office Number</span>
+                              </span>
+                                    <br/>
+                                </div>
+                              </div>
+                              <div class="col-md-12">
+                              <div class="col-md-6">
+                                   <label>Fax Number</label>
+                                    <input type="text" name="faxNumber" class="form-control" ng-model="clinic.faxNumber" placeholder="Enter Fax Number">
+                                    <br/>
+                               </div>
+                                   <div class="col-md-6">
+                                   
+                                    </div>
+                              </div>
+                              <div class="col-md-12">
+                              <div class="col-md-12">
+                               <table width="100%" class="table">
+                               <thead>
+                               <tr>
+                               <th>Day</th><th>Start Time</th><th>End Time</th><th>Is Working Day</th>
+                               </tr>
+                               </thead>
+                               <tbody>
+                               <tr><td>Sunday</td>
+                               <td class="col-md-4">
+                               <div class="input-group">
+                             	<input type="text" style="" name="sunStartTime" id="sunStartTime" class="form-control"  ng-model="clinic.clinicTimingList[0].startTime" placeholder="Enter Start Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              <span class="error-container" ng-show="myForm.sunStartTime.$dirty && myForm.sunStartTime.$invalid">
+                                <span style="color:red" ng-show="myForm.sunStartTime.$error.required">Please Enter the Start Time</span>
+                              </span> 
+                              </td>
+                              <td class="col-md-4"> <div class="input-group">
+                             <input type="text" style="" name="sunEndTime" id="sunEndTime" class="form-control" higher-than="clinic.clinicTimingList[0].startTime"  ng-model="clinic.clinicTimingList[0].endTime" placeholder="Enter End Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                               <span class="error-container" ng-show="myForm.sunEndTime.$dirty && myForm.sunEndTime.$invalid">
+                                <span style="color:red" ng-show="myForm.sunEndTime.$error.required">Please Enter the End Time</span>
+                                <span style="color:red" ng-show="myForm.sunEndTime.$error.higherThan">End Time Should be greater</span>
+                              </span><br>
+                              
+                              </td>
+                              <td>
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[0].isWorkingDay"  ng-true-value="1" ng-false-value="0">
+                              </td></tr>
+                              <tr><td>Monday</td>
+                               <td class="col-md-4">
+                               <div class="input-group">
+                             	<input type="text" style="" name="monStartTime" id="monStartTime" class="form-control"  ng-model="clinic.clinicTimingList[1].startTime" placeholder="Enter Start Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              </td>
+                              <td class="col-md-4"> <div class="input-group">
+                             <input type="text" style="" name="monEndTime" id="monEndTime" class="form-control" higher-than="clinic.clinicTimingList[1].startTime"  ng-model="clinic.clinicTimingList[1].endTime" placeholder="Enter End Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              </td>
+                              <td>
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[1].isWorkingDay" ng-true-value="1" ng-false-value="0">
+                              </td></tr>
+                              <tr><td>Tuesday</td>
+                               <td class="col-md-4">
+                               <div class="input-group">
+                             	<input type="text" style="" name="tueStartTime" id="tueStartTime" class="form-control"  ng-model="clinic.clinicTimingList[2].startTime" placeholder="Enter Start Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              </td>
+                              <td class="col-md-4"> <div class="input-group">
+                             <input type="text" style="" name="tueEndTime" id="tueEndTime" class="form-control" higher-than="clinic.clinicTimingList[2].startTime"  ng-model="clinic.clinicTimingList[2].endTime" placeholder="Enter End Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              </td>
+                              <td>
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[2].isWorkingDay" ng-true-value="1" ng-false-value="0">
+                              </td></tr>
+                              <tr><td>Wednesday</td>
+                               <td class="col-md-4">
+                               <div class="input-group">
+                             	<input type="text" style="" name="wedStartTime" id="wedStartTime" class="form-control"  ng-model="clinic.clinicTimingList[3].startTime" placeholder="Enter Start Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              </td>
+                              <td class="col-md-4"> <div class="input-group">
+                             <input type="text" style="" name="wedEndTime" id="wedEndTime" class="form-control" higher-than="clinic.clinicTimingList[3].startTime"  ng-model="clinic.clinicTimingList[3].endTime" placeholder="Enter End Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              </td>
+                              <td>
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[3].isWorkingDay" ng-true-value="1" ng-false-value="0">
+                              </td></tr>
+                              <tr><td>Thursday</td>
+                               <td class="col-md-4">
+                               <div class="input-group">
+                             	<input type="text" style="" name="thuStartTime" id="thuStartTime" class="form-control"  ng-model="clinic.clinicTimingList[4].startTime" placeholder="Enter Start Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              </td>
+                              <td class="col-md-4"> <div class="input-group">
+                             <input type="text" style="" name="thuEndTime" id="thuEndTime" class="form-control" higher-than="clinic.clinicTimingList[4].startTime"  ng-model="clinic.clinicTimingList[4].endTime" placeholder="Enter End Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              </td>
+                              <td>
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[4].isWorkingDay" ng-true-value="1" ng-false-value="0">
+                              </td></tr>
+                              <tr><td>Friday</td>
+                               <td class="col-md-4">
+                               <div class="input-group">
+                             	<input type="text" style="" name="friStartTime" id="friStartTime" class="form-control"  ng-model="clinic.clinicTimingList[5].startTime" placeholder="Enter Start Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              </td>
+                              <td class="col-md-4"> <div class="input-group">
+                             <input type="text" style="" name="friEndTime" id="friEndTime" class="form-control" higher-than="clinic.clinicTimingList[5].startTime"  ng-model="clinic.clinicTimingList[5].endTime" placeholder="Enter End Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              </td>
+                              <td>
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[5].isWorkingDay" ng-true-value="1" ng-false-value="0">
+                              </td></tr>
+                              <tr><td>Saturday</td>
+                               <td class="col-md-4">
+                               <div class="input-group">
+                             	<input type="text" style="" name="satStartTime" id="satStartTime" class="form-control"  ng-model="clinic.clinicTimingList[6].startTime" placeholder="Enter Start Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              </td>
+                              <td class="col-md-4"> <div class="input-group">
+                             <input type="text" style="" name="satEndTime" id="satEndTime" class="form-control" higher-than="clinic.clinicTimingList[6].startTime"  ng-model="clinic.clinicTimingList[6].endTime" placeholder="Enter End Time" required>
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              </td>
+                              <td>
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[6].isWorkingDay" ng-true-value="1" ng-false-value="0">
+                              </td></tr>
+                               </tbody>
+                               </table> 
+                               </div>   
+                        </div>
+                            <div class="col-md-12">
+                            <div class="col-md-12">
+                                    <label>Direction</label>
+                                     <textarea class="form-control height-100" ng-model="clinic.directions" name="direction" placeholder="Enter Direction"> </textarea>
+                               <br>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                            <div class="col-md-12">
+                                    <label>Notes</label>
+                                     <textarea class="form-control height-100" ng-model="clinic.notes" name="notes" placeholder="Enter Notes"> </textarea>
+                               </div>
+                             </div>
+                </div>
+            </div>
+            <div class="text-right" style="margin-right:30px;">
+                <a class="btn btn-success" ng-show='options'   ng-click="saveClinic()">Save</a>
+            	 <a class="btn btn-success" ng-show='!options' ng-click="updateClinic()">Update</a>
+              <a ui-sref="dashboard.clinic"  class="btn btn-danger" >Cancel</a><br/><br/>
+           </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+         </form>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<style>
+#sunday_div, #monday_div, #tuesday_div, #wednesday_div, #thusday_div, #friday_div, #saturaday_div{
+ border-bottom: 1px solid green;
+}
+</style>
+ <script>
+ $(function(){
+ 	$("html,body").scrollTop(0);
+ });
+
+$('#sunStartTime').datetimepicker({
+			pickTime : true,
+			pickDate:false,
+			format:'HH:mm'
+	});
+$('#sunEndTime').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'HH:mm'
+	
+});
+$('#monStartTime').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'HH:mm'
+});
+$('#monEndTime').datetimepicker({
+pickTime : true,
+pickDate:false,
+format:'HH:mm'
+
+});
+$('#tueStartTime').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'HH:mm'
+});
+$('#tueEndTime').datetimepicker({
+pickTime : true,
+pickDate:false,
+format:'HH:mm'
+});
+$('#wedStartTime').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'HH:mm'
+});
+$('#wedEndTime').datetimepicker({
+pickTime : true,
+pickDate:false,
+format:'HH:mm'
+
+});
+$('#thuStartTime').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'HH:mm'
+});
+$('#thuEndTime').datetimepicker({
+pickTime : true,
+pickDate:false,
+format:'HH:mm'
+
+});
+$('#friStartTime').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'HH:mm'
+});
+$('#friEndTime').datetimepicker({
+pickTime : true,
+pickDate:false,
+format:'HH:mm'
+
+});
+$('#satStartTime').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'HH:mm'
+});
+$('#satEndTime').datetimepicker({
+pickTime : true,
+pickDate:false,
+format:'HH:mm'
+
+});
+</script> 
