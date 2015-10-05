@@ -8,4 +8,5 @@ import com.deemsys.project.entity.Clinics;
 public interface ClinicsDAO extends IGenericDAO<Clinics>{
 
 	public List<Clinics> getClinicsLists();
+	
 }

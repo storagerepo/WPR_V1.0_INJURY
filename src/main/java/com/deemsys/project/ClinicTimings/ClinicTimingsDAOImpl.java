@@ -3,6 +3,7 @@ package com.deemsys.project.ClinicTimings;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,6 +140,14 @@ public class ClinicTimingsDAOImpl implements ClinicTimingsDAO{
 		// TODO Auto-generated method stub
 		List<ClinicTimings> clinicTimings=this.sessionFactory.getCurrentSession().createCriteria(ClinicTimings.class).add(Restrictions.eq("id.clinicId", clinicId)).list();
 		return clinicTimings;
+	}
+
+	@Override
+	public Integer deleteClinicTimingsByClinicId(Integer clinicId) {
+		// TODO Auto-generated method stub
+		Query query=this.sessionFactory.getCurrentSession().createQuery("DELETE FROM ClinicTimings WHERE id.clinicId="+clinicId);
+		query.executeUpdate();
+		return null;
 	}
 
 }

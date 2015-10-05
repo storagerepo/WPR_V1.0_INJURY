@@ -225,7 +225,7 @@
                                <span class="error-container" ng-show="myForm.sunEndTime.$dirty && myForm.sunEndTime.$invalid">
                                 <span style="color:red" ng-show="myForm.sunEndTime.$error.required">Please Enter the End Time</span>
                                 <span style="color:red" ng-show="myForm.sunEndTime.$error.higherThan">End Time Should be greater</span>
-                              </span><br>
+                              </span>
                               
                               </td>
                               <td>
@@ -237,11 +237,18 @@
                              	<input type="text" style="" name="monStartTime" id="monStartTime" class="form-control"  ng-model="clinic.clinicTimingList[1].startTime" placeholder="Enter Start Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
+                              <span class="error-container" ng-show="myForm.monStartTime.$dirty && myForm.monStartTime.$invalid">
+                                <span style="color:red" ng-show="myForm.monStartTime.$error.required">Please Enter the Start Time</span>
+                              </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
                              <input type="text" style="" name="monEndTime" id="monEndTime" class="form-control" higher-than="clinic.clinicTimingList[1].startTime"  ng-model="clinic.clinicTimingList[1].endTime" placeholder="Enter End Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
+                              <span class="error-container" ng-show="myForm.monEndTime.$dirty && myForm.monEndTime.$invalid">
+                                <span style="color:red" ng-show="myForm.monEndTime.$error.required">Please Enter the End Time</span>
+                                <span style="color:red" ng-show="myForm.monEndTime.$error.higherThan">End Time Should be greater</span>
+                              </span>
                               </td>
                               <td>
                              <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[1].isWorkingDay" ng-true-value="1" ng-false-value="0">
@@ -252,11 +259,18 @@
                              	<input type="text" style="" name="tueStartTime" id="tueStartTime" class="form-control"  ng-model="clinic.clinicTimingList[2].startTime" placeholder="Enter Start Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
+                              <span class="error-container" ng-show="myForm.tueStartTime.$dirty && myForm.tueStartTime.$invalid">
+                                <span style="color:red" ng-show="myForm.tueStartTime.$error.required">Please Enter the Start Time</span>
+                              </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
                              <input type="text" style="" name="tueEndTime" id="tueEndTime" class="form-control" higher-than="clinic.clinicTimingList[2].startTime"  ng-model="clinic.clinicTimingList[2].endTime" placeholder="Enter End Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
+                              <span class="error-container" ng-show="myForm.tueEndTime.$dirty && myForm.tueEndTime.$invalid">
+                                <span style="color:red" ng-show="myForm.tueEndTime.$error.required">Please Enter the End Time</span>
+                                <span style="color:red" ng-show="myForm.tueEndTime.$error.higherThan">End Time Should be greater</span>
+                              </span>
                               </td>
                               <td>
                              <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[2].isWorkingDay" ng-true-value="1" ng-false-value="0">
@@ -267,11 +281,18 @@
                              	<input type="text" style="" name="wedStartTime" id="wedStartTime" class="form-control"  ng-model="clinic.clinicTimingList[3].startTime" placeholder="Enter Start Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
+                              <span class="error-container" ng-show="myForm.wedStartTime.$dirty && myForm.wedStartTime.$invalid">
+                                <span style="color:red" ng-show="myForm.wedStartTime.$error.required">Please Enter the Start Time</span>
+                              </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
                              <input type="text" style="" name="wedEndTime" id="wedEndTime" class="form-control" higher-than="clinic.clinicTimingList[3].startTime"  ng-model="clinic.clinicTimingList[3].endTime" placeholder="Enter End Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
+                              <span class="error-container" ng-show="myForm.wedEndTime.$dirty && myForm.wedEndTime.$invalid">
+                                <span style="color:red" ng-show="myForm.wedEndTime.$error.required">Please Enter the End Time </span>
+                                <span style="color:red" ng-show="myForm.wedEndTime.$error.higherThan"> End Time Should be greater</span>
+                              </span>
                               </td>
                               <td>
                              <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[3].isWorkingDay" ng-true-value="1" ng-false-value="0">
@@ -282,11 +303,18 @@
                              	<input type="text" style="" name="thuStartTime" id="thuStartTime" class="form-control"  ng-model="clinic.clinicTimingList[4].startTime" placeholder="Enter Start Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
+                              <span class="error-container" ng-show="myForm.thuStartTime.$dirty && myForm.thuStartTime.$invalid">
+                                <span style="color:red" ng-show="myForm.thuStartTime.$error.required">Please Enter the Start Time</span>
+                              </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
                              <input type="text" style="" name="thuEndTime" id="thuEndTime" class="form-control" higher-than="clinic.clinicTimingList[4].startTime"  ng-model="clinic.clinicTimingList[4].endTime" placeholder="Enter End Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
+                              <span class="error-container" ng-show="myForm.thuEndTime.$dirty && myForm.thuEndTime.$invalid">
+                                <span style="color:red" ng-show="myForm.thuEndTime.$error.required">Please Enter the End Time</span>
+                                <span style="color:red" ng-show="myForm.thuEndTime.$error.higherThan">End Time Should be greater</span>
+                              </span>
                               </td>
                               <td>
                              <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[4].isWorkingDay" ng-true-value="1" ng-false-value="0">
@@ -297,11 +325,18 @@
                              	<input type="text" style="" name="friStartTime" id="friStartTime" class="form-control"  ng-model="clinic.clinicTimingList[5].startTime" placeholder="Enter Start Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
+                              <span class="error-container" ng-show="myForm.friStartTime.$dirty && myForm.friStartTime.$invalid">
+                                <span style="color:red" ng-show="myForm.friStartTime.$error.required">Please Enter the Start Time</span>
+                              </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
                              <input type="text" style="" name="friEndTime" id="friEndTime" class="form-control" higher-than="clinic.clinicTimingList[5].startTime"  ng-model="clinic.clinicTimingList[5].endTime" placeholder="Enter End Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
+                              <span class="error-container" ng-show="myForm.friEndTime.$dirty && myForm.friEndTime.$invalid">
+                                <span style="color:red" ng-show="myForm.friEndTime.$error.required">Please Enter the End Time</span>
+                                <span style="color:red" ng-show="myForm.friEndTime.$error.higherThan">End Time Should be greater</span>
+                              </span>
                               </td>
                               <td>
                              <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[5].isWorkingDay" ng-true-value="1" ng-false-value="0">
@@ -312,11 +347,18 @@
                              	<input type="text" style="" name="satStartTime" id="satStartTime" class="form-control"  ng-model="clinic.clinicTimingList[6].startTime" placeholder="Enter Start Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
+                              <span class="error-container" ng-show="myForm.satStartTime.$dirty && myForm.satStartTime.$invalid">
+                                <span style="color:red" ng-show="myForm.satStartTime.$error.required">Please Enter the Start Time</span>
+                              </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
                              <input type="text" style="" name="satEndTime" id="satEndTime" class="form-control" higher-than="clinic.clinicTimingList[6].startTime"  ng-model="clinic.clinicTimingList[6].endTime" placeholder="Enter End Time" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
+                              <span class="error-container" ng-show="myForm.satEndTime.$dirty && myForm.satEndTime.$invalid">
+                                <span style="color:red" ng-show="myForm.satEndTime.$error.required">Please Enter the End Time</span>
+                                <span style="color:red" ng-show="myForm.satEndTime.$error.higherThan">End Time Should be greater</span>
+                              </span>
                               </td>
                               <td>
                              <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[6].isWorkingDay" ng-true-value="1" ng-false-value="0">
@@ -341,8 +383,8 @@
                 </div>
             </div>
             <div class="text-right" style="margin-right:30px;">
-                <a class="btn btn-success" ng-show='options'   ng-click="saveClinic()">Save</a>
-            	 <a class="btn btn-success" ng-show='!options' ng-click="updateClinic()">Update</a>
+                <a class="btn btn-success" ng-show='options' ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-click="saveClinic()">Save</a>
+            	 <a class="btn btn-success" ng-show='!options' ng-class="{'button-disable':myForm.$invalid || isClean()}" ng-disabled='isClean() || myForm.$invalid' ng-click="updateClinic()">Update</a>
               <a ui-sref="dashboard.clinic"  class="btn btn-danger" >Cancel</a><br/><br/>
            </div>
             <!-- /.panel-body -->

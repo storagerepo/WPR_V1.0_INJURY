@@ -65,4 +65,25 @@ public class ClinicsController {
 		
 		return "/returnPage";
 	}
+	
+	/**
+	 * Delete Clinic
+	 * @param clinicId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/deleteClinic",method=RequestMethod.POST)
+	public String deleteClinic(@RequestParam("clinicId") Integer clinicId,Model model){
+		
+		Integer status=clinicsService.deleteClinic(clinicId);
+		if(status==0){
+			model.addAttribute("requestSuccess",false);
+		}
+		else{
+			model.addAttribute("requestSuccess",true);
+		}
+		return "/returnPage";
+	}
+	
+	
 }

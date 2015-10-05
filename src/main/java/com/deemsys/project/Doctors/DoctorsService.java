@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Clinics;
 import com.deemsys.project.entity.Doctors;
@@ -33,6 +34,9 @@ public class DoctorsService {
 
 	@Autowired
 	PatientsDAO patientsDAO;
+	
+	@Autowired
+	ClinicsDAO clinicsDAO;
 
 	// Get All Entries
 	public List<DoctorsForm> getDoctorsList() {
@@ -194,4 +198,25 @@ public class DoctorsService {
 		return status;
 	}
 
+	// DeleteDoctor By Clinic Id
+	public String deleteDoctorByClinicId(Integer clinicId)
+	{
+		String status="0";
+		try{
+		List<Doctors> doctors=doctorsDAO.getDoctorsByClinicId(clinicId);
+		for (Doctors doctors2 : doctors) {
+			// Remove Assigned Doctor From Patient
+			this.removeAssignedDoctor(doctors2.getId());
+			doctorsDAO.removeClinicIdFromDoctor(doctors2.getId());
+			// Delete Doctor
+			this.deleteDoctors(doctors2.getId());
+			}
+		}
+		catch(Exception e){
+			status=e.toString();
+		}
+		
+		
+		return status;
+	}
 }

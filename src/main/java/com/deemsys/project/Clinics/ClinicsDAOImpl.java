@@ -51,7 +51,7 @@ public class ClinicsDAOImpl implements ClinicsDAO {
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
-		
+		this.sessionFactory.getCurrentSession().delete(this.get(id));
 	}
 
 	@SuppressWarnings("unchecked")

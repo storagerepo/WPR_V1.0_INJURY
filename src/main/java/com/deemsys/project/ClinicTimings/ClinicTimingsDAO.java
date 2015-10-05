@@ -9,4 +9,5 @@ import com.deemsys.project.entity.ClinicTimings;
 public interface ClinicTimingsDAO extends IGenericDAO<ClinicTimings>{
 
 	public List<ClinicTimings> getClinicTimings(Integer clinicId);
+	public Integer deleteClinicTimingsByClinicId(Integer clinicId);
 }

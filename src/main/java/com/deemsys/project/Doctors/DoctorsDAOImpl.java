@@ -4,12 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.Projection;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
@@ -152,6 +152,28 @@ public class DoctorsDAOImpl implements DoctorsDAO{
 				  List<Doctors> list = cr.list();
 		
 		return list;
+	}
+
+	@Override
+	public List<Doctors> getDoctorsByClinicId(Integer clinicId) {
+		// TODO Auto-generated method stub
+		List<Doctors> doctors=this.sessionFactory.getCurrentSession().createCriteria(Doctors.class).add(Restrictions.eq("clinics.clinicId", clinicId)).list();
+		return doctors;
+	}
+
+	@Override
+	public Integer getDoctorsSizeByClinicId(Integer clinicId) {
+		// TODO Auto-generated method stub
+		List<Doctors> doctors=this.sessionFactory.getCurrentSession().createCriteria(Doctors.class).add(Restrictions.eq("clinics.clinicId", clinicId)).list();
+		return doctors.size();
+	}
+
+	@Override
+	public Integer removeClinicIdFromDoctor(Integer doctorId) {
+		// TODO Auto-generated method stub
+		Query query=this.sessionFactory.getCurrentSession().createQuery("update Doctors set clinics.clinicId=NULL where id="+doctorId);
+		query.executeUpdate();
+		return null;
 	}
 
 	

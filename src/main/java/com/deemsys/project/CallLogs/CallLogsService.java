@@ -152,7 +152,7 @@ public class CallLogsService {
 
 		
 		
-		Patients patients = new Patients();
+		Patients patients = patientsDAO.get(callLogsForm.getPatientId());
 		patients.setId(callLogsForm.getPatientId());
 		
 		Appointments appointments=new Appointments();
@@ -167,12 +167,11 @@ public class CallLogsService {
 			{
 				patients.setPatientStatus(3);
 				patientsDAO.update(patients);
-				
-					callLogsDAO.save(callLogs);
+				callLogsDAO.update(callLogs);
 			}
 			else
 			{
-				callLogsDAO.save(callLogs);
+				callLogsDAO.update(callLogs);
 			}
 		}
 		else{
@@ -183,19 +182,16 @@ public class CallLogsService {
 			{
 				patients.setPatientStatus(3);
 				patientsDAO.update(patients);
-				
-					callLogsDAO.save(callLogs);
+				callLogsDAO.update(callLogs);
 			}
 			else
 			{
-				callLogsDAO.save(callLogs);
+				callLogsDAO.update(callLogs);
 			}
 		}
 		
 		
 		//Logic Ends
-		
-		callLogsDAO.update(callLogs);
 		return 1;
 	}
 	

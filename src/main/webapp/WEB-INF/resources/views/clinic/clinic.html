@@ -53,7 +53,7 @@
 								class="glyphicon glyphicon-eye-open"></i>
 						</a>
                                    <a href="#/dashboard/edit-clinic/{{clinic.clinicId}}" data-hint="Edit Clinic" class="btn btn-xs btn-warning hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-edit"></i></a>
-	<a href="#" ui-sref="dashboard.clinic" ng-mousedown="deleteDoctor(clinic.clinicId)" data-hint="Delete Clinic" class="btn btn-xs btn-danger hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-trash"></i></a>
+	<a href="#" ui-sref="dashboard.clinic" ng-mousedown="deleteClinic(clinic.clinicId)" data-hint="Delete Clinic" class="btn btn-xs btn-danger hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-trash"></i></a>
 	</td></tr>
 </tbody>
 
@@ -211,8 +211,8 @@
     </div>
   </div>
 </div> 
-<!--  Delete Doctor Modal -->
-<div class="modal fade" id="deleteDoctorModal" role="dialog">
+<!--  Delete Cinic Modal -->
+<div class="modal fade" id="deleteClinicModal2" role="dialog">
     <div class="modal-dialog">    
       <!-- Modal content-->
       <div class="modal-content">
@@ -220,12 +220,12 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Confirmation</h4>
         </div>
-        <div class="modal-body">Some patients are assigned to this doctor. Do you still want to delete?
+        <div class="modal-body">Some doctors are under this clinic. Do you still want to delete?
               
         </div>
         <div class="modal-footer" >
          <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
-             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-click="deleteDoctorFromPatients()">Yes</a>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-click="deleteDoctorFromClinic()">Yes</a>
         </div>
       </div>
       

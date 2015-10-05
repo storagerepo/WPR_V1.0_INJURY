@@ -4,12 +4,15 @@ package com.deemsys.project.Doctors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.deemsys.project.Clinics.ClinicsService;
 
 /**
  * 
@@ -109,5 +112,18 @@ public class DoctorsController {
        	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+    
+    @RequestMapping(value="/Admin/deleteDoctorsByClinic",method=RequestMethod.POST)
+	public String deleteDoctorsByClinicId(@RequestParam("clinicId") Integer clinicId,Model model){
+		
+		String status=doctorsService.deleteDoctorByClinicId(clinicId);
+		if(status.equals("0"))
+			model.addAttribute("requestSuccess",true);
+		else
+			model.addAttribute("requestSuccess",false);
+		
+		return "/returnPage";
+	}
     
 }

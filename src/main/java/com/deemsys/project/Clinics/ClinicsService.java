@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.deemsys.project.ClinicTimings.ClinicTimingList;
 import com.deemsys.project.ClinicTimings.ClinicTimingsDAO;
+import com.deemsys.project.Doctors.DoctorsDAO;
 import com.deemsys.project.entity.ClinicTimings;
 import com.deemsys.project.entity.ClinicTimingsId;
 import com.deemsys.project.entity.Clinics;
@@ -28,7 +29,8 @@ public class ClinicsService {
 	@Autowired
 	ClinicTimingsDAO clinicTimingsDAO;
 	
-	
+	@Autowired
+	DoctorsDAO doctorsDAO;
 	
 	/** Get Clinic Details
 	 * @param clinicId
@@ -73,7 +75,7 @@ public class ClinicsService {
 	}
 	
 	
-	/**
+	/**Save Clinic
 	 * @param clinicsForm
 	 * @return
 	 */
@@ -93,6 +95,10 @@ public class ClinicsService {
 		return status;
 	}
 	
+	/**Update Clinic
+	 * @param clinicsForm
+	 * @return
+	 */
 	public Integer updateClinic(ClinicsForm clinicsForm){
 		Integer status=0;
 		Clinics clinics=new Clinics(clinicsForm.getClinicName(), clinicsForm.getAddress(), clinicsForm.getCity(), clinicsForm.getState(), clinicsForm.getCounty(), 
@@ -106,6 +112,22 @@ public class ClinicsService {
 			ClinicTimings clinicTimings=new ClinicTimings(clinicTimingsId, clinics, clinicTimingList2.getStartTime(), clinicTimingList2.getEndTime(), clinicTimingList2.getIsWorkingDay());
 			clinicTimingsDAO.update(clinicTimings);
 		}
+		return status;
+	}
+	
+	public Integer deleteClinic(Integer clinicId){
+		Integer status=0;
+		
+		Integer size=doctorsDAO.getDoctorsSizeByClinicId(clinicId);
+		if(size>0){
+			status=0;
+		}
+		else{
+			clinicTimingsDAO.deleteClinicTimingsByClinicId(clinicId);
+			clinicsDAO.delete(clinicId);
+			status=1;
+		}
+		
 		return status;
 	}
 	
