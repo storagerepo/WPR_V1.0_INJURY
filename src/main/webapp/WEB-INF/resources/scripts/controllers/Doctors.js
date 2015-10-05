@@ -82,8 +82,19 @@ adminApp.controller('AddDoctorsCtrl', function($scope,$http,$location,$state,req
             
 			$location.path('dashboard/doctor');
 		});
+		
+		
+		
 	};
-
+	
+	requestHandler.getRequest("Admin/getClinicId.json","").then( function(response) {
+		
+	     $scope.clinic= response.data.clinicsForms;
+	     
+	     
+	  
+	     });
+	
 });
 
 adminApp.controller('EditDoctorController', function($scope,$http,$location,$stateParams,$state,requestHandler,successMessageService,Flash) {
@@ -98,10 +109,14 @@ adminApp.controller('EditDoctorController', function($scope,$http,$location,$sta
 		
 		doctorOriginal=angular.copy(response.data.doctorsForm);
 		
-		$('#officeHoursFromTime').data("DateTimePicker").setDate($scope.doctor.officeHoursFromTime);
-		$('#officeHoursToTime').data("DateTimePicker").setDate($scope.doctor.officeHoursToTime);
-	});
-	
+		});
+	requestHandler.getRequest("Admin/getClinicId.json","").then( function(response) {
+		
+	     $scope.clinic= response.data.clinicsForms;
+	     
+	     
+	  
+	     });
 	
 	
 	  $scope.update=function(){

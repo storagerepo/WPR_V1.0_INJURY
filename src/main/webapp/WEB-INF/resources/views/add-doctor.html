@@ -22,25 +22,25 @@
             <div class="panel-body">
                 <div class="dataTable_wrapper">
                     <div class="col-md-12">
-                                <div class="col-md-6">
-                                    <label>Clinic Name</label>
-                                    <select class="form-control" ng-model="doctor.clinicName" name="clinicName" id="clinicName" required>
-  							  <option value="">-- Select Clinic Name --</option>
-  							  <option value="0">A</option>
-                              <option value="1">b</option>
-                              </select>
-                             <span class="error-container" ng-show="myForm.clinicName.$dirty && myForm.clinicName.$invalid">
-                                <span style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter the ClinicName</span>
-                              </span><br>
-                                 </div>  
-                                 
-                             <div class="col-md-6">
-                                      <label>Doctor Name</label>
+                               <div class="col-md-6">
+                            <label>Select Clinic:</label>
+                                    <select class="form-control" ng-model="doctor.clinicId" name="clinicId" id="clinicId" ng-options="clinics.clinicId as clinics.clinicName for clinics in clinic" required>
+  							  <option value="">-- Select Clinic --</option>
+  							
+  							 </select>
+  							  <span class="error-container" ng-show="myForm.clinicId.$dirty && myForm.clinicId.$invalid">
+                                <span style="color:red" ng-show="myForm.clinicId.$error.required">Please Select the Clinic</span>
+                              </span>
+                            <br>
+                                 </div>   
+                                 <div class="col-md-6">
+                       
+                                          <label>Doctor Name</label>
                                     <input type="text" name="doctorName" class="form-control" ng-model="doctor.doctorName" placeholder="Enter DoctorName" required>
                                     <span class="error-container" ng-show="myForm.doctorName.$dirty && myForm.doctorName.$invalid">
                                 <span style="color:red" ng-show="myForm.doctorName.$error.required">Please Enter the Doctor Name</span>
-                              </span><br/>
-                               </div>
+                              </span><br/> 
+                            </div>
                            </div>
                            <div class="col-md-12">
                            <div class="col-md-6">
