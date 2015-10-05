@@ -122,14 +122,18 @@ public class AppointmentsService {
 		
 		
 		Appointments appointments=new Appointments(patients,InjuryConstants.convertYearFormat(appointmentsForm.getScheduledDate()), appointmentsForm.getNotes(), 0, null);
+	
 		
 		//Logic Ends
 	    CallLogs callLogs = callLogsDAO.get(appointmentsForm.getCallLogId());
 		callLogs.setAppointments(appointments);
 		callLogsDAO.update(callLogs);
-		
-		patientsDAO.update(patients);
-		return 1;
+	
+		//Logic Ends
+	patientsDAO.update(patients);
+
+	patientsDAO.updatePatientStatus(appointmentsForm.getPatientId());
+return 1;
 	}
 	
 	public Integer updateStatu(Integer getId, Integer getStatus)

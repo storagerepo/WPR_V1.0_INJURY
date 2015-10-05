@@ -96,5 +96,13 @@ public class PatientsController {
   	model.addAttribute("requestSuccess",true);
  		return "/returnPage";
  	}
+  
+  @RequestMapping(value="/unAssignPatient",method=RequestMethod.GET)
+ 	public String unAssignPatient(@RequestParam("id") Integer id,ModelMap model)
+ 	{
+  	patientsService.deletePatientsByStaffId(id);
+  	model.addAttribute("requestSuccess",true);
+ 		return "/returnPage";
+ 	}
     
 }

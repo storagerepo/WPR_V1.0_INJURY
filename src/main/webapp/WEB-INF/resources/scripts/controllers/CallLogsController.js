@@ -54,8 +54,96 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		$("#timeStamp").val("");
 		$("#response").val("");
 		$("#notes").val("");
-
-		$("#calllogsModel").modal("show");
+		 var date=new Date();
+		if(date.getMonth()<=8 && date.getDate()<=9 && date.getHours()<=9 && date.getMinutes()<=9 && date.getSeconds()<=9){
+			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
+		   }
+		else if(date.getMonth()<=8 && date.getDate()<=9 && date.getHours()<=9 && date.getMinutes()<=9){
+			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
+			   }
+		 else if(date.getMonth()<=8 && date.getHours()<=9 && date.getMinutes()<=9 && date.getSeconds()<=9){
+			$scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
+			   }
+	 	 else if(date.getMonth()<=8 && date.getDate()<=9 && date.getHours()<=9){
+			$scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+	 		   }
+		 else if(date.getMonth()<=8 && date.getDate()<=9 && date.getMinutes()<=9){
+			$scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
+	 		   }
+		 else if(date.getMonth()<=8 && date.getDate()<=9 && date.getSeconds()<=9){
+			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
+	 		   }
+		 else if(date.getMonth()<=8 && date.getHours()<=9 && date.getMinutes()<=9){
+			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
+			   }
+		 else if(date.getMonth()<=8 && date.getHours()<=9 && date.getSeconds()<=9){
+			$scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
+			   }
+		 else if(date.getMonth()<=8 && date.getMinutes()<=9 && date.getSeconds()<=9){
+			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
+			   }
+	 	else if(date.getMonth()<=8 && date.getDate()<=9){
+			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+			   }
+		 else if(date.getMonth()<=8 && date.getHours()<=9){
+			$scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+			   }
+		 else if(date.getMonth()<=8 && date.getMinutes()<=9){
+			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
+			   }
+		 else if(date.getMonth()<=8 && date.getSeconds()<=9){
+			$scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
+			   }
+		 else if(date.getMonth()<=8){
+			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+		     }
+		 else if(date.getDate()<=9 && date.getHours()<=9 && date.getMinutes()<=9 && date.getSeconds()<=9){
+			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
+			   }
+		  else if(date.getDate()<=9 && date.getHours()<=9 && date.getMinutes()<=9){
+			  $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
+}
+		 else if(date.getDate()<=9 && date.getHours()<=9 && date.getSeconds()<=9){
+			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
+}	 
+  else if(date.getDate()<=9 && date.getHours()<=9){
+			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+			   }
+		 else if(date.getDate()<=9 && date.getMinutes()<=9){
+			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
+			   }
+		 else if(date.getDate()<=9 && date.getSeconds()<=9){
+			  $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
+			   }
+		 else if(date.getDate()<=9){
+			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+			   }
+		  else if(date.getHours()<=9 && date.getMinutes()<=9 && date.getSeconds()<=9){
+			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
+			   }
+		 else if(date.getHours()<=9 && date.getMinutes()<=9){
+			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
+			   }
+		 else if(date.getHours()<=9 && date.getSeconds()<=9){
+			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
+			   }
+		  else if(date.getHours()<=9){
+			  $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+		}
+		  else if(date.getMinutes()<=9 && date.getSeconds()<=9){
+			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
+			   }
+		 else if(date.getMinutes()<=9){
+		     $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
+			}
+		     else if(date.getSeconds()<=9){
+		    	  $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
+			 }
+		     else{
+		    	 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+		     }
+		 
+		 	$("#calllogsModel").modal("show");
 	};
 	
 	$scope.save=function()

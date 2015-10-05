@@ -40,7 +40,14 @@
 				<tbody ng-show="callLogs.length>0"  dir-paginate=" callLogss in callLogs|filter:search|orderBy:sortKey:reverse|itemsPerPage:8">
 				<tr>
 				<td>{{callLogss.timeStamp}}</td>
-				<td>{{callLogss.response}}</td>
+				
+				<td>
+ <div ng-switch on="callLogss.response">
+
+ <div ng-switch-when="1">Not interested/Injured</div>
+ <div ng-switch-when="2">Voice mail</div>
+ <div ng-switch-when="3">Do not call</div>
+  </td>
 				<td>{{callLogss.notes}}</td>
 				<td><a  type="submit" title="" class="btn btn-xs btn-primary hint--top" data-hint="View Appointment" ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
 				 <a type="submit" class="btn btn-xs btn-warning hint--top" data-hint="Edit Call Logs" ng-click="editModal(callLogss.id,callLogss.appointmentId)">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;</a>
@@ -89,13 +96,20 @@
                                     
                                     <input  type="hidden" id="patientId" class="form-control" ng-model="calllogs.patientId">
               						<input  type="hidden" id="appointmentId" class="form-control" ng-model="calllogs.appointmentId">
+        							
         							<label>Response</label>
-                                    <textarea name="response" id="response" class="form-control height-100" ng-model="calllogs.response" placeholder="Enter the Response" required></textarea>
-                 <span class="error-container" ng-show="myForm.response.$dirty && myForm.response.$invalid">
-                                <span style="color:red" ng-show="myForm.response.$error.required" id="responseError">Please Enter the Response</span>
-                              </span>
-                                    <br/>
-                                    
+                           <select class="form-control" ng-model="calllogs.response" name="response" id="response" required>
+  							  <option value="">-- Select Response --</option>
+  				
+                                <option value="1">Not interested/Injured</option>
+                                <option value="2">Voice mail</option>
+<option value="3">Do not call</option>                                
+</select>
+                            <span class="error-container" ng-show="myForm.response.$dirty && myForm.response.$invalid">
+                              <span style="color:red" ng-show="myForm.response.$error.required">Please Select the Response</span>
+                                       </span>
+                                     <br>
+        							
                              	<label>Note</label>
                                    <textarea name="notes" id="notes" class="form-control height-100" ng-model="calllogs.notes" placeholder="Enter the notes" required></textarea> 
                                    <span class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">

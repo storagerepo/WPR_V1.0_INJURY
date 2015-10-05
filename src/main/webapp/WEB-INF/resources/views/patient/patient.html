@@ -21,6 +21,7 @@
 					 <th  style="width:80px!important;" ng-mousedown="sort('phoneNumber')">Phone Number&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='phoneNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 						 <th   style="width:80px!important;"ng-mousedown="sort('dateOfBirth')">Local Report Number&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='dateOfBirth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					  <th  style="width:80px!important;" ng-mousedown="sort('callerName')">Caller Name&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='callerName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					 <th  style="width:80px!important;" ng-mousedown="sort('patientStatus')">Status&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='patientStatus'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 						
 						<th style="width:120px!important;">Actions</th>
 						
@@ -32,6 +33,8 @@
 						<th><input type="text" class="form-control" ng-model="search.phoneNumber" placeholder="Search by Phone Number"/></th>
 						<th><input type="text" class="form-control" ng-model="search.localReportNumber" placeholder="Search by Local Report Number"/></th>
 						<th><input type="text" class="form-control" ng-model="search.callerName" placeholder="Search by Caller Name"/></th>
+						<th><input type="text" class="form-control" ng-model="search.patientStatus" placeholder="Search by Status"/></th>
+						
 						<th></th>
 					</tr>
 				</thead>
@@ -43,6 +46,14 @@
 						<td>{{patients.phoneNumber==""?'N/A':patients.phoneNumber}}</td>
 						<td>{{patients.localReportNumber}}</td>
 						<td>{{patients.callerName}}</td>
+						<td>
+ <div ng-switch on="patients.patientStatus">
+ <div ng-switch-when="1">Active</div>
+  <div ng-switch-when="2">Appointment Scheduled</div>
+ <div ng-switch-when="3">Do not call</div>
+
+ 
+  </td>
 						<td>
 						<span>
 						<a href="#/dashboard/Calllogs/{{patients.id}}" class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs"><i

@@ -74,6 +74,9 @@
 						<a href="" ng-click="resetPassword(staff.id)" class="btn btn-xs btn-primary hint--top" data-hint="Reset Password"><i
 								class="fa fa-key"></i>
 						</a>
+							<a href="" ng-click="releasePatient(staff.id)" class="btn btn-xs btn-success hint--top" data-hint="Release Patient"><i
+								class="fa fa-unlock-alt"></i>
+						</a>
 								
 							 </td>
 							</tr>
@@ -173,6 +176,26 @@
         <div class="modal-footer" >
          <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
              <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-disabled='myForm.$invalid' ng-click="reset()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+
+ <div class="modal fade" id="releasePatient" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmation </h4>
+        </div>
+        <div class="modal-body">Do you want to Release the Patient?
+              
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-disabled='myForm.$invalid' ng-click="release()">Yes</a>
         </div>
       </div>
       

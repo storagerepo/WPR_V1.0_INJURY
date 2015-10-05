@@ -251,9 +251,12 @@ public class PatientsDAOImpl implements PatientsDAO{
 		Query query=this.sessionFactory.getCurrentSession().createQuery("update Patients set doctors.id=NULL where id="+patientId);
 		query.executeUpdate();
 	}
-
 	
-
+@Override
+	public void updatePatientStatus(Integer patientId) {
+		// TODO Auto-generated method stub
+		Query query=this.sessionFactory.getCurrentSession().createQuery("update Patients set patientStatus='2' where id='"+patientId+"'");
+		query.executeUpdate();
 	
-	
+	}
 }

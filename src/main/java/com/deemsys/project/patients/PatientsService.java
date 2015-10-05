@@ -169,10 +169,23 @@ public class PatientsService {
 		Patients patients=new Patients(staff,doctors,patientsForm.getLocalReportNumber(),
 				patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber(),patientsForm.getCrashReportFileName(),patientsForm.getPatientStatus());
 		patients.setId(patientsForm.getId());
-			
+		Integer doctorId=patientsForm.getDoctorId();
+		
 		//Logic Ends
 		
-		patientsDAO.update(patients);
+		
+		if(doctorId == null)
+		{
+			patients.setPatientStatus(1);
+			patientsDAO.update(patients);
+			
+		}
+		else
+		{
+		patients.setPatientStatus(2);
+			patientsDAO.update(patients);
+			
+		}
 		return 1;
 }
 	

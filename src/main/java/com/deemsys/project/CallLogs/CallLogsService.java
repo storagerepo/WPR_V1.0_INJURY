@@ -16,6 +16,7 @@ import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
 import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
+import com.deemsys.project.patients.PatientsDAO;
 /**
  * 
  * @author Deemsys
@@ -37,6 +38,9 @@ public class CallLogsService {
 	
 	@Autowired
 	StaffDAO staffDAO;
+	
+	@Autowired
+	PatientsDAO patientsDAO;
 	
 	@Autowired
 	AppointmentsDAO appointmentsDAO;
@@ -119,14 +123,23 @@ public class CallLogsService {
 		
 		Appointments appointments = new Appointments();
 		
-		Patients patients = new Patients();
-		patients.setId(callLogsForm.getPatientId());
+		Patients patients = patientsDAO.get(callLogsForm.getPatientId());
+			CallLogs callLogs=new CallLogs(patients,null,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		
-		CallLogs callLogs=new CallLogs(patients,null,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
-		
+			String status=callLogsForm.getResponse();
+		if(status.equals("3"))
+		{
+			patients.setPatientStatus(3);
+			patientsDAO.update(patients);
+			
+				callLogsDAO.save(callLogs);
+		}
+		else
+		{
+			callLogsDAO.save(callLogs);
+		}
 		//Logic Ends
 		
-		callLogsDAO.save(callLogs);
 		return 1;
 	}
 	
@@ -149,10 +162,34 @@ public class CallLogsService {
 			appointments.setPatients(patients);
 			callLogs=new CallLogs(patients,appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 			callLogs.setId(callLogsForm.getId());
+			String status=callLogsForm.getResponse();
+			if(status.equals("3"))
+			{
+				patients.setPatientStatus(3);
+				patientsDAO.update(patients);
+				
+					callLogsDAO.save(callLogs);
+			}
+			else
+			{
+				callLogsDAO.save(callLogs);
+			}
 		}
 		else{
 			callLogs=new CallLogs(patients,null,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 			callLogs.setId(callLogsForm.getId());
+			String status=callLogsForm.getResponse();
+			if(status.equals("3"))
+			{
+				patients.setPatientStatus(3);
+				patientsDAO.update(patients);
+				
+					callLogsDAO.save(callLogs);
+			}
+			else
+			{
+				callLogsDAO.save(callLogs);
+			}
 		}
 		
 		

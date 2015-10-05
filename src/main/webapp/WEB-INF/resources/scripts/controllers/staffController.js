@@ -105,6 +105,27 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 		   
     };
     
+    $scope.releasePatient=function(id)
+    {
+    	  $("#releasePatient").modal("show");
+    	  $scope.release=function()
+		   {
+    	  requestHandler.getRequest("Staff/unAssignPatient.json?id="+id,"").then(function(results){
+			 $scope.response=results.data.requestSuccess;
+			 if($scope.response==true)
+			 {
+			 
+			 $("#resetPassword").modal("hide");
+			 $('.modal-backdrop').hide();
+			 Flash.create('success', "You have Successfully Released the Patient!");
+			 $scope.getStaffList();
+			
+			 }
+			});
+		   };
+		   
+    };
+    
     
     $scope.deleteStaff=function(id)
 	  {
