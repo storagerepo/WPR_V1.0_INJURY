@@ -1,15 +1,22 @@
 package com.deemsys.project.Clinics;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
+import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.entity.CallLogs;
 import com.deemsys.project.entity.Clinics;
+import com.deemsys.project.entity.Doctors;
 
 /**
  * 
@@ -140,5 +147,20 @@ public class ClinicsDAOImpl implements ClinicsDAO {
 		List<Clinics> clinics=this.sessionFactory.getCurrentSession().createCriteria(Clinics.class).list();
 		return clinics;
 	}
+	
+@Override
+	public List<Clinics> getClinicId() {
+		// TODO Auto-generated method stubCriteria
+		 Criteria cr = sessionFactory.getCurrentSession().createCriteria(Clinics.class)
+				    .setProjection(Projections.projectionList()
+				      .add(Projections.property("clinicId"), "clinicId")
+				      .add(Projections.property("clinicName"), "clinicName"))
 
-}
+				    .setResultTransformer(Transformers.aliasToBean(Clinics.class));
+
+				  List<Clinics> list = cr.list();
+		
+		return list;
+	}
+	
+	}

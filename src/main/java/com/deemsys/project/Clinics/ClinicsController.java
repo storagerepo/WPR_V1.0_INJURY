@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -84,6 +85,12 @@ public class ClinicsController {
 		}
 		return "/returnPage";
 	}
-	
+	@RequestMapping(value="/getClinicId",method=RequestMethod.GET)
+   	public String getClinicId(ModelMap model)
+   	{
+    	model.addAttribute("clinicsForms",clinicsService.getClinicId());
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
 	
 }

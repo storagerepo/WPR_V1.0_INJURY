@@ -120,6 +120,15 @@ public class ClinicsForm {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+	public ClinicsForm(Integer clinicId,String clinicName)
+	{
+		this.clinicId=clinicId;
+		this.clinicName=clinicName;
+		
+
+	}
+	public ClinicsForm(String string) {
+		// TODO Auto-generated constructor stub
+	}
 	
 }

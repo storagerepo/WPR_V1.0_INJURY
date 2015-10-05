@@ -130,5 +130,20 @@ public class ClinicsService {
 		
 		return status;
 	}
-	
+	public List<ClinicsForm> getClinicId() {
+		List<ClinicsForm> clinicsForms = new ArrayList<ClinicsForm>();
+
+		List<Clinics> clinicss = new ArrayList<Clinics>();
+
+		clinicss = clinicsDAO.getClinicId();
+
+		for (Clinics clinics : clinicss) {
+			// TODO: Fill the List
+			ClinicsForm clinicsForm = new ClinicsForm(clinics.getClinicId(),
+					clinics.getClinicName());
+			clinicsForms.add(clinicsForm);
+		}
+
+		return clinicsForms;
+	}
 }
