@@ -17,8 +17,10 @@ public class PatientsForm {
 	private Integer id;
 	private Integer callerId;
 	private String callerName;
-	private String doctorName;
+	private Integer clinicId;
+	private String clinicName;
 	private Integer doctorId;
+	private String doctorName;
 	private String localReportNumber;
 	private String crashSeverity;
 	private String reportingAgencyName;
@@ -61,6 +63,12 @@ public class PatientsForm {
 	}
 	public void setCallerId(Integer callerId) {
 		this.callerId = callerId;
+	}
+	public Integer getClinicId() {
+		return clinicId;
+	}
+	public void setClinicId(Integer clinicId) {
+		this.clinicId = clinicId;
 	}
 	public Integer getDoctorId() {
 		return doctorId;
@@ -245,7 +253,8 @@ public class PatientsForm {
 	public void setPatientStatus(Integer patientStatus) {
 		this.patientStatus = patientStatus;
 	}
-	public PatientsForm(Integer id, Integer callerId, Integer doctorId, String localReportNumber,
+	public PatientsForm(Integer id, Integer callerId, Integer clinicId, Integer doctorId, 
+			String localReportNumber,
 			String crashSeverity, String reportingAgencyName,
 			String numberOfUnits, String unitInError, String country,
 			String cityVillageTownship, String crashDate, String timeOfCrash,
@@ -259,6 +268,7 @@ public class PatientsForm {
 		super();
 		this.id = id;
 		this.callerId = callerId;
+		this.clinicId=clinicId;
 		this.doctorId = doctorId;
 		this.localReportNumber = localReportNumber;
 		this.crashSeverity = crashSeverity;
@@ -295,9 +305,10 @@ public class PatientsForm {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public PatientsForm(Integer callerId ,Integer doctorId)
+	public PatientsForm(Integer callerId ,Integer clinicId,Integer doctorId)
 	{
 		this.callerId=callerId;
+		this.clinicId=clinicId;
 		this.doctorId=doctorId;
 	}
 	public String getCallerName() {
@@ -305,6 +316,12 @@ public class PatientsForm {
 	}
 	public void setCallerName(String callerName) {
 		this.callerName = callerName;
+	}
+	public String getClinicName() {
+		return clinicName;
+	}
+	public void setClinicName(String clinicName) {
+		this.clinicName = clinicName;
 	}
 	public String getDoctorName() {
 		return doctorName;

@@ -208,6 +208,15 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
 			$scope.patient= response.data.patientsForm;
 		 });
+		//setting clinic id from patient 
+		if($scope.patient.clinicId==0)
+		{
+	$scope.Appointments.clinicId="";
+	}
+else
+	{
+	$scope.Appointments.clinicId=$scope.patient.clinicId;
+	}
 		//setting doctor id from patient 
 		if($scope.patient.doctorId==0)
 			{
@@ -217,16 +226,33 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		{
 		$scope.Appointments.doctorId=$scope.patient.doctorId;
 		}
+		
 	$("#scheduledDate").val("");
 		$("#appointmentNotes").val("");
 		//getting doctor id
-		requestHandler.getRequest("Staff/getDoctorId.json","").then( function(response) {
+		requestHandler.getRequest("Admin/getClinicId.json","").then( function(response) {
 			
-		     $scope.doctor= response.data.doctorsForms;
-		    });
+		     $scope.clinic= response.data.clinicsForms;
+		 
+		     });
+		var ClinicId=$scope.patient.clinicId;
+		requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
+			
+		    $scope.doctor= response.data.doctorsForm;
+		  
+		   });
+		$scope.doctorName=function(){
+			var ClinicId=$scope.Appointments.clinicId;
+				 requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
+						
+				    $scope.doctor= response.data.doctorsForm;
+				  
+				   });
+
+				}
 		$("#AppointmentsModal").modal("show");
 	};
-	 
+	
 	$scope.saveAppointments=function()
 	{
 
@@ -238,8 +264,9 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 				Flash.create("success","You have Successfully Added!");
 				  $scope.getCallLogsList();
 				});
+		 
 		};
-	
+		
 		$scope.removeAppointment=function(id)
 		{
 			if(confirm("Are you sure to cancel appointment ?")){

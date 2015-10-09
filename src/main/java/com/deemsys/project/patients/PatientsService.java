@@ -23,14 +23,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.deemsys.project.entity.Patients;
 import com.deemsys.project.Appointments.AppointmentsDAO;
 import com.deemsys.project.CallLogs.CallLogsDAO;
+import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.Staff.StaffService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
+import com.deemsys.project.entity.Clinics;
 import com.deemsys.project.entity.Doctors;
-import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
 
 
@@ -54,6 +56,8 @@ public class PatientsService {
 	PatientsDAO patientsDAO;
 	@Autowired
 	CallLogsDAO callLogsDAO;
+	@Autowired
+	ClinicsDAO clinicsDAO;
 	
 	@Autowired
 	StaffService staffService;
@@ -71,19 +75,24 @@ public class PatientsService {
 		
 		patientss=patientsDAO.getAll();
 		
-		Integer staffId=0,doctorId=0;
+		Integer staffId=0,clinicId=0,doctorId=0;
 		String staffName="N/A";
+		String clinicName="N/A";
 		String doctorName="N/A";
 		
 		
 		for (Patients patients : patientss) {
 			//TODO: Fill the List
-			staffId=0;doctorId=0;
-			staffName="N/A";doctorName="N/A";
+			staffId=0;clinicId=0;doctorId=0;
+			staffName="N/A";clinicName="N/A";doctorName="N/A";
 			if(patients.getStaff()!=null)
 			{
 				staffId=patients.getStaff().getId();
 				staffName=patients.getStaff().getFirstName()+" "+patients.getStaff().getLastName();
+			}
+			if(patients.getClinics()!=null){
+				clinicId=patients.getClinics().getClinicId();
+				clinicName=patients.getClinics().getClinicName();
 			}
 			if(patients.getDoctors()!=null){
 				doctorId=patients.getDoctors().getId();
@@ -91,8 +100,9 @@ public class PatientsService {
 			}
 				
 			
-			PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber(),patients.getCrashReportFileName(),patients.getPatientStatus());
+			PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,clinicId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber(),patients.getCrashReportFileName(),patients.getPatientStatus());
 			patientsForm.setCallerName(staffName);
+			patientsForm.setClinicName(clinicName);
 			patientsForm.setDoctorName(doctorName);
 			patientsForms.add(patientsForm);
 		}
@@ -110,16 +120,21 @@ public class PatientsService {
 		//TODO: Convert Entity to Form
 		//Start
 		PatientsForm patientsForm = new PatientsForm();
-		Integer staffId = 0,doctorId = 0;
+		Integer staffId = 0,clinicId=0,doctorId = 0;
 		String staffName="N/A";
+		String clinicName="N/A";
 		String doctorName="N/A";
 		if(patients!=null)
 		{
-			staffId=0;doctorId=0;
+			staffId=0;clinicId=0;doctorId=0;
 		if(patients.getStaff()!=null)
 		{
 			staffId=patients.getStaff().getId();
 			staffName=patients.getStaff().getFirstName()+" "+patients.getStaff().getLastName();
+		}
+		if(patients.getClinics()!=null){
+			clinicId=patients.getClinics().getClinicId();
+			clinicName=patients.getClinics().getClinicName();
 		}
 		if(patients.getDoctors()!=null){
 			doctorId=patients.getDoctors().getId();
@@ -127,8 +142,9 @@ public class PatientsService {
 		}
 			
 		
-		patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber(),patients.getCrashReportFileName(),patients.getPatientStatus());
+		patientsForm=new PatientsForm(patients.getId(),staffId,clinicId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber(),patients.getCrashReportFileName(),patients.getPatientStatus());
 		patientsForm.setCallerName(staffName);
+		patientsForm.setClinicName(clinicName);
 		patientsForm.setDoctorName(doctorName);
 		
 		
@@ -152,6 +168,7 @@ public class PatientsService {
 		
 		
 		Staff staff=null;
+		Clinics clinics=null;
 		Doctors doctors=null;
 		if(patientsForm.getCallerId()!=null)
 		if(patientsForm.getCallerId()!=0)
@@ -159,6 +176,12 @@ public class PatientsService {
 			staff=new Staff();
 			staff.setId(patientsForm.getCallerId());
 		}
+		if(patientsForm.getClinicId()!=null)
+			if(patientsForm.getClinicId()!=0)
+			{
+				clinics=new Clinics();
+				clinics.setClinicId(patientsForm.getClinicId());
+			}
 		if(patientsForm.getDoctorId()!=null)
 		if(patientsForm.getDoctorId()!=0)
 		{
@@ -166,9 +189,10 @@ public class PatientsService {
 		doctors.setId(patientsForm.getDoctorId());
 		}
 	
-		Patients patients=new Patients(staff,doctors,patientsForm.getLocalReportNumber(),
+		Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),
 				patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber(),patientsForm.getCrashReportFileName(),patientsForm.getPatientStatus());
 		patients.setId(patientsForm.getId());
+		Integer clinicId=patientsForm.getClinicId();
 		Integer doctorId=patientsForm.getDoctorId();
 		
 		//Logic Ends
@@ -290,7 +314,7 @@ public class PatientsService {
         				patientArray=line.split(csvSplitBy);
         				
         				// validation ends
-        				patients.add(new Patients(null, null,patientArray[0].trim(), patientArray[1].trim(), patientArray[2].trim(),
+        				patients.add(new Patients(null, null,null,patientArray[0].trim(), patientArray[1].trim(), patientArray[2].trim(),
 	        							patientArray[3].trim(), patientArray[4].trim(),patientArray[5].trim(), patientArray[6].trim(), patientArray[7].trim(), 
 	        							patientArray[8].trim(), patientArray[9].trim(),patientArray[10].trim(), patientArray[11].trim(), patientArray[12].trim(), 
 	        							patientArray[13].trim(), patientArray[14].trim(), patientArray[15].trim(), patientArray[16].trim(), 
@@ -372,19 +396,22 @@ public class PatientsService {
 				patientss=patientsDAO.getPatientListByStaffId(staffId);
 			}
 				
-			Integer staffId=0,doctorId=0;
+			Integer staffId=0,clinicId=0,doctorId=0;
 			
 			
 			for (Patients patients : patientss) {
 				//TODO: Fill the List
-				staffId=0;doctorId=0;
+				staffId=0;clinicId=0;doctorId=0;
 				if(patients.getStaff()!=null)
 					staffId=patients.getStaff().getId();
+				if(patients.getClinics()!=null)
+					clinicId=patients.getClinics().getClinicId();
+				
 				if(patients.getDoctors()!=null)
 					doctorId=patients.getDoctors().getId();
 					
 			
-				PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber(),patients.getCrashReportFileName(),patients.getPatientStatus());
+				PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,clinicId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber(),patients.getCrashReportFileName(),patients.getPatientStatus());
 		patientsForms.add(patientsForm);
 			count++;
 			}

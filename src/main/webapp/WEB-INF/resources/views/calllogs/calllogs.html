@@ -140,7 +140,17 @@
           <h4 class="modal-title">Add Appointment</h4>
         </div>
         <div class="modal-body">
-             <label>Select Doctor:</label>
+         <label>Select Clinic:</label>
+             
+		                           <select class="form-control" ng-change="doctorName()" ng-model="Appointments.clinicId" name="clinicId" id="clinicId" ng-options="clinics.clinicId as clinics.clinicName for clinics in clinic" required>
+		  							  <option value="">-- Select Clinic --</option>
+		                             </select> 
+		                              <span class="error-container" ng-show="myForms.clinicId.$dirty && myForms.clinicId.$invalid">
+                                <span style="color:red" ng-show="myForms.clinicId.$error.required">Please Select the Clinic</span>
+                              </span>
+                             
+		                             <br>
+                                   <label>Select Doctor:</label>
              
 		                           <select class="form-control" ng-model="Appointments.doctorId" name="doctorId" id="doctorId" ng-options="doctors.id as doctors.doctorName for doctors in doctor" required>
 		  							  <option value="">-- Select Doctor --</option>

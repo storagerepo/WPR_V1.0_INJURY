@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.entity.Patients;
 import com.deemsys.project.CallLogs.CallLogsDAO;
 import com.deemsys.project.CallLogs.CallLogsForm;
+import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.Doctors.DoctorsDAO;
 import com.deemsys.project.Staff.StaffDAO;
 import com.deemsys.project.Staff.StaffForm;
@@ -19,8 +21,8 @@ import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
+import com.deemsys.project.entity.Clinics;
 import com.deemsys.project.entity.Doctors;
-import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
 import com.deemsys.project.patients.PatientsDAO;
 import com.deemsys.project.patients.PatientsForm;
@@ -42,6 +44,9 @@ public class AppointmentsService {
 
 	@Autowired
 	AppointmentsDAO appointmentsDAO;
+	
+	@Autowired
+	ClinicsDAO clinicsDAO;
 	
 	@Autowired
 	PatientsDAO patientsDAO;
@@ -115,9 +120,11 @@ public class AppointmentsService {
 		//TODO: Convert Form to Entity Here	
 		
 		//Logic Starts
+		Clinics clinics=clinicsDAO.get(appointmentsForm.getClinicId());
 		Doctors doctors = doctorsDAO.get(appointmentsForm.getDoctorId());
 		
 		Patients patients = patientsDAO.get(appointmentsForm.getPatientId());
+		patients.setClinics(clinics);
 		patients.setDoctors(doctors);
 		
 		
@@ -189,7 +196,7 @@ return 1;
 			
 		}
 		else{
-			patientsForm=new PatientsForm(patients.getId(),patients.getStaff().getId(),patients.getDoctors().getId(),patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate().toString(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth().toString(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber(),patients.getCrashReportFileName(),patients.getPatientStatus());
+			patientsForm=new PatientsForm(patients.getId(),patients.getStaff().getId(),patients.getClinics().getClinicId(),patients.getDoctors().getId(),patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate().toString(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth().toString(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber(),patients.getCrashReportFileName(),patients.getPatientStatus());
 
 				}
 		

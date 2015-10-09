@@ -44,19 +44,20 @@
                            </div>
                            <div class="col-md-12">
                            <div class="col-md-6">
-                               <label>Email Id</label>
-                                    <input type="text" name="emailId" class="form-control" ng-model="doctor.emailId" placeholder="Enter EmailId" required>
+                               <label>Email ID</label>
+                                    <input type="email" name="emailId" class="form-control" ng-model="doctor.emailId" placeholder="Enter EmailId" email required>
                                     <span class="error-container" ng-show="myForm.emailId.$dirty && myForm.emailId.$invalid">
-                                <span style="color:red" ng-show="myForm.emailId.$error.required">Please Enter the Email Id</span>
+                             <span style="color:red" ng-show="myForm.emailId.$error.required">Please Enter the Email Id</span> 
+                            <span style="color:red" ng-show="myForm.emailId.$error.email">Enter a valid email</span>
+                           
                               </span><br/>
                               </div>
                             <div class="col-md-6">
                       			<label>Contact Number</label>
-                                    <input type="text" name="city" class="form-control" ng-model="doctor.contactNumber" placeholder="Enter ContactNumber" required>
+                                    <input type="text" name="contactNumber" class="form-control" ng-model="doctor.contactNumber" placeholder="Enter ContactNumber" required>
                                     <span class="error-container" ng-show="myForm.contactNumber.$dirty && myForm.contactNumber.$invalid">
                                 <span style="color:red" ng-show="myForm.contactNumber.$error.required">Please Enter the Contact Number</span>
-                              </span>
-                                    <br/></div>
+                              </span><br/> </div>
                                  </div>
                                  <div class="col-md-12">  
                                  <div class="col-md-6">

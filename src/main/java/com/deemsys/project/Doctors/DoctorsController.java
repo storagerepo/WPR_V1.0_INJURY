@@ -126,4 +126,12 @@ public class DoctorsController {
 		return "/returnPage";
 	}
     
-}
+    @RequestMapping(value="/getNameByClinicId",method=RequestMethod.GET)
+   	public String getNameByClinicId(@RequestParam("clinicId") Integer clinicId,Model model){
+    	model.addAttribute("doctorsForm",doctorsService.getNameByClinicId(clinicId));
+    	
+   		
+   		
+   		return "/returnPage";
+   	}
+ }

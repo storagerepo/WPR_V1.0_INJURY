@@ -127,8 +127,6 @@ public class ClinicsForm {
 		
 
 	}
-	public ClinicsForm(String string) {
-		// TODO Auto-generated constructor stub
-	}
+
 	
 }

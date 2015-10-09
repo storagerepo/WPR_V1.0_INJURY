@@ -289,33 +289,73 @@ adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope,
 
 
 adminApp.controller('EditPatientController', function($scope,$http,$location,$stateParams,requestHandler,Flash){
+	
 	var patientOriginal="";
 	
-	$scope.patientid=$stateParams.id;
+	$scope.patient={};
+	 $scope.patient.patientId =$stateParams.id;
+
 	
-	requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
-		patientOriginal=angular.copy(response.data.patientsForm);
-		  $scope.patient= response.data.patientsForm;
-		     
-		});
-	requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {
-		
+	 requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {
+			
 	     $scope.staff= response.data.staffForms;
-	     
-	     
-	  
-	     });
-	requestHandler.getRequest("Staff/getDoctorId.json","").then( function(response) {
-		
-	     $scope.doctor= response.data.doctorsForms;
-	     
+	   
 	     
 	  
 	     });
+
+		//getting patient details by id
+		requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
+			patientOriginal=angular.copy(response.data.patientsForm);
+			
+			$scope.patient= response.data.patientsForm;
 		
-		$scope.updatePatient=function(){
+	
+		if($scope.patient.clinicId==0)
+		{
+	$scope.patient.clinicId="";
+	}
+else
+	{
+	$scope.patient.clinicId=$scope.patient.clinicId;
+	}
+		//setting doctor id from patient 
+		if($scope.patient.doctorId==0)
+			{
+		$scope.patient.doctorId="";
+		}
+	else
+		{
+		$scope.patient.doctorId=$scope.patient.doctorId;
+		}
+		
+	
+		requestHandler.getRequest("Admin/getClinicId.json","").then( function(response) {
 			
+		     $scope.clinic= response.data.clinicsForms;
+		 
+		     });
+		var ClinicId=$scope.patient.clinicId;
+		requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
 			
+		    $scope.doctor= response.data.doctorsForm;
+		  
+		   });
+		$scope.doctorName=function(){
+			var ClinicId=$scope.patient.clinicId;
+				 requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
+						
+				    $scope.doctor= response.data.doctorsForm;
+				  
+				   });
+
+				}
+		 });
+	
+
+$scope.updatePatient=function(){
+			
+		
 			requestHandler.postRequest('Staff/updatePatients.json',$scope.patient).then(function(response) {
 	            Flash.create("success","You have Successfully updated!");
 				$location.path("dashboard/patient");

@@ -219,4 +219,18 @@ public class DoctorsService {
 		
 		return status;
 	}
+	public List<DoctorsForm> getNameByClinicId(Integer clinicId)
+	{
+		List<DoctorsForm> doctorsForms = new ArrayList<DoctorsForm>();
+
+		List<Doctors> doctorss=doctorsDAO.getDoctorsByClinicId(clinicId);
+		for (Doctors doctors : doctorss) {
+			// TODO: Fill the List
+			DoctorsForm doctorsForm = new DoctorsForm(
+					doctors.getId(), doctors.getDoctorName());
+			doctorsForms.add(doctorsForm);
+			}
+		return doctorsForms;
+	
+	}
 }
