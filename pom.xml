@@ -271,6 +271,29 @@
 </dependency>
 	<!-- Excel -->
 		
+		<!-- PDF Process -->
+		<dependency>
+  	    <groupId>org.apache.pdfbox</groupId>
+   	   <artifactId>pdfbox</artifactId>
+   	   <version>1.8.10</version>
+  	</dependency>
+		<!-- End PDF Process -->
+	            
+	            <!-- iText PDF -->
+	            <dependency>
+	<groupId>com.itextpdf</groupId>
+	<artifactId>itextpdf</artifactId>
+	<version>5.5.7</version>
+</dependency>
+	            <!-- End iText PDF -->
+	            
+	            
+	    <dependency>
+	<groupId>commons-logging</groupId>
+	<artifactId>commons-logging</artifactId>
+	<version>1.2</version>
+</dependency>
+	            
 	            
          <!-- OAUTH -->
          <dependency>

@@ -3,7 +3,10 @@ package com.deemsys.project.patients;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
 
+import org.apache.pdfbox.PDFReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
+import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 
 /**
  * 
@@ -26,6 +32,9 @@ public class PatientsController {
 	
 	@Autowired
 	PatientsService patientsService;
+	
+	@Autowired
+	PDFCrashReportReader crashReportReader;
 	
 	@RequestMapping(value="/getAllPatientss",method=RequestMethod.GET)
    	public String getAllPatientss(ModelMap model)
@@ -104,5 +113,16 @@ public class PatientsController {
   	model.addAttribute("requestSuccess",true);
  		return "/returnPage";
  	}
+  
+  //Upload PDF file
+  @RequestMapping(value = "/addCrashReport" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
+  public @ResponseBody PDFCrashReportJson uploadCrashReportFileHandler(
+          @RequestParam("file") MultipartFile file,ModelMap model) throws IOException {
+	 
+	  //String returnText=patientPDFReader.saveFile(file);
+	  
+	 	return crashReportReader.getValuesFromPDF(file);
+
+  }
     
 }
