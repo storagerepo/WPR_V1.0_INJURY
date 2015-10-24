@@ -1,6 +1,9 @@
 package com.deemsys.project.pdfcrashreport;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,10 +21,33 @@ public class PDFCrashReportReader {
 	/**
 	 * Parses a PDF to a plain text file.
 	 * 
-	 * @param pdf
-	 *            the original PDF
+	 * From PDF 
+	 *
 	 * @param txt
 	 *            the resulting text
+	 * @throws IOException
+	 */
+	public List<List<String>> parsePdfFromURL(String crashId) throws IOException {
+		PdfReader reader = new PdfReader(new URL("https://ext.dps.state.oh.us/CrashRetrieval/ViewCrashReport.aspx?redirectPage=ViewCrashReport.aspx&RequestFrom=ViewEfilePDF&CrashId="+crashId).openStream());
+		List<List<String>> contentList=new ArrayList<List<String>>();
+		PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+		String pdfText="";
+		TextExtractionStrategy strategy;
+		for (int i = 1; i <= reader.getNumberOfPages(); i++) {
+			strategy = parser.processContent(i,new SimpleTextExtractionStrategy());			
+			pdfText = strategy.getResultantText();
+			contentList.add(Arrays.asList(pdfText.split("\n")));
+		}
+		
+		return contentList;
+	}
+	
+	
+	/**
+	 * Parses a PDF to a plain text file.
+	 * 
+	 * From File
+	 * 
 	 * @throws IOException
 	 */
 	public List<List<String>> parsePdf(MultipartFile pdfFile) throws IOException {
@@ -39,11 +65,9 @@ public class PDFCrashReportReader {
 		return contentList;
 	}
 	
-	public PDFCrashReportJson getValuesFromPDF(MultipartFile pdfFile) throws IOException{
+	public PDFCrashReportJson getValuesFromPDF(List<List<String>> content) throws IOException{
 		
-		//All Content from PDF
-		List<List<String>> content=parsePdf(pdfFile);
-		
+			
 		//First Page
 		List<String> firstPage=content.get(0);
 		ReportFirstPageForm reportFirstPageForm=new ReportFirstPageForm(firstPage.get(
@@ -63,13 +87,20 @@ public class PDFCrashReportReader {
 	    	//Unit Page Content
 	    	List<String> unitPage=content.get(i);
 	    	
+	    	String ownerPhoneNumber="",damageScale="",insuranceCompany="",policyNumber="";
+	    	
+	    	ownerPhoneNumber=unitPage.get(unitPage.indexOf("OWNER PHONE NUMBER -  INC, AREA  CODE     ( SAME AS DRIVER )")+1).equals("UNIT NUMBER")?"":unitPage.get(unitPage.indexOf("OWNER PHONE NUMBER -  INC, AREA  CODE     ( SAME AS DRIVER )")+1);
+	    	damageScale=unitPage.get(unitPage.indexOf("DAMAGE SCALE")+1).equals("1 - NONE")?"":unitPage.get(unitPage.indexOf("DAMAGE SCALE")+1);
+	    	insuranceCompany=unitPage.indexOf("INSURANCE COMPANY")==-1?"":unitPage.get(unitPage.indexOf("INSURANCE COMPANY")+1);
+	    	policyNumber=unitPage.indexOf("POLICY NUMBER")==-1?"":unitPage.get(unitPage.indexOf("POLICY NUMBER")+1);
+	    	
 	    	ReportUnitPageForm reportUnitPageForm=new ReportUnitPageForm(unitPage.get(unitPage.indexOf("UNIT NUMBER")+1),
-	    			unitPage.get(unitPage.indexOf("OWNER NAME: LAST, FIRST, MIDDLE       ( SAME AS DRIVER )")+1), 
-	    			unitPage.get(unitPage.indexOf("OWNER PHONE NUMBER -  INC, AREA  CODE     ( SAME AS DRIVER )")+1), 
+	    			unitPage.get(unitPage.indexOf("OWNER NAME: LAST, FIRST, MIDDLE       ( SAME AS DRIVER )")+1),ownerPhoneNumber 
+	    			, 
 	    			unitPage.get(unitPage.indexOf("OWNER ADDRESS: CITY, STATE, ZIP                  SAME AS DRIVER )")+1), 
 	    			unitPage.get(unitPage.indexOf("# OCCUPANTS")+1), 
-	    			unitPage.get(unitPage.indexOf("INSURANCE COMPANY")+1), 
-	    			unitPage.get(unitPage.indexOf("POLICY NUMBER")+1), unitPage.get(unitPage.indexOf("DAMAGE SCALE")+1));
+	    			insuranceCompany, 
+	    			policyNumber,damageScale);
 	    	
 	    	reportUnitPageForms.add(reportUnitPageForm);
 	    }

@@ -115,14 +115,35 @@ public class PatientsController {
  	}
   
   //Upload PDF file
-  @RequestMapping(value = "/addCrashReport" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
+  @RequestMapping(value = "/uploadCrashReport" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
   public @ResponseBody PDFCrashReportJson uploadCrashReportFileHandler(
           @RequestParam("file") MultipartFile file,ModelMap model) throws IOException {
 	 
 	  //String returnText=patientPDFReader.saveFile(file);
 	  
-	 	return crashReportReader.getValuesFromPDF(file);
+	 	return crashReportReader.getValuesFromPDF(crashReportReader.parsePdf(file));
 
   }
+  
+//Upload PDF file
+  @RequestMapping(value = "/readCrashReportFromURL" ,method = RequestMethod.POST)
+  public @ResponseBody PDFCrashReportJson uploadCrashReportFileHandler(
+          @RequestParam("crashId") String crashReportId,ModelMap model) throws IOException {
+	 
+	  return crashReportReader.getValuesFromPDF(crashReportReader.parsePdfFromURL(crashReportId));
+
+  }
+  
     
+//Upload PDF file
+  @RequestMapping(value = "/readCrashReport" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
+  public @ResponseBody List<List<String>> readUploadCrashReportFileHandler(
+          @RequestParam("file") MultipartFile file,ModelMap model) throws IOException {
+	 
+	  //String returnText=patientPDFReader.saveFile(file);
+	  
+	 	return crashReportReader.parsePdf(file);
+
+  }
+  
 }
