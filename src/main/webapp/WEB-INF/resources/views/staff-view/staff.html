@@ -25,7 +25,7 @@
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 								<th>Last Name</th>
 								<th>Phone Number</th>
-								<th>Email ID</th>
+								<th>Email Id</th>
 
 								<th width="20%">Action</th>
 						
@@ -74,7 +74,10 @@
 						<a href="" ng-click="resetPassword(staff.id)" class="btn btn-xs btn-primary hint--top" data-hint="Reset Password"><i
 								class="fa fa-key"></i>
 						</a>
-							<a href="" ng-click="releasePatient(staff.id)" class="btn btn-xs btn-success hint--top" data-hint="Release Patient"><i
+							<a href="" ng-show="staff.assignedPatientSize>0" ng-click="releasePatient(staff.id)" class="btn btn-xs btn-success hint--lefter" data-hint="Release Patient"><i
+								class="fa fa-eject"></i>
+						</a>
+						<a ng-show="staff.assignedPatientSize==0" class="btn btn-xs btn-danger hint--lefter" data-hint="No Patient Assigned"><i
 								class="fa fa-eject"></i>
 						</a>
 								

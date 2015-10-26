@@ -45,6 +45,8 @@ public class Patients implements java.io.Serializable {
 	private String dateOfBirth;
 	private String gender;
 	private String address;
+	private Double latitude;
+	private Double longitude;
 	private String phoneNumber;
 	private String injuries;
 	private String emsAgency;
@@ -70,7 +72,7 @@ public class Patients implements java.io.Serializable {
 			String unitInError, String country, String cityVillageTownship,
 			String crashDate, String timeOfCrash, String localReportNumber1,
 			String unitNumber, String name, String dateOfBirth, String gender,
-			String address, String phoneNumber, String injuries,
+			String address, Double latitude, Double longitude, String phoneNumber, String injuries,
 			String emsAgency, String medicalFacility,
 			String localReportNumber2, String unitInError1, String unitNumber1,
 			String ownerName, String ownerPhoneNumber, String damageScale,
@@ -95,6 +97,8 @@ public class Patients implements java.io.Serializable {
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
 		this.address = address;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.phoneNumber = phoneNumber;
 		this.injuries = injuries;
 		this.emsAgency = emsAgency;
@@ -291,6 +295,24 @@ public class Patients implements java.io.Serializable {
 		this.address = address;
 	}
 
+	@Column(name = "latitude")
+	public Double getLatitude() {
+		return this.latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	@Column(name = "longitude")
+	public Double getLongitude() {
+		return this.longitude;
+	}
+	
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+	
 	@Column(name = "phone_number", length = 100)
 	public String getPhoneNumber() {
 		return this.phoneNumber;

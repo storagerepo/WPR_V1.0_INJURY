@@ -15,10 +15,17 @@ angular
     'angular-loading-bar',
     'angularUtils.directives.dirPagination',
     'requestModule',
-    'flash'
+    'flash',
+    'uiGmapgoogle-maps'
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"$httpProvider",function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,$httpProvider) {
 
+	 /* uiGmapGoogleMapApiProvider.configure({
+	        key: 'AIzaSyCSrffdwIzj8p4RZgvglbhQEEjgEx7ZUKQ',
+	        v: '3.20', //defaults to latest 3.X anyhow
+	        libraries: 'weather,geometry,visualization'
+	    });
+	  */
 	  $httpProvider.defaults.withCredentials = true;
 
       $httpProvider.interceptors.push(['$q','$location','$injector',function ($q, $location,$injector) {
@@ -254,9 +261,7 @@ angular
             loadMyFile:function($ocLazyLoad) {
               return $ocLazyLoad.load({
                   name:'sbAdminApp',
-                  files:['scripts/controllers/clinicController.js',
-                         'https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css',
-                         'https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js']
+                  files:['scripts/controllers/clinicController.js']
               });
             }
           },
@@ -419,6 +424,20 @@ angular
                              'components/datetime/datetimepicker.css',
                              'components/datetime/moment.js',
                              'components/datetime/datetimepicker.js']
+                  });
+                }
+              }
+            
+        }) .state('dashboard.viewlocations/:id',{
+            templateUrl:'views/maplocation/view-nearby-clinics.html',
+            url:'/viewlocations/:id',
+            controller:"showNearByClinicController",
+            resolve: {
+                loadMyFile:function($ocLazyLoad) {
+                  
+                  return $ocLazyLoad.load({
+                      name:'sbAdminApp',
+                      files:['scripts/controllers/MapLocationController.js']
                   });
                 }
               }

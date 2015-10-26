@@ -21,6 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 
+import com.deemsys.project.Map.ClinicLocationForm;
+import com.deemsys.project.Map.SearchClinicsService;
+
 /**
  * 
  * @author Deemsys
@@ -35,6 +38,10 @@ public class PatientsController {
 	
 	@Autowired
 	PDFCrashReportReader crashReportReader;
+	
+	@Autowired
+	SearchClinicsService searchClinicsService;
+
 	
 	@RequestMapping(value="/getAllPatientss",method=RequestMethod.GET)
    	public String getAllPatientss(ModelMap model)
@@ -134,6 +141,26 @@ public class PatientsController {
 
   }
   
+  // Get Patients With Latitude Longitude
+  @RequestMapping(value="/getPatientWithLatLong",method=RequestMethod.GET)
+	public String getPatientsWithLatLong(@RequestParam("id") Integer id,ModelMap model)
+	{
+  	model.addAttribute("patientsForm",patientsService.getPatientWithLatLong(id));
+  	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
+
+// get Near By clinics  
+@RequestMapping(value="/getNearByClincs",method=RequestMethod.GET)
+	public String searchNearByClinics(@RequestParam("patientId") Integer patientId,@RequestParam("searchRange") Integer searchRange,ModelMap model)
+	{
+	
+	ClinicLocationForm clinicLocationForms = searchClinicsService.getNearByClinics(patientId, searchRange);
+	model.addAttribute("clinicLocationForm",clinicLocationForms);
+	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
+
     
 //Upload PDF file
   @RequestMapping(value = "/readCrashReport" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)

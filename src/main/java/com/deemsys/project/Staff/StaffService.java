@@ -36,6 +36,8 @@ public class StaffService {
 	@Autowired
 	StaffDAO staffDAO;
 	
+	@Autowired
+	PatientsDAO patientsDAO;
 	
 	//Get All Entries
 	public List<StaffForm> getStaffList()
@@ -48,8 +50,8 @@ public class StaffService {
 		
 		for (Staff staff : staffs) {
 			//TODO: Fill the List
-			
-			StaffForm staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
+			Integer patientSize=patientsDAO.getPatientListByStaffId(staff.getId()).size();
+			StaffForm staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable(),patientSize);
 			staffForms.add(staffForm);
 			
 		}

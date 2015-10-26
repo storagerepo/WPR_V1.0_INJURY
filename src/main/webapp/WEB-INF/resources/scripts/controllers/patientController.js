@@ -30,7 +30,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 			   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 					
 				     $scope.patientss= response.data.patientsForms;
-				     $scope.sort('name');
+				     $scope.sort('patientStatus');
 				     });
 			   
 		   }
@@ -342,7 +342,13 @@ else
 		  
 		   });
 		$scope.doctorName=function(){
-			var ClinicId=$scope.patient.clinicId;
+			var ClinicId=0;
+			if($scope.patient.clinicId==null){
+				ClinicId=0;
+			}
+			else{
+				ClinicId=$scope.patient.clinicId;
+			}
 				 requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
 						
 				    $scope.doctor= response.data.doctorsForm;

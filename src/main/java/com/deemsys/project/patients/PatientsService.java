@@ -27,6 +27,7 @@ import com.deemsys.project.entity.Patients;
 import com.deemsys.project.Appointments.AppointmentsDAO;
 import com.deemsys.project.CallLogs.CallLogsDAO;
 import com.deemsys.project.Clinics.ClinicsDAO;
+import com.deemsys.project.Map.GeoLocation;
 import com.deemsys.project.Staff.StaffService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
@@ -63,6 +64,10 @@ public class PatientsService {
 	StaffService staffService;
 	@Autowired
 	AppointmentsDAO appointmentsDAO;
+	
+	@Autowired
+	GeoLocation geoLocation;
+	
 	/*@Autowired
 	PatientsFileRead patientsFileRead;*/
 	
@@ -156,7 +161,53 @@ public class PatientsService {
 		return patientsForm;
 	}
 	
-	
+	//Get Particular Entry
+		public PatientsForm getPatientWithLatLong(Integer getId)
+		{
+			Patients patients=new Patients();
+			
+			patients=patientsDAO.get(getId);
+			
+			//TODO: Convert Entity to Form
+			//Start
+			PatientsForm patientsForm = new PatientsForm();
+			Integer staffId = 0,clinicId=0,doctorId = 0;
+			String staffName="N/A";
+			String clinicName="N/A";
+			String doctorName="N/A";
+			if(patients!=null)
+			{
+				staffId=0;clinicId=0;doctorId=0;
+			if(patients.getStaff()!=null)
+			{
+				staffId=patients.getStaff().getId();
+				staffName=patients.getStaff().getFirstName()+" "+patients.getStaff().getLastName();
+			}
+			if(patients.getClinics()!=null){
+				clinicId=patients.getClinics().getClinicId();
+				clinicName=patients.getClinics().getClinicName();
+			}
+			if(patients.getDoctors()!=null){
+				doctorId=patients.getDoctors().getId();
+				doctorName=patients.getDoctors().getDoctorName();
+			}
+				
+			
+			patientsForm=new PatientsForm(patients.getId(),staffId,clinicId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getLocalReportNumber1(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getLocalReportNumber2(),patients.getUnitInError1(),patients.getUnitNumber1(),patients.getOwnerName(),patients.getOwnerPhoneNumber(),patients.getDamageScale(),patients.getProofOfInsurance(),patients.getInsuranceCompany(),patients.getPolicyNumber(),patients.getCrashReportFileName(),patients.getPatientStatus());
+			patientsForm.setLatitude(patients.getLatitude());
+			patientsForm.setLongitude(patients.getLongitude());
+			patientsForm.setCallerName(staffName);
+			patientsForm.setClinicName(clinicName);
+			patientsForm.setDoctorName(doctorName);
+			
+			
+			}
+				
+			
+			//End
+			
+			return patientsForm;
+		}
 	
 	//Update an Entry
 	public int updatePatients(PatientsForm patientsForm)
@@ -189,8 +240,11 @@ public class PatientsService {
 		doctors.setId(patientsForm.getDoctorId());
 		}
 	
+		String latLong=geoLocation.getLocation(patientsForm.getAddress());
+		String[] latitudeLongitude=latLong.split(",");
+		
 		Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),
-				patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber(),patientsForm.getCrashReportFileName(),patientsForm.getPatientStatus());
+				patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(), Double.parseDouble(latitudeLongitude[0]), Double.parseDouble(latitudeLongitude[1]),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber(),patientsForm.getCrashReportFileName(),patientsForm.getPatientStatus());
 		patients.setId(patientsForm.getId());
 		Integer clinicId=patientsForm.getClinicId();
 		Integer doctorId=patientsForm.getDoctorId();
@@ -313,11 +367,13 @@ public class PatientsService {
         				
         				patientArray=line.split(csvSplitBy);
         				
+        				String latLong=geoLocation.getLocation(patientArray[14].trim());
+        				String[] latitudeLongitude=latLong.split(csvSplitBy);
         				// validation ends
         				patients.add(new Patients(null, null,null,patientArray[0].trim(), patientArray[1].trim(), patientArray[2].trim(),
 	        							patientArray[3].trim(), patientArray[4].trim(),patientArray[5].trim(), patientArray[6].trim(), patientArray[7].trim(), 
 	        							patientArray[8].trim(), patientArray[9].trim(),patientArray[10].trim(), patientArray[11].trim(), patientArray[12].trim(), 
-	        							patientArray[13].trim(), patientArray[14].trim(), patientArray[15].trim(), patientArray[16].trim(), 
+	        							patientArray[13].trim(), patientArray[14].trim(), Double.parseDouble(latitudeLongitude[0]), Double.parseDouble(latitudeLongitude[1]), patientArray[15].trim(), patientArray[16].trim(), 
 	        							patientArray[17].trim(), patientArray[18].trim(), patientArray[19].trim(),patientArray[20].trim(),patientArray[21].trim(), 
 	        							patientArray[22].trim(), patientArray[23].trim(), patientArray[24].trim(), patientArray[25].trim(), 
 	        							patientArray[26].trim(),patientArray[27].trim(),crashReportFileName,1));

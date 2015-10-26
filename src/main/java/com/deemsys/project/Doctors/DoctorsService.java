@@ -93,6 +93,25 @@ public class DoctorsService {
 		return 1;
 	}
 
+	//View Particular Doctor Details
+	@SuppressWarnings("unused")
+	public DoctorsForm getDoctorDetails(Integer doctorId) {
+		Doctors doctors = new Doctors();
+		doctors = doctorsDAO.get(doctorId);
+
+		DoctorsForm doctorsForm = new DoctorsForm();
+
+		if (doctors != null) {
+			doctorsForm = new DoctorsForm(doctors.getId(),
+					doctors.getClinics().getClinicId(),doctors.getClinics().getClinicName(), doctors.getDoctorName(),
+					doctors.getEmailId(), doctors.getContactNumber(), doctors.getSpecialistIn(),
+					doctors.getNotes());
+		} else {
+			doctorsForm = new DoctorsForm();
+		}
+		return doctorsForm;
+	}
+	
 	// Save an Entry
 	public int saveDoctors(DoctorsForm doctorsForm)
 

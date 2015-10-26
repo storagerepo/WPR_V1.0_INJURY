@@ -3,7 +3,7 @@ var myApp=angular.module("requestModule",[]);
 myApp.factory("requestHandler",['$http',function($http){
     
     var requestObj={};
-    var appURL="http://192.168.1.236:8089";
+    var appURL="http://192.168.1.122:8081";
 
     requestObj.getRequest=function(requestURL,params){
 
@@ -46,6 +46,17 @@ requestObj.postFileUpload=function(requestURL,data,params){
 				 return true;
 		});
     };
+    
+    // Get Geo Location
+    requestObj.getGeoLocation=function(requestURL,params){
+   	 requestURL=requestURL+params;
+   	 return $http({
+			  method : "POST",
+			  url : requestURL,
+			  }).success(function(response){
+				 return true;
+		});
+   };
     
     return requestObj;
 

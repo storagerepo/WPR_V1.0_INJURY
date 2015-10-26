@@ -93,4 +93,16 @@ public class ClinicsController {
    		return "/returnPage";
    	}
 	
+	/**
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/getNoOfClinics",method=RequestMethod.GET)
+	public String getNoOfClinics(Model model){
+		
+		model.addAttribute("NoOfClinics", clinicsService.getNoOfClinics());
+		return "/retuenPage";
+	}
+	
+	
 }

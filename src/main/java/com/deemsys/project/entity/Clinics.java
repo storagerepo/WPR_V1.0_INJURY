@@ -28,6 +28,8 @@ public class Clinics implements java.io.Serializable {
 	private String county;
 	private String country;
 	private String zipcode;
+	private Double latitude;
+	private Double longitude;
 	private String officeNumber;
 	private String faxNumber;
 	private String directions;
@@ -40,7 +42,7 @@ public class Clinics implements java.io.Serializable {
 
 	public Clinics(String clinicName, String address, String city,
 			String state, String county, String country, String zipcode,
-			String officeNumber, String faxNumber, String directions,
+			Double latitude, Double longitude,String officeNumber, String faxNumber, String directions,
 			String notes, Set<Doctors> doctorses,
 			Set<ClinicTimings> clinicTimingses) {
 		this.clinicName = clinicName;
@@ -50,6 +52,8 @@ public class Clinics implements java.io.Serializable {
 		this.county = county;
 		this.country = country;
 		this.zipcode = zipcode;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.officeNumber = officeNumber;
 		this.faxNumber = faxNumber;
 		this.directions = directions;
@@ -87,6 +91,24 @@ public class Clinics implements java.io.Serializable {
 		this.address = address;
 	}
 
+	@Column(name = "latitude")
+	public Double getLatitude() {
+		return this.latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	@Column(name = "longitude")
+	public Double getLongitude() {
+		return this.longitude;
+	}
+	
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+	
 	@Column(name = "city", length = 60)
 	public String getCity() {
 		return this.city;

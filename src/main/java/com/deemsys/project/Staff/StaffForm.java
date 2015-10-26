@@ -22,6 +22,7 @@ public class StaffForm {
 	private String emailAddress;
 	private String notes;
 	private Integer isEnable;
+	private Integer assignedPatientSize;
 	
 	public Integer getId() {
 		return id;
@@ -78,6 +79,12 @@ public class StaffForm {
 		this.notes = notes;
 	}
 	
+	public Integer getAssignedPatientSize() {
+		return assignedPatientSize;
+	}
+	public void setAssignedPatientSize(Integer assignedPatientSize) {
+		this.assignedPatientSize = assignedPatientSize;
+	}
 	public StaffForm() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -96,6 +103,23 @@ public class StaffForm {
 		this.emailAddress = emailAddress;
 		this.notes = notes;
 		this.isEnable=isEnable;
+	}
+	// Only For get All Staffs
+	public StaffForm(Integer id, String role, String username, String password,
+			String firstName, String lastName, String phoneNumber,
+			String emailAddress, String notes,Integer isEnable,Integer assignedPatientSize) {
+		super();
+		this.id = id;
+		this.role = role;
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.emailAddress = emailAddress;
+		this.notes = notes;
+		this.isEnable=isEnable;
+		this.assignedPatientSize=assignedPatientSize;
 	}
 	public Integer getIsEnable() {
 		return isEnable;

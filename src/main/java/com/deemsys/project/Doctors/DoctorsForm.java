@@ -19,6 +19,7 @@ public class DoctorsForm {
 
 	private Integer id;
 	private Integer clinicId;
+	private String clinicName;
 	private String doctorName;
 	private String emailId;
 	private String contactNumber;
@@ -70,6 +71,12 @@ public class DoctorsForm {
 		return clinicId;
 	}
 	
+	public String getClinicName() {
+		return clinicName;
+	}
+	public void setClinicName(String clinicName) {
+		this.clinicName = clinicName;
+	}
 	public DoctorsForm() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -81,6 +88,20 @@ public class DoctorsForm {
 		super();
 		this.id = id;
 		this.clinicId = clinicId;
+		this.doctorName = doctorName;
+		this.emailId = emailId;
+		this.contactNumber = contactNumber;
+		this.specialistIn = specialistIn;
+		this.notes = notes;
+	}
+	
+	public DoctorsForm(Integer id, Integer clinicId, String clinicName,String doctorName,
+			String emailId, String contactNumber, String specialistIn,
+			String notes) {
+		super();
+		this.id = id;
+		this.clinicId = clinicId;
+		this.clinicName=clinicName;
 		this.doctorName = doctorName;
 		this.emailId = emailId;
 		this.contactNumber = contactNumber;

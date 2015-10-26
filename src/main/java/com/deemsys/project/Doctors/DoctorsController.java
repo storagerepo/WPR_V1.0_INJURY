@@ -108,7 +108,7 @@ public class DoctorsController {
     @RequestMapping(value="/viewDoctors",method=RequestMethod.GET)
    	public String viewDoctors(@RequestParam("id") Integer id,ModelMap model)
    	{
-       	model.addAttribute("doctorsForm",doctorsService.getDoctors(id));
+       	model.addAttribute("doctorsForm",doctorsService.getDoctorDetails(id));
        	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}

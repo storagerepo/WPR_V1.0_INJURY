@@ -13,10 +13,13 @@ public class ClinicsForm {
 	private String county;
 	private String country;
 	private String zipcode;
+	private Double latitude;
+	private Double longitude;
 	private String officeNumber;
 	private String faxNumber;
 	private String directions;
 	private String notes;
+	private Double farAway;
 	private List<ClinicTimingList> clinicTimingList;
 	
 	public Integer getClinicId() {
@@ -67,6 +70,18 @@ public class ClinicsForm {
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
+	public Double getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+	public Double getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
 	public String getOfficeNumber() {
 		return officeNumber;
 	}
@@ -91,11 +106,39 @@ public class ClinicsForm {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+	public Double getFarAway() {
+		return farAway;
+	}
+	public void setFarAway(Double farAway) {
+		this.farAway = farAway;
+	}
 	public List<ClinicTimingList> getClinicTimingList() {
 		return clinicTimingList;
 	}
 	public void setClinicTimingList(List<ClinicTimingList> clinicTimingList) {
 		this.clinicTimingList = clinicTimingList;
+	}
+	public ClinicsForm(Integer clinicId, String clinicName, String address,
+			String city, String state, String county, String country,
+			String zipcode, Double latitude, Double longitude, String officeNumber, String faxNumber,
+			String directions, String notes,Double farAway,List<ClinicTimingList> clinicTimingList) {
+		super();
+		this.clinicId = clinicId;
+		this.clinicName = clinicName;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.county = county;
+		this.country = country;
+		this.zipcode = zipcode;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.officeNumber = officeNumber;
+		this.faxNumber = faxNumber;
+		this.directions = directions;
+		this.notes = notes;
+		this.farAway = farAway;
+		this.clinicTimingList=clinicTimingList;
 	}
 	public ClinicsForm(Integer clinicId, String clinicName, String address,
 			String city, String state, String county, String country,

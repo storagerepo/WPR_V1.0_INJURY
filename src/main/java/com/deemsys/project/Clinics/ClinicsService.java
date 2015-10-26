@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import com.deemsys.project.ClinicTimings.ClinicTimingList;
 import com.deemsys.project.ClinicTimings.ClinicTimingsDAO;
 import com.deemsys.project.Doctors.DoctorsDAO;
+import com.deemsys.project.Map.GeoLocation;
 import com.deemsys.project.entity.ClinicTimings;
 import com.deemsys.project.entity.ClinicTimingsId;
 import com.deemsys.project.entity.Clinics;
-
 /**
  * @author Deemsys
  *
@@ -31,6 +31,9 @@ public class ClinicsService {
 	
 	@Autowired
 	DoctorsDAO doctorsDAO;
+	
+	@Autowired
+	GeoLocation geoLocation;
 	
 	/** Get Clinic Details
 	 * @param clinicId
@@ -81,10 +84,18 @@ public class ClinicsService {
 	 */
 	public Integer saveClinic(ClinicsForm clinicsForm){
 		Integer status=0;
+		
+		// Get Lat Lang of Address
+		String latLong=geoLocation.getLocation(this.getAddressForGeoCode(clinicsForm));
+		System.out.println("CONVERT ADDRESS--"+this.getAddressForGeoCode(clinicsForm));
+		String[] latiudeLongitude=latLong.split(",");
+		
+		// Save Clinic
 		Clinics clinics=new Clinics(clinicsForm.getClinicName(), clinicsForm.getAddress(), clinicsForm.getCity(), clinicsForm.getState(), clinicsForm.getCounty(), 
-									clinicsForm.getCountry(), clinicsForm.getZipcode(), clinicsForm.getOfficeNumber(), clinicsForm.getFaxNumber(), clinicsForm.getDirections(), clinicsForm.getNotes(), null, null);
+									clinicsForm.getCountry(), clinicsForm.getZipcode(), Double.parseDouble(latiudeLongitude[0]), Double.parseDouble(latiudeLongitude[1]), clinicsForm.getOfficeNumber(), clinicsForm.getFaxNumber(), clinicsForm.getDirections(), clinicsForm.getNotes(), null, null);
 		clinicsDAO.save(clinics);
 		
+		// Save Clinic Timings
 		List<ClinicTimingList> clinicTimingList=clinicsForm.getClinicTimingList();
 		for (ClinicTimingList clinicTimingList2 : clinicTimingList) {
 			ClinicTimingsId clinicTimingsId=new ClinicTimingsId(clinics.getClinicId(), clinicTimingList2.getDay());
@@ -101,10 +112,17 @@ public class ClinicsService {
 	 */
 	public Integer updateClinic(ClinicsForm clinicsForm){
 		Integer status=0;
+		
+		// Get Lat Long For Address
+		String latLong=geoLocation.getLocation(this.getAddressForGeoCode(clinicsForm));
+		String[] latiudeLongitude=latLong.split(",");
+	
+		// Update Clinics
 		Clinics clinics=new Clinics(clinicsForm.getClinicName(), clinicsForm.getAddress(), clinicsForm.getCity(), clinicsForm.getState(), clinicsForm.getCounty(), 
-									clinicsForm.getCountry(), clinicsForm.getZipcode(), clinicsForm.getOfficeNumber(), clinicsForm.getFaxNumber(), clinicsForm.getDirections(), clinicsForm.getNotes(), null, null);
+									clinicsForm.getCountry(), clinicsForm.getZipcode(), Double.parseDouble(latiudeLongitude[0]), Double.parseDouble(latiudeLongitude[1]), clinicsForm.getOfficeNumber(), clinicsForm.getFaxNumber(), clinicsForm.getDirections(), clinicsForm.getNotes(), null, null);
 		clinics.setClinicId(clinicsForm.getClinicId());
 		clinicsDAO.update(clinics);
+		
 		// Update Clinic Timings
 		List<ClinicTimingList> clinicTimingList=clinicsForm.getClinicTimingList();
 		for (ClinicTimingList clinicTimingList2 : clinicTimingList) {
@@ -115,6 +133,10 @@ public class ClinicsService {
 		return status;
 	}
 	
+	/** Delete a Clinic
+	 * @param clinicId
+	 * @return
+	 */
 	public Integer deleteClinic(Integer clinicId){
 		Integer status=0;
 		
@@ -146,4 +168,39 @@ public class ClinicsService {
 
 		return clinicsForms;
 	}
+	
+	/**
+	 * Get No Of clinics
+	 * @return 
+	 */
+	public Integer getNoOfClinics(){
+		Integer noOfClinics=0;
+		noOfClinics=clinicsDAO.getAll().size();
+		return noOfClinics;
+	}
+	
+	public String getAddressForGeoCode(ClinicsForm clinicsForm){
+		String address= "";
+		address=clinicsForm.getAddress().replace(" ","+")+"+"+clinicsForm.getCounty().replace(" ","+")+"+"+clinicsForm.getCity().replace(" ","+")+"+"+clinicsForm.getState().replace(" ","+")+"+"+clinicsForm.getCountry().replace(" ","+")+"+"+clinicsForm.getZipcode();
+		return address;
+	}
+	
+	/*
+	 * Get Clinic Timing Lists
+	 */
+	public List<ClinicTimingList> getClinicTimingLists(Integer clinicId){
+		
+		List<ClinicTimings> clinicTimings=clinicTimingsDAO.getClinicTimings(clinicId);
+		
+		List<ClinicTimingList> clinicTimingLists = new ArrayList<ClinicTimingList>();
+		// Set ClinicTiming List
+		for (ClinicTimings clinicTimingss: clinicTimings) {
+		ClinicTimingList clinicTimingList=new ClinicTimingList(clinicTimingss.getId().getDay(), clinicTimingss.getId().getClinicId(), clinicTimingss.getStartTime(), clinicTimingss.getEndTime(), clinicTimingss.getIsWorkingDay());
+		clinicTimingLists.add(clinicTimingList);
+		}
+		
+		
+		return clinicTimingLists;
+	}
+	
 }

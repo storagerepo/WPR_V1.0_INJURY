@@ -17,7 +17,6 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	    requestHandler.postRequest("Staff/getCallLogsById.json?id="+$stateParams.id,"").then( function(response) {
 	    	$scope.callLogs= response.data.callLogsForms;
 	    	$scope.sort('timeStamp');
-	   
 	    	requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
 	    		$scope.patient= response.data.patientsForm;
 	    	});
@@ -49,11 +48,9 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	{
 		$scope.title="Add CallLogs";
 		$scope.options=true;
+		$scope.myForm.$setPristine();
 		$scope.calllogs={};
 		 $scope.calllogs.patientId =$stateParams.id;
-		$("#timeStamp").val("");
-		$("#response").val("");
-		$("#notes").val("");
 		 var date=new Date();
 		if(date.getMonth()<=8 && date.getDate()<=9 && date.getHours()<=9 && date.getMinutes()<=9 && date.getSeconds()<=9){
 			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
@@ -199,6 +196,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	
 	
 	$scope.Appointments={};
+	$scope.Appointments.clinicId="";
 	 $scope.Appointments.patientId =$stateParams.id;
 
 	
@@ -209,6 +207,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 			$scope.patient= response.data.patientsForm;
 		 });
 		//setting clinic id from patient 
+		
 		if($scope.patient.clinicId==0)
 		{
 	$scope.Appointments.clinicId="";
@@ -242,7 +241,13 @@ else
 		  
 		   });
 		$scope.doctorName=function(){
-			var ClinicId=$scope.Appointments.clinicId;
+			var ClinicId=0;
+			if($scope.Appointments.clinicId==null){
+				ClinicId=0;
+			}else{
+				ClinicId=$scope.Appointments.clinicId;
+			}
+			
 				 requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
 						
 				    $scope.doctor= response.data.doctorsForm;

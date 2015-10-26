@@ -250,6 +250,14 @@
 		<version>1.2.2</version>
 	</dependency>
  
+ <!-- Simple JSON -->
+<dependency>
+	<groupId>com.googlecode.json-simple</groupId>
+	<artifactId>json-simple</artifactId>
+	<version>1.1</version>
+</dependency>
+ <!-- End Simple JSON -->
+ 
 	<!-- Apache Commons Upload --> 
 	<dependency>
 		<groupId>commons-io</groupId>

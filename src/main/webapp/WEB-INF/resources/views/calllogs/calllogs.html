@@ -6,10 +6,10 @@
     <a ui-sref="dashboard.patient" class="btn-sm btn-primary pull-right margin-top-40 btn-margin-left">Back to Patient</a>
 	<a ng-click="addModel()" href="" class="btn-sm btn-primary pull-right margin-top-40 margin-left-5 btn-margin-left">Add Call Logs</a>
 	 	<h2 class="page-header" >Call Logs<br></h2>
-	 	<h4>Patient Name: {{patient.name}} | PhoneNumber&nbsp;-&nbsp;{{patient.phoneNumber}} |  	 <a ng-click="viewPatients(patient.id)" class="btn btn-xs btn-primary"><i
-								class="glyphicon glyphicon-eye-open"></i>&nbsp; View More Details
-						
-		</a></h4>
+	 	<h4>Patient Name: {{patient.name}} | PhoneNumber&nbsp;-&nbsp;{{patient.phoneNumber}} | <a ng-click="viewPatients(patient.id)" class="btn btn-xs btn-primary"><i
+								class="glyphicon glyphicon-eye-open"></i>&nbsp; View More Details</a> |
+		<a href="#/dashboard/viewlocations/{{patient.id}}" class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-map-marker"></i>&nbsp; View Near By Clinics</a>
+								</h4>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -88,7 +88,7 @@
                              <input type="text" name="timeStamp" id="timeStamp" class="form-control"  ng-model="calllogs.timeStamp" placeholder="Enter Time and Date" required>
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
-                                     <span class="error-container" ng-show="myForm.timeStamp.$dirty && myForm.timeStamp.$invalid">
+                                     <span class="error-container" ng-show="myForm.timeStamp.$dirty && myForm.timeStamp.$invalid && !myForm.notes.$prestine">
                                 <span style="color:red" ng-show="myForm.timeStamp.$error.required" id="dateTimeError">Please Enter the Date and Time</span>
                               </span>
                                     <br/>
@@ -105,14 +105,14 @@
                                 <option value="2">Voice mail</option>
 <option value="3">Do not call</option>                                
 </select>
-                            <span class="error-container" ng-show="myForm.response.$dirty && myForm.response.$invalid">
+                            <span class="error-container" ng-show="myForm.response.$dirty && myForm.response.$invalid && !myForm.notes.$prestine">
                               <span style="color:red" ng-show="myForm.response.$error.required">Please Select the Response</span>
                                        </span>
                                      <br>
         							
                              	<label>Note</label>
                                    <textarea name="notes" id="notes" class="form-control height-100" ng-model="calllogs.notes" placeholder="Enter the notes" required></textarea> 
-                                   <span class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid">
+                                   <span class="error-container" ng-show="myForm.notes.$dirty && myForm.notes.$invalid && !myForm.notes.$prestine">
                                 <span style="color:red" ng-show="myForm.notes.$error.required" id="calllogsNotesError">Please Enter the Notes</span>
                               </span>
                                     <br/>

@@ -7,10 +7,11 @@
     </div>
     <!-- /.row -->
     <div class="row">
+    	<stats number="{{numberClinics}}" comments="Clinics" colour="primary" type="hospital-o" goto="dashboard.clinic" ng-show="isAdmin"></stats>
         <stats number="{{numberStaff}}" comments="Callers" colour="green" type="user" goto="dashboard.staff" ng-show="isAdmin"></stats>
         <stats number="{{numberDoctors}}" comments="Doctors" colour="primary" type="user-md" goto="dashboard.doctor"></stats>
         <stats number="{{numberPatients}}" comments="Patients" colour="yellow" type="male" goto="dashboard.patient"></stats>
-        <stats number="{{numberappointments}}" comments="Appointments" colour="red" type="hospital-o" goto="dashboard.appointment"></stats>
+        <stats number="{{numberappointments}}" comments="Appointments" colour="red" type="calendar" goto="dashboard.appointment"></stats>
         
     </div>
     

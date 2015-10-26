@@ -14,7 +14,13 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 	     $scope.numberStaff=$scope.staff;
 	     
 	     });
+	
 		if($rootScope.isAdmin){
+			// No of Clinics
+			requestHandler.getRequest("Admin/getNoOfClinics.json","").then( function(response) {
+			      $scope.numberClinics=response.data.NoOfClinics;
+			     
+			     });
 			   	requestHandler.getRequest("Staff/getNoOfDoctors.json","").then( function(response) {
 				     $scope.doctors= response.data.doctorsForms;
 				     
