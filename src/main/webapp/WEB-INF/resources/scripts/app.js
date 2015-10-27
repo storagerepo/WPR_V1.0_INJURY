@@ -379,7 +379,23 @@ angular
         }).state('dashboard.EditPatient/:id',{
             templateUrl:'views/patient/add-patients.html',
             controller:"EditPatientController",
+            title:"Edit Patient",
             url:'/EditPatient/:id',
+            resolve: {
+                loadMyFile:function($ocLazyLoad) {
+                  
+                  return $ocLazyLoad.load({
+                      name:'sbAdminApp',
+                      files:['scripts/controllers/patientController.js']
+                  });
+                }
+              }
+        })
+        .state('dashboard.add-patient',{
+            templateUrl:'views/patient/add-patients.html',
+            controller:"AddPatientController",
+            title: "Add Patient",
+            url:'/add-patient',
             resolve: {
                 loadMyFile:function($ocLazyLoad) {
                   

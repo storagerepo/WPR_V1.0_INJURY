@@ -59,11 +59,15 @@ public class PatientsController {
 		return "/returnPage";
 	}
 	 
-  @RequestMapping(value="/updatePatients",method=RequestMethod.POST)
+  @RequestMapping(value="/saveUpdatePatients",method=RequestMethod.POST)
    	public String updatePatients(@RequestBody  PatientsForm patientsForm,ModelMap model)
    	{
-    	patientsService.updatePatients(patientsForm);
-    	model.addAttribute("requestSuccess",true);
+	  if(patientsForm.getClinicId()==null)
+			patientsService.savePatients(patientsForm);
+		else
+			patientsService.updatePatients(patientsForm);
+		
+    		model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
 

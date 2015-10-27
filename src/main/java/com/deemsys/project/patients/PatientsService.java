@@ -266,6 +266,44 @@ public class PatientsService {
 		}
 		return 1;
 }
+	public int savePatients(PatientsForm patientsForm)
+	{
+		//TODO: Convert Form to Entity Here	
+		
+		//Logic Starts
+		
+		
+		
+		Staff staff=null;
+		Clinics clinics=null;
+		Doctors doctors=null;
+		if(patientsForm.getCallerId()!=null)
+		if(patientsForm.getCallerId()!=0)
+		{
+			staff=new Staff();
+			staff.setId(patientsForm.getCallerId());
+		}
+		if(patientsForm.getClinicId()!=null)
+			if(patientsForm.getClinicId()!=0)
+			{
+				clinics=new Clinics();
+				clinics.setClinicId(patientsForm.getClinicId());
+			}
+		if(patientsForm.getDoctorId()!=null)
+		if(patientsForm.getDoctorId()!=0)
+		{
+		doctors=new Doctors();
+		doctors.setId(patientsForm.getDoctorId());
+		}
+	
+		String latLong=geoLocation.getLocation(patientsForm.getAddress());
+		String[] latitudeLongitude=latLong.split(",");
+		
+		Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),
+				patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(), Double.parseDouble(latitudeLongitude[0]), Double.parseDouble(latitudeLongitude[1]),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber(),patientsForm.getCrashReportFileName(),patientsForm.getPatientStatus());
+		patientsDAO.save(patients);
+		return 1;
+}
 	
 	//Delete an Entry
 	public int deletePatients(Integer id)

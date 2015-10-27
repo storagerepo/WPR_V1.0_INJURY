@@ -252,4 +252,21 @@ public class DoctorsService {
 		return doctorsForms;
 	
 	}
-}
+public List<DoctorsForm> getDoctorsByClinic(Integer clinicId){
+	List<DoctorsForm> doctorsForm= new ArrayList<DoctorsForm>();
+	List<Doctors>  doctors =new ArrayList<Doctors>();
+	doctors= doctorsDAO.getDoctorsByClinic(clinicId);
+	
+	DoctorsForm doctorsForms=new DoctorsForm();
+	for(Doctors doctorss:doctors)
+	{
+	doctorsForms = new DoctorsForm(doctorss.getId(),
+			doctorss.getClinics().getClinicId(), doctorss.getDoctorName(),
+			doctorss.getEmailId(), doctorss.getContactNumber(),doctorss.getSpecialistIn(),
+			doctorss.getNotes());
+	doctorsForm.add(doctorsForms);
+	
+	}
+	return doctorsForm;
+	
+}}

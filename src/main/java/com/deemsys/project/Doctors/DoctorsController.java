@@ -134,4 +134,11 @@ public class DoctorsController {
    		
    		return "/returnPage";
    	}
+    @RequestMapping(value="/getDoctorsByClinic",method=RequestMethod.GET)
+   	public String getDoctorsByClinic(@RequestParam("clinicId") Integer clinicId,ModelMap model)
+   	{
+    	model.addAttribute("doctorsForms",doctorsService.getDoctorsByClinic(clinicId));
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
  }

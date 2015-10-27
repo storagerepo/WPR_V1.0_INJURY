@@ -59,7 +59,13 @@ adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash)
 		     });
 		  }
 	};
-  
+	$scope.viewDoctors=function(clinicId)
+    {
+    	 requestHandler.getRequest("getDoctorsByClinic.json?clinicId="+clinicId,"").then( function(results) {
+    		 	$scope.doctorDetails=results.data.doctorsForms;
+         });
+    	 $("#viewDoctors").modal('show');
+    };
 });
 
 adminApp.controller('SaveClinicController',function($scope,$location,requestHandler,Flash){

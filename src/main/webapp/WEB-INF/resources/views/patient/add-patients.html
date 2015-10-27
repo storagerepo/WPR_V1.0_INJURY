@@ -3,7 +3,7 @@
 		<a ui-sref="dashboard.patient"
 			class="btn-sm btn-primary pull-right margin-top-40">Back to the
 			list</a>
-		<h2 class="page-header" >Edit Patients<span ng-hide="title=='Add Patient'">&nbsp;-&nbsp;{{patient.name}}</span></h2>
+		<h2 class="page-header" >{{title}}<span ng-hide="title=='Add Doctor'">&nbsp;-&nbsp;{{patient.name}}</span></h2>
 		
 	</div>
 	<!-- /.col-lg-12 -->
@@ -264,7 +264,9 @@
                    </div>
 			</div>
 			<div class="text-right" style="margin-right:30px;">
-				<a class="btn btn-success" ng-click="updatePatient()" ng-class="{'button-disable':myForm.$invalid || isClean()}" ng-disabled='isClean() || myForm.$invalid'>Save Changes</a>
+			 <a class="btn btn-success" ng-show='myFormButton' ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid'  ng-click="savePatient()">Save</a>
+            	 <a class="btn btn-success" ng-show='!myFormButton' ng-class="{'button-disable':myForm.$invalid || isClean()}" ng-disabled='isClean() || myForm.$invalid' ng-click="updatePatient()">Update</a>
+  
 				<a ui-sref="dashboard.patient" class="btn btn-danger">Cancel</a><br />
 				<br />
 				<br />

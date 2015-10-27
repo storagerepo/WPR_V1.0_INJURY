@@ -176,6 +176,11 @@ public class DoctorsDAOImpl implements DoctorsDAO{
 		return null;
 	}
 
-	
+	@Override
+	public List<Doctors> getDoctorsByClinic(Integer clinicId) {
+		// TODO Auto-generated method stub
+		return (List<Doctors>) this.sessionFactory.getCurrentSession().createCriteria(Doctors.class).add(Restrictions.eq("clinics.clinicId", clinicId)).list();
+		 
+	}
 
 }

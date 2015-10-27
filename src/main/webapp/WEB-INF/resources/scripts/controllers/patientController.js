@@ -151,7 +151,7 @@ $("#file").val("");
 	//Update the caller
 	$scope.updateCaller=function()
 	{
-		var doUpdate=requestHandler.postRequest('Staff/updatePatients.json',$scope.patients).then(function(response) {
+		var doUpdate=requestHandler.postRequest('Staff/saveUpdatePatients.json',$scope.patients).then(function(response) {
 			$("#assignCallerModel").modal("hide");
 			$('.modal-backdrop').hide();
 
@@ -192,7 +192,7 @@ $("#file").val("");
 	//Update the Doctor
 	$scope.updateDoctor=function()
 	{
-		var doUpdate=requestHandler.postRequest('Staff/updatePatients.json',$scope.patients).then(function(response) {
+		var doUpdate=requestHandler.postRequest('Staff/saveUpdatePatients.json',$scope.patients).then(function(response) {
 			$("#assignDoctorModel").modal("hide");
 			$('.modal-backdrop').hide();
 		});
@@ -286,13 +286,73 @@ adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope,
     console.info('uploader', uploader);
 }]);
 
-
-
-adminApp.controller('EditPatientController', function($scope,$http,$location,$stateParams,requestHandler,Flash){
+adminApp.controller('AddPatientController', function($scope,$state,$http,$location,$stateParams,requestHandler,Flash) {
+	$scope.myFormButton=true;
 	
+	
+	$scope.patient={};
+	$scope.title=$state.current.title;
+	 $scope.patient.patientId =$stateParams.id;
+
+	
+	 requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {
+			
+	     $scope.staff= response.data.staffForms;
+	   
+	     
+	  
+	     });
+
+		//getting patient details by id
+	 
+	
+	
+		requestHandler.getRequest("Admin/getClinicId.json","").then( function(response) {
+			
+		     $scope.clinic= response.data.clinicsForms;
+		 
+		     });
+		var ClinicId=$scope.patient.clinicId;
+		requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
+			
+		    $scope.doctor= response.data.doctorsForm;
+		  
+		   });
+		$scope.doctorName=function(){
+			var ClinicId=0;
+			if($scope.patient.clinicId==null){
+				ClinicId=0;
+			}
+			else{
+				ClinicId=$scope.patient.clinicId;
+			}
+				 requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
+						
+				    $scope.doctor= response.data.doctorsForm;
+				  
+				   });
+
+				}
+		
+	
+	$scope.savePatient=function()
+	{
+	requestHandler.postRequest("Staff/saveUpdatePatients.json",$scope.patient).then(function(response){
+			Flash.create('success', "You have Successfully Added Patient!");
+            
+			$location.path('dashboard/patient');
+		});
+	};
+	
+	
+});
+
+adminApp.controller('EditPatientController', function($scope,$http,$state,$location,$stateParams,requestHandler,Flash){
+	$scope.myFormButton=false;
 	var patientOriginal="";
 	
 	$scope.patient={};
+	$scope.title=$state.current.title;
 	 $scope.patient.patientId =$stateParams.id;
 
 	
@@ -362,7 +422,7 @@ else
 $scope.updatePatient=function(){
 			
 		
-			requestHandler.postRequest('Staff/updatePatients.json',$scope.patient).then(function(response) {
+			requestHandler.postRequest('Staff/saveUpdatePatients.json',$scope.patient).then(function(response) {
 	            Flash.create("success","You have Successfully updated!");
 				$location.path("dashboard/patient");
 			});

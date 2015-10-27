@@ -10,6 +10,7 @@ import com.deemsys.project.entity.Doctors;
  *
  */
 public interface DoctorsDAO extends IGenericDAO<Doctors>{
+	public List<Doctors> getDoctorsByClinic(Integer clinicId);
 	
 	public List<Doctors> getDoctorId();
 	public List<Doctors> getDoctorsByClinicId(Integer clinicId);
