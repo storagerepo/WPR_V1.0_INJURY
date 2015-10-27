@@ -54,7 +54,7 @@
 						</a>
                                    <a href="#/dashboard/edit-clinic/{{clinic.clinicId}}" data-hint="Edit Clinic" class="btn btn-xs btn-warning hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-edit"></i></a>
 	<a href="#" ui-sref="dashboard.clinic" ng-mousedown="deleteClinic(clinic.clinicId)" data-hint="Delete Clinic" class="btn btn-xs btn-danger hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-trash"></i></a>
- <a href="" ng-click="viewDoctors(clinic.clinicId)" class="btn btn-xs btn-primary hint--top" data-hint="View Doctor"><i
+ <a href="" ng-click="viewDoctors(clinic.clinicId)" class="btn btn-xs btn-primary hint--top" data-hint="View Doctors"><i
 								class="fa fa-user-md "></i>
 						</a>	</td></tr>
 </tbody>
@@ -84,7 +84,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">View Doctor</h4>
+          <h4 class="modal-title">Doctors List</h4>
         </div>
         <div class="modal-body">
         
@@ -109,7 +109,11 @@
 				</tr>
 
 				</tbody>
-				
+				<tbody ng-show="!doctorDetails.length">
+				<tr>
+				<td colspan="5" align="center">No Record Found</td>
+				</tr>
+				</tbody>
 			</table>
 			<div class="modal-footer">
         <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
