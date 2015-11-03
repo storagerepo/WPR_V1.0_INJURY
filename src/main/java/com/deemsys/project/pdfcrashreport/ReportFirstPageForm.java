@@ -4,6 +4,7 @@ public class ReportFirstPageForm {
 
 	  private String localReportNumber;
 	  private String crashSeverity;
+	  private String reportingAgencyName;
 	  private String numberOfUnits;
 	  private String unitInError;
 	  private String county;
@@ -12,18 +13,20 @@ public class ReportFirstPageForm {
 	  private String timeOfCrash;
 	
 	  public ReportFirstPageForm(String localReportNumber, String crashSeverity,
-			String numberOfUnits, String unitInError, String county,
-			String cityVillageTownship, String crashDate, String timeOfCrash) {
+			String reportingAgencyName, String numberOfUnits,
+			String unitInError, String county, String cityVillageTownship,
+			String crashDate, String timeOfCrash) {
 		super();
 		this.localReportNumber = localReportNumber;
 		this.crashSeverity = crashSeverity;
+		this.reportingAgencyName = reportingAgencyName;
 		this.numberOfUnits = numberOfUnits;
 		this.unitInError = unitInError;
 		this.county = county;
 		this.cityVillageTownship = cityVillageTownship;
 		this.crashDate = crashDate;
 		this.timeOfCrash = timeOfCrash;
-	  }
+	}
 
 	public String getLocalReportNumber() {
 		return localReportNumber;
@@ -39,6 +42,14 @@ public class ReportFirstPageForm {
 
 	public void setCrashSeverity(String crashSeverity) {
 		this.crashSeverity = crashSeverity;
+	}
+
+	public String getReportingAgencyName() {
+		return reportingAgencyName;
+	}
+
+	public void setReportingAgencyName(String reportingAgencyName) {
+		this.reportingAgencyName = reportingAgencyName;
 	}
 
 	public String getNumberOfUnits() {
@@ -88,6 +99,6 @@ public class ReportFirstPageForm {
 	public void setTimeOfCrash(String timeOfCrash) {
 		this.timeOfCrash = timeOfCrash;
 	}
-	  
+	
 	  
 }

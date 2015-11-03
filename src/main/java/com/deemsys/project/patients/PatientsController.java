@@ -145,6 +145,35 @@ public class PatientsController {
 
   }
   
+//Read JSON Crash Report
+  @RequestMapping(value = "/readAsJSONCrashReportFromURL" ,method = RequestMethod.POST)
+  public @ResponseBody List<List<String>> uploadJSONCrashReportFileHandler(
+          @RequestParam("crashId") String crashReportId,ModelMap model) throws IOException {
+	 
+	  return crashReportReader.parsePdfFromURL(crashReportId);
+
+  }
+  
+  
+//Upload PDF file
+  @RequestMapping(value = "/insertCrashReportFromURL" ,method = RequestMethod.POST)
+  public String insertCrashReportFileHandler(
+          @RequestParam("crashId") String crashReportId,ModelMap model) throws IOException {
+	 
+	  PDFCrashReportJson pdfCrashReportJson=crashReportReader.getValuesFromPDF(crashReportReader.parsePdfFromURL(crashReportId));
+	  boolean crashReportStatus=crashReportReader.checkStatus(pdfCrashReportJson);
+	  if(crashReportStatus){
+		  patientsService.savePatients(crashReportReader.getPatientForm(pdfCrashReportJson));
+		  model.addAttribute("requestSuccess",true);
+	  }else{
+		  model.addAttribute("requestSuccess",false);
+		  model.addAttribute("status","Report not statisfied the conditions");
+	  }
+	  return "ok";
+
+  }
+  
+  
   // Get Patients With Latitude Longitude
   @RequestMapping(value="/getPatientWithLatLong",method=RequestMethod.GET)
 	public String getPatientsWithLatLong(@RequestParam("id") Integer id,ModelMap model)

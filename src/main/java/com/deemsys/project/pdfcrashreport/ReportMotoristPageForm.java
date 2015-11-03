@@ -8,6 +8,8 @@ public class ReportMotoristPageForm {
 	private String adddressCityStateZip;
 	private String contactPhone;
 	private String injuries;
+	private String emsAgency;
+	private String medicalFacility;
 	public String getUnitNumber() {
 		return unitNumber;
 	}
@@ -50,9 +52,22 @@ public class ReportMotoristPageForm {
 	public void setInjuries(String injuries) {
 		this.injuries = injuries;
 	}
+	public String getEmsAgency() {
+		return emsAgency;
+	}
+	public void setEmsAgency(String emsAgency) {
+		this.emsAgency = emsAgency;
+	}
+	public String getMedicalFacility() {
+		return medicalFacility;
+	}
+	public void setMedicalFacility(String medicalFacility) {
+		this.medicalFacility = medicalFacility;
+	}
 	public ReportMotoristPageForm(String unitNumber, String name,
 			String dateOfBirth, String gender, String adddressCityStateZip,
-			String contactPhone, String injuries) {
+			String contactPhone, String injuries, String emsAgency,
+			String medicalFacility) {
 		super();
 		this.unitNumber = unitNumber;
 		this.name = name;
@@ -61,7 +76,13 @@ public class ReportMotoristPageForm {
 		this.adddressCityStateZip = adddressCityStateZip;
 		this.contactPhone = contactPhone;
 		this.injuries = injuries;
+		this.emsAgency = emsAgency;
+		this.medicalFacility = medicalFacility;
 	}
+	
+	
+	
+	
 	
 	
 }
