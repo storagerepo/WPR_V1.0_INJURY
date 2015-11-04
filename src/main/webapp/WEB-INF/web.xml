@@ -17,7 +17,7 @@
   </session-config>
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>/WEB-INF/dispatcher-servlet.xml,/WEB-INF/applicationContext.xml,/WEB-INF/security.xml</param-value>
+    <param-value>/WEB-INF/dispatcher-servlet.xml,/WEB-INF/applicationContext.xml,/WEB-INF/security.xml,/WEB-INF/spring-scheduler.xml</param-value>
   </context-param>
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>

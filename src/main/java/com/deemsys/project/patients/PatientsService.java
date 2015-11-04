@@ -302,7 +302,7 @@ public class PatientsService {
 		Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),
 				patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash(),patientsForm.getLocalReportNumber1(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(), Double.parseDouble(latitudeLongitude[0]), Double.parseDouble(latitudeLongitude[1]),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getLocalReportNumber2(),patientsForm.getUnitInError1(),patientsForm.getUnitNumber1(),patientsForm.getOwnerName(),patientsForm.getOwnerPhoneNumber(),patientsForm.getDamageScale(),patientsForm.getProofOfInsurance(),patientsForm.getInsuranceCompany(),patientsForm.getPolicyNumber(),patientsForm.getCrashReportFileName(),patientsForm.getPatientStatus());
 		patientsDAO.save(patients);
-		return 1;
+		return patients.getId();
 }
 	
 	//Delete an Entry

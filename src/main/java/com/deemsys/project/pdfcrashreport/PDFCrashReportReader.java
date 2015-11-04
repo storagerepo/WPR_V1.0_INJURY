@@ -1,5 +1,6 @@
 package com.deemsys.project.pdfcrashreport;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -52,8 +53,8 @@ public class PDFCrashReportReader {
 	 * 
 	 * @throws IOException
 	 */
-	public List<List<String>> parsePdf(MultipartFile pdfFile) throws IOException {
-		PdfReader reader = new PdfReader(pdfFile.getBytes());
+	public List<List<String>> parsePdf(String fileName) throws IOException {
+		PdfReader reader = new PdfReader(fileName);
 		List<List<String>> contentList=new ArrayList<List<String>>();
 		PdfReaderContentParser parser = new PdfReaderContentParser(reader);
 		String pdfText="";
@@ -63,7 +64,7 @@ public class PDFCrashReportReader {
 			pdfText = strategy.getResultantText();
 			contentList.add(Arrays.asList(pdfText.split("\n")));
 		}
-		
+		reader.close();
 		return contentList;
 	}
 	
