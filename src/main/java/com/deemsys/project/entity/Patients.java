@@ -39,7 +39,6 @@ public class Patients implements java.io.Serializable {
 	private String cityVillageTownship;
 	private String crashDate;
 	private String timeOfCrash;
-	private String localReportNumber1;
 	private String unitNumber;
 	private String name;
 	private String dateOfBirth;
@@ -51,15 +50,6 @@ public class Patients implements java.io.Serializable {
 	private String injuries;
 	private String emsAgency;
 	private String medicalFacility;
-	private String localReportNumber2;
-	private String unitInError1;
-	private String unitNumber1;
-	private String ownerName;
-	private String ownerPhoneNumber;
-	private String damageScale;
-	private String proofOfInsurance;
-	private String insuranceCompany;
-	private String policyNumber;
 	private String crashReportFileName;
 	private Integer patientStatus;
 	 
@@ -70,14 +60,11 @@ public class Patients implements java.io.Serializable {
 			String localReportNumber, String crashSeverity,
 			String reportingAgencyName, String numberOfUnits,
 			String unitInError, String country, String cityVillageTownship,
-			String crashDate, String timeOfCrash, String localReportNumber1,
+			String crashDate, String timeOfCrash,
 			String unitNumber, String name, String dateOfBirth, String gender,
 			String address, Double latitude, Double longitude, String phoneNumber, String injuries,
 			String emsAgency, String medicalFacility,
-			String localReportNumber2, String unitInError1, String unitNumber1,
-			String ownerName, String ownerPhoneNumber, String damageScale,
-			String proofOfInsurance, String insuranceCompany,
-			String policyNumber, String crashReportFileName,
+			String crashReportFileName,
 			Integer patientStatus) {
 		this.staff = staff;
 		this.clinics=clinics;
@@ -91,7 +78,6 @@ public class Patients implements java.io.Serializable {
 		this.cityVillageTownship = cityVillageTownship;
 		this.crashDate = crashDate;
 		this.timeOfCrash = timeOfCrash;
-		this.localReportNumber1 = localReportNumber1;
 		this.unitNumber = unitNumber;
 		this.name = name;
 		this.dateOfBirth = dateOfBirth;
@@ -103,15 +89,6 @@ public class Patients implements java.io.Serializable {
 		this.injuries = injuries;
 		this.emsAgency = emsAgency;
 		this.medicalFacility = medicalFacility;
-		this.localReportNumber2 = localReportNumber2;
-		this.unitInError1 = unitInError1;
-		this.unitNumber1 = unitNumber1;
-		this.ownerName = ownerName;
-		this.ownerPhoneNumber = ownerPhoneNumber;
-		this.damageScale = damageScale;
-		this.proofOfInsurance = proofOfInsurance;
-		this.insuranceCompany = insuranceCompany;
-		this.policyNumber = policyNumber;
 		this.crashReportFileName = crashReportFileName;
 		this.patientStatus = patientStatus;
 		
@@ -241,15 +218,6 @@ public class Patients implements java.io.Serializable {
 		this.timeOfCrash = timeOfCrash;
 	}
 
-	@Column(name = "local_report_number1", length = 100)
-	public String getLocalReportNumber1() {
-		return this.localReportNumber1;
-	}
-
-	public void setLocalReportNumber1(String localReportNumber1) {
-		this.localReportNumber1 = localReportNumber1;
-	}
-
 	@Column(name = "unit_number", length = 100)
 	public String getUnitNumber() {
 		return this.unitNumber;
@@ -347,87 +315,6 @@ public class Patients implements java.io.Serializable {
 
 	public void setMedicalFacility(String medicalFacility) {
 		this.medicalFacility = medicalFacility;
-	}
-
-	@Column(name = "local_report_number2", length = 100)
-	public String getLocalReportNumber2() {
-		return this.localReportNumber2;
-	}
-
-	public void setLocalReportNumber2(String localReportNumber2) {
-		this.localReportNumber2 = localReportNumber2;
-	}
-
-	@Column(name = "unit_in_error1", length = 100)
-	public String getUnitInError1() {
-		return this.unitInError1;
-	}
-
-	public void setUnitInError1(String unitInError1) {
-		this.unitInError1 = unitInError1;
-	}
-
-	@Column(name = "unit_number1", length = 100)
-	public String getUnitNumber1() {
-		return this.unitNumber1;
-	}
-
-	public void setUnitNumber1(String unitNumber1) {
-		this.unitNumber1 = unitNumber1;
-	}
-
-	@Column(name = "owner_name", length = 100)
-	public String getOwnerName() {
-		return this.ownerName;
-	}
-
-	public void setOwnerName(String ownerName) {
-		this.ownerName = ownerName;
-	}
-
-	@Column(name = "owner_phone_number", length = 100)
-	public String getOwnerPhoneNumber() {
-		return this.ownerPhoneNumber;
-	}
-
-	public void setOwnerPhoneNumber(String ownerPhoneNumber) {
-		this.ownerPhoneNumber = ownerPhoneNumber;
-	}
-
-	@Column(name = "damage_scale", length = 100)
-	public String getDamageScale() {
-		return this.damageScale;
-	}
-
-	public void setDamageScale(String damageScale) {
-		this.damageScale = damageScale;
-	}
-
-	@Column(name = "proof_of_insurance", length = 100)
-	public String getProofOfInsurance() {
-		return this.proofOfInsurance;
-	}
-
-	public void setProofOfInsurance(String proofOfInsurance) {
-		this.proofOfInsurance = proofOfInsurance;
-	}
-
-	@Column(name = "insurance_company", length = 100)
-	public String getInsuranceCompany() {
-		return this.insuranceCompany;
-	}
-
-	public void setInsuranceCompany(String insuranceCompany) {
-		this.insuranceCompany = insuranceCompany;
-	}
-
-	@Column(name = "policy_number", length = 100)
-	public String getPolicyNumber() {
-		return this.policyNumber;
-	}
-
-	public void setPolicyNumber(String policyNumber) {
-		this.policyNumber = policyNumber;
 	}
 
 	@Column(name = "crash_report_file_name", length = 800)

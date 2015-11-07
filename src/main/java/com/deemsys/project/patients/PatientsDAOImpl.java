@@ -259,4 +259,12 @@ public class PatientsDAOImpl implements PatientsDAO{
 		query.executeUpdate();
 	
 	}
+
+@Override
+public List<Patients> patientStatus(Integer patientStatus) {
+	// TODO Auto-generated method stub
+	List<Patients> patients=(List<Patients>) this.sessionFactory.getCurrentSession().createQuery("FROM  Patients WHERE patientStatus='"+patientStatus+"'").list();
+	return patients;
+}
+
 }

@@ -206,4 +206,12 @@ public class PatientsController {
 
   }*/
   
+  @RequestMapping(value="/patientStatus",method=RequestMethod.GET)
+ 	public String patientStatus(@RequestParam("patientStatus") Integer patientStatus,ModelMap model)
+ 	{
+  	model.addAttribute("patientsForms",patientsService.patientStatus(patientStatus));
+  	model.addAttribute("requestSuccess",true);
+ 		return "/returnPage";
+ 	}
+
 }

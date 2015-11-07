@@ -14,7 +14,14 @@
 	<div class="col-lg-12">
 		<!-- /.panel-heading -->
 		<div class="col-md-12">
-
+<label>Patient Status:</label>
+                           <select ng-change="patientStatus()" style="width: 225px;" class="form-control" ng-model="Status" name="patientStatus" id="patientStatus" required>
+  							  <option value="">-- Select Patient Status --</option>
+  				
+                                <option value="1">Active</option>
+                                <option value="2">Appointment Scheduled</option>
+<option value="3">Do not call</option>                                
+</select>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -39,7 +46,7 @@
 						<th></th>
 					</tr>
 				</thead>
-				<tbody ng-show="patientss.length>0" dir-paginate="patients in patientss | filter:search | orderBy:sortKey:reverse|itemsPerPage:5 ">
+				<tbody ng-show="patientss.length>0" dir-paginate="patients in patientss | filter:search | orderBy:sortKey:reverse|itemsPerPage:20 ">
 					<tr>
 						
 
@@ -60,7 +67,9 @@
 						<a href="#/dashboard/Calllogs/{{patients.id}}" class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs"><i
 								class="glyphicon glyphicon-eye-open"></i>
 						</a>
-						<a href="#/dashboard/EditPatient/{{patients.id}}" class="btn btn-xs btn-warning hint--top" data-hint="Edit Patient" ng-show="isAdmin"><i
+						
+						<span ng-hide="{{patients.patientStatus}}==3">
+						 <a href="#/dashboard/EditPatient/{{patients.id}}"  class="btn btn-xs btn-warning hint--top" data-hint="Edit Patient" ng-show="isAdmin"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
 						<a href="" ng-click="deletePatient(patients.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Patient" ng-show="admin"><i
@@ -84,12 +93,13 @@
 						</span>
 						<a target="_self" class="btn btn-xs btn-primary hint--lefter"  data-hint="Download Crash Report" href="/Injury/Report/{{patients.crashReportFileName}}" download="{{patients.crashReportFileName}}"><i
 								class="glyphicon glyphicon-download-alt"></i></a>
-						
 						</span>
-						
+						 
+					</span>	
 						</td>
 					</tr>
 				</tbody>
+				
 				<tbody ng-show="patientss.length==0">
 				<tr>
 				<td colspan="5" align="center">No Record Found</td>

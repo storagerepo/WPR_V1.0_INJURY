@@ -30,7 +30,6 @@ public class PatientsForm {
 	private String cityVillageTownship;
 	private String crashDate;
 	private String timeOfCrash;
-	private String localReportNumber1;
 	private String unitNumber;
 	private String name;
 	private String dateOfBirth;
@@ -42,15 +41,6 @@ public class PatientsForm {
 	private String injuries;
 	private String emsAgency;
 	private String medicalFacility;
-	private String localReportNumber2;
-	private String unitInError1;
-	private String unitNumber1;
-	private String ownerName;
-	private String ownerPhoneNumber;
-	private String damageScale;
-	private String proofOfInsurance;
-	private String insuranceCompany;
-	private String policyNumber;
 	private String crashReportFileName;
 	private Integer patientStatus;
 	
@@ -133,12 +123,6 @@ public class PatientsForm {
 	public void setTimeOfCrash(String timeOfCrash) {
 		this.timeOfCrash = timeOfCrash;
 	}
-	public String getLocalReportNumber1() {
-		return localReportNumber1;
-	}
-	public void setLocalReportNumber1(String localReportNumber1) {
-		this.localReportNumber1 = localReportNumber1;
-	}
 	public String getUnitNumber() {
 		return unitNumber;
 	}
@@ -205,62 +189,6 @@ public class PatientsForm {
 	public void setMedicalFacility(String medicalFacility) {
 		this.medicalFacility = medicalFacility;
 	}
-	public String getLocalReportNumber2() {
-		return localReportNumber2;
-	}
-	public void setLocalReportNumber2(String localReportNumber2) {
-		this.localReportNumber2 = localReportNumber2;
-	}
-	public String getUnitInError1() {
-		return unitInError1;
-	}
-	public void setUnitInError1(String unitInError1) {
-		this.unitInError1 = unitInError1;
-	}
-	public String getUnitNumber1() {
-		return unitNumber1;
-	}
-	public void setUnitNumber1(String unitNumber1) {
-		this.unitNumber1 = unitNumber1;
-	}
-	public String getOwnerName() {
-		return ownerName;
-	}
-	public void setOwnerName(String ownerName) {
-		this.ownerName = ownerName;
-	}
-	public String getOwnerPhoneNumber() {
-		return ownerPhoneNumber;
-	}
-	public void setOwnerPhoneNumber(String ownerPhoneNumber) {
-		this.ownerPhoneNumber = ownerPhoneNumber;
-	}
-	public String getDamageScale() {
-		return damageScale;
-	}
-	public void setDamageScale(String damageScale) {
-		this.damageScale = damageScale;
-	}
-	public String getProofOfInsurance() {
-		return proofOfInsurance;
-	}
-	public void setProofOfInsurance(String proofOfInsurance) {
-		this.proofOfInsurance = proofOfInsurance;
-	}
-	public String getInsuranceCompany() {
-		return insuranceCompany;
-	}
-	
-	public void setInsuranceCompany(String insuranceCompany) {
-		this.insuranceCompany = insuranceCompany;
-	}
-	public String getPolicyNumber() {
-		return policyNumber;
-	}
-	
-	public void setPolicyNumber(String policyNumber) {
-		this.policyNumber = policyNumber;
-	}
 	public Integer getPatientStatus() {
 		return patientStatus;
 	}
@@ -272,13 +200,10 @@ public class PatientsForm {
 			String crashSeverity, String reportingAgencyName,
 			String numberOfUnits, String unitInError, String country,
 			String cityVillageTownship, String crashDate, String timeOfCrash,
-			String localReportNumber1, String unitNumber, String name,
+			String unitNumber, String name,
 			String dateOfBirth, String gender, String address,
 			String phoneNumber, String injuries, String emsAgency,
-			String medicalFacility, String localReportNumber2,
-			String unitInError1, String unitNumber1, String ownerName,
-			String ownerPhoneNumber, String damageScale,
-			String proofOfInsurance, String insuranceCompany, String policyNumber,String crashReportFileName,Integer patientStatus) {
+			String medicalFacility,String crashReportFileName,Integer patientStatus) {
 		super();
 		this.id = id;
 		this.callerId = callerId;
@@ -293,7 +218,6 @@ public class PatientsForm {
 		this.cityVillageTownship = cityVillageTownship;
 		this.crashDate = crashDate;
 		this.timeOfCrash = timeOfCrash;
-		this.localReportNumber1 = localReportNumber1;
 		this.unitNumber = unitNumber;
 		this.name = name;
 		this.dateOfBirth = dateOfBirth;
@@ -303,15 +227,6 @@ public class PatientsForm {
 		this.injuries = injuries;
 		this.emsAgency = emsAgency;
 		this.medicalFacility = medicalFacility;
-		this.localReportNumber2 = localReportNumber2;
-		this.unitInError1 = unitInError1;
-		this.unitNumber1 = unitNumber1;
-		this.ownerName = ownerName;
-		this.ownerPhoneNumber = ownerPhoneNumber;
-		this.damageScale = damageScale;
-		this.proofOfInsurance = proofOfInsurance;
-		this.insuranceCompany=insuranceCompany;
-		this.policyNumber=policyNumber;
 		this.crashReportFileName=crashReportFileName;
 		this.patientStatus=patientStatus;
 	}

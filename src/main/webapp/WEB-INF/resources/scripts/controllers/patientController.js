@@ -210,7 +210,12 @@ $("#file").val("");
 		
 		
 	};
-
+	$scope.patientStatus=function(){
+	 requestHandler.getRequest("Staff/patientStatus.json?patientStatus="+$scope.Status,"").then( function(response) {
+			 $scope.patientss= response.data.patientsForms;
+			  });
+	
+	}
 });
 
 
