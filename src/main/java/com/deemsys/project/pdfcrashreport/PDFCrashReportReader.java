@@ -173,8 +173,6 @@ public class PDFCrashReportReader {
 		patientsForm.setMedicalFacility(motoristPageForm.getMedicalFacility());
 		
 		patientsForm.setLocalReportNumber(firstPageForm.getLocalReportNumber());
-		patientsForm.setLocalReportNumber1(firstPageForm.getLocalReportNumber());
-		patientsForm.setLocalReportNumber2(firstPageForm.getLocalReportNumber());
 		patientsForm.setCrashSeverity(firstPageForm.getCrashSeverity());
 		patientsForm.setReportingAgencyName(firstPageForm.getReportingAgencyName());
 		patientsForm.setCountry(firstPageForm.getCounty());
@@ -184,8 +182,6 @@ public class PDFCrashReportReader {
 		patientsForm.setCrashDate(firstPageForm.getCrashDate());
 		patientsForm.setTimeOfCrash(firstPageForm.getTimeOfCrash());
 		
-		patientsForm.setInsuranceCompany(pdfCrashReportJson.getReportUnitPageForms().get(Integer.parseInt(firstPageForm.getUnitInError())-1).getInsuranceCompany());
-		patientsForm.setPolicyNumber(pdfCrashReportJson.getReportUnitPageForms().get(Integer.parseInt(firstPageForm.getUnitInError())-1).getPolicyNumber());
 		patientsForm.setPatientStatus(1);
 		return patientsForm;
 	}

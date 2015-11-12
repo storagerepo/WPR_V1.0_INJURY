@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,7 +75,6 @@ public class CallLogsService {
 		CallLogsForm callLogsForm=new CallLogsForm ();
 		//TODO: Convert Entity to Form
 		//Start
-
 		try{
 		if(callLogs.getAppointments()==null)
 		{
@@ -105,7 +106,7 @@ public class CallLogsService {
 		Patients patients = new Patients();
 		patients.setId(callLogsForm.getPatientId());
 		
-		CallLogs callLogs=new CallLogs(patients,appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+		CallLogs callLogs=new CallLogs(patients,appointments,callLogsForm.getCallerId(),InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		callLogs.setId(callLogsForm.getId());
 		//Logic Ends
 		
@@ -124,7 +125,12 @@ public class CallLogsService {
 		Appointments appointments = new Appointments();
 		
 		Patients patients = patientsDAO.get(callLogsForm.getPatientId());
-			CallLogs callLogs=new CallLogs(patients,null,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+		User user = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+				String username=user.getUsername();
+				Staff staff=staffDAO.getByUserName(username);
+					
+			CallLogs callLogs=new CallLogs(patients,null,staff.getId(),InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		
 			String status=callLogsForm.getResponse();
 		if(status.equals("3"))
@@ -149,9 +155,6 @@ public class CallLogsService {
 		//TODO: Convert Form to Entity Here	
 		
 		//Logic Starts
-
-		
-		
 		Patients patients = patientsDAO.get(callLogsForm.getPatientId());
 		patients.setId(callLogsForm.getPatientId());
 		
@@ -160,7 +163,13 @@ public class CallLogsService {
 		if(callLogsForm.getAppointmentId()!=null){
 			appointments = appointmentsDAO.get(callLogsForm.getAppointmentId());
 			appointments.setPatients(patients);
-			callLogs=new CallLogs(patients,appointments,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+			
+			User user = (User) SecurityContextHolder.getContext()
+					.getAuthentication().getPrincipal();
+					String username=user.getUsername();
+					Staff staff=staffDAO.getByUserName(username);
+						
+			callLogs=new CallLogs(patients,appointments,staff.getId(),InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 			callLogs.setId(callLogsForm.getId());
 			String status=callLogsForm.getResponse();
 			if(status.equals("3"))
@@ -175,7 +184,12 @@ public class CallLogsService {
 			}
 		}
 		else{
-			callLogs=new CallLogs(patients,null,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+			User user = (User) SecurityContextHolder.getContext()
+					.getAuthentication().getPrincipal();
+					String username=user.getUsername();
+					Staff staff=staffDAO.getByUserName(username);
+						
+			callLogs=new CallLogs(patients,null,staff.getId(),InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 			callLogs.setId(callLogsForm.getId());
 			String status=callLogsForm.getResponse();
 			if(status.equals("3"))
@@ -221,13 +235,35 @@ public class CallLogsService {
 		for(CallLogs callLogss:callLogs)
 		{
 			try{
-			if(callLogss.getAppointments()==null)
-			{
-
+		if(callLogss.getCallerId()==null & callLogss.getAppointments()==null ) {
 				callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes());
 			}
-			else{
+			else if(callLogss.getCallerId()!=null & callLogss.getAppointments()==null)
+			{
+				Integer id=callLogss.getCallerId();
+				Staff staff=new Staff();
+				staff=staffDAO.get(id);
+				String staffName=staff.getFirstName()+" "+staff.getLastName();
+
+				callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),staffName);
+				
+			}
+			else if(callLogss.getCallerId()==null && callLogss.getAppointments()!=null)
+		{
 				callLogsForms = new CallLogsForm(callLogss.getId(), callLogss.getAppointments().getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes());
+			
+		}
+			else if(callLogss.getCallerId()!=null && callLogss.getAppointments()!=null)
+			{
+				Integer id=callLogss.getCallerId();
+				Staff staff=new Staff();
+				staff=staffDAO.get(id);
+				String staffName=staff.getFirstName()+" "+staff.getLastName();
+
+				callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getAppointments().getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),staffName);
+			}
+			else
+			{
 				
 			}
 			callLogsForm.add(callLogsForms);

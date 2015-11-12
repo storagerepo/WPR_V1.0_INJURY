@@ -27,6 +27,7 @@ public class CallLogs implements java.io.Serializable {
 	private Integer id;
 	private Patients patients;
 	private Appointments appointments;
+	private Integer callerId;
 	private Date timeStamp;
 	private String response;
 	private String notes;
@@ -34,10 +35,11 @@ public class CallLogs implements java.io.Serializable {
 	public CallLogs() {
 	}
 
-	public CallLogs(Patients patients, Appointments appointments,
+	public CallLogs(Patients patients, Appointments appointments,Integer callerId,
 			Date timeStamp, String response, String notes) {
 		this.patients = patients;
 		this.appointments = appointments;
+		this.callerId=callerId;
 		this.timeStamp = timeStamp;
 		this.response = response;
 		this.notes = notes;
@@ -80,6 +82,15 @@ public class CallLogs implements java.io.Serializable {
 		return this.timeStamp;
 	}
 
+	@Column(name = "caller_id")
+	public Integer getCallerId() {
+		return this.callerId;
+	}
+
+	public void setCallerId(Integer callerId) {
+		this.callerId = callerId;
+	}
+	
 	public void setTimeStamp(Date timeStamp) {
 		this.timeStamp = timeStamp;
 	}

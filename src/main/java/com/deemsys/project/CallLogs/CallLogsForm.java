@@ -27,10 +27,11 @@ public class CallLogsForm {
 	private Integer id;
 	private Integer appointmentId;
 	private Integer patientId;
+	private Integer callerId;
 	private String timeStamp;
 	private String response;
 	private String notes;
-	
+	private String callerName;
 	
 	public Integer getId() {
 		return id;
@@ -51,6 +52,12 @@ public class CallLogsForm {
 	}
 	public void setAppointmentId(Integer appointmentId) {
 		this.appointmentId = appointmentId;
+	}
+	public Integer getCallerId() {
+		return callerId;
+	}
+	public void setCallerId(Integer callerId) {
+		this.callerId = callerId;
 	}
 	public String getTimeStamp() {
 		return timeStamp;
@@ -87,6 +94,41 @@ public class CallLogsForm {
 	public CallLogsForm(Integer id)
 	{
 		this.id=id;
+	}
+	public CallLogsForm(Integer id, Integer patientId, Integer appointmentId,
+			String timeStamp, String response, String notes,
+			String callerName) {
+		// TODO Auto-generated constructor stub
+		super();
+		this.id = id;
+		
+		this.patientId = patientId;
+		this.appointmentId = appointmentId;
+		this.timeStamp = timeStamp;
+		this.response = response;
+		this.notes = notes;
+		this.callerName=callerName;
+	
+	}
+	public CallLogsForm(Integer id, Integer patientId,
+			String timeStamp, String response, String notes,
+			String callerName) {
+		super();
+		this.id = id;
+		
+		this.patientId = patientId;
+		this.timeStamp = timeStamp;
+		this.response = response;
+		this.notes = notes;
+		this.callerName=callerName;
+	
+		// TODO Auto-generated constructor stub
+	}
+	public String getCallerName() {
+		return callerName;
+	}
+	public void setCallerName(String callerName) {
+		this.callerName = callerName;
 	}
 	
 }
