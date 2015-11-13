@@ -229,6 +229,22 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 	}
 
 	@Override
+	public List<Patients> getPatientsByAccessToken3(Integer callerId) {
+		// TODO Auto-generated method stub
+		return (List<Patients>)this.sessionFactory.getCurrentSession().createQuery("FROM Patients WHERE patientStatus=3 and staff.id='"+callerId+"'").list();
+	}
+	
+	@Override
+	public List<Patients> getPatientsByAccessToken2(Integer callerId) {
+		// TODO Auto-generated method stub
+		return (List<Patients>)this.sessionFactory.getCurrentSession().createQuery("FROM Patients WHERE patientStatus=2 and staff.id='"+callerId+"'").list();
+	}
+	@Override
+	public List<Patients> getPatientsByAccessToken1(Integer callerId) {
+		// TODO Auto-generated method stub
+		return (List<Patients>)this.sessionFactory.getCurrentSession().createQuery("FROM Patients WHERE patientStatus=1 and staff.id='"+callerId+"'").list();
+	}
+	@Override
 	public void deleteStaff(Integer id) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().delete(this.get(id));

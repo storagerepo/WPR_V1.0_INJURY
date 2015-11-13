@@ -235,7 +235,8 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 				staffId=0;clinicId=0;doctorId=0;
 				if(patients.getStaff()!=null)
 					staffId=patients.getStaff().getId();
-				if(patients.getClinics()!=null)
+				String staffName=patients.getStaff().getFirstName()+" "+patients.getStaff().getLastName();
+if(patients.getClinics()!=null)
 					clinicId=patients.getClinics().getClinicId();
 				
 				if(patients.getDoctors()!=null)
@@ -243,7 +244,9 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 					
 				
 				PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,clinicId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getCrashReportFileName(),patients.getPatientStatus());
-			patientsForms.add(patientsForm);
+				patientsForm.setCallerName(staffName);
+				
+				patientsForms.add(patientsForm);
 			}
 			}
 			else
@@ -260,8 +263,7 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 			String username=user.getUsername();
 			System.out.println(username);
 			Staff staff=staffDAO.getByUserName(username);
-						
-				return staff.getId();
+					return staff.getId();
 		}
 				
 		

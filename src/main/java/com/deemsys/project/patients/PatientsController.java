@@ -213,5 +213,26 @@ public class PatientsController {
   	model.addAttribute("requestSuccess",true);
  		return "/returnPage";
  	}
-
+  @RequestMapping(value="/patientStatus3",method=RequestMethod.GET)
+	public String patientStatus3(ModelMap model)
+	{
+	model.addAttribute("patientsForms",patientsService.patientStatus3());
+	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
+  @RequestMapping(value="/patientStatus2",method=RequestMethod.GET)
+	public String patientStatus2(ModelMap model)
+	{
+	model.addAttribute("patientsForms",patientsService.patientStatus2());
+	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
+  @RequestMapping(value="/patientStatus1",method=RequestMethod.GET)
+	public String patientStatus1(ModelMap model)
+	{
+	model.addAttribute("patientsForms",patientsService.patientStatus1());
+	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
+ 
 }

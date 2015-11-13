@@ -23,6 +23,7 @@ public class StaffForm {
 	private String notes;
 	private Integer isEnable;
 	private Integer assignedPatientSize;
+	private String callerName;
 	
 	public Integer getId() {
 		return id;
@@ -84,6 +85,12 @@ public class StaffForm {
 	}
 	public void setAssignedPatientSize(Integer assignedPatientSize) {
 		this.assignedPatientSize = assignedPatientSize;
+	}
+	public String getCallerName() {
+		return callerName;
+	}
+	public void setCallerName(String callerName) {
+		this.callerName = callerName;
 	}
 	public StaffForm() {
 		super();

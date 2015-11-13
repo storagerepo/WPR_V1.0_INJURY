@@ -286,15 +286,19 @@ else
 		
 		$scope.viewAppointments=function(id)
 		{
-		
-			requestHandler.getRequest("Staff/getAppointments.json?id="+id,"").then( function(response) {
+		if(id==null)
+			{
+			 $scope.appointments=null;
+			}
+		else{
+		requestHandler.getRequest("Staff/getAppointments.json?id="+id,"").then( function(response) {
 				
 			    $scope.appointments=response.data.appointmentsForm;
-			  });
-			
+		  });
+		}	
 			 $("#viewAppointmentsModal").modal("show");
 			 
-			
+		
 		};
 	
 });

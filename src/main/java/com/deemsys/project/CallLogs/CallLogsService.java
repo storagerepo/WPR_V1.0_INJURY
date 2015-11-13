@@ -59,7 +59,7 @@ public class CallLogsService {
 		
 		for (CallLogs callLogs : callLogss) {
 			//TODO: Fill the List
-			CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
+			CallLogsForm callLogsForm=new CallLogsForm(callLogs.getId(),callLogs.getPatients().getId(), callLogs.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
 			callLogsForms.add(callLogsForm);
 		}
 		
@@ -81,7 +81,7 @@ public class CallLogsService {
 		callLogsForm=new CallLogsForm(callLogs.getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
 		}
 		else{
-			callLogsForm = new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
+			callLogsForm = new CallLogsForm(callLogs.getId(),callLogs.getPatients().getId(), callLogs.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
 			
 		}
 		}
@@ -220,7 +220,7 @@ public class CallLogsService {
 		
 		CallLogsForm callLogsForm= new CallLogsForm();
 		CallLogs callLogs=callLogsDAO.getCallLogsByAppointment(appointmentId);
-		callLogsForm = new CallLogsForm(callLogs.getId(), callLogs.getAppointments().getId(),callLogs.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
+		callLogsForm = new CallLogsForm(callLogs.getId(),callLogs.getPatients().getId(), callLogs.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes());
 		
 		return callLogsForm;
 	}
@@ -235,38 +235,31 @@ public class CallLogsService {
 		for(CallLogs callLogss:callLogs)
 		{
 			try{
-		if(callLogss.getCallerId()==null & callLogss.getAppointments()==null ) {
-				callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes());
-			}
-			else if(callLogss.getCallerId()!=null & callLogss.getAppointments()==null)
-			{
-				Integer id=callLogss.getCallerId();
+		Integer id=callLogss.getCallerId();
 				Staff staff=new Staff();
 				staff=staffDAO.get(id);
 				String staffName=staff.getFirstName()+" "+staff.getLastName();
-
-				callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),staffName);
-				
-			}
-			else if(callLogss.getCallerId()==null && callLogss.getAppointments()!=null)
-		{
-				callLogsForms = new CallLogsForm(callLogss.getId(), callLogss.getAppointments().getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes());
+				if(callLogss.getAppointments()==null)
+					{
+	 if(staffName==null){
+	callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),null);
+	 }
+	 else{
+		 callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),staffName);
 			
-		}
-			else if(callLogss.getCallerId()!=null && callLogss.getAppointments()!=null)
-			{
-				Integer id=callLogss.getCallerId();
-				Staff staff=new Staff();
-				staff=staffDAO.get(id);
-				String staffName=staff.getFirstName()+" "+staff.getLastName();
-
-				callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getAppointments().getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),staffName);
-			}
-			else
-			{
+	 }
+}
+else
+{
+	if(staffName==null){
+		callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(),callLogss.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),null);
+		 }
+		 else{
+			 callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(),callLogss.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),staffName);
 				
-			}
-			callLogsForm.add(callLogsForms);
+		 }
+}
+	callLogsForm.add(callLogsForms);
 
 			}
 			catch(Exception e)

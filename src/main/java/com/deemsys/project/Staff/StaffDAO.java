@@ -20,6 +20,9 @@ public interface StaffDAO extends IGenericDAO<Staff>{
 
 	
 	public List<Patients> getPatientsByAccessToken(Integer callerId);
+	public List<Patients> getPatientsByAccessToken3(Integer callerId);
+	public List<Patients> getPatientsByAccessToken2(Integer callerId);
+	public List<Patients> getPatientsByAccessToken1(Integer callerId);
 	
 	public Integer changePassword(String oldPassword,String userName);
 	public List<Staff> checkPassword(String newPassword, String userName);

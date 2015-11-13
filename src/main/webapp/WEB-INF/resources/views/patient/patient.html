@@ -46,10 +46,10 @@
 						<th></th>
 					</tr>
 				</thead>
+				
 				<tbody ng-show="patientss.length>0" dir-paginate="patients in patientss | filter:search | orderBy:sortKey:reverse|itemsPerPage:20 ">
 					<tr>
 						
-
 						<td><a href="#/dashboard/Calllogs/{{patients.id}}">{{patients.name}}</a></td>
 						<td>{{patients.phoneNumber==""?'N/A':patients.phoneNumber}}</td>
 						<td>{{patients.localReportNumber}}</td>
@@ -85,10 +85,9 @@
 						</span>
 						<span ng-hide="isAdmin">
 						<a title="doctor" ng-hide="{{patients.doctorId}}==''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Change Doctor" class="btn btn-xs btn-success hint--top"><i
-								class="glyphicon glyphicon-ok"></i>
-						</a>
+								class="fa fa-user-md "></i>						</a>
 						<a title="doctor" ng-hide="{{patients.doctorId}}!=''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Assign Doctor" class="btn btn-xs btn-danger hint--top"><i
-								class="glyphicon glyphicon-remove"></i>
+								class="fa fa-user-md "></i>
 						</a>
 						</span>
 						<a target="_self" class="btn btn-xs btn-primary hint--lefter"  data-hint="Download Crash Report" href="/Injury/Report/{{patients.crashReportFileName}}" download="{{patients.crashReportFileName}}"><i
