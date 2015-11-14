@@ -224,17 +224,17 @@ $("#file").val("");
 			     
 			     });
 			 if($scope.Status==3){
-			 requestHandler.getRequest("Staff/patientStatus3.json?patientStatus3="+$scope.Status,"").then( function(response) {
+			 requestHandler.getRequest("Staff/patientStatus3.json","").then( function(response) {
 				 $scope.patientss= response.data.patientsForms;
 			 });
 			 }
 			 if($scope.Status==2){
-				 requestHandler.getRequest("Staff/patientStatus2.json?patientStatus2="+$scope.Status,"").then( function(response) {
+				 requestHandler.getRequest("Staff/patientStatus2.json","").then( function(response) {
 					 $scope.patientss= response.data.patientsForms;
 				 }); 
 			 }
 			 if($scope.Status==1){
-				 requestHandler.getRequest("Staff/patientStatus1.json?patientStatus1="+$scope.Status,"").then( function(response) {
+				 requestHandler.getRequest("Staff/patientStatus1.json","").then( function(response) {
 					 $scope.patientss= response.data.patientsForms;
 				 }); 
 			 }
