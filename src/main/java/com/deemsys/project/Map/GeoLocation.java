@@ -42,14 +42,19 @@ public class GeoLocation {
 				// Parse the Output to Json
 				JSONParser jsonparser = new JSONParser();
 				JSONObject jsonObject = (JSONObject) jsonparser.parse(outputJSON);
-				// Convert to JSON Object
 				
-				JSONArray results = (JSONArray) jsonObject.get("results");
-				JSONObject mainJson = (JSONObject)results.get(0);
-		        JSONObject geoMetry = (JSONObject)mainJson.get("geometry");
-		        JSONObject location = (JSONObject) geoMetry.get("location");
+				String status=(String) jsonObject.get("status");
+				if(!status.equals("ZERO_RESULTS")){
+					// Convert to JSON Object
+					JSONArray results = (JSONArray) jsonObject.get("results");
+					JSONObject mainJson = (JSONObject)results.get(0);
+			        JSONObject geoMetry = (JSONObject)mainJson.get("geometry");
+			        JSONObject location = (JSONObject) geoMetry.get("location");				
+			        latLang=location.get("lat")+","+location.get("lng");
+				}else{
+					latLang="NONE";
+				}
 				
-		        latLang=location.get("lat")+","+location.get("lng");
 		        
 				return latLang;
 			}

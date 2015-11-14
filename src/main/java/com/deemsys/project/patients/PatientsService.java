@@ -301,9 +301,17 @@ public class PatientsService {
 		}
 	
 		String latLong=geoLocation.getLocation(patientsForm.getAddress());
-		String[] latitudeLongitude=latLong.split(",");
 		
-		Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash().toString(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),Double.parseDouble(latitudeLongitude[0]), Double.parseDouble(latitudeLongitude[1]),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getCrashReportFileName(),patientsForm.getPatientStatus());
+		double longitude=0.0;
+		double latitude=0.0;
+		if(!latLong.equals("NONE")){
+			String[] latitudeLongitude=latLong.split(",");
+			latitude=Double.parseDouble(latitudeLongitude[0]);
+			longitude=Double.parseDouble(latitudeLongitude[1]);
+		}
+		
+		
+		Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash().toString(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),latitude,longitude,patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getCrashReportFileName(),patientsForm.getPatientStatus());
 		patientsDAO.save(patients);
 		return patients.getId();
 }

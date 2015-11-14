@@ -79,6 +79,10 @@ public class ReportMotoristPageForm {
 		this.emsAgency = emsAgency;
 		this.medicalFacility = medicalFacility;
 	}
+	public ReportMotoristPageForm() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 	

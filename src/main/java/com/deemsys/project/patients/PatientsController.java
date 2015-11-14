@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.pdfbox.PDFReader;
@@ -163,7 +164,11 @@ public class PatientsController {
 	  PDFCrashReportJson pdfCrashReportJson=crashReportReader.getValuesFromPDF(crashReportReader.parsePdfFromURL(crashReportId));
 	  boolean crashReportStatus=crashReportReader.checkStatus(pdfCrashReportJson);
 	  if(crashReportStatus){
-		  patientsService.savePatients(crashReportReader.getPatientForm(pdfCrashReportJson));
+		  List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
+		  patientsForms=crashReportReader.getPatientForm(pdfCrashReportJson);
+		  for (PatientsForm patientsForm : patientsForms) {
+			  patientsService.savePatients(patientsForm);
+		  }		  
 		  model.addAttribute("requestSuccess",true);
 	  }else{
 		  model.addAttribute("requestSuccess",false);
