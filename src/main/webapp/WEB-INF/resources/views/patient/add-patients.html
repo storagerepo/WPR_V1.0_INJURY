@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="resources/components/datetime/datetimepicker.css"></link>
+<script src="resources/components/datetime/datetimepicker.js"></script>
+<script src="resources/components/datetime/moment.js"></script>
+
 <div class="row">
 	<div class="col-lg-12">
 		<a ui-sref="dashboard.patient"
@@ -44,15 +48,18 @@
                                 <div class="col-md-12">
                                  <div class="col-md-4">
                                  <label>Number Of Units:</label>
-                                    <input  type="text" class="form-control"  ng-model="patient.numberOfUnits" name="numberOfUnits" placeholder="Enter NumberOfUnits"  required>
+                                    <input  type="text" class="form-control" ng-pattern="/^[0-9]{1,9}$/" ng-model="patient.numberOfUnits" name="numberOfUnits" placeholder="Enter NumberOfUnits"  required>
                                     <span class="error-container" ng-show="myForm.numberOfUnits.$dirty && myForm.numberOfUnits.$invalid">
+                                    <span style="color:red" ng-show="myForm.numberOfUnits.$error.pattern">Enter a valid numberOfUnits </span>
                                        <span style="color:red" ng-show="myForm.numberOfUnits.$error.required">Please Enter NumberOfUnits</span>
                                          </span><br><br>
                                    	</div>
                                     <div class="col-md-4">
                                     <label>Unit In Error:</label>
-                                    <input tyep="text" class="form-control"  ng-model="patient.unitInError" name="unitInError" placeholder="Enter UnitInError"  required>
+                                    <input type="text" class="form-control" ng-pattern="/^[0-9]{1,9}$/" ng-model="patient.unitInError" name="unitInError" placeholder="Enter UnitInError"  required>
                                     <span class="error-container" ng-show="myForm.unitInError.$dirty && myForm.unitInError.$invalid">
+                                    <span style="color:red" ng-show="myForm.unitInError.$error.pattern">Enter a valid unitInError</span>
+                                   
                                      <span style="color:red" ng-show="myForm.unitInError.$error.required">Please Enter UnitInError</span>
                                    </span><br><br>
                                   </div>
@@ -72,52 +79,70 @@
                                       <span style="color:red" ng-show="myForm.cityVillageTownship.$error.required">Please Enter CityVillageTownship</span>
                                      </span><br><br>
                                      </div>
-                                <div class="col-md-4">
-                                 <label>Crash Date:</label>
-                                    <input  type="text" class="form-control"  ng-model="patient.crashDate" name="crashDate" placeholder="Enter CrashDate"  required>
-                                    <span class="error-container" ng-show="myForm.crashDate.$dirty && myForm.crashDate.$invalid">
-                                       <span style="color:red" ng-show="myForm.crashDate.$error.required">Please Enter CrashDate</span>
-                                         </span><br><br>
-                                         </div>
-								<div class="col-md-4">
-                                 <label>Time Of Crash:</label>
-                                    <input  type="text" class="form-control"  ng-model="patient.timeOfCrash" name="timeOfCrash" placeholder="Enter TimeOfCrash"  required>
-                                    <span class="error-container" ng-show="myForm.timeOfCrash.$dirty && myForm.timeOfCrash.$invalid">
-                                       <span style="color:red" ng-show="myForm.timeOfCrash.$error.required">Please Enter TimeOfCrash</span>
-                                         </span><br><br>
-                                         </div>
+                              <div class="col-md-4">
+        <label>Crash Date:</label>
+                                  <div class="input-group">   
+                                    <input type="text" name="crashDate" id="CrashDate" class="form-control"  ng-model="patient.crashDate" placeholder="Enter CrashDate" required>
+                                     <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+                              </div>
+                                     <span class="error-container" ng-show="myForm.crashDate.$dirty && myForm.crashDate.$invalid">
+                                <span style="color:red" ng-show="myForm.crashDate.$error.required">Please Enter CrashDate</span>
+                              </span>
+                                    <br/><br>
+        </div>
+        <div class="col-md-4">
+        <label>Time Of Crash:</label>
+                                  <div class="input-group">   
+                                    <input type="text" name="timeOfCrash" id="TimeOfCrash" class="form-control"  ng-model="patient.timeOfCrash" placeholder="Enter timeOfCrash" required>
+                                    <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>    </div>
+                                     <span class="error-container" ng-show="myForm.timeOfCrash.$dirty && myForm.timeOfCrash.$invalid">
+                                <span style="color:red" ng-show="myForm.timeOfCrash.$error.required">Please Enter TimeOfCrash</span>
+                              </span>
+                                    <br/><br>
+        </div>
                                    </div>
 							<div class="col-md-12">                              
                                  <div class="col-md-4">
                                     <label>Unit Number:</label>
-                                    <input tyep="text" class="form-control"  ng-model="patient.unitNumber" name="unitNumber" placeholder="Enter UnitNumber"  required>
+                                    <input type="text" class="form-control" ng-pattern="/^[0-9]{1,9}$/" ng-model="patient.unitNumber" name="unitNumber" placeholder="Enter UnitNumber"  required>
                                     <span class="error-container" ng-show="myForm.unitNumber.$dirty && myForm.unitNumber.$invalid">
+                                  <span style="color:red" ng-show="myForm.unitNumber.$error.pattern">Enter a valid unitNumber</span>
+                                 
                                      <span style="color:red" ng-show="myForm.unitNumber.$error.required">Please Enter UnitNumber</span>
                                    </span><br><br>
                                   </div>
                                   <div class="col-md-4">
                                  	<label>Name:</label>
-                                    <input type="text" class="form-control"  ng-model="patient.name" name="name" placeholder="Enter Name"  required>
+                                    <input type="text" class="form-control" ng-pattern="/^[a-zA-Z]*$/" ng-model="patient.name" name="name" placeholder="Enter Name"  required>
                                     <span class="error-container" ng-show="myForm.name.$dirty && myForm.name.$invalid">
+                                      <span style="color:red" ng-show="myForm.name.$error.pattern">Enter a valid name</span>
+                                     
                                       <span style="color:red" ng-show="myForm.name.$error.required">Please Enter Name</span>
                                      </span><br><br>
                                       </div>
-                                      <div class="col-md-4">
-                                 <label>Date Of Birth:</label>
-                                    <input  type="text" class="form-control"  ng-model="patient.dateOfBirth" name="dateOfBirth" placeholder="Enter DateOfBirth"  required>
-                                    <span class="error-container" ng-show="myForm.dateOfBirth.$dirty && myForm.dateOfBirth.$invalid">
-                                       <span style="color:red" ng-show="myForm.dateOfBirth.$error.required">Please Enter DateOfBirth</span>
-                                         </span><br><br>
+                                       <div class="col-md-4">
+        <label>Date Of Birth:</label>
+                                  <div class="input-group">   
+                                    <input type="text" name="dateOfBirth" id="DateOfBirth" class="form-control"  ng-model="patient.dateOfBirth" placeholder="Enter dateOfBirth" required>
+                                     <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+                              </div>
+                                     <span class="error-container" ng-show="myForm.dateOfBirth.$dirty && myForm.dateOfBirth.$invalid">
+                                <span style="color:red" ng-show="myForm.dateOfBirth.$error.required">Please Enter DateOfBirth</span>
+                              </span>
+                                    <br/><br>
+        </div>
+        
+                                  
                                          </div>
 								</div>
 								<div class="col-md-12">                              
                                  
                                    <div class="col-md-4">
-                                    <label>Gender:</label>
-                                    <input tyep="text" class="form-control"  ng-model="patient.gender" name="gender" placeholder="Enter Gender"  required>
-                                    <span class="error-container" ng-show="myForm.gender.$dirty && myForm.gender.$invalid">
-                                     <span style="color:red" ng-show="myForm.gender.$error.required">Please Enter Gender</span>
-                                   </span><br><br>
+                                    <label>Gender:</label><br>
+                                    <input type="radio" name="gender" value="M" ng-model="patientGender"/> Male
+                 <input type="radio" name="gender" value="F" ng-model="patientGender"/> Female
+                </span>
+                                          <br><br>
                                   </div>
                                   <div class="col-md-4">
                                  	 <label>Address:</label>
@@ -206,4 +231,20 @@
 $(function(){
 	$("html,body").scrollTop(0);
 });
-</script>
+ $('#CrashDate').datetimepicker({
+	pickTime : false,
+	format:'MM/DD/YYYY',
+	minDate : new Date()
+});
+ $('#DateOfBirth').datetimepicker({
+		pickTime : false,
+		format:'MM/DD/YYYY',
+		minDate : new Date()
+	});
+ $('#TimeOfCrash').datetimepicker({
+	 pickTime : true,
+	 pickDate:false,
+	 format:'HH:mm'
+
+	 });
+ </script>

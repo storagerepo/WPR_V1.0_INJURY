@@ -386,7 +386,10 @@ angular
                   
                   return $ocLazyLoad.load({
                       name:'sbAdminApp',
-                      files:['scripts/controllers/patientController.js']
+                      files:['scripts/controllers/patientController.js',
+                             'components/datetime/datetimepicker.css',
+                             'components/datetime/moment.js',
+                             'components/datetime/datetimepicker.js']
                   });
                 }
               }
@@ -401,7 +404,10 @@ angular
                   
                   return $ocLazyLoad.load({
                       name:'sbAdminApp',
-                      files:['scripts/controllers/patientController.js']
+                      files:['scripts/controllers/patientController.js',
+                             'components/datetime/datetimepicker.css',
+                             'components/datetime/moment.js',
+                             'components/datetime/datetimepicker.js']
                   });
                 }
               }

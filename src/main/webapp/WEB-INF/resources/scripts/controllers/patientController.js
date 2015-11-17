@@ -39,7 +39,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 			   requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
 					
 				     $scope.patientss= response.data.patientsForm;
-				     
+				     $scope.sort('patientStatus');
 				     });
 		   }
 			
@@ -322,9 +322,8 @@ adminApp.controller('AddPatientController', function($scope,$state,$http,$locati
 	$scope.patient={};
 	$scope.title=$state.current.title;
 	 $scope.patient.patientId =$stateParams.id;
-
 	
-	 requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {
+  requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {
 			
 	     $scope.staff= response.data.staffForms;
 	   
@@ -366,7 +365,10 @@ adminApp.controller('AddPatientController', function($scope,$state,$http,$locati
 	
 	$scope.savePatient=function()
 	{
+		$scope.patient.gender=$scope.patientGender;
+		
 	requestHandler.postRequest("Staff/saveUpdatePatients.json",$scope.patient).then(function(response){
+		  
 			Flash.create('success', "You have Successfully Added Patient!");
             
 			$location.path('dashboard/patient');
@@ -399,7 +401,8 @@ adminApp.controller('EditPatientController', function($scope,$http,$state,$locat
 			
 			$scope.patient= response.data.patientsForm;
 		
-	
+$scope.patientGender = $scope.patient.gender;
+			      
 		if($scope.patient.clinicId==0)
 		{
 	$scope.patient.clinicId="";
@@ -449,7 +452,8 @@ else
 	
 
 $scope.updatePatient=function(){
-			
+	$scope.patient.gender=$scope.patientGender;
+	
 		
 			requestHandler.postRequest('Staff/saveUpdatePatients.json',$scope.patient).then(function(response) {
 	            Flash.create("success","You have Successfully updated!");
