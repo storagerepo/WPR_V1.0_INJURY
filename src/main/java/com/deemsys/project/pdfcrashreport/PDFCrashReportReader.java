@@ -9,6 +9,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.deemsys.project.patients.PatientsForm;
 import com.itextpdf.text.pdf.PdfReader;
@@ -20,6 +21,37 @@ import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 public class PDFCrashReportReader {
 	
 	protected static Logger logger = LoggerFactory.getLogger("service");
+	
+	/**
+	 * Parses a PDF to a plain text file.
+	 * 
+	 * From PDF 
+	 *
+	 * @param txt
+	 *            the resulting text
+	 * @throws IOException
+	 */
+	public List<List<String>> parsePdfFromFile(MultipartFile file) throws IOException {
+		List<List<String>> contentList=new ArrayList<List<String>>();
+		try{
+			PdfReader reader = new PdfReader(file.getBytes());
+			PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+			String pdfText="";
+			TextExtractionStrategy strategy;
+			for (int i = 1; i <= reader.getNumberOfPages(); i++) {
+				strategy = parser.processContent(i,new SimpleTextExtractionStrategy());			
+				pdfText = strategy.getResultantText();
+				contentList.add(Arrays.asList(pdfText.split("\n")));
+			}
+		}
+		catch(Exception ex){
+			logger.error(ex.toString());
+		}
+		
+		return contentList;
+	}  
+	
+	
 	/**
 	 * Parses a PDF to a plain text file.
 	 * 
@@ -137,7 +169,7 @@ public class PDFCrashReportReader {
     		for (index=0;index<motoristPage.size();index++) {
     		   	
         		if(motoristPage.get(index).equals("UNIT  NUMBER")||motoristPage.get(index).equals("UNIT NUMBER")){
-            		if((Integer.parseInt(motoristPage.get(index+1).trim())!=Integer.parseInt(reportFirstPageForm.getUnitInError().trim()))||Integer.parseInt(reportFirstPageForm.getNumberOfUnits().trim())==1){
+            		if((Integer.parseInt(motoristPage.get(index+1).trim())!=Integer.parseInt(reportFirstPageForm.getUnitInError().trim()))||Integer.parseInt(reportFirstPageForm.getNumberOfUnits().trim())==1||Integer.parseInt(reportFirstPageForm.getUnitInError().trim())==98){
             			ReportMotoristPageForm motoristPageForm=new ReportMotoristPageForm(); 
             			motoristPageForm.setUnitNumber(motoristPage.get(index+1));
             			if(motoristPage.get(index+2).equals("NAME: LAST, FIRST, MIDDLE"))
@@ -153,6 +185,8 @@ public class PDFCrashReportReader {
             			
             			if(motoristPage.get(index-21).equals("INJURIES"))
             				motoristPageForm.setInjuries(motoristPage.get(index-20));
+            			else if(motoristPage.get(index-20).equals("INJURIES"))
+            				motoristPageForm.setInjuries(motoristPage.get(index-19));
             			else if(motoristPage.get(index-25).equals("INJURIES"))
             				motoristPageForm.setInjuries(motoristPage.get(index-24));
             			
@@ -171,7 +205,55 @@ public class PDFCrashReportReader {
             		
         			}        	
     			}   
-    		}    	 	
+    		}else if(motoristPage.get(0).equals("OCCUPANT")){
+    			for (index=0;index<motoristPage.size();index++) {
+        		   	
+            		if(motoristPage.get(index).equals("UNIT  NUMBER")||motoristPage.get(index).equals("UNIT NUMBER")){
+                		if((Integer.parseInt(motoristPage.get(index+1).trim())!=Integer.parseInt(reportFirstPageForm.getUnitInError().trim()))||Integer.parseInt(reportFirstPageForm.getNumberOfUnits().trim())==1){
+                			ReportMotoristPageForm motoristPageForm=new ReportMotoristPageForm(); 
+                			motoristPageForm.setUnitNumber(motoristPage.get(index+1));
+                			if(motoristPage.get(index+2).equals("NAME: LAST, FIRST, MIDDLE"))
+                				motoristPageForm.setName(motoristPage.get(index+3));
+                			if(motoristPage.get(index+4).equals("DATE  OF BIRTH"))
+                				motoristPageForm.setDateOfBirth(motoristPage.get(index+5));
+                			if(motoristPage.get(index+8).equals("GENDER"))
+                				motoristPageForm.setGender(motoristPage.get(index+9));
+                			if(motoristPage.get(index-2).equals("ADDRESS, CITY, STATE, ZIP"))
+                				motoristPageForm.setAdddressCityStateZip(motoristPage.get(index-1));
+                			if(motoristPage.get(index-4).equals("CONTACT PHONE  -  INCLUDE  AREA  CODE"))
+                				motoristPageForm.setContactPhone(motoristPage.get(index-3));
+                			
+                			if(motoristPage.get(index-21).equals("INJURIES")){
+                				motoristPageForm.setInjuries(motoristPage.get(index-20));
+                				if(motoristPage.get(index-17).equals("EMS AGENCY")){
+                					motoristPageForm.setEmsAgency(motoristPage.get(index-16));
+                					if(motoristPage.get(index-15).equals("MEDICAL FACILITY  INJURED TAKEN TO")){
+                        				motoristPageForm.setMedicalFacility(motoristPage.get(index-14));
+                					}
+                				}                    				
+                			}else if(motoristPage.get(index-20).equals("INJURIES")){
+                				motoristPageForm.setInjuries(motoristPage.get(index-19));
+                				if(motoristPage.get(index-17).equals("EMS AGENCY")){
+                					motoristPageForm.setEmsAgency(motoristPage.get(index-16));
+                					if(motoristPage.get(index-15).equals("MEDICAL FACILITY  INJURED TAKEN TO")){
+                        				motoristPageForm.setMedicalFacility(motoristPage.get(index-14));
+                					}
+                				}                    				
+                			}else if(motoristPage.get(index-22).equals("INJURIES")){
+                				motoristPageForm.setInjuries(motoristPage.get(index-21));
+                				if(motoristPage.get(index-17).equals("EMS AGENCY")){
+                					motoristPageForm.setEmsAgency(motoristPage.get(index-16));
+                					if(motoristPage.get(index-15).equals("MEDICAL FACILITY  INJURED TAKEN TO")){
+                        				motoristPageForm.setMedicalFacility(motoristPage.get(index-14));
+                					}
+                				}                    				
+                			}
+                			reportMotoristPageForms.add(motoristPageForm);
+                			}
+                		
+            			}        	
+        			} 
+    		}
 	    }
 	    }
 	    catch(Exception ex){

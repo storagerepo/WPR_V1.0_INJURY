@@ -201,15 +201,35 @@ public class PatientsController {
 
     
 //Upload PDF file
- /* @RequestMapping(value = "/readCrashReport" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
-  public @ResponseBody List<List<String>> readUploadCrashReportFileHandler(
+  @RequestMapping(value = "/readCrashReport" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
+  public @ResponseBody List<PatientsForm> readUploadCrashReportFileHandler(
           @RequestParam("file") MultipartFile file,ModelMap model) throws IOException {
-	 
-	  //String returnText=patientPDFReader.saveFile(file);
-	  
-	 	return crashReportReader.parsePdf(file);
+	
+	  PDFCrashReportJson pdfCrashReportJson=crashReportReader.getValuesFromPDF(crashReportReader.parsePdfFromFile(file));
+	  List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
+	  boolean crashReportStatus=crashReportReader.checkStatus(pdfCrashReportJson);
+	  if(crashReportStatus){		  
+		  patientsForms=crashReportReader.getPatientForm(pdfCrashReportJson);
+		  for (PatientsForm patientsForm : patientsForms) {
+			  patientsService.savePatients(patientsForm);
+		  }		  
+		  model.addAttribute("requestSuccess",true);
+	  }else{
+		  model.addAttribute("requestSuccess",false);
+		  model.addAttribute("status","Report not statisfied the conditions");
+	  }
+	  return patientsForms;
 
-  }*/
+  }
+  
+  //Upload File Get Array
+  @RequestMapping(value = "/readCrashReportArray" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
+  public @ResponseBody List<List<String>> readUploadCrashReportArray(
+          @RequestParam("file") MultipartFile file,ModelMap model) throws IOException {
+	  
+	  return crashReportReader.parsePdfFromFile(file);
+
+  }
   
   @RequestMapping(value="/patientStatus",method=RequestMethod.GET)
  	public String patientStatus(@RequestParam("patientStatus") Integer patientStatus,ModelMap model)

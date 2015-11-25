@@ -26,7 +26,7 @@ public class PDFReadAndInsertService {
 		
 		Logger logger = LoggerFactory.getLogger("service");
 		
-		File downloadFolder=new File("D://InjuryCrashReport//Download//");
+		File downloadFolder=new File("D://InjuryCrashReport//workspace//");
 		
 		for (File pdfFile : downloadFolder.listFiles()) {
 			  PDFCrashReportJson pdfCrashReportJson = null;
@@ -41,13 +41,14 @@ public class PDFReadAndInsertService {
 				  List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
 				  patientsForms=crashReportReader.getPatientForm(pdfCrashReportJson);
 				 String filename="";
-				  if(patientsForms.size()>0){
+				 File archiveFile=null; 
+				 if(patientsForms.size()>0){
 					  filename="D://InjuryCrashReport//Archive//"+patientsForms.get(0).getCountry()+"_CrashReport_"+patientsForms.get(0).getLocalReportNumber()+".pdf";								 
-					  File archiveFile=new File(filename);
+					  archiveFile=new File(filename);
 					  pdfFile.renameTo(archiveFile);
 				  }
 				   for (PatientsForm patientsForm : patientsForms) {
-					    patientsForm.setCrashReportFileName(filename);
+					    patientsForm.setCrashReportFileName(archiveFile.getName());
 					  	patientsService.savePatients(patientsForm);
 				  }			 
 				  	
