@@ -245,8 +245,7 @@ $("#file").val("");
 
 adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader,requestHandler,$state) {
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://192.168.1.122:8081/Injury/Staff/addPatientFromFile.json',
-        queueLimit: 1
+        url: 'http://192.168.1.236:8089/Injury/Staff/uploadCrashReportPDFDocuments.json'
     });
     
     $scope.close=function(){
@@ -308,7 +307,7 @@ adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope,
     uploader.onCompleteAll = function() {
         console.info('onCompleteAll');
        $("#uploadSuccessAlert").show();
-        uploader.clearQueue();
+       // uploader.clearQueue();
         
     };
 
