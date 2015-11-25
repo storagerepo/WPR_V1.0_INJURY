@@ -201,8 +201,8 @@ public class PatientsController {
 
     
 //Upload PDF file
-  @RequestMapping(value = "/readCrashReport" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
-  public @ResponseBody List<PatientsForm> readUploadCrashReportFileHandler(
+  @RequestMapping(value = "/uploadCrashReportPDFDocuments" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
+  public @ResponseBody String readUploadCrashReportFileHandler(
           @RequestParam("file") MultipartFile file,ModelMap model) throws IOException {
 	
 	  PDFCrashReportJson pdfCrashReportJson=crashReportReader.getValuesFromPDF(crashReportReader.parsePdfFromFile(file));
@@ -218,7 +218,7 @@ public class PatientsController {
 		  model.addAttribute("requestSuccess",false);
 		  model.addAttribute("status","Report not statisfied the conditions");
 	  }
-	  return patientsForms;
+	  return "Details Added Successfully from Crash Reports!";
 
   }
   
