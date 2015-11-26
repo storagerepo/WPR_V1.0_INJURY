@@ -232,31 +232,18 @@ public class PatientsController {
 
   }
   
-  @RequestMapping(value="/patientStatus",method=RequestMethod.GET)
- 	public String patientStatus(@RequestParam("patientStatus") Integer patientStatus,ModelMap model)
+  @RequestMapping(value="/adminPatientStatus",method=RequestMethod.GET)
+ 	public String adminPatientStatus(@RequestParam("patientStatus") Integer patientStatus,ModelMap model)
  	{
-  	model.addAttribute("patientsForms",patientsService.patientStatus(patientStatus));
+  	model.addAttribute("patientsForms",patientsService.adminPatientStatus(patientStatus));
   	model.addAttribute("requestSuccess",true);
  		return "/returnPage";
  	}
-  @RequestMapping(value="/patientStatus3",method=RequestMethod.GET)
-	public String patientStatus3(ModelMap model)
+ 
+  @RequestMapping(value="/staffPatientStatus",method=RequestMethod.GET)
+	public String staffPatientStatus(@RequestParam("patientStatus") Integer patientStatus,ModelMap model)
 	{
-	model.addAttribute("patientsForms",patientsService.patientStatus3());
-	model.addAttribute("requestSuccess",true);
-		return "/returnPage";
-	}
-  @RequestMapping(value="/patientStatus2",method=RequestMethod.GET)
-	public String patientStatus2(ModelMap model)
-	{
-	model.addAttribute("patientsForms",patientsService.patientStatus2());
-	model.addAttribute("requestSuccess",true);
-		return "/returnPage";
-	}
-  @RequestMapping(value="/patientStatus1",method=RequestMethod.GET)
-	public String patientStatus1(ModelMap model)
-	{
-	model.addAttribute("patientsForms",patientsService.patientStatus1());
+	model.addAttribute("patientsForms",patientsService.staffPatientStatus(patientStatus));
 	model.addAttribute("requestSuccess",true);
 		return "/returnPage";
 	}

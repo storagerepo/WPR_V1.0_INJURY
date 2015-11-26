@@ -228,21 +228,10 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 		return (List<Patients>)this.sessionFactory.getCurrentSession().createCriteria(Patients.class).add(Restrictions.eq("staff.id", callerId)).list();
 	}
 
-	@Override
-	public List<Patients> getPatientsByAccessToken3(Integer callerId) {
+		@Override
+	public List<Patients> getPatientStatus(Integer patientStatus,Integer callerId) {
 		// TODO Auto-generated method stub
-		return (List<Patients>)this.sessionFactory.getCurrentSession().createQuery("FROM Patients WHERE patientStatus=3 and staff.id='"+callerId+"'").list();
-	}
-	
-	@Override
-	public List<Patients> getPatientsByAccessToken2(Integer callerId) {
-		// TODO Auto-generated method stub
-		return (List<Patients>)this.sessionFactory.getCurrentSession().createQuery("FROM Patients WHERE patientStatus=2 and staff.id='"+callerId+"'").list();
-	}
-	@Override
-	public List<Patients> getPatientsByAccessToken1(Integer callerId) {
-		// TODO Auto-generated method stub
-		return (List<Patients>)this.sessionFactory.getCurrentSession().createQuery("FROM Patients WHERE patientStatus=1 and staff.id='"+callerId+"'").list();
+		return (List<Patients>)this.sessionFactory.getCurrentSession().createQuery("FROM Patients WHERE patientStatus='"+patientStatus+"' and staff.id='"+callerId+"'").list();
 	}
 	@Override
 	public void deleteStaff(Integer id) {

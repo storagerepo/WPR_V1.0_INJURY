@@ -810,7 +810,7 @@ public class PatientsService {
 		    }
 
 		
-			public List<PatientsForm> patientStatus(Integer patientStatus){
+			public List<PatientsForm> adminPatientStatus(Integer patientStatus){
 				List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
 				
 				List<Patients> patientss=new ArrayList<Patients>();
@@ -852,7 +852,8 @@ public class PatientsService {
 				return patientsForms;
 				
 			}
-			public List<PatientsForm> patientStatus3(){
+			
+			public List<PatientsForm> staffPatientStatus(Integer patientStatus){
 				List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
 				List<Patients> patientss=new ArrayList<Patients>();
 				
@@ -866,107 +867,7 @@ public class PatientsService {
 							
 							
 				
-				patientss=staffDAO.getPatientsByAccessToken3(id);
-				Integer staffId=0,clinicId=0,doctorId=0;
-				String staffName="N/A";
-				String clinicName="N/A";
-				String doctorName="N/A";
-				
-				
-				for (Patients patients : patientss) {
-					//TODO: Fill the List
-					staffId=0;clinicId=0;doctorId=0;
-					staffName="N/A";clinicName="N/A";doctorName="N/A";
-					if(patients.getStaff()!=null)
-					{
-						staffId=patients.getStaff().getId();
-						staffName=patients.getStaff().getFirstName()+" "+patients.getStaff().getLastName();
-					}
-					if(patients.getClinics()!=null){
-						clinicId=patients.getClinics().getClinicId();
-						clinicName=patients.getClinics().getClinicName();
-					}
-					if(patients.getDoctors()!=null){
-						doctorId=patients.getDoctors().getId();
-						doctorName=patients.getDoctors().getDoctorName();
-					}
-						
-					
-					PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,clinicId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getCrashReportFileName(),patients.getPatientStatus());
-					patientsForm.setCallerName(staffName);
-					patientsForm.setClinicName(clinicName);
-					patientsForm.setDoctorName(doctorName);
-					patientsForms.add(patientsForm);
-				}
-				
-				return patientsForms;
-				
-			}
-			public List<PatientsForm> patientStatus2(){
-				List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
-				List<Patients> patientss=new ArrayList<Patients>();
-				
-				User user = (User) SecurityContextHolder.getContext()
-						.getAuthentication().getPrincipal();
-				String username=user.getUsername();
-				System.out.println(username);
-				Staff staff=staffDAO.getByUserName(username);
-							Integer id=staff.getId();
-							
-							
-							
-				
-				patientss=staffDAO.getPatientsByAccessToken2(id);
-				Integer staffId=0,clinicId=0,doctorId=0;
-				String staffName="N/A";
-				String clinicName="N/A";
-				String doctorName="N/A";
-				
-				
-				for (Patients patients : patientss) {
-					//TODO: Fill the List
-					staffId=0;clinicId=0;doctorId=0;
-					staffName="N/A";clinicName="N/A";doctorName="N/A";
-					if(patients.getStaff()!=null)
-					{
-						staffId=patients.getStaff().getId();
-						staffName=patients.getStaff().getFirstName()+" "+patients.getStaff().getLastName();
-					}
-					if(patients.getClinics()!=null){
-						clinicId=patients.getClinics().getClinicId();
-						clinicName=patients.getClinics().getClinicName();
-					}
-					if(patients.getDoctors()!=null){
-						doctorId=patients.getDoctors().getId();
-						doctorName=patients.getDoctors().getDoctorName();
-					}
-						
-					
-					PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,clinicId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getCrashReportFileName(),patients.getPatientStatus());
-					patientsForm.setCallerName(staffName);
-					patientsForm.setClinicName(clinicName);
-					patientsForm.setDoctorName(doctorName);
-					patientsForms.add(patientsForm);
-				}
-				
-				return patientsForms;
-				
-			}
-			public List<PatientsForm> patientStatus1(){
-				List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
-				List<Patients> patientss=new ArrayList<Patients>();
-				
-				User user = (User) SecurityContextHolder.getContext()
-						.getAuthentication().getPrincipal();
-				String username=user.getUsername();
-				System.out.println(username);
-				Staff staff=staffDAO.getByUserName(username);
-							Integer id=staff.getId();
-							
-							
-							
-				
-				patientss=staffDAO.getPatientsByAccessToken1(id);
+				patientss=staffDAO.getPatientStatus(patientStatus,id);
 				Integer staffId=0,clinicId=0,doctorId=0;
 				String staffName="N/A";
 				String clinicName="N/A";

@@ -220,7 +220,7 @@ $("#file").val("");
 				   
 				 }
 			 else{
-	 requestHandler.getRequest("Staff/patientStatus.json?patientStatus="+$scope.Status,"").then( function(response) {
+	 requestHandler.getRequest("Staff/adminPatientStatus.json?patientStatus="+$scope.Status,"").then( function(response) {
 			 $scope.patientss= response.data.patientsForms;
 			  });
 	
@@ -228,32 +228,20 @@ $("#file").val("");
 		 }
 		
 		 if(!$rootScope.isAdmin){
-			 requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
-					
-			     $scope.patientss= response.data.patientsForm;
-			     
-			     });
+			
+			 	
 			 if($scope.Status==4){
 				 requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
 						
 				     $scope.patientss= response.data.patientsForm;
 				     	   });
-				 }
-
-			 			 if($scope.Status==3){
-			 requestHandler.getRequest("Staff/patientStatus3.json","").then( function(response) {
-				 $scope.patientss= response.data.patientsForms;
-			 });
+			
+				 
 			 }
-			 if($scope.Status==2){
-				 requestHandler.getRequest("Staff/patientStatus2.json","").then( function(response) {
+			 else{
+				 requestHandler.getRequest("Staff/staffPatientStatus.json?patientStatus="+$scope.Status,"").then( function(response) {
 					 $scope.patientss= response.data.patientsForms;
-				 }); 
-			 }
-			 if($scope.Status==1){
-				 requestHandler.getRequest("Staff/patientStatus1.json","").then( function(response) {
-					 $scope.patientss= response.data.patientsForms;
-				 }); 
+				 });
 			 }
 		 }
 	}
