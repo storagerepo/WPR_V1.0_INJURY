@@ -267,4 +267,11 @@ public List<Patients> patientStatus(Integer patientStatus) {
 	return patients;
 }
 
+@Override
+public Integer activeStatusByPatientId(Integer id) {
+	// TODO Auto-generated method stub
+	Query query=this.sessionFactory.getCurrentSession().createQuery("update Patients set patientStatus = 1 where id="+id);
+	query.executeUpdate();
+	return 0;
+}
 }

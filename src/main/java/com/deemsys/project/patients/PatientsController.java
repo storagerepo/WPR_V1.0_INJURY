@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.pdfbox.PDFReader;
@@ -63,7 +64,7 @@ public class PatientsController {
   @RequestMapping(value="/saveUpdatePatients",method=RequestMethod.POST)
    	public String updatePatients(@RequestBody  PatientsForm patientsForm,ModelMap model)
    	{
-	  if(patientsForm.getClinicId()==null)
+	  if(patientsForm.getId()==null)
 			patientsService.savePatients(patientsForm);
 		else
 			patientsService.updatePatients(patientsForm);
@@ -259,5 +260,18 @@ public class PatientsController {
 	model.addAttribute("requestSuccess",true);
 		return "/returnPage";
 	}
- 
+  @RequestMapping(value="/activeStatusByPatientId",method=RequestMethod.GET)
+ 	public String activeStatusByPatientId(@RequestParam("id") Integer id,ModelMap model)
+ 	{
+	Integer status=patientsService.activeStatusByPatientId(id);
+	if(status==0){
+		
+		model.addAttribute("requestSuccess",true);
+	}
+  	return "/returnPage";
+ 	}
+
+
+
+
 }

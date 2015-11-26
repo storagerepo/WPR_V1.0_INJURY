@@ -87,7 +87,7 @@ adminApp.controller('AddDoctorsCtrl', function($scope,$http,$location,$state,req
 		
 	};
 	
-	requestHandler.getRequest("Admin/getClinicId.json","").then( function(response) {
+	requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
 		
 	     $scope.clinic= response.data.clinicsForms;
 	     
@@ -110,7 +110,7 @@ adminApp.controller('EditDoctorController', function($scope,$http,$location,$sta
 		doctorOriginal=angular.copy(response.data.doctorsForm);
 		
 		});
-	requestHandler.getRequest("Admin/getClinicId.json","").then( function(response) {
+	requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
 		
 	     $scope.clinic= response.data.clinicsForms;
 	     

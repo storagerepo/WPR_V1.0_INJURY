@@ -17,7 +17,7 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 	
 		if($rootScope.isAdmin){
 			// No of Clinics
-			requestHandler.getRequest("Admin/getNoOfClinics.json","").then( function(response) {
+			requestHandler.getRequest("Staff/getNoOfClinics.json","").then( function(response) {
 			      $scope.numberClinics=response.data.NoOfClinics;
 			     
 			     });

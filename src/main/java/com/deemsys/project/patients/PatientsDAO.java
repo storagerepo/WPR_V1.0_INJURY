@@ -31,6 +31,7 @@ public interface PatientsDAO extends IGenericDAO<Patients>{
 
 	public void removeAssignedDoctor(Integer patientId);
 
+	public Integer activeStatusByPatientId(Integer id);
 
 	public void updatePatientStatus(Integer patientId);
 

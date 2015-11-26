@@ -212,18 +212,35 @@ $("#file").val("");
 	};
 	$scope.patientStatus=function(){
 		 if($rootScope.isAdmin){
-				
+			 if($scope.Status==4){
+				   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
+						
+					     $scope.patientss= response.data.patientsForms;
+					     });
+				   
+				 }
+			 else{
 	 requestHandler.getRequest("Staff/patientStatus.json?patientStatus="+$scope.Status,"").then( function(response) {
 			 $scope.patientss= response.data.patientsForms;
 			  });
+	
+			 }
 		 }
+		
 		 if(!$rootScope.isAdmin){
 			 requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
 					
 			     $scope.patientss= response.data.patientsForm;
 			     
 			     });
-			 if($scope.Status==3){
+			 if($scope.Status==4){
+				 requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
+						
+				     $scope.patientss= response.data.patientsForm;
+				     	   });
+				 }
+
+			 			 if($scope.Status==3){
 			 requestHandler.getRequest("Staff/patientStatus3.json","").then( function(response) {
 				 $scope.patientss= response.data.patientsForms;
 			 });

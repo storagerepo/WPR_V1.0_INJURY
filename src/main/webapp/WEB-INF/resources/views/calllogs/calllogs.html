@@ -54,11 +54,11 @@
 				<td>{{callLogss.notes}}</td>
 <td>{{callLogss.callerName}}</td>
 				<td><a  type="submit" title="" class="btn btn-xs btn-primary hint--top" data-hint="View Appointment" ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
-				 <span ng-hide="{{callLogss.response}}==3">
+				 <span ng-hide="doNotCall">
 				 <a type="submit" class="btn btn-xs btn-warning hint--top" data-hint="Edit Call Logs" ng-click="editModal(callLogss.id,callLogss.appointmentId)">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;</a>
 				<a href="#" ng-click="deleteCalllogs(callLogss.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Call Logs">&nbsp;<i class="glyphicon glyphicon-trash" ></i>&nbsp; </a>
 				<a ng-click="addAppointment(callLogss.id)" class="btn btn-xs btn-success hint--top"  data-hint="Add Appointment" ng-show="callLogss.appointmentId==null">&nbsp;<i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
-				<a ng-click="removeAppointment(callLogss.appointmentId)" class="btn btn-xs btn-danger hint--top"  data-hint="Cancel Appointment" ng-show="callLogss.appointmentId!=null">&nbsp;<i class="glyphicon glyphicon-minus"></i>&nbsp;</a>
+				<a ng-click="removeAppointment(callLogss.appointmentId,callLogss.patientId)" class="btn btn-xs btn-danger hint--top"  data-hint="Cancel Appointment" ng-show="callLogss.appointmentId!=null">&nbsp;<i class="glyphicon glyphicon-minus"></i>&nbsp;</a>
 				</span></td>
 				</tr>
 				</tbody>

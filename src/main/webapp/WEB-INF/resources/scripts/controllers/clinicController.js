@@ -6,19 +6,19 @@ adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash)
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
 	    };
 	    
-	    requestHandler.getRequest("Admin/getAllClinics.json","").then(function(results){
+	    requestHandler.getRequest("Staff/getAllClinics.json","").then(function(results){
 	    	 $scope.clinics= results.data.clinicsForm;
 	         $scope.sort('clinicName');
 	     });
 	    
 	$scope.getClinicList=function() {
-		 requestHandler.getRequest("Admin/getAllClinics.json","").then(function(results){
+		 requestHandler.getRequest("Staff/getAllClinics.json","").then(function(results){
 		 	 $scope.clinics= results.data.clinicsForm;
 		  });
 	};
 	
 	$scope.viewClinicDetails=function(clinicId) {
-		 requestHandler.getRequest("Admin/getClinic.json?clinicId="+clinicId,"").then(function(results){
+		 requestHandler.getRequest("Staff/getClinic.json?clinicId="+clinicId,"").then(function(results){
 		 	 $scope.clinicDetails= results.data.clinicsForm;
 		 	 $("#viewClinicDetails").modal('show');
 		  });
@@ -29,7 +29,7 @@ adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash)
 	  {
 		
 		  if(confirm("Are you sure to delete Clinic ?")){
-		  requestHandler.deletePostRequest("Admin/deleteClinic.json?clinicId=",clinicId).then(function(results){
+		  requestHandler.deletePostRequest("Staff/deleteClinic.json?clinicId=",clinicId).then(function(results){
 			  $scope.value=results.data.requestSuccess;
 			  
 			  if($scope.value==true)
@@ -45,7 +45,7 @@ adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash)
 				    	
 				    	requestHandler.postRequest("Admin/deleteDoctorsByClinic.json?clinicId="+clinicId).then(function(response){
 				    		
-				    		 requestHandler.deletePostRequest("Admin/deleteClinic.json?clinicId=",clinicId).then(function(results){
+				    		 requestHandler.deletePostRequest("Staff/deleteClinic.json?clinicId=",clinicId).then(function(results){
 				    			 $("#deleteClinicModal2").modal("hide");
 							    	$('.modal-backdrop').hide();
 						          Flash.create('success', "You have Successfully Deleted!");
@@ -74,7 +74,7 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 	$scope.clinic={};
 	$scope.clinic.clinicTimingList=[{"day":0,"startTime":"","endTime":"","isWorkingDay":0},{"day":1,"startTime":"","endTime":"","isWorkingDay":0},{"day":2,"startTime":"","endTime":"","isWorkingDay":0},{"day":3,"startTime":"","endTime":"","isWorkingDay":0},{"day":4,"startTime":"","endTime":"","isWorkingDay":0},{"day":5,"startTime":"","endTime":"","isWorkingDay":0},{"day":6,"startTime":"","endTime":"","isWorkingDay":0}];
 	$scope.saveClinic=function(){
-		requestHandler.postRequest("Admin/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
+		requestHandler.postRequest("Staff/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
 			Flash.create('success', "You have Successfully Added!");
 				  $location.path('dashboard/clinic');
 		});
@@ -86,7 +86,7 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 	$scope.options=false;
 	$scope.title="Edit Clinic";
 	var clinicOriginal="";
-		requestHandler.getRequest("Admin/getClinic.json?clinicId="+$stateParams.id,"").then(function(response){
+		requestHandler.getRequest("Staff/getClinic.json?clinicId="+$stateParams.id,"").then(function(response){
 			clinicOriginal=angular.copy(response.data.clinicsForm);
 			$scope.clinic= response.data.clinicsForm;
 			$('#sunStartTime').data("DateTimePicker").setDate($scope.clinic.clinicTimingList[0].startTime);
@@ -106,7 +106,7 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 		});
 		
 		$scope.updateClinic=function(){
-			requestHandler.postRequest("Admin/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
+			requestHandler.postRequest("Staff/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
 				Flash.create('success', "You have Successfully Updated!");
 					  $location.path('dashboard/clinic');
 			});

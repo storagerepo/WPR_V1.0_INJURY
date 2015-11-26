@@ -37,6 +37,10 @@ import com.deemsys.project.entity.CallLogs;
 import com.deemsys.project.entity.Clinics;
 import com.deemsys.project.entity.Doctors;
 import com.deemsys.project.entity.Staff;
+import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
+import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
 
 /**
@@ -63,7 +67,9 @@ public class PatientsService {
 	ClinicsDAO clinicsDAO;
 	@Autowired
 	StaffDAO staffDAO;
-	
+	@Autowired
+	PDFCrashReportReader crashReportReader;
+	 
 	@Autowired
 	StaffService staffService;
 	@Autowired
@@ -262,6 +268,12 @@ public class PatientsService {
 			patientsDAO.update(patients);
 			
 		}
+		else if(doctorId == 0)
+		{
+			patients.setPatientStatus(1);
+			patientsDAO.update(patients);
+			
+		}
 		else
 		{
 		patients.setPatientStatus(2);
@@ -311,8 +323,27 @@ public class PatientsService {
 		}
 		
 		
-		Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash().toString(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),latitude,longitude,patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getCrashReportFileName(),patientsForm.getPatientStatus());
+		Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash().toString(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),latitude,longitude,patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getCrashReportFileName(),1);
+		
+		if(patientsForm.getDoctorId() == null)
+		{
+			patients.setPatientStatus(1);
+			patientsDAO.save(patients);
+			
+		}
+		else if(patientsForm.getDoctorId() == 0)
+		{
+			patients.setPatientStatus(1);
+			patientsDAO.save(patients);
+			
+		}
+		else
+		{
+		patients.setPatientStatus(2);
 		patientsDAO.save(patients);
+			
+		}
+		
 		return patients.getId();
 }
 	
@@ -971,4 +1002,12 @@ public class PatientsService {
 				return patientsForms;
 				
 			}
+			
+			public Integer activeStatusByPatientId(Integer id){
+				Integer status=1;
+				patientsDAO.activeStatusByPatientId(id);
+				return status;
+		    }
+			
+
 }

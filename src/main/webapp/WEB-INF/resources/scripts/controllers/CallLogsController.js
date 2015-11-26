@@ -19,6 +19,14 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	    	$scope.sort('timeStamp');
 	    	requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
 	    		$scope.patient= response.data.patientsForm;
+	    		if($scope.patient.patientStatus==3)
+	    			{
+	    		$scope.doNotCall=true;
+	    			}
+	    		else
+	    			{
+	    			$scope.doNotCall=false;
+	    			}
 	    	});
 	  });
 	    
@@ -188,6 +196,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		  $('.modal-backdrop').hide();
 		  requestHandler.postRequest("Staff/saveUpdateCallLogs.json",$scope.calllogs).then(function (status) {
 			  Flash.create("success","You have Successfully Updated!");
+			  $state.reload('dashboard.Calllogs/:id');
 			  $scope.getCallLogsList();
 			});
 		 		 
@@ -205,6 +214,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		//getting patient details by id
 		requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
 			$scope.patient= response.data.patientsForm;
+			
 		 });
 		//setting clinic id from patient 
 		
@@ -229,7 +239,7 @@ else
 	$("#scheduledDate").val("");
 		$("#appointmentNotes").val("");
 		//getting doctor id
-		requestHandler.getRequest("Admin/getClinicId.json","").then( function(response) {
+		requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
 			
 		     $scope.clinic= response.data.clinicsForms;
 		 
@@ -272,15 +282,25 @@ else
 		 
 		};
 		
-		$scope.removeAppointment=function(id)
+		$scope.removeAppointment=function(id,iD)
 		{
+			
 			if(confirm("Are you sure to cancel appointment ?")){
+				 
 			  requestHandler.deletePostRequest("Staff/removeAppointment.json?appointmentId=",id)
 				.then(function(response)
 						{
-					Flash.create("success","You have Successfully Cancelled!");
+					requestHandler.getRequest("Staff/activeStatusByPatientId.json?id="+iD,"")
+					.then(function(results)
+							{
+						$scope.response=results.data.requestSuccess;
+						
+						Flash.create("success","You have Successfully Cancelled!");
+						
 					  $scope.getCallLogsList();
 					});
+						});
+			
 			}
 		};
 		
