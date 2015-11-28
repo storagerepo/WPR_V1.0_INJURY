@@ -45,17 +45,17 @@
                          <tbody dir-paginate="doctor in doctors | filter:search | orderBy:sortKey:reverse|itemsPerPage:8 " >
 	<tr>
 	
-	<td><a href="" ng-click="viewDoctors(doctor.id)">{{doctor.doctorName}}</a></td>
-	<td>{{doctor.emailId}}</td>
-<td>{{doctor.contactNumber}}</td>
-		<td>{{doctor.specialistIn}}</td>
+	<td><a href="" ng-cloak ng-click="viewDoctors(doctor.id)">{{doctor.doctorName}}</a></td>
+	<td ng-cloak>{{doctor.emailId}}</td>
+<td ng-cloak>{{doctor.contactNumber}}</td>
+		<td ng-cloak>{{doctor.specialistIn}}</td>
 					
                                    <td >
-                                   <a href="" ng-click="viewDoctors(doctor.id)" class="btn btn-xs btn-primary hint--top" data-hint="View Doctor"><i
+                                   <a href="" ng-cloak ng-click="viewDoctors(doctor.id)" class="btn btn-xs btn-primary hint--top" data-hint="View Doctor"><i
 								class="glyphicon glyphicon-eye-open"></i>
 						</a>
-                                   <a href="#/dashboard/EditDoctor/{{doctor.id}}" data-hint="Edit Doctor" class="btn btn-xs btn-warning hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-edit"></i></a>
-	<a href="#" ui-sref="dashboard.doctor" ng-mousedown="deleteDoctor(doctor.id)" data-hint="Delete Doctor" class="btn btn-xs btn-danger hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-trash"></i></a>
+                                   <a href="#/dashboard/EditDoctor/{{doctor.id}}" ng-cloak data-hint="Edit Doctor" class="btn btn-xs btn-warning hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-edit"></i></a>
+	<a href="#" ui-sref="dashboard.doctor" ng-mousedown="deleteDoctor(doctor.id)" ng-cloak data-hint="Delete Doctor" class="btn btn-xs btn-danger hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-trash"></i></a>
 	</td></tr>
 </tbody>
 

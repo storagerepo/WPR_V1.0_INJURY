@@ -8,7 +8,7 @@
 	<a ng-click="addModel()" href=""  class="btn-sm btn-primary pull-right margin-top-40 margin-left-5 btn-margin-left">Add Call Logs</a>
 		</span>	 
 	 	<h2 class="page-header" >Call Logs<br></h2>	
-	 	<h4>Patient Name:{{patient.name}} | PhoneNumber&nbsp;-&nbsp;{{patient.phoneNumber}} | <a ng-click="viewPatients(patient.id)" class="btn btn-xs btn-primary"><i
+	 	<h4>Patient Name:<span ng-cloak>{{patient.name}}</span> | PhoneNumber&nbsp;-&nbsp;<span ng-cloak>{{patient.phoneNumber}}</span> | <a ng-click="viewPatients(patient.id)" class="btn btn-xs btn-primary"><i
 								class="glyphicon glyphicon-eye-open"></i>&nbsp; View More Details</a> |
 		<a href="#/dashboard/viewlocations/{{patient.id}}" class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-map-marker"></i>&nbsp; View Near By Clinics</a>
 								</h4>
@@ -40,25 +40,25 @@
 				<th></th>
 				</tr>
 				</thead>
-				<tbody ng-show="callLogs.length>0"  dir-paginate=" callLogss in callLogs|filter:search|orderBy:sortKey:reverse|itemsPerPage:8">
+				<tbody ng-show="callLogs.length>0" dir-paginate=" callLogss in callLogs|filter:search|orderBy:sortKey:reverse|itemsPerPage:8">
 				<tr>
-				<td>{{callLogss.timeStamp}}</td>
+				<td ng-cloak>{{callLogss.timeStamp}}</td>
 				
-				<td>
+				<td ng-cloak>
  <div ng-switch on="callLogss.response">
 
  <div ng-switch-when="1">Not interested/Injured</div>
  <div ng-switch-when="2">Voice mail</div>
  <div ng-switch-when="3">Do not call</div>
   </td>
-				<td>{{callLogss.notes}}</td>
-<td>{{callLogss.callerName}}</td>
-				<td><a  type="submit" title="" class="btn btn-xs btn-primary hint--top" data-hint="View Appointment" ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
+				<td ng-cloak>{{callLogss.notes}}</td>
+<td ng-cloak>{{callLogss.callerName}}</td>
+				<td><a  ng-cloak type="submit" title="" class="btn btn-xs btn-primary hint--top" data-hint="View Appointment" ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i class="glyphicon glyphicon-eye-open"></i> &nbsp;</a>
 				 <span ng-hide="doNotCall">
-				 <a type="submit" class="btn btn-xs btn-warning hint--top" data-hint="Edit Call Logs" ng-click="editModal(callLogss.id,callLogss.appointmentId)">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;</a>
-				<a href="#" ng-click="deleteCalllogs(callLogss.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Call Logs">&nbsp;<i class="glyphicon glyphicon-trash" ></i>&nbsp; </a>
-				<a ng-click="addAppointment(callLogss.id)" class="btn btn-xs btn-success hint--top"  data-hint="Add Appointment" ng-show="callLogss.appointmentId==null">&nbsp;<i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
-				<a ng-click="removeAppointment(callLogss.appointmentId,callLogss.patientId)" class="btn btn-xs btn-danger hint--top"  data-hint="Cancel Appointment" ng-show="callLogss.appointmentId!=null">&nbsp;<i class="glyphicon glyphicon-minus"></i>&nbsp;</a>
+				 <a ng-cloak type="submit" class="btn btn-xs btn-warning hint--top" data-hint="Edit Call Logs" ng-click="editModal(callLogss.id,callLogss.appointmentId)">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;</a>
+				<a href="#" ng-cloak ng-click="deleteCalllogs(callLogss.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Call Logs">&nbsp;<i class="glyphicon glyphicon-trash" ></i>&nbsp; </a>
+				<a ng-cloak ng-click="addAppointment(callLogss.id)" class="btn btn-xs btn-success hint--top"  data-hint="Add Appointment" ng-show="callLogss.appointmentId==null">&nbsp;<i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
+				<a ng-cloak ng-click="removeAppointment(callLogss.appointmentId,callLogss.patientId)" class="btn btn-xs btn-danger hint--top"  data-hint="Cancel Appointment" ng-show="callLogss.appointmentId!=null">&nbsp;<i class="glyphicon glyphicon-minus"></i>&nbsp;</a>
 				</span></td>
 				</tr>
 				</tbody>

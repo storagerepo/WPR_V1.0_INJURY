@@ -7,7 +7,7 @@
 		<a ui-sref="dashboard.patient"
 			class="btn-sm btn-primary pull-right margin-top-40">Back to the
 			list</a>
-		<h2 class="page-header" >{{title}}&nbsp;-&nbsp;{{patient.name}}</span></h2>
+		<h2 ng-cloak class="page-header" >{{title}}&nbsp;-&nbsp;{{patient.name}}</span></h2>
 		
 	</div>
 	<!-- /.col-lg-12 -->
@@ -26,21 +26,21 @@
                                     <label>Local Report Number:</label>
                                     <input type="text" class="form-control"  ng-model="patient.localReportNumber" name="localReportNumber" placeholder="Enter LocalReportNumber"  required>
                                     <span class="error-container" ng-show="myForm.localReportNumber.$dirty && myForm.localReportNumber.$invalid">
-                                    <span style="color:red" ng-show="myForm.localReportNumber.$error.required">Please Enter LocalReportNumber</span>
+                                    <span ng-cloak style="color:red" ng-show="myForm.localReportNumber.$error.required">Please Enter LocalReportNumber</span>
                                      </span><br><br>
                                  </div>
                                 <div class="col-md-4">    
                                     <label>Crash Severity:</label>
                                     <input type="text" class="form-control"  ng-model="patient.crashSeverity" name="crashSeverity" placeholder="Enter CrashSeverity"  required>
                                     <span class="error-container" ng-show="myForm.crashSeverity.$dirty && myForm.crashSeverity.$invalid">
-                                      <span style="color:red" ng-show="myForm.crashSeverity.$error.required">Please Enter CrashSeverity</span>
+                                      <span ng-cloak style="color:red" ng-show="myForm.crashSeverity.$error.required">Please Enter CrashSeverity</span>
                                      </span><br><br>
                                     </div>
                                   <div class="col-md-4">
                                     <label>Reporting Agency Name:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.reportingAgencyName" name="reportingAgencyName" placeholder="Enter ReportingAgencyName"  required>
                                     <span class="error-container" ng-show="myForm.reportingAgencyName.$dirty && myForm.reportingAgencyName.$invalid">
-                                       <span style="color:red" ng-show="myForm.reportingAgencyName.$error.required">Please Enter Report Number</span>
+                                       <span ng-cloak style="color:red" ng-show="myForm.reportingAgencyName.$error.required">Please Enter Report Number</span>
                                          </span><br><br>
                                           </div>
                                          
@@ -50,24 +50,24 @@
                                  <label>Number Of Units:</label>
                                     <input  type="text" class="form-control" ng-pattern="/^[0-9]{1,9}$/" ng-model="patient.numberOfUnits" name="numberOfUnits" placeholder="Enter NumberOfUnits"  required>
                                     <span class="error-container" ng-show="myForm.numberOfUnits.$dirty && myForm.numberOfUnits.$invalid">
-                                    <span style="color:red" ng-show="myForm.numberOfUnits.$error.pattern">Enter a valid numberOfUnits </span>
-                                       <span style="color:red" ng-show="myForm.numberOfUnits.$error.required">Please Enter NumberOfUnits</span>
+                                    <span ng-cloak style="color:red" ng-show="myForm.numberOfUnits.$error.pattern">Enter a valid numberOfUnits </span>
+                                       <span ng-cloak style="color:red" ng-show="myForm.numberOfUnits.$error.required">Please Enter NumberOfUnits</span>
                                          </span><br><br>
                                    	</div>
                                     <div class="col-md-4">
                                     <label>Unit In Error:</label>
                                     <input type="text" class="form-control" ng-pattern="/^[0-9]{1,9}$/" ng-model="patient.unitInError" name="unitInError" placeholder="Enter UnitInError"  required>
                                     <span class="error-container" ng-show="myForm.unitInError.$dirty && myForm.unitInError.$invalid">
-                                    <span style="color:red" ng-show="myForm.unitInError.$error.pattern">Enter a valid unitInError</span>
+                                    <span ng-cloak style="color:red" ng-show="myForm.unitInError.$error.pattern">Enter a valid unitInError</span>
                                    
-                                     <span style="color:red" ng-show="myForm.unitInError.$error.required">Please Enter UnitInError</span>
+                                     <span ng-cloak style="color:red" ng-show="myForm.unitInError.$error.required">Please Enter UnitInError</span>
                                    </span><br><br>
                                   </div>
                                   <div class="col-md-4">
                                  	<label>County:</label>
                                     <input type="text" class="form-control"  ng-model="patient.country" name="country" placeholder="Enter Country"  required>
                                     <span class="error-container" ng-show="myForm.country.$dirty && myForm.country.$invalid">
-                                      <span style="color:red" ng-show="myForm.country.$error.required">Please Enter Country</span>
+                                      <span ng-cloak style="color:red" ng-show="myForm.country.$error.required">Please Enter Country</span>
                                      </span><br><br>
                                       </div>
                                </div>
@@ -76,7 +76,7 @@
 									<label>City Village Township:</label>
 									<input type="text" class="form-control"  ng-model="patient.cityVillageTownship" name="cityVillageTownship" placeholder="Enter CityVillageTownship"  required>
 								 <span class="error-container" ng-show="myForm.cityVillageTownship.$dirty && myForm.cityVillageTownship.$invalid">
-                                      <span style="color:red" ng-show="myForm.cityVillageTownship.$error.required">Please Enter CityVillageTownship</span>
+                                      <span ng-cloak style="color:red" ng-show="myForm.cityVillageTownship.$error.required">Please Enter CityVillageTownship</span>
                                      </span><br><br>
                                      </div>
                               <div class="col-md-4">
@@ -86,7 +86,7 @@
                                      <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
                                      <span class="error-container" ng-show="myForm.crashDate.$dirty && myForm.crashDate.$invalid">
-                                <span style="color:red" ng-show="myForm.crashDate.$error.required">Please Enter CrashDate</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.crashDate.$error.required">Please Enter CrashDate</span>
                               </span>
                                     <br/><br>
         </div>
@@ -96,7 +96,7 @@
                                     <input type="text" name="timeOfCrash" id="TimeOfCrash" class="form-control"  ng-model="patient.timeOfCrash" placeholder="Enter timeOfCrash" required>
                                     <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>    </div>
                                      <span class="error-container" ng-show="myForm.timeOfCrash.$dirty && myForm.timeOfCrash.$invalid">
-                                <span style="color:red" ng-show="myForm.timeOfCrash.$error.required">Please Enter TimeOfCrash</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.timeOfCrash.$error.required">Please Enter TimeOfCrash</span>
                               </span>
                                     <br/><br>
         </div>
@@ -106,18 +106,18 @@
                                     <label>Unit Number:</label>
                                     <input type="text" class="form-control" ng-pattern="/^[0-9]{1,9}$/" ng-model="patient.unitNumber" name="unitNumber" placeholder="Enter UnitNumber"  required>
                                     <span class="error-container" ng-show="myForm.unitNumber.$dirty && myForm.unitNumber.$invalid">
-                                  <span style="color:red" ng-show="myForm.unitNumber.$error.pattern">Enter a valid unitNumber</span>
+                                  <span ng-cloak style="color:red" ng-show="myForm.unitNumber.$error.pattern">Enter a valid unitNumber</span>
                                  
-                                     <span style="color:red" ng-show="myForm.unitNumber.$error.required">Please Enter UnitNumber</span>
+                                     <span ng-cloak style="color:red" ng-show="myForm.unitNumber.$error.required">Please Enter UnitNumber</span>
                                    </span><br><br>
                                   </div>
                                   <div class="col-md-4">
                                  	<label>Name:</label>
                                     <input type="text" class="form-control" ng-pattern="/^[a-zA-Z]*$/" ng-model="patient.name" name="name" placeholder="Enter Name"  required>
                                     <span class="error-container" ng-show="myForm.name.$dirty && myForm.name.$invalid">
-                                      <span style="color:red" ng-show="myForm.name.$error.pattern">Enter a valid name</span>
+                                      <span ng-cloak style="color:red" ng-show="myForm.name.$error.pattern">Enter a valid name</span>
                                      
-                                      <span style="color:red" ng-show="myForm.name.$error.required">Please Enter Name</span>
+                                      <span ng-cloak style="color:red" ng-show="myForm.name.$error.required">Please Enter Name</span>
                                      </span><br><br>
                                       </div>
                                        <div class="col-md-4">
@@ -127,7 +127,7 @@
                                      <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
                                      <span class="error-container" ng-show="myForm.dateOfBirth.$dirty && myForm.dateOfBirth.$invalid">
-                                <span style="color:red" ng-show="myForm.dateOfBirth.$error.required">Please Enter DateOfBirth</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.dateOfBirth.$error.required">Please Enter DateOfBirth</span>
                               </span>
                                     <br/><br>
         </div>
@@ -148,14 +148,14 @@
                                  	 <label>Address:</label>
                                     <input type="text" class="form-control"  ng-model="patient.address" name="address" placeholder="Enter Address"  required>
                                     <span class="error-container" ng-show="myForm.address.$dirty && myForm.address.$invalid">
-                                      <span style="color:red" ng-show="myForm.address.$error.required">Please Enter Address</span>
+                                      <span ng-cloak style="color:red" ng-show="myForm.address.$error.required">Please Enter Address</span>
                                      </span><br><br>
                                       </div>
                                        <div class="col-md-4">
                                  <label>Phone Number:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.phoneNumber" name="phoneNumber" placeholder="Enter PhoneNumber"  required>
                                     <span class="error-container" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
-                                       <span style="color:red" ng-show="myForm.phoneNumber.$error.required">Please Enter Phone Number</span>
+                                       <span ng-cloak style="color:red" ng-show="myForm.phoneNumber.$error.required">Please Enter Phone Number</span>
                                          </span><br><br>
                                          </div>
 								</div>
@@ -165,21 +165,21 @@
                                     <label>Injuries:</label>
                                     <input tyep="text" class="form-control"  ng-model="patient.injuries" name="injuries" placeholder="Enter Injuries"  required>
                                     <span class="error-container" ng-show="myForm.injuries.$dirty && myForm.injuries.$invalid">
-                                     <span style="color:red" ng-show="myForm.injuries.$error.required">Please Enter Injury</span>
+                                     <span ng-cloak style="color:red" ng-show="myForm.injuries.$error.required">Please Enter Injury</span>
                                    </span><br><br>
                                   </div>
                                   <div class="col-md-4">
                                  	 <label>Ems Agency:</label>
                                     <input type="text" class="form-control"  ng-model="patient.emsAgency" name="emsAgency" placeholder="Enter EmsAgency"  required>
                                     <span class="error-container" ng-show="myForm.emsAgency.$dirty && myForm.emsAgency.$invalid">
-                                      <span style="color:red" ng-show="myForm.emsAgency.$error.required">Please Enter EmsAgency</span>
+                                      <span ng-cloak style="color:red" ng-show="myForm.emsAgency.$error.required">Please Enter EmsAgency</span>
                                      </span><br><br>
                                       </div>
                                        <div class="col-md-4">
                                  <label>Medical Facility:</label>
                                     <input  type="text" class="form-control"  ng-model="patient.medicalFacility" name="medicalFacility" placeholder="Enter MedicalFacility"  required>
                                     <span class="error-container" ng-show="myForm.medicalFacility.$dirty && myForm.medicalFacility.$invalid">
-                                       <span style="color:red" ng-show="myForm.medicalFacility.$error.required">Please Enter MedicalFacility</span>
+                                       <span ng-cloak style="color:red" ng-show="myForm.medicalFacility.$error.required">Please Enter MedicalFacility</span>
                                          </span><br><br>
                                      </div>
 								</div>

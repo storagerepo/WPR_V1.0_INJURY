@@ -53,10 +53,10 @@
 				<tbody ng-show="patientss.length>0" dir-paginate="patients in patientss | filter:search | orderBy:sortKey:reverse|itemsPerPage:20 ">
 					<tr>
 						
-						<td><a href="#/dashboard/Calllogs/{{patients.id}}">{{patients.name}}</a></td>
-						<td>{{patients.phoneNumber==""?'N/A':patients.phoneNumber}}</td>
-						<td>{{patients.localReportNumber}}</td>
-						<td>{{patients.callerName}}</td>
+						<td><a href="#/dashboard/Calllogs/{{patients.id}}" ng-cloak>{{patients.name}}</a></td>
+						<td ng-cloak>{{patients.phoneNumber==""?'N/A':patients.phoneNumber}}</td>
+						<td ng-cloak>{{patients.localReportNumber}}</td>
+						<td ng-cloak>{{patients.callerName}}</td>
 						<td>
  <div ng-switch on="patients.patientStatus">
  <div ng-switch-when="1">Active</div>
@@ -67,33 +67,33 @@
   </td>
 						<td>
 						<span>
-						<a href="#/dashboard/Calllogs/{{patients.id}}" class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs"><i
+						<a href="#/dashboard/Calllogs/{{patients.id}}" ng-cloak class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs"><i
 								class="glyphicon glyphicon-eye-open"></i>
 						</a>
 						
 						<span ng-hide="{{patients.patientStatus}}==3">
-						 <a href="#/dashboard/EditPatient/{{patients.id}}"  class="btn btn-xs btn-warning hint--top" data-hint="Edit Patient" ng-show="isAdmin"><i
+						 <a href="#/dashboard/EditPatient/{{patients.id}}"  ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Patient" ng-show="isAdmin"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
-						<a href="" ng-click="deletePatient(patients.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Patient" ng-show="admin"><i
+						<a href="" ng-cloak ng-click="deletePatient(patients.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Patient" ng-show="admin"><i
 								class="glyphicon glyphicon-trash"></i>
 						</a>
 						<span ng-show="isAdmin">
-						<a ng-hide="{{patients.callerId}}==''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-success hint--top" data-hint="Change Caller"><i
+						<a ng-hide="{{patients.callerId}}==''" href="" ng-cloak ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-success hint--top" data-hint="Change Caller"><i
 								class="glyphicon glyphicon-saved"></i>
 						</a>
-						<a ng-hide="{{patients.callerId}}!=''" href="" ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-danger hint--top" data-hint="Assign Caller"><i
+						<a ng-hide="{{patients.callerId}}!=''" href="" ng-cloak ng-click="assignCaller(patients.id,patients.callerId)" class="btn btn-xs btn-danger hint--top" data-hint="Assign Caller"><i
 								class="glyphicon glyphicon-saved"></i>
 						</a>
 						</span>
 						<span ng-hide="isAdmin">
-						<a title="doctor" ng-hide="{{patients.doctorId}}==''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Change Doctor" class="btn btn-xs btn-success hint--top"><i
+						<a title="doctor" ng-hide="{{patients.doctorId}}==''" href="" ng-cloak ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Change Doctor" class="btn btn-xs btn-success hint--top"><i
 								class="fa fa-user-md "></i>						</a>
-						<a title="doctor" ng-hide="{{patients.doctorId}}!=''" href="" ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Assign Doctor" class="btn btn-xs btn-danger hint--top"><i
+						<a title="doctor" ng-hide="{{patients.doctorId}}!=''" href="" ng-cloak ng-click="assignDoctor(patients.id,patients.doctorId)" data-hint="Assign Doctor" class="btn btn-xs btn-danger hint--top"><i
 								class="fa fa-user-md "></i>
 						</a>
 						</span>
-						<a target="_blank" class="btn btn-xs btn-info hint--lefter"  data-hint="View Crash Report" href="/Injury/Report/{{patients.crashReportFileName}}"><i
+						<a target="_blank" class="btn btn-xs btn-info hint--lefter"  data-hint="View Crash Report" href="" ng-cloak><i
 								class="fa fa-file-pdf-o"></i></a>
 						</span>
 						 

@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-lg-12">
         <a ui-sref="dashboard.staff" class="btn-sm btn-primary pull-right margin-top-40">Back to the list</a>
-        <h2 class="page-header">{{title}}&nbsp;-&nbsp;{{staff.firstName}}&nbsp;{{staff.lastName}}</h2>
+        <h2 ng-cloak class="page-header">{{title}}&nbsp;-&nbsp;{{staff.firstName}}&nbsp;{{staff.lastName}}</h2>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -22,14 +22,14 @@
                                     <label>First Name</label>
                                     <input type="text" class="form-control inputclass"  ng-model="staff.firstName" name="firstName" placeholder="Enter First Name" data-mask=""  required>
                                     <span class="error-container" ng-show="myForm.firstName.$dirty && myForm.firstName.$invalid">
-                                    <span style="color:red" ng-show="myForm.firstName.$error.required">Please input First Name</span>
+                                    <span ng-cloak style="color:red" ng-show="myForm.firstName.$error.required">Please input First Name</span>
                                      </span><br/>
                                   </div>
                                   <div class="col-md-6">
                                    <label>Last Name</label>
                                     <input type="text" class="form-control"  ng-model="staff.lastName" name="lastName" placeholder="Enter Last Name"  required>
                                     <span class="error-container" ng-show="myForm.lastName.$dirty && myForm.lastName.$invalid">
-                                      <span style="color:red" ng-show="myForm.lastName.$error.required">Please input Last Name</span>
+                                      <span ng-cloak style="color:red" ng-show="myForm.lastName.$error.required">Please input Last Name</span>
                                      </span><br/>
                                    </div>
                                   </div>
@@ -40,14 +40,14 @@
     								<input  type="text" readonly="readonly" class="form-control" ng-show='!options' ng-model="staff.username" placeholder="Enter UserName">
                                     <span style="color:red" id="username_exists"></span>
                                     <span class="error-container" ng-show="myForm.username.$dirty && myForm.username.$invalid">
-                                       <span style="color:red" ng-show="myForm.username.$error.required">Please input User Name</span>
+                                       <span ng-cloak style="color:red" ng-show="myForm.username.$error.required">Please input User Name</span>
                                        </span><br/>
                                       </div>
                                <div class="col-md-6">
                                <label>Phone Number</label>
                                     <input type="text" class="form-control inputclass"  ng-model="staff.phoneNumber" name="phoneNumber" placeholder="Enter PhoneNumber" data-mask="" required>
                                     <span class="error-container" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
-                                     <span style="color:red" ng-show="myForm.phoneNumber.$error.required">Please input Phone Number</span>
+                                     <span ng-cloak style="color:red" ng-show="myForm.phoneNumber.$error.required">Please input Phone Number</span>
                                    </span>
                                      <br/>
                                    </div> 
@@ -57,7 +57,7 @@
                                  <label>Email Id</label>
                                     <input type="email" class="form-control"  ng-model="staff.emailAddress" name="emailAddress" placeholder="Enter EmailId" email>
                                     <span class="error-container" ng-show="myForm.emailAddress.$dirty && myForm.emailAddress.$invalid">
-                                            <span style="color:red" ng-show="myForm.emailAddress.$error.email">Enter a valid email</span>
+                                            <span ng-cloak style="color:red" ng-show="myForm.emailAddress.$error.email">Enter a valid email</span>
                                     </span>                                    
                                     <br/>
                                     </div>

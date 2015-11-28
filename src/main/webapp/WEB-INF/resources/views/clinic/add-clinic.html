@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-lg-12">
         <a ui-sref="dashboard.clinic" class="btn-sm btn-primary pull-right margin-top-40">Back to the list</a>
-        <h2 class="page-header">{{title}}&nbsp;-&nbsp;{{clinic.clinicName}}</span></h2>
+        <h2 ng-cloak class="page-header">{{title}}&nbsp;-&nbsp;{{clinic.clinicName}}</span></h2>
     </div>
     
     <!-- /.col-lg-12 -->
@@ -27,14 +27,14 @@
                                     <label>Clinic Name</label>
                                     <input type="text" name="clinicName" class="form-control" ng-model="clinic.clinicName" placeholder="Enter ClinicName" required>
                                     <span class="error-container" ng-show="myForm.clinicName.$dirty && myForm.clinicName.$invalid">
-                                <span style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter the ClinicName</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter the ClinicName</span>
                               </span><br>
                                  </div>    
                                  <div class="col-md-6">
                                 <label>Address</label>
                                     <input type="text" name="address" class="form-control" ng-model="clinic.address" placeholder="Enter Address" required>
                                     <span class="error-container" ng-show="myForm.address.$dirty && myForm.address.$invalid">
-                                <span style="color:red" ng-show="myForm.address.$error.required">Please Enter the Address</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.address.$error.required">Please Enter the Address</span>
                               </span><br/>
                                </div>
                            </div>
@@ -43,7 +43,7 @@
                                <label>City</label>
                                     <input type="text" name="city" class="form-control" ng-model="clinic.city" placeholder="Enter City" required>
                                     <span class="error-container" ng-show="myForm.city.$dirty && myForm.city.$invalid">
-                                <span style="color:red" ng-show="myForm.city.$error.required">Please Enter the City</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.city.$error.required">Please Enter the City</span>
                               </span>
                                     <br/>
                               </div>
@@ -54,7 +54,7 @@
   							  <option value="United States">United States</option>
                               	</select>
                              <span class="error-container" ng-show="myForm.country.$dirty && myForm.country.$invalid">
-                              				<span style="color:red" ng-show="myForm.country.$error.required">Please Select the Country</span>
+                              				<span ng-cloak style="color:red" ng-show="myForm.country.$error.required">Please Select the Country</span>
                                      </span>
                            <br>
                       		</div>
@@ -68,7 +68,7 @@
                               </select> 
                              <span class="error-container" ng-show="myForm.state.$dirty && myForm.state.$invalid">
                               
-                                       <span style="color:red" ng-show="myForm.state.$error.required">Please Select the State</span>
+                                       <span ng-cloak style="color:red" ng-show="myForm.state.$error.required">Please Select the State</span>
                               </span>  
                            <br> 
                            </div> 
@@ -167,7 +167,7 @@
                                 </select>
                             <span class="error-container" ng-show="myForm.county.$dirty && myForm.county.$invalid">
                               
-                                       <span style="color:red" ng-show="myForm.county.$error.required">Please Select the County</span>
+                                       <span ng-cloak style="color:red" ng-show="myForm.county.$error.required">Please Select the County</span>
                                        </span>
                                      <br>  
                            </div>
@@ -177,7 +177,7 @@
                              <label>Zip</label>
                                     <input type="text" name="zip" class="form-control" ng-model="clinic.zipcode" placeholder="Enter Zip" required maxlength="5">
                                     <span class="error-container" ng-show="myForm.zip.$dirty && myForm.zip.$invalid">
-                                <span style="color:red" ng-show="myForm.zip.$error.required">Please Enter the Zip</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.zip.$error.required">Please Enter the Zip</span>
                               </span>
                                     <br/>
                               </div>
@@ -185,7 +185,7 @@
                                  <label>Office Number</label>
                                     <input type="text" name="officeNumber" class="form-control" ng-model="clinic.officeNumber" placeholder="Enter Office Number" required>
                                     <span class="error-container" ng-show="myForm.officeNumber.$dirty && myForm.officeNumber.$invalid">
-                                <span style="color:red" ng-show="myForm.officeNumber.$error.required">Please Enter the Office Number</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.officeNumber.$error.required">Please Enter the Office Number</span>
                               </span>
                                     <br/>
                                 </div>
@@ -221,7 +221,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.sunStartTime.$dirty && myForm.sunStartTime.$invalid">
-                                <span style="color:red" ng-show="myForm.sunStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.sunStartTime.$error.required">Please Enter the Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -229,7 +229,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                                <span class="error-container" ng-show="myForm.sunEndTime.$dirty && myForm.sunEndTime.$invalid">
-                                 <span style="color:red" ng-show="myForm.sunEndTime.$error.higherThan">End Time Should be greater</span>
+                                 <span ng-cloak style="color:red" ng-show="myForm.sunEndTime.$error.higherThan">End Time Should be greater</span>
                               </span>
                               
                               </td>
@@ -243,7 +243,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.monStartTime.$dirty && myForm.monStartTime.$invalid">
-                                <span style="color:red" ng-show="myForm.monStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.monStartTime.$error.required">Please Enter the Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -251,7 +251,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.monEndTime.$dirty && myForm.monEndTime.$invalid">
-                                <span style="color:red" ng-show="myForm.monEndTime.$error.higherThan">End Time Should be greater</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.monEndTime.$error.higherThan">End Time Should be greater</span>
                               </span>
                               </td>
                               <td>
@@ -264,7 +264,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.tueStartTime.$dirty && myForm.tueStartTime.$invalid">
-                                <span style="color:red" ng-show="myForm.tueStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.tueStartTime.$error.required">Please Enter the Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -272,7 +272,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.tueEndTime.$dirty && myForm.tueEndTime.$invalid">
-                                 <span style="color:red" ng-show="myForm.tueEndTime.$error.higherThan">End Time Should be greater</span>
+                                 <span ng-cloak style="color:red" ng-show="myForm.tueEndTime.$error.higherThan">End Time Should be greater</span>
                               </span>
                               </td>
                               <td>
@@ -285,7 +285,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.wedStartTime.$dirty && myForm.wedStartTime.$invalid">
-                                <span style="color:red" ng-show="myForm.wedStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.wedStartTime.$error.required">Please Enter the Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -293,7 +293,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.wedEndTime.$dirty && myForm.wedEndTime.$invalid">
-                                 <span style="color:red" ng-show="myForm.wedEndTime.$error.higherThan"> End Time Should be greater</span>
+                                 <span ng-cloak style="color:red" ng-show="myForm.wedEndTime.$error.higherThan"> End Time Should be greater</span>
                               </span>
                               </td>
                               <td>
@@ -306,7 +306,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.thuStartTime.$dirty && myForm.thuStartTime.$invalid">
-                                <span style="color:red" ng-show="myForm.thuStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.thuStartTime.$error.required">Please Enter the Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -314,7 +314,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.thuEndTime.$dirty && myForm.thuEndTime.$invalid">
-                                 <span style="color:red" ng-show="myForm.thuEndTime.$error.higherThan">End Time Should be greater</span>
+                                 <span ng-cloak style="color:red" ng-show="myForm.thuEndTime.$error.higherThan">End Time Should be greater</span>
                               </span>
                               </td>
                               <td>
@@ -327,7 +327,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.friStartTime.$dirty && myForm.friStartTime.$invalid">
-                                <span style="color:red" ng-show="myForm.friStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.friStartTime.$error.required">Please Enter the Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -335,7 +335,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.friEndTime.$dirty && myForm.friEndTime.$invalid">
-                               <span style="color:red" ng-show="myForm.friEndTime.$error.higherThan">End Time Should be greater</span>
+                               <span ng-cloak style="color:red" ng-show="myForm.friEndTime.$error.higherThan">End Time Should be greater</span>
                               </span>
                               </td>
                               <td>
@@ -348,7 +348,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.satStartTime.$dirty && myForm.satStartTime.$invalid">
-                                <span style="color:red" ng-show="myForm.satStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.satStartTime.$error.required">Please Enter the Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -356,7 +356,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.satEndTime.$dirty && myForm.satEndTime.$invalid">
-                                <span style="color:red" ng-show="myForm.satEndTime.$error.higherThan">End Time Should be greater</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.satEndTime.$error.higherThan">End Time Should be greater</span>
                               </span>
                               </td>
                               <td>
