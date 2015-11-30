@@ -339,17 +339,12 @@ adminApp.controller('AddPatientController', function($scope,$state,$http,$locati
 	 
 	
 	
-		requestHandler.getRequest("Admin/getClinicId.json","").then( function(response) {
+		requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
 			
 		     $scope.clinic= response.data.clinicsForms;
 		 
 		     });
-		var ClinicId=$scope.patient.clinicId;
-		requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
-			
-		    $scope.doctor= response.data.doctorsForm;
-		  
-		   });
+	
 		$scope.doctorName=function(){
 			var ClinicId=0;
 			if($scope.patient.clinicId==null){
@@ -426,7 +421,7 @@ else
 		}
 		
 	
-		requestHandler.getRequest("Admin/getClinicId.json","").then( function(response) {
+		requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
 			
 		     $scope.clinic= response.data.clinicsForms;
 		 
