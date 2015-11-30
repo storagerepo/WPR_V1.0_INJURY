@@ -41,9 +41,9 @@ public class SchedulerService {
 		worker.work();
 			try
 			{
-				System.out.println("Start Read PDF From Folder");
-				readAndInsertService.doReadOperation();
-				System.out.print("End PDF Read from folder");
+				//System.out.println("Start Read PDF From Folder");
+				//readAndInsertService.doReadOperation();
+				//System.out.print("End PDF Read from folder");
 			}
 			catch(Exception ex)
 			{
