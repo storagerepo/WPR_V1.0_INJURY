@@ -147,7 +147,13 @@ public class PDFCrashReportReader {
 	    	ownerPhoneNumber=unitPage.get(unitPage.indexOf("OWNER PHONE NUMBER -  INC, AREA  CODE     ( SAME AS DRIVER )")+1).equals("UNIT NUMBER")?"":unitPage.get(unitPage.indexOf("OWNER PHONE NUMBER -  INC, AREA  CODE     ( SAME AS DRIVER )")+1);
 	    	damageScale=unitPage.get(unitPage.indexOf("DAMAGE SCALE")+1).equals("1 - NONE")?"":unitPage.get(unitPage.indexOf("DAMAGE SCALE")+1);
 	    	insuranceCompany=unitPage.indexOf("INSURANCE COMPANY")==-1?"":unitPage.get(unitPage.indexOf("INSURANCE COMPANY")+1);
+	    	if(insuranceCompany.equals("POLICY NUMBER"))
+	    		insuranceCompany="";
+	    	    	
 	    	policyNumber=unitPage.indexOf("POLICY NUMBER")==-1?"":unitPage.get(unitPage.indexOf("POLICY NUMBER")+1);
+	    	if(policyNumber.equals("TOWED BY"))
+	    		policyNumber="";
+	    	
 	    	
 	    	ReportUnitPageForm reportUnitPageForm=new ReportUnitPageForm(unitPage.get(unitPage.indexOf("UNIT NUMBER")+1),
 	    			unitPage.get(unitPage.indexOf("OWNER NAME: LAST, FIRST, MIDDLE       ( SAME AS DRIVER )")+1),ownerPhoneNumber, 
@@ -282,7 +288,13 @@ public class PDFCrashReportReader {
 					return false;
 				}
 			}else{
-				return true;
+				ReportUnitPageForm unitPageForm=pdfCrashReportJson.getReportUnitPageForms().get(unitInError-1);
+				if(!unitPageForm.getInsuranceCompany().equals("")&&!unitPageForm.getPolicyNumber().equals("")){
+					return true;
+				}else{
+					//Skip the form
+					return false;
+				}
 			}
 			
 			

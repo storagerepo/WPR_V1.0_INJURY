@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -211,7 +212,21 @@ public class PatientsController {
 	  boolean crashReportStatus=crashReportReader.checkStatus(pdfCrashReportJson);
 	  if(crashReportStatus){		  
 		  patientsForms=crashReportReader.getPatientForm(pdfCrashReportJson);
+		  
+		  String fileName="";
+		  File archiveFile = null;
+		  //Save File in Location
+		  if(patientsForms.size()>0){	
+			  fileName="D://InjuryCrashReport//Archive//"+patientsForms.get(0).getCountry()+"_CrashReport_"+patientsForms.get(0).getLocalReportNumber()+".pdf";
+			  archiveFile=new File(fileName);
+			  byte[] bytes=file.getBytes();
+			  BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(archiveFile));
+              stream.write(bytes);
+              stream.close();
+		  }
+		  
 		  for (PatientsForm patientsForm : patientsForms) {
+			  patientsForm.setCrashReportFileName(archiveFile.getName());
 			  patientsService.savePatients(patientsForm);
 		  }		  
 		  model.addAttribute("requestSuccess",true);
