@@ -90,7 +90,7 @@
 
                                     <label>Date and Time</label>
                                     <div class="input-group">
-                             <input type="text" name="timeStamp" id="timeStamp" class="form-control"  ng-model="calllogs.timeStamp" placeholder="Enter Time and Date" required>
+                             <input type="text" name="timeStamp" id="timeStamp" class="form-control"  ng-model="calllogs.timeStamp" placeholder="Enter Time and Date" required onkeypress="return false;">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
                                      <span class="error-container" ng-show="myForm.timeStamp.$dirty && myForm.timeStamp.$invalid && !myForm.notes.$prestine">
@@ -167,7 +167,7 @@
 		                             <br>
               <label>Scheduled Date</label>
                                   <div class="input-group">   
-                                    <input type="text" name="scheduledDate" id="scheduledDate" class="form-control"  ng-model="Appointments.scheduledDate" placeholder="Enter Date" required>
+                                    <input type="text" name="scheduledDate" id="scheduledDate" class="form-control"  ng-model="Appointments.scheduledDate" placeholder="Enter Date" required onkeypress="return false;">
                                      <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
                                      <span class="error-container" ng-show="myForms.scheduledDate.$dirty && myForms.scheduledDate.$invalid">
@@ -289,7 +289,7 @@
 						<td class="col-md-3"><b>Number of Units</b></td>
 						<td class="col-md-3">{{patients.numberOfUnits}}</td>
 						<td class="col-md-3"><b>Units in Error</b></td>
-						<td class="col-md-3">{{patients.unitsInError}}</td>
+						<td class="col-md-3">{{patients.unitInError}}</td>
 						</tr>
 						<tr>
 						<td class="col-md-3"><b>County</b></td>

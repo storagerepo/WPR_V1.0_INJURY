@@ -196,9 +196,9 @@
                               <div class="col-md-12">
                               <div class="col-md-6">
                                    <label>Fax Number</label>
-                                    <input type="text" name="faxNumber" class="form-control" ng-model="clinic.faxNumber" placeholder="Enter Fax Number" validate-number maxlength="10">
+                                    <input type="text" name="faxNumber" class="form-control" ng-model="clinic.faxNumber" placeholder="Enter Fax Number eg: (123)456-7890 or 123-456-7890" validate-mobile maxlength="10">
                                      <span class="error-container" ng-show="myForm.faxNumber.$dirty">
-                                     <span ng-cloak style="color:red" ng-show="myForm.faxNumber.$error.validateNumber">Enter valid Fax Number</span>
+                                     <span ng-cloak style="color:red" ng-show="myForm.faxNumber.$error.validateMobile">Enter valid Fax Number</span>
                                      </span>
                                      
                                     <br/>

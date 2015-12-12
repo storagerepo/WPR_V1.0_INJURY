@@ -42,8 +42,8 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 	    	        latitude: clinicLocationForm.centerLatitude,
 	    	        longitude: clinicLocationForm.centerLongitude,
 	    	        title: "Patient Location",
-	   	           	show:false,
-	   	           	icon:'resources/images/map/map_icon_green.png',
+	   	           	icon:'resources/images/map/map_icon_green_search.png',
+	   	           	show:false
 	   	          };
     		marker[idKey]=0;
     		markers.push(marker);
@@ -116,7 +116,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     
     // Get More Details About Clinic
     $scope.viewClinicDetails=function(clinicId) {
-		 requestHandler.getRequest("Admin/getClinic.json?clinicId="+clinicId,"").then(function(results){
+		 requestHandler.getRequest("Staff/getClinic.json?clinicId="+clinicId,"").then(function(results){
 		 	 $scope.clinicDetails= results.data.clinicsForm;
 		 	 $("#viewClinicDetails").modal('show');
 		  });

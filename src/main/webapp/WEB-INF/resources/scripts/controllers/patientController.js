@@ -364,7 +364,7 @@ $("#file").val("");
 
 adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader,requestHandler,$state) {
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://192.168.1.236:8086/Injury/Staff/uploadCrashReportPDFDocuments.json'
+        url: 'http://192.168.1.236:8089/Injury/Staff/uploadCrashReportPDFDocuments.json'
     });
     
     $scope.close=function(){
