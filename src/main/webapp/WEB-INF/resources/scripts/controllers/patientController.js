@@ -214,20 +214,42 @@ $("#file").val("");
 	$scope.assignDoctor=function(id,callerId)
 	{
 		$scope.title="Assign Doctor";
+		 $("#assignDoctorModel").modal("show");
+			
 		$scope.assignPatientId=id;
 		$scope.selectedCaller=callerId;
 		requestHandler.getRequest("Staff/getPatients.json?id="+$scope.assignPatientId).then( function(response) {
 			$scope.patients= response.data.patientsForm;
-		});
 		
-			requestHandler.getRequest("/Staff/getAllDoctorss.json","").then( function(response) {			
-			     $scope.doctors= response.data.doctorsForms;
-			     $("#assignDoctorModel").modal("show");
-			});
-		
-		
-		
-	};
+		requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
+			$scope.clinic= response.data.clinicsForms;
+		 
+		   var ClinicId=0;
+			if($scope.patients.clinicId==null){
+				ClinicId=0;
+			}
+			else{
+				ClinicId=$scope.patients.clinicId;
+			}
+				 requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
+					$scope.doctor= response.data.doctorsForm;
+				  });
+		});	
+		});		
+		$scope.doctorName=function(){
+			var ClinicId=0;
+			if($scope.patients.clinicId==null){
+				ClinicId=0;
+			}
+			else{
+				ClinicId=$scope.patients.clinicId;
+			}
+			requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
+					$scope.doctor= response.data.doctorsForm;
+				   });
+                    }
+		};
+
 	
 	//Update the Doctor
 	$scope.updateDoctor=function()

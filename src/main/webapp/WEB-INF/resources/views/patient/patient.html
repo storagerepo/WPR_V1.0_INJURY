@@ -138,6 +138,8 @@
 <!-- End Assign Model -->
 
 <!--  Doctor Assign Modal -->
+
+ <form id="myForms" name="myForms" novalidate>
 <div class="modal fade" id="assignDoctorModel" role="dialog">
     <div class="modal-dialog">    
       <!-- Modal content-->
@@ -147,22 +149,35 @@
           <h4 class="modal-title">Assign Doctor - Patient - {{assignPatientId}}</h4>
         </div>
         <div class="modal-body">
+              <label>Select Clinic:</label>
              
+		                           <select class="form-control" ng-change="doctorName()" ng-model="patients.clinicId" name="clinicId" id="clinicId" ng-options="clinics.clinicId as clinics.clinicName for clinics in clinic" required>
+		  							  <option value="">-- Select Clinic --</option>
+		                             </select> 
+		                             
+                             <span class="error-container" ng-show="myForms.clinicId.$dirty && myForms.clinicId.$invalid">
+                                <span style="color:red" ng-show="myForms.clinicId.$error.required">Please Select the Clinic</span>
+                              </span>
+		                             <br>
               <label>Select the Doctor</label>
                           <div class="col-md-12 input-group">
-                           <select class="form-control" ng-model="patients.doctorId" name="doctorId" id="doctorId" ng-options="doctor.id as doctor.doctorName for doctor in doctors">
+                           <select class="form-control" ng-model="patients.doctorId" name="doctorId" id="doctorId" ng-options="doctors.id as doctors.doctorName for doctors in doctor" required>
   							  <option value="">-- Select Doctor --</option>
-						  </select>   
+						  </select>  
+						  <span class="error-container" ng-show="myForms.doctorId.$dirty && myForms.doctorId.$invalid">
+                                <span style="color:red" ng-show="myForms.doctorId.$error.required">Please Select the Doctor</span>
+                              </span> 
                            </div>
         </div>
         <div class="modal-footer">
          <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
-             <a type="submit" class="btn btn-success"  ng-disabled='myForm.$invalid' ng-click="updateDoctor()">Assign</a>
+             <a type="submit" class="btn btn-success"  ng-disabled='myForms.$invalid' ng-click="updateDoctor()">Assign</a>
         </div>
       </div>
       
     </div>
  </div>
+ </form>
 <!-- End Assign Model -->
 
 
