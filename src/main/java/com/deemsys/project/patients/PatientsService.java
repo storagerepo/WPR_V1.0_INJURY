@@ -135,13 +135,13 @@ public class PatientsService {
 		//TODO: Convert Entity to Form
 		//Start
 		PatientsForm patientsForm = new PatientsForm();
-		Integer staffId = 0,clinicId=0,doctorId = 0;
+		Integer staffId = null,clinicId=null,doctorId = null;
 		String staffName="N/A";
 		String clinicName="N/A";
 		String doctorName="N/A";
 		if(patients!=null)
 		{
-			staffId=0;clinicId=0;doctorId=0;
+			staffId=null;clinicId=null;doctorId=null;
 		if(patients.getStaff()!=null)
 		{
 			staffId=patients.getStaff().getId();
@@ -251,9 +251,15 @@ public class PatientsService {
 		}
 	
 		String latLong=geoLocation.getLocation(patientsForm.getAddress());
-		String[] latitudeLongitude=latLong.split(",");
+		double longitude=0.0;
+		double latitude=0.0;
+		if(!latLong.equals("NONE")){
+			String[] latitudeLongitude=latLong.split(",");
+			latitude=Double.parseDouble(latitudeLongitude[0]);
+			longitude=Double.parseDouble(latitudeLongitude[1]);
+		}
 		
-		 Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash().toString(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),Double.parseDouble(latitudeLongitude[0]), Double.parseDouble(latitudeLongitude[1]),patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getCrashReportFileName(),patientsForm.getPatientStatus());
+		 Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash().toString(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),latitude,longitude,patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getCrashReportFileName(),patientsForm.getPatientStatus());
 		
 		patients.setId(patientsForm.getId());
 		Integer clinicId=patientsForm.getClinicId();
@@ -323,7 +329,7 @@ public class PatientsService {
 		}
 		
 		
-		Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash().toString(),patientsForm.getUnitNumber(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),latitude,longitude,patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getCrashReportFileName(),1);
+		Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash().toString(),patientsForm.getUnitNumber().trim(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),latitude,longitude,patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getCrashReportFileName(),1);
 		
 		if(patientsForm.getDoctorId() == null)
 		{

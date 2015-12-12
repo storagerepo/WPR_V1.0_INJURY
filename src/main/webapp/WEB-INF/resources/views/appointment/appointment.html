@@ -26,7 +26,7 @@
                           <thead>
 	        <tr>
 						
-                <th ng-mousedown="sort('scheduledDate')">Date   <span class="glyphicon sort-icon" ng-show="sortKey=='scheduledDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                <th ng-mousedown="sort('scheduledDate')">Date</th>
                <th ng-mousedown="sort('patientName')">Patient Name   <span class="glyphicon sort-icon" ng-show="sortKey=='patientName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
             	 	 <th ng-mousedown="sort('notes')">Notes   <span class="glyphicon sort-icon" ng-show="sortKey=='notes'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
@@ -34,7 +34,7 @@
             
               	<th>Action</th>
                 	 <tr>    
-            <th>  <input type="text"  class="form-control"  ng-model="search.scheduledDate" placeholder="Search by Date"></label>
+            <th>
            </th>
            	<th>  <input type="text"  class="form-control"  ng-model="search.patientName" placeholder="Search by Patient Name"></label>
            </th>		

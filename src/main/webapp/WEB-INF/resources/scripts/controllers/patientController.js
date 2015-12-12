@@ -31,6 +31,20 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 					
 				     $scope.patientss= response.data.patientsForms;
 				     $scope.sort('patientStatus');
+				     $.each($scope.patientss,function(index,value) {
+				    	 switch(value.patientStatus) {
+				    	    case 1:
+				    	        value.patientStatus="Active";
+				    	        break;
+				    	    case 2:
+				    	    	value.patientStatus="Appointment Scheduled";
+				    	        break;
+				    	    default:
+				    	    	value.patientStatus="Do Not Call";
+				    	    	break;
+				    	} 
+				     });
+				     
 				     });
 			   
 		   }
@@ -40,6 +54,19 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 					
 				     $scope.patientss= response.data.patientsForm;
 				     $scope.sort('patientStatus');
+				     $.each($scope.patientss,function(index,value) {
+				    	 switch(value.patientStatus) {
+				    	    case 1:
+				    	        value.patientStatus="Active";
+				    	        break;
+				    	    case 2:
+				    	    	value.patientStatus="Appointment Scheduled";
+				    	        break;
+				    	    default:
+				    	    	value.patientStatus="Do Not Call";
+				    	    	break;
+				    	} 
+				     });
 				     });
 		   }
 			
@@ -65,11 +92,24 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 
 	
 	$scope.getPatientList=function(){
-		
+		alert("ppp");
 		 requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 		     $scope.patients= response.patientsForms;
 		     $scope.sort('name');
-
+		     $.each($scope.patientss,function(index,value) {
+		    	 switch(value.patientStatus) {
+		    	    case 1:
+		    	        value.patientStatus="Active";
+		    	        break;
+		    	    case 2:
+		    	    	value.patientStatus="Appointment Scheduled";
+		    	        break;
+		    	    default:
+		    	    	value.patientStatus="Do Not Call";
+		    	    	break;
+		    	} 
+		     });
+		     
 		     });
 	};
 	
@@ -216,12 +256,38 @@ $("#file").val("");
 				   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 						
 					     $scope.patientss= response.data.patientsForms;
+					     $.each($scope.patientss,function(index,value) {
+					    	 switch(value.patientStatus) {
+					    	    case 1:
+					    	        value.patientStatus="Active";
+					    	        break;
+					    	    case 2:
+					    	    	value.patientStatus="Appointment Scheduled";
+					    	        break;
+					    	    default:
+					    	    	value.patientStatus="Do Not Call";
+					    	    	break;
+					    	} 
+					     });
 					     });
 				   
 				 }
 			 else{
 	 requestHandler.getRequest("Staff/adminPatientStatus.json?patientStatus="+$scope.Status,"").then( function(response) {
 			 $scope.patientss= response.data.patientsForms;
+			 $.each($scope.patientss,function(index,value) {
+		    	 switch(value.patientStatus) {
+		    	    case 1:
+		    	        value.patientStatus="Active";
+		    	        break;
+		    	    case 2:
+		    	    	value.patientStatus="Appointment Scheduled";
+		    	        break;
+		    	    default:
+		    	    	value.patientStatus="Do Not Call";
+		    	    	break;
+		    	} 
+		     });
 			  });
 	
 			 }
@@ -234,6 +300,19 @@ $("#file").val("");
 				 requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
 						
 				     $scope.patientss= response.data.patientsForm;
+				     $.each($scope.patientss,function(index,value) {
+				    	 switch(value.patientStatus) {
+				    	    case 1:
+				    	        value.patientStatus="Active";
+				    	        break;
+				    	    case 2:
+				    	    	value.patientStatus="Appointment Scheduled";
+				    	        break;
+				    	    default:
+				    	    	value.patientStatus="Do Not Call";
+				    	    	break;
+				    	} 
+				     });
 				     	   });
 			
 				 
@@ -241,6 +320,19 @@ $("#file").val("");
 			 else{
 				 requestHandler.getRequest("Staff/staffPatientStatus.json?patientStatus="+$scope.Status,"").then( function(response) {
 					 $scope.patientss= response.data.patientsForms;
+					 $.each($scope.patientss,function(index,value) {
+				    	 switch(value.patientStatus) {
+				    	    case 1:
+				    	        value.patientStatus="Active";
+				    	        break;
+				    	    case 2:
+				    	    	value.patientStatus="Appointment Scheduled";
+				    	        break;
+				    	    default:
+				    	    	value.patientStatus="Do Not Call";
+				    	    	break;
+				    	} 
+				     });
 				 });
 			 }
 		 }
@@ -396,6 +488,7 @@ adminApp.controller('EditPatientController', function($scope,$http,$state,$locat
 
 		//getting patient details by id
 		requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
+			//alert(JSON.stringify(response));
 			patientOriginal=angular.copy(response.data.patientsForm);
 			
 			$scope.patient= response.data.patientsForm;

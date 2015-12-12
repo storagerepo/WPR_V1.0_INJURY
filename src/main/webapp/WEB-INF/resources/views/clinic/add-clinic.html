@@ -25,7 +25,7 @@
                     <div class="col-md-12">
                                 <div class="col-md-6">
                                     <label>Clinic Name</label>
-                                    <input type="text" name="clinicName" class="form-control" ng-model="clinic.clinicName" placeholder="Enter ClinicName" required>
+                                    <input type="text" name="clinicName" class="form-control" ng-model="clinic.clinicName" placeholder="Enter Clinic Name" required>
                                     <span class="error-container" ng-show="myForm.clinicName.$dirty && myForm.clinicName.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter the ClinicName</span>
                               </span><br>
@@ -41,9 +41,10 @@
                            <div class="col-md-12">
                            <div class="col-md-6">
                                <label>City</label>
-                                    <input type="text" name="city" class="form-control" ng-model="clinic.city" placeholder="Enter City" required>
+                                    <input type="text" name="city" class="form-control" ng-model="clinic.city" placeholder="Enter City" validate-name required>
                                     <span class="error-container" ng-show="myForm.city.$dirty && myForm.city.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.city.$error.required">Please Enter the City</span>
+                                <span ng-cloak style="color:red" ng-show="!myForm.city.$error.required&&myForm.city.$error.validateName">Enter Valid City Name</span>
                               </span>
                                     <br/>
                               </div>
@@ -175,17 +176,19 @@
                          <div class="col-md-12">
                          <div class="col-md-6">
                              <label>Zip</label>
-                                    <input type="text" name="zip" class="form-control" ng-model="clinic.zipcode" placeholder="Enter Zip" required maxlength="5">
+                                    <input type="text" name="zip" class="form-control" ng-model="clinic.zipcode" placeholder="Enter Zip" validate-number required maxlength="5">
                                     <span class="error-container" ng-show="myForm.zip.$dirty && myForm.zip.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.zip.$error.required">Please Enter the Zip</span>
+                                <span ng-cloak style="color:red" ng-show="!myForm.zip.$error.required&&myForm.zip.$error.validateNumber">Enter Valid Zipcode</span>
                               </span>
                                     <br/>
                               </div>
                                 <div class="col-md-6">
                                  <label>Office Number</label>
-                                    <input type="text" name="officeNumber" class="form-control" ng-model="clinic.officeNumber" placeholder="Enter Office Number" required>
+                                    <input type="text" name="officeNumber" class="form-control" ng-model="clinic.officeNumber" placeholder="Enter Office Number eg: (123)456-7890 or 123-456-7890" validate-mobile required>
                                     <span class="error-container" ng-show="myForm.officeNumber.$dirty && myForm.officeNumber.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.officeNumber.$error.required">Please Enter the Office Number</span>
+                                <span ng-cloak style="color:red" ng-show="!myForm.officeNumber.$error.required&&myForm.officeNumber.$error.validateMobile">Enter valid Office Number</span>
                               </span>
                                     <br/>
                                 </div>
@@ -193,7 +196,11 @@
                               <div class="col-md-12">
                               <div class="col-md-6">
                                    <label>Fax Number</label>
-                                    <input type="text" name="faxNumber" class="form-control" ng-model="clinic.faxNumber" placeholder="Enter Fax Number">
+                                    <input type="text" name="faxNumber" class="form-control" ng-model="clinic.faxNumber" placeholder="Enter Fax Number" validate-number maxlength="10">
+                                     <span class="error-container" ng-show="myForm.faxNumber.$dirty">
+                                     <span ng-cloak style="color:red" ng-show="myForm.faxNumber.$error.validateNumber">Enter valid Fax Number</span>
+                                     </span>
+                                     
                                     <br/>
                                </div>
                                    <div class="col-md-6">
@@ -217,7 +224,7 @@
                                <tr><td>Sunday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="sunStartTime" id="sunStartTime" class="form-control"  ng-model="clinic.clinicTimingList[0].startTime" placeholder="Enter Start Time" required>
+                             	<input type="text" style="" name="sunStartTime" id="sunStartTime" class="form-control"  ng-model="clinic.clinicTimingList[0].startTime" placeholder="Enter Start Time11" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0"">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.sunStartTime.$dirty && myForm.sunStartTime.$invalid">
@@ -225,7 +232,7 @@
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="sunEndTime" id="sunEndTime" class="form-control" higher-than="clinic.clinicTimingList[0].startTime"  ng-model="clinic.clinicTimingList[0].endTime" placeholder="Enter End Time">
+                             <input type="text" style="" name="sunEndTime" id="sunEndTime" class="form-control" higher-than="clinic.clinicTimingList[0].startTime"  ng-model="clinic.clinicTimingList[0].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                                <span class="error-container" ng-show="myForm.sunEndTime.$dirty && myForm.sunEndTime.$invalid">
@@ -239,7 +246,7 @@
                               <tr><td>Monday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="monStartTime" id="monStartTime" class="form-control"  ng-model="clinic.clinicTimingList[1].startTime" placeholder="Enter Start Time" required>
+                             	<input type="text" style="" name="monStartTime" id="monStartTime" class="form-control"  ng-model="clinic.clinicTimingList[1].startTime" placeholder="Enter Start Time" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.monStartTime.$dirty && myForm.monStartTime.$invalid">
@@ -247,7 +254,7 @@
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="monEndTime" id="monEndTime" class="form-control" higher-than="clinic.clinicTimingList[1].startTime"  ng-model="clinic.clinicTimingList[1].endTime" placeholder="Enter End Time" >
+                             <input type="text" style="" name="monEndTime" id="monEndTime" class="form-control" higher-than="clinic.clinicTimingList[1].startTime"  ng-model="clinic.clinicTimingList[1].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.monEndTime.$dirty && myForm.monEndTime.$invalid">
@@ -260,7 +267,7 @@
                               <tr><td>Tuesday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="tueStartTime" id="tueStartTime" class="form-control"  ng-model="clinic.clinicTimingList[2].startTime" placeholder="Enter Start Time" required>
+                             	<input type="text" style="" name="tueStartTime" id="tueStartTime" class="form-control"  ng-model="clinic.clinicTimingList[2].startTime" placeholder="Enter Start Time" required ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.tueStartTime.$dirty && myForm.tueStartTime.$invalid">
@@ -268,7 +275,7 @@
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="tueEndTime" id="tueEndTime" class="form-control" higher-than="clinic.clinicTimingList[2].startTime"  ng-model="clinic.clinicTimingList[2].endTime" placeholder="Enter End Time">
+                             <input type="text" style="" name="tueEndTime" id="tueEndTime" class="form-control" higher-than="clinic.clinicTimingList[2].startTime"  ng-model="clinic.clinicTimingList[2].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.tueEndTime.$dirty && myForm.tueEndTime.$invalid">
@@ -281,15 +288,15 @@
                               <tr><td>Wednesday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="wedStartTime" id="wedStartTime" class="form-control"  ng-model="clinic.clinicTimingList[3].startTime" placeholder="Enter Start Time" required>
-                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                             	<input type="text" style="" name="wedStartTime" id="wedStartTime" class="form-control"  ng-model="clinic.clinicTimingList[3].startTime" placeholder="Enter Start Time" required ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0">
+                             	<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>	
                               </div>
                               <span class="error-container" ng-show="myForm.wedStartTime.$dirty && myForm.wedStartTime.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.wedStartTime.$error.required">Please Enter the Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="wedEndTime" id="wedEndTime" class="form-control" higher-than="clinic.clinicTimingList[3].startTime"  ng-model="clinic.clinicTimingList[3].endTime" placeholder="Enter End Time">
+                             <input type="text" style="" name="wedEndTime" id="wedEndTime" class="form-control" higher-than="clinic.clinicTimingList[3].startTime"  ng-model="clinic.clinicTimingList[3].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.wedEndTime.$dirty && myForm.wedEndTime.$invalid">
@@ -302,7 +309,7 @@
                               <tr><td>Thursday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="thuStartTime" id="thuStartTime" class="form-control"  ng-model="clinic.clinicTimingList[4].startTime" placeholder="Enter Start Time" required>
+                             	<input type="text" style="" name="thuStartTime" id="thuStartTime" class="form-control"  ng-model="clinic.clinicTimingList[4].startTime" placeholder="Enter Start Time" required ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.thuStartTime.$dirty && myForm.thuStartTime.$invalid">
@@ -310,7 +317,7 @@
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="thuEndTime" id="thuEndTime" class="form-control" higher-than="clinic.clinicTimingList[4].startTime"  ng-model="clinic.clinicTimingList[4].endTime" placeholder="Enter End Time">
+                             <input type="text" style="" name="thuEndTime" id="thuEndTime" class="form-control" higher-than="clinic.clinicTimingList[4].startTime"  ng-model="clinic.clinicTimingList[4].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0"> 
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.thuEndTime.$dirty && myForm.thuEndTime.$invalid">
@@ -323,7 +330,7 @@
                               <tr><td>Friday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="friStartTime" id="friStartTime" class="form-control"  ng-model="clinic.clinicTimingList[5].startTime" placeholder="Enter Start Time" required>
+                             	<input type="text" style="" name="friStartTime" id="friStartTime" class="form-control"  ng-model="clinic.clinicTimingList[5].startTime" placeholder="Enter Start Time" required ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.friStartTime.$dirty && myForm.friStartTime.$invalid">
@@ -331,7 +338,7 @@
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="friEndTime" id="friEndTime" class="form-control" higher-than="clinic.clinicTimingList[5].startTime"  ng-model="clinic.clinicTimingList[5].endTime" placeholder="Enter End Time">
+                             <input type="text" style="" name="friEndTime" id="friEndTime" class="form-control" higher-than="clinic.clinicTimingList[5].startTime"  ng-model="clinic.clinicTimingList[5].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.friEndTime.$dirty && myForm.friEndTime.$invalid">
@@ -344,7 +351,7 @@
                               <tr><td>Saturday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="satStartTime" id="satStartTime" class="form-control"  ng-model="clinic.clinicTimingList[6].startTime" placeholder="Enter Start Time" required>
+                             	<input type="text" style="" name="satStartTime" id="satStartTime" class="form-control"  ng-model="clinic.clinicTimingList[6].startTime" placeholder="Enter Start Time" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.satStartTime.$dirty && myForm.satStartTime.$invalid">
@@ -352,7 +359,7 @@
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="satEndTime" id="satEndTime" class="form-control" higher-than="clinic.clinicTimingList[6].startTime"  ng-model="clinic.clinicTimingList[6].endTime" placeholder="Enter End Time">
+                             <input type="text" style="" name="satEndTime" id="satEndTime" class="form-control" higher-than="clinic.clinicTimingList[6].startTime"  ng-model="clinic.clinicTimingList[6].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0"> 
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.satEndTime.$dirty && myForm.satEndTime.$invalid">

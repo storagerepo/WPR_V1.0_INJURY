@@ -7,7 +7,7 @@
  *
  * Main module of the application.
  */
-angular
+var sbAdminApp=angular
   .module('sbAdminApp', [
     'oc.lazyLoad',
     'ui.router',
@@ -17,8 +17,9 @@ angular
     'requestModule',
     'flash',
     'uiGmapgoogle-maps'
-  ])
-  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"$httpProvider",function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,$httpProvider) {
+  ]);
+  
+sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"$httpProvider",function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,$httpProvider) {
 
 	 /* uiGmapGoogleMapApiProvider.configure({
 	        key: 'AIzaSyCSrffdwIzj8p4RZgvglbhQEEjgEx7ZUKQ',
@@ -506,3 +507,98 @@ angular
 
      authenticate(); 
   });
+sbAdminApp.directive('validateEmail',function(){
+	 var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/;
+	    return {
+	        require: 'ngModel',
+	        restrict: '',
+	        link: function(scope, elm, attrs, ctrl) {
+	            // only apply the validator if ngModel is present and Angular has added the email validator
+	            if (ctrl && ctrl.$validators.email) {
+
+	                // this will overwrite the default Angular email validator
+	                ctrl.$validators.email = function(modelValue) {
+	                    return ctrl.$isEmpty(modelValue) || EMAIL_REGEXP.test(modelValue);
+	                };
+	            }
+	        }
+	    };
+});
+
+sbAdminApp.directive('validateEmail',function(){
+	 var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/;
+	    return {
+	        require: 'ngModel',
+	        restrict: '',
+	        link: function(scope, elm, attrs, ctrl) {
+	            // only apply the validator if ngModel is present and Angular has added the email validator
+	            if (ctrl && ctrl.$validators.email) {
+
+	                // this will overwrite the default Angular email validator
+	                ctrl.$validators.email = function(modelValue) {
+	                    return ctrl.$isEmpty(modelValue) || EMAIL_REGEXP.test(modelValue);
+	                };
+	            }
+	        }
+	    };
+});
+
+sbAdminApp.directive('validateMobile',function(){
+	 var USA_MOB_EXPR = /^(\([0-9]{3}\)|[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+	 var USA_MOB_EXPR_NO=/^[0-9]{10}$/;
+	    return {
+	        require: 'ngModel',
+	        restrict: '',
+	        link: function(scope, elm, attrs, ngModel) {
+	           	ngModel.$validators.validateMobile = function(modelValue) {
+	                    return USA_MOB_EXPR.test(modelValue)||USA_MOB_EXPR_NO.test(modelValue);
+	                };
+	        }
+	    };
+});
+
+sbAdminApp.directive('validateName',function(){
+	 var NAME_EXPR = /^ *([a-zA-Z]+ ?)+ *$/;
+	// var USA_MOB_EXPR_WITH_BR=/^(\([0-9]{3}\)|[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+	    return {
+	        require: 'ngModel',
+	        restrict: '',
+	        link: function(scope, elm, attrs, ngModel) {
+	           	ngModel.$validators.validateName = function(modelValue) {
+	                    return NAME_EXPR.test(modelValue);//||USA_MOB_EXPR_WITH_BR.test(modelValue);
+	                };
+	        }
+	    };
+});
+
+sbAdminApp.directive('validateNameusa',function(){
+	 var NAME_EXPR = /^ *([a-zA-Z,]+ ?)+ *$/;
+	// var USA_MOB_EXPR_WITH_BR=/^(\([0-9]{3}\)|[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+	    return {
+	        require: 'ngModel',
+	        restrict: '',
+	        link: function(scope, elm, attrs, ngModel) {
+	           	ngModel.$validators.validateNameusa = function(modelValue) {
+	                    return NAME_EXPR.test(modelValue);//||USA_MOB_EXPR_WITH_BR.test(modelValue);
+	                };
+	        }
+	    };
+});
+
+sbAdminApp.directive('validateNumber',function(){
+	 var NUMBER_EXPR = /^[0-9]*$/;
+	// var USA_MOB_EXPR_WITH_BR=/^(\([0-9]{3}\)|[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+	    return {
+	        require: 'ngModel',
+	        restrict: '',
+	        link: function(scope, elm, attrs, ngModel) {
+	           	ngModel.$validators.validateNumber = function(modelValue) {
+	                    return NUMBER_EXPR.test(modelValue);//||USA_MOB_EXPR_WITH_BR.test(modelValue);
+	                };
+	        }
+	    };
+});
+
+
+
+

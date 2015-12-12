@@ -57,14 +57,7 @@
 						<td ng-cloak>{{patients.phoneNumber==""?'N/A':patients.phoneNumber}}</td>
 						<td ng-cloak>{{patients.localReportNumber}}</td>
 						<td ng-cloak>{{patients.callerName}}</td>
-						<td>
- <div ng-switch on="patients.patientStatus">
- <div ng-switch-when="1">Active</div>
-  <div ng-switch-when="2">Appointment Scheduled</div>
- <div ng-switch-when="3">Do not call</div>
-
- 
-  </td>
+						<td ng-cloak>{{patients.patientStatus}}</td>
 						<td>
 						<span>
 						<a href="#/dashboard/Calllogs/{{patients.id}}" ng-cloak class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs"><i
