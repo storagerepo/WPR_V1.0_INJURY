@@ -26,13 +26,13 @@
                           <thead>
 	        <tr>
 						
-                <th ng-mousedown="sort('scheduledDate')">Date</th>
-               <th ng-mousedown="sort('patientName')">Patient Name   <span class="glyphicon sort-icon" ng-show="sortKey=='patientName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-            	 	 <th ng-mousedown="sort('notes')">Notes   <span class="glyphicon sort-icon" ng-show="sortKey=='notes'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+                <th ng-mousedown="sort('scheduledDate')" class="col-md-2">Date</th>
+               <th ng-mousedown="sort('patientName')" class="col-md-3">Patient Name   <span class="glyphicon sort-icon" ng-show="sortKey=='patientName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+            	 	 <th ng-mousedown="sort('notes')" class="col-md-3">Notes   <span class="glyphicon sort-icon" ng-show="sortKey=='notes'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
-             	 <th ng-mousedown="sort('status')">Status   <span class="glyphicon sort-icon" ng-show="sortKey=='status'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
+             	 <th ng-mousedown="sort('status')" class="col-md-2">Status   <span class="glyphicon sort-icon" ng-show="sortKey=='status'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
-              	<th>Action</th>
+              	<th class="col-md-3">Action</th>
                 	 <tr>    
             <th>
            </th>
@@ -132,7 +132,7 @@
 						<td class="col-md-3"><b>Number of Units</b></td>
 						<td class="col-md-3">{{patients.numberOfUnits}}</td>
 						<td class="col-md-3"><b>Units in Error</b></td>
-						<td class="col-md-3">{{patients.unitsInError}}</td>
+						<td class="col-md-3">{{patients.unitInError}}</td>
 						</tr>
 						<tr>
 						<td class="col-md-3"><b>County</b></td>

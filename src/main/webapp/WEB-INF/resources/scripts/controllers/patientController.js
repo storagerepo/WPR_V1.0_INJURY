@@ -76,6 +76,19 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 		
 		requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 		     $scope.patientss= response.data.patientsForms;
+		     $.each($scope.patientss,function(index,value) {
+		    	 switch(value.patientStatus) {
+		    	    case 1:
+		    	        value.patientStatus="Active";
+		    	        break;
+		    	    case 2:
+		    	    	value.patientStatus="Appointment Scheduled";
+		    	        break;
+		    	    default:
+		    	    	value.patientStatus="Do Not Call";
+		    	    	break;
+		    	} 
+		     });
 		     });
 	};
 	 
@@ -364,7 +377,7 @@ $("#file").val("");
 
 adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader,requestHandler,$state) {
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://192.168.1.236:8086/Injury/Staff/uploadCrashReportPDFDocuments.json'
+        url: 'http://192.168.1.60:8080/Injury/Staff/uploadCrashReportPDFDocuments.json'
     });
     
     $scope.close=function(){

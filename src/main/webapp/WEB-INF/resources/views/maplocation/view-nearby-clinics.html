@@ -113,7 +113,7 @@
 			
 				<tr>
 			<td class="col-md-3"><b>Address</b></td>
-						<td class="col-md-3" ng-hide="clinicDetails.address.length==0">{{clinicDetails.address}}</td>
+						<td class="col-md-3 wrap" ng-hide="clinicDetails.address.length==0">{{clinicDetails.address}}</td>
 						<td class="col-md-3" ng-show="clinicDetails.address.length==0">-</td>
 			<td class="col-md-3"><b>Office Number</b></td>
 						<td class="col-md-3" ng-hide="clinicDetails.officeNumber.length==0">{{clinicDetails.officeNumber}}</td>
@@ -149,7 +149,7 @@
 				</tr>
 	<tr>
 <td class="col-md-3"><b>Direction</b></td>
-						<td class="col-md-3" ng-hide="clinicDetails.direction.length==0" colspan="3">{{clinicDetails.directions}}</td>
+						<td class="col-md-3 wrap" ng-hide="clinicDetails.direction.length==0" colspan="3">{{clinicDetails.directions}}</td>
 						<td class="col-md-3" ng-show="clinicDetails.direction.length==0" colspan="3">-</td>
 				
 </tr>
@@ -157,7 +157,7 @@
 
 <tr>
 <td class="col-md-3"><b>Notes</b></td>
-						<td class="col-md-3" ng-hide="clinicDetails.notes.length==0" colspan="3">{{clinicDetails.notes}}</td>
+						<td class="col-md-3 wrap" ng-hide="clinicDetails.notes.length==0" colspan="3">{{clinicDetails.notes}}</td>
 						<td class="col-md-3" ng-show="clinicDetails.notes.length==0" colspan="3">-</td>
 	</tr>
 	<tr>

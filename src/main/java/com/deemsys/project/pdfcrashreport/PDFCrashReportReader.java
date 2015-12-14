@@ -191,8 +191,12 @@ public class PDFCrashReportReader {
             			
             			if(motoristPage.get(index-21).equals("INJURIES"))
             				motoristPageForm.setInjuries(motoristPage.get(index-20));
+            			if(motoristPage.get(index-22).equals("INJURIES"))
+            				motoristPageForm.setInjuries(motoristPage.get(index-21));
             			else if(motoristPage.get(index-20).equals("INJURIES"))
             				motoristPageForm.setInjuries(motoristPage.get(index-19));
+            			else if(motoristPage.get(index-19).equals("INJURIES"))
+            				motoristPageForm.setInjuries(motoristPage.get(index-18));
             			else if(motoristPage.get(index-25).equals("INJURIES"))
             				motoristPageForm.setInjuries(motoristPage.get(index-24));
             			

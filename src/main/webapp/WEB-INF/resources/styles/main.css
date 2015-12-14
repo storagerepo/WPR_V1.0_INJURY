@@ -416,7 +416,6 @@ border-radius:4px !important;
 .wrap{
 	word-break: break-all!important;
 }
-. white-color-bg{
+.white-color-bg{
 	background-color: white !important;
 }
-input[type=text]::-ms-clear { display: none; }

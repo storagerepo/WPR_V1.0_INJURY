@@ -135,8 +135,7 @@
 								<div class="input-group">
 									<input type="text" name="crashDate" id="CrashDate"
 										class="form-control" ng-model="patient.crashDate"
-										placeholder="Enter Crash Date" required
-										onkeypress="return false;"> <span
+										placeholder="Enter Crash Date" required> <span
 										class="input-group-addon white-color-bg"> <span
 										class="glyphicon glyphicon-calendar"></span></span>
 								</div>
@@ -153,8 +152,7 @@
 								<div class="input-group">
 									<input type="text" name="timeOfCrash" id="TimeOfCrash"
 										class="form-control" ng-model="patient.timeOfCrash"
-										placeholder="Enter Time Of Crash" required
-										onkeypress="return false;"> <span
+										placeholder="Enter Time Of Crash" required> <span
 										class="input-group-addon white-color-bg"> <span
 										class="glyphicon glyphicon-time"></span></span>
 								</div>
@@ -200,7 +198,7 @@
 								<div class="input-group">
 									<input type="text" name="dateOfBirth" id="DateOfBirth"
 										class="form-control" ng-model="patient.dateOfBirth"
-										placeholder="Enter Date Of Birth" required  onkeypress="return false;"> <span
+										placeholder="Enter Date Of Birth" required> <span
 										class="input-group-addon white-color-bg"> <span
 										class="glyphicon glyphicon-calendar"></span></span>
 								</div>
@@ -269,7 +267,7 @@
 							<br>
 						</div>
 						<div class="col-md-4">
-							<label>Ems Agency:</label> <input type="text"
+							<label>Ems Agency <i>(Optional)</i>:</label> <input type="text"
 								class="form-control" ng-model="patient.emsAgency"
 								name="emsAgency" placeholder="Enter Ems Agency">
 							<!-- <span class="error-container"
@@ -281,7 +279,7 @@
 							<br>
 						</div>
 						<div class="col-md-4">
-							<label>Medical Facility:</label> <input type="text"
+							<label>Medical Facility <i>(Optional)</i>:</label> <input type="text"
 								class="form-control" ng-model="patient.medicalFacility"
 								name="medicalFacility" placeholder="Enter Medical Facility"><!--  <span class="error-container"
 								ng-show="myForm.medicalFacility.$dirty && myForm.medicalFacility.$invalid">
@@ -359,4 +357,27 @@ $(function(){
 	 pickDate:false,
 	 format:'HH:mm'
 	 });
+ 
+ $('#CrashDate').keydown(function(e){
+	 e.preventDefault();
+	});
+ $('#CrashDate').bind("cut copy paste",function(e) {
+     e.preventDefault();
+ }); 
+ 
+	 $('#DateOfBirth').keydown(function(e){
+		 e.preventDefault();
+		});
+	 $('#DateOfBirth').bind("cut copy paste",function(e) {
+         e.preventDefault();
+     });
+ 
+	 
+	 $('#TimeOfCrash').keydown(function(e){
+		 e.preventDefault();
+		});
+	 $('#TimeOfCrash').bind("cut copy paste",function(e) {
+         e.preventDefault();
+     });
+ 
  </script>
