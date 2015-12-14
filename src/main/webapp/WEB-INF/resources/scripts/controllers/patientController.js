@@ -133,7 +133,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	{
 		$scope.title="Add Patient";
 			
-		
+$("#fileUploadError").hide();
 		
 $("#uploadSuccessAlert").hide();
 $("#file").val(""); 
@@ -364,11 +364,11 @@ $("#file").val("");
 
 adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader,requestHandler,$state) {
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://192.168.1.236:8089/Injury/Staff/uploadCrashReportPDFDocuments.json'
+        url: 'http://192.168.1.236:8086/Injury/Staff/uploadCrashReportPDFDocuments.json'
     });
     
     $scope.close=function(){
-    	$("#error_msg").text("");
+    	$scope.fileUploadError="";
     	uploader.clearQueue();
      };
 
@@ -378,6 +378,18 @@ adminApp.controller('AppController', ['$scope', 'FileUploader', function($scope,
         name: 'customFilter',
         fn: function(item /*{File|FileLikeObject}*/, options) {
             return this.queue.length < 10;
+        }
+    },{
+    	name: 'imageFilter',
+        fn: function(item /*{File|FileLikeObject}*/, options) {
+        	$("#fileUploadError").hide();
+            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+            var boolean='|pdf|'.indexOf(type) !== -1;
+            if(!boolean){
+            	$("#fileUploadError").show();
+            }
+            	
+            return boolean;
         }
     });
 
@@ -478,7 +490,7 @@ adminApp.controller('AddPatientController', function($scope,$state,$http,$locati
 	
 	$scope.savePatient=function()
 	{
-		$scope.patient.gender=$scope.patientGender;
+		//$scope.patient.gender=$scope.patientGender;
 		
 	requestHandler.postRequest("Staff/saveUpdatePatients.json",$scope.patient).then(function(response){
 		  
@@ -514,8 +526,6 @@ adminApp.controller('EditPatientController', function($scope,$http,$state,$locat
 			patientOriginal=angular.copy(response.data.patientsForm);
 			
 			$scope.patient= response.data.patientsForm;
-		
-$scope.patientGender = $scope.patient.gender;
 			      
 		if($scope.patient.clinicId==0)
 		{
@@ -566,10 +576,7 @@ else
 	
 
 $scope.updatePatient=function(){
-	$scope.patient.gender=$scope.patientGender;
-	
-		
-			requestHandler.postRequest('Staff/saveUpdatePatients.json',$scope.patient).then(function(response) {
+	requestHandler.postRequest('Staff/saveUpdatePatients.json',$scope.patient).then(function(response) {
 	            Flash.create("success","You have Successfully updated!");
 				$location.path("dashboard/patient");
 			});

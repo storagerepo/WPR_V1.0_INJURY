@@ -572,7 +572,7 @@ sbAdminApp.directive('validateName',function(){
 });
 
 sbAdminApp.directive('validateNameusa',function(){
-	 var NAME_EXPR = /^ *([a-zA-Z,]+ ?)+ *$/;
+	 var NAME_EXPR = /^ *([a-zA-Z,.]+ ?)+ *$/;
 	// var USA_MOB_EXPR_WITH_BR=/^(\([0-9]{3}\)|[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
 	    return {
 	        require: 'ngModel',
@@ -593,6 +593,20 @@ sbAdminApp.directive('validateNumber',function(){
 	        restrict: '',
 	        link: function(scope, elm, attrs, ngModel) {
 	           	ngModel.$validators.validateNumber = function(modelValue) {
+	                    return NUMBER_EXPR.test(modelValue);//||USA_MOB_EXPR_WITH_BR.test(modelValue);
+	                };
+	        }
+	    };
+});
+
+sbAdminApp.directive('validateCitytownship',function(){
+	 var NUMBER_EXPR = /^ *([a-zA-Z,()]+ ?)+ *$/;
+	// var USA_MOB_EXPR_WITH_BR=/^(\([0-9]{3}\)|[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+	    return {
+	        require: 'ngModel',
+	        restrict: '',
+	        link: function(scope, elm, attrs, ngModel) {
+	           	ngModel.$validators.validateCitytownship = function(modelValue) {
 	                    return NUMBER_EXPR.test(modelValue);//||USA_MOB_EXPR_WITH_BR.test(modelValue);
 	                };
 	        }

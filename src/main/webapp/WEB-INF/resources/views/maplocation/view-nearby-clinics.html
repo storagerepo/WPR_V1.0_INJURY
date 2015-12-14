@@ -64,7 +64,7 @@
         </ui-gmap-marker> -->
         <ui-gmap-markers models="clinicMarkers" coords="'self'" icon="'icon'" click="onClick" events="markersEvents">
             <ui-gmap-windows show="show">
-                <div ng-cloak ng-non-bindable>{{title}}</div>
+                <div ng-non-bindable>{{title}}</div>
             </ui-gmap-windows>
         </ui-gmap-markers>
       </ui-gmap-google-map>
@@ -75,7 +75,7 @@
 <tr><th>Clinic Name</th><th>Address</th><th>City</th><th>Office Number</th><th>Action</th></tr>
 </thead>
 <tbody ng-repeat="clinic in clinicsForms">
-<tr id="text"><td ng-cloak>{{clinic.clinicName}}</td><td ng-cloak>{{clinic.address}}</td><td ng-cloak>{{clinic.city}}</td><td ng-cloak>{{clinic.officeNumber}}</td><td> <a href="" ng-cloak ng-click="viewClinicDetails(clinic.clinicId)" class="btn btn-xs btn-primary hint--top" data-hint="View More Details"><i
+<tr id="text"><td>{{clinic.clinicName}}</td><td>{{clinic.address}}</td><td>{{clinic.city}}</td><td>{{clinic.officeNumber}}</td><td> <a href=""  ng-click="viewClinicDetails(clinic.clinicId)" class="btn btn-xs btn-primary hint--top" data-hint="View More Details"><i
 								class="glyphicon glyphicon-eye-open"></i></a></td></tr>
 </tbody>
 <tbody ng-show="clinicsForms.length==0">

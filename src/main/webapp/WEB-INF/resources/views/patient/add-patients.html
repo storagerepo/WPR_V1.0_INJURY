@@ -119,11 +119,11 @@
 								<label>City Village Township:</label> <input type="text"
 									class="form-control" ng-model="patient.cityVillageTownship"
 									name="cityVillageTownship"
-									placeholder="Enter City Village Township" validate-name
+									placeholder="Enter City Village Township" validate-citytownship
 									required> <span class="error-container"
 									ng-show="myForm.cityVillageTownship.$dirty && myForm.cityVillageTownship.$invalid">
 									<span ng-cloak style="color: red"
-									ng-show="!myForm.cityVillageTownship.$error.required&&myForm.cityVillageTownship.$error.validateName">Enter
+									ng-show="!myForm.cityVillageTownship.$error.required&&myForm.cityVillageTownship.$error.validateCitytownship">Enter
 										Valid City Village Township</span> <span ng-cloak style="color: red"
 									ng-show="myForm.cityVillageTownship.$error.required">Please
 										Enter City Village Township</span>
@@ -220,8 +220,8 @@
 
 						<div class="col-md-4">
 							<label>Gender:</label><br> <input type="radio" name="gender"
-								value="M" ng-model="patientGender" /> Male <input type="radio"
-								name="gender" value="F" ng-model="patientGender" /> Female </span> <br>
+								value="M" ng-model="patient.gender" /> Male <input type="radio"
+								name="gender" value="F" ng-model="patient.gender" /> Female </span> <br>
 							<br>
 						</div>
 						<div class="col-md-4">

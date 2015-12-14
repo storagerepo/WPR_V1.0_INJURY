@@ -2,7 +2,7 @@
 <div class="row">
 
 	<div class="col-lg-12">
-	<a ng-click="addModel()" class="btn-sm btn-primary pull-right margin-top-40 btn-margin-left" ng-show="isAdmin">Upload Crash Report PDF</a>
+	<a href="" ng-click="addModel()" class="btn-sm btn-primary pull-right margin-top-40 btn-margin-left" style="text-decoration: none;" ng-show="isAdmin">Upload Crash Report PDF</a>
 	<a ui-sref="dashboard.add-patient" class="btn-sm btn-primary pull-right margin-top-40 margin-left-5 btn-margin-left" ng-show="isAdmin">Add Patient</a>
 		<h2 class="page-header">Patients</h2>
 	</div>
@@ -189,14 +189,14 @@
     <div class="modal-content"  ng-controller="AppController" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Add Patient</h4>
+        <h4 class="modal-title">Add Patient - Upload Crash Report PDF</h4>
       </div>
       <div class="modal-body" >
 
       <div class="btn btn-primary btn-file" >
        Browse .PDF Crash Report Files to Upload
-                    <input class="btn btn-primary" type="file" nv-file-select="" uploader="uploader" name="file" id="file" multiple/>
-                   </div><br/><br/>
+                    <input class="btn btn-primary" type="file" nv-file-select="image/*" uploader="uploader" name="file" id="file" multiple/>
+                   </div>&nbsp;&nbsp;<span ng-cloak style="color:red" id="fileUploadError">Please Select Only PDF Files</span><br/><br/>
              <div id="uploadSuccessAlert" class="panel well" style="color:green;font-weight:bold;">
             <span id="uploadSuccessStatus"></span>
                         </div>

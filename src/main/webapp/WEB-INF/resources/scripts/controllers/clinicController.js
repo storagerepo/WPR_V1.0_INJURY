@@ -68,17 +68,57 @@ adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash)
     };
 });
 
+
+
 adminApp.controller('SaveClinicController',function($scope,$location,requestHandler,Flash){
 	$scope.options=true;
 	$scope.title="Add Clinic";
 	$scope.clinic={};
-	$scope.clinic.clinicTimingList=[{"day":0,"startTime":"","endTime":"","isWorkingDay":0},{"day":1,"startTime":"","endTime":"","isWorkingDay":0},{"day":2,"startTime":"","endTime":"","isWorkingDay":0},{"day":3,"startTime":"","endTime":"","isWorkingDay":0},{"day":4,"startTime":"","endTime":"","isWorkingDay":0},{"day":5,"startTime":"","endTime":"","isWorkingDay":0},{"day":6,"startTime":"","endTime":"","isWorkingDay":0}];
+	$scope.clinic.clinicTimingList=[{"day":0,"startTime":"09:00","endTime":"16:00","isWorkingDay":0},{"day":1,"startTime":"09:00","endTime":"16:00","isWorkingDay":0},{"day":2,"startTime":"09:00","endTime":"16:00","isWorkingDay":0},{"day":3,"startTime":"09:00","endTime":"16:00","isWorkingDay":0},{"day":4,"startTime":"09:00","endTime":"16:00","isWorkingDay":0},{"day":5,"startTime":"09:00","endTime":"16:00","isWorkingDay":0},{"day":6,"startTime":"09:00","endTime":"16:00","isWorkingDay":0}];
 	$scope.saveClinic=function(){
 		requestHandler.postRequest("Staff/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
 			Flash.create('success', "You have Successfully Added!");
 				  $location.path('dashboard/clinic');
 		});
 	};
+	
+
+	$scope.resetDatePicker=function(workingDayId){
+		switch(workingDayId) {
+	    case 0:
+	    	$scope.clinic.clinicTimingList[0].startTime="09:00";
+	    	$scope.clinic.clinicTimingList[0].endTime="16:00";
+	        break;
+	    case 1:
+	    	$scope.clinic.clinicTimingList[1].startTime="09:00";
+	    	$scope.clinic.clinicTimingList[1].endTime="16:00";
+	        break;
+	    case 2:
+	    	$scope.clinic.clinicTimingList[2].startTime="09:00";
+	    	$scope.clinic.clinicTimingList[2].endTime="16:00";
+	        break;
+	    case 3:
+	    	$scope.clinic.clinicTimingList[3].startTime="09:00";
+	    	$scope.clinic.clinicTimingList[3].endTime="16:00";
+	        break;
+	    case 4:
+	    	$scope.clinic.clinicTimingList[4].startTime="09:00";
+	    	$scope.clinic.clinicTimingList[4].endTime="16:00";
+	        break;
+	    case 5:
+	    	$scope.clinic.clinicTimingList[5].startTime="09:00";
+	    	$scope.clinic.clinicTimingList[5].endTime="16:00";
+	        break;
+	    case 6:
+	    	$scope.clinic.clinicTimingList[6].startTime="09:00";
+	    	$scope.clinic.clinicTimingList[6].endTime="16:00";
+	        break;
+	    default:
+	        break;
+	}
+		
+	};
+
 	
 });
 
@@ -112,11 +152,50 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 			});
 		};
 		
+		
+			$scope.resetDatePicker=function(workingDayId){
+				switch(workingDayId) {
+			    case 0:
+			    	$scope.clinic.clinicTimingList[0].startTime="09:00";
+			    	$scope.clinic.clinicTimingList[0].endTime="16:00";
+			        break;
+			    case 1:
+			    	$scope.clinic.clinicTimingList[1].startTime="09:00";
+			    	$scope.clinic.clinicTimingList[1].endTime="16:00";
+			        break;
+			    case 2:
+			    	$scope.clinic.clinicTimingList[2].startTime="09:00";
+			    	$scope.clinic.clinicTimingList[2].endTime="16:00";
+			        break;
+			    case 3:
+			    	$scope.clinic.clinicTimingList[3].startTime="09:00";
+			    	$scope.clinic.clinicTimingList[3].endTime="16:00";
+			        break;
+			    case 4:
+			    	$scope.clinic.clinicTimingList[4].startTime="09:00";
+			    	$scope.clinic.clinicTimingList[4].endTime="16:00";
+			        break;
+			    case 5:
+			    	$scope.clinic.clinicTimingList[5].startTime="09:00";
+			    	$scope.clinic.clinicTimingList[5].endTime="16:00";
+			        break;
+			    case 6:
+			    	$scope.clinic.clinicTimingList[6].startTime="09:00";
+			    	$scope.clinic.clinicTimingList[6].endTime="16:00";
+			        break;
+			    default:
+			        break;
+			}
+		};
+		
 		$scope.isClean = function() {
 	        return angular.equals(clinicOriginal, $scope.clinic);
 	    };
 	
 });
+
+
+
 
 //Directive For Comapre From and To Time
 adminApp.directive('higherThan',function() {
@@ -128,8 +207,9 @@ otherModelValue: "=higherThan"
 link: function(scope, element, attributes, ngModel) {
 
 ngModel.$validators.higherThan = function(modelValue) {
-	
-return modelValue > scope.otherModelValue;
+
+	return modelValue > scope.otherModelValue;
+
 };
 
 scope.$watch("otherModelValue", function() {

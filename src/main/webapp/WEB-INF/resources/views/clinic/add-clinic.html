@@ -196,7 +196,7 @@
                               <div class="col-md-12">
                               <div class="col-md-6">
                                    <label>Fax Number</label>
-                                    <input type="text" name="faxNumber" class="form-control" ng-model="clinic.faxNumber" placeholder="Enter Fax Number eg: (123)456-7890 or 123-456-7890" validate-mobile maxlength="10">
+                                    <input type="text" name="faxNumber" class="form-control" ng-model="clinic.faxNumber" placeholder="Enter Fax Number eg: (123)456-7890 or 123-456-7890" validate-mobile>
                                      <span class="error-container" ng-show="myForm.faxNumber.$dirty">
                                      <span ng-cloak style="color:red" ng-show="myForm.faxNumber.$error.validateMobile">Enter valid Fax Number</span>
                                      </span>
@@ -224,7 +224,7 @@
                                <tr><td>Sunday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="sunStartTime" id="sunStartTime" class="form-control"  ng-model="clinic.clinicTimingList[0].startTime" placeholder="Enter Start Time11" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0"">
+                             	<input type="text" style="" name="sunStartTime" id="sunStartTime" class="form-control"  ng-model="clinic.clinicTimingList[0].startTime" placeholder="Enter Start Time" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0" onkeypress="return false;">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.sunStartTime.$dirty && myForm.sunStartTime.$invalid">
@@ -232,7 +232,7 @@
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="sunEndTime" id="sunEndTime" class="form-control" higher-than="clinic.clinicTimingList[0].startTime"  ng-model="clinic.clinicTimingList[0].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
+                             <input type="text" style="" name="sunEndTime" id="sunEndTime" class="form-control" higher-than="clinic.clinicTimingList[0].startTime"  ng-model="clinic.clinicTimingList[0].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0" onkeypress="return false;">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                                <span class="error-container" ng-show="myForm.sunEndTime.$dirty && myForm.sunEndTime.$invalid">
@@ -241,12 +241,12 @@
                               
                               </td>
                               <td>
-                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[0].isWorkingDay"  ng-true-value="1" ng-false-value="0">
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[0].isWorkingDay"  ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(0);">
                               </td></tr>
                               <tr><td>Monday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="monStartTime" id="monStartTime" class="form-control"  ng-model="clinic.clinicTimingList[1].startTime" placeholder="Enter Start Time" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
+                             	<input type="text" style="" name="monStartTime" id="monStartTime" class="form-control"  ng-model="clinic.clinicTimingList[1].startTime" placeholder="Enter Start Time" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0" onkeypress="return false;">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.monStartTime.$dirty && myForm.monStartTime.$invalid">
@@ -254,7 +254,7 @@
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="monEndTime" id="monEndTime" class="form-control" higher-than="clinic.clinicTimingList[1].startTime"  ng-model="clinic.clinicTimingList[1].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
+                             <input type="text" style="" name="monEndTime" id="monEndTime" class="form-control" higher-than="clinic.clinicTimingList[1].startTime"  ng-model="clinic.clinicTimingList[1].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0" onkeypress="return false;">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.monEndTime.$dirty && myForm.monEndTime.$invalid">
@@ -262,7 +262,7 @@
                               </span>
                               </td>
                               <td>
-                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[1].isWorkingDay" ng-true-value="1" ng-false-value="0">
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[1].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(1);">
                               </td></tr>
                               <tr><td>Tuesday</td>
                                <td class="col-md-4">
@@ -275,7 +275,7 @@
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="tueEndTime" id="tueEndTime" class="form-control" higher-than="clinic.clinicTimingList[2].startTime"  ng-model="clinic.clinicTimingList[2].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0">
+                             <input type="text" style="" name="tueEndTime" id="tueEndTime" class="form-control" higher-than="clinic.clinicTimingList[2].startTime"  ng-model="clinic.clinicTimingList[2].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0" onkeypress="return false;">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.tueEndTime.$dirty && myForm.tueEndTime.$invalid">
@@ -283,12 +283,12 @@
                               </span>
                               </td>
                               <td>
-                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[2].isWorkingDay" ng-true-value="1" ng-false-value="0">
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[2].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(2);">
                               </td></tr>
                               <tr><td>Wednesday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="wedStartTime" id="wedStartTime" class="form-control"  ng-model="clinic.clinicTimingList[3].startTime" placeholder="Enter Start Time" required ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0">
+                             	<input type="text" style="" name="wedStartTime" id="wedStartTime" class="form-control"  ng-model="clinic.clinicTimingList[3].startTime" placeholder="Enter Start Time" required ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0" onkeypress="return false;">
                              	<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>	
                               </div>
                               <span class="error-container" ng-show="myForm.wedStartTime.$dirty && myForm.wedStartTime.$invalid">
@@ -304,12 +304,12 @@
                               </span>
                               </td>
                               <td>
-                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[3].isWorkingDay" ng-true-value="1" ng-false-value="0">
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[3].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(3);">
                               </td></tr>
                               <tr><td>Thursday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="thuStartTime" id="thuStartTime" class="form-control"  ng-model="clinic.clinicTimingList[4].startTime" placeholder="Enter Start Time" required ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0">
+                             	<input type="text" style="" name="thuStartTime" id="thuStartTime" class="form-control"  ng-model="clinic.clinicTimingList[4].startTime" placeholder="Enter Start Time" required ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0" onkeypress="return false;">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.thuStartTime.$dirty && myForm.thuStartTime.$invalid">
@@ -317,7 +317,7 @@
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="thuEndTime" id="thuEndTime" class="form-control" higher-than="clinic.clinicTimingList[4].startTime"  ng-model="clinic.clinicTimingList[4].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0"> 
+                             <input type="text" style="" name="thuEndTime" id="thuEndTime" class="form-control" higher-than="clinic.clinicTimingList[4].startTime"  ng-model="clinic.clinicTimingList[4].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0" onkeypress="return false;"> 
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.thuEndTime.$dirty && myForm.thuEndTime.$invalid">
@@ -325,12 +325,12 @@
                               </span>
                               </td>
                               <td>
-                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[4].isWorkingDay" ng-true-value="1" ng-false-value="0">
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[4].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(4);">
                               </td></tr>
                               <tr><td>Friday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="friStartTime" id="friStartTime" class="form-control"  ng-model="clinic.clinicTimingList[5].startTime" placeholder="Enter Start Time" required ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
+                             	<input type="text" style="" name="friStartTime" id="friStartTime" class="form-control"  ng-model="clinic.clinicTimingList[5].startTime" placeholder="Enter Start Time" required ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0" onkeypress="return false;">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.friStartTime.$dirty && myForm.friStartTime.$invalid">
@@ -338,7 +338,7 @@
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="friEndTime" id="friEndTime" class="form-control" higher-than="clinic.clinicTimingList[5].startTime"  ng-model="clinic.clinicTimingList[5].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
+                             <input type="text" style="" name="friEndTime" id="friEndTime" class="form-control" higher-than="clinic.clinicTimingList[5].startTime"  ng-model="clinic.clinicTimingList[5].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0" onkeypress="return false;">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.friEndTime.$dirty && myForm.friEndTime.$invalid">
@@ -346,12 +346,12 @@
                               </span>
                               </td>
                               <td>
-                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[5].isWorkingDay" ng-true-value="1" ng-false-value="0">
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[5].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(5);">
                               </td></tr>
                               <tr><td>Saturday</td>
                                <td class="col-md-4">
                                <div class="input-group">
-                             	<input type="text" style="" name="satStartTime" id="satStartTime" class="form-control"  ng-model="clinic.clinicTimingList[6].startTime" placeholder="Enter Start Time" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0">
+                             	<input type="text" style="" name="satStartTime" id="satStartTime" class="form-control"  ng-model="clinic.clinicTimingList[6].startTime" placeholder="Enter Start Time" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0" onkeypress="return false;">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.satStartTime.$dirty && myForm.satStartTime.$invalid">
@@ -359,7 +359,7 @@
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="satEndTime" id="satEndTime" class="form-control" higher-than="clinic.clinicTimingList[6].startTime"  ng-model="clinic.clinicTimingList[6].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0"> 
+                             <input type="text" style="" name="satEndTime" id="satEndTime" class="form-control" higher-than="clinic.clinicTimingList[6].startTime"  ng-model="clinic.clinicTimingList[6].endTime" placeholder="Enter End Time" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0" onkeypress="return false;"> 
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.satEndTime.$dirty && myForm.satEndTime.$invalid">
@@ -367,7 +367,7 @@
                               </span>
                               </td>
                               <td>
-                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[6].isWorkingDay" ng-true-value="1" ng-false-value="0">
+                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[6].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(6);">
                               </td></tr>
                                </tbody>
                                </table> 
@@ -390,7 +390,7 @@
                 </div>
             </div>
             <div class="text-right" style="margin-right:30px;">
-                <a class="btn btn-success" ng-show='options' ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-click="saveClinic()">Save</a>
+                <a class="btn btn-success" ng-show='options' ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-click="saveClinic()">Save{{myForm.$invalid}}</a>
             	 <a class="btn btn-success" ng-show='!options' ng-class="{'button-disable':myForm.$invalid || isClean()}" ng-disabled='isClean() || myForm.$invalid' ng-click="updateClinic()">Update</a>
               <a ui-sref="dashboard.clinic"  class="btn btn-danger" >Cancel</a><br/><br/>
            </div>
@@ -488,4 +488,5 @@ pickDate:false,
 format:'HH:mm'
 
 });
+
 </script> 
