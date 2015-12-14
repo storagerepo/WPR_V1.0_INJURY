@@ -40,7 +40,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 				    	    	value.patientStatus="Appointment Scheduled";
 				    	        break;
 				    	    default:
-				    	    	value.patientStatus="Do Not Call";
+				    	    	value.patientStatus="Do-Not-Call";
 				    	    	break;
 				    	} 
 				     });
@@ -63,7 +63,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 				    	    	value.patientStatus="Appointment Scheduled";
 				    	        break;
 				    	    default:
-				    	    	value.patientStatus="Do Not Call";
+				    	    	value.patientStatus="Do-Not-Call";
 				    	    	break;
 				    	} 
 				     });
@@ -85,7 +85,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 		    	    	value.patientStatus="Appointment Scheduled";
 		    	        break;
 		    	    default:
-		    	    	value.patientStatus="Do Not Call";
+		    	    	value.patientStatus="Do-Not-Call";
 		    	    	break;
 		    	} 
 		     });
@@ -95,6 +95,19 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	$scope.staffGetPatientList=function(){
 		requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
 			$scope.patientss= response.data.patientsForm;
+			$.each($scope.patientss,function(index,value) {
+		    	 switch(value.patientStatus) {
+		    	    case 1:
+		    	        value.patientStatus="Active";
+		    	        break;
+		    	    case 2:
+		    	    	value.patientStatus="Appointment Scheduled";
+		    	        break;
+		    	    default:
+		    	    	value.patientStatus="Do-Not-Call";
+		    	    	break;
+		    	} 
+		     });
 		     });
 	};
 	
@@ -118,7 +131,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 		    	    	value.patientStatus="Appointment Scheduled";
 		    	        break;
 		    	    default:
-		    	    	value.patientStatus="Do Not Call";
+		    	    	value.patientStatus="Do-Not-Call";
 		    	    	break;
 		    	} 
 		     });
@@ -300,7 +313,7 @@ $("#file").val("");
 					    	    	value.patientStatus="Appointment Scheduled";
 					    	        break;
 					    	    default:
-					    	    	value.patientStatus="Do Not Call";
+					    	    	value.patientStatus="Do-Not-Call";
 					    	    	break;
 					    	} 
 					     });
@@ -319,7 +332,7 @@ $("#file").val("");
 		    	    	value.patientStatus="Appointment Scheduled";
 		    	        break;
 		    	    default:
-		    	    	value.patientStatus="Do Not Call";
+		    	    	value.patientStatus="Do-Not-Call";
 		    	    	break;
 		    	} 
 		     });
@@ -344,7 +357,7 @@ $("#file").val("");
 				    	    	value.patientStatus="Appointment Scheduled";
 				    	        break;
 				    	    default:
-				    	    	value.patientStatus="Do Not Call";
+				    	    	value.patientStatus="Do-Not-Call";
 				    	    	break;
 				    	} 
 				     });
@@ -364,7 +377,7 @@ $("#file").val("");
 				    	    	value.patientStatus="Appointment Scheduled";
 				    	        break;
 				    	    default:
-				    	    	value.patientStatus="Do Not Call";
+				    	    	value.patientStatus="Do-Not-Call";
 				    	    	break;
 				    	} 
 				     });

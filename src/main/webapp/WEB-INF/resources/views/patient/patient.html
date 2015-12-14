@@ -22,7 +22,7 @@
   				
                                 <option value="1">Active</option>
                                 <option value="2">Appointment Scheduled</option>
-<option value="3">Do not call</option>     
+<option value="3">Do-Not-Call</option>     
 <option value="4">All</option>                                                    
 </select></div><br/><br/>
 			<table class="table table-hover">
@@ -64,7 +64,7 @@
 								class="glyphicon glyphicon-eye-open"></i>
 						</a>
 						
-						<span ng-hide="{{patients.patientStatus}}==3">
+						<span ng-hide="{{patients.patientStatus}}==Do-Not-Call">
 						 <a href="#/dashboard/EditPatient/{{patients.id}}"  ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Patient" ng-show="isAdmin"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
@@ -118,19 +118,27 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Assign Caller - Patient - {{assignPatientId}}</h4>
         </div>
+        <form name="assignForm">
         <div class="modal-body">
              
               <label>Select the Caller</label>
                           <div class="col-md-12 input-group">
-                           <select class="form-control" ng-model="patients.callerId" name="callerId" id="callerId" ng-change="changeCaller()" ng-options="staff.id as staff.firstName for staff in staffs">
+                           <select class="form-control" ng-model="patients.callerId" name="callerId" id="callerId" ng-change="changeCaller()" ng-options="staff.id as staff.firstName for staff in staffs" required>
   							  <option value="">-- Select Caller --</option>
-						  </select>   
+						  </select> 
+						  <span
+									class="error-container"
+									ng-show="assignForm.callerId.$dirty && assignForm.callerId.$invalid">
+									<span ng-cloak style="color: red"
+									ng-show="assignForm.callerId.$error.required">Please Select Caller</span>
+								</span>  
                            </div>
         </div>
         <div class="modal-footer">
          <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
-             <a type="submit" class="btn btn-success"  ng-disabled='myForm.$invalid' ng-click="updateCaller()">Assign</a>
+             <a type="submit" class="btn btn-success" ng-disabled='assignForm.$invalid' ng-class="{'button-disable':assignForm.$invalid}"  ng-click="updateCaller()">Assign</a>
         </div>
+        </form>
       </div>
       
     </div>
@@ -171,7 +179,7 @@
         </div>
         <div class="modal-footer">
          <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
-             <a type="submit" class="btn btn-success"  ng-disabled='myForms.$invalid' ng-click="updateDoctor()">Assign</a>
+             <a type="submit" class="btn btn-success"  ng-disabled='myForms.$invalid' ng-class="{'button-disable':myForms.$invalid}" ng-click="updateDoctor()">Assign</a>
         </div>
       </div>
       
