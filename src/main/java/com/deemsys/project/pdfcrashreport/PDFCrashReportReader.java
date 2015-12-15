@@ -199,16 +199,22 @@ public class PDFCrashReportReader {
             				motoristPageForm.setInjuries(motoristPage.get(index-18));
             			else if(motoristPage.get(index-25).equals("INJURIES"))
             				motoristPageForm.setInjuries(motoristPage.get(index-24));
+            			else if(motoristPage.get(index-26).equals("INJURIES"))
+            				motoristPageForm.setInjuries(motoristPage.get(index-25));
             			
             			if(motoristPage.get(index-17).equals("EMS AGENCY"))
             				motoristPageForm.setEmsAgency(motoristPage.get(index-16));
             			else if(motoristPage.get(index-21).equals("EMS AGENCY"))
             				motoristPageForm.setEmsAgency(motoristPage.get(index-20));
+            			else if(motoristPage.get(index-22).equals("EMS AGENCY"))
+            				motoristPageForm.setEmsAgency(motoristPage.get(index-21));
             			
             			if(motoristPage.get(index-15).equals("MEDICAL FACILITY  INJURED TAKEN TO"))
             				motoristPageForm.setMedicalFacility(motoristPage.get(index-14));
             			else if(motoristPage.get(index-19).equals("MEDICAL FACILITY  INJURED TAKEN TO"))
             				motoristPageForm.setMedicalFacility(motoristPage.get(index-18));
+            			else if(motoristPage.get(index-20).equals("MEDICAL FACILITY  INJURED TAKEN TO"))
+            				motoristPageForm.setMedicalFacility(motoristPage.get(index-19));
             			
             			reportMotoristPageForms.add(motoristPageForm);
             			}
@@ -257,7 +263,17 @@ public class PDFCrashReportReader {
                         				motoristPageForm.setMedicalFacility(motoristPage.get(index-14));
                 					}
                 				}                    				
+                			}else if(motoristPage.get(index-26).equals("INJURIES")){
+                				motoristPageForm.setInjuries(motoristPage.get(index-21));
+                				if(motoristPage.get(index-17).equals("EMS AGENCY")){
+                					motoristPageForm.setEmsAgency(motoristPage.get(index-16));
+                					if(motoristPage.get(index-15).equals("MEDICAL FACILITY  INJURED TAKEN TO")){
+                        				motoristPageForm.setMedicalFacility(motoristPage.get(index-14));
+                					}
+                				}                    				
                 			}
+                			
+                			
                 			reportMotoristPageForms.add(motoristPageForm);
                 			}
                 		
