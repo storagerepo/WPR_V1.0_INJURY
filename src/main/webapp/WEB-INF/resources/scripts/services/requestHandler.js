@@ -4,6 +4,11 @@ myApp.factory("requestHandler",['$http',function($http){
     
     var requestObj={};
     var appURL="http://192.168.1.236:8086";
+    
+    
+    requestObj.getURL=function(){
+    	return appURL;
+    };
 
     requestObj.getRequest=function(requestURL,params){
 
