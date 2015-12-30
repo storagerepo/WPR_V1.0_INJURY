@@ -1,13 +1,25 @@
 <div class="row">
     <div class="col-lg-12">
-        <a ui-sref="dashboard.add-clinic" class="btn-sm btn-primary pull-right margin-top-40" ng-show="isAdmin">Add Clinic</a>
+        <a ui-sref="dashboard.add-clinic" class="btn-sm btn-primary pull-right margin-top-40" ng-show="isAdmin">Add Clinic</a>        
+   		 <div flash-message="2000" class="col-md-5 pull-right"></div>
         <h2 class="page-header">Clinics</h2>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
+<div class="col-md-4 pull-right">
+	<select ng-model="pagesize"
+		class="form-control" ng-model="Status" name="patientStatus"
+		id="patientStatus" required>
+		<option value="10" ng-selected>Show 10 Per Page</option>
+		<option value="25">Show 25 Per Page</option>
+		<option value="50">Show 50 Per Page</option>
+		<option value="">Show All</option>
+	</select> 
+</div>
+
 <div class="row">
-<div flash-message="2000" class="col-md-5 pull-right"></div>
+
     <div class="col-lg-12">           
     
             <!-- /.panel-heading -->

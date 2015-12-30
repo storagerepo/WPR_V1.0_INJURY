@@ -101,7 +101,7 @@
 				</tbody>
 				<tbody ng-show="!callLogs.length">
 					<tr>
-						<td colspan="5" align="center">No Record Found</td>
+						<td colspan="5" align="center">No Records Found!</td>
 					</tr>
 				</tbody>
 			</table>
@@ -133,7 +133,7 @@
 					<div class="input-group">
 						<input type="text" name="timeStamp" id="timeStamp"
 							class="form-control" ng-model="calllogs.timeStamp"
-							placeholder="Enter Time and Date" required>
+							placeholder="Date and Time" required>
 						<span class="input-group-addon white-color-bg"> <span
 							class="glyphicon glyphicon-calendar"></span></span>
 					</div>
@@ -141,7 +141,7 @@
 						ng-show="myForm.timeStamp.$dirty && myForm.timeStamp.$invalid && !myForm.notes.$prestine">
 						<span style="color: red"
 						ng-show="myForm.timeStamp.$error.required" id="dateTimeError">Please
-							Enter the Date and Time</span>
+							Enter Date and Time</span>
 					</span> <br /> <input type="hidden" id="patientId" class="form-control"
 						ng-model="calllogs.patientId"> <input type="hidden"
 						id="appointmentId" class="form-control"
@@ -156,15 +156,15 @@
 					</select> <span class="error-container"
 						ng-show="myForm.response.$dirty && myForm.response.$invalid && !myForm.notes.$prestine">
 						<span style="color: red" ng-show="myForm.response.$error.required">Please
-							Select the Response</span>
-					</span> <br> <label>Note</label>
+							Select Response</span>
+					</span> <br> <label>Notes</label>
 					<textarea name="notes" id="notes" class="form-control height-100"
-						ng-model="calllogs.notes" placeholder="Enter the notes" required
+						ng-model="calllogs.notes" placeholder="Notes" required
 						maxlength="400"></textarea>
 					<span class="error-container"
 						ng-show="myForm.notes.$dirty && myForm.notes.$invalid && !myForm.notes.$prestine">
 						<span style="color: red" ng-show="myForm.notes.$error.required"
-						id="calllogsNotesError">Please Enter the Notes</span>
+						id="calllogsNotesError">Please Enter Notes</span>
 					</span> <br />
 
 				</div>
@@ -176,7 +176,7 @@
 					<button type="button" class="btn btn-success" data-dismiss="modal"
 						ng-class="{'button-disable':myForm.$invalid || isClean()}"
 						ng-disabled='isClean() || myForm.$invalid' ng-show='!options'
-						ng-click="update()">update</button>
+						ng-click="update()">Update</button>
 
 				</div>
 			</div>
@@ -205,7 +205,7 @@
 						ng-show="myForms.clinicId.$dirty && myForms.clinicId.$invalid">
 						<span style="color: red"
 						ng-show="myForms.clinicId.$error.required">Please Select
-							the Clinic</span>
+							Clinic</span>
 					</span> <br> <label>Select Doctor:</label> <select
 						class="form-control" ng-model="Appointments.doctorId"
 						name="doctorId" id="doctorId"
@@ -216,7 +216,7 @@
 						ng-show="myForms.doctorId.$dirty && myForms.doctorId.$invalid">
 						<span style="color: red"
 						ng-show="myForms.doctorId.$error.required">Please Select
-							the Doctor</span>
+							 Doctor</span>
 					</span> <br> <label>Scheduled Date</label>
 					<div class="input-group">
 						<input type="text" name="scheduledDate" id="scheduledDate"
@@ -229,7 +229,7 @@
 						ng-show="myForms.scheduledDate.$dirty && myForms.scheduledDate.$invalid">
 						<span style="color: red"
 						ng-show="myForms.scheduledDate.$error.required">Please
-							Enter the Date</span>
+							Enter Date</span>
 					</span> <br /> <input type="hidden" name="patientId" class="form-control"
 						ng-model="Appointments.patientId"> <input type="hidden"
 						name="callLogId" class="form-control"
@@ -240,7 +240,7 @@
 					<span class="error-container"
 						ng-show="myForms.notes.$dirty && myForms.notes.$invalid"> <span
 						style="color: red" ng-show="myForms.notes.$error.required">Please
-							Enter the Notes</span>
+							Enter Notes</span>
 					</span> <br />
 				</div>
 
@@ -274,12 +274,17 @@
 							<th>Notes</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody ng-show="!appointments.notavailable">
 						<tr>
 							<td>{{appointments.scheduledDate}}</td>
 							<td class="col-md-3 wrap">{{appointments.notes}}</td>
 						</tr>
 					</tbody>
+					<tbody ng-show="appointments.notavailable">
+					<tr>
+						<td colspan="5" align="center">No Records Found!</td>
+					</tr>
+				</tbody>
 
 				</table>
 				<div class="modal-footer">

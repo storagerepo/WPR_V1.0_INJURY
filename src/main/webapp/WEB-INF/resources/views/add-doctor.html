@@ -36,9 +36,9 @@
                                  <div class="col-md-6">
                        
                                           <label>Doctor Name</label>
-                                    <input type="text" name="doctorName" class="form-control" ng-model="doctor.doctorName" placeholder="Enter Doctor Name" validate-name required>
+                                    <input type="text" name="doctorName" class="form-control" ng-model="doctor.doctorName" placeholder="Doctor Name" validate-name required>
                                     <span class="error-container" ng-show="myForm.doctorName.$dirty && myForm.doctorName.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.doctorName.$error.required">Please Enter the Doctor Name</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.doctorName.$error.required">Please Enter Doctor Name</span>
                                 <span ng-cloak style="color:red" ng-show="!myForm.doctorName.$error.required&&myForm.doctorName.$error.validateName">Enter Valid Name</span>
                               </span><br/> 
                             </div>
@@ -46,34 +46,34 @@
                            <div class="col-md-12">
                            <div class="col-md-6">
                                <label>Email ID</label>
-                                    <input type="email" name="emailId" class="form-control" ng-model="doctor.emailId" placeholder="Enter Email ID" validate-email required>
+                                    <input type="email" name="emailId" class="form-control" ng-model="doctor.emailId" placeholder="Email ID" validate-email required>
                                     <span class="error-container" ng-show="myForm.emailId.$dirty && myForm.emailId.$invalid">
-                             <span ng-cloak style="color:red" ng-show="myForm.emailId.$error.required">Please Enter the Email ID</span> 
+                             <span ng-cloak style="color:red" ng-show="myForm.emailId.$error.required">Please Enter Email ID</span> 
                             <span ng-cloak style="color:red" ng-show="myForm.emailId.$error.email">Enter a valid E-mail ID</span>
                            
                               </span><br/>
                               </div>
                             <div class="col-md-6">
                       			<label>Contact Number</label>
-                                    <input type="text" name="contactNumber" class="form-control" ng-model="doctor.contactNumber" placeholder="Enter Contact Number eg: (123)456-7890 or 123-456-7890" validate-mobile required>
+                                    <input type="text" name="contactNumber" class="form-control" ng-model="doctor.contactNumber" placeholder="Contact Number eg: (123)456-7890 or 123-456-7890" validate-mobile required>
                                     <span class="error-container" ng-show="myForm.contactNumber.$dirty && myForm.contactNumber.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.contactNumber.$error.required">Please Enter the Contact Number</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.contactNumber.$error.required">Please Enter Contact Number</span>
                                 <span ng-cloak style="color:red" ng-show="!myForm.contactNumber.$error.required&&myForm.contactNumber.$error.validateMobile">Enter valid Contact Number</span>
                               </span><br/> </div>
                                  </div>
                                  <div class="col-md-12">  
                                  <div class="col-md-6">
                                     <label>Specialist In</label>
-                          <input type="text" name="specialistIn" class="form-control" ng-model="doctor.specialistIn" placeholder="Enter Specialist In" required>
+                          <input type="text" name="specialistIn" class="form-control" ng-model="doctor.specialistIn" placeholder="Specialist In" required>
                                     <span class="error-container" ng-show="myForm.specialistIn.$dirty && myForm.specialistIn.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.specialistIn.$error.required">Please Enter the SpecialistIn</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.specialistIn.$error.required">Please Enter Specialist In</span>
                               </span>  <br>
                            </div> 
                             </div>
                                  <div class="col-md-12">
                             <div class="col-md-12">
                                     <label>Notes</label>
-                                     <textarea class="form-control height-100" ng-model="doctor.notes" name="notes" placeholder="Enter Notes"> </textarea>
+                                     <textarea class="form-control height-100" ng-model="doctor.notes" name="notes" placeholder="Notes"> </textarea>
                                </div>
                              </div>
                </div>

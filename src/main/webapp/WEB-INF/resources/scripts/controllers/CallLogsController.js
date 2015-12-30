@@ -54,7 +54,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	
    $scope.addModel=function()
 	{
-		$scope.title="Add CallLogs";
+		$scope.title="Add Call Log";
 		$scope.options=true;
 		$scope.myForm.$setPristine();
 		$scope.calllogs={};
@@ -168,7 +168,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	{
 		$scope.calllogs={};
 		$scope.calllogs.appointmentId = appointmentId;
-		$scope.title="Edit CallLogs";
+		$scope.title="Edit Call Log";
 		$scope.options=false;
 		var callLogsOriginal="";
 		
@@ -308,12 +308,14 @@ else
 		{
 		if(id==null)
 			{
-			 $scope.appointments=null;
+			 $scope.appointments={};
+			 $scope.appointments.notavailable=true;
 			}
 		else{
 		requestHandler.getRequest("Staff/getAppointments.json?id="+id,"").then( function(response) {
-				
+			
 			    $scope.appointments=response.data.appointmentsForm;
+			    $scope.appointments.notavailable=false;
 		  });
 		}	
 			 $("#viewAppointmentsModal").modal("show");
