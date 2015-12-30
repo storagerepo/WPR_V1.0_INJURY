@@ -33,6 +33,7 @@ public class Clinics implements java.io.Serializable {
 	private String officeNumber;
 	private String faxNumber;
 	private String directions;
+	private String serviceArea;
 	private String notes;
 	private Set<Doctors> doctorses = new HashSet<Doctors>(0);
 	private Set<ClinicTimings> clinicTimingses = new HashSet<ClinicTimings>(0);
@@ -43,7 +44,7 @@ public class Clinics implements java.io.Serializable {
 	public Clinics(String clinicName, String address, String city,
 			String state, String county, String country, String zipcode,
 			Double latitude, Double longitude,String officeNumber, String faxNumber, String directions,
-			String notes, Set<Doctors> doctorses,
+			String serviceArea, String notes, Set<Doctors> doctorses,
 			Set<ClinicTimings> clinicTimingses) {
 		this.clinicName = clinicName;
 		this.address = address;
@@ -57,6 +58,7 @@ public class Clinics implements java.io.Serializable {
 		this.officeNumber = officeNumber;
 		this.faxNumber = faxNumber;
 		this.directions = directions;
+		this.serviceArea = serviceArea;
 		this.notes = notes;
 		this.doctorses = doctorses;
 		this.clinicTimingses = clinicTimingses;
@@ -181,6 +183,15 @@ public class Clinics implements java.io.Serializable {
 		this.directions = directions;
 	}
 
+	@Column(name = "service_area", length = 65535)
+	public String getServiceArea() {
+		return this.serviceArea;
+	}
+
+	public void setServiceArea(String serviceArea) {
+		this.serviceArea = serviceArea;
+	}
+	
 	@Column(name = "notes", length = 65535)
 	public String getNotes() {
 		return this.notes;

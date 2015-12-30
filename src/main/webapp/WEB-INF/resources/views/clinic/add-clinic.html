@@ -27,14 +27,14 @@
                                     <label>Clinic Name</label>
                                     <input type="text" name="clinicName" class="form-control" ng-model="clinic.clinicName" placeholder="Clinic Name" required>
                                     <span class="error-container" ng-show="myForm.clinicName.$dirty && myForm.clinicName.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter the ClinicName</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter ClinicName</span>
                               </span><br>
                                  </div>    
                                  <div class="col-md-6">
                                 <label>Address</label>
                                     <input type="text" name="address" class="form-control" ng-model="clinic.address" placeholder="Address" required>
                                     <span class="error-container" ng-show="myForm.address.$dirty && myForm.address.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.address.$error.required">Please Enter the Address</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.address.$error.required">Please Enter Address</span>
                               </span><br/>
                                </div>
                            </div>
@@ -43,7 +43,7 @@
                                <label>City</label>
                                     <input type="text" name="city" class="form-control" ng-model="clinic.city" placeholder="City" validate-name required>
                                     <span class="error-container" ng-show="myForm.city.$dirty && myForm.city.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.city.$error.required">Please Enter the City</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.city.$error.required">Please Enter City</span>
                                 <span ng-cloak style="color:red" ng-show="!myForm.city.$error.required&&myForm.city.$error.validateName">Enter Valid City Name</span>
                               </span>
                                     <br/>
@@ -55,7 +55,7 @@
   							  <option value="United States">United States</option>
                               	</select>
                              <span class="error-container" ng-show="myForm.country.$dirty && myForm.country.$invalid">
-                              				<span ng-cloak style="color:red" ng-show="myForm.country.$error.required">Please Select the Country</span>
+                              				<span ng-cloak style="color:red" ng-show="myForm.country.$error.required">Please Select Country</span>
                                      </span>
                            <br>
                       		</div>
@@ -69,7 +69,7 @@
                               </select> 
                              <span class="error-container" ng-show="myForm.state.$dirty && myForm.state.$invalid">
                               
-                                       <span ng-cloak style="color:red" ng-show="myForm.state.$error.required">Please Select the State</span>
+                                       <span ng-cloak style="color:red" ng-show="myForm.state.$error.required">Please Select State</span>
                               </span>  
                            <br> 
                            </div> 
@@ -168,7 +168,7 @@
                                 </select>
                             <span class="error-container" ng-show="myForm.county.$dirty && myForm.county.$invalid">
                               
-                                       <span ng-cloak style="color:red" ng-show="myForm.county.$error.required">Please Select the County</span>
+                                       <span ng-cloak style="color:red" ng-show="myForm.county.$error.required">Please Select County</span>
                                        </span>
                                      <br>  
                            </div>
@@ -178,16 +178,16 @@
                              <label>Zip</label>
                                     <input type="text" name="zip" class="form-control" ng-model="clinic.zipcode" placeholder="Zip" validate-number required maxlength="5">
                                     <span class="error-container" ng-show="myForm.zip.$dirty && myForm.zip.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.zip.$error.required">Please Enter the Zip</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.zip.$error.required">Please Enter Zip</span>
                                 <span ng-cloak style="color:red" ng-show="!myForm.zip.$error.required&&myForm.zip.$error.validateNumber">Enter Valid Zipcode</span>
                               </span>
                                     <br/>
                               </div>
                                 <div class="col-md-6">
                                  <label>Office Number</label>
-                                    <input type="text" name="officeNumber" class="form-control" ng-model="clinic.officeNumber" placeholder="Office Number eg: (123)456-7890 or 123-456-7890" validate-mobile required>
+                                    <input type="text" name="officeNumber" class="form-control" ng-model="clinic.officeNumber" placeholder="Office Number eg: (123) 456-7890 or 123-456-7890" validate-mobile required>
                                     <span class="error-container" ng-show="myForm.officeNumber.$dirty && myForm.officeNumber.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.officeNumber.$error.required">Please Enter the Office Number</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.officeNumber.$error.required">Please Enter Office Number</span>
                                 <span ng-cloak style="color:red" ng-show="!myForm.officeNumber.$error.required&&myForm.officeNumber.$error.validateMobile">Enter valid Office Number</span>
                               </span>
                                     <br/>
@@ -196,20 +196,24 @@
                               <div class="col-md-12">
                               <div class="col-md-6">
                                    <label>Fax Number</label>
-                                    <input type="text" name="faxNumber" class="form-control" ng-model="clinic.faxNumber" placeholder="Fax Number eg: (123)456-7890 or 123-456-7890" validate-mobile>
-                                     <span class="error-container" ng-show="myForm.faxNumber.$dirty">
-                                     <span ng-cloak style="color:red" ng-show="myForm.faxNumber.$error.validateMobile">Enter valid Fax Number</span>
-                                     </span>
+                                    <input type="text" name="faxNumber" class="form-control" ng-model="clinic.faxNumber" placeholder="Fax Number eg: (123) 456-7890 or 123-456-7890">
+                                   
                                      
                                     <br/>
                                </div>
-                                   <div class="col-md-6">
-                                   
-                                    </div>
+                                <div class="col-md-6">
+                                 <label>Service Area</label>
+                                    <input type="text" name="serviceArea" class="form-control" ng-model="clinic.serviceArea" placeholder="Service Area" required>
+                                    <span class="error-container" ng-show="myForm.serviceArea.$dirty && myForm.serviceArea.$invalid">
+                                <span ng-cloak style="color:red" ng-show="myForm.serviceArea.$error.required">Please Enter Service Area</span>
+         
+                              </span>
+                                    <br/>
+                                </div>
                               </div>
                               <div class="col-md-12">
                               <div class="col-md-12">
-                              <label>Working Days and Timings</label>
+                              <label>Office Hours</label>
                               </div>
                               </div>
                               <div class="col-md-12">
@@ -228,7 +232,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.sunStartTime.$dirty && myForm.sunStartTime.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.sunStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.sunStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -250,7 +254,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.monStartTime.$dirty && myForm.monStartTime.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.monStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.monStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -271,7 +275,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.tueStartTime.$dirty && myForm.tueStartTime.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.tueStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.tueStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -292,7 +296,7 @@
                              	<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>	
                               </div>
                               <span class="error-container" ng-show="myForm.wedStartTime.$dirty && myForm.wedStartTime.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.wedStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.wedStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -313,7 +317,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.thuStartTime.$dirty && myForm.thuStartTime.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.thuStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.thuStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -334,7 +338,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.friStartTime.$dirty && myForm.friStartTime.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.friStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.friStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">
@@ -355,7 +359,7 @@
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.satStartTime.$dirty && myForm.satStartTime.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.satStartTime.$error.required">Please Enter the Start Time</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.satStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
                               <td class="col-md-4"> <div class="input-group">

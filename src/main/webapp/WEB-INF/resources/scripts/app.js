@@ -544,7 +544,7 @@ sbAdminApp.directive('validateEmail',function(){
 });
 
 sbAdminApp.directive('validateMobile',function(){
-	 var USA_MOB_EXPR = /^(\([0-9]{3}\)|[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+	 var USA_MOB_EXPR = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
 	 var USA_MOB_EXPR_NO=/^[0-9]{10}$/;
 	    return {
 	        require: 'ngModel',

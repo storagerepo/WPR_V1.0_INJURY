@@ -46,14 +46,14 @@
             <th>  <input type="text"  class="form-control"  ng-model="search.city" placeholder="Search by City">
            </th>
            <th>  <input type="text"  class="form-control"  ng-model="search.county" placeholder="Search by County"></th>
-             
             
+           
            <th></th>
            </tr>
             </thead>
             
           
-                         <tbody dir-paginate="clinic in clinics | filter:search | orderBy:sortKey:reverse|itemsPerPage:8 " >
+                         <tbody dir-paginate="clinic in clinics | filter:search | orderBy:sortKey:reverse|itemsPerPage:20 " >
 	<tr>
 	<td><a href="" ng-cloak ng-click="viewClinicDetails(clinic.clinicId)">{{clinic.clinicName}}</a></td>
 <td ng-cloak>{{clinic.address}}</td>
@@ -197,9 +197,15 @@
 				</tr>
 				<tr>
 				<td class="col-md-3"><b>Country</b></td>
-						<td class="col-md-3" ng-hide="clinicDetails.country.length==0" colspan="3">{{clinicDetails.country}}</td>
+						<td class="col-md-3" ng-hide="clinicDetails.country.length==0">{{clinicDetails.country}}</td>
 						<td class="col-md-3" ng-show="clinicDetails.country.length==0">-</td>
+				
+				<td class="col-md-3"><b>Service Area</b></td>
+					
+						<td class="col-md-3" ng-hide="clinicDetails.serviceArea.length==0">{{clinicDetails.serviceArea}}</td>
+						<td class="col-md-3" ng-show="clinicDetails.serviceArea.length==0">-</td>
 				</tr>
+				
 	<tr>
 <td class="col-md-3"><b>Direction</b></td>
 						<td class="col-md-3 wrap" ng-hide="clinicDetails.direction.length==0" colspan="3">{{clinicDetails.directions}}</td>

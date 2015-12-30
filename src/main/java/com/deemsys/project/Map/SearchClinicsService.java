@@ -54,7 +54,7 @@ public class SearchClinicsService {
 									clinics2.getClinicName(), clinics2.getAddress(), clinics2.getCity(), 
 									clinics2.getState(), clinics2.getCounty(), clinics2.getCountry(), clinics2.getZipcode(), 
 									clinics2.getLatitude(), clinics2.getLongitude(), clinics2.getOfficeNumber(), 
-									clinics2.getFaxNumber(), clinics2.getDirections(), clinics2.getNotes(), geoLocation.convertKiloMeterToMiles(distance),clinicTimingLists);
+									clinics2.getFaxNumber(), clinics2.getDirections(), clinics2.getServiceArea(), clinics2.getNotes(), geoLocation.convertKiloMeterToMiles(distance),clinicTimingLists);
 				clinicsForms.add(clinicsForm);
 			}
 		}
