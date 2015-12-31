@@ -144,8 +144,13 @@
 				</tr>
 				<tr>
 				<td class="col-md-3"><b>Country</b></td>
-						<td class="col-md-3" ng-hide="clinicDetails.country.length==0" colspan="3">{{clinicDetails.country}}</td>
+						<td class="col-md-3" ng-hide="clinicDetails.country.length==0">{{clinicDetails.country}}</td>
 						<td class="col-md-3" ng-show="clinicDetails.country.length==0">-</td>
+				
+				<td class="col-md-3"><b>Service Area</b></td>
+					
+						<td class="col-md-3" ng-hide="clinicDetails.serviceArea.length==0">{{clinicDetails.serviceArea}}</td>
+						<td class="col-md-3" ng-show="clinicDetails.serviceArea.length==0">-</td>
 				</tr>
 	<tr>
 <td class="col-md-3"><b>Direction</b></td>
@@ -161,7 +166,7 @@
 						<td class="col-md-3" ng-show="clinicDetails.notes.length==0" colspan="3">-</td>
 	</tr>
 	<tr>
-				<td class="col-md-3" colspan="4"><b>Working Days and Timing</b></td>
+				<td class="col-md-3" colspan="4"><b>Office Hours</b></td>
 				</tr>
 	<tr>
 				<td class="col-md-12" colspan="4">
