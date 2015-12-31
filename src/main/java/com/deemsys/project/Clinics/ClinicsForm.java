@@ -17,8 +17,8 @@ public class ClinicsForm {
 	private Double longitude;
 	private String officeNumber;
 	private String faxNumber;
-	private String directions;
 	private String serviceArea;
+	private String directions;
 	private String notes;
 	private Double farAway;
 	private List<ClinicTimingList> clinicTimingList;
@@ -95,17 +95,17 @@ public class ClinicsForm {
 	public void setFaxNumber(String faxNumber) {
 		this.faxNumber = faxNumber;
 	}
-	public String getDirections() {
-		return directions;
-	}
-	public void setDirections(String directions) {
-		this.directions = directions;
-	}
 	public String getServiceArea() {
 		return serviceArea;
 	}
 	public void setServiceArea(String serviceArea) {
 		this.serviceArea = serviceArea;
+	}
+	public String getDirections() {
+		return directions;
+	}
+	public void setDirections(String directions) {
+		this.directions = directions;
 	}
 	public String getNotes() {
 		return notes;
@@ -128,7 +128,7 @@ public class ClinicsForm {
 	public ClinicsForm(Integer clinicId, String clinicName, String address,
 			String city, String state, String county, String country,
 			String zipcode, Double latitude, Double longitude, String officeNumber, String faxNumber,
-			String directions, String serviceArea,String notes,Double farAway,List<ClinicTimingList> clinicTimingList) {
+			String serviceArea,String directions, String notes,Double farAway,List<ClinicTimingList> clinicTimingList) {
 		super();
 		this.clinicId = clinicId;
 		this.clinicName = clinicName;
@@ -142,8 +142,8 @@ public class ClinicsForm {
 		this.longitude = longitude;
 		this.officeNumber = officeNumber;
 		this.faxNumber = faxNumber;
-		this.directions = directions;
 		this.serviceArea=serviceArea;
+		this.directions = directions;
 		this.notes = notes;
 		this.farAway = farAway;
 		this.clinicTimingList=clinicTimingList;
@@ -151,7 +151,7 @@ public class ClinicsForm {
 	public ClinicsForm(Integer clinicId, String clinicName, String address,
 			String city, String state, String county, String country,
 			String zipcode, String officeNumber, String faxNumber,
-			String directions, String serviceArea,String notes,List<ClinicTimingList> clinicTimingList) {
+			String serviceArea,String directions, String notes,List<ClinicTimingList> clinicTimingList) {
 		super();
 		this.clinicId = clinicId;
 		this.clinicName = clinicName;
@@ -163,8 +163,8 @@ public class ClinicsForm {
 		this.zipcode = zipcode;
 		this.officeNumber = officeNumber;
 		this.faxNumber = faxNumber;
-		this.directions = directions;
 		this.serviceArea=serviceArea;
+		this.directions = directions;
 		this.notes = notes;
 		this.clinicTimingList=clinicTimingList;
 	}
