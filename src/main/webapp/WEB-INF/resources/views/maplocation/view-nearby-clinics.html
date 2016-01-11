@@ -173,43 +173,64 @@
 				<table class="table">
 				<thead>
 				<tr>
-				<th>Day</th><th>Start Time</th><th>End Time</th>
+				<th>Day</th><th>Start Time</th><th>End Time</th><th>Starts Break</th><th>Ends Break</th>
 				</tr>
 				</thead>
 				<tr ng-show="clinicDetails.clinicTimingList[0].isWorkingDay==1">
 				<td>Sunday</td>
 				<td>{{clinicDetails.clinicTimingList[0].startTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[0].endTime}}</td>
+				<td>{{clinicDetails.clinicTimingList[0].startsBreak}}</td>
+				<td>{{clinicDetails.clinicTimingList[0].endsBreak}}</td>
+				
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[1].isWorkingDay==1">
 				<td>Monday</td>
 				<td>{{clinicDetails.clinicTimingList[1].startTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[1].endTime}}</td>
+				<td>{{clinicDetails.clinicTimingList[1].startsBreak}}</td>
+				<td>{{clinicDetails.clinicTimingList[1].endsBreak}}</td>
+				
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[2].isWorkingDay==1">
 				<td>Tuesday</td>
 				<td>{{clinicDetails.clinicTimingList[2].startTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[2].endTime}}</td>
+				<td>{{clinicDetails.clinicTimingList[2].startsBreak}}</td>
+				<td>{{clinicDetails.clinicTimingList[2].endsBreak}}</td>
+				
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[3].isWorkingDay==1">
 				<td>Wednesday</td>
 				<td>{{clinicDetails.clinicTimingList[3].startTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[3].endTime}}</td>
+				<td>{{clinicDetails.clinicTimingList[3].startsBreak}}</td>
+				<td>{{clinicDetails.clinicTimingList[3].endsBreak}}</td>
+				
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[4].isWorkingDay==1">
 				<td>Thursday</td>
 				<td>{{clinicDetails.clinicTimingList[4].startTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[4].endTime}}</td>
+				<td>{{clinicDetails.clinicTimingList[4].startsBreak}}</td>
+				<td>{{clinicDetails.clinicTimingList[4].endsBreak}}</td>
+				
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[5].isWorkingDay==1">
 				<td>Friday</td>
 				<td>{{clinicDetails.clinicTimingList[5].startTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[5].endTime}}</td>
+				<td>{{clinicDetails.clinicTimingList[5].startsBreak}}</td>
+				<td>{{clinicDetails.clinicTimingList[5].endsBreak}}</td>
+				
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[6].isWorkingDay==1">
 				<td>Saturday</td>
 				<td>{{clinicDetails.clinicTimingList[6].startTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[6].endTime}}</td>
+				<td>{{clinicDetails.clinicTimingList[6].startsBreak}}</td>
+				<td>{{clinicDetails.clinicTimingList[6].endsBreak}}</td>
+				
 				</tr>
 				</table>
 				</td>

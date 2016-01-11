@@ -23,6 +23,8 @@ public class ClinicTimings implements java.io.Serializable {
 	private Clinics clinics;
 	private String startTime;
 	private String endTime;
+	private String startsBreak;
+	private String endsBreak;
 	private Integer isWorkingDay;
 
 	public ClinicTimings() {
@@ -34,11 +36,13 @@ public class ClinicTimings implements java.io.Serializable {
 	}
 
 	public ClinicTimings(ClinicTimingsId id, Clinics clinics, String startTime,
-			String endTime, Integer isWorkingDay) {
+			String endTime, String startsBreak, String endsBreak,Integer isWorkingDay) {
 		this.id = id;
 		this.clinics = clinics;
 		this.startTime = startTime;
 		this.endTime = endTime;
+		this.startsBreak=startsBreak;
+		this.endsBreak=endsBreak;
 		this.isWorkingDay = isWorkingDay;
 	}
 
@@ -80,6 +84,24 @@ public class ClinicTimings implements java.io.Serializable {
 
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
+	}
+	
+	@Column(name = "starts_break", length = 45)
+	public String getStartsBreak() {
+		return this.startsBreak;
+	}
+
+	public void setStartsBreak(String startsBreak) {
+		this.startsBreak = startsBreak;
+	}
+	
+	@Column(name = "ends_break", length = 45)
+	public String getEndsBreak() {
+		return this.endsBreak;
+	}
+
+	public void setEndsBreak(String endsBreak) {
+		this.endsBreak = endsBreak;
 	}
 
 	@Column(name = "is_working_day")

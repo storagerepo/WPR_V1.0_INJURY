@@ -406,7 +406,7 @@ adminApp.controller('AppController', ['$scope', 'FileUploader','requestHandler',
      uploader.filters.push({
         name: 'customFilter',
         fn: function(item /*{File|FileLikeObject}*/, options) {
-            return this.queue.length < 10;
+            return true;
         }
     },{
     	name: 'imageFilter',

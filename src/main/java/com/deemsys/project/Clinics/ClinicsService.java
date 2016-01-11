@@ -12,6 +12,7 @@ import com.deemsys.project.ClinicTimings.ClinicTimingList;
 import com.deemsys.project.ClinicTimings.ClinicTimingsDAO;
 import com.deemsys.project.Doctors.DoctorsDAO;
 import com.deemsys.project.Map.GeoLocation;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.ClinicTimings;
 import com.deemsys.project.entity.ClinicTimingsId;
 import com.deemsys.project.entity.Clinics;
@@ -48,7 +49,7 @@ public class ClinicsService {
 		List<ClinicTimingList> clinicTimingLists = new ArrayList<ClinicTimingList>();
 		// Set ClinicTiming List
 		for (ClinicTimings clinicTimingss: clinicTimings) {
-		ClinicTimingList clinicTimingList=new ClinicTimingList(clinicTimingss.getId().getDay(), clinicTimingss.getId().getClinicId(), clinicTimingss.getStartTime(), clinicTimingss.getEndTime(), clinicTimingss.getIsWorkingDay());
+		ClinicTimingList clinicTimingList=new ClinicTimingList(clinicTimingss.getId().getDay(), clinicTimingss.getId().getClinicId(), InjuryConstants.convertAMPMTime(clinicTimingss.getStartTime()), InjuryConstants.convertAMPMTime(clinicTimingss.getEndTime()),InjuryConstants.convertAMPMTime(clinicTimingss.getStartsBreak()),InjuryConstants.convertAMPMTime(clinicTimingss.getEndsBreak()), clinicTimingss.getIsWorkingDay());
 		clinicTimingLists.add(clinicTimingList);
 		}
 		// Set Clinic
@@ -99,7 +100,7 @@ public class ClinicsService {
 		List<ClinicTimingList> clinicTimingList=clinicsForm.getClinicTimingList();
 		for (ClinicTimingList clinicTimingList2 : clinicTimingList) {
 			ClinicTimingsId clinicTimingsId=new ClinicTimingsId(clinics.getClinicId(), clinicTimingList2.getDay());
-			ClinicTimings clinicTimings=new ClinicTimings(clinicTimingsId, clinics, clinicTimingList2.getStartTime(), clinicTimingList2.getEndTime(), clinicTimingList2.getIsWorkingDay());
+			ClinicTimings clinicTimings=new ClinicTimings(clinicTimingsId, clinics, InjuryConstants.convert24HourTime(clinicTimingList2.getStartTime()), InjuryConstants.convert24HourTime(clinicTimingList2.getEndTime()),InjuryConstants.convert24HourTime(clinicTimingList2.getStartsBreak()),InjuryConstants.convert24HourTime(clinicTimingList2.getEndsBreak()), clinicTimingList2.getIsWorkingDay());
 			clinicTimingsDAO.save(clinicTimings);
 		}
 		
@@ -127,7 +128,7 @@ public class ClinicsService {
 		List<ClinicTimingList> clinicTimingList=clinicsForm.getClinicTimingList();
 		for (ClinicTimingList clinicTimingList2 : clinicTimingList) {
 			ClinicTimingsId clinicTimingsId=new ClinicTimingsId(clinicTimingList2.getClinicId(), clinicTimingList2.getDay());
-			ClinicTimings clinicTimings=new ClinicTimings(clinicTimingsId, clinics, clinicTimingList2.getStartTime(), clinicTimingList2.getEndTime(), clinicTimingList2.getIsWorkingDay());
+			ClinicTimings clinicTimings=new ClinicTimings(clinicTimingsId, clinics, InjuryConstants.convert24HourTime(clinicTimingList2.getStartTime()), InjuryConstants.convert24HourTime(clinicTimingList2.getEndTime()),InjuryConstants.convert24HourTime(clinicTimingList2.getStartsBreak()),InjuryConstants.convert24HourTime(clinicTimingList2.getEndsBreak()), clinicTimingList2.getIsWorkingDay());
 			clinicTimingsDAO.update(clinicTimings);
 		}
 		return status;
@@ -195,7 +196,7 @@ public class ClinicsService {
 		List<ClinicTimingList> clinicTimingLists = new ArrayList<ClinicTimingList>();
 		// Set ClinicTiming List
 		for (ClinicTimings clinicTimingss: clinicTimings) {
-		ClinicTimingList clinicTimingList=new ClinicTimingList(clinicTimingss.getId().getDay(), clinicTimingss.getId().getClinicId(), clinicTimingss.getStartTime(), clinicTimingss.getEndTime(), clinicTimingss.getIsWorkingDay());
+		ClinicTimingList clinicTimingList=new ClinicTimingList(clinicTimingss.getId().getDay(), clinicTimingss.getId().getClinicId(), InjuryConstants.convertAMPMTime(clinicTimingss.getStartTime()), InjuryConstants.convertAMPMTime(clinicTimingss.getEndTime()),InjuryConstants.convertAMPMTime(clinicTimingss.getStartsBreak()),InjuryConstants.convertAMPMTime(clinicTimingss.getEndsBreak()), clinicTimingss.getIsWorkingDay());
 		clinicTimingLists.add(clinicTimingList);
 		}
 		

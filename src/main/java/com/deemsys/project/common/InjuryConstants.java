@@ -1,5 +1,6 @@
 package com.deemsys.project.common;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +44,39 @@ public class InjuryConstants {
 		return dateformat;
 	}
 	
-	// Convert To Month Format
+	// Convert To 24HourTime
+		public static String convert24HourTime(String time)
+		{
+			String time24="";
+			try {
+				
+				 SimpleDateFormat inFormat = new SimpleDateFormat("hh:mm aa");
+		            SimpleDateFormat outFormat = new SimpleDateFormat("HH:mm");
+		            time24 = outFormat.format(inFormat.parse(time));
+		             } catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return time24;
+
+		}
+		// Convert To AMPMTime
+				public static String convertAMPMTime(String time)
+				{
+					String time24="";
+					try {
+					        SimpleDateFormat inFormat = new SimpleDateFormat("HH:mm");
+				            SimpleDateFormat outFormat = new SimpleDateFormat("hh:mm aa");
+				            time24 = outFormat.format(inFormat.parse(time));
+				           } catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return time24;
+
+				}
+				
+	 // Convert To Month Format
 	public static String convertMonthFormat(Date date)
 	{   SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");
 		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -62,7 +95,7 @@ public class InjuryConstants {
 	public static String convertUSAFormatWithTime(Date date)
 	{
 		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
 		Date dateformat=new Date();
 		try {
 			dateformat =yearFormat.parse(yearFormat.format(date));
@@ -77,8 +110,8 @@ public class InjuryConstants {
 	// Convert To Year Format With Time
 	public static Date convertYearFormatWithTime(String date)
 	{
-		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		  SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		Date dateformat=new Date();
 		try {
 			dateformat = monthFormat.parse(date);

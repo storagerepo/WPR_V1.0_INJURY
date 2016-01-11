@@ -221,12 +221,12 @@
                                <table width="100%" class="table">
                                <thead>
                                <tr>
-                               <th>Day</th><th>Start Time</th><th>End Time</th><th>Is Working Day</th>
+                               <th>Day</th><th>Start Time</th><th>End Time</th><th>Starts Break</th><th>Ends Break</th><th>Is Working Day</th>
                                </tr>
                                </thead>
                                <tbody>
                                <tr><td>Sunday</td>
-                               <td class="col-md-4">
+                                           <td class="col-md-2">
                                <div class="input-group">
                              	<input type="text" style="" name="sunStartTime" id="sunStartTime" class="form-control"  ng-model="clinic.clinicTimingList[0].startTime" placeholder="Start Time" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
@@ -235,8 +235,8 @@
                                 <span ng-cloak style="color:red" ng-show="myForm.sunStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
-                              <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="sunEndTime" id="sunEndTime" class="form-control" higher-than="clinic.clinicTimingList[0].startTime"  ng-model="clinic.clinicTimingList[0].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="sunEndTime" id="sunEndTime" class="form-control" ng-model="clinic.clinicTimingList[0].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                                <span class="error-container" ng-show="myForm.sunEndTime.$dirty && myForm.sunEndTime.$invalid">
@@ -244,11 +244,34 @@
                               </span>
                               
                               </td>
+                              
+                               <td class="col-md-2">
+                            
+                               <div class="input-group">
+                             	<input type="text" style="" name="sunStartsBreak" id="sunStartsBreak" class="form-control" ng-model="clinic.clinicTimingList[0].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              <span class="error-container" ng-show="myForm.sunStartsBreak.$dirty && myForm.sunStartsBreak.$invalid">
+                                <span ng-cloak style="color:red" ng-show="myForm.sunStartsBreak.$error.required">Please Enter Starts Break</span>
+                              </span>
+                               
+                              </td>
+                            
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="sunEndsBreak" id="sunEndsBreak" class="form-control" ng-model="clinic.clinicTimingList[0].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                               <span class="error-container" ng-show="myForm.sunEndsBreak.$dirty && myForm.sunEndsBreak.$invalid">
+                                 <span ng-cloak style="color:red" ng-show="myForm.sunEndsBreak.$error.higherThan">Ends Break Should be greater</span>
+                              </span>
+                             
+                             </td>
                               <td>
+                              <center>
                              <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[0].isWorkingDay"  ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(0);">
-                              </td></tr>
+                              </center></td></tr>
                               <tr><td>Monday</td>
-                               <td class="col-md-4">
+                               <td class="col-md-2">
                                <div class="input-group">
                              	<input type="text" style="" name="monStartTime" id="monStartTime" class="form-control"  ng-model="clinic.clinicTimingList[1].startTime" placeholder="Start Time" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
@@ -257,19 +280,39 @@
                                 <span ng-cloak style="color:red" ng-show="myForm.monStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
-                              <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="monEndTime" id="monEndTime" class="form-control" higher-than="clinic.clinicTimingList[1].startTime"  ng-model="clinic.clinicTimingList[1].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="monEndTime" id="monEndTime" class="form-control" ng-model="clinic.clinicTimingList[1].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.monEndTime.$dirty && myForm.monEndTime.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.monEndTime.$error.higherThan">End Time Should be greater</span>
                               </span>
                               </td>
-                              <td>
+                              
+                              <td class="col-md-2">
+                            
+                               <div class="input-group">
+                             	<input type="text" style="" name="monStartsBreak" id="monStartsBreak" class="form-control"  ng-model="clinic.clinicTimingList[1].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              <span class="error-container" ng-show="myForm.monStartsBreak.$dirty && myForm.monStartsBreak.$invalid">
+                                <span ng-cloak style="color:red" ng-show="myForm.monStartsBreak.$error.required">Please Enter Starts Break</span>
+                              </span> 
+                              </td>
+                            
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="monEndsBreak" id="monEndsBreak" class="form-control" ng-model="clinic.clinicTimingList[1].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                             <span class="error-container" ng-show="myForm.monEndsBreak.$dirty && myForm.monEndsBreak.$invalid">
+                                 <span ng-cloak style="color:red" ng-show="myForm.monEndsBreak.$error.higherThan">Ends Break Should be greater</span>
+                              </span>
+                               </td>
+                              <td> <center>
                              <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[1].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(1);">
-                              </td></tr>
+                            </center>  </td></tr>
                               <tr><td>Tuesday</td>
-                               <td class="col-md-4">
+                               <td class="col-md-2">
                                <div class="input-group">
                              	<input type="text" style="" name="tueStartTime" id="tueStartTime" class="form-control"  ng-model="clinic.clinicTimingList[2].startTime" placeholder="Start Time" required ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
@@ -278,19 +321,41 @@
                                 <span ng-cloak style="color:red" ng-show="myForm.tueStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
-                              <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="tueEndTime" id="tueEndTime" class="form-control" higher-than="clinic.clinicTimingList[2].startTime"  ng-model="clinic.clinicTimingList[2].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0">
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="tueEndTime" id="tueEndTime" class="form-control" ng-model="clinic.clinicTimingList[2].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.tueEndTime.$dirty && myForm.tueEndTime.$invalid">
                                  <span ng-cloak style="color:red" ng-show="myForm.tueEndTime.$error.higherThan">End Time Should be greater</span>
                               </span>
                               </td>
+                            
+                              <td class="col-md-2">
+                            
+                               <div class="input-group">
+                             	<input type="text" style="" name="tueStartsBreak" id="tueStartsBreak" class="form-control"  ng-model="clinic.clinicTimingList[2].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              <span class="error-container" ng-show="myForm.tueStartsBreak.$dirty && myForm.tueStartsBreak.$invalid">
+                                <span ng-cloak style="color:red" ng-show="myForm.tueStartsBreak.$error.required">Please Enter Starts Break</span>
+                              </span> 
+                              </td>
+                            
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="tueEndsBreak" id="tueEndsBreak" class="form-control" ng-model="clinic.clinicTimingList[2].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              <span class="error-container" ng-show="myForm.tueEndsBreak.$dirty && myForm.tueEndsBreak.$invalid">
+                                 <span ng-cloak style="color:red" ng-show="myForm.tueEndsBreak.$error.higherThan">Ends Break Should be greater</span>
+                              </span>
+                               </td>
+                            
                               <td>
+                               <center>
                              <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[2].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(2);">
-                              </td></tr>
+                              </center></td></tr>
                               <tr><td>Wednesday</td>
-                               <td class="col-md-4">
+                               <td class="col-md-2">
                                <div class="input-group">
                              	<input type="text" style="" name="wedStartTime" id="wedStartTime" class="form-control"  ng-model="clinic.clinicTimingList[3].startTime" placeholder="Start Time" required ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0">
                              	<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>	
@@ -299,19 +364,39 @@
                                 <span ng-cloak style="color:red" ng-show="myForm.wedStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
-                              <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="wedEndTime" id="wedEndTime" class="form-control" higher-than="clinic.clinicTimingList[3].startTime"  ng-model="clinic.clinicTimingList[3].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0">
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="wedEndTime" id="wedEndTime" class="form-control" ng-model="clinic.clinicTimingList[3].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.wedEndTime.$dirty && myForm.wedEndTime.$invalid">
                                  <span ng-cloak style="color:red" ng-show="myForm.wedEndTime.$error.higherThan"> End Time Should be greater</span>
                               </span>
                               </td>
+                              
+                               <td class="col-md-2">
+                            
+                               <div class="input-group">
+                             	<input type="text" style="" name="wedStartsBreak" id="wedStartsBreak" class="form-control"  ng-model="clinic.clinicTimingList[3].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              <span class="error-container" ng-show="myForm.wedStartsBreak.$dirty && myForm.wedStartsBreak.$invalid">
+                                <span ng-cloak style="color:red" ng-show="myForm.wedStartsBreak.$error.required">Please Enter Starts Break</span>
+                              </span> 
+                              </td>
+                            
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="wedEndsBreak" id="wedEndsBreak" class="form-control" ng-model="clinic.clinicTimingList[3].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              <span class="error-container" ng-show="myForm.wedEndsBreak.$dirty && myForm.wedEndsBreak.$invalid">
+                                 <span ng-cloak style="color:red" ng-show="myForm.wedEndsBreak.$error.higherThan">Ends Break Should be greater</span>
+                              </span>
+                              </td>
                               <td>
-                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[3].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(3);">
-                              </td></tr>
+                             <center> <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[3].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(3);">
+                              </center></td></tr>
                               <tr><td>Thursday</td>
-                               <td class="col-md-4">
+                               <td class="col-md-2">
                                <div class="input-group">
                              	<input type="text" style="" name="thuStartTime" id="thuStartTime" class="form-control"  ng-model="clinic.clinicTimingList[4].startTime" placeholder="Start Time" required ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
@@ -320,19 +405,39 @@
                                 <span ng-cloak style="color:red" ng-show="myForm.thuStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
-                              <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="thuEndTime" id="thuEndTime" class="form-control" higher-than="clinic.clinicTimingList[4].startTime"  ng-model="clinic.clinicTimingList[4].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0"> 
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="thuEndTime" id="thuEndTime" class="form-control" ng-model="clinic.clinicTimingList[4].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0"> 
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.thuEndTime.$dirty && myForm.thuEndTime.$invalid">
                                  <span ng-cloak style="color:red" ng-show="myForm.thuEndTime.$error.higherThan">End Time Should be greater</span>
                               </span>
                               </td>
+                              
+                               <td class="col-md-2">
+                            
+                               <div class="input-group">
+                             	<input type="text" style="" name="thuStartsBreak" id="thuStartsBreak" class="form-control"  ng-model="clinic.clinicTimingList[4].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              <span class="error-container" ng-show="myForm.thuStartsBreak.$dirty && myForm.thuStartsBreak.$invalid">
+                                <span ng-cloak style="color:red" ng-show="myForm.thuStartsBreak.$error.required">Please Enter Starts Break</span>
+                              </span> 
+                              </td>
+                            
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="thuEndsBreak" id="thuEndsBreak" class="form-control" ng-model="clinic.clinicTimingList[4].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              <span class="error-container" ng-show="myForm.thuEndsBreak.$dirty && myForm.thuEndsBreak.$invalid">
+                                 <span ng-cloak style="color:red" ng-show="myForm.thuEndsBreak.$error.higherThan">Ends Break Should be greater</span>
+                              </span>
+                              </td>
                               <td>
-                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[4].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(4);">
-                              </td></tr>
+                             <center> <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[4].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(4);">
+                              </center></td></tr>
                               <tr><td>Friday</td>
-                               <td class="col-md-4">
+                               <td class="col-md-2">
                                <div class="input-group">
                              	<input type="text" style="" name="friStartTime" id="friStartTime" class="form-control"  ng-model="clinic.clinicTimingList[5].startTime" placeholder="Start Time" required ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
@@ -341,19 +446,39 @@
                                 <span ng-cloak style="color:red" ng-show="myForm.friStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
-                              <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="friEndTime" id="friEndTime" class="form-control" higher-than="clinic.clinicTimingList[5].startTime"  ng-model="clinic.clinicTimingList[5].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="friEndTime" id="friEndTime" class="form-control" ng-model="clinic.clinicTimingList[5].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.friEndTime.$dirty && myForm.friEndTime.$invalid">
                                <span ng-cloak style="color:red" ng-show="myForm.friEndTime.$error.higherThan">End Time Should be greater</span>
                               </span>
                               </td>
+                              
+                               <td class="col-md-2">
+                            
+                               <div class="input-group">
+                             	<input type="text" style="" name="friStartsBreak" id="friStartsBreak" class="form-control"  ng-model="clinic.clinicTimingList[5].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              <span class="error-container" ng-show="myForm.friStartsBreak.$dirty && myForm.friStartsBreak.$invalid">
+                                <span ng-cloak style="color:red" ng-show="myForm.friStartsBreak.$error.required">Please Enter Starts Break</span>
+                              </span> 
+                              </td>
+                            
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="friEndsBreak" id="friEndsBreak" class="form-control" ng-model="clinic.clinicTimingList[5].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              <span class="error-container" ng-show="myForm.friEndsBreak.$dirty && myForm.friEndsBreak.$invalid">
+                                 <span ng-cloak style="color:red" ng-show="myForm.friEndsBreak.$error.higherThan">Ends Break Should be greater</span>
+                              </span>
+                               </td>
                               <td>
-                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[5].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(5);">
-                              </td></tr>
+                             <center> <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[5].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(5);">
+                              </center></td></tr>
                               <tr><td>Saturday</td>
-                               <td class="col-md-4">
+                               <td class="col-md-2">
                                <div class="input-group">
                              	<input type="text" style="" name="satStartTime" id="satStartTime" class="form-control"  ng-model="clinic.clinicTimingList[6].startTime" placeholder="Start Time" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
@@ -362,17 +487,37 @@
                                 <span ng-cloak style="color:red" ng-show="myForm.satStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
-                              <td class="col-md-4"> <div class="input-group">
-                             <input type="text" style="" name="satEndTime" id="satEndTime" class="form-control" higher-than="clinic.clinicTimingList[6].startTime"  ng-model="clinic.clinicTimingList[6].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[6].isWorkingDay==1"  readonly="true" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0"> 
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="satEndTime" id="satEndTime" class="form-control" ng-model="clinic.clinicTimingList[6].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0"> 
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                               <span class="error-container" ng-show="myForm.satEndTime.$dirty && myForm.satEndTime.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.satEndTime.$error.higherThan">End Time Should be greater</span>
                               </span>
                               </td>
+                              
+                               <td class="col-md-2">
+                            
+                               <div class="input-group">
+                             	<input type="text" style="" name="satStartsBreak" id="satStartsBreak" class="form-control"  ng-model="clinic.clinicTimingList[6].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                              <span class="error-container" ng-show="myForm.satStartsBreak.$dirty && myForm.satStartsBreak.$invalid">
+                                <span ng-cloak style="color:red" ng-show="myForm.satStartsBreak.$error.required">Please Enter Starts Break</span>
+                              </span> 
+                              </td>
+                            
+                              <td class="col-md-2"> <div class="input-group">
+                             <input type="text" style="" name="satEndsBreak" id="satEndsBreak" class="form-control" ng-model="clinic.clinicTimingList[6].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0">
+                              <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
+                              </div>
+                             <span class="error-container" ng-show="myForm.satEndsBreak.$dirty && myForm.satEndsBreak.$invalid">
+                                 <span ng-cloak style="color:red" ng-show="myForm.satEndsBreak.$error.higherThan">Ends Break Should be greater</span>
+                              </span>
+                               </td>
                               <td>
-                             <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[6].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(6);">
-                              </td></tr>
+                             <center> <input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" ng-model="clinic.clinicTimingList[6].isWorkingDay" ng-true-value="1" ng-false-value="0"  ng-click="resetDatePicker(6);">
+                             </center> </td></tr>
                                </tbody>
                                </table> 
                                </div>   
@@ -419,7 +564,8 @@
 $('#sunStartTime').datetimepicker({
 			pickTime : true,
 			pickDate:false,
-			format:'HH:mm'
+			format:'hh:mm A',
+			defaultDate:new Date()
 	});
 $('#sunStartTime').keydown(function(e){
 	 e.preventDefault();
@@ -431,7 +577,8 @@ $('#sunStartTime').bind("cut copy paste",function(e) {
 $('#sunEndTime').datetimepicker({
 	pickTime : true,
 	pickDate:false,
-	format:'HH:mm'
+	format:'hh:mm A',
+	defaultDate:new Date()
 	
 });
 $('#sunEndTime').keydown(function(e){
@@ -441,10 +588,39 @@ $('#sunEndTime').bind("cut copy paste",function(e) {
    e.preventDefault();
 });
 
+$('#sunStartsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#sunStartsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#sunStartsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
+
+$('#sunEndsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#sunEndsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#sunEndsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
+
 $('#monStartTime').datetimepicker({
 	pickTime : true,
 	pickDate:false,
-	format:'HH:mm'
+	format:'hh:mm A',
+	defaultDate:new Date()
 });
 $('#monStartTime').keydown(function(e){
 	 e.preventDefault();
@@ -456,7 +632,8 @@ $('#monStartTime').bind("cut copy paste",function(e) {
 $('#monEndTime').datetimepicker({
 pickTime : true,
 pickDate:false,
-format:'HH:mm'
+format:'hh:mm A',
+defaultDate:new Date()
 });
 $('#monEndTime').keydown(function(e){
 	 e.preventDefault();
@@ -465,10 +642,38 @@ $('#monEndTime').bind("cut copy paste",function(e) {
    e.preventDefault();
 });
 
+$('#monStartsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#monStartsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#monStartsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
+
+$('#monEndsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#monEndsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#monEndsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
 $('#tueStartTime').datetimepicker({
 	pickTime : true,
 	pickDate:false,
-	format:'HH:mm'
+	format:'hh:mm A',
+	defaultDate:new Date()
 });
 $('#tueStartTime').keydown(function(e){
 	 e.preventDefault();
@@ -480,7 +685,8 @@ $('#tueStartTime').bind("cut copy paste",function(e) {
 $('#tueEndTime').datetimepicker({
 pickTime : true,
 pickDate:false,
-format:'HH:mm'
+format:'hh:mm A',
+defaultDate:new Date()
 });
 $('#tueEndTime').keydown(function(e){
 	 e.preventDefault();
@@ -489,10 +695,39 @@ $('#tueEndTime').bind("cut copy paste",function(e) {
    e.preventDefault();
 });
 
+$('#tueStartsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#tueStartsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#tueStartsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
+
+$('#tueEndsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#tueEndsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#tueEndsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
+
 $('#wedStartTime').datetimepicker({
 	pickTime : true,
 	pickDate:false,
-	format:'HH:mm'
+	format:'hh:mm A',
+	defaultDate:new Date()
 });
 $('#wedStartTime').keydown(function(e){
 	 e.preventDefault();
@@ -504,7 +739,8 @@ $('#wedStartTime').bind("cut copy paste",function(e) {
 $('#wedEndTime').datetimepicker({
 pickTime : true,
 pickDate:false,
-format:'HH:mm'
+format:'hh:mm A',
+defaultDate:new Date()
 });
 $('#wedEndTime').keydown(function(e){
 	 e.preventDefault();
@@ -513,10 +749,39 @@ $('#wedEndTime').bind("cut copy paste",function(e) {
    e.preventDefault();
 });
 
+$('#wedStartsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#wedStartsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#wedStartsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
+
+$('#wedEndsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#wedEndsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#wedEndsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
+
 $('#thuStartTime').datetimepicker({
 	pickTime : true,
 	pickDate:false,
-	format:'HH:mm'
+	format:'hh:mm A',
+	defaultDate:new Date()
 });
 $('#thuStartTime').keydown(function(e){
 	 e.preventDefault();
@@ -528,7 +793,8 @@ $('#thuStartTime').bind("cut copy paste",function(e) {
 $('#thuEndTime').datetimepicker({
 pickTime : true,
 pickDate:false,
-format:'HH:mm'
+format:'hh:mm A',
+defaultDate:new Date()
 
 });
 $('#thuEndTime').keydown(function(e){
@@ -538,11 +804,39 @@ $('#thuEndTime').bind("cut copy paste",function(e) {
 e.preventDefault();
 });
 
+$('#thuStartsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#thuStartsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#thuStartsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
+
+$('#thuEndsBreak').datetimepicker({
+ 	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#thuEndsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#thuEndsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
 
 $('#friStartTime').datetimepicker({
 	pickTime : true,
 	pickDate:false,
-	format:'HH:mm'
+	format:'hh:mm A',
+	defaultDate:new Date()
 });
 $('#friStartTime').keydown(function(e){
 	 e.preventDefault();
@@ -554,7 +848,8 @@ e.preventDefault();
 $('#friEndTime').datetimepicker({
 pickTime : true,
 pickDate:false,
-format:'HH:mm'
+format:'hh:mm A',
+defaultDate:new Date()
 });
 $('#friEndTime').keydown(function(e){
 	 e.preventDefault();
@@ -563,10 +858,39 @@ $('#friEndTime').bind("cut copy paste",function(e) {
    e.preventDefault();
 });
 
+$('#friStartsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#friStartsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#friStartsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
+
+$('#friEndsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#friEndsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#friEndsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
+
 $('#satStartTime').datetimepicker({
 	pickTime : true,
 	pickDate:false,
-	format:'HH:mm'
+	format:'hh:mm A',
+	defaultDate:new Date()
 });
 $('#satStartTime').keydown(function(e){
 	 e.preventDefault();
@@ -578,7 +902,8 @@ $('#satStartTime').bind("cut copy paste",function(e) {
 $('#satEndTime').datetimepicker({
 pickTime : true,
 pickDate:false,
-format:'HH:mm'
+format:'hh:mm A',
+defaultDate:new Date()
 });
 $('#satEndTime').keydown(function(e){
 	 e.preventDefault();
@@ -587,6 +912,36 @@ $('#satEndTime').bind("cut copy paste",function(e) {
    e.preventDefault();
 });
 
+$('#satStartsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#satStartsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#satStartsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
+
+$('#satEndsBreak').datetimepicker({
+	pickTime : true,
+	pickDate:false,
+	format:'hh:mm A',
+	defaultDate:new Date()
+	
+});
+$('#satEndsBreak').keydown(function(e){
+	 e.preventDefault();
+	});
+$('#satEndsBreak').bind("cut copy paste",function(e) {
+   e.preventDefault();
+});
+
+</script>
 
 
-</script> 
+
+
