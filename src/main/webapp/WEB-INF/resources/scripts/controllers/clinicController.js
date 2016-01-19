@@ -81,7 +81,1836 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 				  $location.path('dashboard/clinic');
 		});
 	};
-	 
+	$scope.lowerThanStartBreak=function(i){
+		
+		  var convert="";
+			var convert1="";
+			 var hour=Number($scope.clinic.clinicTimingList[i].startsBreak.match(/^(\d+)/)[1]);
+			 var hour1=Number($scope.clinic.clinicTimingList[i].endTime.match(/^(\d+)/)[1]);
+			var minute1=Number($scope.clinic.clinicTimingList[i].endTime.match(/:(\d+)/)[1]);
+			 var minute = Number($scope.clinic.clinicTimingList[i].startsBreak.match(/:(\d+)/)[1]);
+			 var AMPM=$scope.clinic.clinicTimingList[i].startsBreak.match(/\s(.*)$/)[1];
+	 		 var AMPMendTime=$scope.clinic.clinicTimingList[i].endTime.match(/\s(.*)$/)[1];
+	 		if(AMPMendTime=="AM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="PM"){
+	 		convert1=hour1+":"+minute1;
+	 		var totalHour=hour+12;
+	 		convert=totalHour+":"+minute;
+	 if(totalHour>hour1){
+		 if(i==0){
+			 $scope.error0=" ";
+			 }
+			 if(i==1){
+			 $scope.error1=" ";
+			 }
+			 if(i==2){
+			 $scope.error2=" ";
+			 }
+			 if(i==3){
+			 $scope.error3=" ";
+			 }
+			 if(i==4){
+				 $scope.error4=" ";
+			 }
+			 if(i==5){
+			 $scope.error5=" ";
+			 }
+			 if(i==6){
+				 $scope.error6=" ";
+			 }
+			}
+	 else
+		 {
+		 if(i==0){
+			 $scope.error0="Starts Break Should be smaller";
+			 }
+			 if(i==1){
+			 $scope.error1="Starts Break Should be smaller";
+			 }
+			 if(i==2){
+			 $scope.error2="Starts Break Should be smaller";
+			 }
+			 if(i==3){
+			 $scope.error3="Starts Break Should be smaller";
+			 }
+			 if(i==4){
+				 $scope.error4="Starts Break Should be smaller";
+			 }
+			 if(i==5){
+			 $scope.error5="Starts Break Should be smaller";
+			 }
+			 if(i==6){
+				 $scope.error6="Starts Break Should be smaller";
+			 }
+		
+		 }
+	 		}
+			 if(AMPMendTime=="PM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+				 var totalHour1 = hour1 + 12;
+				 convert1=totalHour1+":"+minute1;
+				 var totalHour = hour + 12;
+				 convert=totalHour+":"+minute;
+				 if(totalHour<totalHour1){
+					 if(i==0){
+						 $scope.error0=" ";
+						 }
+						 if(i==1){
+						 $scope.error1=" ";
+						 }
+						 if(i==2){
+						 $scope.error2=" ";
+						 }
+						 if(i==3){
+						 $scope.error3=" ";
+						 }
+						 if(i==4){
+							 $scope.error4=" ";
+						 }
+						 if(i==5){
+						 $scope.error5=" ";
+						 }
+						 if(i==6){
+							 $scope.error6=" ";
+						 }
+						 }
+				 else if(totalHour == totalHour1 && minute >= minute1){
+					 if(i==0){
+						 $scope.error0="Starts Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.error1="Starts Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.error2="Starts Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.error3="Starts Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.error4="Starts Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.error5="Starts Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.error6="Starts Break Should be smaller";
+						 }
+					  }
+				 else if(totalHour == totalHour1 && minute<minute1){
+					 if(i==0){
+						 $scope.error0=" ";
+						 }
+						 if(i==1){
+						 $scope.error1=" ";
+						 }
+						 if(i==2){
+						 $scope.error2=" ";
+						 }
+						 if(i==3){
+						 $scope.error3=" ";
+						 }
+						 if(i==4){
+							 $scope.error4=" ";
+						 }
+						 if(i==5){
+						 $scope.error5=" ";
+						 }
+						 if(i==6){
+							 $scope.error6=" ";
+						 }
+					  }
+				
+					 else
+					 {
+					 if(i==0){
+						 $scope.error0="Starts Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.error1="Starts Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.error2="Starts Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.error3="Starts Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.error4="Starts Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.error5="Starts Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.error6="Starts Break Should be smaller";
+						 }
+					 		 }
+					  
+			  }	
+			 if(AMPMendTime=="PM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="PM"){
+				 var totalHour1 = hour1 + 12;
+				 convert1=totalHour1+":"+minute1;
+				 var totalHour = hour + 12;
+				 convert=totalHour+":"+minute;
+				 if(totalHour<totalHour1){
+					 if(i==0){
+						 $scope.error0=" ";
+						 }
+						 if(i==1){
+						 $scope.error1=" ";
+						 }
+						 if(i==2){
+						 $scope.error2=" ";
+						 }
+						 if(i==3){
+						 $scope.error3=" ";
+						 }
+						 if(i==4){
+							 $scope.error4=" ";
+						 }
+						 if(i==5){
+						 $scope.error5=" ";
+						 }
+						 if(i==6){
+							 $scope.error6=" ";
+						 }
+						 }
+				 else if(totalHour == totalHour1 && minute >= minute1){
+					 if(i==0){
+						 $scope.error0="Starts Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.error1="Starts Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.error2="Starts Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.error3="Starts Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.error4="Starts Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.error5="Starts Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.error6="Starts Break Should be smaller";
+						 }
+					  }
+				 else if(totalHour == totalHour1 && minute<minute1){
+					 if(i==0){
+						 $scope.error0=" ";
+						 }
+						 if(i==1){
+						 $scope.error1=" ";
+						 }
+						 if(i==2){
+						 $scope.error2=" ";
+						 }
+						 if(i==3){
+						 $scope.error3=" ";
+						 }
+						 if(i==4){
+							 $scope.error4=" ";
+						 }
+						 if(i==5){
+						 $scope.error5=" ";
+						 }
+						 if(i==6){
+							 $scope.error6=" ";
+						 }
+					  }
+				
+					 else
+					 {
+					 if(i==0){
+						 $scope.error0="Starts Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.error1="Starts Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.error2="Starts Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.error3="Starts Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.error4="Starts Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.error5="Starts Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.error6="Starts Break Should be smaller";
+						 }
+					 		 }
+					  
+			  }	
+
+			 if(AMPMendTime=="AM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+			 	 if(i==0){
+			 		 $scope.error0="Starts Break Should be smaller";
+			 		 }
+			 		 if(i==1){
+			 		 $scope.error1="Starts Break Should be smaller";
+			 		 }
+			 		 if(i==2){
+			 		 $scope.error2="Starts Break Should be smaller";
+			 		 }
+			 		 if(i==3){
+			 		 $scope.error3="Starts Break Should be smaller";
+			 		 }
+			 		 if(i==4){
+			 			 $scope.error4="Starts Break Should be smaller";
+			 		 }
+			 		 if(i==5){
+			 		 $scope.error5="Starts Break Should be smaller";
+			 		 }
+			 		 if(i==6){
+			 			 $scope.error6="Starts Break Should be smaller";
+			 		 }
+			 }
+
+			 if(AMPMendTime=="PM" && AMPM == "AM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="PM"){
+if(i==0){
+	 $scope.error0="Starts Break Should be smaller";
+	 }
+	 if(i==1){
+	 $scope.error1="Starts Break Should be smaller";
+	 }
+	 if(i==2){
+	 $scope.error2="Starts Break Should be smaller";
+	 }
+	 if(i==3){
+	 $scope.error3="Starts Break Should be smaller";
+	 }
+	 if(i==4){
+		 $scope.error4="Starts Break Should be smaller";
+	 }
+	 if(i==5){
+	 $scope.error5="Starts Break Should be smaller";
+	 }
+	 if(i==6){
+		 $scope.error6="Starts Break Should be smaller";
+	 }
+}
+				 if(AMPMendTime=="AM" && hour1 != 12 && AMPM == "AM" && hour !=12){
+				 
+					 convert1=hour1+":"+minute1;
+			 
+				 convert=hour+":"+minute;
+				  if(hour<hour1){
+					 if(i==0){
+						 $scope.error0=" ";
+						 }
+						 if(i==1){
+						 $scope.error1=" ";
+						 }
+						 if(i==2){
+						 $scope.error2=" ";
+						 }
+						 if(i==3){
+						 $scope.error3=" ";
+						 }
+						 if(i==4){
+							 $scope.error4=" ";
+						 }
+						 if(i==5){
+						 $scope.error5=" ";
+						 }
+						 if(i==6){
+							 $scope.error6=" ";
+						 }
+						 }
+				 else if(hour == hour1 && minute >= minute1){
+					 if(i==0){
+						 $scope.error0="Starts Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.error1="Starts Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.error2="Starts Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.error3="Starts Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.error4="Starts Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.error5="Starts Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.error6="Starts Break Should be smaller";
+						 }
+					  }
+				 else if(hour == hour1 && minute<minute1){
+					 if(i==0){
+						 $scope.error0=" ";
+						 }
+						 if(i==1){
+						 $scope.error1=" ";
+						 }
+						 if(i==2){
+						 $scope.error2=" ";
+						 }
+						 if(i==3){
+						 $scope.error3=" ";
+						 }
+						 if(i==4){
+							 $scope.error4=" ";
+						 }
+						 if(i==5){
+						 $scope.error5=" ";
+						 }
+						 if(i==6){
+							 $scope.error6=" ";
+						 }
+					  }
+				
+				 else
+					 {
+					 if(i==0){
+						 $scope.error0="Starts Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.error1="Starts Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.error2="Starts Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.error3="Starts Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.error4="Starts Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.error5="Starts Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.error6="Starts Break Should be smaller";
+						 }
+					 		 }
+				 }
+				 if(AMPMendTime=="AM" && hour1 == 12 && AMPM == "AM" && hour == 12){
+					 var totalHour1 = hour1 - 12;
+					 	convert1=totalHour1+":"+minute1;
+					 	 var totalHour = hour - 12;
+						 	convert=totalHour+":"+minute;
+						 	if(totalHour<totalHour1){
+								 if(i==0){
+									 $scope.error0=" ";
+									 }
+									 if(i==1){
+									 $scope.error1=" ";
+									 }
+									 if(i==2){
+									 $scope.error2=" ";
+									 }
+									 if(i==3){
+									 $scope.error3=" ";
+									 }
+									 if(i==4){
+										 $scope.error4=" ";
+									 }
+									 if(i==5){
+									 $scope.error5=" ";
+									 }
+									 if(i==6){
+										 $scope.error6=" ";
+									 }
+									 }
+						 	 else if(totalHour == totalHour1 && minute >= minute1){
+								 if(i==0){
+									 $scope.error0="Starts Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.error1="Starts Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.error2="Starts Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.error3="Starts Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.error4="Starts Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.error5="Starts Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.error6="Starts Break Should be smaller";
+									 }
+								  }
+							 else if(totalHour == totalHour1 && minute<minute1){
+								 if(i==0){
+									 $scope.error0=" ";
+									 }
+									 if(i==1){
+									 $scope.error1=" ";
+									 }
+									 if(i==2){
+									 $scope.error2=" ";
+									 }
+									 if(i==3){
+									 $scope.error3=" ";
+									 }
+									 if(i==4){
+										 $scope.error4=" ";
+									 }
+									 if(i==5){
+									 $scope.error5=" ";
+									 }
+									 if(i==6){
+										 $scope.error6=" ";
+									 }
+								  }
+							
+									 else
+								 {
+								 if(i==0){
+									 $scope.error0="Starts Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.error1="Starts Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.error2="Starts Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.error3="Starts Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.error4="Starts Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.error5="Starts Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.error6="Starts Break Should be smaller";
+									 }
+								 		 }
+													 }
+				 if(AMPMendTime=="AM" && hour1 != 12 && AMPM == "AM" && hour ==12){
+					 convert1=hour1+":"+minute1;
+					 var totalHour = hour - 12;
+					 	convert=totalHour+":"+minute;
+					 	if(totalHour<hour1){
+							 if(i==0){
+								 $scope.error0=" ";
+								 }
+								 if(i==1){
+								 $scope.error1=" ";
+								 }
+								 if(i==2){
+								 $scope.error2=" ";
+								 }
+								 if(i==3){
+								 $scope.error3=" ";
+								 }
+								 if(i==4){
+									 $scope.error4=" ";
+								 }
+								 if(i==5){
+								 $scope.error5=" ";
+								 }
+								 if(i==6){
+									 $scope.error6=" ";
+								 }
+								 }
+					 	 else if(totalHour == hour1 && minute >= minute1){
+							 if(i==0){
+								 $scope.error0="Starts Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.error1="Starts Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.error2="Starts Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.error3="Starts Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.error4="Starts Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.error5="Starts Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.error6="Starts Break Should be smaller";
+								 }
+							  }
+						 else if(totalHour == hour1 && minute<minute1){
+							 if(i==0){
+								 $scope.error0=" ";
+								 }
+								 if(i==1){
+								 $scope.error1=" ";
+								 }
+								 if(i==2){
+								 $scope.error2=" ";
+								 }
+								 if(i==3){
+								 $scope.error3=" ";
+								 }
+								 if(i==4){
+									 $scope.error4=" ";
+								 }
+								 if(i==5){
+								 $scope.error5=" ";
+								 }
+								 if(i==6){
+									 $scope.error6=" ";
+								 }
+							  }
+						
+						 else
+							 {
+							 if(i==0){
+								 $scope.error0="Starts Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.error1="Starts Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.error2="Starts Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.error3="Starts Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.error4="Starts Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.error5="Starts Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.error6="Starts Break Should be smaller";
+								 }
+							 		 }
+							
+				 }		
+				 if(AMPMendTime=="AM" && hour1 == 12 && AMPM == "AM" && hour != 12){
+					 var totalHour1 = hour1 - 12;
+					 	convert1=totalHour1+":"+minute1;
+					 	 convert=hour+":"+minute;
+					 	if(hour<totalHour1){
+							 if(i==0){
+								 $scope.error0=" ";
+								 }
+								 if(i==1){
+								 $scope.error1=" ";
+								 }
+								 if(i==2){
+								 $scope.error2=" ";
+								 }
+								 if(i==3){
+								 $scope.error3=" ";
+								 }
+								 if(i==4){
+									 $scope.error4=" ";
+								 }
+								 if(i==5){
+								 $scope.error5=" ";
+								 }
+								 if(i==6){
+									 $scope.error6=" ";
+								 }
+								 }
+					 	 else if(hour == totalHour1 && minute >= minute1){
+							 if(i==0){
+								 $scope.error0="Starts Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.error1="Starts Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.error2="Starts Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.error3="Starts Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.error4="Starts Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.error5="Starts Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.error6="Starts Break Should be smaller";
+								 }
+							  }
+						 else if(hour == totalHour1 && minute<minute1){
+							 if(i==0){
+								 $scope.error0=" ";
+								 }
+								 if(i==1){
+								 $scope.error1=" ";
+								 }
+								 if(i==2){
+								 $scope.error2=" ";
+								 }
+								 if(i==3){
+								 $scope.error3=" ";
+								 }
+								 if(i==4){
+									 $scope.error4=" ";
+								 }
+								 if(i==5){
+								 $scope.error5=" ";
+								 }
+								 if(i==6){
+									 $scope.error6=" ";
+								 }
+							  }
+						
+							 else
+							 {
+							 if(i==0){
+								 $scope.error0="Starts Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.error1="Starts Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.error2="Starts Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.error3="Starts Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.error4="Starts Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.error5="Starts Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.error6="Starts Break Should be smaller";
+								 }
+							 		 }
+							}
+				 if(AMPMendTime=="PM" && AMPM == "AM" && hour != 12 && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM" ){
+					 var totalHour1 = hour1 + 12;
+					 convert1=totalHour1+":"+minute1;
+					 convert=hour+":"+minute;
+					 if(hour<totalHour1){
+						 if(i==0){
+							 $scope.error0=" ";
+							 }
+							 if(i==1){
+							 $scope.error1=" ";
+							 }
+							 if(i==2){
+							 $scope.error2=" ";
+							 }
+							 if(i==3){
+							 $scope.error3=" ";
+							 }
+							 if(i==4){
+								 $scope.error4=" ";
+							 }
+							 if(i==5){
+							 $scope.error5=" ";
+							 }
+							 if(i==6){
+								 $scope.error6=" ";
+							 }
+							 }
+					 else if(hour == totalHour1 && minute >= minute1){
+						 if(i==0){
+							 $scope.error0="Starts Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.error1="Starts Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.error2="Starts Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.error3="Starts Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.error4="Starts Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.error5="Starts Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.error6="Starts Break Should be smaller";
+							 }
+						  }
+					 else if(hour == totalHour1 && minute<minute1){
+						 if(i==0){
+							 $scope.error0=" ";
+							 }
+							 if(i==1){
+							 $scope.error1=" ";
+							 }
+							 if(i==2){
+							 $scope.error2=" ";
+							 }
+							 if(i==3){
+							 $scope.error3=" ";
+							 }
+							 if(i==4){
+								 $scope.error4=" ";
+							 }
+							 if(i==5){
+							 $scope.error5=" ";
+							 }
+							 if(i==6){
+								 $scope.error6=" ";
+							 }
+						  }
+					
+					 else
+						 {
+						 if(i==0){
+							 $scope.error0="Starts Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.error1="Starts Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.error2="Starts Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.error3="Starts Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.error4="Starts Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.error5="Starts Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.error6="Starts Break Should be smaller";
+							 }
+						 		 }
+					}
+				 if(AMPMendTime=="PM" && AMPM == "AM" && hour == 12 && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+					 var totalHour1 = hour1 + 12;
+					 convert1=totalHour1+":"+minute1;
+					 var totalHour = hour - 12;
+					 	convert=totalHour+":"+minute;
+					 	if(totalHour<totalHour1){
+							 if(i==0){
+								 $scope.error0=" ";
+								 }
+								 if(i==1){
+								 $scope.error1=" ";
+								 }
+								 if(i==2){
+								 $scope.error2=" ";
+								 }
+								 if(i==3){
+								 $scope.error3=" ";
+								 }
+								 if(i==4){
+									 $scope.error4=" ";
+								 }
+								 if(i==5){
+								 $scope.error5=" ";
+								 }
+								 if(i==6){
+									 $scope.error6=" ";
+								 }
+								 }
+					 	 else if(totalHour == totalHour1 && minute >= minute1){
+							 if(i==0){
+								 $scope.error0="Starts Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.error1="Starts Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.error2="Starts Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.error3="Starts Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.error4="Starts Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.error5="Starts Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.error6="Starts Break Should be smaller";
+								 }
+							  }
+						 else if(totalHour == totalHour1 && minute<minute1){
+							 if(i==0){
+								 $scope.error0=" ";
+								 }
+								 if(i==1){
+								 $scope.error1=" ";
+								 }
+								 if(i==2){
+								 $scope.error2=" ";
+								 }
+								 if(i==3){
+								 $scope.error3=" ";
+								 }
+								 if(i==4){
+									 $scope.error4=" ";
+								 }
+								 if(i==5){
+								 $scope.error5=" ";
+								 }
+								 if(i==6){
+									 $scope.error6=" ";
+								 }
+							  }
+						
+						 else
+							 {
+							 if(i==0){
+								 $scope.error0="Starts Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.error1="Starts Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.error2="Starts Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.error3="Starts Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.error4="Starts Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.error5="Starts Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.error6="Starts Break Should be smaller";
+								 }
+							 		 }
+									
+	}
+	}
+	$scope.lowerThanEndBreak=function(i){
+		$scope.errors0="";
+		$scope.errors1="";
+		$scope.errors2="";
+		$scope.errors3="";
+		$scope.errors4="";
+		$scope.errors5="";
+		$scope.errors6="";
+		  var convert="";
+			var convert1="";
+			 var hour=Number($scope.clinic.clinicTimingList[i].endsBreak.match(/^(\d+)/)[1]);
+			 var hour1=Number($scope.clinic.clinicTimingList[i].endTime.match(/^(\d+)/)[1]);
+			var minute1=Number($scope.clinic.clinicTimingList[i].endTime.match(/:(\d+)/)[1]);
+			 var minute = Number($scope.clinic.clinicTimingList[i].endsBreak.match(/:(\d+)/)[1]);
+			 var AMPM=$scope.clinic.clinicTimingList[i].endsBreak.match(/\s(.*)$/)[1];
+	 		 var AMPMendTime=$scope.clinic.clinicTimingList[i].endTime.match(/\s(.*)$/)[1];
+	 		if(AMPMendTime=="AM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+	 			if(i==0){
+					 $scope.errors0="Ends Break Should be smaller";
+					 }
+					 if(i==1){
+					 $scope.errors1="Ends Break Should be smaller";
+					 }
+					 if(i==2){
+					 $scope.errors2="Ends Break Should be smaller";
+					 }
+					 if(i==3){
+					 $scope.errors3="Ends Break Should be smaller";
+					 }
+					 if(i==4){
+						 $scope.errors4="Ends Break Should be smaller";
+					 }
+					 if(i==5){
+					 $scope.errors5="Ends Break Should be smaller";
+					 }
+					 if(i==6){
+						 $scope.errors6="Ends Break Should be smaller";
+					 }
+				 }
+
+	 		 if(AMPMendTime=="AM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="PM"){
+		 		convert1=hour1+":"+minute1;
+		 		var totalHour=hour+12;
+		 		convert=totalHour+":"+minute;
+		 if(totalHour>hour1){
+			 if(i==0){
+				 $scope.errors0=" ";
+				 }
+				 if(i==1){
+				 $scope.errors1=" ";
+				 }
+				 if(i==2){
+				 $scope.errors2=" ";
+				 }
+				 if(i==3){
+				 $scope.errors3=" ";
+				 }
+				 if(i==4){
+					 $scope.errors4=" ";
+				 }
+				 if(i==5){
+				 $scope.errors5=" ";
+				 }
+				 if(i==6){
+					 $scope.errors6=" ";
+				 }
+		}
+		 else
+			 {
+			 if(i==0){
+				 $scope.errors0="Ends Break Should be smaller";
+				 }
+				 if(i==1){
+				 $scope.errors1="Ends Break Should be smaller";
+				 }
+				 if(i==2){
+				 $scope.errors2="Ends Break Should be smaller";
+				 }
+				 if(i==3){
+				 $scope.errors3="Ends Break Should be smaller";
+				 }
+				 if(i==4){
+					 $scope.errors4="Ends Break Should be smaller";
+				 }
+				 if(i==5){
+				 $scope.errors5="Ends Break Should be smaller";
+				 }
+				 if(i==6){
+					 $scope.errors6="Ends Break Should be smaller";
+				 }
+	
+	 }
+		 		}
+			
+	 		 if(AMPMendTime=="PM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="PM"){
+				 var totalHour1 = hour1 + 12;
+				 convert1=totalHour1+":"+minute1;
+				 var totalHour = hour + 12;
+				 convert=totalHour+":"+minute;
+				 if(totalHour<totalHour1){
+					 if(i==0){
+						 $scope.errors0=" ";
+						 }
+						 if(i==1){
+						 $scope.errors1=" ";
+						 }
+						 if(i==2){
+						 $scope.errors2=" ";
+						 }
+						 if(i==3){
+						 $scope.errors3=" ";
+						 }
+						 if(i==4){
+							 $scope.errors4=" ";
+						 }
+						 if(i==5){
+						 $scope.errors5=" ";
+						 }
+						 if(i==6){
+							 $scope.errors6=" ";
+						 }
+						 }
+				 else if(totalHour == totalHour1 && minute >= minute1){
+					 if(i==0){
+						 $scope.errors0="Ends Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.errors1="Ends Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.errors2="Ends Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.errors3="Ends Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.errors4="Ends Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.errors5="Ends Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.errors6="Ends Break Should be smaller";
+						 }
+			
+					  }
+				 else if(totalHour == totalHour1 && minute<minute1){
+					 if(i==0){
+						 $scope.errors0=" ";
+						 }
+						 if(i==1){
+						 $scope.errors1=" ";
+						 }
+						 if(i==2){
+						 $scope.errors2=" ";
+						 }
+						 if(i==3){
+						 $scope.errors3=" ";
+						 }
+						 if(i==4){
+							 $scope.errors4=" ";
+						 }
+						 if(i==5){
+						 $scope.errors5=" ";
+						 }
+						 if(i==6){
+							 $scope.errors6=" ";
+						 }
+					  }
+				
+					 else
+					 {
+					 if(i==0){
+						 $scope.errors0="Ends Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.errors1="Ends Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.errors2="Ends Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.errors3="Ends Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.errors4="Ends Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.errors5="Ends Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.errors6="Ends Break Should be smaller";
+						 }
+					 		 }
+					  
+			  }
+			 if(AMPMendTime=="PM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+				 var totalHour1 = hour1 + 12;
+				 convert1=totalHour1+":"+minute1;
+				 var totalHour = hour + 12;
+				 convert=totalHour+":"+minute;
+				 if(totalHour<totalHour1){
+					 if(i==0){
+						 $scope.errors0=" ";
+						 }
+						 if(i==1){
+						 $scope.errors1=" ";
+						 }
+						 if(i==2){
+						 $scope.errors2=" ";
+						 }
+						 if(i==3){
+						 $scope.errors3=" ";
+						 }
+						 if(i==4){
+							 $scope.errors4=" ";
+						 }
+						 if(i==5){
+						 $scope.errors5=" ";
+						 }
+						 if(i==6){
+							 $scope.errors6=" ";
+						 }
+						 }
+				 else if(totalHour == totalHour1 && minute >= minute1){
+					 if(i==0){
+						 $scope.errors0="Ends Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.errors1="Ends Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.errors2="Ends Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.errors3="Ends Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.errors4="Ends Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.errors5="Ends Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.errors6="Ends Break Should be smaller";
+						 }
+				
+					  }
+				 else if(totalHour == totalHour1 && minute<minute1){
+					 if(i==0){
+						 $scope.errors0=" ";
+						 }
+						 if(i==1){
+						 $scope.errors1=" ";
+						 }
+						 if(i==2){
+						 $scope.errors2=" ";
+						 }
+						 if(i==3){
+						 $scope.errors3=" ";
+						 }
+						 if(i==4){
+							 $scope.errors4=" ";
+						 }
+						 if(i==5){
+						 $scope.errors5=" ";
+						 }
+						 if(i==6){
+							 $scope.errors6=" ";
+						 }
+					  }
+				
+					 else
+					 {
+					 if(i==0){
+						 $scope.errors0="Ends Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.errors1="Ends Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.errors2="Ends Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.errors3="Ends Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.errors4="Ends Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.errors5="Ends Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.errors6="Ends Break Should be smaller";
+						 }
+					 		 }
+					  
+			  }	
+	 		 if(AMPMendTime=="PM" && AMPM == "AM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="PM"){
+	 			
+	 			 if(i==0){
+	 				 $scope.errors0="Ends Break Should be smaller";
+	 				 }
+	 				 if(i==1){
+	 				 $scope.errors1="Ends Break Should be smaller";
+	 				 }
+	 				 if(i==2){
+	 				 $scope.errors2="Ends Break Should be smaller";
+	 				 }
+	 				 if(i==3){
+	 				 $scope.errors3="Ends Break Should be smaller";
+	 				 }
+	 				 if(i==4){
+	 					 $scope.errors4="Ends Break Should be smaller";
+	 				 }
+	 				 if(i==5){
+	 				 $scope.errors5="Ends Break Should be smaller";
+	 				 }
+	 				 if(i==6){
+	 					 $scope.errors6="Ends Break Should be smaller";
+	 				 }
+	 		}
+				 if(AMPMendTime=="AM" && hour1 != 12 && AMPM == "AM" && hour !=12){
+				 
+					 convert1=hour1+":"+minute1;
+			 
+				 convert=hour+":"+minute;
+				  if(hour<hour1){
+					 if(i==0){
+						 $scope.errors0=" ";
+						 }
+						 if(i==1){
+						 $scope.errors1=" ";
+						 }
+						 if(i==2){
+						 $scope.errors2=" ";
+						 }
+						 if(i==3){
+						 $scope.errors3=" ";
+						 }
+						 if(i==4){
+							 $scope.errors4=" ";
+						 }
+						 if(i==5){
+						 $scope.errors5=" ";
+						 }
+						 if(i==6){
+							 $scope.errors6=" ";
+						 }
+						 }
+				 else if(hour == hour1 && minute >= minute1){
+					 if(i==0){
+						 $scope.errors0="Ends Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.errors1="Ends Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.errors2="Ends Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.errors3="Ends Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.errors4="Ends Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.errors5="Ends Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.errors6="Ends Break Should be smaller";
+						 }
+					  }
+				 else if(hour == hour1 && minute<minute1){
+					 if(i==0){
+						 $scope.errors0=" ";
+						 }
+						 if(i==1){
+						 $scope.errors1=" ";
+						 }
+						 if(i==2){
+						 $scope.errors2=" ";
+						 }
+						 if(i==3){
+						 $scope.errors3=" ";
+						 }
+						 if(i==4){
+							 $scope.errors4=" ";
+						 }
+						 if(i==5){
+						 $scope.errors5=" ";
+						 }
+						 if(i==6){
+							 $scope.errors6=" ";
+						 }
+					  }
+				
+					 else
+					 {
+					 if(i==0){
+						 $scope.errors0="Ends Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.errors1="Ends Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.errors2="Ends Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.errors3="Ends Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.errors4="Ends Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.errors5="Ends Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.errors6="Ends Break Should be smaller";
+						 }
+						 }
+					  }	
+				 if(AMPMendTime=="AM" && hour1 == 12 && AMPM == "AM" && hour == 12){
+					 var totalHour1 = hour1 - 12;
+					 	convert1=totalHour1+":"+minute1;
+					 	 var totalHour = hour - 12;
+						 	convert=totalHour+":"+minute;
+							 if(totalHour<totalHour1){
+								 if(i==0){
+									 $scope.errors0=" ";
+									 }
+									 if(i==1){
+									 $scope.errors1=" ";
+									 }
+									 if(i==2){
+									 $scope.errors2=" ";
+									 }
+									 if(i==3){
+									 $scope.errors3=" ";
+									 }
+									 if(i==4){
+										 $scope.errors4=" ";
+									 }
+									 if(i==5){
+									 $scope.errors5=" ";
+									 }
+									 if(i==6){
+										 $scope.errors6=" ";
+									 }
+									 }
+							 else if(totalHour == totalHour1 && minute >= minute1){
+								 if(i==0){
+									 $scope.errors0="Ends Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.errors1="Ends Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.errors2="Ends Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.errors3="Ends Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.errors4="Ends Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.errors5="Ends Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.errors6="Ends Break Should be smaller";
+									 }
+								  }
+							 else if(totalHour == totalHour1 && minute<minute1){
+								 if(i==0){
+									 $scope.errors0=" ";
+									 }
+									 if(i==1){
+									 $scope.errors1=" ";
+									 }
+									 if(i==2){
+									 $scope.errors2=" ";
+									 }
+									 if(i==3){
+									 $scope.errors3=" ";
+									 }
+									 if(i==4){
+										 $scope.errors4=" ";
+									 }
+									 if(i==5){
+									 $scope.errors5=" ";
+									 }
+									 if(i==6){
+										 $scope.errors6=" ";
+									 }
+								  }
+										 else
+								 {
+								 if(i==0){
+									 $scope.errors0="Ends Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.errors1="Ends Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.errors2="Ends Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.errors3="Ends Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.errors4="Ends Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.errors5="Ends Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.errors6="Ends Break Should be smaller";
+									 }
+									 }											 }
+				 if(AMPMendTime=="AM" && hour1 != 12 && AMPM == "AM" && hour ==12){
+					 convert1=hour1+":"+minute1;
+					 var totalHour = hour - 12;
+					 	convert=totalHour+":"+minute;
+						 if(totalHour<hour1){
+							 if(i==0){
+								 $scope.errors0=" ";
+								 }
+								 if(i==1){
+								 $scope.errors1=" ";
+								 }
+								 if(i==2){
+								 $scope.errors2=" ";
+								 }
+								 if(i==3){
+								 $scope.errors3=" ";
+								 }
+								 if(i==4){
+									 $scope.errors4=" ";
+								 }
+								 if(i==5){
+								 $scope.errors5=" ";
+								 }
+								 if(i==6){
+									 $scope.errors6=" ";
+								 }
+								 }
+						 else if(totalHour == hour1 && minute >= minute1){
+							 if(i==0){
+								 $scope.errors0="Ends Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.errors1="Ends Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.errors2="Ends Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.errors3="Ends Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.errors4="Ends Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.errors5="Ends Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.errors6="Ends Break Should be smaller";
+								 }
+							  }
+						 else if(totalHour == hour1 && minute<minute1){
+							 if(i==0){
+								 $scope.errors0=" ";
+								 }
+								 if(i==1){
+								 $scope.errors1=" ";
+								 }
+								 if(i==2){
+								 $scope.errors2=" ";
+								 }
+								 if(i==3){
+								 $scope.errors3=" ";
+								 }
+								 if(i==4){
+									 $scope.errors4=" ";
+								 }
+								 if(i==5){
+								 $scope.errors5=" ";
+								 }
+								 if(i==6){
+									 $scope.errors6=" ";
+								 }
+							  }
+						 else
+							 {
+							 if(i==0){
+								 $scope.errors0="Ends Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.errors1="Ends Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.errors2="Ends Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.errors3="Ends Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.errors4="Ends Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.errors5="Ends Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.errors6="Ends Break Should be smaller";
+								 }
+								 }
+						 }		
+				 if(AMPMendTime=="AM" && hour1 == 12 && AMPM == "AM" && hour != 12){
+					 var totalHour1 = hour1 - 12;
+					 	convert1=totalHour1+":"+minute1;
+					 	 convert=hour+":"+minute;
+						 if(hour<totalHour1){
+							 if(i==0){
+								 $scope.errors0=" ";
+								 }
+								 if(i==1){
+								 $scope.errors1=" ";
+								 }
+								 if(i==2){
+								 $scope.errors2=" ";
+								 }
+								 if(i==3){
+								 $scope.errors3=" ";
+								 }
+								 if(i==4){
+									 $scope.errors4=" ";
+								 }
+								 if(i==5){
+								 $scope.errors5=" ";
+								 }
+								 if(i==6){
+									 $scope.errors6=" ";
+								 }
+								 }
+						 else if(hour == totalHour1 && minute >= minute1){
+							 if(i==0){
+								 $scope.errors0="Ends Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.errors1="Ends Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.errors2="Ends Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.errors3="Ends Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.errors4="Ends Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.errors5="Ends Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.errors6="Ends Break Should be smaller";
+								 }
+							  }
+						 else if(hour == totalHour1 && minute<minute1){
+							 if(i==0){
+								 $scope.errors0=" ";
+								 }
+								 if(i==1){
+								 $scope.errors1=" ";
+								 }
+								 if(i==2){
+								 $scope.errors2=" ";
+								 }
+								 if(i==3){
+								 $scope.errors3=" ";
+								 }
+								 if(i==4){
+									 $scope.errors4=" ";
+								 }
+								 if(i==5){
+								 $scope.errors5=" ";
+								 }
+								 if(i==6){
+									 $scope.errors6=" ";
+								 }
+							  }
+							 else
+							 {
+							 if(i==0){
+								 $scope.errors0="Ends Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.errors1="Ends Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.errors2="Ends Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.errors3="Ends Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.errors4="Ends Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.errors5="Ends Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.errors6="Ends Break Should be smaller";
+								 }
+								 }
+						 }
+				 if(AMPMendTime=="PM" && AMPM == "AM" && hour != 12 && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+					 var totalHour1 = hour1 + 12;
+					 convert1=totalHour1+":"+minute1;
+					 convert=hour+":"+minute;
+					 if(hour<totalHour1){
+						 if(i==0){
+							 $scope.errors0=" ";
+							 }
+							 if(i==1){
+							 $scope.errors1=" ";
+							 }
+							 if(i==2){
+							 $scope.errors2=" ";
+							 }
+							 if(i==3){
+							 $scope.errors3=" ";
+							 }
+							 if(i==4){
+								 $scope.errors4=" ";
+							 }
+							 if(i==5){
+							 $scope.errors5=" ";
+							 }
+							 if(i==6){
+								 $scope.errors6=" ";
+							 }
+							 }
+					 else if(hour == totalHour1 && minute >= minute1){
+						 if(i==0){
+							 $scope.errors0="Ends Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.errors1="Ends Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.errors2="Ends Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.errors3="Ends Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.errors4="Ends Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.errors5="Ends Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.errors6="Ends Break Should be smaller";
+							 }
+						  }
+					 else if(hour == totalHour1 && minute<minute1){
+						 if(i==0){
+							 $scope.errors0=" ";
+							 }
+							 if(i==1){
+							 $scope.errors1=" ";
+							 }
+							 if(i==2){
+							 $scope.errors2=" ";
+							 }
+							 if(i==3){
+							 $scope.errors3=" ";
+							 }
+							 if(i==4){
+								 $scope.errors4=" ";
+							 }
+							 if(i==5){
+							 $scope.errors5=" ";
+							 }
+							 if(i==6){
+								 $scope.errors6=" ";
+							 }
+						  }
+					 else
+						 {
+						 if(i==0){
+							 $scope.errors0="Ends Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.errors1="Ends Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.errors2="Ends Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.errors3="Ends Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.errors4="Ends Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.errors5="Ends Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.errors6="Ends Break Should be smaller";
+							 }
+							 }
+					 }
+
+				 if(AMPMendTime=="PM" && AMPM == "AM" && hour == 12 && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+					 var totalHour1 = hour1 + 12;
+					 convert1=totalHour1+":"+minute1;
+					 var totalHour = hour - 12;
+					 	convert=totalHour+":"+minute;
+						 if(totalHour<totalHour1){
+							 if(i==0){
+								 $scope.errors0=" ";
+								 }
+								 if(i==1){
+								 $scope.errors1=" ";
+								 }
+								 if(i==2){
+								 $scope.errors2=" ";
+								 }
+								 if(i==3){
+								 $scope.errors3=" ";
+								 }
+								 if(i==4){
+									 $scope.errors4=" ";
+								 }
+								 if(i==5){
+								 $scope.errors5=" ";
+								 }
+								 if(i==6){
+									 $scope.errors6=" ";
+								 }
+								 }
+						 else if(totalHour == totalHour1 && minute >= minute1){
+							 if(i==0){
+								 $scope.errors0="Ends Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.errors1="Ends Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.errors2="Ends Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.errors3="Ends Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.errors4="Ends Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.errors5="Ends Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.errors6="Ends Break Should be smaller";
+								 }
+							  }
+						 else if(totalHour == totalHour1 && minute<minute1){
+							 if(i==0){
+								 $scope.errors0=" ";
+								 }
+								 if(i==1){
+								 $scope.errors1=" ";
+								 }
+								 if(i==2){
+								 $scope.errors2=" ";
+								 }
+								 if(i==3){
+								 $scope.errors3=" ";
+								 }
+								 if(i==4){
+									 $scope.errors4=" ";
+								 }
+								 if(i==5){
+								 $scope.errors5=" ";
+								 }
+								 if(i==6){
+									 $scope.errors6=" ";
+								 }
+							  }
+						 else
+							 {
+							 if(i==0){
+								 $scope.errors0="Ends Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.errors1="Ends Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.errors2="Ends Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.errors3="Ends Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.errors4="Ends Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.errors5="Ends Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.errors6="Ends Break Should be smaller";
+								 }
+								 
+							 }
+						 }		
+	}	
+			  
  $scope.resetDatePicker=function(workingDayId){
 		switch(workingDayId) {
 	    case 0:
@@ -148,6 +1977,7 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 		requestHandler.getRequest("Staff/getClinic.json?clinicId="+$stateParams.id,"").then(function(response){
 			clinicOriginal=angular.copy(response.data.clinicsForm);
 			$scope.clinic= response.data.clinicsForm;
+			 
 			$('#sunStartTime').data("DateTimePicker").setDate($scope.clinic.clinicTimingList[0].startTime);
 			$('#sunEndTime').data("DateTimePicker").setDate($scope.clinic.clinicTimingList[0].endTime);
 			$('#sunStartsBreak').data("DateTimePicker").setDate($scope.clinic.clinicTimingList[0].startsBreak);
@@ -176,15 +2006,1846 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 			$('#satEndTime').data("DateTimePicker").setDate($scope.clinic.clinicTimingList[6].endTime);
 			$('#satStartsBreak').data("DateTimePicker").setDate($scope.clinic.clinicTimingList[6].startsBreak);
 			$('#satEndsBreak').data("DateTimePicker").setDate($scope.clinic.clinicTimingList[6].endsBreak);
-			});
+			
+		});
+ 
 		$scope.updateClinic=function(){
 			requestHandler.postRequest("Staff/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
 				Flash.create('success', "You have Successfully Updated!");
 					  $location.path('dashboard/clinic');
+			
 			});
 		};
+		$scope.lowerThanStartBreak=function(i){
+			
+			  var convert="";
+				var convert1="";
+				 var hour=Number($scope.clinic.clinicTimingList[i].startsBreak.match(/^(\d+)/)[1]);
+				 var hour1=Number($scope.clinic.clinicTimingList[i].endTime.match(/^(\d+)/)[1]);
+				var minute1=Number($scope.clinic.clinicTimingList[i].endTime.match(/:(\d+)/)[1]);
+				 var minute = Number($scope.clinic.clinicTimingList[i].startsBreak.match(/:(\d+)/)[1]);
+				 var AMPM=$scope.clinic.clinicTimingList[i].startsBreak.match(/\s(.*)$/)[1];
+		 		 var AMPMendTime=$scope.clinic.clinicTimingList[i].endTime.match(/\s(.*)$/)[1];
+		 		if(AMPMendTime=="AM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="PM"){
+		 		convert1=hour1+":"+minute1;
+		 		var totalHour=hour+12;
+		 		convert=totalHour+":"+minute;
+		 if(totalHour>hour1){
+			 if(i==0){
+				 $scope.error0=" ";
+				 }
+				 if(i==1){
+				 $scope.error1=" ";
+				 }
+				 if(i==2){
+				 $scope.error2=" ";
+				 }
+				 if(i==3){
+				 $scope.error3=" ";
+				 }
+				 if(i==4){
+					 $scope.error4=" ";
+				 }
+				 if(i==5){
+				 $scope.error5=" ";
+				 }
+				 if(i==6){
+					 $scope.error6=" ";
+				 }
+				}
+		 else
+			 {
+			 if(i==0){
+				 $scope.error0="Starts Break Should be smaller";
+				 }
+				 if(i==1){
+				 $scope.error1="Starts Break Should be smaller";
+				 }
+				 if(i==2){
+				 $scope.error2="Starts Break Should be smaller";
+				 }
+				 if(i==3){
+				 $scope.error3="Starts Break Should be smaller";
+				 }
+				 if(i==4){
+					 $scope.error4="Starts Break Should be smaller";
+				 }
+				 if(i==5){
+				 $scope.error5="Starts Break Should be smaller";
+				 }
+				 if(i==6){
+					 $scope.error6="Starts Break Should be smaller";
+				 }
+			
+			 }
+		 		}
+				 if(AMPMendTime=="PM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+					 var totalHour1 = hour1 + 12;
+					 convert1=totalHour1+":"+minute1;
+					 var totalHour = hour + 12;
+					 convert=totalHour+":"+minute;
+					 if(totalHour<totalHour1){
+						 if(i==0){
+							 $scope.error0=" ";
+							 }
+							 if(i==1){
+							 $scope.error1=" ";
+							 }
+							 if(i==2){
+							 $scope.error2=" ";
+							 }
+							 if(i==3){
+							 $scope.error3=" ";
+							 }
+							 if(i==4){
+								 $scope.error4=" ";
+							 }
+							 if(i==5){
+							 $scope.error5=" ";
+							 }
+							 if(i==6){
+								 $scope.error6=" ";
+							 }
+							 }
+					 else if(totalHour == totalHour1 && minute >= minute1){
+						 if(i==0){
+							 $scope.error0="Starts Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.error1="Starts Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.error2="Starts Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.error3="Starts Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.error4="Starts Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.error5="Starts Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.error6="Starts Break Should be smaller";
+							 }
+						  }
+					 else if(totalHour == totalHour1 && minute<minute1){
+						 if(i==0){
+							 $scope.error0=" ";
+							 }
+							 if(i==1){
+							 $scope.error1=" ";
+							 }
+							 if(i==2){
+							 $scope.error2=" ";
+							 }
+							 if(i==3){
+							 $scope.error3=" ";
+							 }
+							 if(i==4){
+								 $scope.error4=" ";
+							 }
+							 if(i==5){
+							 $scope.error5=" ";
+							 }
+							 if(i==6){
+								 $scope.error6=" ";
+							 }
+						  }
+					
+						 else
+						 {
+						 if(i==0){
+							 $scope.error0="Starts Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.error1="Starts Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.error2="Starts Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.error3="Starts Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.error4="Starts Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.error5="Starts Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.error6="Starts Break Should be smaller";
+							 }
+						 		 }
+						  
+				  }	
+				 if(AMPMendTime=="PM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="PM"){
+					 var totalHour1 = hour1 + 12;
+					 convert1=totalHour1+":"+minute1;
+					 var totalHour = hour + 12;
+					 convert=totalHour+":"+minute;
+					 if(totalHour<totalHour1){
+						 if(i==0){
+							 $scope.error0=" ";
+							 }
+							 if(i==1){
+							 $scope.error1=" ";
+							 }
+							 if(i==2){
+							 $scope.error2=" ";
+							 }
+							 if(i==3){
+							 $scope.error3=" ";
+							 }
+							 if(i==4){
+								 $scope.error4=" ";
+							 }
+							 if(i==5){
+							 $scope.error5=" ";
+							 }
+							 if(i==6){
+								 $scope.error6=" ";
+							 }
+							 }
+					 else if(totalHour == totalHour1 && minute >= minute1){
+						 if(i==0){
+							 $scope.error0="Starts Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.error1="Starts Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.error2="Starts Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.error3="Starts Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.error4="Starts Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.error5="Starts Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.error6="Starts Break Should be smaller";
+							 }
+						  }
+					 else if(totalHour == totalHour1 && minute<minute1){
+						 if(i==0){
+							 $scope.error0=" ";
+							 }
+							 if(i==1){
+							 $scope.error1=" ";
+							 }
+							 if(i==2){
+							 $scope.error2=" ";
+							 }
+							 if(i==3){
+							 $scope.error3=" ";
+							 }
+							 if(i==4){
+								 $scope.error4=" ";
+							 }
+							 if(i==5){
+							 $scope.error5=" ";
+							 }
+							 if(i==6){
+								 $scope.error6=" ";
+							 }
+						  }
+					
+						 else
+						 {
+						 if(i==0){
+							 $scope.error0="Starts Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.error1="Starts Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.error2="Starts Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.error3="Starts Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.error4="Starts Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.error5="Starts Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.error6="Starts Break Should be smaller";
+							 }
+						 		 }
+						  
+				  }	
+
+				 if(AMPMendTime=="AM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+				 	 if(i==0){
+				 		 $scope.error0="Starts Break Should be smaller";
+				 		 }
+				 		 if(i==1){
+				 		 $scope.error1="Starts Break Should be smaller";
+				 		 }
+				 		 if(i==2){
+				 		 $scope.error2="Starts Break Should be smaller";
+				 		 }
+				 		 if(i==3){
+				 		 $scope.error3="Starts Break Should be smaller";
+				 		 }
+				 		 if(i==4){
+				 			 $scope.error4="Starts Break Should be smaller";
+				 		 }
+				 		 if(i==5){
+				 		 $scope.error5="Starts Break Should be smaller";
+				 		 }
+				 		 if(i==6){
+				 			 $scope.error6="Starts Break Should be smaller";
+				 		 }
+				 }
+
+				 if(AMPMendTime=="PM" && AMPM == "AM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="PM"){
+	 if(i==0){
+		 $scope.error0="Starts Break Should be smaller";
+		 }
+		 if(i==1){
+		 $scope.error1="Starts Break Should be smaller";
+		 }
+		 if(i==2){
+		 $scope.error2="Starts Break Should be smaller";
+		 }
+		 if(i==3){
+		 $scope.error3="Starts Break Should be smaller";
+		 }
+		 if(i==4){
+			 $scope.error4="Starts Break Should be smaller";
+		 }
+		 if(i==5){
+		 $scope.error5="Starts Break Should be smaller";
+		 }
+		 if(i==6){
+			 $scope.error6="Starts Break Should be smaller";
+		 }
+}
+					 if(AMPMendTime=="AM" && hour1 != 12 && AMPM == "AM" && hour !=12){
+					 
+						 convert1=hour1+":"+minute1;
+				 
+					 convert=hour+":"+minute;
+					  if(hour<hour1){
+						 if(i==0){
+							 $scope.error0=" ";
+							 }
+							 if(i==1){
+							 $scope.error1=" ";
+							 }
+							 if(i==2){
+							 $scope.error2=" ";
+							 }
+							 if(i==3){
+							 $scope.error3=" ";
+							 }
+							 if(i==4){
+								 $scope.error4=" ";
+							 }
+							 if(i==5){
+							 $scope.error5=" ";
+							 }
+							 if(i==6){
+								 $scope.error6=" ";
+							 }
+							 }
+					 else if(hour == hour1 && minute >= minute1){
+						 if(i==0){
+							 $scope.error0="Starts Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.error1="Starts Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.error2="Starts Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.error3="Starts Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.error4="Starts Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.error5="Starts Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.error6="Starts Break Should be smaller";
+							 }
+						  }
+					 else if(hour == hour1 && minute<minute1){
+						 if(i==0){
+							 $scope.error0=" ";
+							 }
+							 if(i==1){
+							 $scope.error1=" ";
+							 }
+							 if(i==2){
+							 $scope.error2=" ";
+							 }
+							 if(i==3){
+							 $scope.error3=" ";
+							 }
+							 if(i==4){
+								 $scope.error4=" ";
+							 }
+							 if(i==5){
+							 $scope.error5=" ";
+							 }
+							 if(i==6){
+								 $scope.error6=" ";
+							 }
+						  }
+					
+					 else
+						 {
+						 if(i==0){
+							 $scope.error0="Starts Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.error1="Starts Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.error2="Starts Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.error3="Starts Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.error4="Starts Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.error5="Starts Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.error6="Starts Break Should be smaller";
+							 }
+						 		 }
+					 }
+					 if(AMPMendTime=="AM" && hour1 == 12 && AMPM == "AM" && hour == 12){
+						 var totalHour1 = hour1 - 12;
+						 	convert1=totalHour1+":"+minute1;
+						 	 var totalHour = hour - 12;
+							 	convert=totalHour+":"+minute;
+							 	if(totalHour<totalHour1){
+									 if(i==0){
+										 $scope.error0=" ";
+										 }
+										 if(i==1){
+										 $scope.error1=" ";
+										 }
+										 if(i==2){
+										 $scope.error2=" ";
+										 }
+										 if(i==3){
+										 $scope.error3=" ";
+										 }
+										 if(i==4){
+											 $scope.error4=" ";
+										 }
+										 if(i==5){
+										 $scope.error5=" ";
+										 }
+										 if(i==6){
+											 $scope.error6=" ";
+										 }
+										 }
+							 	 else if(totalHour == totalHour1 && minute >= minute1){
+									 if(i==0){
+										 $scope.error0="Starts Break Should be smaller";
+										 }
+										 if(i==1){
+										 $scope.error1="Starts Break Should be smaller";
+										 }
+										 if(i==2){
+										 $scope.error2="Starts Break Should be smaller";
+										 }
+										 if(i==3){
+										 $scope.error3="Starts Break Should be smaller";
+										 }
+										 if(i==4){
+											 $scope.error4="Starts Break Should be smaller";
+										 }
+										 if(i==5){
+										 $scope.error5="Starts Break Should be smaller";
+										 }
+										 if(i==6){
+											 $scope.error6="Starts Break Should be smaller";
+										 }
+									  }
+								 else if(totalHour == totalHour1 && minute<minute1){
+									 if(i==0){
+										 $scope.error0=" ";
+										 }
+										 if(i==1){
+										 $scope.error1=" ";
+										 }
+										 if(i==2){
+										 $scope.error2=" ";
+										 }
+										 if(i==3){
+										 $scope.error3=" ";
+										 }
+										 if(i==4){
+											 $scope.error4=" ";
+										 }
+										 if(i==5){
+										 $scope.error5=" ";
+										 }
+										 if(i==6){
+											 $scope.error6=" ";
+										 }
+									  }
+								
+										 else
+									 {
+									 if(i==0){
+										 $scope.error0="Starts Break Should be smaller";
+										 }
+										 if(i==1){
+										 $scope.error1="Starts Break Should be smaller";
+										 }
+										 if(i==2){
+										 $scope.error2="Starts Break Should be smaller";
+										 }
+										 if(i==3){
+										 $scope.error3="Starts Break Should be smaller";
+										 }
+										 if(i==4){
+											 $scope.error4="Starts Break Should be smaller";
+										 }
+										 if(i==5){
+										 $scope.error5="Starts Break Should be smaller";
+										 }
+										 if(i==6){
+											 $scope.error6="Starts Break Should be smaller";
+										 }
+									 		 }
+														 }
+					 if(AMPMendTime=="AM" && hour1 != 12 && AMPM == "AM" && hour ==12){
+						 convert1=hour1+":"+minute1;
+						 var totalHour = hour - 12;
+						 	convert=totalHour+":"+minute;
+						 	if(totalHour<hour1){
+								 if(i==0){
+									 $scope.error0=" ";
+									 }
+									 if(i==1){
+									 $scope.error1=" ";
+									 }
+									 if(i==2){
+									 $scope.error2=" ";
+									 }
+									 if(i==3){
+									 $scope.error3=" ";
+									 }
+									 if(i==4){
+										 $scope.error4=" ";
+									 }
+									 if(i==5){
+									 $scope.error5=" ";
+									 }
+									 if(i==6){
+										 $scope.error6=" ";
+									 }
+									 }
+						 	 else if(totalHour == hour1 && minute >= minute1){
+								 if(i==0){
+									 $scope.error0="Starts Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.error1="Starts Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.error2="Starts Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.error3="Starts Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.error4="Starts Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.error5="Starts Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.error6="Starts Break Should be smaller";
+									 }
+								  }
+							 else if(totalHour == hour1 && minute<minute1){
+								 if(i==0){
+									 $scope.error0=" ";
+									 }
+									 if(i==1){
+									 $scope.error1=" ";
+									 }
+									 if(i==2){
+									 $scope.error2=" ";
+									 }
+									 if(i==3){
+									 $scope.error3=" ";
+									 }
+									 if(i==4){
+										 $scope.error4=" ";
+									 }
+									 if(i==5){
+									 $scope.error5=" ";
+									 }
+									 if(i==6){
+										 $scope.error6=" ";
+									 }
+								  }
+							
+							 else
+								 {
+								 if(i==0){
+									 $scope.error0="Starts Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.error1="Starts Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.error2="Starts Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.error3="Starts Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.error4="Starts Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.error5="Starts Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.error6="Starts Break Should be smaller";
+									 }
+								 		 }
+								
+					 }		
+					 if(AMPMendTime=="AM" && hour1 == 12 && AMPM == "AM" && hour != 12){
+						 var totalHour1 = hour1 - 12;
+						 	convert1=totalHour1+":"+minute1;
+						 	 convert=hour+":"+minute;
+						 	if(hour<totalHour1){
+								 if(i==0){
+									 $scope.error0=" ";
+									 }
+									 if(i==1){
+									 $scope.error1=" ";
+									 }
+									 if(i==2){
+									 $scope.error2=" ";
+									 }
+									 if(i==3){
+									 $scope.error3=" ";
+									 }
+									 if(i==4){
+										 $scope.error4=" ";
+									 }
+									 if(i==5){
+									 $scope.error5=" ";
+									 }
+									 if(i==6){
+										 $scope.error6=" ";
+									 }
+									 }
+						 	 else if(hour == totalHour1 && minute >= minute1){
+								 if(i==0){
+									 $scope.error0="Starts Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.error1="Starts Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.error2="Starts Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.error3="Starts Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.error4="Starts Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.error5="Starts Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.error6="Starts Break Should be smaller";
+									 }
+								  }
+							 else if(hour == totalHour1 && minute<minute1){
+								 if(i==0){
+									 $scope.error0=" ";
+									 }
+									 if(i==1){
+									 $scope.error1=" ";
+									 }
+									 if(i==2){
+									 $scope.error2=" ";
+									 }
+									 if(i==3){
+									 $scope.error3=" ";
+									 }
+									 if(i==4){
+										 $scope.error4=" ";
+									 }
+									 if(i==5){
+									 $scope.error5=" ";
+									 }
+									 if(i==6){
+										 $scope.error6=" ";
+									 }
+								  }
+							
+								 else
+								 {
+								 if(i==0){
+									 $scope.error0="Starts Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.error1="Starts Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.error2="Starts Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.error3="Starts Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.error4="Starts Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.error5="Starts Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.error6="Starts Break Should be smaller";
+									 }
+								 		 }
+								}
+					 if(AMPMendTime=="PM" && AMPM == "AM" && hour != 12 && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM" ){
+						 var totalHour1 = hour1 + 12;
+						 convert1=totalHour1+":"+minute1;
+						 convert=hour+":"+minute;
+						 if(hour<totalHour1){
+							 if(i==0){
+								 $scope.error0=" ";
+								 }
+								 if(i==1){
+								 $scope.error1=" ";
+								 }
+								 if(i==2){
+								 $scope.error2=" ";
+								 }
+								 if(i==3){
+								 $scope.error3=" ";
+								 }
+								 if(i==4){
+									 $scope.error4=" ";
+								 }
+								 if(i==5){
+								 $scope.error5=" ";
+								 }
+								 if(i==6){
+									 $scope.error6=" ";
+								 }
+								 }
+						 else if(hour == totalHour1 && minute >= minute1){
+							 if(i==0){
+								 $scope.error0="Starts Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.error1="Starts Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.error2="Starts Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.error3="Starts Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.error4="Starts Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.error5="Starts Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.error6="Starts Break Should be smaller";
+								 }
+							  }
+						 else if(hour == totalHour1 && minute<minute1){
+							 if(i==0){
+								 $scope.error0=" ";
+								 }
+								 if(i==1){
+								 $scope.error1=" ";
+								 }
+								 if(i==2){
+								 $scope.error2=" ";
+								 }
+								 if(i==3){
+								 $scope.error3=" ";
+								 }
+								 if(i==4){
+									 $scope.error4=" ";
+								 }
+								 if(i==5){
+								 $scope.error5=" ";
+								 }
+								 if(i==6){
+									 $scope.error6=" ";
+								 }
+							  }
+						
+						 else
+							 {
+							 if(i==0){
+								 $scope.error0="Starts Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.error1="Starts Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.error2="Starts Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.error3="Starts Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.error4="Starts Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.error5="Starts Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.error6="Starts Break Should be smaller";
+								 }
+							 		 }
+						}
+					 if(AMPMendTime=="PM" && AMPM == "AM" && hour == 12 && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+						 var totalHour1 = hour1 + 12;
+						 convert1=totalHour1+":"+minute1;
+						 var totalHour = hour - 12;
+						 	convert=totalHour+":"+minute;
+						 	if(totalHour<totalHour1){
+								 if(i==0){
+									 $scope.error0=" ";
+									 }
+									 if(i==1){
+									 $scope.error1=" ";
+									 }
+									 if(i==2){
+									 $scope.error2=" ";
+									 }
+									 if(i==3){
+									 $scope.error3=" ";
+									 }
+									 if(i==4){
+										 $scope.error4=" ";
+									 }
+									 if(i==5){
+									 $scope.error5=" ";
+									 }
+									 if(i==6){
+										 $scope.error6=" ";
+									 }
+									 }
+						 	 else if(totalHour == totalHour1 && minute >= minute1){
+								 if(i==0){
+									 $scope.error0="Starts Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.error1="Starts Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.error2="Starts Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.error3="Starts Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.error4="Starts Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.error5="Starts Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.error6="Starts Break Should be smaller";
+									 }
+								  }
+							 else if(totalHour == totalHour1 && minute<minute1){
+								 if(i==0){
+									 $scope.error0=" ";
+									 }
+									 if(i==1){
+									 $scope.error1=" ";
+									 }
+									 if(i==2){
+									 $scope.error2=" ";
+									 }
+									 if(i==3){
+									 $scope.error3=" ";
+									 }
+									 if(i==4){
+										 $scope.error4=" ";
+									 }
+									 if(i==5){
+									 $scope.error5=" ";
+									 }
+									 if(i==6){
+										 $scope.error6=" ";
+									 }
+								  }
+							
+							 else
+								 {
+								 if(i==0){
+									 $scope.error0="Starts Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.error1="Starts Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.error2="Starts Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.error3="Starts Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.error4="Starts Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.error5="Starts Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.error6="Starts Break Should be smaller";
+									 }
+								 		 }
+										
+		}
+		}
+		$scope.lowerThanEndBreak=function(i){
+			$scope.errors0="";
+			$scope.errors1="";
+			$scope.errors2="";
+			$scope.errors3="";
+			$scope.errors4="";
+			$scope.errors5="";
+			$scope.errors6="";
+			  var convert="";
+				var convert1="";
+				 var hour=Number($scope.clinic.clinicTimingList[i].endsBreak.match(/^(\d+)/)[1]);
+				 var hour1=Number($scope.clinic.clinicTimingList[i].endTime.match(/^(\d+)/)[1]);
+				var minute1=Number($scope.clinic.clinicTimingList[i].endTime.match(/:(\d+)/)[1]);
+				 var minute = Number($scope.clinic.clinicTimingList[i].endsBreak.match(/:(\d+)/)[1]);
+				 var AMPM=$scope.clinic.clinicTimingList[i].endsBreak.match(/\s(.*)$/)[1];
+		 		 var AMPMendTime=$scope.clinic.clinicTimingList[i].endTime.match(/\s(.*)$/)[1];
+		 		if(AMPMendTime=="AM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+		 			if(i==0){
+						 $scope.errors0="Ends Break Should be smaller";
+						 }
+						 if(i==1){
+						 $scope.errors1="Ends Break Should be smaller";
+						 }
+						 if(i==2){
+						 $scope.errors2="Ends Break Should be smaller";
+						 }
+						 if(i==3){
+						 $scope.errors3="Ends Break Should be smaller";
+						 }
+						 if(i==4){
+							 $scope.errors4="Ends Break Should be smaller";
+						 }
+						 if(i==5){
+						 $scope.errors5="Ends Break Should be smaller";
+						 }
+						 if(i==6){
+							 $scope.errors6="Ends Break Should be smaller";
+						 }
+					 }
+
+		 		 if(AMPMendTime=="AM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="PM"){
+			 		convert1=hour1+":"+minute1;
+			 		var totalHour=hour+12;
+			 		convert=totalHour+":"+minute;
+			 if(totalHour>hour1){
+				 if(i==0){
+					 $scope.errors0=" ";
+					 }
+					 if(i==1){
+					 $scope.errors1=" ";
+					 }
+					 if(i==2){
+					 $scope.errors2=" ";
+					 }
+					 if(i==3){
+					 $scope.errors3=" ";
+					 }
+					 if(i==4){
+						 $scope.errors4=" ";
+					 }
+					 if(i==5){
+					 $scope.errors5=" ";
+					 }
+					 if(i==6){
+						 $scope.errors6=" ";
+					 }
+			}
+			 else
+				 {
+				 if(i==0){
+					 $scope.errors0="Ends Break Should be smaller";
+					 }
+					 if(i==1){
+					 $scope.errors1="Ends Break Should be smaller";
+					 }
+					 if(i==2){
+					 $scope.errors2="Ends Break Should be smaller";
+					 }
+					 if(i==3){
+					 $scope.errors3="Ends Break Should be smaller";
+					 }
+					 if(i==4){
+						 $scope.errors4="Ends Break Should be smaller";
+					 }
+					 if(i==5){
+					 $scope.errors5="Ends Break Should be smaller";
+					 }
+					 if(i==6){
+						 $scope.errors6="Ends Break Should be smaller";
+					 }
 		
-		
+		 }
+			 		}
+				
+		 		 if(AMPMendTime=="PM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="PM"){
+					 var totalHour1 = hour1 + 12;
+					 convert1=totalHour1+":"+minute1;
+					 var totalHour = hour + 12;
+					 convert=totalHour+":"+minute;
+					 if(totalHour<totalHour1){
+						 if(i==0){
+							 $scope.errors0=" ";
+							 }
+							 if(i==1){
+							 $scope.errors1=" ";
+							 }
+							 if(i==2){
+							 $scope.errors2=" ";
+							 }
+							 if(i==3){
+							 $scope.errors3=" ";
+							 }
+							 if(i==4){
+								 $scope.errors4=" ";
+							 }
+							 if(i==5){
+							 $scope.errors5=" ";
+							 }
+							 if(i==6){
+								 $scope.errors6=" ";
+							 }
+							 }
+					 else if(totalHour == totalHour1 && minute >= minute1){
+						 if(i==0){
+							 $scope.errors0="Ends Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.errors1="Ends Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.errors2="Ends Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.errors3="Ends Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.errors4="Ends Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.errors5="Ends Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.errors6="Ends Break Should be smaller";
+							 }
+				
+						  }
+					 else if(totalHour == totalHour1 && minute<minute1){
+						 if(i==0){
+							 $scope.errors0=" ";
+							 }
+							 if(i==1){
+							 $scope.errors1=" ";
+							 }
+							 if(i==2){
+							 $scope.errors2=" ";
+							 }
+							 if(i==3){
+							 $scope.errors3=" ";
+							 }
+							 if(i==4){
+								 $scope.errors4=" ";
+							 }
+							 if(i==5){
+							 $scope.errors5=" ";
+							 }
+							 if(i==6){
+								 $scope.errors6=" ";
+							 }
+						  }
+					
+						 else
+						 {
+						 if(i==0){
+							 $scope.errors0="Ends Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.errors1="Ends Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.errors2="Ends Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.errors3="Ends Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.errors4="Ends Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.errors5="Ends Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.errors6="Ends Break Should be smaller";
+							 }
+						 		 }
+						  
+				  }
+				 if(AMPMendTime=="PM" && AMPM == "PM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+					 var totalHour1 = hour1 + 12;
+					 convert1=totalHour1+":"+minute1;
+					 var totalHour = hour + 12;
+					 convert=totalHour+":"+minute;
+					 if(totalHour<totalHour1){
+						 if(i==0){
+							 $scope.errors0=" ";
+							 }
+							 if(i==1){
+							 $scope.errors1=" ";
+							 }
+							 if(i==2){
+							 $scope.errors2=" ";
+							 }
+							 if(i==3){
+							 $scope.errors3=" ";
+							 }
+							 if(i==4){
+								 $scope.errors4=" ";
+							 }
+							 if(i==5){
+							 $scope.errors5=" ";
+							 }
+							 if(i==6){
+								 $scope.errors6=" ";
+							 }
+							 }
+					 else if(totalHour == totalHour1 && minute >= minute1){
+						 if(i==0){
+							 $scope.errors0="Ends Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.errors1="Ends Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.errors2="Ends Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.errors3="Ends Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.errors4="Ends Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.errors5="Ends Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.errors6="Ends Break Should be smaller";
+							 }
+					
+						  }
+					 else if(totalHour == totalHour1 && minute<minute1){
+						 if(i==0){
+							 $scope.errors0=" ";
+							 }
+							 if(i==1){
+							 $scope.errors1=" ";
+							 }
+							 if(i==2){
+							 $scope.errors2=" ";
+							 }
+							 if(i==3){
+							 $scope.errors3=" ";
+							 }
+							 if(i==4){
+								 $scope.errors4=" ";
+							 }
+							 if(i==5){
+							 $scope.errors5=" ";
+							 }
+							 if(i==6){
+								 $scope.errors6=" ";
+							 }
+						  }
+					
+						 else
+						 {
+						 if(i==0){
+							 $scope.errors0="Ends Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.errors1="Ends Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.errors2="Ends Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.errors3="Ends Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.errors4="Ends Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.errors5="Ends Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.errors6="Ends Break Should be smaller";
+							 }
+						 		 }
+						  
+				  }	
+		 		 if(AMPMendTime=="PM" && AMPM == "AM" && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="PM"){
+		 			
+		 			 if(i==0){
+		 				 $scope.errors0="Ends Break Should be smaller";
+		 				 }
+		 				 if(i==1){
+		 				 $scope.errors1="Ends Break Should be smaller";
+		 				 }
+		 				 if(i==2){
+		 				 $scope.errors2="Ends Break Should be smaller";
+		 				 }
+		 				 if(i==3){
+		 				 $scope.errors3="Ends Break Should be smaller";
+		 				 }
+		 				 if(i==4){
+		 					 $scope.errors4="Ends Break Should be smaller";
+		 				 }
+		 				 if(i==5){
+		 				 $scope.errors5="Ends Break Should be smaller";
+		 				 }
+		 				 if(i==6){
+		 					 $scope.errors6="Ends Break Should be smaller";
+		 				 }
+		 		}
+					 if(AMPMendTime=="AM" && hour1 != 12 && AMPM == "AM" && hour !=12){
+					 
+						 convert1=hour1+":"+minute1;
+				 
+					 convert=hour+":"+minute;
+					  if(hour<hour1){
+						 if(i==0){
+							 $scope.errors0=" ";
+							 }
+							 if(i==1){
+							 $scope.errors1=" ";
+							 }
+							 if(i==2){
+							 $scope.errors2=" ";
+							 }
+							 if(i==3){
+							 $scope.errors3=" ";
+							 }
+							 if(i==4){
+								 $scope.errors4=" ";
+							 }
+							 if(i==5){
+							 $scope.errors5=" ";
+							 }
+							 if(i==6){
+								 $scope.errors6=" ";
+							 }
+							 }
+					 else if(hour == hour1 && minute >= minute1){
+						 if(i==0){
+							 $scope.errors0="Ends Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.errors1="Ends Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.errors2="Ends Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.errors3="Ends Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.errors4="Ends Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.errors5="Ends Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.errors6="Ends Break Should be smaller";
+							 }
+						  }
+					 else if(hour == hour1 && minute<minute1){
+						 if(i==0){
+							 $scope.errors0=" ";
+							 }
+							 if(i==1){
+							 $scope.errors1=" ";
+							 }
+							 if(i==2){
+							 $scope.errors2=" ";
+							 }
+							 if(i==3){
+							 $scope.errors3=" ";
+							 }
+							 if(i==4){
+								 $scope.errors4=" ";
+							 }
+							 if(i==5){
+							 $scope.errors5=" ";
+							 }
+							 if(i==6){
+								 $scope.errors6=" ";
+							 }
+						  }
+					
+						 else
+						 {
+						 if(i==0){
+							 $scope.errors0="Ends Break Should be smaller";
+							 }
+							 if(i==1){
+							 $scope.errors1="Ends Break Should be smaller";
+							 }
+							 if(i==2){
+							 $scope.errors2="Ends Break Should be smaller";
+							 }
+							 if(i==3){
+							 $scope.errors3="Ends Break Should be smaller";
+							 }
+							 if(i==4){
+								 $scope.errors4="Ends Break Should be smaller";
+							 }
+							 if(i==5){
+							 $scope.errors5="Ends Break Should be smaller";
+							 }
+							 if(i==6){
+								 $scope.errors6="Ends Break Should be smaller";
+							 }
+							 }
+						  }	
+					 if(AMPMendTime=="AM" && hour1 == 12 && AMPM == "AM" && hour == 12){
+						 var totalHour1 = hour1 - 12;
+						 	convert1=totalHour1+":"+minute1;
+						 	 var totalHour = hour - 12;
+							 	convert=totalHour+":"+minute;
+								 if(totalHour<totalHour1){
+									 if(i==0){
+										 $scope.errors0=" ";
+										 }
+										 if(i==1){
+										 $scope.errors1=" ";
+										 }
+										 if(i==2){
+										 $scope.errors2=" ";
+										 }
+										 if(i==3){
+										 $scope.errors3=" ";
+										 }
+										 if(i==4){
+											 $scope.errors4=" ";
+										 }
+										 if(i==5){
+										 $scope.errors5=" ";
+										 }
+										 if(i==6){
+											 $scope.errors6=" ";
+										 }
+										 }
+								 else if(totalHour == totalHour1 && minute >= minute1){
+									 if(i==0){
+										 $scope.errors0="Ends Break Should be smaller";
+										 }
+										 if(i==1){
+										 $scope.errors1="Ends Break Should be smaller";
+										 }
+										 if(i==2){
+										 $scope.errors2="Ends Break Should be smaller";
+										 }
+										 if(i==3){
+										 $scope.errors3="Ends Break Should be smaller";
+										 }
+										 if(i==4){
+											 $scope.errors4="Ends Break Should be smaller";
+										 }
+										 if(i==5){
+										 $scope.errors5="Ends Break Should be smaller";
+										 }
+										 if(i==6){
+											 $scope.errors6="Ends Break Should be smaller";
+										 }
+									  }
+								 else if(totalHour == totalHour1 && minute<minute1){
+									 if(i==0){
+										 $scope.errors0=" ";
+										 }
+										 if(i==1){
+										 $scope.errors1=" ";
+										 }
+										 if(i==2){
+										 $scope.errors2=" ";
+										 }
+										 if(i==3){
+										 $scope.errors3=" ";
+										 }
+										 if(i==4){
+											 $scope.errors4=" ";
+										 }
+										 if(i==5){
+										 $scope.errors5=" ";
+										 }
+										 if(i==6){
+											 $scope.errors6=" ";
+										 }
+									  }
+											 else
+									 {
+									 if(i==0){
+										 $scope.errors0="Ends Break Should be smaller";
+										 }
+										 if(i==1){
+										 $scope.errors1="Ends Break Should be smaller";
+										 }
+										 if(i==2){
+										 $scope.errors2="Ends Break Should be smaller";
+										 }
+										 if(i==3){
+										 $scope.errors3="Ends Break Should be smaller";
+										 }
+										 if(i==4){
+											 $scope.errors4="Ends Break Should be smaller";
+										 }
+										 if(i==5){
+										 $scope.errors5="Ends Break Should be smaller";
+										 }
+										 if(i==6){
+											 $scope.errors6="Ends Break Should be smaller";
+										 }
+										 }											 }
+					 if(AMPMendTime=="AM" && hour1 != 12 && AMPM == "AM" && hour ==12){
+						 convert1=hour1+":"+minute1;
+						 var totalHour = hour - 12;
+						 	convert=totalHour+":"+minute;
+							 if(totalHour<hour1){
+								 if(i==0){
+									 $scope.errors0=" ";
+									 }
+									 if(i==1){
+									 $scope.errors1=" ";
+									 }
+									 if(i==2){
+									 $scope.errors2=" ";
+									 }
+									 if(i==3){
+									 $scope.errors3=" ";
+									 }
+									 if(i==4){
+										 $scope.errors4=" ";
+									 }
+									 if(i==5){
+									 $scope.errors5=" ";
+									 }
+									 if(i==6){
+										 $scope.errors6=" ";
+									 }
+									 }
+							 else if(totalHour == hour1 && minute >= minute1){
+								 if(i==0){
+									 $scope.errors0="Ends Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.errors1="Ends Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.errors2="Ends Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.errors3="Ends Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.errors4="Ends Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.errors5="Ends Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.errors6="Ends Break Should be smaller";
+									 }
+								  }
+							 else if(totalHour == hour1 && minute<minute1){
+								 if(i==0){
+									 $scope.errors0=" ";
+									 }
+									 if(i==1){
+									 $scope.errors1=" ";
+									 }
+									 if(i==2){
+									 $scope.errors2=" ";
+									 }
+									 if(i==3){
+									 $scope.errors3=" ";
+									 }
+									 if(i==4){
+										 $scope.errors4=" ";
+									 }
+									 if(i==5){
+									 $scope.errors5=" ";
+									 }
+									 if(i==6){
+										 $scope.errors6=" ";
+									 }
+								  }
+							 else
+								 {
+								 if(i==0){
+									 $scope.errors0="Ends Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.errors1="Ends Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.errors2="Ends Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.errors3="Ends Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.errors4="Ends Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.errors5="Ends Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.errors6="Ends Break Should be smaller";
+									 }
+									 }
+							 }		
+					 if(AMPMendTime=="AM" && hour1 == 12 && AMPM == "AM" && hour != 12){
+						 var totalHour1 = hour1 - 12;
+						 	convert1=totalHour1+":"+minute1;
+						 	 convert=hour+":"+minute;
+							 if(hour<totalHour1){
+								 if(i==0){
+									 $scope.errors0=" ";
+									 }
+									 if(i==1){
+									 $scope.errors1=" ";
+									 }
+									 if(i==2){
+									 $scope.errors2=" ";
+									 }
+									 if(i==3){
+									 $scope.errors3=" ";
+									 }
+									 if(i==4){
+										 $scope.errors4=" ";
+									 }
+									 if(i==5){
+									 $scope.errors5=" ";
+									 }
+									 if(i==6){
+										 $scope.errors6=" ";
+									 }
+									 }
+							 else if(hour == totalHour1 && minute >= minute1){
+								 if(i==0){
+									 $scope.errors0="Ends Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.errors1="Ends Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.errors2="Ends Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.errors3="Ends Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.errors4="Ends Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.errors5="Ends Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.errors6="Ends Break Should be smaller";
+									 }
+								  }
+							 else if(hour == totalHour1 && minute<minute1){
+								 if(i==0){
+									 $scope.errors0=" ";
+									 }
+									 if(i==1){
+									 $scope.errors1=" ";
+									 }
+									 if(i==2){
+									 $scope.errors2=" ";
+									 }
+									 if(i==3){
+									 $scope.errors3=" ";
+									 }
+									 if(i==4){
+										 $scope.errors4=" ";
+									 }
+									 if(i==5){
+									 $scope.errors5=" ";
+									 }
+									 if(i==6){
+										 $scope.errors6=" ";
+									 }
+								  }
+								 else
+								 {
+								 if(i==0){
+									 $scope.errors0="Ends Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.errors1="Ends Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.errors2="Ends Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.errors3="Ends Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.errors4="Ends Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.errors5="Ends Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.errors6="Ends Break Should be smaller";
+									 }
+									 }
+							 }
+					 if(AMPMendTime=="PM" && AMPM == "AM" && hour != 12 && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+						 var totalHour1 = hour1 + 12;
+						 convert1=totalHour1+":"+minute1;
+						 convert=hour+":"+minute;
+						 if(hour<totalHour1){
+							 if(i==0){
+								 $scope.errors0=" ";
+								 }
+								 if(i==1){
+								 $scope.errors1=" ";
+								 }
+								 if(i==2){
+								 $scope.errors2=" ";
+								 }
+								 if(i==3){
+								 $scope.errors3=" ";
+								 }
+								 if(i==4){
+									 $scope.errors4=" ";
+								 }
+								 if(i==5){
+								 $scope.errors5=" ";
+								 }
+								 if(i==6){
+									 $scope.errors6=" ";
+								 }
+								 }
+						 else if(hour == totalHour1 && minute >= minute1){
+							 if(i==0){
+								 $scope.errors0="Ends Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.errors1="Ends Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.errors2="Ends Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.errors3="Ends Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.errors4="Ends Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.errors5="Ends Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.errors6="Ends Break Should be smaller";
+								 }
+							  }
+						 else if(hour == totalHour1 && minute<minute1){
+							 if(i==0){
+								 $scope.errors0=" ";
+								 }
+								 if(i==1){
+								 $scope.errors1=" ";
+								 }
+								 if(i==2){
+								 $scope.errors2=" ";
+								 }
+								 if(i==3){
+								 $scope.errors3=" ";
+								 }
+								 if(i==4){
+									 $scope.errors4=" ";
+								 }
+								 if(i==5){
+								 $scope.errors5=" ";
+								 }
+								 if(i==6){
+									 $scope.errors6=" ";
+								 }
+							  }
+						 else
+							 {
+							 if(i==0){
+								 $scope.errors0="Ends Break Should be smaller";
+								 }
+								 if(i==1){
+								 $scope.errors1="Ends Break Should be smaller";
+								 }
+								 if(i==2){
+								 $scope.errors2="Ends Break Should be smaller";
+								 }
+								 if(i==3){
+								 $scope.errors3="Ends Break Should be smaller";
+								 }
+								 if(i==4){
+									 $scope.errors4="Ends Break Should be smaller";
+								 }
+								 if(i==5){
+								 $scope.errors5="Ends Break Should be smaller";
+								 }
+								 if(i==6){
+									 $scope.errors6="Ends Break Should be smaller";
+								 }
+								 }
+						 }
+
+					 if(AMPMendTime=="PM" && AMPM == "AM" && hour == 12 && $scope.clinic.clinicTimingList[i].startTime.match(/\s(.*)$/)[1] =="AM"){
+						 var totalHour1 = hour1 + 12;
+						 convert1=totalHour1+":"+minute1;
+						 var totalHour = hour - 12;
+						 	convert=totalHour+":"+minute;
+							 if(totalHour<totalHour1){
+								 if(i==0){
+									 $scope.errors0=" ";
+									 }
+									 if(i==1){
+									 $scope.errors1=" ";
+									 }
+									 if(i==2){
+									 $scope.errors2=" ";
+									 }
+									 if(i==3){
+									 $scope.errors3=" ";
+									 }
+									 if(i==4){
+										 $scope.errors4=" ";
+									 }
+									 if(i==5){
+									 $scope.errors5=" ";
+									 }
+									 if(i==6){
+										 $scope.errors6=" ";
+									 }
+									 }
+							 else if(totalHour == totalHour1 && minute >= minute1){
+								 if(i==0){
+									 $scope.errors0="Ends Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.errors1="Ends Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.errors2="Ends Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.errors3="Ends Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.errors4="Ends Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.errors5="Ends Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.errors6="Ends Break Should be smaller";
+									 }
+								  }
+							 else if(totalHour == totalHour1 && minute<minute1){
+								 if(i==0){
+									 $scope.errors0=" ";
+									 }
+									 if(i==1){
+									 $scope.errors1=" ";
+									 }
+									 if(i==2){
+									 $scope.errors2=" ";
+									 }
+									 if(i==3){
+									 $scope.errors3=" ";
+									 }
+									 if(i==4){
+										 $scope.errors4=" ";
+									 }
+									 if(i==5){
+									 $scope.errors5=" ";
+									 }
+									 if(i==6){
+										 $scope.errors6=" ";
+									 }
+								  }
+							 else
+								 {
+								 if(i==0){
+									 $scope.errors0="Ends Break Should be smaller";
+									 }
+									 if(i==1){
+									 $scope.errors1="Ends Break Should be smaller";
+									 }
+									 if(i==2){
+									 $scope.errors2="Ends Break Should be smaller";
+									 }
+									 if(i==3){
+									 $scope.errors3="Ends Break Should be smaller";
+									 }
+									 if(i==4){
+										 $scope.errors4="Ends Break Should be smaller";
+									 }
+									 if(i==5){
+									 $scope.errors5="Ends Break Should be smaller";
+									 }
+									 if(i==6){
+										 $scope.errors6="Ends Break Should be smaller";
+									 }
+									 
+								 }
+							 }		
+		}	
+				  
 			$scope.resetDatePicker=function(workingDayId){
 				switch(workingDayId) {
 			    case 0:
@@ -243,24 +3904,108 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 
 
 
-//Directive For Comapre From and To Time
 adminApp.directive('higherThan',function() {
-return {
-require: "ngModel",
-scope: {
- otherModelValue: "=higherThan"
-},
-link: function(scope, element, attributes, ngModel) {
-	ngModel.$validators.higherThan = function(modelValue) {
+	return {
+	require: "ngModel",
+	scope: {
+	 otherModelValue: "=higherThan"
+		 },
+	 
+	link: function(scope, element, attributes, ngModel) {
+		 ngModel.$validators.higherThan = function(modelValue) {
+			 
+			  var convert="";
+			var convert1="";
+			 var hour=Number(modelValue.match(/^(\d+)/)[1]);
+			 var hour1=Number(scope.otherModelValue.match(/^(\d+)/)[1]);
+			var minute1=Number(scope.otherModelValue.match(/:(\d+)/)[1]);
+			 var minute = Number(modelValue.match(/:(\d+)/)[1]);
+			 var AMPM=modelValue.match(/\s(.*)$/)[1];
 
-	return modelValue > scope.otherModelValue;
 
-		 };
+		 if(scope.otherModelValue.match(/\s(.*)$/)[1]=="AM" && AMPM == "AM" && hour != 12 && hour1 != 12){
+				 convert1=hour1+":"+minute1;
+			 
+				 convert=hour+":"+minute;
+				
+				 if(hour1 == hour && minute1 < minute){
+					 return true;
+				 }
+				 else if(hour>hour1)
+					 {
+					 return true;
+					 }
+				 else
+					 {
+					 return false;
+					 }
+			 }
+			 if(scope.otherModelValue.match(/\s(.*)$/)[1]=="AM" && hour1 != 12 && AMPM == "PM"){
+				  
+				 convert1=hour1+":"+minute1;
+				 var totalHour = hour + 12;
+				 convert=totalHour+":"+minute;
+				 if(totalHour>hour1){
+						return totalHour>hour1;
+						 }
+			 }
+			 if(scope.otherModelValue.match(/\s(.*)$/)[1]=="PM" && hour1 != 12 && AMPM == "AM"){
+				  
+				 var totalHour1 = hour1 + 12;
+				 convert1=totalHour1+":"+minute1;
+				 
+				 convert=hour+":"+minute;
+				 if(totalHour1>hour){
+						return totalHour1>hour;
+						 }
+			 }
+			 if(scope.otherModelValue.match(/\s(.*)$/)[1]=="AM" && hour1 != 12){
+				  
+				 convert1=hour1+":"+minute1;
+			 
+			 }
+			 if (AMPM == "PM"){ 
+				 var totalHour = hour + 12;
+				 convert=totalHour+":"+minute;
+			  }		
+			
 
-scope.$watch("otherModelValue", function() {
-ngModel.$validate();
-});
-}
-};
-});
+			  if(scope.otherModelValue.match(/\s(.*)$/)[1]=="PM"){
+				 var totalHour1 = hour1 + 12;
+				 convert1=totalHour1+":"+minute1;
+			  }	
+			
+			 if (AMPM == "AM"){ 
+				
+				 convert=hour+":"+minute;
+		  	 }
+			 
+			 if (AMPM == "AM" && hour == 12){ 
+				 var totalHour = hour - 12;
+				 convert=totalHour+":"+minute;
+		  	 }
+		      if(scope.otherModelValue.match(/\s(.*)$/)[1]=="AM" && hour1 != 12){
+				  
+				 convert1=hour1+":"+minute1;
+			  }
+			 
+			 if(scope.otherModelValue.match(/\s(.*)$/)[1]=="AM" && hour1 == 12){
+				 var totalHour1 = hour1 - 12;
+				 convert1=totalHour1+":"+minute1;
+			  }
+			  
+		 
+	  return convert1<convert && convert>convert1;
+			 };
+				
+	scope.$watch("otherModelValue", function() {
+	ngModel.$validate();
+	});
+	}
+	};
+	});
+
+
+
+
 
