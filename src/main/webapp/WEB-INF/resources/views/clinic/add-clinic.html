@@ -234,11 +234,12 @@
                                 <span ng-cloak style="color:red" ng-show="myForm.sunStartTime.$error.required">Please Enter Start Time</span>
                               </span> 
                               </td>
-                              <td class="col-md-2"> <div class="input-group">
-                             <input type="text" style="" name="sunEndTime" id="sunEndTime" class="form-control" higher-than="clinic.clinicTimingList[0].startTime"  ng-model="clinic.clinicTimingList[0].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
+                              <td class="col-md-2"> <div class="input-group"> 
+                             <input type="text" style="" name="sunEndTime" id="sunEndTime" class="form-control" higher-than="clinic.clinicTimingList[0].startTime" ng-model="clinic.clinicTimingList[0].endTime" placeholder="End Time" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
                                <span class="error-container" ng-show="myForm.sunEndTime.$dirty && myForm.sunEndTime.$invalid">
+             
                                  <span ng-cloak style="color:red" ng-show="myForm.sunEndTime.$error.higherThan">End Time Should be greater</span>
                               </span>
                               
@@ -247,26 +248,23 @@
                                <td class="col-md-2">
                             
                                <div class="input-group">
-                                	<input type="text" style="" name="sunStartsBreak" id="sunStartsBreak" class="form-control" ng-change="lowerThanStartBreak(0)" higher-than="clinic.clinicTimingList[0].startTime" ng-model="clinic.clinicTimingList[0].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
+                                	<input type="text" style="" name="sunStartsBreak" id="sunStartsBreak" class="form-control" higher-than="clinic.clinicTimingList[0].startTime" ng-model="clinic.clinicTimingList[0].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
                                  <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                                 </div>
-                             <span style="color:red">{{error0}}</span>
-                <span class="error-container" ng-show="myForm.sunStartsBreak.$dirty && myForm.sunStartsBreak.$invalid">
+                     <span class="error-container" ng-show="myForm.sunStartsBreak.$dirty && myForm.sunStartsBreak.$invalid">
                             <span ng-cloak style="color:red" ng-show="myForm.sunStartsBreak.$error.higherThan">Starts Break Should be greater</span>
-                           
-                               </span>
+                                 </span>
             
                               </td> 
                             
                               <td class="col-md-2"> <div class="input-group">
-                             <input type="text" style="" name="sunEndsBreak" id="sunEndsBreak" class="form-control" ng-change="lowerThanEndBreak(0)" higher-than="clinic.clinicTimingList[0].startsBreak" ng-model="clinic.clinicTimingList[0].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
+                             <input type="text" style="" name="sunEndsBreak"  id="sunEndsBreak" class="form-control" higher-than="clinic.clinicTimingList[0].startsBreak" ng-model="clinic.clinicTimingList[0].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[0].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[0].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                                 <span style="color:red">{{errors0}}</span>
-                               <span class="error-container" ng-show="myForm.sunEndsBreak.$dirty && myForm.sunEndsBreak.$invalid">
+                                 <span class="error-container" ng-show="myForm.sunEndsBreak.$dirty && myForm.sunEndsBreak.$invalid">
                            
                                  <span ng-cloak style="color:red" ng-show="myForm.sunEndsBreak.$error.higherThan">Ends Break Should be greater</span>
-                              </span>
+                               </span>
                               
                              </td>
                               <td>
@@ -295,21 +293,20 @@
                               <td class="col-md-2">
                             
                                <div class="input-group">
-                             	<input type="text" style="" name="monStartsBreak" id="monStartsBreak" class="form-control" ng-change="lowerThanStartBreak(1)" higher-than="clinic.clinicTimingList[1].startTime" ng-model="clinic.clinicTimingList[1].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
+                             	<input type="text" style="" name="monStartsBreak" id="monStartsBreak" class="form-control" higher-than="clinic.clinicTimingList[1].startTime" ng-model="clinic.clinicTimingList[1].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                                <span style="color:red">{{error1}}</span>
+                                
                                <span class="error-container" ng-show="myForm.monStartsBreak.$dirty && myForm.monStartsBreak.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.monStartsBreak.$error.higherThan">Starts Break Should be greater</span>
                               </span>
                               </td>
                             
                               <td class="col-md-2"> <div class="input-group">
-                             <input type="text" style="" name="monEndsBreak" id="monEndsBreak" class="form-control" ng-change="lowerThanEndBreak(1)" higher-than="clinic.clinicTimingList[1].startsBreak" ng-model="clinic.clinicTimingList[1].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
+                             <input type="text" style="" name="monEndsBreak" id="monEndsBreak" class="form-control" higher-than="clinic.clinicTimingList[1].startsBreak" ng-model="clinic.clinicTimingList[1].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[1].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[1].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                              <span style="color:red">{{errors1}}</span>
-                             <span class="error-container" ng-show="myForm.monEndsBreak.$dirty && myForm.monEndsBreak.$invalid">
+                              <span class="error-container" ng-show="myForm.monEndsBreak.$dirty && myForm.monEndsBreak.$invalid">
                                  <span ng-cloak style="color:red" ng-show="myForm.monEndsBreak.$error.higherThan">Ends Break Should be greater</span>
                               </span>
                                </td>
@@ -338,22 +335,20 @@
                               <td class="col-md-2">
                             
                                <div class="input-group">
-                             	<input type="text" style="" name="tueStartsBreak" id="tueStartsBreak" class="form-control" ng-change="lowerThanStartBreak(2)" higher-than="clinic.clinicTimingList[2].startTime"  ng-model="clinic.clinicTimingList[2].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0">
+                             	<input type="text" style="" name="tueStartsBreak" id="tueStartsBreak" class="form-control" higher-than="clinic.clinicTimingList[2].startTime"  ng-model="clinic.clinicTimingList[2].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                            <span style="color:red">{{error2}}</span>
+             
                               <span class="error-container" ng-show="myForm.tueStartsBreak.$dirty && myForm.tueStartsBreak.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.tueStartsBreak.$error.higherThan">Starts Break Should be greater</span>
                               </span>
                               </td>
                             
                               <td class="col-md-2"> <div class="input-group">
-                             <input type="text" style="" name="tueEndsBreak" id="tueEndsBreak" ng-change="lowerThanEndBreak(2)" higher-than="clinic.clinicTimingList[2].startsBreak" class="form-control" ng-model="clinic.clinicTimingList[2].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0">
+                             <input type="text" style="" name="tueEndsBreak" id="tueEndsBreak" higher-than="clinic.clinicTimingList[2].startsBreak" class="form-control" ng-model="clinic.clinicTimingList[2].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[2].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[2].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                               <span style="color:red">{{errors2}}</span>
-                           
-                              <span class="error-container" ng-show="myForm.tueEndsBreak.$dirty && myForm.tueEndsBreak.$invalid">
+                             <span class="error-container" ng-show="myForm.tueEndsBreak.$dirty && myForm.tueEndsBreak.$invalid">
                                  <span ng-cloak style="color:red" ng-show="myForm.tueEndsBreak.$error.higherThan">Ends Break Should be greater</span>
                               </span>
                                </td>
@@ -384,21 +379,19 @@
                                <td class="col-md-2">
                             
                                <div class="input-group">
-                             	<input type="text" style="" name="wedStartsBreak" id="wedStartsBreak" class="form-control" ng-change="lowerThanStartBreak(3)" higher-than="clinic.clinicTimingList[3].startTime"  ng-model="clinic.clinicTimingList[3].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0">
+                             	<input type="text" style="" name="wedStartsBreak" id="wedStartsBreak" class="form-control" higher-than="clinic.clinicTimingList[3].startTime"  ng-model="clinic.clinicTimingList[3].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                              <span style="color:red">{{error3}}</span>
-                             <span class="error-container" ng-show="myForm.wedStartsBreak.$dirty && myForm.wedStartsBreak.$invalid">
+             <span class="error-container" ng-show="myForm.wedStartsBreak.$dirty && myForm.wedStartsBreak.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.wedStartsBreak.$error.higherThan">Starts Break Should be greater</span>
                               </span>
                               </td>
                             
                               <td class="col-md-2"> <div class="input-group">
-                             <input type="text" style="" name="wedEndsBreak" id="wedEndsBreak" class="form-control" ng-change="lowerThanEndBreak(3)" higher-than="clinic.clinicTimingList[3].startsBreak" ng-model="clinic.clinicTimingList[3].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0">
+                             <input type="text" style="" name="wedEndsBreak" id="wedEndsBreak" class="form-control" higher-than="clinic.clinicTimingList[3].startsBreak" ng-model="clinic.clinicTimingList[3].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[3].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[3].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                              <span style="color:red">{{errors3}}</span>
-                              <span class="error-container" ng-show="myForm.wedEndsBreak.$dirty && myForm.wedEndsBreak.$invalid">
+                               <span class="error-container" ng-show="myForm.wedEndsBreak.$dirty && myForm.wedEndsBreak.$invalid">
                                  <span ng-cloak style="color:red" ng-show="myForm.wedEndsBreak.$error.higherThan">Ends Break Should be greater</span>
                               </span>
                               </td>
@@ -427,21 +420,19 @@
                                <td class="col-md-2">
                             
                                <div class="input-group">
-                             	<input type="text" style="" name="thuStartsBreak" id="thuStartsBreak" class="form-control" ng-change="lowerThanStartBreak(4)" higher-than="clinic.clinicTimingList[4].startTime"  ng-model="clinic.clinicTimingList[4].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0">
+                             	<input type="text" style="" name="thuStartsBreak" id="thuStartsBreak" class="form-control" higher-than="clinic.clinicTimingList[4].startTime"  ng-model="clinic.clinicTimingList[4].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                              <span style="color:red">{{error4}}</span>
-                             <span class="error-container" ng-show="myForm.thuStartsBreak.$dirty && myForm.thuStartsBreak.$invalid">
+              <span class="error-container" ng-show="myForm.thuStartsBreak.$dirty && myForm.thuStartsBreak.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.thuStartsBreak.$error.higherThan">Starts Break Should be greater</span>
                               </span>
                               </td>
                             
                               <td class="col-md-2"> <div class="input-group">
-                             <input type="text" style="" name="thuEndsBreak" id="thuEndsBreak" class="form-control" ng-change="lowerThanEndBreak(4)" higher-than="clinic.clinicTimingList[4].startsBreak" ng-model="clinic.clinicTimingList[4].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0">
+                             <input type="text" style="" name="thuEndsBreak" id="thuEndsBreak" class="form-control" higher-than="clinic.clinicTimingList[4].startsBreak" ng-model="clinic.clinicTimingList[4].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[4].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[4].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                            <span style="color:red">{{errors4}}</span>
-                              <span class="error-container" ng-show="myForm.thuEndsBreak.$dirty && myForm.thuEndsBreak.$invalid">
+                               <span class="error-container" ng-show="myForm.thuEndsBreak.$dirty && myForm.thuEndsBreak.$invalid">
                                  <span ng-cloak style="color:red" ng-show="myForm.thuEndsBreak.$error.higherThan">Ends Break Should be greater</span>
                               </span>
                               </td>
@@ -470,21 +461,19 @@
                                <td class="col-md-2">
                             
                                <div class="input-group">
-                             	<input type="text" style="" name="friStartsBreak" id="friStartsBreak" class="form-control" ng-change="lowerThanStartBreak(5)" higher-than="clinic.clinicTimingList[5].startTime"  ng-model="clinic.clinicTimingList[5].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
+                             	<input type="text" style="" name="friStartsBreak" id="friStartsBreak" class="form-control" higher-than="clinic.clinicTimingList[5].startTime"  ng-model="clinic.clinicTimingList[5].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                                  <span style="color:red">{{error5}}</span>
-                             <span class="error-container" ng-show="myForm.friStartsBreak.$dirty && myForm.friStartsBreak.$invalid">
+              <span class="error-container" ng-show="myForm.friStartsBreak.$dirty && myForm.friStartsBreak.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.friStartsBreak.$error.higherThan">Starts Break Should be greater</span>
                               </span>
                               </td>
                             
                               <td class="col-md-2"> <div class="input-group">
-                             <input type="text" style="" name="friEndsBreak" id="friEndsBreak" class="form-control" ng-change="lowerThanEndBreak(5)" higher-than="clinic.clinicTimingList[5].startsBreak" ng-model="clinic.clinicTimingList[5].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
+                             <input type="text" style="" name="friEndsBreak" id="friEndsBreak" class="form-control" higher-than="clinic.clinicTimingList[5].startsBreak" ng-model="clinic.clinicTimingList[5].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[5].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[5].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                                <span style="color:red">{{errors5}}</span>
-                              <span class="error-container" ng-show="myForm.friEndsBreak.$dirty && myForm.friEndsBreak.$invalid">
+                                  <span class="error-container" ng-show="myForm.friEndsBreak.$dirty && myForm.friEndsBreak.$invalid">
                                  <span ng-cloak style="color:red" ng-show="myForm.friEndsBreak.$error.higherThan">Ends Break Should be greater</span>
                               </span>
                                </td>
@@ -514,20 +503,20 @@
                                <td class="col-md-2">
                             
                                <div class="input-group">
-                             	<input type="text" style="" name="satStartsBreak" id="satStartsBreak" class="form-control" ng-change="lowerThanStartBreak(6)" higher-than="clinic.clinicTimingList[6].startTime"  ng-model="clinic.clinicTimingList[6].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0">
+                             	<input type="text" style="" name="satStartsBreak" id="satStartsBreak" class="form-control" higher-than="clinic.clinicTimingList[6].startTime"  ng-model="clinic.clinicTimingList[6].startsBreak" placeholder="Starts Break" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                                 <span style="color:red">{{error6}}</span>
+              
                              <span class="error-container" ng-show="myForm.satStartsBreak.$dirty && myForm.satStartsBreak.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.satStartsBreak.$error.higherThan">Starts Break Should be greater</span>
                               </span>
                               </td>
                             
                               <td class="col-md-2"> <div class="input-group">
-                             <input type="text" style="" name="satEndsBreak" id="satEndsBreak" class="form-control" ng-change="lowerThanEndBreak(6)" higher-than="clinic.clinicTimingList[6].startsBreak" ng-model="clinic.clinicTimingList[6].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0">
+                             <input type="text" style="" name="satEndsBreak" id="satEndsBreak" class="form-control" higher-than="clinic.clinicTimingList[6].startsBreak" ng-model="clinic.clinicTimingList[6].endsBreak" placeholder="Ends Break" ng-required="clinic.clinicTimingList[6].isWorkingDay==1" ng-disabled="clinic.clinicTimingList[6].isWorkingDay==0">
                               <span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-time"></span></span>
                               </div>
-                                 <span style="color:red">{{errors6}}</span>
+                                
                              <span class="error-container" ng-show="myForm.satEndsBreak.$dirty && myForm.satEndsBreak.$invalid">
                                  <span ng-cloak style="color:red" ng-show="myForm.satEndsBreak.$error.higherThan">Ends Break Should be greater</span>
                               </span>
@@ -958,6 +947,9 @@ $('#satEndsBreak').bind("cut copy paste",function(e) {
 });
 
 </script>
+
+
+
 
 
 
