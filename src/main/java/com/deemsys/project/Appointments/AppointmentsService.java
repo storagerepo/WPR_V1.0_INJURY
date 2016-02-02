@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -213,8 +214,10 @@ return 1;
 				
 				List<Appointments> appointmentss=new ArrayList<Appointments>();
 				String role = staffService.getCurrentRole();
+				Date monthBegin = new LocalDate().withDayOfMonth(1).toDate();
+				Date monthEnd = new LocalDate().plusMonths(1).withDayOfMonth(1).minusDays(1).toDate();
 				if(role=="ROLE_ADMIN"){
-					appointmentss=appointmentsDAO.todaysAppointment();
+					appointmentss=appointmentsDAO.getAppointmentsBetweenDates(monthBegin,monthEnd);
 					for (Appointments appointments : appointmentss) {
 						//TODO: Fill the List
 						AppointmentsForm appointmentsForm=new AppointmentsForm(appointments.getId(), appointments.getPatients().getId(),appointments.getPatients().getName(),appointments.getScheduledDate().toString(), appointments.getNotes(), appointments.getStatus());
@@ -230,7 +233,7 @@ return 1;
 				return appointmentsForms;
 			
 			
-}
+			}
 			
 			public List<AppointmentsForm> getByDates(String date)
 			{
@@ -308,6 +311,13 @@ return 1;
 				callLogsDAO.update(callLogs);
 				
 				appointmentsDAO.delete(appointmentId);
+				
+				//Change Patient Status
+				Patients patients = patientsDAO.get(callLogs.getPatients().getId());
+				patients.setClinics(null);
+				patients.setDoctors(null);
+				patients.setPatientStatus(1);
+				patientsDAO.update(patients);
 				status=1;
 
 				return status;

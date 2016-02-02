@@ -158,5 +158,14 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		appointments= this.sessionFactory.getCurrentSession().createQuery("FROM Appointments where scheduledDate='"+date+"'").list();
 		return appointments;
 	}
+
+	@Override
+	public List<Appointments> getAppointmentsBetweenDates(Date startDate,
+			Date endDate) {
+		// TODO Auto-generated method stub
+		List<Appointments> appointments=new ArrayList<Appointments>();
+		appointments=this.sessionFactory.getCurrentSession().createCriteria(Appointments.class).add(Restrictions.and(Restrictions.ge("scheduledDate", startDate), Restrictions.le("scheduledDate", endDate))).list();
+		return appointments;
+	}
 	
 	}

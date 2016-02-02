@@ -23,7 +23,7 @@
          			 <th style="width:100px!important;" ng-mousedown="sort('contactNumber')">Contact Number  <span class="glyphicon sort-icon" ng-show="sortKey=='contactNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
             
              	 <th style="width:100px!important;" ng-mousedown="sort('specialistIn')">Specialist In   <span class="glyphicon sort-icon" ng-show="sortKey=='specialistIn'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
-            
+            	<th style="width:100px!important;" ng-mousedown="sort('clinicName')">Clinic Name <span class="glyphicon sort-icon" ng-show="sortKey=='clinicName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>  </th>
               	
                               <th width="120px!important">Action</th></tr>
 
@@ -36,7 +36,8 @@
            </th>
             <th>  <input type="text"  class="form-control"  ng-model="search.specialistIn" placeholder="Search by Specialist In">
            </th>
-                       
+           <th>  <input type="text"  class="form-control"  ng-model="search.clinicName" placeholder="Search by Clinic Name">
+           </th>          
            <th></th>
            </tr>
             </thead>
@@ -49,7 +50,7 @@
 	<td ng-cloak>{{doctor.emailId}}</td>
 <td ng-cloak>{{doctor.contactNumber}}</td>
 		<td ng-cloak>{{doctor.specialistIn}}</td>
-					
+		<td>{{doctor.clinicName}}</td>			
                                    <td >
                                    <a href="" ng-cloak ng-click="viewDoctors(doctor.id)" class="btn btn-xs btn-primary hint--top" data-hint="View Doctor"><i
 								class="glyphicon glyphicon-eye-open"></i>

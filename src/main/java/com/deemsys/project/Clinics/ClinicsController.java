@@ -24,7 +24,7 @@ public class ClinicsController {
 	ClinicsService clinicsService;
 	
 	/**
-	 * Get Clinic
+	 * Get Clinic For Edit
 	 * @param clinicId
 	 * @param model
 	 * @return
@@ -32,6 +32,20 @@ public class ClinicsController {
 	@RequestMapping(value="/getClinic",method=RequestMethod.GET)
 	public String getClinicDetails(@RequestParam("clinicId") Integer clinicId,Model model){
 		ClinicsForm clinicsForm=clinicsService.getClinic(clinicId);
+		model.addAttribute("clinicsForm",clinicsForm);
+		model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
+	
+	/**
+	 * Get Clinic For View Only
+	 * @param clinicId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/getClinicDetails",method=RequestMethod.GET)
+	public String getOneClinicDetails(@RequestParam("clinicId") Integer clinicId,Model model){
+		ClinicsForm clinicsForm=clinicsService.getClinicDetails(clinicId);
 		model.addAttribute("clinicsForm",clinicsForm);
 		model.addAttribute("requestSuccess",true);
 		return "/returnPage";
@@ -85,6 +99,8 @@ public class ClinicsController {
 		}
 		return "/returnPage";
 	}
+	
+	
 	@RequestMapping(value="/getClinicId",method=RequestMethod.GET)
    	public String getClinicId(ModelMap model)
    	{

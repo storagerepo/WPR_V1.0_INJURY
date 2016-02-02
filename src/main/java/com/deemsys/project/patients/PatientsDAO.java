@@ -28,8 +28,9 @@ public interface PatientsDAO extends IGenericDAO<Patients>{
 	public List<CallLogs> getCallLogsListByPatientsId(Integer patientId);
 	public void deletePatientsByStaffId(Integer id);
 	public List<Patients> getpatientsByDoctorId(Integer doctorId);
-
+	public List<Patients> getpatientsByClinicId(Integer clinicId);
 	public void removeAssignedDoctor(Integer patientId);
+	public void removeAssignedClinic(Integer patientId);
 
 	public Integer activeStatusByPatientId(Integer id);
 

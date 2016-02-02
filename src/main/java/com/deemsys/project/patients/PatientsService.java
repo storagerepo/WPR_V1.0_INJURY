@@ -270,7 +270,6 @@ public class PatientsService {
 		
 		if(doctorId == null)
 		{
-			patients.setPatientStatus(1);
 			patientsDAO.update(patients);
 			
 		}
@@ -282,7 +281,7 @@ public class PatientsService {
 		}
 		else
 		{
-		patients.setPatientStatus(2);
+			patients.setPatientStatus(2);
 			patientsDAO.update(patients);
 			
 		}

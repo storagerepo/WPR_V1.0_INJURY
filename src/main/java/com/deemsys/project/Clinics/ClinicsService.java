@@ -11,11 +11,15 @@ import org.springframework.stereotype.Service;
 import com.deemsys.project.ClinicTimings.ClinicTimingList;
 import com.deemsys.project.ClinicTimings.ClinicTimingsDAO;
 import com.deemsys.project.Doctors.DoctorsDAO;
+import com.deemsys.project.Doctors.DoctorsForm;
+import com.deemsys.project.Doctors.DoctorsService;
 import com.deemsys.project.Map.GeoLocation;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.ClinicTimings;
 import com.deemsys.project.entity.ClinicTimingsId;
 import com.deemsys.project.entity.Clinics;
+import com.deemsys.project.entity.Patients;
+import com.deemsys.project.patients.PatientsDAO;
 /**
  * @author Deemsys
  *
@@ -36,7 +40,13 @@ public class ClinicsService {
 	@Autowired
 	GeoLocation geoLocation;
 	
-	/** Get Clinic Details
+	@Autowired
+	PatientsDAO patientsDAO;
+	
+	@Autowired
+	DoctorsService doctorsService;
+	
+	/** Get Clinic Details For Edit
 	 * @param clinicId
 	 * @return
 	 */
@@ -49,16 +59,51 @@ public class ClinicsService {
 		List<ClinicTimingList> clinicTimingLists = new ArrayList<ClinicTimingList>();
 		// Set ClinicTiming List
 		for (ClinicTimings clinicTimingss: clinicTimings) {
-		ClinicTimingList clinicTimingList=new ClinicTimingList(clinicTimingss.getId().getDay(), clinicTimingss.getId().getClinicId(), InjuryConstants.convertAMPMTime(clinicTimingss.getStartTime()), InjuryConstants.convertAMPMTime(clinicTimingss.getEndTime()),InjuryConstants.convertAMPMTime(clinicTimingss.getStartsBreak()),InjuryConstants.convertAMPMTime(clinicTimingss.getEndsBreak()), clinicTimingss.getIsWorkingDay());
+		ClinicTimingList clinicTimingList=new ClinicTimingList(clinicTimingss.getId().getDay(), clinicTimingss.getId().getClinicId(), InjuryConstants.convertAMPMTime(clinicTimingss.getStartTime()), InjuryConstants.convertAMPMTime(clinicTimingss.getEndTime()),InjuryConstants.convertAMPMTime(clinicTimingss.getStartsBreak()),InjuryConstants.convertAMPMTime(clinicTimingss.getEndsBreak()), clinicTimingss.getIsWorkingDay(),clinicTimingss.getIsAppointmentDay());
 		clinicTimingLists.add(clinicTimingList);
 		}
+		
+		// Get Doctors List
+		List<DoctorsForm> doctorsForms = doctorsService.getDoctorsByClinic(clinicId);
+		
 		// Set Clinic
 		ClinicsForm clinicsForm = new ClinicsForm(clinics.getClinicId(), clinics.getClinicName(), clinics.getAddress(), clinics.getCity(), clinics.getState(), clinics.getCounty(), 
-				clinics.getCountry(), clinics.getZipcode(), clinics.getOfficeNumber(), clinics.getFaxNumber(), clinics.getServiceArea(), clinics.getDirections(),clinics.getNotes(), clinicTimingLists);
+				clinics.getCountry(), clinics.getZipcode(), clinics.getOfficeNumber(), clinics.getFaxNumber(), clinics.getServiceArea(), clinics.getDirections(),clinics.getNotes(), clinicTimingLists,doctorsForms);
+		
 		
 		
 		return clinicsForm;
 	}
+	
+	/** Get Clinic Details For View
+	 * @param clinicId
+	 * @return
+	 */
+	public ClinicsForm getClinicDetails(Integer clinicId){
+		
+		
+		Clinics clinics=clinicsDAO.get(clinicId);
+		List<ClinicTimings> clinicTimings=clinicTimingsDAO.getClinicTimings(clinicId);
+		
+		List<ClinicTimingList> clinicTimingLists = new ArrayList<ClinicTimingList>();
+		// Set ClinicTiming List
+		for (ClinicTimings clinicTimingss: clinicTimings) {
+		ClinicTimingList clinicTimingList=new ClinicTimingList(clinicTimingss.getId().getDay(), clinicTimingss.getId().getClinicId(), InjuryConstants.convertAMPMTime(clinicTimingss.getStartTime()), InjuryConstants.convertAMPMTime(clinicTimingss.getEndTime()),InjuryConstants.convertAMPMTime(clinicTimingss.getStartsBreak()),InjuryConstants.convertAMPMTime(clinicTimingss.getEndsBreak()), clinicTimingss.getIsWorkingDay(),clinicTimingss.getIsAppointmentDay());
+		clinicTimingLists.add(clinicTimingList);
+		}
+		
+		// Get Doctors List
+		List<DoctorsForm> doctorsForms = doctorsService.getDoctorsDetailsByClinic(clinicId);
+		
+		// Set Clinic
+		ClinicsForm clinicsForm = new ClinicsForm(clinics.getClinicId(), clinics.getClinicName(), clinics.getAddress(), clinics.getCity(), clinics.getState(), clinics.getCounty(), 
+				clinics.getCountry(), clinics.getZipcode(), clinics.getOfficeNumber(), clinics.getFaxNumber(), clinics.getServiceArea(), clinics.getDirections(),clinics.getNotes(), clinicTimingLists,doctorsForms);
+		
+		
+		
+		return clinicsForm;
+	}
+	
 	
 	/**
 	 * Get All Clinics
@@ -71,7 +116,7 @@ public class ClinicsService {
 		
 		for (Clinics clinics : clinicses) {
 			ClinicsForm clinicsForm = new ClinicsForm(clinics.getClinicId(), clinics.getClinicName(), clinics.getAddress(), clinics.getCity(), clinics.getState(), clinics.getCounty(), 
-					clinics.getCountry(), clinics.getZipcode(), clinics.getOfficeNumber(), clinics.getFaxNumber(),clinics.getServiceArea(), clinics.getDirections(), clinics.getNotes(), null);
+					clinics.getCountry(), clinics.getZipcode(), clinics.getOfficeNumber(), clinics.getFaxNumber(),clinics.getServiceArea(), clinics.getDirections(), clinics.getNotes(), null,null);
 			clinicsForms.add(clinicsForm);
 		}
 		
@@ -100,8 +145,15 @@ public class ClinicsService {
 		List<ClinicTimingList> clinicTimingList=clinicsForm.getClinicTimingList();
 		for (ClinicTimingList clinicTimingList2 : clinicTimingList) {
 			ClinicTimingsId clinicTimingsId=new ClinicTimingsId(clinics.getClinicId(), clinicTimingList2.getDay());
-			ClinicTimings clinicTimings=new ClinicTimings(clinicTimingsId, clinics, InjuryConstants.convert24HourTime(clinicTimingList2.getStartTime()), InjuryConstants.convert24HourTime(clinicTimingList2.getEndTime()),InjuryConstants.convert24HourTime(clinicTimingList2.getStartsBreak()),InjuryConstants.convert24HourTime(clinicTimingList2.getEndsBreak()), clinicTimingList2.getIsWorkingDay());
+			ClinicTimings clinicTimings=new ClinicTimings(clinicTimingsId, clinics, InjuryConstants.convert24HourTime(clinicTimingList2.getStartTime()), InjuryConstants.convert24HourTime(clinicTimingList2.getEndTime()),InjuryConstants.convert24HourTime(clinicTimingList2.getStartsBreak()),InjuryConstants.convert24HourTime(clinicTimingList2.getEndsBreak()), clinicTimingList2.getIsWorkingDay(),clinicTimingList2.getIsAppointmentDay());
 			clinicTimingsDAO.save(clinicTimings);
+		}
+		
+		// Save Doctors List
+		List<DoctorsForm> doctorsForms=clinicsForm.getDoctorsForms();
+		for (DoctorsForm doctorsForm : doctorsForms) {
+			doctorsForm.setClinicId(clinics.getClinicId());
+			doctorsService.saveDoctors(doctorsForm);
 		}
 		
 		return status;
@@ -128,9 +180,22 @@ public class ClinicsService {
 		List<ClinicTimingList> clinicTimingList=clinicsForm.getClinicTimingList();
 		for (ClinicTimingList clinicTimingList2 : clinicTimingList) {
 			ClinicTimingsId clinicTimingsId=new ClinicTimingsId(clinicTimingList2.getClinicId(), clinicTimingList2.getDay());
-			ClinicTimings clinicTimings=new ClinicTimings(clinicTimingsId, clinics, InjuryConstants.convert24HourTime(clinicTimingList2.getStartTime()), InjuryConstants.convert24HourTime(clinicTimingList2.getEndTime()),InjuryConstants.convert24HourTime(clinicTimingList2.getStartsBreak()),InjuryConstants.convert24HourTime(clinicTimingList2.getEndsBreak()), clinicTimingList2.getIsWorkingDay());
+			ClinicTimings clinicTimings=new ClinicTimings(clinicTimingsId, clinics, InjuryConstants.convert24HourTime(clinicTimingList2.getStartTime()), InjuryConstants.convert24HourTime(clinicTimingList2.getEndTime()),InjuryConstants.convert24HourTime(clinicTimingList2.getStartsBreak()),InjuryConstants.convert24HourTime(clinicTimingList2.getEndsBreak()), clinicTimingList2.getIsWorkingDay(),clinicTimingList2.getIsAppointmentDay());
 			clinicTimingsDAO.update(clinicTimings);
 		}
+		
+		// Update Doctors List
+		List<DoctorsForm> doctorsForms=clinicsForm.getDoctorsForms();
+		for (DoctorsForm doctorsForm : doctorsForms) {
+			doctorsForm.setClinicId(clinicsForm.getClinicId());
+			if(doctorsForm.getId()==null){
+				doctorsService.saveDoctors(doctorsForm);
+			}else{
+				doctorsService.updateDoctors(doctorsForm);
+			}
+			
+		}
+		
 		return status;
 	}
 	
@@ -182,7 +247,7 @@ public class ClinicsService {
 	
 	public String getAddressForGeoCode(ClinicsForm clinicsForm){
 		String address= "";
-		address=clinicsForm.getAddress().replace(" ","+")+"+"+clinicsForm.getCounty().replace(" ","+")+"+"+clinicsForm.getCity().replace(" ","+")+"+"+clinicsForm.getState().replace(" ","+")+"+"+clinicsForm.getCountry().replace(" ","+")+"+"+clinicsForm.getZipcode();
+		address=clinicsForm.getAddress().replace(" ","+")+"+"+clinicsForm.getCity().replace(" ","+")+"+"+clinicsForm.getState().replace(" ","+")+"+"+clinicsForm.getCountry().replace(" ","+")+"+"+clinicsForm.getZipcode();
 		return address;
 	}
 	
@@ -196,12 +261,30 @@ public class ClinicsService {
 		List<ClinicTimingList> clinicTimingLists = new ArrayList<ClinicTimingList>();
 		// Set ClinicTiming List
 		for (ClinicTimings clinicTimingss: clinicTimings) {
-		ClinicTimingList clinicTimingList=new ClinicTimingList(clinicTimingss.getId().getDay(), clinicTimingss.getId().getClinicId(), InjuryConstants.convertAMPMTime(clinicTimingss.getStartTime()), InjuryConstants.convertAMPMTime(clinicTimingss.getEndTime()),InjuryConstants.convertAMPMTime(clinicTimingss.getStartsBreak()),InjuryConstants.convertAMPMTime(clinicTimingss.getEndsBreak()), clinicTimingss.getIsWorkingDay());
+		ClinicTimingList clinicTimingList=new ClinicTimingList(clinicTimingss.getId().getDay(), clinicTimingss.getId().getClinicId(), InjuryConstants.convertAMPMTime(clinicTimingss.getStartTime()), InjuryConstants.convertAMPMTime(clinicTimingss.getEndTime()),InjuryConstants.convertAMPMTime(clinicTimingss.getStartsBreak()),InjuryConstants.convertAMPMTime(clinicTimingss.getEndsBreak()), clinicTimingss.getIsWorkingDay(),clinicTimingss.getIsAppointmentDay());
 		clinicTimingLists.add(clinicTimingList);
 		}
 		
 		
 		return clinicTimingLists;
+	}
+	
+	// Unassign the Patients from clinic
+	public Integer removeAssignedClinic(Integer clinicId){
+		Integer status=0;
+		try{
+		List<Patients> patients=patientsDAO.getpatientsByClinicId(clinicId);
+		for (Patients patients2 : patients) {
+			patientsDAO.removeAssignedClinic(patients2.getId());
+		}
+		status=1;
+		}
+		catch(Exception e){
+			System.out.println(e.toString());
+			status=0;
+		}
+		
+		return status;
 	}
 	
 }

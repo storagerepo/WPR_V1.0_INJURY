@@ -18,7 +18,7 @@ adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash)
 	};
 	
 	$scope.viewClinicDetails=function(clinicId) {
-		 requestHandler.getRequest("Staff/getClinic.json?clinicId="+clinicId,"").then(function(results){
+		 requestHandler.getRequest("Staff/getClinicDetails.json?clinicId="+clinicId,"").then(function(results){
 		 	 $scope.clinicDetails= results.data.clinicsForm;
 		 	 $("#viewClinicDetails").modal('show');
 		  });
@@ -74,7 +74,16 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 	$scope.options=true;
 	$scope.title="Add Clinic";
 	$scope.clinic={};
-	$scope.clinic.clinicTimingList=[{"day":0,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0},{"day":1,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0},{"day":2,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0},{"day":3,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0},{"day":4,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0},{"day":5,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0},{"day":6,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0}];
+	$scope.clinic.doctorsForms=[{doctorName:"",titleDr:"",titleDc:""}];
+	$scope.addDoctorInput=function(){
+		$scope.clinic.doctorsForms.push({doctorName:"",titleDr:"",titleDc:""});
+	};
+	
+	$scope.removeDoctorInput=function(index){
+		$scope.clinic.doctorsForms.splice(index,1);
+	};
+	
+	$scope.clinic.clinicTimingList=[{"day":0,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":1,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":2,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":3,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":4,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":5,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":6,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0}];
 	$scope.saveClinic=function(){
 		requestHandler.postRequest("Staff/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
 			Flash.create('success', "You have Successfully Added!");
@@ -83,6 +92,9 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 	};
  
  $scope.resetDatePicker=function(workingDayId){
+	 $scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
+		$scope.satError=false;
+		$scope.isError=false;
 		switch(workingDayId) {
 	    case 0:
 	    	$scope.clinic.clinicTimingList[0].startTime="09:00 AM";
@@ -138,18 +150,100 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 		
 	};
 
+	// Convert to 24 Hr Format For Validations
+	 $scope.convertTo24Hr=function(timeForConvert){
+		 var convertedTime="";
+		 var hours = Number(timeForConvert.match(/^(\d+)/)[1]);
+		 var minutes = Number(timeForConvert.match(/:(\d+)/)[1]);
+		 var AMPM = timeForConvert.match(/\s(.*)$/)[1];
+		 if(AMPM == "PM" && hours<12) hours = hours+12;
+		 if(AMPM == "AM" && hours==12) hours = hours-12;
+		 var sHours = hours.toString();
+		 var sMinutes = minutes.toString();
+		 if(hours<10) sHours = "0" + sHours;
+		 if(minutes<10) sMinutes = "0" + sMinutes;
+		 convertedTime=sHours + ":" + sMinutes;
+		 return convertedTime;
+	 };
+	 
+	// Validate the time
+	$scope.validateTime=function(fieldArray,errorField){
+		
+		$scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
+		$scope.satError=false;
+		$scope.isError=false;
+		var startTime=$("#"+fieldArray[0]).val();
+		var endTime=$("#"+fieldArray[1]).val();
+		var breakStartTime=$("#"+fieldArray[2]).val();
+		var breakEndTime=$("#"+fieldArray[3]).val();
+		
+		startTime=$scope.convertTo24Hr(startTime);
+		endTime=$scope.convertTo24Hr(endTime);
+		breakStartTime=$scope.convertTo24Hr(breakStartTime);
+		breakEndTime=$scope.convertTo24Hr(breakEndTime);
+		
+		if(startTime<endTime && breakStartTime>startTime && breakStartTime<endTime && breakEndTime>breakStartTime && breakEndTime<endTime){
+			if(errorField==0){
+				$scope.sunError=false;
+			}
+			if(errorField==1){
+				$scope.monError=false;
+			}
+			if(errorField==2){
+				$scope.tueError=false;
+			}
+			if(errorField==3){
+				$scope.wedError=false;
+			}
+			if(errorField==4){
+				$scope.thuError=false;
+			}
+			if(errorField==5){
+				$scope.friError=false;
+			}
+			if(errorField==6){
+				$scope.satError=false;
+			}
+			$scope.isError=false;
+		}else{
+			if(errorField==0){
+				$scope.sunError=true;
+			}
+			if(errorField==1){
+				$scope.monError=true;
+			}
+			if(errorField==2){
+				$scope.tueError=true;
+			}
+			if(errorField==3){
+				$scope.wedError=true;
+			}
+			if(errorField==4){
+				$scope.thuError=true;
+			}
+			if(errorField==5){
+				$scope.friError=true;
+			}
+			if(errorField==6){
+				$scope.satError=true;
+			}
+			$scope.isError=true;
+		}
+		
+	 };
 	
 });
 
 adminApp.controller('EditClinicController',function($scope,$stateParams,$location,requestHandler,Flash){
-	
+	$scope.clinic={};
+	$scope.clinic.doctorsForms=[];
 	$scope.options=false;
 	$scope.title="Edit Clinic";
 	var clinicOriginal="";
 		requestHandler.getRequest("Staff/getClinic.json?clinicId="+$stateParams.id,"").then(function(response){
+			
 			clinicOriginal=angular.copy(response.data.clinicsForm);
 			$scope.clinic= response.data.clinicsForm;
-			 
 			$('#sunStartTime').data("DateTimePicker").setDate($scope.clinic.clinicTimingList[0].startTime);
 			$('#sunEndTime').data("DateTimePicker").setDate($scope.clinic.clinicTimingList[0].endTime);
 			$('#sunStartsBreak').data("DateTimePicker").setDate($scope.clinic.clinicTimingList[0].startsBreak);
@@ -181,6 +275,40 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 			
 		});
  
+		$scope.addDoctorInput=function(){
+			$scope.clinic.doctorsForms.push({doctorName:"",titleDr:"",titleDc:""});
+		};
+		
+		$scope.removeDoctorInput=function(index,removeableStatus,doctorId){
+			if(doctorId!="" && doctorId!==undefined){
+				if(removeableStatus==1){
+					requestHandler.deletePostRequest("Admin/deleteDoctors.json?id=",doctorId).then(function(results){
+						  $scope.value=results.data.requestSuccess;
+						  });
+					$scope.clinic.doctorsForms.splice(index,1);
+				}
+				else{
+					$("#deleteDoctorModal").modal("show");
+				    $scope.deleteDoctorFromPatients=function()
+				    {
+				    	requestHandler.postRequest("Admin/removeAssignedDoctors.json?id="+doctorId).then(function(response){
+				    		
+				    		requestHandler.deletePostRequest("Admin/deleteDoctors.json?id=",doctorId).then(function(results){
+				    			$("#deleteDoctorModal").modal("hide");
+				    			$('.modal-backdrop').hide();
+				    			 $scope.clinic.doctorsForms.splice(index,1);
+				    		 });
+				    		});
+				    };
+				   
+				}
+			}
+			else{
+				$scope.clinic.doctorsForms.splice(index,1);
+			}
+			
+		};
+		
 		$scope.updateClinic=function(){
 			requestHandler.postRequest("Staff/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
 				Flash.create('success', "You have Successfully Updated!");
@@ -189,6 +317,9 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 			});
 		};
 			$scope.resetDatePicker=function(workingDayId){
+				$scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
+				$scope.satError=false;
+				$scope.isError=false;
 				switch(workingDayId) {
 			    case 0:
 			    	$scope.clinic.clinicTimingList[0].startTime="09:00 AM";
@@ -241,6 +372,88 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 	        return angular.equals(clinicOriginal, $scope.clinic);
 	    };
 	
+	    // Convert to 24 Hr Format For Validations
+		 $scope.convertTo24Hr=function(timeForConvert){
+			 var convertedTime="";
+			 var hours = Number(timeForConvert.match(/^(\d+)/)[1]);
+			 var minutes = Number(timeForConvert.match(/:(\d+)/)[1]);
+			 var AMPM = timeForConvert.match(/\s(.*)$/)[1];
+			 if(AMPM == "PM" && hours<12) hours = hours+12;
+			 if(AMPM == "AM" && hours==12) hours = hours-12;
+			 var sHours = hours.toString();
+			 var sMinutes = minutes.toString();
+			 if(hours<10) sHours = "0" + sHours;
+			 if(minutes<10) sMinutes = "0" + sMinutes;
+			 convertedTime=sHours + ":" + sMinutes;
+			 return convertedTime;
+		 };
+		 
+		// Validate the Time
+		$scope.validateTime=function(fieldArray,errorField){
+			
+			$scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
+			$scope.satError=false;
+			$scope.isError=false;
+			var startTime=$("#"+fieldArray[0]).val();
+			var endTime=$("#"+fieldArray[1]).val();
+			var breakStartTime=$("#"+fieldArray[2]).val();
+			var breakEndTime=$("#"+fieldArray[3]).val();
+			
+			startTime=$scope.convertTo24Hr(startTime);
+			endTime=$scope.convertTo24Hr(endTime);
+			breakStartTime=$scope.convertTo24Hr(breakStartTime);
+			breakEndTime=$scope.convertTo24Hr(breakEndTime);
+			
+			if(startTime<endTime && breakStartTime>startTime && breakStartTime<endTime && breakEndTime>breakStartTime && breakEndTime<endTime){
+				if(errorField==0){
+					$scope.sunError=false;
+				}
+				if(errorField==1){
+					$scope.monError=false;
+				}
+				if(errorField==2){
+					$scope.tueError=false;
+				}
+				if(errorField==3){
+					$scope.wedError=false;
+				}
+				if(errorField==4){
+					$scope.thuError=false;
+				}
+				if(errorField==5){
+					$scope.friError=false;
+				}
+				if(errorField==6){
+					$scope.satError=false;
+				}
+				$scope.isError=false;
+			}else{
+				if(errorField==0){
+					$scope.sunError=true;
+				}
+				if(errorField==1){
+					$scope.monError=true;
+				}
+				if(errorField==2){
+					$scope.tueError=true;
+				}
+				if(errorField==3){
+					$scope.wedError=true;
+				}
+				if(errorField==4){
+					$scope.thuError=true;
+				}
+				if(errorField==5){
+					$scope.friError=true;
+				}
+				if(errorField==6){
+					$scope.satError=true;
+				}
+				$scope.isError=true;
+			}
+			
+		 };
+	    
 });
 
 
@@ -254,8 +467,9 @@ adminApp.directive('higherThan',function() {
 		 },
 	 
 	link: function(scope, element, attributes, ngModel) {
+		
 		 ngModel.$validators.higherThan = function(modelValue) {
-			 
+			
 			  var convert="";
 			var convert1="";
 			 var hour=Number(modelValue.match(/^(\d+)/)[1]);
@@ -387,8 +601,6 @@ adminApp.directive('higherThan',function() {
 	}
 	};
 	});
-
-
 
 
 

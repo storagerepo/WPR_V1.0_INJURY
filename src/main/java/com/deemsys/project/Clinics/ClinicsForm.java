@@ -3,6 +3,8 @@ package com.deemsys.project.Clinics;
 import java.util.List;
 
 import com.deemsys.project.ClinicTimings.ClinicTimingList;
+import com.deemsys.project.Doctors.DoctorsForm;
+import com.deemsys.project.entity.Doctors;
 
 public class ClinicsForm {
 	private Integer clinicId;
@@ -22,6 +24,7 @@ public class ClinicsForm {
 	private String notes;
 	private Double farAway;
 	private List<ClinicTimingList> clinicTimingList;
+	private List<DoctorsForm> doctorsForms;
 	
 	public Integer getClinicId() {
 		return clinicId;
@@ -125,6 +128,12 @@ public class ClinicsForm {
 	public void setClinicTimingList(List<ClinicTimingList> clinicTimingList) {
 		this.clinicTimingList = clinicTimingList;
 	}
+	public List<DoctorsForm> getDoctorsForms() {
+		return doctorsForms;
+	}
+	public void setDoctorsForms(List<DoctorsForm> doctorsForms) {
+		this.doctorsForms = doctorsForms;
+	}
 	public ClinicsForm(Integer clinicId, String clinicName, String address,
 			String city, String state, String county, String country,
 			String zipcode, Double latitude, Double longitude, String officeNumber, String faxNumber,
@@ -151,7 +160,7 @@ public class ClinicsForm {
 	public ClinicsForm(Integer clinicId, String clinicName, String address,
 			String city, String state, String county, String country,
 			String zipcode, String officeNumber, String faxNumber,
-			String serviceArea,String directions, String notes,List<ClinicTimingList> clinicTimingList) {
+			String serviceArea,String directions, String notes,List<ClinicTimingList> clinicTimingList,List<DoctorsForm> doctorsForms) {
 		super();
 		this.clinicId = clinicId;
 		this.clinicName = clinicName;
@@ -167,6 +176,7 @@ public class ClinicsForm {
 		this.directions = directions;
 		this.notes = notes;
 		this.clinicTimingList=clinicTimingList;
+		this.doctorsForms = doctorsForms;
 	}
 	public ClinicsForm() {
 		super();

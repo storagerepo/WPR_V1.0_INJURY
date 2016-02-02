@@ -121,10 +121,9 @@ public class CallLogsService {
 		//TODO: Convert Form to Entity Here	
 		
 		//Logic Starts
-		
+		Patients patients = patientsDAO.get(callLogsForm.getPatientId());
 		Appointments appointments = new Appointments();
 		
-		Patients patients = patientsDAO.get(callLogsForm.getPatientId());
 		User user = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 				String username=user.getUsername();
@@ -135,6 +134,8 @@ public class CallLogsService {
 			String status=callLogsForm.getResponse();
 		if(status.equals("3"))
 		{
+			patients.setClinics(null);
+			patients.setDoctors(null);
 			patients.setPatientStatus(3);
 			patientsDAO.update(patients);
 			
@@ -142,6 +143,12 @@ public class CallLogsService {
 		}
 		else
 		{
+			if(patients.getPatientStatus()==2){
+				patients.setPatientStatus(2);
+			}else{
+				patients.setPatientStatus(1);
+			}
+			patientsDAO.update(patients);
 			callLogsDAO.save(callLogs);
 		}
 		//Logic Ends
@@ -175,11 +182,19 @@ public class CallLogsService {
 			if(status.equals("3"))
 			{
 				patients.setPatientStatus(3);
+				patients.setClinics(null);
+				patients.setDoctors(null);
 				patientsDAO.update(patients);
 				callLogsDAO.update(callLogs);
 			}
 			else
 			{
+				if(patients.getPatientStatus()==2){
+					patients.setPatientStatus(2);
+				}else{
+					patients.setPatientStatus(1);
+				}
+				patientsDAO.update(patients);
 				callLogsDAO.update(callLogs);
 			}
 		}
@@ -195,11 +210,19 @@ public class CallLogsService {
 			if(status.equals("3"))
 			{
 				patients.setPatientStatus(3);
+				patients.setClinics(null);
+				patients.setDoctors(null);
 				patientsDAO.update(patients);
 				callLogsDAO.update(callLogs);
 			}
 			else
 			{
+				if(patients.getPatientStatus()==2){
+					patients.setPatientStatus(2);
+				}else{
+					patients.setPatientStatus(1);
+				}
+				patientsDAO.update(patients);
 				callLogsDAO.update(callLogs);
 			}
 		}

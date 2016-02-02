@@ -25,6 +25,9 @@ public class DoctorsForm {
 	private String contactNumber;
 	private String specialistIn;
 	private String notes;
+	private Integer titleDr;
+	private Integer titleDc;
+	private Integer isRemoveable;
 	
 	public Integer getId() {
 		return id;
@@ -77,6 +80,25 @@ public class DoctorsForm {
 	public void setClinicName(String clinicName) {
 		this.clinicName = clinicName;
 	}
+	
+	public Integer getTitleDr() {
+		return titleDr;
+	}
+	public void setTitleDr(Integer titleDr) {
+		this.titleDr = titleDr;
+	}
+	public Integer getTitleDc() {
+		return titleDc;
+	}
+	public void setTitleDc(Integer titleDc) {
+		this.titleDc = titleDc;
+	}
+	public Integer getIsRemoveable() {
+		return isRemoveable;
+	}
+	public void setIsRemoveable(Integer isRemoveable) {
+		this.isRemoveable = isRemoveable;
+	}
 	public DoctorsForm() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -112,8 +134,15 @@ public class DoctorsForm {
 	{
 		this.id=id;
 		this.doctorName=doctorName;
-		
-
 	}
+	public DoctorsForm(Integer id, String doctorName, Integer titleDr,
+			Integer titleDc) {
+		super();
+		this.id = id;
+		this.doctorName = doctorName;
+		this.titleDr = titleDr;
+		this.titleDc = titleDc;
+	}
+	
 	
 }
