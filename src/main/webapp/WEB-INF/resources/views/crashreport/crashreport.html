@@ -1,0 +1,71 @@
+<div class="row">
+<div class="col-lg-12">
+	 <a ui-sref="dashboard.patient" class="btn-sm btn-primary pull-right margin-top-40">Back to the list</a>	
+	 <h2 class="page-header">Add Patients - Upload Crash Report PDF</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+<div flash-message="2000" class="col-md-5 pull-right"></div>
+     <div ng-controller="crashReportController" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+      <div class="btn btn-primary btn-file">
+      Browse .PDF Crash Report Files to Upload
+                    <input class="btn btn-primary" type="file" nv-file-select="image/*" uploader="uploader" name="file" id="file" multiple/>
+                </div>&nbsp;&nbsp;<span ng-cloak style="color:red" id="fileUploadError">Please Select Only PDF Files</span><br/><br/>
+             <div id="uploadSuccessAlert" class="panel well" style="color:green;font-weight:bold;">
+            <span id="uploadSuccessStatus"></span>
+                        </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="50%" >Name</th>
+                                <th ng-show="uploader.isHTML5" >Size</th>
+                                <th ng-show="uploader.isHTML5" >Progress</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr  ng-hide="uploader.queue.length==0" ng-repeat="item in uploader.queue" >
+                                <td><strong >{{ item.file.name }}</strong></td>
+                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:3 }} MB</td>
+                                <td ng-show="uploader.isHTML5">
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                 </div>
+                                </td>
+                                <td class="text-center">
+                                    <span ng-show="uploader.queue[0].isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span ng-show="uploader.queue[0].isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span><i class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                                <td><button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                    </button></td>
+                            </tr>
+                            <tr ng-show="uploader.queue.length==0">
+                            <td colspan="5"><center><strong>No files added!</strong></center></td>
+                            </tr>
+                        </tbody>
+                        <span id="error_msg" class="error-text" ng-show="!uploader.getNotUploadedItems().length"></span>
+                    </table>
+          <div class="text-right" style="margin-right:30px;">
+       <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                            <span class="glyphicon glyphicon-upload"></span> Upload all
+                        </button>
+                        <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                        </button>
+                        <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                            <span class="glyphicon glyphicon-trash"></span> Remove all
+                        </button>
+     </div>
+     </div>
+    </div>
+  </div>
+   <script>
+$(function(){
+	$("html,body").scrollTop(0);
+});
+ </script>

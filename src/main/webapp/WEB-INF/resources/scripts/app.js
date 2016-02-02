@@ -451,7 +451,8 @@ sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"
                 }
               }
             
-        }) .state('dashboard.viewlocations/:id',{
+        }) 
+        .state('dashboard.viewlocations/:id',{
             templateUrl:'views/maplocation/view-nearby-clinics.html',
             url:'/viewlocations/:id',
             controller:"showNearByClinicController",
@@ -466,6 +467,21 @@ sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"
               }
             
         })// End Call logs
+         .state('dashboard.Crashreport',{
+            templateUrl:'views/crashreport/crashreport.html',
+            url:'/Crashreport',
+            controller:"crashReportController",
+            resolve: {
+                loadMyFile:function($ocLazyLoad) {
+                  
+                  return $ocLazyLoad.load({
+                      name:'sbAdminApp',
+                      files:['scripts/controllers/crashReportController.js']
+                  });
+                }
+              }
+            
+        })
         .state('dashboard.Changepassword',{
             templateUrl:'views/changepassword/changepassword.html',
             url:'/Changepassword',
@@ -618,6 +634,7 @@ sbAdminApp.directive('validateCitytownship',function(){
 	        }
 	    };
 });
+
 
 
 
