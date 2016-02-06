@@ -7,7 +7,8 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
     };
     var date=new Date();
-if(date.getDate()<=9 && date.getMonth()<=8){
+    $scope.searchDate=(date.getMonth()+1).toString();
+/*if(date.getDate()<=9 && date.getMonth()<=8){
   	$scope.searchDate=date.getFullYear()+"-0"+(date.getMonth()+1)+"-0"+date.getDate();
   }
     else if(date.getMonth()<=8){
@@ -19,8 +20,8 @@ if(date.getDate()<=9 && date.getMonth()<=8){
     else{
     	$scope.searchDate=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
     }
-
-    requestHandler.getRequest("Staff/todaysAppointment.json","").then(function(response){
+*/
+    requestHandler.getRequest("Staff/monthwiseAppointment.json?month=0","").then(function(response){
 		//alert(JSON.stringify(response));
     	 $scope.appointments = response.data.appointmentsForms;
          $scope.appointments.status = true;
@@ -38,14 +39,14 @@ $scope.getByDates=function()
 {
 if($scope.searchDate)
 	{
-	requestHandler.getRequest("Staff/getByDates.json?date="+$scope.searchDate,"").then(function (response) {
+	requestHandler.getRequest("Staff/monthwiseAppointment.json?month="+$scope.searchDate,"").then(function (response) {
 			$scope.appointments=response.data.appointmentsForms;
 	});
 	 }
 
 else
 {
-	requestHandler.getRequest("Staff/todaysAppointment.json").then( function(response) {
+	requestHandler.getRequest("Staff/monthwiseAppointment.json?month=0").then( function(response) {
 	     $scope.appointments = response.data.appointmentsForms;
 	    $scope.appointments.status = true;
 	    });

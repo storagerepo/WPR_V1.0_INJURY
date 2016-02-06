@@ -230,7 +230,7 @@
                                 <td class="text-center">
                                     <span ng-show="uploader.queue[0].isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
                                     <span ng-show="uploader.queue[0].isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                    <span><i class="glyphicon glyphicon-remove"></i></span>
+                                    <span ng-show="uploader.queue[0].isError"><i class="glyphicon glyphicon-remove"></i></span>
                                 </td>
                                 <td><button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
                                         <span class="glyphicon glyphicon-trash"></span> Remove

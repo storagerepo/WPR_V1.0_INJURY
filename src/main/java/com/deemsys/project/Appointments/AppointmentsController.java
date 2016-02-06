@@ -7,6 +7,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -83,10 +84,10 @@ public class AppointmentsController {
    		return "/returnPage";
    	}
     
-   @RequestMapping(value="/todaysAppointment",method=RequestMethod.GET)
-   	public String todaysAppointment(ModelMap model)
+   @RequestMapping(value="/monthwiseAppointment",method=RequestMethod.GET)
+   	public String todaysAppointment(@RequestParam("month") Integer month,ModelMap model)
    	{
-    	model.addAttribute("appointmentsForms",appointmentsService.todaysAppointment());
+    	model.addAttribute("appointmentsForms",appointmentsService.monthwiseAppointment(month));
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}

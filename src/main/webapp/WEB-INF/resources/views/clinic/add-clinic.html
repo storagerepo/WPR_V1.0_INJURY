@@ -211,35 +211,7 @@
                                     <br/>
                                 </div>
                               </div>
-                              <div class="col-md-12">
-                              	<div class="col-md-6"><button class="btn btn-sm btn-primary" ng-click="addDoctorInput()">Add Doctor</button> <br/></div>
-                              </div>
-                              <div class="col-md-12"><hr></div>
-                               <div class="col-md-12" ng-repeat="doctorInput in clinic.doctorsForms">
-                               <div class="col-md-2">
-                                 <label>Doctor Name</label>
-                                </div>
-                                <div class="col-md-3">
-                                <input type="hidden" ng-model="doctorInput.id"/>
-                                <input type="text" name="doctorName{{$index}}" ng-model="doctorInput.doctorName" class="form-control" placeholder="Doctor Name" validate-name required/>
-                                <span class="error-container" ng-show="myForm.doctorName{{$index}}.$dirty && myForm.doctorName{{$index}}.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.doctorName{{$index}}.$error.required">Please Enter Doctor Name</span>
-                                <span ng-cloak style="color:red" ng-show="!myForm.doctorName{{$index}}.$error.required&&myForm.doctorName{{$index}}.$error.validateName">Enter Valid Doctor Name</span>
-                                </span>
-                                </div>
-                                <div class="col-md-2">
-                                 <label>Doctor Title</label>
-                                 </div>
-                                 <div class="col-md-2">
-                                    <input type="checkbox" name="doctorTitleDR" ng-model="doctorInput.titleDr" ng-true-value="1" ng-false-value="0"/> DR &nbsp;&nbsp;
-                                    <input type="checkbox" name="doctorTitleDC" ng-model="doctorInput.titleDc" ng-true-value="1" ng-false-value="0"/> DC
-                                </div>
-                                <div class="col-md-2">
-                                 <a href="" class="btn btn-xs btn-primary" ng-click="removeDoctorInput($index,doctorInput.isRemoveable,doctorInput.id)"><i class="glyphicon glyphicon-trash"></i>&nbsp;Remove</a>
-                                 <br/><br/>
-                                 </div>
-                               </div>
-                               <div class="col-md-12"><hr></div>
+                              
                               <div class="col-md-12">
                               <div class="col-md-12">
                               <label>Office Hours</label>
@@ -623,7 +595,40 @@
                                      <textarea class="form-control height-100" ng-model="clinic.notes" name="notes" placeholder="Notes"> </textarea><br>
                                </div>
                              </div>
-                             
+                             <div class="col-md-12">
+                              <div class="col-md-12">
+                              <label>Doctor Details</label>
+                              </div>
+                               </div>
+                             <div class="col-md-12">
+                              	<div class="col-md-6"><br/><button class="btn btn-sm btn-primary" ng-click="addDoctorInput()">Add Doctor</button> <br/></div>
+                              </div>
+                              <div class="col-md-12"><hr></div>
+                               <div class="col-md-12" ng-repeat="doctorInput in clinic.doctorsForms">
+                               <div class="col-md-2">
+                                 <label>Doctor Name</label>
+                                </div>
+                                <div class="col-md-3">
+                                <input type="hidden" ng-model="doctorInput.id"/>
+                                <input type="text" name="doctorName{{$index}}" ng-model="doctorInput.doctorName" class="form-control" placeholder="Doctor Name" validate-name required/>
+                                <span class="error-container" ng-show="myForm.doctorName{{$index}}.$dirty && myForm.doctorName{{$index}}.$invalid">
+                                <span ng-cloak style="color:red" ng-show="myForm.doctorName{{$index}}.$error.required">Please Enter Doctor Name</span>
+                                <span ng-cloak style="color:red" ng-show="!myForm.doctorName{{$index}}.$error.required&&myForm.doctorName{{$index}}.$error.validateName">Enter Valid Doctor Name</span>
+                                </span>
+                                </div>
+                                <div class="col-md-2">
+                                 <label>Doctor Title</label>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <input type="checkbox" name="doctorTitleDR" ng-model="doctorInput.titleDr" ng-true-value="1" ng-false-value="0"/> DR &nbsp;&nbsp;
+                                    <input type="checkbox" name="doctorTitleDC" ng-model="doctorInput.titleDc" ng-true-value="1" ng-false-value="0"/> DC
+                                </div>
+                                <div class="col-md-2">
+                                 <a href="" class="btn btn-xs btn-primary" ng-click="removeDoctorInput($index,doctorInput.isRemoveable,doctorInput.id)"><i class="glyphicon glyphicon-trash"></i>&nbsp;Remove</a>
+                                 <br/><br/>
+                                 </div>
+                               </div>
+                               <div class="col-md-12"><hr></div>
                 </div>
             </div>
             <div class="text-right" style="margin-right:30px;">

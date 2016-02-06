@@ -2,6 +2,7 @@ package com.deemsys.project.Appointments;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -208,14 +209,22 @@ return 1;
 		return patientsForm;
 	}
 			
-			public List<AppointmentsForm> todaysAppointment()
+			public List<AppointmentsForm> monthwiseAppointment(Integer month)
 			{
 			List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();
 				
 				List<Appointments> appointmentss=new ArrayList<Appointments>();
 				String role = staffService.getCurrentRole();
-				Date monthBegin = new LocalDate().withDayOfMonth(1).toDate();
-				Date monthEnd = new LocalDate().plusMonths(1).withDayOfMonth(1).minusDays(1).toDate();
+				Date monthBegin = new Date();
+				Date monthEnd = new Date();
+				if(month==0){
+					monthBegin = new LocalDate().withDayOfMonth(1).toDate();
+					monthEnd = new LocalDate().plusMonths(1).withDayOfMonth(1).minusDays(1).toDate();
+				}else{
+					 int year = Calendar.getInstance().get(Calendar.YEAR);
+					monthBegin = new LocalDate(year,month,1).toDate();
+					monthEnd = new LocalDate(year,month,1).plusMonths(1).withDayOfMonth(1).minusDays(1).toDate();
+				}
 				if(role=="ROLE_ADMIN"){
 					appointmentss=appointmentsDAO.getAppointmentsBetweenDates(monthBegin,monthEnd);
 					for (Appointments appointments : appointmentss) {

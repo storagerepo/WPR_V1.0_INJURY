@@ -217,141 +217,154 @@
 						<td class="col-md-3" ng-show="clinicDetails.notes.length==0" colspan="3">-</td>
 	</tr>
 	<tr>
-				<td class="col-md-3" colspan="4"><b>Working & Appointment Days and Timing</b></td>
+				<td class="col-md-3" colspan="4"><b>Office Hours &nbsp;|</b>&nbsp;&nbsp;&nbsp;<span class="successText"><i class="glyphicon glyphicon-ok"></i></span> <b>- Working/Appointment Day</b> &nbsp;&nbsp;&nbsp;&nbsp;<span class="errorText"><i class="glyphicon glyphicon-remove"></i></span> <b>- Not Working/Not Appointment Day</b></td>
 				</tr>
 	<tr>
 				<td class="col-md-12" colspan="4">
 				<table class="table">
 				<thead>
 				<tr>
-				<th>Day</th><th>Start Time</th><th>End Time</th><th>Starts Break</th><th>Ends Break</th><th>Is Appointment</th>
+				<th>Day</th><th align="center">Is Working Day</th><th>Start Time</th><th>End Time</th><th>Starts Break</th><th>Ends Break</th><th align="center">Is Appointment</th>
 				</tr>
 				</thead>
 				<tr ng-show="clinicDetails.clinicTimingList[0].isWorkingDay==1">
 				<td>Sunday</td>
-				<td ng-hide="clinicDetails.clinicTimingList[0].startTime.length==0">{{clinicDetails.clinicTimingList[0].startTime}}</td>
-				<td ng-hide="clinicDetails.clinicTimingList[0].endTime.length==0">{{clinicDetails.clinicTimingList[0].endTime}}</td>
-				<td ng-hide="clinicDetails.clinicTimingList[0].startsBreak.length==0">{{clinicDetails.clinicTimingList[0].startsBreak}}</td>
-				<td ng-hide="clinicDetails.clinicTimingList[0].endsBreak.length==0">{{clinicDetails.clinicTimingList[0].endsBreak}}</td>
-				<td ng-show="clinicDetails.clinicTimingList[0].isAppointmentDay==1">Yes</td>
-				<td ng-show="clinicDetails.clinicTimingList[0].isAppointmentDay==0">No</td>
+				<td align="center"><span class="successText hint--top" data-hint="Working day"><i class="glyphicon glyphicon-ok"></i></span></td>
+				<td>{{clinicDetails.clinicTimingList[0].endTime}}</td>
+				<td>{{clinicDetails.clinicTimingList[0].startsBreak}}</td>
+				<td>{{clinicDetails.clinicTimingList[0].endsBreak}}</td>
+				<td ng-show="clinicDetails.clinicTimingList[0].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[0].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[0].isWorkingDay!=1">
 				<td>Sunday</td>
+				<td align="center"><span class="errorText hint--top" data-hint="Not Working Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
-				<td ng-show="clinicDetails.clinicTimingList[0].isAppointmentDay==0">No</td>
-				<td ng-show="clinicDetails.clinicTimingList[0].isAppointmentDay==1">Yes</td>
+				<td ng-show="clinicDetails.clinicTimingList[0].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[0].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[1].isWorkingDay==1">
 				<td>Monday</td>
-				<td ng-hide="clinicDetails.clinicTimingList[1].startTime.length==0">{{clinicDetails.clinicTimingList[0].startTime}}</td>
-				<td ng-hide="clinicDetails.clinicTimingList[1].endTime.length==0">{{clinicDetails.clinicTimingList[0].endTime}}</td>
-				<td ng-hide="clinicDetails.clinicTimingList[1].startsBreak.length==0">{{clinicDetails.clinicTimingList[0].startsBreak}}</td>
-				<td ng-hide="clinicDetails.clinicTimingList[1].endsBreak.length==0">{{clinicDetails.clinicTimingList[0].endsBreak}}</td>
-				<td ng-show="clinicDetails.clinicTimingList[1].isAppointmentDay==1">Yes</td>
-				<td ng-show="clinicDetails.clinicTimingList[1].isAppointmentDay==0">No</td>
+				<td align="center"><span class="successText hint--top" data-hint="Working day"><i class="glyphicon glyphicon-ok"></i></span></td>
+				<td>{{clinicDetails.clinicTimingList[1].startTime}}</td>
+				<td>{{clinicDetails.clinicTimingList[1].endTime}}</td>
+				<td>{{clinicDetails.clinicTimingList[1].startsBreak}}</td>
+				<td>{{clinicDetails.clinicTimingList[1].endsBreak}}</td>
+				<td ng-show="clinicDetails.clinicTimingList[1].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[1].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[1].isWorkingDay!=1">
 				<td>Monday</td>
+				<td align="center"><span class="errorText hint--top" data-hint="Not Working Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
-				<td ng-show="clinicDetails.clinicTimingList[1].isAppointmentDay==0">No</td>
-				<td ng-show="clinicDetails.clinicTimingList[1].isAppointmentDay==1">Yes</td>
+				<td ng-show="clinicDetails.clinicTimingList[1].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[1].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[2].isWorkingDay==1">
 				<td>Tuesday</td>
+				<td align="center"><span class="successText hint--top" data-hint="Working day"><i class="glyphicon glyphicon-ok"></i></span></td>
 				<td>{{clinicDetails.clinicTimingList[2].startTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[2].endTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[2].startsBreak}}</td>
 				<td>{{clinicDetails.clinicTimingList[2].endsBreak}}</td>
-				<td ng-show="clinicDetails.clinicTimingList[2].isAppointmentDay==1">Yes</td>
-				<td ng-show="clinicDetails.clinicTimingList[2].isAppointmentDay==0">No</td>
+				<td ng-show="clinicDetails.clinicTimingList[2].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[2].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[2].isWorkingDay!=1">
 				<td>Tuesday</td>
+				<td align="center"><span class="errorText hint--top" data-hint="Not Working Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
-				<td ng-show="clinicDetails.clinicTimingList[2].isAppointmentDay==0">No</td>
-				<td ng-show="clinicDetails.clinicTimingList[2].isAppointmentDay==1">Yes</td>
+				<td ng-show="clinicDetails.clinicTimingList[2].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[2].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[3].isWorkingDay==1">
 				<td>Wednesday</td>
+				<td align="center"><span class="successText hint--top" data-hint="Working day"><i class="glyphicon glyphicon-ok"></i></span></td>
 				<td>{{clinicDetails.clinicTimingList[3].startTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[3].endTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[3].startsBreak}}</td>
 				<td>{{clinicDetails.clinicTimingList[3].endsBreak}}</td>
-				<td ng-show="clinicDetails.clinicTimingList[3].isAppointmentDay==1">Yes</td>
-				<td ng-show="clinicDetails.clinicTimingList[3].isAppointmentDay==0">No</td>
+				<td ng-show="clinicDetails.clinicTimingList[3].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[3].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[3].isWorkingDay!=1">
 				<td>Wednesday</td>
+				<td align="center"><span class="errorText hint--top" data-hint="Not Working Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
-				<td ng-show="clinicDetails.clinicTimingList[3].isAppointmentDay==0">No</td>
-				<td ng-show="clinicDetails.clinicTimingList[3].isAppointmentDay==1">Yes</td>
+				<td ng-show="clinicDetails.clinicTimingList[3].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[3].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[4].isWorkingDay==1">
 				<td>Thursday</td>
+				<td align="center"><span class="successText hint--top" data-hint="Working day"><i class="glyphicon glyphicon-ok"></i></span></td>
 				<td>{{clinicDetails.clinicTimingList[4].startTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[4].endTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[4].startsBreak}}</td>
 				<td>{{clinicDetails.clinicTimingList[4].endsBreak}}</td>
-				<td ng-show="clinicDetails.clinicTimingList[4].isAppointmentDay==1">Yes</td>
-				<td ng-show="clinicDetails.clinicTimingList[4].isAppointmentDay==0">No</td>
+				<td ng-show="clinicDetails.clinicTimingList[4].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[4].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[4].isWorkingDay!=1">
 				<td>Thursday</td>
+				<td align="center"><span class="errorText hint--top" data-hint="Not Working Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
-				<td ng-show="clinicDetails.clinicTimingList[4].isAppointmentDay==0">No</td>
-				<td ng-show="clinicDetails.clinicTimingList[4].isAppointmentDay==1">Yes</td>
+				<td ng-show="clinicDetails.clinicTimingList[4].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[4].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[5].isWorkingDay==1">
 				<td>Friday</td>
+				<td align="center"><span class="successText hint--top" data-hint="Working day"><i class="glyphicon glyphicon-ok"></i></span></td>
 				<td>{{clinicDetails.clinicTimingList[5].startTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[5].endTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[5].startsBreak}}</td>
 				<td>{{clinicDetails.clinicTimingList[5].endsBreak}}</td>
-				<td ng-show="clinicDetails.clinicTimingList[5].isAppointmentDay==1">Yes</td>
-				<td ng-show="clinicDetails.clinicTimingList[5].isAppointmentDay==0">No</td>
+				<td ng-show="clinicDetails.clinicTimingList[5].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[5].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[5].isWorkingDay!=1">
 				<td>Friday</td>
+				<td align="center"><span class="errorText hint--top" data-hint="Not Working Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
-				<td ng-show="clinicDetails.clinicTimingList[5].isAppointmentDay==0">No</td>
-				<td ng-show="clinicDetails.clinicTimingList[5].isAppointmentDay==1">Yes</td>
+				<td ng-show="clinicDetails.clinicTimingList[5].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[5].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[6].isWorkingDay==1">
 				<td>Saturday</td>
+				<td align="center"><span class="successText hint--top" data-hint="Working day"><i class="glyphicon glyphicon-ok"></i></span></td>
 				<td>{{clinicDetails.clinicTimingList[6].startTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[6].endTime}}</td>
 				<td>{{clinicDetails.clinicTimingList[6].startsBreak}}</td>
 				<td>{{clinicDetails.clinicTimingList[6].endsBreak}}</td>
-				<td ng-show="clinicDetails.clinicTimingList[6].isAppointmentDay==1">Yes</td>
-				<td ng-show="clinicDetails.clinicTimingList[6].isAppointmentDay==0">No</td>
+				<td ng-show="clinicDetails.clinicTimingList[6].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[6].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				</tr>
 				<tr ng-show="clinicDetails.clinicTimingList[6].isWorkingDay!=1">
 				<td>Saturday</td>
+				<td align="center"><span class="errorText hint--top" data-hint="Not Working Day"><i class="glyphicon glyphicon-remove"></i></span></td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
 				<td>-</td>
-				<td ng-show="clinicDetails.clinicTimingList[6].isAppointmentDay==0">No</td>
-				<td ng-show="clinicDetails.clinicTimingList[6].isAppointmentDay==1">Yes</td>
+				<td ng-show="clinicDetails.clinicTimingList[6].isAppointmentDay==0" align="center"><span class="errorText hint--top" data-hint="Not Appointment Day"><i class="glyphicon glyphicon-remove"></i></span></td>
+				<td ng-show="clinicDetails.clinicTimingList[6].isAppointmentDay==1" align="center"><span class="successText hint--top" data-hint="Appointment day"><i class="glyphicon glyphicon-ok"></i></span></td>
 				</tr>
 				</table>
 				</td>
@@ -370,6 +383,11 @@
 				<tbody>
 				<tr ng-repeat="doctorDetails in clinicDetails.doctorsForms">
 				<td>{{doctorDetails.doctorName}}</td>
+				</tr>
+				</tbody>
+				<tbody ng-show="!clinicDetails.doctorsForms.length">
+				<tr>
+				<td colspan="1" align="center">No Doctors added</td>
 				</tr>
 				</tbody>
 				</table>

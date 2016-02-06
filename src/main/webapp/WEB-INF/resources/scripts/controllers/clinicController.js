@@ -71,6 +71,9 @@ adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash)
 
 
 adminApp.controller('SaveClinicController',function($scope,$location,requestHandler,Flash){
+	
+	$scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
+	$scope.satError=false;$scope.isError=false;
 	$scope.options=true;
 	$scope.title="Add Clinic";
 	$scope.clinic={};
@@ -92,61 +95,66 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 	};
  
  $scope.resetDatePicker=function(workingDayId){
-	 $scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
-		$scope.satError=false;
-		$scope.isError=false;
+	
 		switch(workingDayId) {
 	    case 0:
 	    	$scope.clinic.clinicTimingList[0].startTime="09:00 AM";
 	    	$scope.clinic.clinicTimingList[0].endTime="08:00 PM";
 	    	$scope.clinic.clinicTimingList[0].startsBreak="02:00 PM";
 	    	$scope.clinic.clinicTimingList[0].endsBreak="05:00 PM";
+	    	$scope.sunError=false;
 	    	break;
 	    case 1:
 	    	$scope.clinic.clinicTimingList[1].startTime="09:00 AM";
 	    	$scope.clinic.clinicTimingList[1].endTime="08:00 PM";
 	    	$scope.clinic.clinicTimingList[1].startsBreak="02:00 PM";
 	    	$scope.clinic.clinicTimingList[1].endsBreak="05:00 PM";
-
+	    	$scope.monError=false;
 	        break;
 	    case 2:
 	    	$scope.clinic.clinicTimingList[2].startTime="09:00 AM";
 	    	$scope.clinic.clinicTimingList[2].endTime="08:00 PM";
 	    	$scope.clinic.clinicTimingList[2].startsBreak="02:00 PM";
 	    	$scope.clinic.clinicTimingList[2].endsBreak="05:00 PM";
-
-	        break;
+	    	$scope.tueError=false;
+	    	break;
 	    case 3:
 	    	$scope.clinic.clinicTimingList[3].startTime="09:00 AM";
 	    	$scope.clinic.clinicTimingList[3].endTime="08:00 PM";
 	    	$scope.clinic.clinicTimingList[3].startsBreak="02:00 PM";
 	    	$scope.clinic.clinicTimingList[3].endsBreak="05:00 PM";
-
+	    	$scope.wedError=false;
 	        break;
 	    case 4:
 	    	$scope.clinic.clinicTimingList[4].startTime="09:00 AM";
 	    	$scope.clinic.clinicTimingList[4].endTime="08:00 PM";
 	    	$scope.clinic.clinicTimingList[4].startsBreak="02:00 PM";
 	    	$scope.clinic.clinicTimingList[4].endsBreak="05:00 PM";
-
+	    	$scope.thuError=false;
 	        break;
 	    case 5:
 	    	$scope.clinic.clinicTimingList[5].startTime="09:00 AM";
 	    	$scope.clinic.clinicTimingList[5].endTime="08:00 PM";
 	    	$scope.clinic.clinicTimingList[5].startsBreak="02:00 PM";
 	    	$scope.clinic.clinicTimingList[5].endsBreak="05:00 PM";
-
+	    	$scope.friError=false;
 	        break;
 	    case 6:
 	    	$scope.clinic.clinicTimingList[6].startTime="09:00 AM";
 	    	$scope.clinic.clinicTimingList[6].endTime="08:00 PM";
 	    	$scope.clinic.clinicTimingList[6].startsBreak="02:00 PM";
 	    	$scope.clinic.clinicTimingList[6].endsBreak="05:00 PM";
-
+	    	$scope.satError=false;
 	        break;
 	    default:
 	        break;
 	}
+	
+		if($scope.sunError==false&&$scope.monError==false&&$scope.tueError==false&&$scope.wedError==false&&$scope.thuError==false&&$scope.friError==false&&
+				$scope.satError==false)
+			{
+				$scope.isError=false;
+			}
 		
 	};
 
@@ -169,9 +177,7 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 	// Validate the time
 	$scope.validateTime=function(fieldArray,errorField){
 		
-		$scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
-		$scope.satError=false;
-		$scope.isError=false;
+		
 		var startTime=$("#"+fieldArray[0]).val();
 		var endTime=$("#"+fieldArray[1]).val();
 		var breakStartTime=$("#"+fieldArray[2]).val();
@@ -186,45 +192,51 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 			if(errorField==0){
 				$scope.sunError=false;
 			}
-			if(errorField==1){
+			else if(errorField==1){
 				$scope.monError=false;
 			}
-			if(errorField==2){
+			else if(errorField==2){
 				$scope.tueError=false;
 			}
-			if(errorField==3){
+			else if(errorField==3){
 				$scope.wedError=false;
 			}
-			if(errorField==4){
+			else if(errorField==4){
 				$scope.thuError=false;
 			}
-			if(errorField==5){
+			else if(errorField==5){
 				$scope.friError=false;
 			}
-			if(errorField==6){
+			else if(errorField==6){
 				$scope.satError=false;
 			}
-			$scope.isError=false;
+			
+			if($scope.sunError==false&&$scope.monError==false&&$scope.tueError==false&&$scope.wedError==false&&$scope.thuError==false&&$scope.friError==false&&
+					$scope.satError==false)
+				{
+					$scope.isError=false;
+				}
+			
 		}else{
 			if(errorField==0){
 				$scope.sunError=true;
 			}
-			if(errorField==1){
+			else if(errorField==1){
 				$scope.monError=true;
 			}
-			if(errorField==2){
+			else if(errorField==2){
 				$scope.tueError=true;
 			}
-			if(errorField==3){
+			else if(errorField==3){
 				$scope.wedError=true;
 			}
-			if(errorField==4){
+			else if(errorField==4){
 				$scope.thuError=true;
 			}
-			if(errorField==5){
+			else if(errorField==5){
 				$scope.friError=true;
 			}
-			if(errorField==6){
+			else if(errorField==6){
 				$scope.satError=true;
 			}
 			$scope.isError=true;
@@ -235,6 +247,8 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 });
 
 adminApp.controller('EditClinicController',function($scope,$stateParams,$location,requestHandler,Flash){
+	$scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
+	$scope.satError=false;$scope.isError=false;
 	$scope.clinic={};
 	$scope.clinic.doctorsForms=[];
 	$scope.options=false;
@@ -317,55 +331,65 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 			});
 		};
 			$scope.resetDatePicker=function(workingDayId){
-				$scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
-				$scope.satError=false;
-				$scope.isError=false;
+				
 				switch(workingDayId) {
 			    case 0:
 			    	$scope.clinic.clinicTimingList[0].startTime="09:00 AM";
 			    	$scope.clinic.clinicTimingList[0].endTime="08:00 PM";
 			    	$scope.clinic.clinicTimingList[0].startsBreak="02:00 PM";
 			    	$scope.clinic.clinicTimingList[0].endsBreak="05:00 PM";
+			    	$scope.sunError=false;
 			        break;
 			    case 1:
 			    	$scope.clinic.clinicTimingList[1].startTime="09:00 AM";
 			    	$scope.clinic.clinicTimingList[1].endTime="08:00 PM";
 			    	$scope.clinic.clinicTimingList[1].startsBreak="02:00 PM";
 			    	$scope.clinic.clinicTimingList[1].endsBreak="05:00 PM";
+			    	$scope.monError=false;
 			    	break;
 			    case 2:
 			    	$scope.clinic.clinicTimingList[2].startTime="09:00 AM";
 			    	$scope.clinic.clinicTimingList[2].endTime="08:00 PM";
 			    	$scope.clinic.clinicTimingList[2].startsBreak="02:00 PM";
 			    	$scope.clinic.clinicTimingList[2].endsBreak="05:00 PM";
+			    	$scope.tueError=false;
 			    	break;
 			    case 3:
 			    	$scope.clinic.clinicTimingList[3].startTime="09:00 AM";
 			    	$scope.clinic.clinicTimingList[3].endTime="08:00 PM";
 			    	$scope.clinic.clinicTimingList[3].startsBreak="02:00 PM";
 			    	$scope.clinic.clinicTimingList[3].endsBreak="05:00 PM";
+			    	$scope.wedError=false;
 			    	break;
 			    case 4:
 			    	$scope.clinic.clinicTimingList[4].startTime="09:00 AM";
 			    	$scope.clinic.clinicTimingList[4].endTime="08:00 PM";
 			    	$scope.clinic.clinicTimingList[4].startsBreak="02:00 PM";
 			    	$scope.clinic.clinicTimingList[4].endsBreak="05:00 PM";
+			    	$scope.thuError=false;
 			    	break;
 			    case 5:
 			    	$scope.clinic.clinicTimingList[5].startTime="09:00 AM";
 			    	$scope.clinic.clinicTimingList[5].endTime="08:00 PM";
 			    	$scope.clinic.clinicTimingList[5].startsBreak="02:00 PM";
 			    	$scope.clinic.clinicTimingList[5].endsBreak="05:00 PM";
+			    	$scope.friError=false;
 			    	break;
 			    case 6:
 			    	$scope.clinic.clinicTimingList[6].startTime="09:00 AM";
 			    	$scope.clinic.clinicTimingList[6].endTime="08:00 PM";
 			    	$scope.clinic.clinicTimingList[6].startsBreak="02:00 PM";
 			    	$scope.clinic.clinicTimingList[6].endsBreak="05:00 PM";
+			    	$scope.satError=false;
 			    	break;
 			    default:
 			        break;
 			}
+				if($scope.sunError==false&&$scope.monError==false&&$scope.tueError==false&&$scope.wedError==false&&$scope.thuError==false&&$scope.friError==false&&
+						$scope.satError==false)
+					{
+						$scope.isError=false;
+					}
 		};
 		
 		$scope.isClean = function() {
@@ -391,9 +415,6 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 		// Validate the Time
 		$scope.validateTime=function(fieldArray,errorField){
 			
-			$scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
-			$scope.satError=false;
-			$scope.isError=false;
 			var startTime=$("#"+fieldArray[0]).val();
 			var endTime=$("#"+fieldArray[1]).val();
 			var breakStartTime=$("#"+fieldArray[2]).val();
@@ -408,45 +429,50 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 				if(errorField==0){
 					$scope.sunError=false;
 				}
-				if(errorField==1){
+				else if(errorField==1){
 					$scope.monError=false;
 				}
-				if(errorField==2){
+				else if(errorField==2){
 					$scope.tueError=false;
 				}
-				if(errorField==3){
+				else if(errorField==3){
 					$scope.wedError=false;
 				}
-				if(errorField==4){
+				else if(errorField==4){
 					$scope.thuError=false;
 				}
-				if(errorField==5){
+				else if(errorField==5){
 					$scope.friError=false;
 				}
-				if(errorField==6){
+				else if(errorField==6){
 					$scope.satError=false;
 				}
-				$scope.isError=false;
+				
+				if($scope.sunError==false&&$scope.monError==false&&$scope.tueError==false&&$scope.wedError==false&&$scope.thuError==false&&$scope.friError==false&&
+						$scope.satError==false)
+					{
+						$scope.isError=false;
+					}
 			}else{
 				if(errorField==0){
 					$scope.sunError=true;
 				}
-				if(errorField==1){
+				else if(errorField==1){
 					$scope.monError=true;
 				}
-				if(errorField==2){
+				else if(errorField==2){
 					$scope.tueError=true;
 				}
-				if(errorField==3){
+				else if(errorField==3){
 					$scope.wedError=true;
 				}
-				if(errorField==4){
+				else if(errorField==4){
 					$scope.thuError=true;
 				}
-				if(errorField==5){
+				else if(errorField==5){
 					$scope.friError=true;
 				}
-				if(errorField==6){
+				else if(errorField==6){
 					$scope.satError=true;
 				}
 				$scope.isError=true;
