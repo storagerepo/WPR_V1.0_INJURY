@@ -85,7 +85,14 @@ adminApp.controller('crashReportController', ['$scope', 'FileUploader','requestH
         console.info('onProgressAll', progress);
     };
     uploader.onSuccessItem = function(fileItem, response, status, headers) {
-        console.info('onSuccessItem', fileItem, response, status, headers);
+    	if(response.requestSuccess==false){
+    		fileItem.isError=true;
+        	fileItem.responseMessage=response.responseMessage;
+    	}else{
+    		fileItem.isError=false;
+    		fileItem.responseMessage=response.responseMessage;
+    	}
+    	console.info('onSuccessItem', fileItem);
     };
     uploader.onErrorItem = function(fileItem, response, status, headers) {
         console.info('onErrorItem', fileItem, response, status, headers);
@@ -96,14 +103,11 @@ adminApp.controller('crashReportController', ['$scope', 'FileUploader','requestH
     };
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
-        $("#uploadSuccessStatus").html(response);
         $scope.updateList();
       
     };
     uploader.onCompleteAll = function() {
         console.info('onCompleteAll');
-       $("#uploadSuccessAlert").show();
-       // uploader.clearQueue();
         
     };
 

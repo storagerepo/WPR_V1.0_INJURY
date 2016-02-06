@@ -292,7 +292,7 @@ public class PDFCrashReportReader {
     	
 	}
 	
-	public boolean checkStatus(PDFCrashReportJson pdfCrashReportJson){
+	public Integer checkStatus(PDFCrashReportJson pdfCrashReportJson){
 		
 		//Check for the report
 		//1. Check for unit number
@@ -302,25 +302,33 @@ public class PDFCrashReportReader {
 			if(unitInError!=99&&unitInError!=98){
 				ReportUnitPageForm unitPageForm=pdfCrashReportJson.getReportUnitPageForms().get(unitInError-1);
 				if(!unitPageForm.getInsuranceCompany().equals("")&&!unitPageForm.getPolicyNumber().equals("")){
-					return true;
-				}else{
+					return 1;//If 1 then the report satisfy the condition
+				}else if(unitPageForm.getInsuranceCompany().equals("")&&unitPageForm.getPolicyNumber().equals("")){
 					//Skip the form
-					return false;
+					return 2;//If 2 both are empty
+				}else if(unitPageForm.getInsuranceCompany().equals("")){
+					return 3;//If 3 Insurance Company is empty
+				}else{
+					return 4;//If 4 Policy Number is empty
 				}
 			}else{
 				ReportUnitPageForm unitPageForm=pdfCrashReportJson.getReportUnitPageForms().get(unitInError-1);
 				if(!unitPageForm.getInsuranceCompany().equals("")&&!unitPageForm.getPolicyNumber().equals("")){
-					return true;
-				}else{
+					return 1;//If 1 then the report satisfy the condition
+				}else if(unitPageForm.getInsuranceCompany().equals("")&&unitPageForm.getPolicyNumber().equals("")){
 					//Skip the form
-					return false;
+					return 2;//If 2 both are empty
+				}else if(unitPageForm.getInsuranceCompany().equals("")){
+					return 3;//If 3 Insurance Company is empty
+				}else{
+					return 4;//If 4 Policy Number is empty
 				}
 			}
 			
 			
 		}catch(Exception ex){
 			System.out.println(ex.toString());
-			return false;
+			return 0;
 		}
 	}
 	

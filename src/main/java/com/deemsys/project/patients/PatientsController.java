@@ -164,8 +164,8 @@ public class PatientsController {
           @RequestParam("crashId") String crashReportId,ModelMap model) throws IOException {
 	 
 	  PDFCrashReportJson pdfCrashReportJson=crashReportReader.getValuesFromPDF(crashReportReader.parsePdfFromURL(crashReportId));
-	  boolean crashReportStatus=crashReportReader.checkStatus(pdfCrashReportJson);
-	  if(crashReportStatus){
+	  Integer crashReportStatus=crashReportReader.checkStatus(pdfCrashReportJson);
+	  if(crashReportStatus==1){
 		  List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
 		  patientsForms=crashReportReader.getPatientForm(pdfCrashReportJson);
 		  for (PatientsForm patientsForm : patientsForms) {
@@ -204,35 +204,48 @@ public class PatientsController {
     
 //Upload PDF file
   @RequestMapping(value = "/uploadCrashReportPDFDocuments" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
-  public @ResponseBody String readUploadCrashReportFileHandler(
+  public String readUploadCrashReportFileHandler(
           @RequestParam("file") MultipartFile file,ModelMap model) throws IOException {
 	
 	  PDFCrashReportJson pdfCrashReportJson=crashReportReader.getValuesFromPDF(crashReportReader.parsePdfFromFile(file));
 	  List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
-	  boolean crashReportStatus=crashReportReader.checkStatus(pdfCrashReportJson);
-	  if(crashReportStatus){		  
-		  patientsForms=crashReportReader.getPatientForm(pdfCrashReportJson);
-		  
+	  Integer crashReportStatus=crashReportReader.checkStatus(pdfCrashReportJson);
+	  if(crashReportStatus==1){		  
+		  patientsForms=crashReportReader.getPatientForm(pdfCrashReportJson);		  
 		  String fileName="";
 		  File archiveFile = null;
 		  //Save File in Location
 		  if(patientsForms.size()>0){	
-			  fileName="D://InjuryCrashReport//Archive//"+patientsForms.get(0).getCountry()+"_CrashReport_"+patientsForms.get(0).getLocalReportNumber()+".pdf";
+			  fileName="D:\\InjuryCrashReport\\Archive\\"+patientsForms.get(0).getCountry()+"_CrashReport_"+patientsForms.get(0).getLocalReportNumber()+".pdf";
 			  archiveFile=new File(fileName);
 			  byte[] bytes=file.getBytes();
 			  BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(archiveFile));
               stream.write(bytes);
               stream.close();
 		  }
-		  
 		  for (PatientsForm patientsForm : patientsForms) {
 			  patientsForm.setCrashReportFileName(archiveFile.getName());
 			  patientsService.savePatients(patientsForm);
 		  }		  
 		  model.addAttribute("requestSuccess",true);
+		  if(patientsForms.size()>0)
+			  model.addAttribute("responseMessage","Report Read Successfully and "+patientsForms.size()+" Patients Added!");
+		  else{
+			  model.addAttribute("responseMessage","Report Read Successfully but No Patient have sufficient information!");
+		  }
+		  
 	  }else{
 		  model.addAttribute("requestSuccess",false);
-		  model.addAttribute("status","Report not statisfied the conditions");
+		  String responseMessage="";
+			if(crashReportStatus==2){
+				responseMessage="Unit in Error doesn't have Insurance Company and Policy Number Details!";
+			}else if(crashReportStatus==3){
+				responseMessage="Unit in Error doesn't have Insurance Company Name!";
+			}else{
+				responseMessage="Unit in Error doesn't have Insurance Policy Number!";
+			}
+		  
+		  model.addAttribute("responseMessage",responseMessage);
 	  }
 	  return "Details Added Successfully from Crash Reports!";
 

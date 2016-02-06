@@ -115,7 +115,7 @@ public class PatientsService {
 			}
 				
 			
-			PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,clinicId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),InjuryConstants.convertAMPMTime(patients.getTimeOfCrash().toString()),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getCrashReportFileName(),patients.getPatientStatus());
+			PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,clinicId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getCrashReportFileName(),patients.getPatientStatus());
 			patientsForm.setCallerName(staffName);
 			patientsForm.setClinicName(clinicName);
 			patientsForm.setDoctorName(doctorName);
@@ -328,7 +328,7 @@ public class PatientsService {
 		}
 		
 		
-		Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),InjuryConstants.convert24HourTime(patientsForm.getTimeOfCrash().toString()),patientsForm.getUnitNumber().trim(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),latitude,longitude,patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getCrashReportFileName(),1);
+		Patients patients=new Patients(staff,clinics,doctors,patientsForm.getLocalReportNumber(),patientsForm.getCrashSeverity(),patientsForm.getReportingAgencyName(),patientsForm.getNumberOfUnits(),patientsForm.getUnitInError(),patientsForm.getCountry(),patientsForm.getCityVillageTownship(),patientsForm.getCrashDate(),patientsForm.getTimeOfCrash().toString(),patientsForm.getUnitNumber().trim(),patientsForm.getName(),patientsForm.getDateOfBirth(),patientsForm.getGender(),patientsForm.getAddress(),latitude,longitude,patientsForm.getPhoneNumber(),patientsForm.getInjuries(),patientsForm.getEmsAgency(),patientsForm.getMedicalFacility(),patientsForm.getCrashReportFileName(),1);
 		
 		if(patientsForm.getDoctorId() == null)
 		{
@@ -550,7 +550,7 @@ public class PatientsService {
 					doctorId=patients.getDoctors().getId();
 					
 			
-				PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,clinicId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),InjuryConstants.convertAMPMTime(patients.getTimeOfCrash().toString()),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getCrashReportFileName(),patients.getPatientStatus());
+				PatientsForm patientsForm=new PatientsForm(patients.getId(),staffId,clinicId,doctorId,patients.getLocalReportNumber(),patients.getCrashSeverity(),patients.getReportingAgencyName(),patients.getNumberOfUnits(),patients.getUnitInError(),patients.getCountry(),patients.getCityVillageTownship(),patients.getCrashDate(),patients.getTimeOfCrash().toString(),patients.getUnitNumber(),patients.getName(),patients.getDateOfBirth(),patients.getGender(),patients.getAddress(),patients.getPhoneNumber(),patients.getInjuries(),patients.getEmsAgency(),patients.getMedicalFacility(),patients.getCrashReportFileName(),patients.getPatientStatus());
 		patientsForms.add(patientsForm);
 			count++;
 			}

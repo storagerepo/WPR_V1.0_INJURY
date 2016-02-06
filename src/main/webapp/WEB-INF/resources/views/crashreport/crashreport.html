@@ -13,17 +13,15 @@
       Browse .PDF Crash Report Files to Upload
                     <input class="btn btn-primary" type="file" nv-file-select="image/*" uploader="uploader" name="file" id="file" multiple/>
                 </div>&nbsp;&nbsp;<span ng-cloak style="color:red" id="fileUploadError">Please Select Only PDF Files</span><br/><br/>
-             <div id="uploadSuccessAlert" class="panel well" style="color:green;font-weight:bold;">
-            <span id="uploadSuccessStatus"></span>
-                        </div>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th width="50%" >Name</th>
-                                <th ng-show="uploader.isHTML5" >Size</th>
-                                <th ng-show="uploader.isHTML5" >Progress</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th class="col-md-4">Name</th>
+                                <th class="col-md-1" ng-show="uploader.isHTML5" >Size</th>
+                                <th class="col-md-1"ng-show="uploader.isHTML5" >Progress</th>
+                                <th class="col-md-1 text-center">Status</th>
+                                <th class="col-md-4">Report Status</th>
+                                <th class="col-md-1">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,13 +34,19 @@
                                  </div>
                                 </td>
                                 <td class="text-center">
-                                    <span ng-show="uploader.queue[0].isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                                    <span ng-show="uploader.queue[0].isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                    <span><i class="glyphicon glyphicon-remove"></i></span>
+                                    <span ng-show="item.isSuccess&&!item.isError"><i class="successText glyphicon glyphicon-ok"></i></span>
+                                    <span ng-show="item.isError"><i class="errorText glyphicon glyphicon-remove"></i></span>
+                                    <span ng-hide="item.isSuccess||item.isError"><i class="glyphicon glyphicon-time"></i>&nbsp;Queued</span>
                                 </td>
-                                <td><button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                        <span class="glyphicon glyphicon-trash"></span> Remove
-                                    </button></td>
+                                <td class="text-left">
+                                    <span ng-show="item.isError" class="errorText">{{item.responseMessage}}</span>
+                                    <span ng-hide="item.isError" class="successText">{{item.responseMessage}}</span>
+                                </td>
+                                <td>
+                                	<button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </td>
                             </tr>
                             <tr ng-show="uploader.queue.length==0">
                             <td colspan="5"><center><strong>No files added!</strong></center></td>

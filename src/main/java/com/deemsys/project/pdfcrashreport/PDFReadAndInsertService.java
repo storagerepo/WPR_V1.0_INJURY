@@ -36,8 +36,8 @@ public class PDFReadAndInsertService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			  boolean crashReportStatus=crashReportReader.checkStatus(pdfCrashReportJson);
-			  if(crashReportStatus){
+			  Integer crashReportStatus=crashReportReader.checkStatus(pdfCrashReportJson);
+			  if(crashReportStatus==1){
 				  List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
 				  patientsForms=crashReportReader.getPatientForm(pdfCrashReportJson);
 				 String filename="";
