@@ -53,6 +53,8 @@
 							placeholder="Search by Response" ng-model="search.response" /></th>
 						<th><input type="text" class="form-control"
 							placeholder="Search by Notes" ng-model="search.notes" /></th>
+						<th><input type="text" class="form-control"
+							placeholder="Search by Caller" ng-model="search.callerName" /></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -61,13 +63,7 @@
 					<tr>
 						<td ng-cloak>{{callLogss.timeStamp}}</td>
 
-						<td ng-cloak>
-							<div ng-switch on="callLogss.response">
-
-								<div ng-switch-when="1">Not interested/Injured</div>
-								<div ng-switch-when="2">Voice mail</div>
-								<div ng-switch-when="3">Do not call</div>
-						</td>
+						<td ng-cloak>{{callLogss.response}}</td>
 						<td ng-cloak class="col-md-4 wrap">{{callLogss.notes}}</td>
 						<td ng-cloak class="col-md-2">{{callLogss.callerName}}</td>
 						<td><a ng-cloak type="submit" title=""
@@ -267,22 +263,20 @@
 				<h4 class="modal-title">View Appointment</h4>
 			</div>
 			<div class="modal-body">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Scheduled Date</th>
-							<th>Notes</th>
-						</tr>
-					</thead>
+				<table class="table table-striped table-bordered">
 					<tbody ng-show="!appointments.notavailable">
 						<tr>
-							<td>{{appointments.scheduledDate}}</td>
-							<td class="col-md-3 wrap">{{appointments.notes}}</td>
+							<td>Scheduled Date</td>
+							<td class="col-md-9">{{appointments.scheduledDate}}</td>
+						</tr>
+						<tr>
+						<td>Notes</td>
+						<td class="col-md-9 wrap">{{appointments.notes}}</td>
 						</tr>
 					</tbody>
 					<tbody ng-show="appointments.notavailable">
 					<tr>
-						<td colspan="5" align="center">No Records Found!</td>
+						<td colspan="5" align="center">No Appointment Added!</td>
 					</tr>
 				</tbody>
 
@@ -368,11 +362,15 @@
 						<td class="col-md-3">{{patients.callerName}}</td>
 					</tr>
 					<tr>
-						<td class="col-md-3"><b>Doctor Name</b></td>
-						<td class="col-md-3">{{patients.doctorName}}</td>
+						<td class="col-md-3"><b>Clinic Name</b></td>
+						<td class="col-md-3">{{patients.clinicName}}</td>
 						<td class="col-md-3"><b>Unit Number</b></td>
 						<td class="col-md-3">{{patients.unitNumber}}</td>
 
+					</tr>
+					<tr>
+						<td class="col-md-3"><b>Doctor Name</b></td>
+						<td class="col-md-3">{{patients.doctorName}}</td>
 					</tr>
 				</table>
 			</div>

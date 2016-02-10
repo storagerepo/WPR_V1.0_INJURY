@@ -32,8 +32,7 @@ sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"
       $httpProvider.interceptors.push(['$q','$location','$injector',function ($q, $location,$injector) {
               return {
                   'request': function(request) {
-
-                      return request;
+                	   return request;
                   },
                   'response': function (response) {
                       return response;
@@ -45,10 +44,11 @@ sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"
                           }
                           case 401:{
                             alert("restricted");
+                            window.location.href="/Injury/logout";
+                            
                           }
                           case 403: {
-                            
-                            alert("Access Denied!!!");
+                              window.location.href="/Injury/logout";
                               break;
                           }
                           case 500: {
@@ -56,9 +56,7 @@ sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"
                               break;
                           }
                           default : {
-                             
-
-                              break;
+                             break;
                           }
                       }
 
@@ -634,7 +632,6 @@ sbAdminApp.directive('validateCitytownship',function(){
 	        }
 	    };
 });
-
 
 
 

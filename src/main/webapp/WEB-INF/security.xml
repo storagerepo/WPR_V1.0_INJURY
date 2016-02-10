@@ -67,9 +67,10 @@
 		    default-target-url="/dashboard"
 			authentication-failure-url="/login-failed" 
 			username-parameter="username"
-			password-parameter="password" />
+			password-parameter="password" 
+			always-use-default-target="true" />
 		<session-management invalid-session-url="/logout" />
-		<logout logout-success-url="/logout" />		
+		<logout logout-success-url="/logout" delete-cookies="JSESSIONID" invalidate-session="true"/>
 	</http>
 
 

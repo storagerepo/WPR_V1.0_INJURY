@@ -51,14 +51,10 @@
     <!-- endbuild -->
 	
 	<!-- Google Map-->
-<!-- 	<script src="resources/components/angular-google-map/angular-google-maps.min.js"></script> -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
 	<script src="http://rawgit.com/angular-ui/angular-google-maps/2.0.X/dist/angular-google-maps.js"></script>
 	
-	<!-- Bootstrap Toggle -->
-   <!--  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
-	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script> -->
-	
+
 	<!-- Load For Menu -->
 	<script src="resources/scripts/services/requestHandler.js"></script>
 	<script src='resources/scripts/directives/sidebar/sidebar.js'></script>

@@ -167,5 +167,25 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		appointments=this.sessionFactory.getCurrentSession().createCriteria(Appointments.class).add(Restrictions.and(Restrictions.ge("scheduledDate", startDate), Restrictions.le("scheduledDate", endDate))).list();
 		return appointments;
 	}
+
+	@Override
+	public List<AppointmentsForm> getAppointmentsBetweenDatesByStaffId(
+			String startDate, String endDate,Integer staffId) {
+		// TODO Auto-generated method stub
+		List<Appointments> appointments=new ArrayList<Appointments>();
+		
+		Query query =this.sessionFactory.getCurrentSession().createQuery("select s1.id,s1.patients.id,s1.patients.name,s1.scheduledDate,s1.notes,s1.status from Patients s2,Appointments s1 where s2.id=s1.patients.id and s2.staff.id="+staffId+" and (s1.scheduledDate>='"+startDate+"' and s1.scheduledDate<='"+endDate+"')");
+		
+		List<Object[]> list = query.list();
+		
+		List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();
+		AppointmentsForm appointmentsForm=new AppointmentsForm();
+		for(Object[] arr : list){
+			appointmentsForm=new AppointmentsForm(Integer.parseInt(arr[0].toString()), Integer.parseInt(arr[1].toString()),arr[2].toString(),arr[3].toString(), arr[4].toString(), Integer.parseInt(arr[5].toString()));
+			appointmentsForms.add(appointmentsForm);
+				
+		}
+		return appointmentsForms;
+	}
 	
 	}

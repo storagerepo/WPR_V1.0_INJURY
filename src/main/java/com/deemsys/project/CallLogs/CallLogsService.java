@@ -258,30 +258,31 @@ public class CallLogsService {
 		for(CallLogs callLogss:callLogs)
 		{
 			try{
-		Integer id=callLogss.getCallerId();
+				Integer id=callLogss.getCallerId();
 				Staff staff=new Staff();
 				staff=staffDAO.get(id);
 				String staffName=staff.getFirstName()+" "+staff.getLastName();
-				if(callLogss.getAppointments()==null)
-					{
-	 if(staffName==null){
-	callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),null);
-	 }
-	 else{
-		 callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),staffName);
-			
-	 }
-}
-else
-{
-	if(staffName==null){
-		callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(),callLogss.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),null);
-		 }
-		 else{
-			 callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(),callLogss.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),staffName);
 				
-		 }
-}
+				if(callLogss.getAppointments()==null)
+				{
+						if(staffName==null){
+							 callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),null);
+						 }
+						 else{
+							 callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),staffName);
+								
+						 }
+				}
+				else
+				{
+					if(staffName==null){
+						callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(),callLogss.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),null);
+						 }
+						 else{
+							 callLogsForms = new CallLogsForm(callLogss.getId(),callLogss.getPatients().getId(),callLogss.getAppointments().getId(), InjuryConstants.convertUSAFormatWithTime(callLogss.getTimeStamp()), callLogss.getResponse(), callLogss.getNotes(),staffName);
+								
+						 }
+				}
 	callLogsForm.add(callLogsForms);
 
 			}

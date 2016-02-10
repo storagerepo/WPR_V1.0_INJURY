@@ -11,12 +11,17 @@
 <div class="row">
     <div class="col-lg-12">           
             <!-- /.panel-heading -->
-            <div class="col-md-4">
+            <div class="col-md-2">
+            Select Year :
+            <div class='input-group'><input type="text"  class="form-control"  ng-model="searchYear" placeholder="Search by Date" id="yearpicker" ng-change="getByDates()"/><span class="input-group-addon white-color-bg"> <span
+																class="glyphicon glyphicon-calendar"></span></span></div>
+            </div>
+            <div class="col-md-3">
          Select Month :
          <!-- 
          <div class='input-group'><input type="text"  class="form-control"  ng-model="searchDate" placeholder="Search by Date" id="monthpicker" ng-change="getByDates()"/><span class="input-group-addon white-color-bg"> <span
 																class="glyphicon glyphicon-calendar"></span></span></div> -->
-       <select class="form-control" name="month" ng-model="searchDate" ng-change="getByDates()">
+       <select class="form-control" name="month" ng-model="searchMonth" ng-change="getByDates()">
          <option value="">--Select Month--</option>
 		<option value="1">January</option>
 		<option value="2">February</option>
@@ -31,6 +36,7 @@
 		<option value="11">November</option>
 		<option value="12">December</option>
          </select>
+         <br/>
         </div>
         
                   <table class="table table-hover" id="dataTables-example">
@@ -67,13 +73,7 @@
 		<td ng-cloak>{{appointment.patientName}}</td>
 <td ng-cloak class="col-md-4 wrap">{{appointment.notes}}</td>
 		 	
-  <td ng-cloak>
- <div ng-switch on="appointment.status">
- <div ng-switch-when="1">Arrived</div>
- <div ng-switch-when="2">Cancelled</div>
- <div ng-switch-default>Not Arrived</div>
-
-  </td><td>
+  <td ng-cloak>{{appointment.status}}</td><td>
   <a ng-cloak ng-click="viewPatients(appointment.patientId)" class="btn btn-xs btn-primary"><i
 								class="glyphicon glyphicon-eye-open"></i>&nbsp; View patients details
 						
@@ -161,11 +161,14 @@
 						<td class="col-md-3">{{patients.callerName}}</td>
 						</tr>
 						<tr>
-						<td class="col-md-3"><b>Doctor Name</b></td>
-						<td class="col-md-3">{{patients.doctorName}}</td>
+						<td class="col-md-3"><b>Clinic Name</b></td>
+						<td class="col-md-3">{{patients.clinicName}}</td>
 						<td class="col-md-3"><b>Unit Number</b></td>
 						<td class="col-md-3">{{patients.unitNumber}}</td>
-					
+						</tr>
+						<tr>
+						<td class="col-md-3"><b>Doctor Name</b></td>
+						<td class="col-md-3">{{patients.doctorName}}</td>
 						</tr>
 	 				</table>
       </div>
@@ -183,12 +186,12 @@ $('#datetimepicker8').datetimepicker(
 			defaultDate:new Date()
 			
 		});
-$('#monthpicker').datetimepicker(
+$('#yearpicker').datetimepicker(
 		{
 			pickTime : false,
-			format:'M',
-			viewMode: "months", 
-		    minViewMode: "months"
+			format:'YYYY',
+			viewMode: "years", 
+		    minViewMode: "years"
 			
 		});
 </script>    

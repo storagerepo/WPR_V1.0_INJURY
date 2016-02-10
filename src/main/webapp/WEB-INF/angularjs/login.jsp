@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <link rel="stylesheet" href="resources/components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="styles/sb-admin-2.css">
     <link rel="stylesheet" href="styles/timeline.css">

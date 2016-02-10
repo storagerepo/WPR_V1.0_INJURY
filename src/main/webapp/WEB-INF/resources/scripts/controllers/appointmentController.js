@@ -7,7 +7,8 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
     };
     var date=new Date();
-    $scope.searchDate=(date.getMonth()+1).toString();
+    $scope.searchMonth=(date.getMonth()+1).toString();
+    $scope.searchYear=date.getFullYear();
 /*if(date.getDate()<=9 && date.getMonth()<=8){
   	$scope.searchDate=date.getFullYear()+"-0"+(date.getMonth()+1)+"-0"+date.getDate();
   }
@@ -21,10 +22,15 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
     	$scope.searchDate=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
     }
 */
-    requestHandler.getRequest("Staff/monthwiseAppointment.json?month=0","").then(function(response){
+    requestHandler.getRequest("Staff/monthwiseAppointment.json?month=0&year=0","").then(function(response){
 		//alert(JSON.stringify(response));
     	 $scope.appointments = response.data.appointmentsForms;
          $scope.appointments.status = true;
+         $.each($scope.appointments,function(index,value){
+        	 if(value.status==0){
+        		 value.status="Not Arrived";
+        	 }
+         });
           $scope.sort("scheduledDate");
 	     });
  
@@ -37,17 +43,27 @@ $scope.viewPatients=function(id)
 }
 $scope.getByDates=function()
 {
-if($scope.searchDate)
+if($scope.searchMonth)
 	{
-	requestHandler.getRequest("Staff/monthwiseAppointment.json?month="+$scope.searchDate,"").then(function (response) {
+	requestHandler.getRequest("Staff/monthwiseAppointment.json?month="+$scope.searchMonth+"&year="+$scope.searchYear,"").then(function (response) {
 			$scope.appointments=response.data.appointmentsForms;
+			 $.each($scope.appointments,function(index,value){
+	        	 if(value.status==0){
+	        		 value.status="Not Arrived";
+	        	 }
+	         });
 	});
 	 }
 
 else
 {
-	requestHandler.getRequest("Staff/monthwiseAppointment.json?month=0").then( function(response) {
+	requestHandler.getRequest("Staff/monthwiseAppointment.json?month=0&year=0").then( function(response) {
 	     $scope.appointments = response.data.appointmentsForms;
+	     $.each($scope.appointments,function(index,value){
+        	 if(value.status==0){
+        		 value.status="Not Arrived";
+        	 }
+         });
 	    $scope.appointments.status = true;
 	    });
 	}

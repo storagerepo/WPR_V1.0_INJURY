@@ -142,7 +142,7 @@ public class AppointmentsService {
 	patientsDAO.update(patients);
 
 	patientsDAO.updatePatientStatus(appointmentsForm.getPatientId());
-return 1;
+	return 1;
 	}
 	
 	public Integer updateStatu(Integer getId, Integer getStatus)
@@ -209,7 +209,7 @@ return 1;
 		return patientsForm;
 	}
 			
-			public List<AppointmentsForm> monthwiseAppointment(Integer month)
+			public List<AppointmentsForm> monthwiseAppointment(Integer year,Integer month)
 			{
 			List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();
 				
@@ -221,7 +221,6 @@ return 1;
 					monthBegin = new LocalDate().withDayOfMonth(1).toDate();
 					monthEnd = new LocalDate().plusMonths(1).withDayOfMonth(1).minusDays(1).toDate();
 				}else{
-					 int year = Calendar.getInstance().get(Calendar.YEAR);
 					monthBegin = new LocalDate(year,month,1).toDate();
 					monthEnd = new LocalDate(year,month,1).plusMonths(1).withDayOfMonth(1).minusDays(1).toDate();
 				}
@@ -235,7 +234,11 @@ return 1;
 				}
 				else if(role=="ROLE_STAFF"){
 					Integer staffId = staffService.getCurrentUserId();
-					appointmentsForms=patientsDAO.getTodayAppointmentListByStaffId(staffId);
+					SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd");
+					String startDate=yearFormat.format(monthBegin);
+					String endDate=yearFormat.format(monthEnd);
+					appointmentsForms=appointmentsDAO.getAppointmentsBetweenDatesByStaffId(startDate,endDate,staffId);
+					
 				}
 				
 

@@ -300,7 +300,7 @@ $("#file").val("");
 	};
 	$scope.patientStatus=function(){
 		 if($rootScope.isAdmin){
-			 if($scope.Status==4){
+			 if($scope.Status=="" || $scope.Status==undefined){
 				   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 						
 					     $scope.patientss= response.data.patientsForms;

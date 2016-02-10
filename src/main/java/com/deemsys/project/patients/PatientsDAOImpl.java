@@ -156,7 +156,7 @@ public class PatientsDAOImpl implements PatientsDAO{
 	@Override
 	public List<AppointmentsForm> getAppointmentListByStaffId(Integer staffId) {
 	
-		Query query= this.sessionFactory.getCurrentSession().createQuery("select s1.id,s1.patients.id,s1.patients.name,s1.scheduledDate,s1.notes,s1.status from Patients s2,Appointments s1 where s2.id=s1.patients.id and s2.staff.id="+staffId+" and s1.scheduledDate=CURDATE()" );
+		Query query= this.sessionFactory.getCurrentSession().createQuery("select s1.id,s1.patients.id,s1.patients.name,s1.scheduledDate,s1.notes,s1.status from Patients s2,Appointments s1 where s2.id=s1.patients.id and s2.staff.id="+staffId+"");
 				
 				List<Object[]> list = query.list();
 	

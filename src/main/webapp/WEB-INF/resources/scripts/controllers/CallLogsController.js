@@ -11,11 +11,41 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	   $scope.getCallLogsList=function(){
 		    requestHandler.postRequest("Staff/getCallLogsById.json?id="+$stateParams.id,"").then( function(response) {
 		    	$scope.callLogs= response.data.callLogsForms;
+		    	$.each($scope.callLogs,function(index,value) {
+			    	 switch(value.response) {
+			    	    case 1:
+			    	        value.response="Not interested/injured";
+			    	        break;
+			    	    case 2:
+			    	    	value.response="Voice mail";
+			    	        break;
+			    	    case 3:
+			    	    	value.response="Do not call";
+			    	    	break;
+			    	    default:
+			    	    	break;
+			    	} 
+			     });
 		    });
 	   };
 	   
 	    requestHandler.postRequest("Staff/getCallLogsById.json?id="+$stateParams.id,"").then( function(response) {
 	    	$scope.callLogs= response.data.callLogsForms;
+	    	 $.each($scope.callLogs,function(index,value) {
+		    	 switch(value.response) {
+		    	    case "1":
+		    	        value.response="Not interested/injured";
+		    	        break;
+		    	    case "2":
+		    	    	value.response="Voice mail";
+		    	        break;
+		    	    case "3":
+		    	    	value.response="Do not call";
+		    	    	break;
+		    	    default:
+		    	    	break;
+		    	} 
+		     });
 	    	$scope.sort('timeStamp');
 	    	requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
 	    		$scope.patient= response.data.patientsForm;
