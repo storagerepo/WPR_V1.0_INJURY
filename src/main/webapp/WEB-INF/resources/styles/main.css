@@ -422,8 +422,11 @@ border-radius:4px !important;
 input[type=text]::-ms-clear { display: none; }
 
 .errorText{
-	color:red;
+	color:#e60000;
 }
 .successText{
 	color:green;
+}
+.warningText{
+	color:#ffcc00;
 }

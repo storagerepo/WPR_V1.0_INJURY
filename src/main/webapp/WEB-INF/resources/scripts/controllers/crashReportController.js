@@ -86,10 +86,14 @@ adminApp.controller('crashReportController', ['$scope', 'FileUploader','requestH
     };
     uploader.onSuccessItem = function(fileItem, response, status, headers) {
     	if(response.requestSuccess==false){
-    		fileItem.isError=true;
+    		fileItem.isError=1;
         	fileItem.responseMessage=response.responseMessage;
     	}else{
-    		fileItem.isError=false;
+    		if(response.successMessage==false){
+    			fileItem.isError=2;
+    		}else{
+    			fileItem.isError=3;
+    		}
     		fileItem.responseMessage=response.responseMessage;
     	}
     	console.info('onSuccessItem', fileItem);

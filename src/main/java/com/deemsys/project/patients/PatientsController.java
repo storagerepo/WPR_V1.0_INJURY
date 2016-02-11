@@ -228,9 +228,12 @@ public class PatientsController {
 			  patientsService.savePatients(patientsForm);
 		  }		  
 		  model.addAttribute("requestSuccess",true);
-		  if(patientsForms.size()>0)
+		  if(patientsForms.size()>0){
+			  model.addAttribute("successMessage",true);
 			  model.addAttribute("responseMessage","Report Read Successfully and "+patientsForms.size()+" Patients Added!");
+		  }
 		  else{
+			  model.addAttribute("successMessage",false);
 			  model.addAttribute("responseMessage","Report Read Successfully but No Patient have sufficient information!");
 		  }
 		  

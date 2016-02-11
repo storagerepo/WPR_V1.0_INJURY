@@ -1,6 +1,6 @@
 <div class="row">
 <div class="col-lg-12">
-	 <a ui-sref="dashboard.patient" class="btn-sm btn-primary pull-right margin-top-40">Back to the list</a>	
+	 <a ui-sref="dashboard.patient" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to the list</a>	
 	 <h2 class="page-header">Add Patients - Upload Crash Report PDF</h2>
 	</div>
 	<!-- /.col-lg-12 -->
@@ -9,7 +9,7 @@
 <div class="row">
 <div flash-message="2000" class="col-md-5 pull-right"></div>
      <div ng-controller="crashReportController" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
-      <div class="btn btn-primary btn-file">
+      <div class="btn btn-primary btn-file"><i class="fa fa-paperclip fa-lg"></i> 
       Browse .PDF Crash Report Files to Upload
                     <input class="btn btn-primary" type="file" nv-file-select="image/*" uploader="uploader" name="file" id="file" multiple/>
                 </div>&nbsp;&nbsp;<span ng-cloak style="color:red" id="fileUploadError">Please Select Only PDF Files</span><br/><br/>
@@ -34,13 +34,14 @@
                                  </div>
                                 </td>
                                 <td class="text-center">
-                                    <span ng-show="item.isSuccess&&!item.isError"><i class="successText glyphicon glyphicon-ok"></i></span>
-                                    <span ng-show="item.isError"><i class="errorText glyphicon glyphicon-remove"></i></span>
+                                    <span ng-show="item.isSuccess&&item.isError!=1"><i class="glyphicon glyphicon-ok" ng-class="item.isError!=2?'successText':'warningText'"></i></span>
+                                    <span ng-show="item.isError==1"><i class="errorText glyphicon glyphicon-remove"></i></span>
                                     <span ng-hide="item.isSuccess||item.isError"><i class="glyphicon glyphicon-time"></i>&nbsp;Queued</span>
                                 </td>
                                 <td class="text-left">
-                                    <span ng-show="item.isError" class="errorText">{{item.responseMessage}}</span>
-                                    <span ng-hide="item.isError" class="successText">{{item.responseMessage}}</span>
+                                    <span ng-show="item.isError==1" class="errorText">{{item.responseMessage}}</span>
+                                    <span ng-show="item.isError==2" class="warningText">{{item.responseMessage}}</span>
+                                    <span ng-show="item.isError==3" class="successText">{{item.responseMessage}}</span>
                                 </td>
                                 <td>
                                 	<button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">

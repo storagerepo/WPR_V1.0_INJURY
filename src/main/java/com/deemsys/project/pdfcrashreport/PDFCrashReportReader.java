@@ -343,7 +343,7 @@ public class PDFCrashReportReader {
 			if(motoristPageForm.getAdddressCityStateZip()!=null&&motoristPageForm.getContactPhone()!=null){
 				PatientsForm patientsForm=new PatientsForm();
 				patientsForm.setName(motoristPageForm.getName());
-				patientsForm.setUnitNumber(motoristPageForm.getUnitNumber());
+				patientsForm.setUnitNumber(motoristPageForm.getUnitNumber().trim());
 				patientsForm.setDateOfBirth(motoristPageForm.getDateOfBirth());
 				patientsForm.setGender(motoristPageForm.getGender());
 				patientsForm.setAddress(motoristPageForm.getAdddressCityStateZip());
