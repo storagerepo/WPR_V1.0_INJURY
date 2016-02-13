@@ -24,6 +24,8 @@ adminApp.directive('fileChange', function () {
 adminApp.controller('ShowPatientController', function($scope,$http,$location,$state,$rootScope,requestHandler,$http,successMessageService,Flash) {
 	
 	$scope.title="Add Patient";
+	// Number of Records Per Page
+	$scope.noOfRows="10";
 		    if($rootScope.isAdmin){
 			   $scope.admin=true;
 			   $scope.staff=true;
@@ -384,7 +386,8 @@ $("#file").val("");
 				 });
 			 }
 		 }
-	}
+	};
+
 });
 
 adminApp.controller('AddPatientController', function($scope,$state,$http,$location,$stateParams,requestHandler,Flash) {

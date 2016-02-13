@@ -6,7 +6,7 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-<!-- <div class="col-md-4 pull-right">
+<div class="col-md-4 pull-right">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="noOfRows" name="noOfRows"
@@ -15,8 +15,9 @@
 		<option value="25">Show 25 Per Page</option>
 		<option value="50">Show 50 Per Page</option>
 		<option value="100">Show 100 Per Page</option>
+		<option value="{{clinics.length}}">Show All</option>
 	</select> 
-</div>  -->
+</div>
 
 <div class="row">
 <div flash-message="2000" class="col-md-5 pull-right"></div>
@@ -50,7 +51,7 @@
             </thead>
             
           
-                         <tbody dir-paginate="clinic in clinics | filter:search | orderBy:sortKey:reverse|itemsPerPage:20" >
+                         <tbody dir-paginate="clinic in clinics | filter:search | orderBy:sortKey:reverse|itemsPerPage:noOfRows" >
 	<tr>
 	<td ng-cloak>{{clinic.serviceArea}}</td>
 	<td><a href="" ng-cloak ng-click="viewClinicDetails(clinic.clinicId)">{{clinic.clinicName}}</a></td>

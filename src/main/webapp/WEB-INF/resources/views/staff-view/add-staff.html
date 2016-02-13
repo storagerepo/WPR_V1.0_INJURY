@@ -19,6 +19,7 @@
                 <div class="dataTable_wrapper">
                             <div class="col-md-12">
                                 <div class="col-md-6">
+                                <input type="number" step="0.01" name="price" ng-model="price" autocomplete="off">
                                     <label>First Name</label>
                                     <input type="text" class="form-control inputclass"  ng-model="staff.firstName" name="firstName" placeholder="First Name" validate-name required>
                                     <span class="error-container" ng-show="myForm.firstName.$dirty && myForm.firstName.$invalid">

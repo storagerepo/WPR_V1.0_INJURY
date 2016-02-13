@@ -1,6 +1,7 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
 
 adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash){
+	$scope.noOfRows="10";
 	 $scope.sort = function(keyname){
 	        $scope.sortKey = keyname;   //set the sortKey to the param passed
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
@@ -75,7 +76,8 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 	$scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
 	$scope.satError=false;$scope.isError=false;
 	$scope.options=true;
-	$scope.title="Add Clinic";
+	
+	$scope.title="Add Clinic & Doctor";
 	$scope.clinic={};
 	$scope.clinic.doctorsForms=[{doctorName:"",titleDr:"",titleDc:""}];
 	$scope.addDoctorInput=function(){
@@ -252,7 +254,7 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 	$scope.clinic={};
 	$scope.clinic.doctorsForms=[];
 	$scope.options=false;
-	$scope.title="Edit Clinic";
+	$scope.title="Edit Clinic & Doctor";
 	var clinicOriginal="";
 		requestHandler.getRequest("Staff/getClinic.json?clinicId="+$stateParams.id,"").then(function(response){
 			

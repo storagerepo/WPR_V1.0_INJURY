@@ -12,26 +12,24 @@
 <div class="row">
 <div flash-message="2000" class="col-md-5 pull-right"></div>
 	<div class="col-lg-12">
-		<!-- /.panel-heading -->
-		<div class="col-md-12">	
-<div class="col-md-4">
+	<div class="col-md-4">
                            <label>Patient Status:</label><select ng-change="patientStatus()" style="width: 225px;" class="form-control" ng-model="Status" name="patientStatus" id="patientStatus" required>
   							  	<option value="">All</option>
   								<option value="1">Active</option>
                                 <option value="2">Appointment Scheduled</option>
 								<option value="3">Do-Not-Call</option>                                                   
 </select></div>
-<div class="col-md-4"></div>
-<!-- <div class="col-md-4 pull-right">
-                          <label>Number of Records</label> <select style="width: 225px;" class="form-control" ng-model="noOfRows" name="noOfRows" id="noOfRows">
+
+ <div class="col-md-4 pull-right">
+                          <label>Number of Records</label> <select class="form-control" ng-model="noOfRows" name="noOfRows" id="noOfRows">
   							  	<option value="10">Show 10 Per Page</option>
   								<option value="25">Show 25 Per Page</option>
                                 <option value="50">Show 50 Per Page</option>
 								<option value="100">Show 100 Per Page</option>
 								<option value="{{patientss.length}}">Show All</option>                                                    
-</select><br/><br/></div> -->
-
-			<table class="table table-hover">
+</select><br/><br/></div>
+		<!-- /.panel-heading -->
+ 		<table class="table table-hover">
 				<thead>
 					<tr>
 						<th  style="width:100px!important;" ng-mousedown="sort('name')">Name <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
@@ -56,7 +54,7 @@
 					</tr>
 				</thead>
 				
-				<tbody ng-show="patientss.length>0" dir-paginate="patients in patientss | filter:search | orderBy:sortKey:reverse|itemsPerPage:20">
+				<tbody ng-show="patientss.length>0" dir-paginate="patients in patientss | filter:search | orderBy:sortKey:reverse|itemsPerPage:noOfRows">
 					<tr>
 						
 						<td><a href="#/dashboard/Calllogs/{{patients.id}}" ng-cloak>{{patients.name}}</a></td>
@@ -109,7 +107,6 @@
 			</table>
 			<dir-pagination-controls max-size="5" direction-links="true"
 					boundary-links="true"> </dir-pagination-controls>
-		</div>
 		<!-- /.panel-body -->
 	</div>
 	<!-- /.col-lg-12 -->

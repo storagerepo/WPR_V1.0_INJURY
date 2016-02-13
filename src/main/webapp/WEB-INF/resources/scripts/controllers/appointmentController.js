@@ -1,7 +1,9 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule']);
 
 adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$state,requestHandler) {
-	 
+	
+	// Number of Records per Page
+	$scope.noOfRows="10";
 	$scope.sort = function(keyname){
         $scope.sortKey = keyname;   //set the sortKey to the param passed
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
