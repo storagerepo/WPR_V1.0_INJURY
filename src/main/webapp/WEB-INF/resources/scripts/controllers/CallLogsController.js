@@ -13,13 +13,13 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		    	$scope.callLogs= response.data.callLogsForms;
 		    	$.each($scope.callLogs,function(index,value) {
 			    	 switch(value.response) {
-			    	    case 1:
+			    	    case "1":
 			    	        value.response="Not interested/injured";
 			    	        break;
-			    	    case 2:
+			    	    case "2":
 			    	    	value.response="Voice mail";
 			    	        break;
-			    	    case 3:
+			    	    case "3":
 			    	    	value.response="Do not call";
 			    	    	break;
 			    	    default:

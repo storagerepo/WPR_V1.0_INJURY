@@ -48,6 +48,7 @@ sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"
                             
                           }
                           case 403: {
+                        	  alert("forbidden");
                               window.location.href="/Injury/logout";
                               break;
                           }
@@ -479,7 +480,100 @@ sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"
                 }
               }
             
-        })
+        })//Lawyer Admin starts
+        .state('dashboard.LawyerAdmin',{
+       	 resolve: {
+                loadMyFile:function($ocLazyLoad) {
+                  return $ocLazyLoad.load({
+                      name:'sbAdminApp',
+                      files:['scripts/controllers/lawyerAdminController.js',
+                             'js/mask.js']
+                  });
+                }
+              },
+           controller:'ShowLawyerAdminController',
+           templateUrl:'views/lawyeradmin/viewlawyeradmin.html',
+           url:'/LawyerAdmin'
+       
+       })
+       .state('dashboard.add-lawyer-admin',{
+      
+       resolve: {
+           loadMyFiles:function($ocLazyLoad) {
+             return $ocLazyLoad.load({
+                 name:'sbAdminApp',
+                 files:['scripts/controllers/lawyerAdminController.js',
+                        'js/mask.js']
+             });
+           }
+         },
+         controller:'SaveLawyerAdminController',
+         templateUrl:'views/lawyeradmin/add-lawyer-admin.html',
+         url:'/add-lawyer-admin',
+         title:'Add Lawyer Admin'
+   }).state('dashboard.EditLawyerAdmin/:id',{
+       
+       resolve: {
+           loadMyFile:function($ocLazyLoad) {
+             
+             return $ocLazyLoad.load({
+                 name:'sbAdminApp',
+                 files:['scripts/controllers/lawyerAdminController.js']
+             });
+           }
+         },
+         controller:'EditLawyerAdminController',
+         templateUrl:'views/lawyeradmin/add-lawyer-admin.html',
+         url:'/EditLawyerAdmin/:id',
+         title:'Edit Lawyer Admin'
+   })//End Lawyer Admin
+   //Lawyers starts
+        .state('dashboard.Lawyer',{
+       	 resolve: {
+                loadMyFile:function($ocLazyLoad) {
+                  return $ocLazyLoad.load({
+                      name:'sbAdminApp',
+                      files:['scripts/controllers/lawyerController.js',
+                             'js/mask.js']
+                  });
+                }
+              },
+           controller:'ShowLawyerController',
+           templateUrl:'views/lawyer/viewlawyer.html',
+           url:'/Lawyer'
+       
+       })
+       .state('dashboard.add-lawyer',{
+      
+       resolve: {
+           loadMyFiles:function($ocLazyLoad) {
+             return $ocLazyLoad.load({
+                 name:'sbAdminApp',
+                 files:['scripts/controllers/lawyerController.js',
+                        'js/mask.js']
+             });
+           }
+         },
+         controller:'SaveLawyerController',
+         templateUrl:'views/lawyer/add-lawyer.html',
+         url:'/add-lawyer',
+         title:'Add Lawyer'
+   }).state('dashboard.EditLawyer/:id',{
+       
+       resolve: {
+           loadMyFile:function($ocLazyLoad) {
+             
+             return $ocLazyLoad.load({
+                 name:'sbAdminApp',
+                 files:['scripts/controllers/lawyerController.js']
+             });
+           }
+         },
+         controller:'EditLawyerController',
+         templateUrl:'views/lawyer/add-lawyer.html',
+         url:'/EditLawyer/:id',
+         title:'Edit Lawyer'
+   })//End Lawyers
         .state('dashboard.Changepassword',{
             templateUrl:'views/changepassword/changepassword.html',
             url:'/Changepassword',
@@ -498,24 +592,30 @@ sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"
      
   }]).controller('authenticationController', function($rootScope,$scope,$http,$location,requestHandler) {
      var authenticate=function(){
-       requestHandler.postRequest("Staff/getCurrentRole.json","").then(function(response) {
+       requestHandler.postRequest("getCurrentRole.json","").then(function(response) {
        
         if(response.data.role=="ROLE_ADMIN"){
             $rootScope.authenticated=true;
-            $rootScope.isAdmin=true;
+            $rootScope.isAdmin=1;
             $rootScope.username=response.data.username;
          }
        else if(response.data.role=="ROLE_STAFF"){
             $rootScope.authenticated=true;
-            $rootScope.isAdmin=false;
+            $rootScope.isAdmin=2;
             $rootScope.username=response.data.username;
          }
-      else
+      else if(response.data.role=="ROLE_LAWYER_ADMIN")
          {
-            $rootScope.authenticated=false;
-            $rootScope.isAdmin=false;
-            
+            $rootScope.authenticated=true;
+            $rootScope.isAdmin=3;
+            $rootScope.username=response.data.username;
          }
+      else if(response.data.role=="ROLE_LAWYER")
+      {
+         $rootScope.authenticated=true;
+         $rootScope.isAdmin=4;
+         $rootScope.username=response.data.username;
+      }
        });
      };
 

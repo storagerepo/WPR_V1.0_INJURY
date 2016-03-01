@@ -98,7 +98,7 @@ public class StaffController {
    		return "/returnPage";
    	}
 	
-    @RequestMapping(value="/Staff/getCurrentRole",method=RequestMethod.POST)
+    @RequestMapping(value="/getCurrentRole",method=RequestMethod.POST)
     public String getCurrentRole(ModelMap model,Principal principal){
     	
     	String role=staffService.getCurrentRole();

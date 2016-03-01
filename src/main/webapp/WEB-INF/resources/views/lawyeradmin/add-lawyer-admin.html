@@ -1,0 +1,127 @@
+<link rel="stylesheet" href="resources/components/datetime/datetimepicker.css"></link>
+<script src="resources/components/datetime/datetimepicker.js"></script>
+<script src="resources/components/datetime/moment.js"></script>
+    <div class="row">
+    <div class="col-lg-12">
+        <a ui-sref="dashboard.LawyerAdmin" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to the list</a>
+        <h2 ng-cloak class="page-header">{{title}}&nbsp;-&nbsp;{{lawyerAdmin.firstName}}&nbsp;{{lawyerAdmin.lastName}}</span></h2>
+    </div>
+    
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+     <form id="myForm" name="myForm" novalidate>
+   
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Enter Lawyer Admin Details
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    		<div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control inputclass"  ng-model="lawyerAdmin.firstName" name="firstName" placeholder="First Name" validate-name required>
+                                    <span class="error-container" ng-show="myForm.firstName.$dirty && myForm.firstName.$invalid">
+                                    <span ng-cloak style="color:red" ng-show="myForm.firstName.$error.required">Please Enter First Name</span>
+                                    <span ng-cloak style="color:red" ng-show="!myForm.firstName.$error.required&&myForm.firstName.$error.validateName">Enter Valid First Name</span>
+                                     </span><br/>
+                                  </div>
+                                  <div class="col-md-6">
+                                   <label>Last Name</label>
+                                    <input type="text" class="form-control"  ng-model="lawyerAdmin.lastName" name="lastName" placeholder="Last Name" validate-name  required>
+                                    <span class="error-container" ng-show="myForm.lastName.$dirty && myForm.lastName.$invalid">
+                                      <span ng-cloak style="color:red" ng-show="myForm.lastName.$error.required">Please Enter Last Name</span>
+                                      <span ng-cloak style="color:red" ng-show="!myForm.lastName.$error.required&&myForm.lastName.$error.validateName">Enter Valid Last Name</span>
+                                     </span><br/>
+                                   </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label>Middle Name</label>
+                                    <input type="text" class="form-control inputclass"  ng-model="lawyerAdmin.middleName" name="middleName" placeholder="Middle Name" validate-name>
+                                    <span class="error-container" ng-show="myForm.middleName.$dirty && myForm.middleName.$invalid">
+                                    <span ng-cloak style="color:red" ng-show="myForm.middleName.$error.required">Please Enter First Name</span>
+                                    <span ng-cloak style="color:red" ng-show="!myForm.middleName.$error.required&&myForm.middleName.$error.validateName">Enter Valid First Name</span>
+                                     </span><br/>
+                                  </div>
+                                  <div class="col-md-6">
+                                   <label>Address</label>
+                                    <input type="text" class="form-control"  ng-model="lawyerAdmin.address" name="address" placeholder="Address"  required>
+                                    <span class="error-container" ng-show="myForm.address.$dirty && myForm.address.$invalid">
+                                      <span ng-cloak style="color:red" ng-show="myForm.address.$error.required">Please Enter Last Name</span>
+                                      
+                                     </span><br/>
+                                   </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                  <div class="col-md-6">
+                                   <label>User Name</label>
+                                    <input  type="text" class="form-control inputclass" ng-show='options' ng-model="lawyerAdmin.username" name="username" id="username" data-mask="usernameinput" placeholder="User Name" required>
+    								<input  type="text" readonly="readonly" class="form-control" ng-show='!options' ng-model="lawyerAdmin.username" placeholder="Enter UserName">
+                                    <span style="color:red" id="username_exists"></span>
+                                    <span class="error-container" ng-show="myForm.username.$dirty && myForm.username.$invalid">
+                                       <span ng-cloak style="color:red" ng-show="myForm.username.$error.required">Please Enter User Name</span>
+                                       </span><br/>
+                                      </div>
+                               <div class="col-md-6">
+                               <label>Phone Number</label>
+                                    <input type="text" class="form-control inputclass"  ng-model="lawyerAdmin.phoneNumber" name="phoneNumber" placeholder="Phone Number eg: (123)456-7890 or 123-456-7890" validate-mobile required>
+                                    <span class="error-container" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
+                                     <span ng-cloak style="color:red" ng-show="myForm.phoneNumber.$error.required">Please Enter Phone Number</span>
+                                     <span ng-cloak style="color:red" ng-show="!myForm.phoneNumber.$error.required&&myForm.phoneNumber.$error.validateMobile">Enter Valid Phone Number</span>
+                                   </span>
+                                     <br/>
+                                   </div> 
+                                  </div>
+                                <div class="col-md-12">
+                                  <div class="col-md-6">
+                                 <label>Email ID</label>
+                                    <input type="email" class="form-control"  ng-model="lawyerAdmin.emailAddress" name="emailAddress" placeholder="Email ID" validate-email>
+                                    <span class="error-container" ng-show="myForm.emailAddress.$dirty && myForm.emailAddress.$invalid">
+                                            <span ng-cloak style="color:red" ng-show="myForm.emailAddress.$error.email">Enter a valid email</span>
+                                    </span>                                    
+                                    <br/>
+                                    </div>
+                                    
+                                   </div>
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <label>Notes</label>
+                                    <textarea class="form-control height-100"  ng-model="lawyerAdmin.notes" name="notes" placeholder="Notes" maxlength="150"></textarea>
+                         	</div>
+                         	</div>
+                </div>
+            </div>
+            <div class="text-right" style="margin-right:30px;">
+                <a class="btn btn-success" ng-show='options' ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid' ng-click="saveLawyerAdmin()">Save</a>
+            	 <a class="btn btn-success" ng-show='!options' ng-class="{'button-disable':myForm.$invalid || isClean()}" ng-disabled='isClean() || myForm.$invalid' ng-click="updateLawyerAdmin()">Update</a>
+              <a ui-sref="dashboard.LawyerAdmin"  class="btn btn-danger" >Cancel</a><br/><br/>
+           </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+         </form>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+
+
+
+ <script>
+ $(function(){
+ 	$("html,body").scrollTop(0);
+ });
+
+</script>
+
+
+
+
+
+
+

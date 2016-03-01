@@ -1,10 +1,20 @@
 package com.deemsys.project.login;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -17,8 +27,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.UserRoleMapping.UserRoleDAO;
 import com.deemsys.project.common.BasicQuery;
-import com.deemsys.project.entity.Staff;
+import com.deemsys.project.entity.UserRoleMapping;
+import com.deemsys.project.entity.Users;
 
 @Repository
 @Transactional
@@ -28,26 +40,29 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 	@Autowired
 	SessionFactory sessionFactory;
 	
+	@Autowired
+	UserRoleDAO userRoleDAO;
+	
 	@Override
-	public void save(Staff entity) {
+	public void save(Users entity) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void merge(Staff entity) {
+	public void merge(Users entity) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Staff get(Integer id) {
+	public Users get(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Staff update(Staff entity) {
+	public Users update(Users entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -59,50 +74,50 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 	}
 
 	@Override
-	public List<Staff> getAll() {
+	public List<Users> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Staff> find(String paramName, String paramValue) {
+	public List<Users> find(String paramName, String paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Staff> find(String paramName, Long paramValue) {
+	public List<Users> find(String paramName, Long paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Staff> find(String paramName, Integer paramValue) {
+	public List<Users> find(String paramName, Integer paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Staff> find(BasicQuery query) {
+	public List<Users> find(BasicQuery query) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Staff> find(String queryString, String[] paramNames,
+	public List<Users> find(String queryString, String[] paramNames,
 			String[] paramValues) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Staff> find(String ParamName, Date date1, Date date2) {
+	public List<Users> find(String ParamName, Date date1, Date date2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Staff> find(String ParamName, Date date) {
+	public List<Users> find(String ParamName, Date date) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -132,7 +147,7 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 	}
 
 	@Override
-	public List<Staff> getActiveList() {
+	public List<Users> getActiveList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -143,7 +158,7 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 		public User loadUserByUsername(String userName){
 			
 			//Load User Who having the User name
-			Staff userLoginDetails=this.getByUserName(userName);
+			Users userLoginDetails=this.getByUserName(userName);
 			if(userName.equals(userLoginDetails.getUsername())){
 				userName=userLoginDetails.getUsername();
 			}
@@ -153,13 +168,13 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 			List<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
 			
 			if(userLoginDetails!=null)
-				authorities= buildUserAuthority(userLoginDetails.getRole());
+				authorities= buildUserAuthority(userRoleDAO.getbyUserId(userLoginDetails.getUserId()));
 			
 			return buildUserForAuthentication(userName,userLoginDetails, authorities);
 		}
 		
 		
-		private User buildUserForAuthentication(String username,Staff userLoginDetails, List<GrantedAuthority> authorities) {
+		private User buildUserForAuthentication(String username,Users userLoginDetails, List<GrantedAuthority> authorities) {
 			
 			String password;
 			boolean isEnable=true,accountNonExpired=true,credentialsNonExpired=true,accountNonLocked=true;
@@ -179,12 +194,12 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 			return new User(username,password,isEnable, accountNonExpired, credentialsNonExpired, accountNonLocked,authorities);
 		}
 
-		private List<GrantedAuthority> buildUserAuthority(String userRoles) {
+		private List<GrantedAuthority> buildUserAuthority(UserRoleMapping userRoleMapping) {
 
 			Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
 
 			// Build user's authorities
-			setAuths.add(new SimpleGrantedAuthority(userRoles));
+			setAuths.add(new SimpleGrantedAuthority(userRoleMapping.getRole().getRole()));
 
 			List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
 
@@ -193,9 +208,10 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 
 	
 		@Override
-		public Staff getByUserName(String username) {
+		public Users getByUserName(String username) {
 			// TODO Auto-generated method stub
-			return (Staff) this.sessionFactory.getCurrentSession().createCriteria(Staff.class).add(Restrictions.eq("username", username)).uniqueResult();
+			return (Users) this.sessionFactory.getCurrentSession().createCriteria(Users.class).add(Restrictions.eq("username", username)).uniqueResult();
 		}
 
+		
 }

@@ -1,11 +1,11 @@
 package com.deemsys.project.login;
 
 import com.deemsys.project.common.IGenericDAO;
-import com.deemsys.project.entity.Staff;
+import com.deemsys.project.entity.Users;
 
-public interface loginDAO extends IGenericDAO<Staff>{
+public interface loginDAO extends IGenericDAO<Users>{
 
 	//Function to check for user name
-		public Staff getByUserName(String username);
+		public Users getByUserName(String username);
 	
 }

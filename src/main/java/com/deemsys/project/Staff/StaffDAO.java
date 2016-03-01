@@ -13,7 +13,7 @@ import com.deemsys.project.entity.Staff;
 public interface StaffDAO extends IGenericDAO<Staff>{
 	public Staff getByUserName(String username);
 	public List<Staff> getStaffId();
-	
+	public Staff getByUserId(Integer userId);
 	public void deleteStaff(Integer id);
 	public List<Patients> getPatientsByStaffId(Integer id);
 	

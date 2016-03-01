@@ -24,8 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 
+import com.deemsys.project.Lawyers.LawyersService;
 import com.deemsys.project.Map.ClinicLocationForm;
 import com.deemsys.project.Map.SearchClinicsService;
+import com.deemsys.project.Staff.StaffService;
 
 /**
  * 
@@ -33,7 +35,6 @@ import com.deemsys.project.Map.SearchClinicsService;
  *
  */
 @Controller
-@RequestMapping("/Staff")
 public class PatientsController {
 	
 	@Autowired
@@ -44,9 +45,14 @@ public class PatientsController {
 	
 	@Autowired
 	SearchClinicsService searchClinicsService;
-
 	
-	@RequestMapping(value="/getAllPatientss",method=RequestMethod.GET)
+	@Autowired
+	LawyersService lawyersService;
+	
+	@Autowired
+	StaffService staffService;
+	
+	@RequestMapping(value={"/Patient/getAllPatientss","/Staff/getAllPatientss"},method=RequestMethod.GET)
    	public String getAllPatientss(ModelMap model)
    	{
     	model.addAttribute("patientsForms",patientsService.getPatientsList());
@@ -54,7 +60,7 @@ public class PatientsController {
    		return "/returnPage";
    	}
 
-    @RequestMapping(value="/getPatients",method=RequestMethod.GET)
+    @RequestMapping(value={"/Patient/getPatients","/Staff/getPatients"},method=RequestMethod.GET)
 	public String getPatients(@RequestParam("id") Integer id,ModelMap model)
 	{
     	model.addAttribute("patientsForm",patientsService.getPatients(id));
@@ -62,7 +68,7 @@ public class PatientsController {
 		return "/returnPage";
 	}
 	 
-  @RequestMapping(value="/saveUpdatePatients",method=RequestMethod.POST)
+  @RequestMapping(value="/Staff/saveUpdatePatients",method=RequestMethod.POST)
    	public String updatePatients(@RequestBody  PatientsForm patientsForm,ModelMap model)
    	{
 	  if(patientsForm.getId()==null)
@@ -74,7 +80,7 @@ public class PatientsController {
    		return "/returnPage";
    	}
 
-    @RequestMapping(value="/deletePatients",method=RequestMethod.POST)
+    @RequestMapping(value="/Staff/deletePatients",method=RequestMethod.POST)
    	public String deletePatients(@RequestParam("id") Integer id,ModelMap model)
    	{
     	patientsService.deletePatients(id);
@@ -82,7 +88,7 @@ public class PatientsController {
    		return "/returnPage";
    	}
    
- @RequestMapping(value = "/addPatientFromFile" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
+ @RequestMapping(value = "/Staff/addPatientFromFile" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
     public @ResponseBody String uploadFileHandler(
             @RequestParam("file") MultipartFile file,ModelMap model) {
 	 String returnText="<p>";
@@ -104,7 +110,7 @@ public class PatientsController {
 	 	return returnText;
 
     }
-  @RequestMapping(value="/getNoOfPatientss",method=RequestMethod.GET)
+  @RequestMapping(value="/Staff/getNoOfPatientss",method=RequestMethod.GET)
    	public String getNoOfPatientss(ModelMap model)
    	{
     	model.addAttribute("patientsForms",patientsService.getNoOfPatientss());
@@ -112,7 +118,7 @@ public class PatientsController {
    		return "/returnPage";
    	}
   
-  @RequestMapping(value="/deletePatientsByStaffId",method=RequestMethod.POST)
+  @RequestMapping(value="/Staff/deletePatientsByStaffId",method=RequestMethod.POST)
  	public String deletePatientsByStaffId(@RequestParam("id") Integer id,ModelMap model)
  	{
   	patientsService.deletePatientsByStaffId(id);
@@ -120,7 +126,7 @@ public class PatientsController {
  		return "/returnPage";
  	}
   
-  @RequestMapping(value="/unAssignPatient",method=RequestMethod.GET)
+  @RequestMapping(value="/Staff/unAssignPatient",method=RequestMethod.GET)
  	public String unAssignPatient(@RequestParam("id") Integer id,ModelMap model)
  	{
   	patientsService.deletePatientsByStaffId(id);
@@ -140,7 +146,7 @@ public class PatientsController {
   }*/
   
 //Upload PDF file
-  @RequestMapping(value = "/readCrashReportFromURL" ,method = RequestMethod.POST)
+  @RequestMapping(value = "/Staff/readCrashReportFromURL" ,method = RequestMethod.POST)
   public @ResponseBody PDFCrashReportJson uploadCrashReportFileHandler(
           @RequestParam("crashId") String crashReportId,ModelMap model) throws IOException {
 	 
@@ -149,7 +155,7 @@ public class PatientsController {
   }
   
 //Read JSON Crash Report
-  @RequestMapping(value = "/readAsJSONCrashReportFromURL" ,method = RequestMethod.POST)
+  @RequestMapping(value = "/Staff/readAsJSONCrashReportFromURL" ,method = RequestMethod.POST)
   public @ResponseBody List<List<String>> uploadJSONCrashReportFileHandler(
           @RequestParam("crashId") String crashReportId,ModelMap model) throws IOException {
 	 
@@ -159,7 +165,7 @@ public class PatientsController {
   
   
 //Upload PDF file
-  @RequestMapping(value = "/insertCrashReportFromURL" ,method = RequestMethod.POST)
+  @RequestMapping(value = "/Staff/insertCrashReportFromURL" ,method = RequestMethod.POST)
   public String insertCrashReportFileHandler(
           @RequestParam("crashId") String crashReportId,ModelMap model) throws IOException {
 	 
@@ -182,7 +188,7 @@ public class PatientsController {
   
   
   // Get Patients With Latitude Longitude
-  @RequestMapping(value="/getPatientWithLatLong",method=RequestMethod.GET)
+  @RequestMapping(value="/Staff/getPatientWithLatLong",method=RequestMethod.GET)
 	public String getPatientsWithLatLong(@RequestParam("id") Integer id,ModelMap model)
 	{
   	model.addAttribute("patientsForm",patientsService.getPatientWithLatLong(id));
@@ -191,7 +197,7 @@ public class PatientsController {
 	}
 
 // get Near By clinics  
-@RequestMapping(value="/getNearByClincs",method=RequestMethod.GET)
+@RequestMapping(value="/Staff/getNearByClincs",method=RequestMethod.GET)
 	public String searchNearByClinics(@RequestParam("patientId") Integer patientId,@RequestParam("searchRange") Integer searchRange,ModelMap model)
 	{
 	
@@ -203,7 +209,7 @@ public class PatientsController {
 
     
 //Upload PDF file
-  @RequestMapping(value = "/uploadCrashReportPDFDocuments" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
+  @RequestMapping(value = "/Staff/uploadCrashReportPDFDocuments" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
   public String readUploadCrashReportFileHandler(
           @RequestParam("file") MultipartFile file,ModelMap model) throws IOException {
 	
@@ -255,7 +261,7 @@ public class PatientsController {
   }
   
   //Upload File Get Array
-  @RequestMapping(value = "/readCrashReportArray" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
+  @RequestMapping(value = "/Staff/readCrashReportArray" ,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
   public @ResponseBody List<List<String>> readUploadCrashReportArray(
           @RequestParam("file") MultipartFile file,ModelMap model) throws IOException {
 	  
@@ -263,7 +269,7 @@ public class PatientsController {
 
   }
   
-  @RequestMapping(value="/adminPatientStatus",method=RequestMethod.GET)
+  @RequestMapping(value="/Staff/adminPatientStatus",method=RequestMethod.GET)
  	public String adminPatientStatus(@RequestParam("patientStatus") Integer patientStatus,ModelMap model)
  	{
   	model.addAttribute("patientsForms",patientsService.adminPatientStatus(patientStatus));
@@ -271,14 +277,14 @@ public class PatientsController {
  		return "/returnPage";
  	}
  
-  @RequestMapping(value="/staffPatientStatus",method=RequestMethod.GET)
+  @RequestMapping(value="/Staff/staffPatientStatus",method=RequestMethod.GET)
 	public String staffPatientStatus(@RequestParam("patientStatus") Integer patientStatus,ModelMap model)
 	{
 	model.addAttribute("patientsForms",patientsService.staffPatientStatus(patientStatus));
 	model.addAttribute("requestSuccess",true);
 		return "/returnPage";
 	}
-  @RequestMapping(value="/activeStatusByPatientId",method=RequestMethod.GET)
+   @RequestMapping(value="/Staff/activeStatusByPatientId",method=RequestMethod.GET)
  	public String activeStatusByPatientId(@RequestParam("id") Integer id,ModelMap model)
  	{
 	Integer status=patientsService.activeStatusByPatientId(id);
@@ -289,6 +295,33 @@ public class PatientsController {
   	return "/returnPage";
  	}
 
+   // Get Patients By Mapped County For Lawyers
+   @RequestMapping(value="/Patient/getPatientsByLawyer",method=RequestMethod.GET)
+	public String getPatientsByLawyer(ModelMap model)
+	{
+	
+	Integer userId=staffService.getCurrentUserId();
+	Integer lawyerId=lawyersService.getLawyerIdByUserId(userId);
+	List<PatientsForm> patientsForms=lawyersService.getPatientsByLawyer(lawyerId);
+	model.addAttribute("patientsForms",patientsForms);
+	model.addAttribute("requestSuccess",true);
+ 	return "/returnPage";
+ 	
+	}
+   
+   // Get Patients By Mapped County For Lawyers
+   @RequestMapping(value="/Patient/getNoOfPatientsByLawyer",method=RequestMethod.GET)
+	public String getNoOfPatientsByLawyer(ModelMap model)
+	{
+	
+	Integer userId=staffService.getCurrentUserId();
+	Integer lawyerId=lawyersService.getLawyerIdByUserId(userId);
+	List<PatientsForm> patientsForms=lawyersService.getPatientsByLawyer(lawyerId);
+	model.addAttribute("noOfPatientsByLawyer",patientsForms.size());
+	model.addAttribute("requestSuccess",true);
+ 	return "/returnPage";
+ 	
+	}
 
 
 

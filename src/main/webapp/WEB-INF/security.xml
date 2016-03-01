@@ -44,17 +44,27 @@
 		<session-management invalid-session-url="/logout" />
 	</http> 
 	
-	
-	
-	<!--  <http pattern="/Staff/**" create-session="never"
+	<http pattern="/Lawyer/**" create-session="never" use-expressions="true"
 		entry-point-ref="oauthAuthenticationEntryPoint"
 		access-decision-manager-ref="accessDecisionManager"
 		xmlns="http://www.springframework.org/schema/security">
 		<anonymous enabled="false" />
-		<intercept-url pattern="/Staff/**" access="ROLE_STAFF" />
+		<intercept-url pattern="/Lawyer/**" access="hasAnyRole('ROLE_LAWYER_ADMIN','ROLE_ADMIN','ROLE_LAWYER')" />
+		
 		<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 		<session-management invalid-session-url="/logout" />
-	</http>-->
+	</http>
+	
+	<http pattern="/Patient/**" create-session="never" use-expressions="true"
+		entry-point-ref="oauthAuthenticationEntryPoint"
+		access-decision-manager-ref="accessDecisionManager"
+		xmlns="http://www.springframework.org/schema/security">
+		<anonymous enabled="false" />
+		<intercept-url pattern="/Lawyer/**" access="hasAnyRole('ROLE_LAWYER_ADMIN','ROLE_ADMIN','ROLE_LAWYER','ROLE_STAFF')" />
+		
+		<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
+		<session-management invalid-session-url="/logout" />
+	</http>
 	
 	
 	

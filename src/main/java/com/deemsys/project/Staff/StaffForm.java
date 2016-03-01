@@ -21,7 +21,7 @@ public class StaffForm {
 	private String phoneNumber;
 	private String emailAddress;
 	private String notes;
-	private Integer isEnable;
+	private Integer status;
 	private Integer assignedPatientSize;
 	private String callerName;
 	
@@ -96,12 +96,11 @@ public class StaffForm {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public StaffForm(Integer id, String role, String username, String password,
+	public StaffForm(Integer id, String username, String password,
 			String firstName, String lastName, String phoneNumber,
-			String emailAddress, String notes,Integer isEnable) {
+			String emailAddress, String notes,Integer status) {
 		super();
 		this.id = id;
-		this.role = role;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -109,15 +108,14 @@ public class StaffForm {
 		this.phoneNumber = phoneNumber;
 		this.emailAddress = emailAddress;
 		this.notes = notes;
-		this.isEnable=isEnable;
+		this.status=status;
 	}
 	// Only For get All Staffs
-	public StaffForm(Integer id, String role, String username, String password,
+	public StaffForm(Integer id, String username, String password,
 			String firstName, String lastName, String phoneNumber,
-			String emailAddress, String notes,Integer isEnable,Integer assignedPatientSize) {
+			String emailAddress, String notes,Integer status,Integer assignedPatientSize) {
 		super();
 		this.id = id;
-		this.role = role;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -125,14 +123,14 @@ public class StaffForm {
 		this.phoneNumber = phoneNumber;
 		this.emailAddress = emailAddress;
 		this.notes = notes;
-		this.isEnable=isEnable;
+		this.status=status;
 		this.assignedPatientSize=assignedPatientSize;
 	}
-	public Integer getIsEnable() {
-		return isEnable;
+	public Integer getstatus() {
+		return status;
 	}
-	public void setIsEnable(Integer isEnable) {
-		this.isEnable = isEnable;
+	public void setstatus(Integer status) {
+		this.status = status;
 	}
 	
 	

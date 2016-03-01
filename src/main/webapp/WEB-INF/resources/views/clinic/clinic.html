@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <a ui-sref="dashboard.add-clinic" class="btn-sm btn-primary pull-right margin-top-40" ng-show="isAdmin"><i class="fa fa-plus-circle fa-lg"></i> Add Clinic</a>        
+        <a ui-sref="dashboard.add-clinic" class="btn-sm btn-primary pull-right margin-top-40" ng-show="{{isAdmin==1}}"><i class="fa fa-plus-circle fa-lg"></i> Add Clinic</a>        
    		<h2 class="page-header">Clinics</h2>
     </div>
     <!-- /.col-lg-12 -->
@@ -63,8 +63,8 @@
                                    <a href="" ng-cloak ng-click="viewClinicDetails(clinic.clinicId)" class="btn btn-xs btn-primary hint--top" data-hint="View Clinic"><i
 								class="glyphicon glyphicon-eye-open"></i>
 						</a>
-                                   <a href="#/dashboard/edit-clinic/{{clinic.clinicId}}" ng-cloak data-hint="Edit Clinic" class="btn btn-xs btn-warning hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-edit"></i></a>
-	<a href="#" ng-cloak ui-sref="dashboard.clinic" ng-mousedown="deleteClinic(clinic.clinicId)" data-hint="Delete Clinic" class="btn btn-xs btn-danger hint--top" ng-show="isAdmin"><i class="glyphicon glyphicon-trash"></i></a>
+                                   <a href="#/dashboard/edit-clinic/{{clinic.clinicId}}" ng-cloak data-hint="Edit Clinic" class="btn btn-xs btn-warning hint--top" ng-show="{{isAdmin==1}}"><i class="glyphicon glyphicon-edit"></i></a>
+	<a href="#" ng-cloak ui-sref="dashboard.clinic" ng-mousedown="deleteClinic(clinic.clinicId)" data-hint="Delete Clinic" class="btn btn-xs btn-danger hint--top" ng-show="{{isAdmin==1}}"><i class="glyphicon glyphicon-trash"></i></a>
 <!--  <a href="" ng-cloak ng-click="viewDoctors(clinic.clinicId)" class="btn btn-xs btn-primary hint--top" data-hint="View Doctors"><i
 								class="fa fa-user-md "></i>
 						</a> -->	</td></tr>

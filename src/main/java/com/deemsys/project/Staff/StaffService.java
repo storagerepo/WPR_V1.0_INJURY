@@ -12,9 +12,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.Role.RoleDAO;
+import com.deemsys.project.UserRoleMapping.UserRoleDAO;
+import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Patients;
+import com.deemsys.project.entity.Role;
 import com.deemsys.project.entity.Staff;
+import com.deemsys.project.entity.UserRoleMapping;
+import com.deemsys.project.entity.Users;
 import com.deemsys.project.patients.PatientsDAO;
 import com.deemsys.project.patients.PatientsForm;
 /**
@@ -39,6 +45,15 @@ public class StaffService {
 	@Autowired
 	PatientsDAO patientsDAO;
 	
+	@Autowired
+	UsersDAO usersDAO;
+	
+	@Autowired
+	RoleDAO roleDAO;
+	
+	@Autowired
+	UserRoleDAO userRoleDAO;
+	
 	//Get All Entries
 	public List<StaffForm> getStaffList()
 	{
@@ -51,7 +66,7 @@ public class StaffService {
 		for (Staff staff : staffs) {
 			//TODO: Fill the List
 			Integer patientSize=patientsDAO.getPatientListByStaffId(staff.getId()).size();
-			StaffForm staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable(),patientSize);
+			StaffForm staffForm=new StaffForm(staff.getId(), staff.getUsers().getUsername(), staff.getUsers().getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getStatus(),patientSize);
 			staffForms.add(staffForm);
 			
 		}
@@ -69,7 +84,7 @@ public class StaffService {
 		//TODO: Convert Entity to Form
 		//Start
 		if(staff!=null){
-		staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
+		staffForm=new StaffForm(staff.getId(), staff.getUsers().getUsername(), staff.getUsers().getPassword(),staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getStatus());
 		}
 		else{
 		staffForm= new StaffForm();
@@ -85,13 +100,23 @@ public class StaffService {
 		//TODO: Convert Form to Entity Here
 		
 		//Logic Starts
-		
-		Staff staff=new Staff(staffForm.getRole(), staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),staffForm.getIsEnable(),null);
+		Users users = new Users();
+		UserRoleMapping userRoleMapping= new UserRoleMapping();
+		Role role= new Role();
+		users.setUsername(staffForm.getUsername());
+		users.setPassword(staffForm.getUsername());
+		users.setIsEnable(1);
+		Staff staff = new Staff(users, staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),1, null);
 		staff.setId(staffForm.getId());
-		//Logic Ends
-		
 		
 		staffDAO.merge(staff);
+		
+		role=roleDAO.get(InjuryConstants.INJURY_STAFF_ROLE_ID);
+		userRoleMapping.setRole(role);
+		userRoleMapping.setUsers(users);
+		userRoleDAO.save(userRoleMapping);
+		
+		//Logic Ends
 		return 1;
 	}
 	
@@ -102,11 +127,21 @@ public class StaffService {
 		
 		//Logic Starts
 		
-		Staff staff=new Staff("ROLE_STAFF", staffForm.getUsername(), staffForm.getUsername(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),1,null);
-		staff.setIsEnable(1);
-		//Logic Ends
+		Users users = new Users();
+		UserRoleMapping userRoleMapping= new UserRoleMapping();
+		Role role= new Role();
+		users.setUsername(staffForm.getUsername());
+		users.setPassword(staffForm.getUsername());
+		users.setIsEnable(1);
+		Staff staff = new Staff(users, staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),1, null);
 		
 		staffDAO.save(staff);
+		
+		role=roleDAO.get(InjuryConstants.INJURY_STAFF_ROLE_ID);
+		userRoleMapping.setRole(role);
+		userRoleMapping.setUsers(users);
+		userRoleDAO.save(userRoleMapping);
+		//Logic Ends
 		return 1;
 	}
 	
@@ -116,12 +151,22 @@ public class StaffService {
 		//TODO: Convert Form to Entity Here	
 		
 		//Logic Starts
+		Staff staff = staffDAO.get(staffForm.getId());
+		Users users = usersDAO.get(staff.getUsers().getUserId());
 		
-		Staff staff=new Staff(staffForm.getRole(), staffForm.getUsername(), staffForm.getPassword(), staffForm.getFirstName(), staffForm.getLastName(), staffForm.getPhoneNumber(), staffForm.getEmailAddress(), staffForm.getNotes(),staffForm.getIsEnable(),null);
+		staff.setUsers(users);
+		staff.setFirstName(staffForm.getFirstName());
+		staff.setLastName(staffForm.getLastName());
+		staff.setPhoneNumber(staffForm.getPhoneNumber());
+		staff.setEmailAddress(staffForm.getEmailAddress());
+		staff.setNotes(staffForm.getNotes());
+		staff.setStatus(1);
 		staff.setId(staffForm.getId());
-		//Logic Ends
 		
 		staffDAO.update(staff);
+		
+		
+		// Logic Ends
 		return 1;
 	}
 	
@@ -133,7 +178,10 @@ public class StaffService {
 		patientss=staffDAO.getPatientsByStaffId(id);
 		if(patientss.size()==0)
 		{
-			
+		Staff staff = staffDAO.get(id);
+		Users users=usersDAO.get(staff.getUsers().getUserId());
+		userRoleDAO.deletebyUserId(users.getUserId());
+		
 		staffDAO.delete(id);
 		status=1;
 		}
@@ -150,7 +198,7 @@ public class StaffService {
 	{
 		Integer count=0;
 		
-List<StaffForm> staffForms=new ArrayList<StaffForm>();
+		List<StaffForm> staffForms=new ArrayList<StaffForm>();
 		
 		List<Staff> staffs=new ArrayList<Staff>();
 		
@@ -158,7 +206,7 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 		
 		for (Staff staff : staffs) {
 			//TODO: Fill the List
-			StaffForm staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
+			StaffForm staffForm=new StaffForm(staff.getId(), staff.getUsers().getUsername(), staff.getUsers().getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getStatus());
 			staffForms.add(staffForm);
 			count++;
 		}
@@ -177,11 +225,17 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 			Object[] role = user.getAuthorities().toArray();
 		
 			
-			if(role[0].toString().equals("ROLE_STAFF")){
-				currentRole="ROLE_STAFF";
+			if(role[0].toString().equals(InjuryConstants.INJURY_ADMIN_ROLE)){
+				currentRole=InjuryConstants.INJURY_ADMIN_ROLE;
 			}
-			else if(role[0].toString().equals("ROLE_ADMIN")){
-				currentRole="ROLE_ADMIN";
+			else if(role[0].toString().equals(InjuryConstants.INJURY_STAFF_ROLE)){
+				currentRole=InjuryConstants.INJURY_STAFF_ROLE;
+			}
+			else if(role[0].toString().equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+				currentRole=InjuryConstants.INJURY_LAWYER_ADMIN_ROLE;
+			}
+			else if(role[0].toString().equals(InjuryConstants.INJURY_LAWYER_ROLE)){
+				currentRole=InjuryConstants.INJURY_LAWYER_ROLE;
 			}
 			return currentRole;
 		}
@@ -198,7 +252,7 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 			
 			for (Staff staff : staffs) {
 				
-				StaffForm staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
+				StaffForm staffForm=new StaffForm(staff.getId(), staff.getUsers().getUsername(), staff.getUsers().getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getStatus());
 				staffForms.add(staffForm);
 				
 			}
@@ -214,29 +268,29 @@ List<StaffForm> staffForms=new ArrayList<StaffForm>();
 					.getAuthentication().getPrincipal();
 			String username=user.getUsername();
 			System.out.println(username);
-			Staff staff=staffDAO.getByUserName(username);
-						Integer id=staff.getId();
-						
-						
-						
+			Users users=usersDAO.getByUserName(username);
+			Integer userId=users.getUserId();
+			
+			// get Staff Id
+			Integer staffId=staffDAO.getByUserId(userId).getId();
 			List<PatientsForm> patientsForms=new ArrayList<PatientsForm>();
 			
 			List<Patients> patientss=new ArrayList<Patients>();
 			
-			if(id!=null)
+			if(staffId!=null)
 			{
-			patientss=staffDAO.getPatientsByAccessToken(id);
+			patientss=staffDAO.getPatientsByAccessToken(staffId);
 			
-			Integer staffId=0,clinicId=0,doctorId=0;
+			Integer clinicId=0,doctorId=0;
 			
 			
 			for (Patients patients : patientss) {
 				//TODO: Fill the List
-				staffId=0;clinicId=0;doctorId=0;
+				clinicId=0;doctorId=0;
 				if(patients.getStaff()!=null)
 					staffId=patients.getStaff().getId();
 				String staffName=patients.getStaff().getFirstName()+" "+patients.getStaff().getLastName();
-if(patients.getClinics()!=null)
+				if(patients.getClinics()!=null)
 					clinicId=patients.getClinics().getClinicId();
 				
 				if(patients.getDoctors()!=null)
@@ -262,8 +316,8 @@ if(patients.getClinics()!=null)
 					.getAuthentication().getPrincipal();
 			String username=user.getUsername();
 			System.out.println(username);
-			Staff staff=staffDAO.getByUserName(username);
-					return staff.getId();
+			Users users=usersDAO.getByUserName(username);
+			return users.getUserId();
 		}
 				
 		
@@ -275,26 +329,23 @@ if(patients.getClinics()!=null)
 		{
 			Integer count=0;
 			
-			Staff staff=new Staff();
+			Users users = new Users();
 			
-			staff=staffDAO.getByUserName(username);
-			StaffForm staffForm=new StaffForm();
-			//TODO: Convert Entity to Form
+			users=usersDAO.getByUserName(username);
 			//Start
-			if(staff!=null){
+			if(users!=null){
 				System.out.println(count++);
 				return count++;
-			//staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
 			}
 			else{
-			//staffForm= new StaffForm();
+			
 				return count;
 			}
 			//End
-			}
+		}
 		
 
-public String[] getusers() {
+   public String[] getusers() {
 	String[] currentuser = new String[100];
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		currentuser[0] = user.getUsername();
@@ -306,10 +357,10 @@ public String[] getusers() {
 		// TODO Auto-generated method stub
 		Integer status=0;
 		String[] users=getusers();
-		List<Staff> staff=staffDAO.checkPassword(oldPassword,users[0]);
+		List<Users> user=usersDAO.checkPassword(oldPassword,users[0]);
 		
-		 if(staff.size()>0){
-			if(oldPassword.equals(staff.get(0).getPassword())){
+		 if(user.size()>0){
+			if(oldPassword.equals(user.get(0).getPassword())){
 				status=1;
 			}
 			else{
@@ -325,7 +376,7 @@ public String[] getusers() {
 	public Integer changePassword(String newPassword) {
 		// TODO Auto-generated method stub
 		String[] users=getusers();
-		staffDAO.changePassword(newPassword,users[0]);
+		usersDAO.changePassword(newPassword,users[0]);
 		return 1;
 	}
 	
@@ -335,11 +386,11 @@ public String[] getusers() {
 		
 			Staff staff=new Staff();
 			String[] users=getusers();
-				staff=staffDAO.getDetails(users[0]);
+			staff=staffDAO.getDetails(users[0]);
 
-				StaffForm staffForm=new StaffForm();
+			StaffForm staffForm=new StaffForm();
 			if(staff!=null){
-			staffForm=new StaffForm(staff.getId(), staff.getRole(), staff.getUsername(), staff.getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getIsEnable());
+			staffForm=new StaffForm(staff.getId(), staff.getUsers().getUsername(), staff.getUsers().getPassword(), staff.getFirstName(), staff.getLastName(), staff.getPhoneNumber(), staff.getEmailAddress(), staff.getNotes(),staff.getStatus());
 			}
 			else{
 			staffForm= new StaffForm();
@@ -353,23 +404,28 @@ public String[] getusers() {
 		Staff staff=new Staff();
 		
 		staff=staffDAO.get(getId);
+		Users users= usersDAO.get(staff.getUsers().getUserId());
 		
-		if(staff.getIsEnable()==1){
+		if(staff.getStatus()==1){
 			status=staffDAO.isDisable(getId);
+			users.setIsEnable(0);
 		}
-		if(staff.getIsEnable()==0){
+		else if(staff.getStatus()==0){
 			status=staffDAO.isEnable(getId);
+			users.setIsEnable(1);
 		}
 		System.out.println(status);
+		usersDAO.merge(users);
 		return status;
 	}
 	
 	public Integer resetPassword(Integer getId)
 	{
 		Integer status=1;
+		Staff staff=new Staff();
+		staff=staffDAO.get(getId);
 		
-		
-		status=staffDAO.resetPassword(getId);
+		status=usersDAO.resetUserPassword(staff.getUsers().getUserId());
 		return status;
 	}
 	}

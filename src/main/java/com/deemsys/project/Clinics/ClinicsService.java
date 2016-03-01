@@ -138,7 +138,7 @@ public class ClinicsService {
 		
 		// Save Clinic
 		Clinics clinics=new Clinics(clinicsForm.getClinicName(), clinicsForm.getAddress(), clinicsForm.getCity(), clinicsForm.getState(), clinicsForm.getCounty(), 
-									clinicsForm.getCountry(), clinicsForm.getZipcode(), Double.parseDouble(latiudeLongitude[0]), Double.parseDouble(latiudeLongitude[1]), clinicsForm.getOfficeNumber(), clinicsForm.getFaxNumber(), clinicsForm.getServiceArea(), clinicsForm.getDirections(),clinicsForm.getNotes(), null, null);
+									clinicsForm.getCountry(), clinicsForm.getZipcode(), Double.parseDouble(latiudeLongitude[0]), Double.parseDouble(latiudeLongitude[1]), clinicsForm.getOfficeNumber(), clinicsForm.getFaxNumber(), clinicsForm.getServiceArea(), clinicsForm.getDirections(),clinicsForm.getNotes(), null, null,null);
 		clinicsDAO.save(clinics);
 		
 		// Save Clinic Timings
@@ -172,7 +172,7 @@ public class ClinicsService {
 	
 		// Update Clinics
 		Clinics clinics=new Clinics(clinicsForm.getClinicName(), clinicsForm.getAddress(), clinicsForm.getCity(), clinicsForm.getState(), clinicsForm.getCounty(), 
-									clinicsForm.getCountry(), clinicsForm.getZipcode(), Double.parseDouble(latiudeLongitude[0]), Double.parseDouble(latiudeLongitude[1]), clinicsForm.getOfficeNumber(), clinicsForm.getFaxNumber(),clinicsForm.getServiceArea(), clinicsForm.getDirections(), clinicsForm.getNotes(), null, null);
+									clinicsForm.getCountry(), clinicsForm.getZipcode(), Double.parseDouble(latiudeLongitude[0]), Double.parseDouble(latiudeLongitude[1]), clinicsForm.getOfficeNumber(), clinicsForm.getFaxNumber(),clinicsForm.getServiceArea(), clinicsForm.getDirections(), clinicsForm.getNotes(), null, null,null);
 		clinics.setClinicId(clinicsForm.getClinicId());
 		clinicsDAO.update(clinics);
 		

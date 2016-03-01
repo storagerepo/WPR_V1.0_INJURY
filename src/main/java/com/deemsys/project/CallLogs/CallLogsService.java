@@ -13,11 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.deemsys.project.Appointments.AppointmentsDAO;
 import com.deemsys.project.Staff.StaffDAO;
 import com.deemsys.project.Staff.StaffForm;
+import com.deemsys.project.Staff.StaffService;
+import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
 import com.deemsys.project.entity.Patients;
 import com.deemsys.project.entity.Staff;
+import com.deemsys.project.entity.Users;
 import com.deemsys.project.patients.PatientsDAO;
 /**
  * 
@@ -42,11 +45,16 @@ public class CallLogsService {
 	StaffDAO staffDAO;
 	
 	@Autowired
+	StaffService staffService;
+	
+	@Autowired
 	PatientsDAO patientsDAO;
 	
 	@Autowired
 	AppointmentsDAO appointmentsDAO;
 	
+	@Autowired
+	UsersDAO usersDAO;
 	
 	//Get All Entries
 	public List<CallLogsForm> getCallLogsList()
@@ -106,7 +114,9 @@ public class CallLogsService {
 		Patients patients = new Patients();
 		patients.setId(callLogsForm.getPatientId());
 		
-		CallLogs callLogs=new CallLogs(patients,appointments,callLogsForm.getCallerId(),InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+		Users users=usersDAO.get(staffService.getCurrentUserId());
+		
+		CallLogs callLogs=new CallLogs(patients,appointments,users,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		callLogs.setId(callLogsForm.getId());
 		//Logic Ends
 		
@@ -124,12 +134,9 @@ public class CallLogsService {
 		Patients patients = patientsDAO.get(callLogsForm.getPatientId());
 		Appointments appointments = new Appointments();
 		
-		User user = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-				String username=user.getUsername();
-				Staff staff=staffDAO.getByUserName(username);
+		Users users=usersDAO.get(staffService.getCurrentUserId());
 					
-			CallLogs callLogs=new CallLogs(patients,null,staff.getId(),InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+		CallLogs callLogs=new CallLogs(patients,null,users,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 		
 			String status=callLogsForm.getResponse();
 		if(status.equals("3"))
@@ -171,12 +178,9 @@ public class CallLogsService {
 			appointments = appointmentsDAO.get(callLogsForm.getAppointmentId());
 			appointments.setPatients(patients);
 			
-			User user = (User) SecurityContextHolder.getContext()
-					.getAuthentication().getPrincipal();
-					String username=user.getUsername();
-					Staff staff=staffDAO.getByUserName(username);
+			Users users=usersDAO.get(staffService.getCurrentUserId());
 						
-			callLogs=new CallLogs(patients,appointments,staff.getId(),InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+			callLogs=new CallLogs(patients,appointments,users,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 			callLogs.setId(callLogsForm.getId());
 			String status=callLogsForm.getResponse();
 			if(status.equals("3"))
@@ -199,12 +203,9 @@ public class CallLogsService {
 			}
 		}
 		else{
-			User user = (User) SecurityContextHolder.getContext()
-					.getAuthentication().getPrincipal();
-					String username=user.getUsername();
-					Staff staff=staffDAO.getByUserName(username);
+			Users users=usersDAO.get(staffService.getCurrentUserId());
 						
-			callLogs=new CallLogs(patients,null,staff.getId(),InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
+			callLogs=new CallLogs(patients,null,users,InjuryConstants.convertYearFormatWithTime(callLogsForm.getTimeStamp()), callLogsForm.getResponse(), callLogsForm.getNotes());
 			callLogs.setId(callLogsForm.getId());
 			String status=callLogsForm.getResponse();
 			if(status.equals("3"))
@@ -258,10 +259,16 @@ public class CallLogsService {
 		for(CallLogs callLogss:callLogs)
 		{
 			try{
-				Integer id=callLogss.getCallerId();
+				Integer id=callLogss.getUsers().getUserId();
+				
 				Staff staff=new Staff();
-				staff=staffDAO.get(id);
-				String staffName=staff.getFirstName()+" "+staff.getLastName();
+				String staffName="";
+				if(id==1){
+					staffName=callLogss.getUsers().getUsername();
+				}else{
+					staff=staffDAO.getByUserId(id);
+					staffName=staff.getFirstName()+" "+staff.getLastName();
+				}
 				
 				if(callLogss.getAppointments()==null)
 				{

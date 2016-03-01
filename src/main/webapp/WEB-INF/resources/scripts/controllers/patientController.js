@@ -26,7 +26,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	$scope.title="Add Patient";
 	// Number of Records Per Page
 	$scope.noOfRows="10";
-		    if($rootScope.isAdmin){
+		    if($rootScope.isAdmin==1){
 			   $scope.admin=true;
 			   $scope.staff=true;
 			   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
@@ -50,7 +50,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 				     });
 			   
 		   }
-		   else if(!$rootScope.isAdmin){
+		   else if($rootScope.isAdmin==2){
 			   $scope.staff=true;
 			   requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
 					
@@ -69,6 +69,25 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 				    	    	break;
 				    	} 
 				     });
+				     });
+		   }
+		   else if($rootScope.isAdmin==4){
+			  requestHandler.getRequest("/Patient/getPatientsByLawyer.json","").then(function(response){
+					 $scope.patientss= response.data.patientsForms;
+				     $scope.sort('patientStatus');
+				    /* $.each($scope.patientss,function(index,value) {
+				    	 switch(value.patientStatus) {
+				    	    case 1:
+				    	        value.patientStatus="Active";
+				    	        break;
+				    	    case 2:
+				    	    	value.patientStatus="Appointment Scheduled";
+				    	        break;
+				    	    default:
+				    	    	value.patientStatus="Do-Not-Call";
+				    	    	break;
+				    	} 
+				     });*/
 				     });
 		   }
 			
@@ -145,10 +164,10 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 		if(confirm("Are you sure to delete patient?")){
 			  requestHandler.deletePostRequest("Staff/deletePatients.json?id=",id).then(function(response){
 				  Flash.create('success', "You have Successfully Deleted!");  
-				  if($rootScope.isAdmin){
+				  if($rootScope.isAdmin==1){
 					  $scope.updateList();
 				  }
-				  else if(!$rootScope.isAdmin){
+				  else if($rootScope.isAdmin==2){
 					  $scope.staffGetPatientList();
 				  }
 		         
@@ -181,8 +200,8 @@ $("#file").val("");
 	$scope.viewPatientModal=function(id){
 		$scope.viewPatientTitle="View Patient";
 		$("#viewPatientModal").modal("show");
-		  requestHandler.deletePostRequest("Staff/getPatients.json?id="+id).success( function(response) {
-			$scope.patients= response.patientsForm;
+		  requestHandler.getRequest("Patient/getPatients.json?id="+id).then( function(response) {
+			$scope.patients= response.data.patientsForm;
 		  });
 
 		
@@ -227,10 +246,10 @@ $("#file").val("");
 		});
 		
 		doUpdate.then(function(){ 
-			  if($rootScope.isAdmin){
+			  if($rootScope.isAdmin==1){
 				  $scope.updateList();
 			  }
-			  else if(!$rootScope.isAdmin){
+			  else if($rootScope.isAdmin==2){
 				  $scope.staffGetPatientList();
 			  }
 			
@@ -290,10 +309,10 @@ $("#file").val("");
 		doUpdate.then(function(){
 			$("#assignDoctorModel").modal("hide");
 			Flash.create('success', "You have Successfully Assigned!");  
-			  if($rootScope.isAdmin){
+			  if($rootScope.isAdmin==1){
 				  $scope.updateList();
 			  }
-			  else if(!$rootScope.isAdmin){
+			  else if($rootScope.isAdmin==2){
 				  $scope.staffGetPatientList();
 			  }
 		});
@@ -301,7 +320,7 @@ $("#file").val("");
 		
 	};
 	$scope.patientStatus=function(){
-		 if($rootScope.isAdmin){
+		 if($rootScope.isAdmin==1){
 			 if($scope.Status=="" || $scope.Status==undefined){
 				   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 						
@@ -343,7 +362,7 @@ $("#file").val("");
 			 }
 		 }
 		
-		 if(!$rootScope.isAdmin){
+		 if($rootScope.isAdmin==2){
 			
 			 	
 			 if($scope.Status==4){

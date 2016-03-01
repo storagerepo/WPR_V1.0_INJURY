@@ -62,6 +62,9 @@ public class AppointmentsService {
 	@Autowired
 	DoctorsDAO doctorsDAO ;
 	
+	@Autowired
+	StaffDAO staffDAO;
+	
 	//Get All Entries
 	public List<AppointmentsForm> getAppointmentsList()
 	{
@@ -139,9 +142,9 @@ public class AppointmentsService {
 		callLogsDAO.update(callLogs);
 	
 		//Logic Ends
-	patientsDAO.update(patients);
+		patientsDAO.update(patients);
 
-	patientsDAO.updatePatientStatus(appointmentsForm.getPatientId());
+		patientsDAO.updatePatientStatus(appointmentsForm.getPatientId());
 	return 1;
 	}
 	
@@ -233,7 +236,10 @@ public class AppointmentsService {
 					}
 				}
 				else if(role=="ROLE_STAFF"){
-					Integer staffId = staffService.getCurrentUserId();
+					Integer userId = staffService.getCurrentUserId();
+					//get Staff Id
+					Integer staffId=staffDAO.getByUserId(userId).getId();
+					
 					SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd");
 					String startDate=yearFormat.format(monthBegin);
 					String endDate=yearFormat.format(monthEnd);
@@ -265,7 +271,9 @@ public class AppointmentsService {
 					}
 				}
 				else if(role=="ROLE_STAFF"){
-					Integer staffId = staffService.getCurrentUserId();
+					Integer userId = staffService.getCurrentUserId();
+					// get Staff Id
+					Integer staffId = staffDAO.getByUserId(userId).getId();
 					appointmentsForms=patientsDAO.getParticularDayAppointmentListByStaffId(date, staffId);
 				}
 				
@@ -290,7 +298,9 @@ public class AppointmentsService {
 				if(role=="ROLE_ADMIN"){
 					appointmentss=appointmentsDAO.getAll();
 				}else if(role=="ROLE_STAFF"){
-					Integer staffId = staffService.getCurrentUserId();
+					Integer userId = staffService.getCurrentUserId();
+					// Get Staff Id
+					Integer staffId=staffDAO.getByUserId(userId).getId();
 					count=patientsDAO.getAppointmentListByStaffId(staffId).size();
 				}
 				

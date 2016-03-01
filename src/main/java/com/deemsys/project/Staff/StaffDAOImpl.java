@@ -29,11 +29,11 @@ import com.deemsys.project.entity.Staff;
  *
  */
 @Repository
-public class StaffDAOImpl implements StaffDAO,UserDetailsService{
+public class StaffDAOImpl implements StaffDAO{
 	
 	
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 	@Override
 	public void save(Staff entity) {
@@ -71,7 +71,7 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 	@Override
 	public List<Staff> getAll() {
 		// TODO Auto-generated method stub
-		return this.sessionFactory.getCurrentSession().createCriteria(Staff.class).add(Restrictions.eq("role", "ROLE_STAFF")).list();
+		return this.sessionFactory.getCurrentSession().createCriteria(Staff.class).list();
 	}
 
 	@Override
@@ -147,60 +147,6 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 		return null;
 	}
 
-	//OAUTH
-	//Function that overrides the default spring security
-	@Override
-	public User loadUserByUsername(String username){
-		
-		//Load User Who having the User name
-		Staff staff=this.getByUserName(username);
-		if(username.equals(staff.getUsername())){
-			username=staff.getUsername();
-		}
-		else{
-			username="";
-		}
-		List<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
-		
-		if(staff!=null)
-			authorities= buildUserAuthority(staff.getRole());
-				
-		return buildUserForAuthentication(username,staff, authorities);
-	}
-		
-	
-	private User buildUserForAuthentication(String username,Staff staff, List<GrantedAuthority> authorities) {
-		
-		String password;
-		boolean isEnable=true,accountNonExpired=true,credentialsNonExpired=true,accountNonLocked=true;
-		if(staff==null)
-		{
-			password="";
-		}
-		else
-		{
-			password=staff.getPassword();
-			if(staff.getIsEnable()==1)
-				isEnable=true;
-			else
-				isEnable=false;
-		}
-		
-		return new User(username,password,isEnable, accountNonExpired, credentialsNonExpired, accountNonLocked,authorities);
-	}
-
-	private List<GrantedAuthority> buildUserAuthority(String userRoles) {
-
-		Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
-
-		// Build user's authorities
-		setAuths.add(new SimpleGrantedAuthority(userRoles));
-
-		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
-
-		return Result;
-	}
-	
 	@Override
 	public Staff getByUserName(String username) {
 		// TODO Auto-generated method stub
@@ -274,7 +220,7 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 	@Override
 	public Integer isDisable(Integer getId) {
 		// TODO Auto-generated method stub
-		Query query=sessionFactory.getCurrentSession().createQuery("update Staff set isEnable='0' where id='"+getId+"'");
+		Query query=sessionFactory.getCurrentSession().createQuery("update Staff set status='0' where id='"+getId+"'");
 		query.executeUpdate();
 			return 0;
 	
@@ -282,7 +228,7 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 	@Override
 	public Integer isEnable(Integer getId) {
 		// TODO Auto-generated method stub
-		Query query=sessionFactory.getCurrentSession().createQuery("update Staff set isEnable='1' where id='"+getId+"'");
+		Query query=sessionFactory.getCurrentSession().createQuery("update Staff set status='1' where id='"+getId+"'");
 		query.executeUpdate();
 			return 1;
 	
@@ -294,6 +240,12 @@ public class StaffDAOImpl implements StaffDAO,UserDetailsService{
 		Query query=sessionFactory.getCurrentSession().createQuery("update Staff set password=userName where id='"+id+"'");
 		query.executeUpdate();
 			return 0;
+	}
+
+	@Override
+	public Staff getByUserId(Integer userId) {
+		// TODO Auto-generated method stub
+		return (Staff) this.sessionFactory.getCurrentSession().createCriteria(Staff.class).add(Restrictions.eq("users.userId", userId)).uniqueResult();
 	}
 
 	

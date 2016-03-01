@@ -20,5 +20,12 @@
         <mapping class="com.deemsys.project.entity.CrashReports" />
         <mapping class="com.deemsys.project.entity.Clinics" />
         <mapping class="com.deemsys.project.entity.ClinicTimings" />
+        <mapping class="com.deemsys.project.entity.County" />
+        <mapping class="com.deemsys.project.entity.LawyerAdmin" />
+        <mapping class="com.deemsys.project.entity.Lawyers" />
+        <mapping class="com.deemsys.project.entity.LawyerCountyMapping" />
+        <mapping class="com.deemsys.project.entity.Users" />
+        <mapping class="com.deemsys.project.entity.UserRoleMapping" />
+        <mapping class="com.deemsys.project.entity.Role" />
     </session-factory>
 </hibernate-configuration>

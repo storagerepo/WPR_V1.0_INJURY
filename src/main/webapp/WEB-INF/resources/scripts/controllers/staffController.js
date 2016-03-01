@@ -177,7 +177,6 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 
 adminApp.controller('SaveStaffController', function($scope,$http,$location,$state,requestHandler,successMessageService,Flash) {
 	
-	$scope.price=2;
 	$("#username_exists").text("");
 	$scope.options=true;
 	$scope.title=$state.current.title;

@@ -531,7 +531,9 @@ public class PatientsService {
 				patientss=patientsDAO.getAll();
 			}
 			else if(role=="ROLE_STAFF"){
-				Integer staffId=staffService.getCurrentUserId();
+				Integer userId=staffService.getCurrentUserId();
+				// get Staff Id
+				Integer staffId=staffDAO.getByUserId(userId).getId();
 				patientss=patientsDAO.getPatientListByStaffId(staffId);
 			}
 				
@@ -914,6 +916,5 @@ public class PatientsService {
 				patientsDAO.activeStatusByPatientId(id);
 				return status;
 		    }
-			
 
 }
