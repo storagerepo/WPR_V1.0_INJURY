@@ -6,7 +6,14 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-<div class="col-md-4 pull-right">
+
+
+<div class="row">
+
+        <!-- /.panel-heading -->
+            <div class="col-md-12">
+            <div flash-message="2000" class="col-md-5"></div><div class="col-md-5"></div>
+             <div class="col-md-4 pull-right">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="noOfRows" name="noOfRows"
@@ -18,15 +25,7 @@
 		<option value="{{clinics.length}}">Show All</option>
 	</select> 
 </div>
-
-<div class="row">
-<div flash-message="2000" class="col-md-5 pull-right"></div>
-    <div class="col-lg-12">           
-    
-            <!-- /.panel-heading -->
-            <div class="col-md-12">
-                <div class="dataTable_wrapper">
-                    <table class="table table-hover" id="dataTables-example">
+                    <table class="table table-hover">
                      
                           <thead>
 	        <tr>
@@ -81,10 +80,10 @@
               </table>
               <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
     					</dir-pagination-controls>   
-                </div>
+                
             </div>
         <!-- /.panel -->
-    </div>
+ 
     <!-- /.col-lg-12 -->
 </div>
 
@@ -406,7 +405,28 @@
     </div>
   </div>
 </div> 
-<!--  Delete Cinic Modal -->
+<!--  Delete Cinic First Modal -->
+<div class="modal fade" id="deleteClinicModal1" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmation</h4>
+        </div>
+        <div class="modal-body">Are you sure to delete clinic?
+              
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-click="deleteClinicNormal()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+
+<!--  Delete Cinic Second Modal -->
 <div class="modal fade" id="deleteClinicModal2" role="dialog">
     <div class="modal-dialog">    
       <!-- Modal content-->

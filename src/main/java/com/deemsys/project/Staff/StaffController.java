@@ -180,9 +180,10 @@ public class StaffController {
    	{
        	Integer status=staffService.disableStaff(id);
        	if(status==0){
-       		model.addAttribute("requestSuccess",false);
-       		
+       		model.addAttribute("enableOrDisable",0);
+       		model.addAttribute("requestSuccess",true);
        	}else{
+       		model.addAttribute("enableOrDisable",1);
        		model.addAttribute("requestSuccess",true);
            		
        	}

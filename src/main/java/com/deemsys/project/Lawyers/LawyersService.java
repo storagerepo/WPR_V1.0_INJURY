@@ -267,6 +267,11 @@ public class LawyersService {
 		Users users=usersDAO.get(lawyers.getUsers().getUserId());
 		userRoleDAO.deletebyUserId(users.getUserId());
 		
+		List<LawyerCountyMapping> lawyerCountyMappings=lawyerCountyMappingDAO.getLaweCountyMappingsByLawyerId(id);
+		for (LawyerCountyMapping lawyerCountyMapping : lawyerCountyMappings) {
+			lawyerCountyMappingDAO.delete(lawyerCountyMapping.getMappingId());
+		}
+		
 		lawyersDAO.delete(id);
 		return 1;
 	}
@@ -311,5 +316,36 @@ public class LawyersService {
 		
 		Lawyers lawyers=lawyersDAO.getLawyersByUserId(userId);
 		return lawyers.getId();
+	}
+	
+	// Enable or Disable Lawyer
+	public Integer enableOrDisabelLawyer(Integer lawyerId){
+		Integer status=0;
+		try{
+			Lawyers lawyers=lawyersDAO.get(lawyerId);
+			Users users= usersDAO.get(lawyers.getUsers().getUserId());
+			if(lawyers.getStatus()==1){
+				lawyers.setStatus(0);
+				users.setIsEnable(0);
+			}else if(lawyers.getStatus()==0){
+				lawyers.setStatus(1);
+				users.setIsEnable(1);
+			}
+			lawyersDAO.merge(lawyers);
+			usersDAO.merge(users);
+		}catch(Exception e){
+			status=1;
+		}
+		
+		return status;
+	}
+	
+	// Reset the Password
+	public Integer resetLawyerPassword(Integer lawyerId){
+		Integer status=1;
+		Lawyers lawyers=lawyersDAO.get(lawyerId);
+		
+		status=usersDAO.resetUserPassword(lawyers.getUsers().getUserId());
+		return status;
 	}
 }

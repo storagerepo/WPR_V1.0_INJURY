@@ -20,12 +20,47 @@ adminApp.controller('ShowLawyerController',function($http,$state,$scope,requestH
     	});
     };
 	
-	
-	$scope.resetPassword=function(id){
+    // Enable Lawyer
+    $scope.enableLawyer=function(lawyerId){
+    	$scope.confirmation="Enable";
+    	$scope.isEnable=true;
+    	$("#enableOrDisableStaff").modal('show');
+    	$scope.enable=function(){
+    		requestHandler.getRequest("Lawyer/enableDisableLawyers.json?lawyerId="+lawyerId,"").then(function(response){
+    	    	 if(response.data.requestSuccess){
+    	    		 $("#enableOrDisableStaff").modal("hide");
+   		          	$('.modal-backdrop').hide();
+    	  		   Flash.create('success', "You have Successfully Enabled!");
+    	    	 }
+    	    	 $scope.getLawyerList();
+    	  		});
+    	};
+    	
+    };
+    
+    // Disable Lawyer
+    $scope.disableLawyer=function(lawyerId){
+    	$scope.confirmation="Disable";
+    	$scope.isEnable=false;
+    	$("#enableOrDisableStaff").modal('show');
+    	$scope.disable=function(){
+	    	requestHandler.getRequest("Lawyer/enableDisableLawyers.json?lawyerId="+lawyerId,"").then(function(response){
+	    	 if(response.data.requestSuccess){
+	    		$("#enableOrDisableStaff").modal("hide");
+		        $('.modal-backdrop').hide();
+	  		   Flash.create('success', "You have Successfully Disabled!");
+	    	 }
+	    	 $scope.getLawyerList();
+	  		});
+    	};
+    };
+    
+    //Reset Password
+    $scope.resetPassword=function(id){
 		$("#resetLawyerPassword").modal("show");
   	  $scope.resetLawyerPassword=function()
 		   {
-  		requestHandler.getRequest("Admin/resetLawyerPassword.json?id="+id,"").then(function(response) {
+  		requestHandler.getRequest("Lawyer/resetLawyerPassword.json?lawyerId="+id,"").then(function(response) {
 			 $scope.response=response.data.requestSuccess;
 			 if($scope.response==true)
 			 {
@@ -37,8 +72,23 @@ adminApp.controller('ShowLawyerController',function($http,$state,$scope,requestH
 			 }
 			});
 		   };
-		
 	};
+	
+	// Delete Lawyer
+	$scope.deleteLawyer=function(lawyerId)
+    {
+    	$("#deleteLawyerModal").modal("show");
+    	$scope.deleteOneLawyer=function(){
+        	 requestHandler.deletePostRequest("Lawyer/deleteLawyers.json?lawyerId=",lawyerId).then(function(results){
+       			 $("#deleteLawyerModal").modal("hide");
+   			    	$('.modal-backdrop').hide();
+   		          Flash.create('success', "You have Successfully Deleted!");
+   		          $scope.getLawyerList();
+       		 });
+       		 
+    	};
+    	
+    };
 	
 });
 

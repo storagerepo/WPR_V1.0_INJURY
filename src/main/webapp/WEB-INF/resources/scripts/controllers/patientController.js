@@ -74,21 +74,8 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 		   else if($rootScope.isAdmin==4){
 			  requestHandler.getRequest("/Patient/getPatientsByLawyer.json","").then(function(response){
 					 $scope.patientss= response.data.patientsForms;
-				     $scope.sort('patientStatus');
-				    /* $.each($scope.patientss,function(index,value) {
-				    	 switch(value.patientStatus) {
-				    	    case 1:
-				    	        value.patientStatus="Active";
-				    	        break;
-				    	    case 2:
-				    	    	value.patientStatus="Appointment Scheduled";
-				    	        break;
-				    	    default:
-				    	    	value.patientStatus="Do-Not-Call";
-				    	    	break;
-				    	} 
-				     });*/
-				     });
+				     $scope.sort('name');
+				   	});
 		   }
 			
 	
@@ -161,8 +148,11 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	};
 	
 	$scope.deletePatient=function(id){
-		if(confirm("Are you sure to delete patient?")){
+		$("#deletePatientModal").modal("show");
+		$scope.deleteOnePatient=function(){
 			  requestHandler.deletePostRequest("Staff/deletePatients.json?id=",id).then(function(response){
+				  $("#deletePatientModal").modal("hide");
+				  $('.modal-backdrop').hide();
 				  Flash.create('success', "You have Successfully Deleted!");  
 				  if($rootScope.isAdmin==1){
 					  $scope.updateList();
@@ -173,7 +163,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 		         
 		});
 		
-		}
+		};
 	};
 	
 	$scope.addModel=function()

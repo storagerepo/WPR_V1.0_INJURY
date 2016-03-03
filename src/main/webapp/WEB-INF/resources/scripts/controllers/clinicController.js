@@ -28,18 +28,22 @@ adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash)
 	// Delete the Clinic
 	$scope.deleteClinic=function(clinicId)
 	  {
-		
-		  if(confirm("Are you sure to delete Clinic ?")){
-		  requestHandler.deletePostRequest("Staff/deleteClinic.json?clinicId=",clinicId).then(function(results){
+		 $("#deleteClinicModal1").modal("show");
+		  $scope.deleteClinicNormal=function(){
+			  requestHandler.deletePostRequest("Staff/deleteClinic.json?clinicId=",clinicId).then(function(results){
 			  $scope.value=results.data.requestSuccess;
 			  
 			  if($scope.value==true)
 				  {
+				  $("#deleteClinicModal1").modal("hide");
+				  $('.modal-backdrop').hide();
 				  Flash.create('success', "You have Successfully Deleted!");
 		          $scope.getClinicList();
 				  }
 			  else
 				  {
+				  $("#deleteClinicModal1").modal("hide");
+				  $('.modal-backdrop').hide();
 				  $("#deleteClinicModal2").modal("show");
 				    $scope.deleteDoctorFromClinic=function()
 				    {

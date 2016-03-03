@@ -8,9 +8,10 @@
 </div>
 <!-- /.row -->
 <div class="row">
-	 <div flash-message="2000" class="col-md-5 pull-right"></div>			
+	 		
 			<!-- /.panel-heading -->
 			<div class="col-md-12">
+			<div flash-message="2000" class="col-md-5"></div><div class="col-md-2"></div>	
 			 <div class="col-md-4 pull-right">
 <label>Number of Records</label>
 	<select
@@ -70,15 +71,15 @@
 								<a href="#/dashboard/EditLawyer/{{lawyer.id}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Lawyer Admin"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
-						<a href="#" ng-cloak ng-click="deleteLawyer(lawyer.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Lawyer Admin"><i
+						<a href="" ng-cloak ng-click="deleteLawyer(lawyer.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Lawyer Admin"><i
 								class="glyphicon glyphicon-trash"></i>
 						</a>
 								
 							
-								<a href="" ng-cloak ng-show="lawyer.status==1" ng-click="disableLawyerAdmin(lawyer.id)" class="btn btn-xs btn-success hint--top" data-hint="Disable Lawyer Admin"><i
+								<a href="" ng-cloak ng-show="lawyer.status==1" ng-click="disableLawyer(lawyer.id)" class="btn btn-xs btn-success hint--top" data-hint="Disable Lawyer Admin"><i
 								class="fa fa-unlock-alt"></i>
 						</a>
-								<a href="" ng-cloak ng-show="lawyer.status==0" ng-click="enableLawyerAdmin(lawyer.id)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Lawyer Admin"><i
+								<a href="" ng-cloak ng-show="lawyer.status==0" ng-click="enableLawyer(lawyer.id)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Lawyer Admin"><i
 								class="fa fa-lock"></i>
 						</a>
 						<a href="" ng-cloak ng-click="resetPassword(lawyer.id)" class="btn btn-xs btn-primary hint--top" data-hint="Reset Password"><i
@@ -101,6 +102,7 @@
 	<!-- /.col-lg-12 -->
 </div>
 
+<!-- Reset Lawyer Password Modal -->
   <div class="modal fade" id="resetLawyerPassword" role="dialog">
     <div class="modal-dialog">    
       <!-- Modal content-->
@@ -115,6 +117,47 @@
         <div class="modal-footer" >
          <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
              <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-disabled='myForm.$invalid' ng-click="resetLawyerPassword()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+ <!-- Enable or Disable Lawyer Modal -->
+ <div class="modal fade" id="enableOrDisableStaff" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmation </h4>
+        </div>
+        <div class="modal-body">Do you want to {{confirmation}} Caller?
+              
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-show="isEnable" ng-click="enable()">Yes</a>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-hide="isEnable" ng-click="disable()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+ <!-- Delete Lawyer Modal -->
+ <div class="modal fade" id="deleteLawyerModal" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Delete Lawyer </h4>
+        </div>
+        <div class="modal-body">Are you sure to delete lawyer?
+              
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-click="deleteOneLawyer()">Yes</a>
         </div>
       </div>
       

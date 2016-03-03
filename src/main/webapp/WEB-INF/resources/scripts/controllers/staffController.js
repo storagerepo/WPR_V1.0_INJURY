@@ -28,24 +28,17 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 		   {
     	  requestHandler.getRequest("Admin/disableStaff.json?id="+id,"").then(function(results){
     		 
- $scope.response=results.data.requestSuccess;
+ $scope.response=results.data.enableOrDisable;
 			  
-			  if($scope.response==true)
+			  if($scope.response==0)
 				  {
 		          $("#disableStaff").modal("hide");
-		          $('.modal-backdrop').hide();
-		          Flash.create('success', "You have Successfully Enabled!");
-		          $scope.getStaffList();
-
-				  }
-			  if($scope.response==false)
-			  {
-				  $("#disableStaff").modal("hide");
 		          $('.modal-backdrop').hide();
 		          Flash.create('success', "You have Successfully Disabled!");
 		          $scope.getStaffList();
 
-			  }
+				  }
+			
     	     });
 		   };
 		   
@@ -57,26 +50,17 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
     	  $scope.enable=function()
 		   {
     	  requestHandler.getRequest("Admin/disableStaff.json?id="+id,"").then(function(results){
- $scope.result=results.data.requestSuccess;
+ $scope.result=results.data.enableOrDisable;
 			  
-			  if($scope.result==true)
+			  if($scope.result==1)
 				  {
 				  $("#enableStaff").modal("hide");
 		          $('.modal-backdrop').hide();
-		          Flash.create('success', "You have Successfully Updated!");
+		          Flash.create('success', "You have Successfully Enabled!");
 		          $scope.getStaffList();
 
 				  }
-			  if($scope.result==false)
-			  {
-				  successMessageService.setMessage("You have Successfully Disabled!");
-		          successMessageService.setIsError(0);
-		          successMessageService.setIsSuccess(1); 
-		          $("#enableStaff").modal("hide");
-		          $('.modal-backdrop').hide();
-		          $state.reload('dashboard.staff');
-
-			  }
+			  
     	     });
 		   };
 		   
@@ -129,34 +113,38 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
     
     $scope.deleteStaff=function(id)
 	  {
-		
-		  if(confirm("Are you sure to delete Caller ?")){
-		  requestHandler.deletePostRequest("Admin/deleteStaff.json?id=",id).then(function(results){
+    	$("#deleteStaffModal1").modal("show");
+		  $scope.deleteStaffNormal=function(){
+			requestHandler.deletePostRequest("Admin/deleteStaff.json?id=",id).then(function(results){
 			  $scope.value=results.data.requestSuccess;
 			  
 			  if($scope.value==true)
 				  {
+				  $("#deleteStaffModal1").modal("hide");
+				  $('.modal-backdrop').hide();
 				  Flash.create('success', "You have Successfully Deleted!");
 		          $scope.getStaffList();
 			  $state.reload('dashboard.staff');
 				  }
 			  else
 				  {
-				  $("#deleteStaffModal").modal("show");
+				  $("#deleteStaffModal1").modal("hide");
+				  $('.modal-backdrop').hide();
+				  $("#deleteStaffModal2").modal("show");
 				    $scope.deleteStaffFromPatients=function()
 				    {
 				    	
 				    	requestHandler.postRequest("Staff/deletePatientsByStaffId.json?id="+id).then(function(response){
 				    		
 				    		 requestHandler.deletePostRequest("Admin/deleteStaff.json?id=",id).then(function(results){
-				    			 $("#deleteStaffModal").modal("hide");
+				    			 $("#deleteStaffModal2").modal("hide");
 							    	$('.modal-backdrop').hide();
 						          Flash.create('success', "You have Successfully Deleted!");
 						          $scope.getStaffList();
 				    		 });
 				    		 
 							});
-				    }
+				    };
 				  
 				  }
 		     });

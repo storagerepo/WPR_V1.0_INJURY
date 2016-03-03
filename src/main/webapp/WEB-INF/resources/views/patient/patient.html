@@ -10,16 +10,16 @@
 </div>
 <!-- /.row -->
 <div class="row">
-<div flash-message="2000" class="col-md-5 pull-right"></div>
-	<div class="col-lg-12">
-	<div class="col-md-4" ng-hide="{{isAdmin==4}}">
+
+	<div class="col-md-12">
+<div class="col-md-4" ng-hide="{{isAdmin==4}}">
                            <label>Patient Status:</label><select ng-change="patientStatus()" style="width: 225px;" class="form-control" ng-model="Status" name="patientStatus" id="patientStatus" required>
   							  	<option value="">All</option>
   								<option value="1">Active</option>
                                 <option value="2">Appointment Scheduled</option>
 								<option value="3">Do-Not-Call</option>                                                   
 </select></div>
-
+<div flash-message="2000" class="col-md-4"></div>
  <div class="col-md-4 pull-right">
                           <label>Number of Records</label> <select class="form-control" ng-model="noOfRows" name="noOfRows" id="noOfRows">
   							  	<option value="10">Show 10 Per Page</option>
@@ -27,7 +27,7 @@
                                 <option value="50">Show 50 Per Page</option>
 								<option value="100">Show 100 Per Page</option>
 								<option value="{{patientss.length}}">Show All</option>                                                    
-</select><br/></div>
+</select></div>
 		<!-- /.panel-heading -->
  		<table class="table table-hover">
 				<thead>
@@ -121,6 +121,27 @@
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
+
+<!--  Delete Patient Modal -->
+<div class="modal fade" id="deletePatientModal" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmation</h4>
+        </div>
+        <div class="modal-body">Are you sure to delete patient?
+              
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-click="deleteOnePatient()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
 
 <!--  Assign Modal -->
 <div class="modal fade" id="assignCallerModel" role="dialog">
