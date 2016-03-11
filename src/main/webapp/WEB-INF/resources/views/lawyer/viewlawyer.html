@@ -68,18 +68,18 @@
 								<td ng-cloak>{{lawyer.emailAddress}}</td>
 								
 								<td>
-								<a href="#/dashboard/EditLawyer/{{lawyer.id}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Lawyer Admin"><i
+								<a href="#/dashboard/EditLawyer/{{lawyer.id}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Lawyer"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
-						<a href="" ng-cloak ng-click="deleteLawyer(lawyer.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Lawyer Admin"><i
+						<a href="" ng-cloak ng-click="deleteLawyer(lawyer.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Lawyer"><i
 								class="glyphicon glyphicon-trash"></i>
 						</a>
 								
 							
-								<a href="" ng-cloak ng-show="lawyer.status==1" ng-click="disableLawyer(lawyer.id)" class="btn btn-xs btn-success hint--top" data-hint="Disable Lawyer Admin"><i
+								<a href="" ng-cloak ng-show="lawyer.status==1" ng-click="disableLawyer(lawyer.id)" class="btn btn-xs btn-success hint--top" data-hint="Disable Lawyer"><i
 								class="fa fa-unlock-alt"></i>
 						</a>
-								<a href="" ng-cloak ng-show="lawyer.status==0" ng-click="enableLawyer(lawyer.id)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Lawyer Admin"><i
+								<a href="" ng-cloak ng-show="lawyer.status==0" ng-click="enableLawyer(lawyer.id)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Lawyer"><i
 								class="fa fa-lock"></i>
 						</a>
 						<a href="" ng-cloak ng-click="resetPassword(lawyer.id)" class="btn btn-xs btn-primary hint--top" data-hint="Reset Password"><i
@@ -131,7 +131,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Confirmation </h4>
         </div>
-        <div class="modal-body">Do you want to {{confirmation}} Caller?
+        <div class="modal-body">Do you want to {{confirmation}} Lawyer?
               
         </div>
         <div class="modal-footer" >

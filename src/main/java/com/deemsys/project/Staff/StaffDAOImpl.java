@@ -1,10 +1,7 @@
 package com.deemsys.project.Staff;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -13,10 +10,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
@@ -161,20 +154,20 @@ public class StaffDAOImpl implements StaffDAO{
 				      .add(Projections.property("firstName"), "firstName"))
 				    .setResultTransformer(Transformers.aliasToBean(Staff.class));
 
-				  List<Staff> list = cr.list();
+				  @SuppressWarnings("unchecked")
+				List<Staff> list = cr.list();
 		return list;
 	}
-
 	
-	
-	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Patients> getPatientsByAccessToken(Integer callerId) {
 		// TODO Auto-generated method stub
 		return (List<Patients>)this.sessionFactory.getCurrentSession().createCriteria(Patients.class).add(Restrictions.eq("staff.id", callerId)).list();
 	}
 
-		@Override
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Patients> getPatientStatus(Integer patientStatus,Integer callerId) {
 		// TODO Auto-generated method stub
 		return (List<Patients>)this.sessionFactory.getCurrentSession().createQuery("FROM Patients WHERE patientStatus='"+patientStatus+"' and staff.id='"+callerId+"'").list();
@@ -186,6 +179,7 @@ public class StaffDAOImpl implements StaffDAO{
 	 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Patients> getPatientsByStaffId(Integer id) {
 		// TODO Auto-generated method stub
@@ -204,6 +198,7 @@ public class StaffDAOImpl implements StaffDAO{
 	@Override
 	public List<Staff> checkPassword(String newPassword, String userName) {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
 		List<Staff> staff=(List<Staff>) this.sessionFactory.getCurrentSession().createQuery("FROM  Staff WHERE password='"+newPassword+"' and userName='"+userName+"'").list();
 		return staff;
 		

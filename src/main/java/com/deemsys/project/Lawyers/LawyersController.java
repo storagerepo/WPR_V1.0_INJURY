@@ -52,7 +52,8 @@ public class LawyersController {
 	}
 
 	@RequestMapping(value = "/deleteLawyers", method = RequestMethod.POST)
-	public String deleteLawyers(@RequestParam("lawyerId") Integer lawyerId, ModelMap model) {
+	public String deleteLawyers(@RequestParam("lawyerId") Integer lawyerId,
+			ModelMap model) {
 
 		lawyersService.deleteLawyers(lawyerId);
 		model.addAttribute("requestSuccess", true);
@@ -98,7 +99,8 @@ public class LawyersController {
 	}
 
 	@RequestMapping(value = "/resetLawyerPassword", method = RequestMethod.GET)
-	public String resetLawyerPassword(@RequestParam("lawyerId") Integer lawyerId,ModelMap model) {
+	public String resetLawyerPassword(
+			@RequestParam("lawyerId") Integer lawyerId, ModelMap model) {
 		Integer status = lawyersService.resetLawyerPassword(lawyerId);
 		if (status == 0) {
 			model.addAttribute("requestSuccess", true);

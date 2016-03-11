@@ -11,16 +11,16 @@ import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.County;
 
 @Repository
-public class CountyDAOImpl implements CountyDAO{
+public class CountyDAOImpl implements CountyDAO {
 
 	@Autowired
 	SessionFactory sessionFactory;
-	
+
 	@Override
 	public void save(County entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().save(entity);
-		
+
 	}
 
 	@Override
@@ -32,7 +32,8 @@ public class CountyDAOImpl implements CountyDAO{
 	@Override
 	public County get(Integer id) {
 		// TODO Auto-generated method stub
-		County county=(County) this.sessionFactory.getCurrentSession().get(County.class, id);
+		County county = (County) this.sessionFactory.getCurrentSession().get(
+				County.class, id);
 		return county;
 	}
 
@@ -46,8 +47,8 @@ public class CountyDAOImpl implements CountyDAO{
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
-		County county=this.get(id);
-		if(county!=null){
+		County county = this.get(id);
+		if (county != null) {
 			this.sessionFactory.getCurrentSession().delete(county);
 		}
 	}
@@ -56,7 +57,8 @@ public class CountyDAOImpl implements CountyDAO{
 	public List<County> getAll() {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
-		List<County> county=this.sessionFactory.getCurrentSession().createCriteria(County.class).list();
+		List<County> county = this.sessionFactory.getCurrentSession()
+				.createCriteria(County.class).list();
 		return county;
 	}
 

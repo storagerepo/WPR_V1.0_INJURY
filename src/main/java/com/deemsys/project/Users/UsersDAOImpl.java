@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
-import com.deemsys.project.entity.Staff;
 import com.deemsys.project.entity.Users;
 
 @Repository
@@ -130,6 +129,7 @@ public class UsersDAOImpl implements UsersDAO{
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Users> checkPassword(String password, String userName) {
 		// TODO Auto-generated method stub

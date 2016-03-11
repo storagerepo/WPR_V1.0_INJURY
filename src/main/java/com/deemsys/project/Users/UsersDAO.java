@@ -2,10 +2,8 @@ package com.deemsys.project.Users;
 
 import java.util.List;
 
-import org.hibernate.Query;
 
 import com.deemsys.project.common.IGenericDAO;
-import com.deemsys.project.entity.Staff;
 import com.deemsys.project.entity.Users;
 
 public interface UsersDAO extends IGenericDAO<Users> {

@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,7 +18,6 @@ import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
 import com.deemsys.project.entity.Patients;
-import com.deemsys.project.entity.Staff;
 
 /**
  * 
@@ -144,6 +146,7 @@ public class PatientsDAOImpl implements PatientsDAO{
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Patients> getPatientListByStaffId(Integer staffId) {
 		// TODO Auto-generated method stub
@@ -158,6 +161,7 @@ public class PatientsDAOImpl implements PatientsDAO{
 	
 		Query query= this.sessionFactory.getCurrentSession().createQuery("select s1.id,s1.patients.id,s1.patients.name,s1.scheduledDate,s1.notes,s1.status from Patients s2,Appointments s1 where s2.id=s1.patients.id and s2.staff.id="+staffId+"");
 				
+				@SuppressWarnings("unchecked")
 				List<Object[]> list = query.list();
 	
 		List<AppointmentsForm> forms=new ArrayList<AppointmentsForm>();
@@ -178,6 +182,7 @@ public class PatientsDAOImpl implements PatientsDAO{
 	
 		Query query= this.sessionFactory.getCurrentSession().createQuery("select s1.id,s1.patients.id,s1.patients.name,s1.scheduledDate,s1.notes,s1.status from Patients s2,Appointments s1 where s2.id=s1.patients.id and s2.staff.id="+staffId+" and s1.scheduledDate=CURDATE()" );
 				
+				@SuppressWarnings("unchecked")
 				List<Object[]> list = query.list();
 	
 		List<AppointmentsForm> forms=new ArrayList<AppointmentsForm>();
@@ -198,6 +203,7 @@ public class PatientsDAOImpl implements PatientsDAO{
 	
 		Query query= this.sessionFactory.getCurrentSession().createQuery("select s1.id,s1.patients.id,s1.patients.name,s1.scheduledDate,s1.notes,s1.status from Patients s2,Appointments s1 where s2.id=s1.patients.id and s2.staff.id="+staffId+" and s1.scheduledDate='"+date+"'");
 				
+				@SuppressWarnings("unchecked")
 				List<Object[]> list = query.list();
 	
 		List<AppointmentsForm> forms=new ArrayList<AppointmentsForm>();
@@ -220,18 +226,20 @@ public class PatientsDAOImpl implements PatientsDAO{
 	}
 
 	@Override
-	public void deletePatientsByStaffId(Integer id) {
+	public void releasePatientsFromStaff(Integer id) {
 		// TODO Auto-generated method stub
 		Query query=this.sessionFactory.getCurrentSession().createQuery("update Patients set staff.id = NULL where id="+id);
 		query.executeUpdate();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Appointments> getAppointmentsListByPatientsId(Integer patientId) {
 		// TODO Auto-generated method stub
 		return (List<Appointments>)this.sessionFactory.getCurrentSession().createCriteria(Appointments.class).add(Restrictions.eq("patients.id", patientId)).list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CallLogs> getCallLogsListByPatientsId(Integer patientId) {
 		// TODO Auto-generated method stub
@@ -241,6 +249,7 @@ public class PatientsDAOImpl implements PatientsDAO{
 	@Override
 	public List<Patients> getpatientsByDoctorId(Integer doctorId) {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
 		List<Patients> patientss=this.sessionFactory.getCurrentSession().createCriteria(Patients.class).add(Restrictions.eq("doctors.id", doctorId)).list();
 		return patientss;
 	}
@@ -248,6 +257,7 @@ public class PatientsDAOImpl implements PatientsDAO{
 	@Override
 	public List<Patients> getpatientsByClinicId(Integer clinicId) {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
 		List<Patients> patientss=this.sessionFactory.getCurrentSession().createCriteria(Patients.class).add(Restrictions.eq("clinics.clinicId", clinicId)).list();
 		return patientss;
 	}
@@ -268,8 +278,9 @@ public class PatientsDAOImpl implements PatientsDAO{
 	}
 
 @Override
-public List<Patients> patientStatus(Integer patientStatus) {
+public List<Patients> getPatientsByStatus(Integer patientStatus) {
 	// TODO Auto-generated method stub
+	@SuppressWarnings("unchecked")
 	List<Patients> patients=(List<Patients>) this.sessionFactory.getCurrentSession().createQuery("FROM  Patients WHERE patientStatus='"+patientStatus+"'").list();
 	return patients;
 }
@@ -287,6 +298,42 @@ public void removeAssignedClinic(Integer patientId) {
 	// TODO Auto-generated method stub
 	Query query=this.sessionFactory.getCurrentSession().createQuery("update Patients set clinics.clinicId=NULL where id="+patientId);
 	query.executeUpdate();
+}
+
+@SuppressWarnings("unchecked")
+@Override
+public List<Patients> getPatientListByLimit(Integer pageNumber,
+		Integer itemsPerPage,String name,String phoneNumber,String localReportNumber,String callerName) {
+	// TODO Auto-generated method stub
+	List<Patients> patients=new ArrayList<Patients>();
+	if(name.equals("")&&phoneNumber.equals("")&&localReportNumber.equals("")&&callerName.equals("")){
+	  patients=this.sessionFactory.getCurrentSession().createCriteria(Patients.class).setFirstResult((pageNumber-1)*itemsPerPage).setMaxResults(itemsPerPage).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+	}
+	else if(callerName.equals("")){
+		Criterion criterion=Restrictions.and(Restrictions.like("name", name, MatchMode.ANYWHERE), Restrictions.like("phoneNumber", phoneNumber, MatchMode.ANYWHERE));
+		Criterion criterion2=Restrictions.and(criterion, Restrictions.like("localReportNumber", localReportNumber, MatchMode.ANYWHERE));
+		patients=this.sessionFactory.getCurrentSession().createCriteria(Patients.class).add(criterion2).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+	}
+	else if(!callerName.equals("")){
+		patients=this.sessionFactory.getCurrentSession().createQuery("from Staff s1 join s1.patientses p1 where (s1.firstName like '%"+callerName+"%' or s1.lastName like '%"+callerName+"%') and p1.name like '%"+name+"%' and p1.phoneNumber like '%"+phoneNumber+"%' and p1.localReportNumber like '%"+localReportNumber+"%'").setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+	}
+	return patients;
+}
+
+@SuppressWarnings("unchecked")
+@Override
+public Integer getTotalPatientsCount(String name,String phoneNumber,String localReportNumber,String callerName) {
+	// TODO Auto-generated method stub
+	List<Patients> patients=new ArrayList<Patients>();
+	if(callerName.equals("")){
+		Criterion criterion=Restrictions.and(Restrictions.like("name", name, MatchMode.ANYWHERE), Restrictions.like("phoneNumber", phoneNumber, MatchMode.ANYWHERE));
+		Criterion criterion2=Restrictions.and(criterion, Restrictions.like("localReportNumber", localReportNumber, MatchMode.ANYWHERE));
+		patients=this.sessionFactory.getCurrentSession().createCriteria(Patients.class).add(criterion2).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+	}
+	else if(!callerName.equals("")){
+		patients=this.sessionFactory.getCurrentSession().createQuery("from Staff s1 join s1.patientses p1 where (s1.firstName like '%"+callerName+"%' or s1.lastName like '%"+callerName+"%') and p1.name like '%"+name+"%' and p1.phoneNumber like '%"+phoneNumber+"%' and p1.localReportNumber like '%"+localReportNumber+"%'").setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+	}
+	return patients.size();
 }
 
 }

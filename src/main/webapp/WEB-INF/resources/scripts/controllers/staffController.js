@@ -94,7 +94,7 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
     	  $("#releasePatient").modal("show");
     	  $scope.release=function()
 		   {
-    	  requestHandler.getRequest("Staff/unAssignPatient.json?id="+id,"").then(function(results){
+    	  requestHandler.postRequest("Staff/releasePatientsFromStaff.json?id="+id).then(function(results){
 			 $scope.response=results.data.requestSuccess;
 			 if($scope.response==true)
 			 {
@@ -134,7 +134,7 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 				    $scope.deleteStaffFromPatients=function()
 				    {
 				    	
-				    	requestHandler.postRequest("Staff/deletePatientsByStaffId.json?id="+id).then(function(response){
+				    	requestHandler.postRequest("Staff/releasePatientsFromStaff.json?id="+id).then(function(response){
 				    		
 				    		 requestHandler.deletePostRequest("Admin/deleteStaff.json?id=",id).then(function(results){
 				    			 $("#deleteStaffModal2").modal("hide");

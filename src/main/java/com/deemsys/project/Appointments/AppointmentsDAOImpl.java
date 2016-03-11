@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.Appointments;
-import com.deemsys.project.entity.Patients;
 
 /**
  * 
@@ -143,6 +142,7 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 			return 1;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Appointments> todaysAppointment()
 	{
@@ -151,6 +151,7 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		  return appointments;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Appointments> getByDates(String date) {
 		// TODO Auto-generated method stub
@@ -159,6 +160,7 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		return appointments;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Appointments> getAppointmentsBetweenDates(Date startDate,
 			Date endDate) {
@@ -168,6 +170,7 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		return appointments;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public List<AppointmentsForm> getAppointmentsBetweenDatesByStaffId(
 			String startDate, String endDate,Integer staffId) {
@@ -176,6 +179,7 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		
 		Query query =this.sessionFactory.getCurrentSession().createQuery("select s1.id,s1.patients.id,s1.patients.name,s1.scheduledDate,s1.notes,s1.status from Patients s2,Appointments s1 where s2.id=s1.patients.id and s2.staff.id="+staffId+" and (s1.scheduledDate>='"+startDate+"' and s1.scheduledDate<='"+endDate+"')");
 		
+		@SuppressWarnings("unchecked")
 		List<Object[]> list = query.list();
 		
 		List<AppointmentsForm> appointmentsForms=new ArrayList<AppointmentsForm>();

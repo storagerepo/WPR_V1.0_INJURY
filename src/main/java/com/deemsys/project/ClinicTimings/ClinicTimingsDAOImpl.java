@@ -138,6 +138,7 @@ public class ClinicTimingsDAOImpl implements ClinicTimingsDAO{
 	@Override
 	public List<ClinicTimings> getClinicTimings(Integer clinicId) {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
 		List<ClinicTimings> clinicTimings=this.sessionFactory.getCurrentSession().createCriteria(ClinicTimings.class).add(Restrictions.eq("id.clinicId", clinicId)).list();
 		return clinicTimings;
 	}

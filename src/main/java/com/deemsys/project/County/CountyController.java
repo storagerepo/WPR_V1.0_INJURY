@@ -18,50 +18,43 @@ public class CountyController {
 	@Autowired
 	CountyService countyService;
 
-    @RequestMapping(value="/Admin/getCounty",method=RequestMethod.GET)
-	public String getCounty(@RequestParam("id") Integer id,ModelMap model)
-	{
-    	model.addAttribute("countyForm",countyService.getCounty(id));
-    	model.addAttribute("requestSuccess",true);
+	@RequestMapping(value = "/Admin/getCounty", method = RequestMethod.GET)
+	public String getCounty(@RequestParam("id") Integer id, ModelMap model) {
+		model.addAttribute("countyForm", countyService.getCounty(id));
+		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
-	
-    
-    @RequestMapping(value="/Admin/mergeCounty",method=RequestMethod.POST)
-   	public String mergeCounty(@RequestBody CountyForm countyForm,ModelMap model)
-   	{
-    	countyService.mergeCounty(countyForm);
-    	model.addAttribute("requestSuccess",true);
-   		return "/returnPage";
-   	}
-    
-    @RequestMapping(value="/Admin/saveUpdateCounty",method=RequestMethod.POST)
-   	public String saveCounty(@RequestBody CountyForm countyForm,ModelMap model)
-   	{
-    	if(countyForm.getId()==null)
-    		countyService.saveCounty(countyForm);
-    	else
-    		countyService.updateCounty(countyForm);
-    	model.addAttribute("requestSuccess",true);
-   		return "/returnPage";
-   	}
-   
-    
-    @RequestMapping(value="/Admin/deleteCounty",method=RequestMethod.POST)
-   	public String deleteCounty(@RequestParam("id") Integer id,ModelMap model)
-   	{
-    	
-    	countyService.deleteCounty(id);
-    	model.addAttribute("requestSuccess",true);
-   		return "/returnPage";
-   	}
-    
-    @RequestMapping(value={"/Admin/getAllCountys","/Lawyer/getAllCountys"},method=RequestMethod.GET)
-   	public String getAllCountys(ModelMap model)
-   	{
-    	model.addAttribute("countyForms",countyService.getCountyList());
-    	model.addAttribute("requestSuccess",true);
-   		return "/returnPage";
-   	}
-	
+
+	@RequestMapping(value = "/Admin/mergeCounty", method = RequestMethod.POST)
+	public String mergeCounty(@RequestBody CountyForm countyForm, ModelMap model) {
+		countyService.mergeCounty(countyForm);
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+
+	@RequestMapping(value = "/Admin/saveUpdateCounty", method = RequestMethod.POST)
+	public String saveCounty(@RequestBody CountyForm countyForm, ModelMap model) {
+		if (countyForm.getId() == null)
+			countyService.saveCounty(countyForm);
+		else
+			countyService.updateCounty(countyForm);
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+
+	@RequestMapping(value = "/Admin/deleteCounty", method = RequestMethod.POST)
+	public String deleteCounty(@RequestParam("id") Integer id, ModelMap model) {
+
+		countyService.deleteCounty(id);
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+
+	@RequestMapping(value = { "/Admin/getAllCountys", "/Lawyer/getAllCountys" }, method = RequestMethod.GET)
+	public String getAllCountys(ModelMap model) {
+		model.addAttribute("countyForms", countyService.getCountyList());
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+
 }

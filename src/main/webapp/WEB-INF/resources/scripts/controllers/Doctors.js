@@ -88,12 +88,8 @@ adminApp.controller('AddDoctorsCtrl', function($scope,$http,$location,$state,req
 	};
 	
 	requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
-		
-	     $scope.clinic= response.data.clinicsForms;
-	     
-	     
-	  
-	     });
+			$scope.clinic= response.data.clinicsForms;
+	  });
 	
 });
 

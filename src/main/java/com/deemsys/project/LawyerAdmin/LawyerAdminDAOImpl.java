@@ -12,11 +12,11 @@ import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.LawyerAdmin;
 
 @Repository
-public class LawyerAdminDAOImpl implements LawyerAdminDAO{
+public class LawyerAdminDAOImpl implements LawyerAdminDAO {
 
 	@Autowired
 	SessionFactory sessionFactory;
-	
+
 	@Override
 	public void save(LawyerAdmin entity) {
 		// TODO Auto-generated method stub
@@ -27,13 +27,14 @@ public class LawyerAdminDAOImpl implements LawyerAdminDAO{
 	public void merge(LawyerAdmin entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().merge(entity);
-		
+
 	}
 
 	@Override
 	public LawyerAdmin get(Integer id) {
 		// TODO Auto-generated method stub
-		LawyerAdmin lawyerAdmin= (LawyerAdmin) this.sessionFactory.getCurrentSession().get(LawyerAdmin.class, id);
+		LawyerAdmin lawyerAdmin = (LawyerAdmin) this.sessionFactory
+				.getCurrentSession().get(LawyerAdmin.class, id);
 		return lawyerAdmin;
 	}
 
@@ -47,8 +48,8 @@ public class LawyerAdminDAOImpl implements LawyerAdminDAO{
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
-		LawyerAdmin lawyerAdmin=this.get(id);
-		if(lawyerAdmin!=null){
+		LawyerAdmin lawyerAdmin = this.get(id);
+		if (lawyerAdmin != null) {
 			this.sessionFactory.getCurrentSession().delete(lawyerAdmin);
 		}
 	}
@@ -57,7 +58,8 @@ public class LawyerAdminDAOImpl implements LawyerAdminDAO{
 	public List<LawyerAdmin> getAll() {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
-		List<LawyerAdmin> lawyerAdmin=this.sessionFactory.getCurrentSession().createCriteria(LawyerAdmin.class).list();
+		List<LawyerAdmin> lawyerAdmin = this.sessionFactory.getCurrentSession()
+				.createCriteria(LawyerAdmin.class).list();
 		return lawyerAdmin;
 	}
 
@@ -137,7 +139,9 @@ public class LawyerAdminDAOImpl implements LawyerAdminDAO{
 	@Override
 	public LawyerAdmin getByUserId(Integer userId) {
 		// TODO Auto-generated method stub
-		LawyerAdmin lawyerAdmin=(LawyerAdmin) this.sessionFactory.getCurrentSession().createCriteria(LawyerAdmin.class).add(Restrictions.eq("users.userId", userId)).uniqueResult();
+		LawyerAdmin lawyerAdmin = (LawyerAdmin) this.sessionFactory
+				.getCurrentSession().createCriteria(LawyerAdmin.class)
+				.add(Restrictions.eq("users.userId", userId)).uniqueResult();
 		return lawyerAdmin;
 	}
 

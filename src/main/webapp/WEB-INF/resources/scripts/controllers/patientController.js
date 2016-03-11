@@ -26,12 +26,14 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	$scope.title="Add Patient";
 	// Number of Records Per Page
 	$scope.noOfRows="10";
-		    if($rootScope.isAdmin==1){
-			   $scope.admin=true;
-			   $scope.staff=true;
-			   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
-					
-				     $scope.patientss= response.data.patientsForms;
+	if($rootScope.isAdmin==4){
+		  requestHandler.getRequest("/Patient/getPatientsByLawyer.json","").then(function(response){
+				 $scope.patientss= response.data.patientsForms;
+			     $scope.sort('name');
+			   	});
+	   }else{
+		   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
+			   $scope.patientss= response.data.patientsForms;
 				     $scope.sort('patientStatus');
 				     $.each($scope.patientss,function(index,value) {
 				    	 switch(value.patientStatus) {
@@ -48,62 +50,15 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 				     });
 				     
 				     });
-			   
-		   }
-		   else if($rootScope.isAdmin==2){
-			   $scope.staff=true;
-			   requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
-					
-				     $scope.patientss= response.data.patientsForm;
-				     $scope.sort('patientStatus');
-				     $.each($scope.patientss,function(index,value) {
-				    	 switch(value.patientStatus) {
-				    	    case 1:
-				    	        value.patientStatus="Active";
-				    	        break;
-				    	    case 2:
-				    	    	value.patientStatus="Appointment Scheduled";
-				    	        break;
-				    	    default:
-				    	    	value.patientStatus="Do-Not-Call";
-				    	    	break;
-				    	} 
-				     });
-				     });
-		   }
-		   else if($rootScope.isAdmin==4){
-			  requestHandler.getRequest("/Patient/getPatientsByLawyer.json","").then(function(response){
-					 $scope.patientss= response.data.patientsForms;
-				     $scope.sort('name');
-				   	});
-		   }
+	   }
+		   
 			
 	
 		    
 	$scope.updateList=function(){
-		
 		requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 		     $scope.patientss= response.data.patientsForms;
 		     $.each($scope.patientss,function(index,value) {
-		    	 switch(value.patientStatus) {
-		    	    case 1:
-		    	        value.patientStatus="Active";
-		    	        break;
-		    	    case 2:
-		    	    	value.patientStatus="Appointment Scheduled";
-		    	        break;
-		    	    default:
-		    	    	value.patientStatus="Do-Not-Call";
-		    	    	break;
-		    	} 
-		     });
-		     });
-	};
-	 
-	$scope.staffGetPatientList=function(){
-		requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
-			$scope.patientss= response.data.patientsForm;
-			$.each($scope.patientss,function(index,value) {
 		    	 switch(value.patientStatus) {
 		    	    case 1:
 		    	        value.patientStatus="Active";
@@ -126,7 +81,6 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 
 	
 	$scope.getPatientList=function(){
-		alert("ppp");
 		 requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 		     $scope.patients= response.patientsForms;
 		     $scope.sort('name');
@@ -154,12 +108,8 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 				  $("#deletePatientModal").modal("hide");
 				  $('.modal-backdrop').hide();
 				  Flash.create('success', "You have Successfully Deleted!");  
-				  if($rootScope.isAdmin==1){
-					  $scope.updateList();
-				  }
-				  else if($rootScope.isAdmin==2){
-					  $scope.staffGetPatientList();
-				  }
+				 $scope.updateList();
+				 
 		         
 		});
 		
@@ -236,13 +186,7 @@ $("#file").val("");
 		});
 		
 		doUpdate.then(function(){ 
-			  if($rootScope.isAdmin==1){
 				  $scope.updateList();
-			  }
-			  else if($rootScope.isAdmin==2){
-				  $scope.staffGetPatientList();
-			  }
-			
 		});
 		
 		
@@ -299,18 +243,13 @@ $("#file").val("");
 		doUpdate.then(function(){
 			$("#assignDoctorModel").modal("hide");
 			Flash.create('success', "You have Successfully Assigned!");  
-			  if($rootScope.isAdmin==1){
-				  $scope.updateList();
-			  }
-			  else if($rootScope.isAdmin==2){
-				  $scope.staffGetPatientList();
-			  }
+			 $scope.updateList();
+			  
 		});
 		
 		
 	};
 	$scope.patientStatus=function(){
-		 if($rootScope.isAdmin==1){
 			 if($scope.Status=="" || $scope.Status==undefined){
 				   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
 						
@@ -332,7 +271,7 @@ $("#file").val("");
 				   
 				 }
 			 else{
-	 requestHandler.getRequest("Staff/adminPatientStatus.json?patientStatus="+$scope.Status,"").then( function(response) {
+			requestHandler.getRequest("Staff/getPatientsByStatus.json?patientStatus="+$scope.Status,"").then( function(response) {
 			 $scope.patientss= response.data.patientsForms;
 			 $.each($scope.patientss,function(index,value) {
 		    	 switch(value.patientStatus) {
@@ -350,51 +289,6 @@ $("#file").val("");
 			  });
 	
 			 }
-		 }
-		
-		 if($rootScope.isAdmin==2){
-			
-			 	
-			 if($scope.Status==4){
-				 requestHandler.getRequest("Staff/getPatientsByAccessToken.json","").then(function(response){
-						
-				     $scope.patientss= response.data.patientsForm;
-				     $.each($scope.patientss,function(index,value) {
-				    	 switch(value.patientStatus) {
-				    	    case 1:
-				    	        value.patientStatus="Active";
-				    	        break;
-				    	    case 2:
-				    	    	value.patientStatus="Appointment Scheduled";
-				    	        break;
-				    	    default:
-				    	    	value.patientStatus="Do-Not-Call";
-				    	    	break;
-				    	} 
-				     });
-				     	   });
-			
-				 
-			 }
-			 else{
-				 requestHandler.getRequest("Staff/staffPatientStatus.json?patientStatus="+$scope.Status,"").then( function(response) {
-					 $scope.patientss= response.data.patientsForms;
-					 $.each($scope.patientss,function(index,value) {
-				    	 switch(value.patientStatus) {
-				    	    case 1:
-				    	        value.patientStatus="Active";
-				    	        break;
-				    	    case 2:
-				    	    	value.patientStatus="Appointment Scheduled";
-				    	        break;
-				    	    default:
-				    	    	value.patientStatus="Do-Not-Call";
-				    	    	break;
-				    	} 
-				     });
-				 });
-			 }
-		 }
 	};
 
 });
@@ -407,23 +301,14 @@ adminApp.controller('AddPatientController', function($scope,$state,$http,$locati
 	$scope.title=$state.current.title;
 	 $scope.patient.patientId =$stateParams.id;
 	
-  requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {
-			
-	     $scope.staff= response.data.staffForms;
-	   
-	     
-	  
-	     });
+	 requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {
+		$scope.staff= response.data.staffForms;
+	    });
 
 		//getting patient details by id
-	 
-	
-	
-		requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
-			
-		     $scope.clinic= response.data.clinicsForms;
-		 
-		     });
+	 	requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
+			$scope.clinic= response.data.clinicsForms;
+	 	});
 	
 		$scope.doctorName=function(){
 			var ClinicId=0;
@@ -434,10 +319,8 @@ adminApp.controller('AddPatientController', function($scope,$state,$http,$locati
 				ClinicId=$scope.patient.clinicId;
 			}
 				 requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
-						
-				    $scope.doctor= response.data.doctorsForm;
-				  
-				   });
+					$scope.doctor= response.data.doctorsForm;
+				  });
 
 				}
 		

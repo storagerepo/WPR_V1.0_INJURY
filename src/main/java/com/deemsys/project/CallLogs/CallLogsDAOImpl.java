@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
-import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLogs;
-import com.deemsys.project.entity.Patients;
-import com.deemsys.project.entity.Staff;
 
 /**
  * 
@@ -149,6 +146,7 @@ public class CallLogsDAOImpl implements CallLogsDAO{
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CallLogs> getCallLogsByPatientsId(Integer id) {
 		// TODO Auto-generated method stub
@@ -163,7 +161,8 @@ public class CallLogsDAOImpl implements CallLogsDAO{
 			      
 			    .setResultTransformer(Transformers.aliasToBean(CallLogs.class));
 
-			  List<CallLogs> list = cr.list();
+			  @SuppressWarnings("unchecked")
+			List<CallLogs> list = cr.list();
 		return list;
 	}
 
