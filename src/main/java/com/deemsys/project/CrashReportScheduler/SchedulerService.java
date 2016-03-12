@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 import com.deemsys.project.pdfcrashreport.PDFReadAndInsertService;
 
@@ -30,6 +31,9 @@ public class SchedulerService {
 	@Autowired
 	PDFCrashReportReader crashReportReader;
 	
+	@Autowired
+	InjuryProperties injuryProperties;
+	
 	/**
 	 * You can opt for cron expression or fixedRate or fixedDelay
 	 * <p>
@@ -43,7 +47,11 @@ public class SchedulerService {
 			try
 			{
 				System.out.println("Start Read PDF From Folder");
-				crashReportReader.downloadPDFFile(crashReportReader.getCrashId());
+				if(injuryProperties.getProperty("autoDownloadCrash").equals("on")){
+					crashReportReader.downloadPDFFile(crashReportReader.getCrashId());
+				}else{
+					System.out.print("Auto Download Off");
+				}
 				System.out.print("End PDF Read from folder");
 			}
 			catch(Exception ex)

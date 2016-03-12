@@ -35,6 +35,9 @@ public class PDFCrashReportReader {
 	
 	@Autowired
 	InjuryProperties injuryProperties;
+	
+	@Autowired
+	AWSFileUpload awsFileUpload;
 
 	protected static Logger logger = LoggerFactory.getLogger("service");
 
@@ -85,12 +88,13 @@ public class PDFCrashReportReader {
 			HttpURLConnection httpURLConnection=(HttpURLConnection) url.openConnection();
 			if(httpURLConnection.getResponseCode()==200)
 			{
+				String filePath=injuryProperties
+						.getProperty("tempFolder")
+						+ "CrashReport_"
+						+ crashId + ".pdf";
 				try {
-					InputStream in = url.openStream();
-					Files.copy(in, Paths.get(injuryProperties
-							.getProperty("tempFolder")
-							+ "CrashReport_"
-							+ crashId + ".pdf"),
+					InputStream in = url.openStream();					
+					Files.copy(in, Paths.get(filePath),
 							StandardCopyOption.REPLACE_EXISTING);
 					in.close();
 				} catch (Exception e) {
@@ -98,7 +102,7 @@ public class PDFCrashReportReader {
 					System.out.println("Failed");
 				}
 				this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
-			}else{
+				awsFileUpload.uploadFileToAWSS3(filePath, "CrashReport_"+ crashId + ".pdf");
 				
 			}
 			

@@ -2,6 +2,7 @@ package com.deemsys.project.pdfcrashreport;
 
 import java.io.File;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.amazonaws.AmazonClientException;
@@ -11,9 +12,13 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.deemsys.project.common.InjuryProperties;
 
 @Service
 public class AWSFileUpload {
+	
+	@Autowired
+	InjuryProperties injuryProperties;
 
 	public void uploadFileToAWSS3(String filePath,String fileName){
 		
@@ -21,9 +26,9 @@ public class AWSFileUpload {
 		// credentials object identifying user for authentication
 		// user must have AWSConnector and AmazonS3FullAccess
 		AWSCredentials credentials = new BasicAWSCredentials(
-						"AKIAJVAKKD6LO7WI6OYQ", 
-						"uTVQWKzreLhPe7f+jF/sdTCATsg1QyD78Mz/NJF+");
-		String bucketName ="injurycrashreports";
+						injuryProperties.getProperty("accessKey"), 
+						injuryProperties.getProperty("secretKey"));
+		String bucketName =injuryProperties.getProperty("bucketName");
 		
 		// create a client connection based on credentials
 		AmazonS3 s3client = new AmazonS3Client(credentials);
