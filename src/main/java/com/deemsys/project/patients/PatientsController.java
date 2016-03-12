@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 
@@ -47,6 +50,9 @@ public class PatientsController {
 
 	@Autowired
 	StaffService staffService;
+	
+	@Autowired
+	InjuryProperties injuryProperties;
 
 	@RequestMapping(value = { "/Patient/getAllPatientss",
 			"/Staff/getAllPatientss" }, method = RequestMethod.GET)
@@ -120,6 +126,18 @@ public class PatientsController {
 
 	}
 
+	//Upload Crash Id Notepad
+	  @RequestMapping(value = "/Staff/uploadCrashIdNotepad" ,method = RequestMethod.POST)
+	  public @ResponseBody String uploadCrashIdNotepad(
+			  @RequestParam("file") MultipartFile file,ModelMap model) throws IOException {
+		 
+		  List<String> crashIdList=crashReportReader.getCrashIdList(file);
+		  for (String crashId : crashIdList) {
+			crashReportReader.downloadPDFFile(crashId);
+		  }
+		  return "success";
+	  }
+	  
 	// Upload PDF file
 	@RequestMapping(value = "/Staff/insertCrashReportFromURL", method = RequestMethod.POST)
 	public String insertCrashReportFileHandler(
@@ -305,6 +323,12 @@ public class PatientsController {
 				phoneNumber, localReportNumber, callerName));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
+	}
+	
+	@RequestMapping(value = { "/Staff/checkRead" }, method = RequestMethod.GET)
+	public @ResponseBody String getAllPatientssByLimit(ModelMap model) {
+		
+		return injuryProperties.getProperty("tempFolder");
 	}
 
 }

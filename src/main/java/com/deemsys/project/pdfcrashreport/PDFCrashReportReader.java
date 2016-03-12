@@ -3,16 +3,25 @@ package com.deemsys.project.pdfcrashreport;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.hibernate.mapping.Array;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.patients.PatientsForm;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
@@ -22,6 +31,10 @@ import java.io.*;
 
 @Service
 public class PDFCrashReportReader {
+	
+	
+	@Autowired
+	InjuryProperties injuryProperties;
 
 	protected static Logger logger = LoggerFactory.getLogger("service");
 
@@ -55,6 +68,49 @@ public class PDFCrashReportReader {
 		return contentList;
 	}
 
+	/**
+	 * Parses a PDF to a plain text file.
+	 * 
+	 * From PDF 
+	 *
+	 * @param txt
+	 *            the resulting text
+	 * @throws IOException
+	 */
+	public boolean downloadPDFFile(String crashId) throws IOException {
+		try{
+			
+			URL url=new URL("https://ext.dps.state.oh.us/CrashRetrieval/ViewCrashReport.aspx?redirectPage=ViewCrashReport.aspx&RequestFrom=ViewEfilePDF&CrashId="+crashId);
+			
+			HttpURLConnection httpURLConnection=(HttpURLConnection) url.openConnection();
+			if(httpURLConnection.getResponseCode()==200)
+			{
+				try {
+					InputStream in = url.openStream();
+					Files.copy(in, Paths.get(injuryProperties
+							.getProperty("tempFolder")
+							+ "CrashReport_"
+							+ crashId + ".pdf"),
+							StandardCopyOption.REPLACE_EXISTING);
+					in.close();
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println("Failed");
+				}
+				this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
+			}else{
+				
+			}
+			
+		}
+		catch(Exception ex){
+			logger.error(ex.toString());
+			return false;
+		}
+		return true;
+	}  
+	
+	
 	/**
 	 * Download PDF
 	 * 
@@ -176,6 +232,31 @@ public class PDFCrashReportReader {
 		return crashIdList;
 	}
 
+	//Get automated crash id
+	public String getCrashId(){
+		
+		List<String> data=new ArrayList<String>();
+		try {
+			System.out.println(injuryProperties.getProperty("crashIDNotepad"));
+			data=FileUtils.readLines(new File(injuryProperties.getProperty("crashIDNotepad")));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data.get(0);		
+	}
+	
+	//Update automated crash id
+		public void updateCrashId(String crashId){			
+				try {
+					FileUtils.writeStringToFile(new File(injuryProperties.getProperty("crashIDNotepad")), crashId);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}			
+		}
+	
+	
 	public PDFCrashReportJson getValuesFromPDF(List<List<String>> content)
 			throws IOException {
 
