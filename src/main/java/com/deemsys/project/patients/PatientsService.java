@@ -132,7 +132,8 @@ public class PatientsService {
 				patients.getName(), patients.getDateOfBirth(),
 				patients.getGender(), patients.getAddress(),
 				patients.getPhoneNumber(), patients.getInjuries(),
-				patients.getEmsAgency(), patients.getMedicalFacility(),
+				patients.getEmsAgency(), patients.getMedicalFacility(),patients.getInsuranceCompany(),
+				patients.getPolicyNumber(),patients.getAtFaultInsuranceCompany(),patients.getAtFaultPolicyNumber(),
 				patients.getCrashReportFileName(),
 				patients.getPatientStatus());
 		patientsForm.setCallerName(staffName);
@@ -201,7 +202,8 @@ public class PatientsService {
 					patients.getName(), patients.getDateOfBirth(),
 					patients.getGender(), patients.getAddress(),
 					patients.getPhoneNumber(), patients.getInjuries(),
-					patients.getEmsAgency(), patients.getMedicalFacility(),
+					patients.getEmsAgency(), patients.getMedicalFacility(),patients.getInsuranceCompany(),
+					patients.getPolicyNumber(),patients.getAtFaultInsuranceCompany(),patients.getAtFaultPolicyNumber(),
 					patients.getCrashReportFileName(),
 					patients.getPatientStatus());
 			patientsForm.setLatitude(patients.getLatitude());
@@ -265,7 +267,8 @@ public class PatientsService {
 				patientsForm.getGender(), patientsForm.getAddress(), latitude,
 				longitude, patientsForm.getPhoneNumber(),
 				patientsForm.getInjuries(), patientsForm.getEmsAgency(),
-				patientsForm.getMedicalFacility(),
+				patientsForm.getMedicalFacility(),patientsForm.getInsuranceCompany(),
+				patientsForm.getPolicyNumber(),patientsForm.getAtFaultInsuranceCompany(),patientsForm.getAtFaultPolicyNumber(),
 				patientsForm.getCrashReportFileName(),
 				patientsForm.getPatientStatus());
 
@@ -336,7 +339,8 @@ public class PatientsService {
 				patientsForm.getGender(), patientsForm.getAddress(), latitude,
 				longitude, patientsForm.getPhoneNumber(),
 				patientsForm.getInjuries(), patientsForm.getEmsAgency(),
-				patientsForm.getMedicalFacility(),
+				patientsForm.getMedicalFacility(),patientsForm.getInsuranceCompany(),
+				patientsForm.getPolicyNumber(),patientsForm.getAtFaultInsuranceCompany(),patientsForm.getAtFaultPolicyNumber(),
 				patientsForm.getCrashReportFileName(), 1);
 
 		if (patientsForm.getDoctorId() == null) {

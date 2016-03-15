@@ -34,6 +34,10 @@ public class PatientsForm {
 	private String injuries;
 	private String emsAgency;
 	private String medicalFacility;
+	private String insuranceCompany;
+	private String policyNumber;
+	private String atFaultInsuranceCompany;
+	private String atFaultPolicyNumber;
 	private String crashReportFileName;
 	private Integer patientStatus;
 
@@ -229,6 +233,39 @@ public class PatientsForm {
 		this.medicalFacility = medicalFacility;
 	}
 
+		
+	public String getInsuranceCompany() {
+		return insuranceCompany;
+	}
+
+	public void setInsuranceCompany(String insuranceCompany) {
+		this.insuranceCompany = insuranceCompany;
+	}
+
+	public String getPolicyNumber() {
+		return policyNumber;
+	}
+
+	public void setPolicyNumber(String policyNumber) {
+		this.policyNumber = policyNumber;
+	}
+
+	public String getAtFaultInsuranceCompany() {
+		return atFaultInsuranceCompany;
+	}
+
+	public void setAtFaultInsuranceCompany(String atFaultInsuranceCompany) {
+		this.atFaultInsuranceCompany = atFaultInsuranceCompany;
+	}
+
+	public String getAtFaultPolicyNumber() {
+		return atFaultPolicyNumber;
+	}
+
+	public void setAtFaultPolicyNumber(String atFaultPolicyNumber) {
+		this.atFaultPolicyNumber = atFaultPolicyNumber;
+	}
+
 	public Integer getPatientStatus() {
 		return patientStatus;
 	}
@@ -237,15 +274,17 @@ public class PatientsForm {
 		this.patientStatus = patientStatus;
 	}
 
-	public PatientsForm(Integer id, Integer callerId, Integer clinicId,
-			Integer doctorId, String localReportNumber, String crashSeverity,
+	
+	
+	public PatientsForm(Integer id, Integer callerId,Integer clinicId,Integer doctorId,String localReportNumber, String crashSeverity,
 			String reportingAgencyName, String numberOfUnits,
 			String unitInError, String country, String cityVillageTownship,
 			String crashDate, String timeOfCrash, String unitNumber,
-			String name, String dateOfBirth, String gender, String address,
-			String phoneNumber, String injuries, String emsAgency,
-			String medicalFacility, String crashReportFileName,
-			Integer patientStatus) {
+			String name, String dateOfBirth, String gender, String address, String phoneNumber,
+			String injuries, String emsAgency, String medicalFacility,
+			String insuranceCompany, String policyNumber,
+			String atFaultInsuranceCompany, String atFaultPolicyNumber,
+			String crashReportFileName, Integer patientStatus) {
 		super();
 		this.id = id;
 		this.callerId = callerId;
@@ -265,10 +304,16 @@ public class PatientsForm {
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
 		this.address = address;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.phoneNumber = phoneNumber;
 		this.injuries = injuries;
 		this.emsAgency = emsAgency;
 		this.medicalFacility = medicalFacility;
+		this.insuranceCompany = insuranceCompany;
+		this.policyNumber = policyNumber;
+		this.atFaultInsuranceCompany = atFaultInsuranceCompany;
+		this.atFaultPolicyNumber = atFaultPolicyNumber;
 		this.crashReportFileName = crashReportFileName;
 		this.patientStatus = patientStatus;
 	}

@@ -46,6 +46,10 @@ public class Patients implements java.io.Serializable {
 	private String injuries;
 	private String emsAgency;
 	private String medicalFacility;
+	private String insuranceCompany;
+	private String policyNumber;
+	private String atFaultInsuranceCompany;
+	private String atFaultPolicyNumber;
 	private String crashReportFileName;
 	private Integer patientStatus;
 	private Set<Appointments> appointmentses = new HashSet<Appointments>(0);
@@ -61,7 +65,8 @@ public class Patients implements java.io.Serializable {
 			String crashDate, String timeOfCrash, String unitNumber,
 			String name, String dateOfBirth, String gender, String address,
 			Double latitude, Double longitude, String phoneNumber,
-			String injuries, String emsAgency, String medicalFacility,
+			String injuries, String emsAgency, String medicalFacility,String insuranceCompany,
+			String policyNumber,String atFaultInsuranceCompany,String atFaultPolicyNumber,
 			String crashReportFileName, Integer patientStatus) {
 		this.staff = staff;
 		this.clinics = clinics;
@@ -88,8 +93,10 @@ public class Patients implements java.io.Serializable {
 		this.medicalFacility = medicalFacility;
 		this.crashReportFileName = crashReportFileName;
 		this.patientStatus = patientStatus;
-		this.appointmentses = appointmentses;
-		this.callLogses = callLogses;
+		this.insuranceCompany=insuranceCompany;
+		this.policyNumber=policyNumber;
+		this.atFaultInsuranceCompany=atFaultInsuranceCompany;
+		this.atFaultPolicyNumber=atFaultPolicyNumber;
 	}
 
 	@Id
@@ -312,6 +319,43 @@ public class Patients implements java.io.Serializable {
 	public void setMedicalFacility(String medicalFacility) {
 		this.medicalFacility = medicalFacility;
 	}
+	
+	
+	@Column(name = "insurance_company", length = 100)
+	public String getInsuranceCompany() {
+		return insuranceCompany;
+	}
+
+	public void setInsuranceCompany(String insuranceCompany) {
+		this.insuranceCompany = insuranceCompany;
+	}
+
+	@Column(name = "policy_number", length = 100)
+	public String getPolicyNumber() {
+		return policyNumber;
+	}
+
+	public void setPolicyNumber(String policyNumber) {
+		this.policyNumber = policyNumber;
+	}
+
+	@Column(name = "at_fault_insurance_company", length = 100)
+	public String getAtFaultInsuranceCompany() {
+		return atFaultInsuranceCompany;
+	}
+
+	public void setAtFaultInsuranceCompany(String atFaultInsuranceCompany) {
+		this.atFaultInsuranceCompany = atFaultInsuranceCompany;
+	}
+
+	@Column(name = "at_fault_policy_number", length = 100)
+	public String getAtFaultPolicyNumber() {
+		return atFaultPolicyNumber;
+	}
+
+	public void setAtFaultPolicyNumber(String atFaultPolicyNumber) {
+		this.atFaultPolicyNumber = atFaultPolicyNumber;
+	}
 
 	@Column(name = "crash_report_file_name", length = 800)
 	public String getCrashReportFileName() {
@@ -348,5 +392,7 @@ public class Patients implements java.io.Serializable {
 	public void setCallLogses(Set<CallLogs> callLogses) {
 		this.callLogses = callLogses;
 	}
+	
+	
 
 }

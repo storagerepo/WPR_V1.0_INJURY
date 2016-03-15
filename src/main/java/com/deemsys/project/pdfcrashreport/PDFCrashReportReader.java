@@ -725,7 +725,7 @@ public class PDFCrashReportReader {
 		if(tier==1){
 			for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
 					.getReportMotoristPageForms()) {
-				PatientsForm patientsForm=getPatientsForm(motoristPageForm, firstPageForm);
+				PatientsForm patientsForm=getPatientsForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 				if(patientsForm!=null){
 					patientsForms.add(patientsForm);
 				}
@@ -738,7 +738,7 @@ public class PDFCrashReportReader {
 						for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
 								.getReportMotoristPageForms()) {
 							if(motoristPageForm.getUnitNumber()==reportUnitPageForm.getUnitNumber()){
-								PatientsForm patientsForm=getPatientsForm(motoristPageForm, firstPageForm);
+								PatientsForm patientsForm=getPatientsForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 								if(patientsForm!=null){
 									patientsForms.add(patientsForm);
 								}
@@ -753,21 +753,29 @@ public class PDFCrashReportReader {
 		}else if(tier==3){
 			for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
 					.getReportMotoristPageForms()) {
-				if(!motoristPageForm.getInjuries().equals("1")&&!motoristPageForm.getInjuries().equals("5")){
-					PatientsForm patientsForm=getPatientsForm(motoristPageForm, firstPageForm);
+				if(motoristPageForm.getInjuries()!=null){
+					if(!motoristPageForm.getInjuries().equals("1")&&!motoristPageForm.getInjuries().equals("5")){
+						PatientsForm patientsForm=getPatientsForm(motoristPageForm, firstPageForm,reportUnitPageForms);
+						if(patientsForm!=null){
+							patientsForms.add(patientsForm);
+						}
+					}else{
+						//#8 Skip the patient low injury
+					}
+				}else{
+					PatientsForm patientsForm=getPatientsForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 					if(patientsForm!=null){
 						patientsForms.add(patientsForm);
 					}
-				}else{
-					//#8 Skip the patient low injury
 				}
+				
 			}
 		}
 
 		return patientsForms;
 	}
 	
-	public PatientsForm getPatientsForm(ReportMotoristPageForm motoristPageForm,ReportFirstPageForm firstPageForm){
+	public PatientsForm getPatientsForm(ReportMotoristPageForm motoristPageForm,ReportFirstPageForm firstPageForm,List<ReportUnitPageForm> reportUnitPageForms){
 		
 			PatientsForm patientsForm = new PatientsForm();
 			patientsForm.setName(motoristPageForm.getName());
@@ -794,6 +802,10 @@ public class PDFCrashReportReader {
 					.getCityVillageTownship());
 			patientsForm.setCrashDate(firstPageForm.getCrashDate());
 			patientsForm.setTimeOfCrash(firstPageForm.getTimeOfCrash());
+			patientsForm.setInsuranceCompany(reportUnitPageForms.get(Integer.parseInt(motoristPageForm.getUnitNumber().trim())-1).getInsuranceCompany());
+			patientsForm.setPolicyNumber(reportUnitPageForms.get(Integer.parseInt(motoristPageForm.getUnitNumber().trim())-1).getPolicyNumber());
+			patientsForm.setAtFaultInsuranceCompany(reportUnitPageForms.get(Integer.parseInt(firstPageForm.getUnitInError().trim())-1).getInsuranceCompany());
+			patientsForm.setAtFaultPolicyNumber(reportUnitPageForms.get(Integer.parseInt(firstPageForm.getUnitInError().trim())-1).getPolicyNumber());
 			patientsForm.setPatientStatus(1);
 			return patientsForm;
 		
@@ -883,14 +895,16 @@ public class PDFCrashReportReader {
 	}
 	
 	public List<PatientsForm> filterPatientForms(List<PatientsForm> patientsForms){
+		List<PatientsForm> filteredPatientsForms=new ArrayList<PatientsForm>();
+		filteredPatientsForms.addAll(patientsForms);
 		for (PatientsForm patientsForm : patientsForms) {
 			if ((patientsForm.getAddress()==null || patientsForm.getAddress().equals(""))
 						&& (patientsForm.getPhoneNumber()==null || patientsForm.getPhoneNumber().equals(""))) {
-					patientsForms.remove(patientsForm);
+					filteredPatientsForms.remove(patientsForm);
 				}
 			
 		}
-		return patientsForms;
+		return filteredPatientsForms;
 	}
 	
 	
