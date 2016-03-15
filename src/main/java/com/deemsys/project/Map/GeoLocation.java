@@ -63,7 +63,7 @@ public class GeoLocation {
 
 			return latLang;
 		} catch (Exception ex) {
-			outputJSON = "Err";
+			outputJSON = "0.0,0.0";
 		}
 		return outputJSON;
 	}

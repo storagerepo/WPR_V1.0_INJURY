@@ -1,5 +1,7 @@
 package com.deemsys.project.pdfcrashreport;
 
+import java.util.Comparator;
+
 public class ReportUnitPageForm {
     private String unitNumber;
     private String ownerName;
@@ -71,6 +73,19 @@ public class ReportUnitPageForm {
 		this.damageScale = damageScale;
 	}
     
-    
+		public static Comparator<ReportUnitPageForm> ReportUnitPageComparitor 
+			    = new Comparator<ReportUnitPageForm>() {
+			
+			@Override
+			public int compare(ReportUnitPageForm reportUnitPage1, ReportUnitPageForm reportUnitPage2) {
+				// TODO Auto-generated method stub
+				Integer fruitName1 = Integer.parseInt(reportUnitPage1.getUnitNumber().trim());
+				Integer fruitName2 = Integer.parseInt(reportUnitPage2.getUnitNumber().trim());
+				
+				//ascending order
+				return fruitName1.compareTo(fruitName2);
+			}
+
+};
 
 }

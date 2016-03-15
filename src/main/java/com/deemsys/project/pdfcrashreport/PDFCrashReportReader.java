@@ -1,5 +1,6 @@
 package com.deemsys.project.pdfcrashreport;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,7 +12,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.hibernate.mapping.Array;
@@ -23,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.patients.PatientsForm;
+import com.deemsys.project.patients.PatientsService;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
@@ -38,6 +43,9 @@ public class PDFCrashReportReader {
 	
 	@Autowired
 	AWSFileUpload awsFileUpload;
+	
+	@Autowired
+	PatientsService patientsService;
 
 	protected static Logger logger = LoggerFactory.getLogger("service");
 
@@ -50,7 +58,38 @@ public class PDFCrashReportReader {
 	 *            the resulting text
 	 * @throws IOException
 	 */
-	public List<List<String>> parsePdfFromFile(MultipartFile file)
+	public List<List<String>> parsePdfFromFile(File file)
+			throws IOException {
+		List<List<String>> contentList = new ArrayList<List<String>>();
+		try {
+			FileInputStream fileInputStream=new FileInputStream(file);
+			PdfReader reader = new PdfReader(fileInputStream);
+			PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+			String pdfText = "";
+			TextExtractionStrategy strategy;
+			for (int i = 1; i <= reader.getNumberOfPages(); i++) {
+				strategy = parser.processContent(i,
+						new SimpleTextExtractionStrategy());
+				pdfText = strategy.getResultantText();
+				contentList.add(Arrays.asList(pdfText.split("\n")));
+			}
+		} catch (Exception ex) {
+			logger.error(ex.toString());
+		}
+
+		return contentList;
+	}
+
+	/**
+	 * Parses a Manual PDF
+	 * 
+	 * From PDF
+	 * 
+	 * @param txt
+	 *            the resulting text
+	 * @throws IOException
+	 */
+	public List<List<String>> parsePdfFromMultipartFile(MultipartFile file)
 			throws IOException {
 		List<List<String>> contentList = new ArrayList<List<String>>();
 		try {
@@ -70,7 +109,8 @@ public class PDFCrashReportReader {
 
 		return contentList;
 	}
-
+	
+	
 	/**
 	 * Parses a PDF to a plain text file.
 	 * 
@@ -97,12 +137,19 @@ public class PDFCrashReportReader {
 					Files.copy(in, Paths.get(filePath),
 							StandardCopyOption.REPLACE_EXISTING);
 					in.close();
+					
+					//Parse the PDF
+					parsePDFDocument(new File(filePath),Integer.parseInt(crashId));
+					
+					// Update Crash Id
+					this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
+					
 				} catch (Exception e) {
 					// TODO: handle exception
-					System.out.println("Failed");
+					System.out.println("Failed"+e.toString());
 				}
-				this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
-				awsFileUpload.uploadFileToAWSS3(filePath, "CrashReport_"+ crashId + ".pdf");
+				
+				
 				
 			}
 			
@@ -337,11 +384,11 @@ public class PDFCrashReportReader {
 				List<String> motoristPage = content.get(i);
 				int index = 0;
 				if (motoristPage.get(3).equals("MOTORIST/NON-MOTORIST")) {
-					for (index = 0; index < motoristPage.size(); index++) {
+    					for (index = 0; index < motoristPage.size(); index++) {
 
-						if (motoristPage.get(index).equals("UNIT  NUMBER")
-								|| motoristPage.get(index)
-										.equals("UNIT NUMBER")) {
+  						if (motoristPage.get(index).equals("UNIT  NUMBER")
+    								|| motoristPage.get(index)
+      										.equals("UNIT NUMBER")) {
 							if ((Integer.parseInt(motoristPage.get(index + 1)
 									.trim()) != Integer
 									.parseInt(reportFirstPageForm
@@ -371,6 +418,12 @@ public class PDFCrashReportReader {
 									motoristPageForm
 											.setAdddressCityStateZip(motoristPage
 													.get(index - 1));
+								else if (motoristPage.get(index - 2).equals(
+										"CONTACT PHONE  -  INCLUDE  AREA  CODE ADDRESS, CITY, STATE, ZIP"))
+									motoristPageForm
+											.setAdddressCityStateZip(motoristPage
+													.get(index - 1));
+								
 								if (motoristPage
 										.get(index - 4)
 										.equals("CONTACT PHONE  -  INCLUDE  AREA  CODE"))
@@ -394,6 +447,10 @@ public class PDFCrashReportReader {
 										"INJURIES"))
 									motoristPageForm.setInjuries(motoristPage
 											.get(index - 18));
+								else if (motoristPage.get(index - 19).equals(
+										"INJURIES"))
+									motoristPageForm.setInjuries(motoristPage
+											.get(index - 17));
 								else if (motoristPage.get(index - 25).equals(
 										"INJURIES"))
 									motoristPageForm.setInjuries(motoristPage
@@ -402,6 +459,10 @@ public class PDFCrashReportReader {
 										"INJURIES"))
 									motoristPageForm.setInjuries(motoristPage
 											.get(index - 25));
+								else if (motoristPage.get(index - 23).equals(
+										"INJURIES"))
+									motoristPageForm.setInjuries(motoristPage
+											.get(index - 22));
 
 								if (motoristPage.get(index - 17).equals(
 										"EMS AGENCY"))
@@ -470,6 +531,12 @@ public class PDFCrashReportReader {
 									motoristPageForm
 											.setAdddressCityStateZip(motoristPage
 													.get(index - 1));
+								else if (motoristPage.get(index - 2).equals(
+										"CONTACT PHONE  -  INCLUDE  AREA  CODE ADDRESS, CITY, STATE, ZIP"))
+									motoristPageForm
+											.setAdddressCityStateZip(motoristPage
+													.get(index - 1));
+								
 								if (motoristPage
 										.get(index - 4)
 										.equals("CONTACT PHONE  -  INCLUDE  AREA  CODE"))
@@ -545,6 +612,21 @@ public class PDFCrashReportReader {
 															.get(index - 14));
 										}
 									}
+								} else if (motoristPage.get(index - 18).equals(
+										"INJURIES")) {
+									motoristPageForm.setInjuries(motoristPage
+											.get(index - 17));
+								}
+								else if (motoristPage.get(index - 23).equals(
+										"INJURIES")){
+									motoristPageForm.setInjuries(motoristPage
+											.get(index - 22));
+									if (motoristPage.get(index - 19).equals(
+											"EMS AGENCY")) {
+										motoristPageForm
+												.setEmsAgency(motoristPage
+														.get(index - 18));
+									}
 								}
 
 								reportMotoristPageForms.add(motoristPageForm);
@@ -559,51 +641,67 @@ public class PDFCrashReportReader {
 					+ reportFirstPageForm.getLocalReportNumber());
 			logger.error(ex.toString());
 		}
-
+		Collections.sort(reportUnitPageForms,ReportUnitPageForm.ReportUnitPageComparitor);
 		return new PDFCrashReportJson(reportFirstPageForm, reportUnitPageForms,
 				reportMotoristPageForms);
 
 	}
 
-	public Integer checkStatus(PDFCrashReportJson pdfCrashReportJson) {
+	public Integer getReportType(PDFCrashReportJson pdfCrashReportJson) {
 
+		// #1 Tire 1 Patients
+		// #2 Tire 2 Patients
+		// #3 Tire 3 Patients
+		// #4 Number of units > 1 and Unit in Error is an animal
+		// #5 Number of units == 1 and Unit in Error is an animal
+		// #6 Number of units == 1 and Unit in Error not having Insurance
+		
+		
 		// Check for the report
-		// 1. Check for unit number
 		try {
+
 			Integer unitInError = Integer.parseInt(pdfCrashReportJson
 					.getFirstPageForm().getUnitInError());
-
-			if (unitInError != 99 && unitInError != 98) {
-				ReportUnitPageForm unitPageForm = pdfCrashReportJson
-						.getReportUnitPageForms().get(unitInError - 1);
-				if (!unitPageForm.getInsuranceCompany().equals("")
-						&& !unitPageForm.getPolicyNumber().equals("")) {
-					return 1;// If 1 then the report satisfy the condition
-				} else if (unitPageForm.getInsuranceCompany().equals("")
-						&& unitPageForm.getPolicyNumber().equals("")) {
-					// Skip the form
-					return 2;// If 2 both are empty
-				} else if (unitPageForm.getInsuranceCompany().equals("")) {
-					return 3;// If 3 Insurance Company is empty
-				} else {
-					return 4;// If 4 Policy Number is empty
+			
+			Integer numberOfUnits=Integer.parseInt(pdfCrashReportJson.getFirstPageForm().getNumberOfUnits());
+			
+			//Check for unit > 1
+			if(numberOfUnits==1){
+				if(unitInError==1){					
+					//Check for insurance company
+					if(!pdfCrashReportJson.getReportUnitPageForms().get(0).getInsuranceCompany().equals("")){
+						// #3 Tier Patients 
+						return 3;
+					}else{
+						//Skip the report
+						// #6 Number of units == 1 and Unit in Error not having Insurance
+						return 6;
+					}
+					
+				}else{
+					//Skip the Report
+					// #5 Number of units == 1 and Unit in Error is an animal
+					return 5;
 				}
-			} else {
-				ReportUnitPageForm unitPageForm = pdfCrashReportJson
-						.getReportUnitPageForms().get(unitInError - 1);
-				if (!unitPageForm.getInsuranceCompany().equals("")
-						&& !unitPageForm.getPolicyNumber().equals("")) {
-					return 1;// If 1 then the report satisfy the condition
-				} else if (unitPageForm.getInsuranceCompany().equals("")
-						&& unitPageForm.getPolicyNumber().equals("")) {
-					// Skip the form
-					return 2;// If 2 both are empty
-				} else if (unitPageForm.getInsuranceCompany().equals("")) {
-					return 3;// If 3 Insurance Company is empty
-				} else {
-					return 4;// If 4 Policy Number is empty
+			}else{
+				if(unitInError!=98&&unitInError!=99){
+					//Check for unit has insurance
+					//NOTE POLICY NUMBER IS NOT CHECKING
+					if(!pdfCrashReportJson.getReportUnitPageForms().get(unitInError-1).getInsuranceCompany().equals("")){
+						//#1 Tier 1 patients
+						return 1;
+					}else{
+						//Check victim have insurance
+						//#2 Tier 2 patients
+						return 2;
+					}
+					
+				}else{
+					//Skip the Report
+					//# 4 Unit in Error is an animal
+					return 4;
 				}
-			}
+			}	
 
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
@@ -611,50 +709,190 @@ public class PDFCrashReportReader {
 		}
 	}
 
-	public List<PatientsForm> getPatientForm(
-			PDFCrashReportJson pdfCrashReportJson) {
+	//# Tier 1 Patients
+	public List<PatientsForm> getTierPatientForm(
+			PDFCrashReportJson pdfCrashReportJson,Integer tier) {
 
 		List<PatientsForm> patientsForms = new ArrayList<PatientsForm>();
 
+		//First Page
 		ReportFirstPageForm firstPageForm = pdfCrashReportJson
 				.getFirstPageForm();
-
-		for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
-				.getReportMotoristPageForms()) {
-			if (motoristPageForm.getAdddressCityStateZip() != null
-					&& motoristPageForm.getContactPhone() != null) {
-				PatientsForm patientsForm = new PatientsForm();
-				patientsForm.setName(motoristPageForm.getName());
-				patientsForm.setUnitNumber(motoristPageForm.getUnitNumber()
-						.trim());
-				patientsForm.setDateOfBirth(motoristPageForm.getDateOfBirth());
-				patientsForm.setGender(motoristPageForm.getGender());
-				patientsForm.setAddress(motoristPageForm
-						.getAdddressCityStateZip());
-				patientsForm.setPhoneNumber(motoristPageForm.getContactPhone());
-				patientsForm.setInjuries(motoristPageForm.getInjuries());
-				patientsForm.setEmsAgency(motoristPageForm.getEmsAgency());
-				patientsForm.setMedicalFacility(motoristPageForm
-						.getMedicalFacility());
-				patientsForm.setLocalReportNumber(firstPageForm
-						.getLocalReportNumber());
-				patientsForm.setCrashSeverity(firstPageForm.getCrashSeverity());
-				patientsForm.setReportingAgencyName(firstPageForm
-						.getReportingAgencyName());
-				patientsForm.setCountry(firstPageForm.getCounty());
-				patientsForm.setNumberOfUnits(firstPageForm.getNumberOfUnits());
-				patientsForm.setUnitInError(firstPageForm.getUnitInError());
-				patientsForm.setCityVillageTownship(firstPageForm
-						.getCityVillageTownship());
-				patientsForm.setCrashDate(firstPageForm.getCrashDate());
-				patientsForm.setTimeOfCrash(firstPageForm.getTimeOfCrash());
-				patientsForm.setPatientStatus(1);
-
-				patientsForms.add(patientsForm);
+		
+		//Units Page
+		List<ReportUnitPageForm> reportUnitPageForms=pdfCrashReportJson.getReportUnitPageForms();
+		
+		if(tier==1){
+			for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
+					.getReportMotoristPageForms()) {
+				PatientsForm patientsForm=getPatientsForm(motoristPageForm, firstPageForm);
+				if(patientsForm!=null){
+					patientsForms.add(patientsForm);
+				}
 			}
-
+		}				
+		else if(tier==2){
+			for (ReportUnitPageForm reportUnitPageForm : reportUnitPageForms) {
+				if(reportUnitPageForm.getUnitNumber()!=firstPageForm.getUnitInError()){
+					if(!reportUnitPageForm.getInsuranceCompany().equals("")){
+						for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
+								.getReportMotoristPageForms()) {
+							if(motoristPageForm.getUnitNumber()==reportUnitPageForm.getUnitNumber()){
+								PatientsForm patientsForm=getPatientsForm(motoristPageForm, firstPageForm);
+								if(patientsForm!=null){
+									patientsForms.add(patientsForm);
+								}
+							}							
+						}
+					}else{
+						//#7 Skip the unit
+					}
+				}
+			}
+						
+		}else if(tier==3){
+			for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
+					.getReportMotoristPageForms()) {
+				if(!motoristPageForm.getInjuries().equals("1")&&!motoristPageForm.getInjuries().equals("5")){
+					PatientsForm patientsForm=getPatientsForm(motoristPageForm, firstPageForm);
+					if(patientsForm!=null){
+						patientsForms.add(patientsForm);
+					}
+				}else{
+					//#8 Skip the patient low injury
+				}
+			}
 		}
 
 		return patientsForms;
 	}
+	
+	public PatientsForm getPatientsForm(ReportMotoristPageForm motoristPageForm,ReportFirstPageForm firstPageForm){
+		
+			PatientsForm patientsForm = new PatientsForm();
+			patientsForm.setName(motoristPageForm.getName());
+			patientsForm.setUnitNumber(motoristPageForm.getUnitNumber()
+					.trim());
+			patientsForm.setDateOfBirth(motoristPageForm.getDateOfBirth());
+			patientsForm.setGender(motoristPageForm.getGender());
+			patientsForm.setAddress(motoristPageForm
+					.getAdddressCityStateZip());
+			patientsForm.setPhoneNumber(motoristPageForm.getContactPhone());
+			patientsForm.setInjuries(motoristPageForm.getInjuries());
+			patientsForm.setEmsAgency(motoristPageForm.getEmsAgency());
+			patientsForm.setMedicalFacility(motoristPageForm
+					.getMedicalFacility());
+			patientsForm.setLocalReportNumber(firstPageForm
+					.getLocalReportNumber());
+			patientsForm.setCrashSeverity(firstPageForm.getCrashSeverity());
+			patientsForm.setReportingAgencyName(firstPageForm
+					.getReportingAgencyName());
+			patientsForm.setCountry(firstPageForm.getCounty());
+			patientsForm.setNumberOfUnits(firstPageForm.getNumberOfUnits());
+			patientsForm.setUnitInError(firstPageForm.getUnitInError());
+			patientsForm.setCityVillageTownship(firstPageForm
+					.getCityVillageTownship());
+			patientsForm.setCrashDate(firstPageForm.getCrashDate());
+			patientsForm.setTimeOfCrash(firstPageForm.getTimeOfCrash());
+			patientsForm.setPatientStatus(1);
+			return patientsForm;
+		
+	}
+	
+	
+	//Main function for PDF Parsing
+	public void parsePDFDocument(File file,Integer crashId){
+		
+	
+				UUID uuid=UUID.randomUUID();
+		
+				//Convert PDF data to Parsed JSON
+				PDFCrashReportJson pdfCrashReportJson=null;
+				try {
+					pdfCrashReportJson = this
+							.getValuesFromPDF(this.parsePdfFromFile(file));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				List<PatientsForm> patientsForms = new ArrayList<PatientsForm>();
+				
+				//Check for report status
+				Integer tierType = this.getReportType(pdfCrashReportJson);
+						
+				switch (tierType) {
+				case 1:
+					patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
+					patientsForms=filterPatientForms(patientsForms);
+					if(patientsForms.size()==0){
+						//Error None of the Patients are not having address and the phone number
+					}else{
+						//Insert patients
+						this.savePatientsList(patientsForms, uuid.toString(), crashId.toString());
+					}
+					break;
+				case 2:
+					patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
+					if(patientsForms.size()==0){
+						//Victim units not having insurance
+					}else{
+						patientsForms=filterPatientForms(patientsForms);
+						if(patientsForms.size()==0){
+							//No patient have insurance and phone number
+						}else{
+							//Insert patients
+							this.savePatientsList(patientsForms, uuid.toString(), crashId.toString());
+						}
+					}
+					
+					break;
+				case 3:
+					patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
+					if(patientsForms.size()==0){
+						//Error None of the Patients satisfy injuries scale 2 to 4
+					}else{
+						patientsForms=filterPatientForms(patientsForms);
+						if(patientsForms.size()==0){
+							//Patient Not having address and phone numbers
+						}else{
+							//Insert patients
+							this.savePatientsList(patientsForms, uuid.toString(), crashId.toString());
+						}
+					}
+					break;
+				case 4:
+					//Insert into crash report table number of units > 1 and unit in error is an animal
+				case 5:
+					//Insert into crash report table number of units == 1 and unit in error is an animal
+				case 6:
+					//Insert into crash report table number of units == 1 and unit in error not having insurance details
+				default:
+					break;
+				}
+								
+				awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), uuid+"_"+ crashId + ".pdf");
+ 	}
+	
+	
+	public void savePatientsList(List<PatientsForm> patientsForms,String uuid,String crashId){
+		for (PatientsForm patientsForm : patientsForms) {
+			patientsForm.setCrashReportFileName(uuid.toString()+"_"+crashId+".pdf");
+			patientsService.savePatients(patientsForm);
+		}		
+	}
+	
+	public List<PatientsForm> filterPatientForms(List<PatientsForm> patientsForms){
+		for (PatientsForm patientsForm : patientsForms) {
+			if ((patientsForm.getAddress()==null || patientsForm.getAddress().equals(""))
+						&& (patientsForm.getPhoneNumber()==null || patientsForm.getPhoneNumber().equals(""))) {
+					patientsForms.remove(patientsForm);
+				}
+			
+		}
+		return patientsForms;
+	}
+	
+	
+	
 }

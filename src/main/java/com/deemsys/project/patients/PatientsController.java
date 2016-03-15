@@ -138,33 +138,7 @@ public class PatientsController {
 		  return "success";
 	  }
 	  
-	// Upload PDF file
-	@RequestMapping(value = "/Staff/insertCrashReportFromURL", method = RequestMethod.POST)
-	public String insertCrashReportFileHandler(
-			@RequestParam("crashId") String crashReportId, ModelMap model)
-			throws IOException {
-
-		PDFCrashReportJson pdfCrashReportJson = crashReportReader
-				.getValuesFromPDF(crashReportReader
-						.parsePdfFromURL(crashReportId));
-		Integer crashReportStatus = crashReportReader
-				.checkStatus(pdfCrashReportJson);
-		if (crashReportStatus == 1) {
-			List<PatientsForm> patientsForms = new ArrayList<PatientsForm>();
-			patientsForms = crashReportReader
-					.getPatientForm(pdfCrashReportJson);
-			for (PatientsForm patientsForm : patientsForms) {
-				patientsService.savePatients(patientsForm);
-			}
-			model.addAttribute("requestSuccess", true);
-		} else {
-			model.addAttribute("requestSuccess", false);
-			model.addAttribute("status", "Report not statisfied the conditions");
-		}
-		return "ok";
-
-	}
-
+	
 	// Get Patients With Latitude Longitude
 	@RequestMapping(value = "/Staff/getPatientWithLatLong", method = RequestMethod.GET)
 	public String getPatientsWithLatLong(@RequestParam("id") Integer id,
@@ -193,70 +167,20 @@ public class PatientsController {
 	public String readUploadCrashReportFileHandler(
 			@RequestParam("file") MultipartFile file, ModelMap model)
 			throws IOException {
-
-		PDFCrashReportJson pdfCrashReportJson = crashReportReader
-				.getValuesFromPDF(crashReportReader.parsePdfFromFile(file));
-		List<PatientsForm> patientsForms = new ArrayList<PatientsForm>();
-		Integer crashReportStatus = crashReportReader
-				.checkStatus(pdfCrashReportJson);
-		if (crashReportStatus == 1) {
-			patientsForms = crashReportReader
-					.getPatientForm(pdfCrashReportJson);
-			String fileName = "";
-			File archiveFile = null;
-			// Save File in Location
-			if (patientsForms.size() > 0) {
-				fileName = "D:\\InjuryCrashReport\\Archive\\"
-						+ patientsForms.get(0).getCountry() + "_CrashReport_"
-						+ patientsForms.get(0).getLocalReportNumber() + ".pdf";
-				archiveFile = new File(fileName);
-				byte[] bytes = file.getBytes();
-				BufferedOutputStream stream = new BufferedOutputStream(
-						new FileOutputStream(archiveFile));
-				stream.write(bytes);
-				stream.close();
-			}
-			for (PatientsForm patientsForm : patientsForms) {
-				patientsForm.setCrashReportFileName(archiveFile.getName());
-				patientsService.savePatients(patientsForm);
-			}
-			model.addAttribute("requestSuccess", true);
-			if (patientsForms.size() > 0) {
-				model.addAttribute("successMessage", true);
-				model.addAttribute("responseMessage",
-						"Report Read Successfully and " + patientsForms.size()
-								+ " Patients Added!");
-			} else {
-				model.addAttribute("successMessage", false);
-				model.addAttribute("responseMessage",
-						"Report Read Successfully but No Patient have sufficient information!");
-			}
-
-		} else {
-			model.addAttribute("requestSuccess", false);
-			String responseMessage = "";
-			if (crashReportStatus == 2) {
-				responseMessage = "Unit in Error doesn't have Insurance Company and Policy Number Details!";
-			} else if (crashReportStatus == 3) {
-				responseMessage = "Unit in Error doesn't have Insurance Company Name!";
-			} else {
-				responseMessage = "Unit in Error doesn't have Insurance Policy Number!";
-			}
-
-			model.addAttribute("responseMessage", responseMessage);
-		}
+		
+		
 		return "Details Added Successfully from Crash Reports!";
 
 	}
 
 	// Upload File Get Array
-	@RequestMapping(value = "/Staff/readCrashReportArray", headers = "content-type=multipart/form-data", method = RequestMethod.POST)
+	@RequestMapping(value = "/Staff/readCrashReportJson", headers = "content-type=multipart/form-data", method = RequestMethod.POST)
 	public @ResponseBody
-	List<List<String>> readUploadCrashReportArray(
+	PDFCrashReportJson readUploadCrashReportArray(
 			@RequestParam("file") MultipartFile file, ModelMap model)
 			throws IOException {
 
-		return crashReportReader.parsePdfFromFile(file);
+		return crashReportReader.getValuesFromPDF(crashReportReader.parsePdfFromMultipartFile(file));
 
 	}
 

@@ -50,9 +50,9 @@ public class SchedulerService {
 				if(injuryProperties.getProperty("autoDownloadCrash").equals("on")){
 					crashReportReader.downloadPDFFile(crashReportReader.getCrashId());
 				}else{
-					System.out.print("Auto Download Off");
+					System.out.println("Auto Download Off");
 				}
-				System.out.print("End PDF Read from folder");
+				System.out.println("End PDF Read from folder");
 			}
 			catch(Exception ex)
 			{
