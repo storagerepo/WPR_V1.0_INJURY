@@ -34,6 +34,10 @@ public class PatientForm {
 	private String injuries;
 	private String emsAgency;
 	private String medicalFacility;
+	private String insuranceCompany;
+	private String policyNumber;
+	private String atFaultInsuranceCompany;
+	private String atFaultPolicyNumber;
 	private String crashReportFileName;
 	private Integer patientStatus;
 
@@ -227,6 +231,38 @@ public class PatientForm {
 
 	public void setMedicalFacility(String medicalFacility) {
 		this.medicalFacility = medicalFacility;
+	}
+	
+	public String getInsuranceCompany() {
+		return insuranceCompany;
+	}
+
+	public void setInsuranceCompany(String insuranceCompany) {
+		this.insuranceCompany = insuranceCompany;
+	}
+
+	public String getPolicyNumber() {
+		return policyNumber;
+	}
+
+	public void setPolicyNumber(String policyNumber) {
+		this.policyNumber = policyNumber;
+	}
+
+	public String getAtFaultInsuranceCompany() {
+		return atFaultInsuranceCompany;
+	}
+
+	public void setAtFaultInsuranceCompany(String atFaultInsuranceCompany) {
+		this.atFaultInsuranceCompany = atFaultInsuranceCompany;
+	}
+
+	public String getAtFaultPolicyNumber() {
+		return atFaultPolicyNumber;
+	}
+
+	public void setAtFaultPolicyNumber(String atFaultPolicyNumber) {
+		this.atFaultPolicyNumber = atFaultPolicyNumber;
 	}
 
 	public Integer getPatientStatus() {
