@@ -76,14 +76,14 @@ public class DoctorsController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Staff/getNoOfDoctors", method = RequestMethod.GET)
+	@RequestMapping(value = "/Caller/getNoOfDoctors", method = RequestMethod.GET)
 	public String getNoOfDoctors(ModelMap model) {
 		model.addAttribute("doctorsForms", doctorsService.getNoOfDoctors());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Staff/getDoctorId", method = RequestMethod.GET)
+	@RequestMapping(value = "/Caller/getDoctorId", method = RequestMethod.GET)
 	public String getDoctorId(ModelMap model) {
 		model.addAttribute("doctorsForms", doctorsService.getDoctorId());
 		model.addAttribute("requestSuccess", true);

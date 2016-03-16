@@ -8,12 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.Role.RoleDAO;
-import com.deemsys.project.UserRoleMapping.UserRoleDAO;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.LawyerAdmin;
-import com.deemsys.project.entity.Role;
-import com.deemsys.project.entity.UserRoleMapping;
+import com.deemsys.project.entity.Roles;
 import com.deemsys.project.entity.Users;
 
 @Service
@@ -25,10 +23,7 @@ public class LawyerAdminService {
 
 	@Autowired
 	RoleDAO roleDAO;
-
-	@Autowired
-	UserRoleDAO userRoleDAO;
-
+	
 	@Autowired
 	UsersDAO usersDAO;
 
@@ -41,9 +36,11 @@ public class LawyerAdminService {
 
 		for (LawyerAdmin lawyerAdmin : lawyerAdmins) {
 			LawyerAdminForm lawyerAdminForm = new LawyerAdminForm(
-					lawyerAdmin.getId(), lawyerAdmin.getUsers().getUserId(),
-					lawyerAdmin.getFirstName(), lawyerAdmin.getLastName(),
-					lawyerAdmin.getMiddleName(), lawyerAdmin.getAddress(),
+					lawyerAdmin.getLawyerAdminId(), lawyerAdmin.getUsers().getUserId(),
+					lawyerAdmin.getFirstName(), lawyerAdmin.getLastName(),lawyerAdmin.getStreet(),
+					lawyerAdmin.getCity(),
+					lawyerAdmin.getState(),
+					lawyerAdmin.getZipcode(),
 					lawyerAdmin.getEmailAddress(),
 					lawyerAdmin.getPhoneNumber(), lawyerAdmin.getNotes(),
 					lawyerAdmin.getStatus());
@@ -64,11 +61,14 @@ public class LawyerAdminService {
 		// Start
 
 		LawyerAdminForm lawyerAdminForm = new LawyerAdminForm(
-				lawyerAdmin.getId(), lawyerAdmin.getUsers().getUserId(),
-				lawyerAdmin.getFirstName(), lawyerAdmin.getLastName(),
-				lawyerAdmin.getMiddleName(), lawyerAdmin.getAddress(),
-				lawyerAdmin.getEmailAddress(), lawyerAdmin.getPhoneNumber(),
-				lawyerAdmin.getNotes(), lawyerAdmin.getStatus());
+				lawyerAdmin.getLawyerAdminId(), lawyerAdmin.getUsers().getUserId(),
+				lawyerAdmin.getFirstName(), lawyerAdmin.getLastName(),lawyerAdmin.getStreet(),
+				lawyerAdmin.getCity(),
+				lawyerAdmin.getState(),
+				lawyerAdmin.getZipcode(),
+				lawyerAdmin.getEmailAddress(),
+				lawyerAdmin.getPhoneNumber(), lawyerAdmin.getNotes(),
+				lawyerAdmin.getStatus());
 		lawyerAdminForm.setUsername(lawyerAdmin.getUsers().getUsername());
 		// End
 
@@ -81,24 +81,25 @@ public class LawyerAdminService {
 
 		// Logic Starts
 		Users users = new Users();
-		UserRoleMapping userRoleMapping = new UserRoleMapping();
-		Role role = new Role();
+		Roles role = new Roles();
 		users.setUsername(lawyerAdminForm.getUsername());
 		users.setPassword(lawyerAdminForm.getUsername());
 		users.setIsEnable(1);
 		LawyerAdmin lawyerAdmin = new LawyerAdmin(users,
-				lawyerAdminForm.getFirstName(), lawyerAdminForm.getLastName(),
-				lawyerAdminForm.getMiddleName(), lawyerAdminForm.getAddress(),
+				lawyerAdminForm.getFirstName(), lawyerAdminForm.getLastName(), 
+				lawyerAdminForm.getStreet(),
+				lawyerAdminForm.getCity(),
+				lawyerAdminForm.getState(),
+				lawyerAdminForm.getZipcode(),
 				lawyerAdminForm.getEmailAddress(),
 				lawyerAdminForm.getPhoneNumber(), lawyerAdminForm.getNotes(),
-				lawyerAdminForm.getStatus(), null);
-		lawyerAdmin.setId(lawyerAdminForm.getId());
+				lawyerAdminForm.getStatus(), null,null,null);
+		lawyerAdmin.setLawyerAdminId(lawyerAdminForm.getLawyerAdminId());
 		lawyerAdminDAO.merge(lawyerAdmin);
 
 		role = roleDAO.get(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID);
-		userRoleMapping.setRole(role);
-		userRoleMapping.setUsers(users);
-		userRoleDAO.save(userRoleMapping);
+		users.setRoles(role);
+		usersDAO.save(users);
 
 		// Logic Ends
 
@@ -111,24 +112,25 @@ public class LawyerAdminService {
 
 		// Logic Starts
 		Users users = new Users();
-		UserRoleMapping userRoleMapping = new UserRoleMapping();
-		Role role = new Role();
+		Roles role = new Roles();
 		users.setUsername(lawyerAdminForm.getUsername());
 		users.setPassword(lawyerAdminForm.getUsername());
 		users.setIsEnable(1);
 		LawyerAdmin lawyerAdmin = new LawyerAdmin(users,
-				lawyerAdminForm.getFirstName(), lawyerAdminForm.getLastName(),
-				lawyerAdminForm.getMiddleName(), lawyerAdminForm.getAddress(),
+				lawyerAdminForm.getFirstName(), lawyerAdminForm.getLastName(), 
+				lawyerAdminForm.getStreet(),
+				lawyerAdminForm.getCity(),
+				lawyerAdminForm.getState(),
+				lawyerAdminForm.getZipcode(),
 				lawyerAdminForm.getEmailAddress(),
 				lawyerAdminForm.getPhoneNumber(), lawyerAdminForm.getNotes(),
-				1, null);
+				lawyerAdminForm.getStatus(), null,null,null);
 
 		lawyerAdminDAO.save(lawyerAdmin);
 
 		role = roleDAO.get(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID);
-		userRoleMapping.setRole(role);
-		userRoleMapping.setUsers(users);
-		userRoleDAO.save(userRoleMapping);
+		users.setRoles(role);
+		usersDAO.save(users);
 
 		// Logic Ends
 
@@ -143,12 +145,15 @@ public class LawyerAdminService {
 
 		Users users = usersDAO.get(lawyerAdminForm.getUserId());
 		LawyerAdmin lawyerAdmin = new LawyerAdmin(users,
-				lawyerAdminForm.getFirstName(), lawyerAdminForm.getLastName(),
-				lawyerAdminForm.getMiddleName(), lawyerAdminForm.getAddress(),
+				lawyerAdminForm.getFirstName(), lawyerAdminForm.getLastName(), 
+				lawyerAdminForm.getStreet(),
+				lawyerAdminForm.getCity(),
+				lawyerAdminForm.getState(),
+				lawyerAdminForm.getZipcode(),
 				lawyerAdminForm.getEmailAddress(),
 				lawyerAdminForm.getPhoneNumber(), lawyerAdminForm.getNotes(),
-				1, null);
-		lawyerAdmin.setId(lawyerAdminForm.getId());
+				lawyerAdminForm.getStatus(), null,null,null);
+		lawyerAdmin.setLawyerAdminId(lawyerAdminForm.getLawyerAdminId());
 
 		// Logic Ends
 
@@ -160,7 +165,7 @@ public class LawyerAdminService {
 	public int deleteLawyerAdmin(Integer id) {
 		LawyerAdmin lawyerAdmin = lawyerAdminDAO.get(id);
 		Users users = usersDAO.get(lawyerAdmin.getUsers().getUserId());
-		userRoleDAO.deletebyUserId(users.getUserId());
+		usersDAO.delete(users.getUserId());
 
 		lawyerAdminDAO.delete(id);
 		return 1;
@@ -186,7 +191,7 @@ public class LawyerAdminService {
 	// Get Lawyer Admin By UserId
 	public Integer getLawyerAdminIdByUserId(Integer userId) {
 		LawyerAdmin lawyerAdmin = lawyerAdminDAO.getByUserId(userId);
-		return lawyerAdmin.getId();
+		return lawyerAdmin.getLawyerAdminId();
 	}
 
 }

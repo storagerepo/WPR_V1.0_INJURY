@@ -3,19 +3,17 @@ package com.deemsys.project.Lawyers;
 import java.util.List;
 
 import com.deemsys.project.County.CountyForm;
-import com.deemsys.project.entity.Lawyers;
+import com.deemsys.project.entity.Lawyer;
 
 
 public class LawyersForm {
 
-	private Integer id;
+	private Integer lawyerId;
 	private Integer lawyerAdminId;
 	private Integer userId;
 	private String username;
 	private String firstName;
 	private String lastName;
-	private String middleName;
-	private String gender;
 	private String streetAddress;
 	private String city;
 	private String state;
@@ -27,11 +25,12 @@ public class LawyersForm {
 	private List<CountyForm> countyForms;
 	private Integer[] countyId;
 	
-	public Integer getId() {
-		return id;
+	
+	public Integer getLawyerId() {
+		return lawyerId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setLawyerId(Integer lawyerId) {
+		this.lawyerId = lawyerId;
 	}
 	public Integer getLawyerAdminId() {
 		return lawyerAdminId;
@@ -63,18 +62,7 @@ public class LawyersForm {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getMiddleName() {
-		return middleName;
-	}
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+	
 	public String getStreetAddress() {
 		return streetAddress;
 	}
@@ -136,18 +124,16 @@ public class LawyersForm {
 		this.countyForms = countyForms;
 	}
 	
-	public LawyersForm(Integer id, Integer lawyerAdminId, Integer userId, String firstName, String lastName,
-			String middleName, String gender, String streetAddress,
+	public LawyersForm(Integer lawyerId, Integer lawyerAdminId, Integer userId, String firstName, String lastName,
+			String streetAddress,
 			String city, String state, String zipcode, String emailAddress,
 			String phoneNumber, String notes, Integer status) {
 		super();
-		this.id = id;
+		this.lawyerId = lawyerId;
 		this.lawyerAdminId = lawyerAdminId;
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.middleName = middleName;
-		this.gender = gender;
 		this.streetAddress = streetAddress;
 		this.city = city;
 		this.state = state;
@@ -158,8 +144,8 @@ public class LawyersForm {
 		this.status = status;
 	}
 	
-	public Lawyers getLawyersDetails(LawyersForm lawyersForm){
-		Lawyers lawyers=new Lawyers();
+	public Lawyer getLawyersDetails(LawyersForm lawyersForm){
+		Lawyer lawyers=new Lawyer();
 		
 		
 		return lawyers;

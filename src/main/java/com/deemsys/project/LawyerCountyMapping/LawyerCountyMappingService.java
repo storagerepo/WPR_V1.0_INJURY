@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.deemsys.project.entity.LawyerCountyMapping;
+import com.deemsys.project.entity.LawyerCountyMap;
 
 @Service
 @Transactional
@@ -19,12 +19,12 @@ public class LawyerCountyMappingService {
 	//Get County Mapping By Lawyer Id
 	public List<LawyerCountyMappingForm> getLawyerCountyMappingByLaweyerId(Integer lawyerId){
 		List<LawyerCountyMappingForm> lawyerCountyMappingForms= new ArrayList<LawyerCountyMappingForm>();
-		List<LawyerCountyMapping> lawyerCountyMappings= new ArrayList<LawyerCountyMapping>();
+		List<LawyerCountyMap> lawyerCountyMappings= new ArrayList<LawyerCountyMap>();
 		
-		lawyerCountyMappings=lawyerCountyMappingDAO.getLaweCountyMappingsByLawyerId(lawyerId);
+		lawyerCountyMappings=lawyerCountyMappingDAO.getLawyerCountyMappingsByLawyerId(lawyerId);
 		
-		for (LawyerCountyMapping lawyerCountyMapping : lawyerCountyMappings) {
-			LawyerCountyMappingForm lawyerCountyMappingForm=new LawyerCountyMappingForm(lawyerCountyMapping.getMappingId(), lawyerCountyMapping.getLawyers().getId(), lawyerCountyMapping.getCounty().getId());
+		for (LawyerCountyMap lawyerCountyMapping : lawyerCountyMappings) {
+			LawyerCountyMappingForm lawyerCountyMappingForm=new LawyerCountyMappingForm(lawyerCountyMapping.getId().getLawyerId(), lawyerCountyMapping.getId().getCountyId(), lawyerCountyMapping.getStatus());
 			lawyerCountyMappingForms.add(lawyerCountyMappingForm);
 		}
 		
@@ -42,7 +42,7 @@ public class LawyerCountyMappingService {
 					// Do Nothing
 				}
 				else{
-					lawyerCountyMappingDAO.delete(lawyerCountyMappingForm.getMappingId());
+					lawyerCountyMappingDAO.deleteLawyerCountyMappingsByLawyerIdAndCountyId(lawyerCountyMappingForm.getLawyerId(), lawyerCountyMappingForm.getCountyId());
 				}
 			}
 		}

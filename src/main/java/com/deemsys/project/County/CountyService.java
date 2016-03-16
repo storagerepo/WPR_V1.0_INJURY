@@ -27,7 +27,7 @@ public class CountyService {
 
 		for (County county : countys) {
 			// TODO: Fill the List
-			CountyForm countyForm = new CountyForm(county.getId(),
+			CountyForm countyForm = new CountyForm(county.getCountyId(),
 					county.getName(), county.getStatus());
 			countyForms.add(countyForm);
 
@@ -45,7 +45,7 @@ public class CountyService {
 		// TODO: Convert Entity to Form
 		// Start
 
-		CountyForm countyForm = new CountyForm(county.getId(),
+		CountyForm countyForm = new CountyForm(county.getCountyId(),
 				county.getName(), county.getStatus());
 
 		// End
@@ -60,8 +60,8 @@ public class CountyService {
 		// Logic Starts
 
 		County county = new County(countyForm.getName(),
-				countyForm.getStatus(), null);
-		county.setId(countyForm.getId());
+				countyForm.getStatus(), null,null,null,null);
+		county.setCountyId(countyForm.getId());
 
 		// Logic Ends
 
@@ -76,7 +76,7 @@ public class CountyService {
 		// Logic Starts
 
 		County county = new County(countyForm.getName(),
-				countyForm.getStatus(), null);
+				countyForm.getStatus(), null,null,null,null);
 
 		// Logic Ends
 
@@ -91,8 +91,8 @@ public class CountyService {
 		// Logic Starts
 
 		County county = new County(countyForm.getName(),
-				countyForm.getStatus(), null);
-		county.setId(countyForm.getId());
+				countyForm.getStatus(), null,null,null,null);
+		county.setCountyId(countyForm.getId());
 		// Logic Ends
 
 		countyDAO.update(county);

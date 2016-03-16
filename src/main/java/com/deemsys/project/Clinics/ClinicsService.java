@@ -17,9 +17,9 @@ import com.deemsys.project.Map.GeoLocation;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.ClinicTimings;
 import com.deemsys.project.entity.ClinicTimingsId;
-import com.deemsys.project.entity.Clinics;
-import com.deemsys.project.entity.Patients;
-import com.deemsys.project.patients.PatientsDAO;
+import com.deemsys.project.entity.Clinic;
+import com.deemsys.project.entity.Patient;
+import com.deemsys.project.patient.PatientDAO;
 
 /**
  * @author Deemsys
@@ -42,7 +42,7 @@ public class ClinicsService {
 	GeoLocation geoLocation;
 
 	@Autowired
-	PatientsDAO patientsDAO;
+	PatientDAO patientDAO;
 
 	@Autowired
 	DoctorsService doctorsService;
@@ -55,7 +55,7 @@ public class ClinicsService {
 	 */
 	public ClinicsForm getClinic(Integer clinicId) {
 
-		Clinics clinics = clinicsDAO.get(clinicId);
+		Clinic clinics = clinicsDAO.get(clinicId);
 		List<ClinicTimings> clinicTimings = clinicTimingsDAO
 				.getClinicTimings(clinicId);
 
@@ -100,7 +100,7 @@ public class ClinicsService {
 	 */
 	public ClinicsForm getClinicDetails(Integer clinicId) {
 
-		Clinics clinics = clinicsDAO.get(clinicId);
+		Clinic clinics = clinicsDAO.get(clinicId);
 		List<ClinicTimings> clinicTimings = clinicTimingsDAO
 				.getClinicTimings(clinicId);
 
@@ -144,10 +144,10 @@ public class ClinicsService {
 	 */
 	public List<ClinicsForm> getClinicsList() {
 		List<ClinicsForm> clinicsForms = new ArrayList<ClinicsForm>();
-		List<Clinics> clinicses = new ArrayList<Clinics>();
+		List<Clinic> clinicses = new ArrayList<Clinic>();
 		clinicses = clinicsDAO.getAll();
 
-		for (Clinics clinics : clinicses) {
+		for (Clinic clinics : clinicses) {
 			ClinicsForm clinicsForm = new ClinicsForm(clinics.getClinicId(),
 					clinics.getClinicName(), clinics.getAddress(),
 					clinics.getCity(), clinics.getState(), clinics.getCounty(),
@@ -178,15 +178,16 @@ public class ClinicsService {
 		String[] latiudeLongitude = latLong.split(",");
 
 		// Save Clinic
-		Clinics clinics = new Clinics(clinicsForm.getClinicName(),
-				clinicsForm.getAddress(), clinicsForm.getCity(),
-				clinicsForm.getState(), clinicsForm.getCounty(),
-				clinicsForm.getCountry(), clinicsForm.getZipcode(),
+		Clinic clinics = new Clinic(null,clinicsForm.getClinicName(),
+				clinicsForm.getAddress(), 
 				Double.parseDouble(latiudeLongitude[0]),
 				Double.parseDouble(latiudeLongitude[1]),
+				clinicsForm.getCity(),
+				clinicsForm.getState(), clinicsForm.getCounty(),
+				clinicsForm.getCountry(), clinicsForm.getZipcode(),
 				clinicsForm.getOfficeNumber(), clinicsForm.getFaxNumber(),
 				clinicsForm.getServiceArea(), clinicsForm.getDirections(),
-				clinicsForm.getNotes(), null, null, null);
+				clinicsForm.getNotes(), 1, null, null);
 		clinicsDAO.save(clinics);
 
 		// Save Clinic Timings
@@ -206,7 +207,7 @@ public class ClinicsService {
 					InjuryConstants.convert24HourTime(clinicTimingList2
 							.getEndsBreak()),
 					clinicTimingList2.getIsWorkingDay(),
-					clinicTimingList2.getIsAppointmentDay());
+					clinicTimingList2.getIsAppointmentDay(),1);
 			clinicTimingsDAO.save(clinicTimings);
 		}
 
@@ -235,15 +236,14 @@ public class ClinicsService {
 		String[] latiudeLongitude = latLong.split(",");
 
 		// Update Clinics
-		Clinics clinics = new Clinics(clinicsForm.getClinicName(),
-				clinicsForm.getAddress(), clinicsForm.getCity(),
+		Clinic clinics = new Clinic(null,clinicsForm.getClinicName(),
+				clinicsForm.getAddress(),Double.parseDouble(latiudeLongitude[0]),
+				Double.parseDouble(latiudeLongitude[1]), clinicsForm.getCity(),
 				clinicsForm.getState(), clinicsForm.getCounty(),
 				clinicsForm.getCountry(), clinicsForm.getZipcode(),
-				Double.parseDouble(latiudeLongitude[0]),
-				Double.parseDouble(latiudeLongitude[1]),
 				clinicsForm.getOfficeNumber(), clinicsForm.getFaxNumber(),
 				clinicsForm.getServiceArea(), clinicsForm.getDirections(),
-				clinicsForm.getNotes(), null, null, null);
+				clinicsForm.getNotes(), 1,null, null);
 		clinics.setClinicId(clinicsForm.getClinicId());
 		clinicsDAO.update(clinics);
 
@@ -264,7 +264,7 @@ public class ClinicsService {
 					InjuryConstants.convert24HourTime(clinicTimingList2
 							.getEndsBreak()),
 					clinicTimingList2.getIsWorkingDay(),
-					clinicTimingList2.getIsAppointmentDay());
+					clinicTimingList2.getIsAppointmentDay(),1);
 			clinicTimingsDAO.update(clinicTimings);
 		}
 
@@ -307,11 +307,11 @@ public class ClinicsService {
 	public List<ClinicsForm> getClinicId() {
 		List<ClinicsForm> clinicsForms = new ArrayList<ClinicsForm>();
 
-		List<Clinics> clinicss = new ArrayList<Clinics>();
+		List<Clinic> clinicss = new ArrayList<Clinic>();
 
 		clinicss = clinicsDAO.getClinicId();
 
-		for (Clinics clinics : clinicss) {
+		for (Clinic clinics : clinicss) {
 			// TODO: Fill the List
 			ClinicsForm clinicsForm = new ClinicsForm(clinics.getClinicId(),
 					clinics.getClinicName());
@@ -370,14 +370,14 @@ public class ClinicsService {
 		return clinicTimingLists;
 	}
 
-	// Unassign the Patients from clinic
+	// Unassign the Patient from clinic
 	public Integer removeAssignedClinic(Integer clinicId) {
 		Integer status = 0;
 		try {
-			List<Patients> patients = patientsDAO
-					.getpatientsByClinicId(clinicId);
-			for (Patients patients2 : patients) {
-				patientsDAO.removeAssignedClinic(patients2.getId());
+			List<Patient> patient = patientDAO
+					.getpatientByClinicId(clinicId);
+			for (Patient patient2 : patient) {
+				//patientDAO.removeAssignedClinic(patient2.getPatientId());
 			}
 			status = 1;
 		} catch (Exception e) {

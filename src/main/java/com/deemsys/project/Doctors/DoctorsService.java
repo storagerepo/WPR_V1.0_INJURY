@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.Clinics.ClinicsService;
-import com.deemsys.project.entity.Clinics;
-import com.deemsys.project.entity.Doctors;
-import com.deemsys.project.entity.Patients;
-import com.deemsys.project.patients.PatientsDAO;
+import com.deemsys.project.entity.Clinic;
+import com.deemsys.project.entity.Doctor;
+import com.deemsys.project.entity.Patient;
+import com.deemsys.project.patient.PatientDAO;
 
 /**
  * 
@@ -31,7 +31,7 @@ public class DoctorsService {
 	DoctorsDAO doctorsDAO;
 
 	@Autowired
-	PatientsDAO patientsDAO;
+	PatientDAO patientsDAO;
 
 	@Autowired
 	ClinicsDAO clinicsDAO;
@@ -43,12 +43,12 @@ public class DoctorsService {
 	public List<DoctorsForm> getDoctorsList() {
 		List<DoctorsForm> doctorsForms = new ArrayList<DoctorsForm>();
 
-		List<Doctors> doctorss = new ArrayList<Doctors>();
+		List<Doctor> doctorss = new ArrayList<Doctor>();
 
 		doctorss = doctorsDAO.getAll();
-		for (Doctors doctors : doctorss) {
+		for (Doctor doctors : doctorss) {
 			// TODO: Fill the List
-			DoctorsForm doctorsForm = new DoctorsForm(doctors.getId(),
+			DoctorsForm doctorsForm = new DoctorsForm(doctors.getDoctorId(),
 					doctors.getDoctorName(), doctors.getTitleDr(),
 					doctors.getTitleDc());
 
@@ -59,13 +59,13 @@ public class DoctorsService {
 	}
 
 	public DoctorsForm getDoctors(Integer getId) {
-		Doctors doctors = new Doctors();
+		Doctor doctors = new Doctor();
 		doctors = doctorsDAO.get(getId);
 
 		DoctorsForm doctorsForm = new DoctorsForm();
 
 		if (doctors != null) {
-			doctorsForm = new DoctorsForm(doctors.getId(),
+			doctorsForm = new DoctorsForm(doctors.getDoctorId(),
 					doctors.getDoctorName(), doctors.getTitleDr(),
 					doctors.getTitleDc());
 		} else {
@@ -79,19 +79,19 @@ public class DoctorsService {
 		// TODO: Convert Form to Entity Here
 
 		// Logic Starts
-		Clinics clinics = new Clinics();
+		Clinic clinics = new Clinic();
 		clinics.setClinicId(doctorsForm.getClinicId());
 		/*
 		 * Doctors doctors = new Doctors(clinics, doctorsForm.getDoctorName(),
 		 * doctorsForm.getEmailId(), doctorsForm.getContactNumber(),
 		 * doctorsForm.getSpecialistIn(), doctorsForm.getNotes(), null);
 		 */
-		Doctors doctors = new Doctors();
-		doctors.setClinics(clinics);
+		Doctor doctors = new Doctor();
+		doctors.setClinic(clinics);
 		doctors.setDoctorName(doctorsForm.getDoctorName());
 		doctors.setTitleDr(doctorsForm.getTitleDr());
 		doctors.setTitleDc(doctorsForm.getTitleDc());
-		doctors.setId(doctorsForm.getId());
+		doctors.setDoctorId(doctorsForm.getId());
 		// Logic Ends
 
 		doctorsDAO.merge(doctors);
@@ -100,13 +100,13 @@ public class DoctorsService {
 
 	// View Particular Doctor Details
 	public DoctorsForm getDoctorDetails(Integer doctorId) {
-		Doctors doctors = new Doctors();
+		Doctor doctors = new Doctor();
 		doctors = doctorsDAO.get(doctorId);
 
 		DoctorsForm doctorsForm = new DoctorsForm();
 
 		if (doctors != null) {
-			doctorsForm = new DoctorsForm(doctors.getId(),
+			doctorsForm = new DoctorsForm(doctors.getDoctorId(),
 					doctors.getDoctorName(), doctors.getTitleDr(),
 					doctors.getTitleDc());
 		} else {
@@ -119,15 +119,15 @@ public class DoctorsService {
 	public int saveDoctors(DoctorsForm doctorsForm)
 
 	{
-		Clinics clinics = new Clinics();
+		Clinic clinics = new Clinic();
 		clinics.setClinicId(doctorsForm.getClinicId());
 		/*
 		 * Doctors doctors = new Doctors(clinics, doctorsForm.getDoctorName(),
 		 * doctorsForm.getEmailId(), doctorsForm.getContactNumber(),
 		 * doctorsForm.getSpecialistIn(), doctorsForm.getNotes(), null);
 		 */
-		Doctors doctors = new Doctors();
-		doctors.setClinics(clinics);
+		Doctor doctors = new Doctor();
+		doctors.setClinic(clinics);
 		doctors.setDoctorName(doctorsForm.getDoctorName());
 		doctors.setTitleDr(doctorsForm.getTitleDr());
 		doctors.setTitleDc(doctorsForm.getTitleDc());
@@ -140,19 +140,19 @@ public class DoctorsService {
 		// TODO: Convert Form to Entity Here
 
 		// Logic Starts
-		Clinics clinics = new Clinics();
+		Clinic clinics = new Clinic();
 		clinics.setClinicId(doctorsForm.getClinicId());
 		/*
 		 * Doctors doctors = new Doctors(clinics, doctorsForm.getDoctorName(),
 		 * doctorsForm.getEmailId(), doctorsForm.getContactNumber(),
 		 * doctorsForm.getSpecialistIn(), doctorsForm.getNotes(), null);
 		 */
-		Doctors doctors = new Doctors();
-		doctors.setClinics(clinics);
+		Doctor doctors = new Doctor();
+		doctors.setClinic(clinics);
 		doctors.setDoctorName(doctorsForm.getDoctorName());
 		doctors.setTitleDr(doctorsForm.getTitleDr());
 		doctors.setTitleDc(doctorsForm.getTitleDc());
-		doctors.setId(doctorsForm.getId());
+		doctors.setDoctorId(doctorsForm.getId());
 		// Logic Ends
 
 		doctorsDAO.update(doctors);
@@ -162,9 +162,9 @@ public class DoctorsService {
 	// Delete an Entry
 	public int deleteDoctors(Integer id) {
 		int status = 0;
-		List<Patients> patientss = new ArrayList<Patients>();
+		List<Patient> patientss = new ArrayList<Patient>();
 
-		patientss = patientsDAO.getpatientsByDoctorId(id);
+		patientss = patientsDAO.getpatientByDoctorId(id);
 		if (patientss.size() == 0) {
 			doctorsDAO.delete(id);
 			status = 1;
@@ -180,16 +180,14 @@ public class DoctorsService {
 
 		List<DoctorsForm> doctorsForms = new ArrayList<DoctorsForm>();
 
-		List<Doctors> doctorss = new ArrayList<Doctors>();
+		List<Doctor> doctorss = new ArrayList<Doctor>();
 
 		doctorss = doctorsDAO.getAll();
-		for (Doctors doctors : doctorss) {
+		for (Doctor doctors : doctorss) {
 
 			// TODO: Fill the List
-			DoctorsForm doctorsForm = new DoctorsForm(doctors.getId(), doctors
-					.getClinics().getClinicId(), doctors.getDoctorName(),
-					doctors.getEmailId(), doctors.getContactNumber(),
-					doctors.getSpecialistIn(), doctors.getNotes());
+			DoctorsForm doctorsForm = new DoctorsForm(doctors.getDoctorId(), doctors
+					.getClinic().getClinicId(), doctors.getDoctorName());
 			doctorsForms.add(doctorsForm);
 			count++;
 		}
@@ -202,14 +200,14 @@ public class DoctorsService {
 	public List<DoctorsForm> getDoctorId() {
 		List<DoctorsForm> doctorsForms = new ArrayList<DoctorsForm>();
 
-		List<Doctors> doctorss = new ArrayList<Doctors>();
+		List<Doctor> doctorss = new ArrayList<Doctor>();
 
 		doctorss = doctorsDAO.getDoctorId();
 
-		for (Doctors doctors : doctorss) {
+		for (Doctor doctors : doctorss) {
 			// TODO: Fill the List
 			String doctorName = this.getDoctorNameWithTitle(doctors);
-			DoctorsForm doctorsForm = new DoctorsForm(doctors.getId(),
+		DoctorsForm doctorsForm = new DoctorsForm(doctors.getDoctorId(),
 					doctorName);
 			doctorsForms.add(doctorsForm);
 		}
@@ -221,10 +219,10 @@ public class DoctorsService {
 	public Integer removeAssignedDoctor(Integer doctorId) {
 
 		Integer status = 0;
-		List<Patients> patients = patientsDAO.getpatientsByDoctorId(doctorId);
-		for (Patients patients2 : patients) {
-			patientsDAO.removeAssignedDoctor(patients2.getId());
-
+		List<Patient> patients = patientsDAO.getpatientByDoctorId(doctorId);
+		for (Patient patients2 : patients) {
+			//patientsDAO.removeAssignedDoctor(patients2.getPatientId());
+			// Need to change remove Assigned Doctor Function
 			status = 1;
 		}
 
@@ -236,13 +234,13 @@ public class DoctorsService {
 		String status = "0";
 		try {
 			// Unassign and Remove Doctors
-			List<Doctors> doctors = doctorsDAO.getDoctorsByClinicId(clinicId);
-			for (Doctors doctors2 : doctors) {
+			List<Doctor> doctors = doctorsDAO.getDoctorsByClinicId(clinicId);
+			for (Doctor doctors2 : doctors) {
 				// Remove Assigned Doctor From Patient
-				this.removeAssignedDoctor(doctors2.getId());
-				doctorsDAO.removeClinicIdFromDoctor(doctors2.getId());
+				this.removeAssignedDoctor(doctors2.getDoctorId());
+				doctorsDAO.removeClinicIdFromDoctor(doctors2.getDoctorId());
 				// Delete Doctor
-				this.deleteDoctors(doctors2.getId());
+				this.deleteDoctors(doctors2.getDoctorId());
 			}
 			// Unassign Patients
 			// Need to Confirm with Client
@@ -257,11 +255,11 @@ public class DoctorsService {
 	public List<DoctorsForm> getNameByClinicId(Integer clinicId) {
 		List<DoctorsForm> doctorsForms = new ArrayList<DoctorsForm>();
 
-		List<Doctors> doctorss = doctorsDAO.getDoctorsByClinicId(clinicId);
-		for (Doctors doctors : doctorss) {
+		List<Doctor> doctorss = doctorsDAO.getDoctorsByClinicId(clinicId);
+		for (Doctor doctors : doctorss) {
 			// TODO: Fill the List
 			String doctorName = this.getDoctorNameWithTitle(doctors);
-			DoctorsForm doctorsForm = new DoctorsForm(doctors.getId(),
+			DoctorsForm doctorsForm = new DoctorsForm(doctors.getDoctorId(),
 					doctorName);
 			doctorsForms.add(doctorsForm);
 		}
@@ -272,16 +270,16 @@ public class DoctorsService {
 	// Get Doctors BY Clinic For Edit Operations
 	public List<DoctorsForm> getDoctorsByClinic(Integer clinicId) {
 		List<DoctorsForm> doctorsForm = new ArrayList<DoctorsForm>();
-		List<Doctors> doctors = new ArrayList<Doctors>();
+		List<Doctor> doctors = new ArrayList<Doctor>();
 		doctors = doctorsDAO.getDoctorsByClinic(clinicId);
 
 		DoctorsForm doctorsForms = new DoctorsForm();
-		for (Doctors doctorss : doctors) {
-			doctorsForms = new DoctorsForm(doctorss.getId(),
+		for (Doctor doctorss : doctors) {
+			doctorsForms = new DoctorsForm(doctorss.getDoctorId(),
 					doctorss.getDoctorName(), doctorss.getTitleDr(),
 					doctorss.getTitleDc());
 			doctorsForms.setIsRemoveable(this
-					.getDoctorsRemoveableStatus(doctorss.getId()));
+					.getDoctorsRemoveableStatus(doctorss.getDoctorId()));
 			doctorsForm.add(doctorsForms);
 
 		}
@@ -292,13 +290,13 @@ public class DoctorsService {
 	// Get Doctors BY Clinic For View Details
 	public List<DoctorsForm> getDoctorsDetailsByClinic(Integer clinicId) {
 		List<DoctorsForm> doctorsForm = new ArrayList<DoctorsForm>();
-		List<Doctors> doctors = new ArrayList<Doctors>();
+		List<Doctor> doctors = new ArrayList<Doctor>();
 		doctors = doctorsDAO.getDoctorsByClinic(clinicId);
 
 		DoctorsForm doctorsForms = new DoctorsForm();
-		for (Doctors doctorss : doctors) {
+		for (Doctor doctorss : doctors) {
 			String doctorName = this.getDoctorNameWithTitle(doctorss);
-			doctorsForms = new DoctorsForm(doctorss.getId(), doctorName,
+			doctorsForms = new DoctorsForm(doctorss.getDoctorId(), doctorName,
 					doctorss.getTitleDr(), doctorss.getTitleDc());
 			doctorsForm.add(doctorsForms);
 
@@ -308,7 +306,7 @@ public class DoctorsService {
 	}
 
 	// Append the DoctorName and Title
-	public String getDoctorNameWithTitle(Doctors doctors) {
+	public String getDoctorNameWithTitle(Doctor doctors) {
 		String doctorName = doctors.getDoctorName();
 		if (doctors.getTitleDr() != null) {
 			if (doctors.getTitleDr() == 1) {
@@ -327,9 +325,9 @@ public class DoctorsService {
 	// Get Doctor Removeable Status Based on the Appointment
 	public Integer getDoctorsRemoveableStatus(Integer id) {
 		Integer status = 0;
-		List<Patients> patientss = new ArrayList<Patients>();
+		List<Patient> patientss = new ArrayList<Patient>();
 
-		patientss = patientsDAO.getpatientsByDoctorId(id);
+		patientss = patientsDAO.getpatientByDoctorId(id);
 		if (patientss.size() == 0) {
 			status = 1;
 		} else {

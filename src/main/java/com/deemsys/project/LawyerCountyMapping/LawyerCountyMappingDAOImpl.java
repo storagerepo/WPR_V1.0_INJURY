@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
-import com.deemsys.project.entity.LawyerCountyMapping;
+import com.deemsys.project.entity.LawyerCountyMap;
 @Repository
 public class LawyerCountyMappingDAOImpl implements LawyerCountyMappingDAO{
 
@@ -17,26 +17,26 @@ public class LawyerCountyMappingDAOImpl implements LawyerCountyMappingDAO{
 	SessionFactory sessionFactory;
 	
 	@Override
-	public void save(LawyerCountyMapping entity) {
+	public void save(LawyerCountyMap entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().save(entity);
 	}
 
 	@Override
-	public void merge(LawyerCountyMapping entity) {
+	public void merge(LawyerCountyMap entity) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public LawyerCountyMapping get(Integer id) {
+	public LawyerCountyMap get(Integer id) {
 		// TODO Auto-generated method stub
-		LawyerCountyMapping lawyerCountyMapping=(LawyerCountyMapping) this.sessionFactory.getCurrentSession().get(LawyerCountyMapping.class, id);
+		LawyerCountyMap lawyerCountyMapping=(LawyerCountyMap) this.sessionFactory.getCurrentSession().get(LawyerCountyMap.class, id);
 		return lawyerCountyMapping;
 	}
 
 	@Override
-	public LawyerCountyMapping update(LawyerCountyMapping entity) {
+	public LawyerCountyMap update(LawyerCountyMap entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -44,58 +44,58 @@ public class LawyerCountyMappingDAOImpl implements LawyerCountyMappingDAO{
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
-		LawyerCountyMapping lawyerCountyMapping=this.get(id);
+		LawyerCountyMap lawyerCountyMapping=this.get(id);
 		if(lawyerCountyMapping!=null){
 			this.sessionFactory.getCurrentSession().delete(lawyerCountyMapping);
 		}
 	}
 
 	@Override
-	public List<LawyerCountyMapping> getAll() {
+	public List<LawyerCountyMap> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LawyerCountyMapping> find(String paramName, String paramValue) {
+	public List<LawyerCountyMap> find(String paramName, String paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LawyerCountyMapping> find(String paramName, Long paramValue) {
+	public List<LawyerCountyMap> find(String paramName, Long paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LawyerCountyMapping> find(String paramName, Integer paramValue) {
+	public List<LawyerCountyMap> find(String paramName, Integer paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LawyerCountyMapping> find(BasicQuery query) {
+	public List<LawyerCountyMap> find(BasicQuery query) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LawyerCountyMapping> find(String queryString,
+	public List<LawyerCountyMap> find(String queryString,
 			String[] paramNames, String[] paramValues) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LawyerCountyMapping> find(String ParamName, Date date1,
+	public List<LawyerCountyMap> find(String ParamName, Date date1,
 			Date date2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LawyerCountyMapping> find(String ParamName, Date date) {
+	public List<LawyerCountyMap> find(String ParamName, Date date) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -125,18 +125,27 @@ public class LawyerCountyMappingDAOImpl implements LawyerCountyMappingDAO{
 	}
 
 	@Override
-	public List<LawyerCountyMapping> getActiveList() {
+	public List<LawyerCountyMap> getActiveList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LawyerCountyMapping> getLaweCountyMappingsByLawyerId(
+	public List<LawyerCountyMap> getLawyerCountyMappingsByLawyerId(
 			Integer lawyerId) {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
-		List<LawyerCountyMapping> lawyerCountyMappings=this.sessionFactory.getCurrentSession().createCriteria(LawyerCountyMapping.class).add(Restrictions.eq("lawyers.id", lawyerId)).list();
+		List<LawyerCountyMap> lawyerCountyMappings=this.sessionFactory.getCurrentSession().createCriteria(LawyerCountyMap.class).add(Restrictions.eq("lawyers.id", lawyerId)).list();
 		return lawyerCountyMappings;
+	}
+
+	@Override
+	public void deleteLawyerCountyMappingsByLawyerIdAndCountyId(
+			Integer lawyerId, Integer countyId) {
+		// TODO Auto-generated method stub
+		LawyerCountyMap lawyerCountyMap=(LawyerCountyMap) this.sessionFactory.getCurrentSession().createCriteria(LawyerCountyMap.class).add(Restrictions.and(Restrictions.eq("county.id", countyId),Restrictions.eq("lawyers.id", lawyerId))).uniqueResult();
+		this.sessionFactory.getCurrentSession().delete(lawyerCountyMap);
+		
 	}
 
 	

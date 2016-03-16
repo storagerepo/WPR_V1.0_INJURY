@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
-import com.deemsys.project.entity.Lawyers;
+import com.deemsys.project.entity.Lawyer;
 
 @Repository
 public class LawyersDAOImpl implements LawyersDAO {
@@ -18,27 +18,27 @@ public class LawyersDAOImpl implements LawyersDAO {
 	SessionFactory sessionFactory;
 
 	@Override
-	public void save(Lawyers entity) {
+	public void save(Lawyer entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().save(entity);
 	}
 
 	@Override
-	public void merge(Lawyers entity) {
+	public void merge(Lawyer entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().merge(entity);
 	}
 
 	@Override
-	public Lawyers get(Integer id) {
+	public Lawyer get(Integer id) {
 		// TODO Auto-generated method stub
-		Lawyers lawyers = (Lawyers) this.sessionFactory.getCurrentSession()
-				.get(Lawyers.class, id);
+		Lawyer lawyers = (Lawyer) this.sessionFactory.getCurrentSession()
+				.get(Lawyer.class, id);
 		return lawyers;
 	}
 
 	@Override
-	public Lawyers update(Lawyers entity) {
+	public Lawyer update(Lawyer entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().update(entity);
 		return null;
@@ -47,60 +47,60 @@ public class LawyersDAOImpl implements LawyersDAO {
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
-		Lawyers lawyers = this.get(id);
+		Lawyer lawyers = this.get(id);
 		if (lawyers != null) {
 			this.sessionFactory.getCurrentSession().delete(lawyers);
 		}
 	}
 
 	@Override
-	public List<Lawyers> getAll() {
+	public List<Lawyer> getAll() {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
-		List<Lawyers> lawyers = this.sessionFactory.getCurrentSession()
-				.createCriteria(Lawyers.class).list();
+		List<Lawyer> lawyers = this.sessionFactory.getCurrentSession()
+				.createCriteria(Lawyer.class).list();
 		return lawyers;
 	}
 
 	@Override
-	public List<Lawyers> find(String paramName, String paramValue) {
+	public List<Lawyer> find(String paramName, String paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Lawyers> find(String paramName, Long paramValue) {
+	public List<Lawyer> find(String paramName, Long paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Lawyers> find(String paramName, Integer paramValue) {
+	public List<Lawyer> find(String paramName, Integer paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Lawyers> find(BasicQuery query) {
+	public List<Lawyer> find(BasicQuery query) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Lawyers> find(String queryString, String[] paramNames,
+	public List<Lawyer> find(String queryString, String[] paramNames,
 			String[] paramValues) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Lawyers> find(String ParamName, Date date1, Date date2) {
+	public List<Lawyer> find(String ParamName, Date date1, Date date2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Lawyers> find(String ParamName, Date date) {
+	public List<Lawyer> find(String ParamName, Date date) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -130,26 +130,26 @@ public class LawyersDAOImpl implements LawyersDAO {
 	}
 
 	@Override
-	public List<Lawyers> getActiveList() {
+	public List<Lawyer> getActiveList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Lawyers> getLawyersByLawyerAdmin(Integer lawyerAdminId) {
+	public List<Lawyer> getLawyersByLawyerAdmin(Integer lawyerAdminId) {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
-		List<Lawyers> lawyers = this.sessionFactory.getCurrentSession()
-				.createCriteria(Lawyers.class)
+		List<Lawyer> lawyers = this.sessionFactory.getCurrentSession()
+				.createCriteria(Lawyer.class)
 				.add(Restrictions.eq("lawyerAdmin.id", lawyerAdminId)).list();
 		return lawyers;
 	}
 
 	@Override
-	public Lawyers getLawyersByUserId(Integer userId) {
+	public Lawyer getLawyersByUserId(Integer userId) {
 		// TODO Auto-generated method stub
-		Lawyers lawyers = (Lawyers) this.sessionFactory.getCurrentSession()
-				.createCriteria(Lawyers.class)
+		Lawyer lawyers = (Lawyer) this.sessionFactory.getCurrentSession()
+				.createCriteria(Lawyer.class)
 				.add(Restrictions.eq("users.userId", userId)).uniqueResult();
 		return lawyers;
 	}

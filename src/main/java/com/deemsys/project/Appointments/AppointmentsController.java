@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * 
  */
 @Controller
-@RequestMapping("/Staff")
+@RequestMapping("/Caller")
 public class AppointmentsController {
 
 	@Autowired
@@ -111,7 +111,7 @@ public class AppointmentsController {
 	public String getAppointmentListByStaffId(
 			@RequestParam("callerId") Integer staffId, ModelMap model) {
 		model.addAttribute("appointmentsForms",
-				appointmentsService.getAppointmentListByStaffId(staffId));
+				appointmentsService.getAppointmentListByCallerId(staffId));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

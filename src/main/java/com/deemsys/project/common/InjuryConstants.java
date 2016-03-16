@@ -10,14 +10,16 @@ import java.util.Set;
 
 public class InjuryConstants {
 	
-	public static Integer INJURY_ADMIN_ROLE_ID=1;
-	public static Integer INJURY_STAFF_ROLE_ID=2;
+	public static Integer INJURY_SUPER_ADMIN_ROLE_ID=1;
+	public static Integer INJURY_CALLER_ADMIN_ROLE_ID=2;
 	public static Integer INJURY_LAWYER_ADMIN_ROLE_ID=3;
-	public static Integer INJURY_LAWYER_ROLE_ID=4;
+	public static Integer INJURY_CALLER_ROLE_ID=4;
+	public static Integer INJURY_LAWYER_ROLE_ID=5;
 	
-	public static String INJURY_ADMIN_ROLE="ROLE_ADMIN";
-	public static String INJURY_STAFF_ROLE="ROLE_STAFF";
+	public static String INJURY_SUPER_ADMIN_ROLE="ROLE_SUPER_ADMIN";
+	public static String INJURY_CALLER_ADMIN_ROLE="ROLE_CALLER_ADMIN";
 	public static String INJURY_LAWYER_ADMIN_ROLE="ROLE_LAWYER_ADMIN";
+	public static String INJURY_CALLER_ROLE="ROLE_CALLER";
 	public static String INJURY_LAWYER_ROLE="ROLE_LAWYER";
 	
 	// Convert Date To Year Format

@@ -18,9 +18,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.deemsys.project.UserRoleMapping.UserRoleDAO;
+import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.BasicQuery;
-import com.deemsys.project.entity.UserRoleMapping;
 import com.deemsys.project.entity.Users;
 
 @Repository
@@ -32,7 +31,7 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 	SessionFactory sessionFactory;
 	
 	@Autowired
-	UserRoleDAO userRoleDAO;
+	UsersDAO usersDAO;
 	
 	@Override
 	public void save(Users entity) {
@@ -159,7 +158,7 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 			List<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
 			
 			if(userLoginDetails!=null)
-				authorities= buildUserAuthority(userRoleDAO.getbyUserId(userLoginDetails.getUserId()));
+				authorities= buildUserAuthority(usersDAO.get(userLoginDetails.getUserId()));
 			
 			return buildUserForAuthentication(userName,userLoginDetails, authorities);
 		}
@@ -185,12 +184,12 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 			return new User(username,password,isEnable, accountNonExpired, credentialsNonExpired, accountNonLocked,authorities);
 		}
 
-		private List<GrantedAuthority> buildUserAuthority(UserRoleMapping userRoleMapping) {
+		private List<GrantedAuthority> buildUserAuthority(Users users) {
 
 			Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
 
 			// Build user's authorities
-			setAuths.add(new SimpleGrantedAuthority(userRoleMapping.getRole().getRole()));
+			setAuths.add(new SimpleGrantedAuthority(users.getRoles().getRole()));
 
 			List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
 

@@ -11,9 +11,9 @@ import com.deemsys.project.ClinicTimings.ClinicTimingList;
 import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.Clinics.ClinicsForm;
 import com.deemsys.project.Clinics.ClinicsService;
-import com.deemsys.project.entity.Clinics;
-import com.deemsys.project.entity.Patients;
-import com.deemsys.project.patients.PatientsDAO;
+import com.deemsys.project.entity.Clinic;
+import com.deemsys.project.entity.Patient;
+import com.deemsys.project.patient.PatientDAO;
 
 @Service
 @Transactional
@@ -23,7 +23,7 @@ public class SearchClinicsService {
 	ClinicsDAO clinicsDAO;
 
 	@Autowired
-	PatientsDAO patientsDAO;
+	PatientDAO patientDAO;
 
 	@Autowired
 	GeoLocation geoLocation;
@@ -45,11 +45,11 @@ public class SearchClinicsService {
 		// Convert Miles to Meter for Circle in Map
 		Double radius = geoLocation.convertMilesToMeter(searchRange);
 
-		Patients patients = patientsDAO.get(patientId);
-		List<Clinics> clinics = new ArrayList<Clinics>();
+		Patient patients = patientDAO.get(patientId);
+		List<Clinic> clinics = new ArrayList<Clinic>();
 		clinics = clinicsDAO.getClinicsLists();
 
-		for (Clinics clinics2 : clinics) {
+		for (Clinic clinics2 : clinics) {
 			Double distance = geoLocation.distance(patients.getLatitude(),
 					clinics2.getLatitude(), patients.getLongitude(),
 					clinics2.getLongitude());

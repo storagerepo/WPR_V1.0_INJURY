@@ -7,8 +7,8 @@ package com.deemsys.project.CallLogs;
  */
 public class CallLogsForm {
 
-	public CallLogsForm(Integer id, Integer patientId, String timeStamp,
-			String response, String notes) {
+	public CallLogsForm(Long id, Integer patientId, String timeStamp,
+			Integer response, String notes) {
 		super();
 		this.id = id;
 		this.patientId = patientId;
@@ -17,20 +17,20 @@ public class CallLogsForm {
 		this.notes = notes;
 	}
 
-	private Integer id;
+	private Long id;
 	private Integer patientId;
 	private Integer appointmentId;
 	private Integer callerId;
 	private String timeStamp;
-	private String response;
+	private Integer response;
 	private String notes;
 	private String callerName;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -66,11 +66,11 @@ public class CallLogsForm {
 		this.timeStamp = timeStamp;
 	}
 
-	public String getResponse() {
+	public Integer getResponse() {
 		return response;
 	}
 
-	public void setResponse(String response) {
+	public void setResponse(Integer response) {
 		this.response = response;
 	}
 
@@ -82,8 +82,8 @@ public class CallLogsForm {
 		this.notes = notes;
 	}
 
-	public CallLogsForm(Integer id, Integer patientId, Integer appointmentId,
-			String timeStamp, String response, String notes) {
+	public CallLogsForm(Long id, Integer patientId, Integer appointmentId,
+			String timeStamp, Integer response, String notes) {
 		super();
 		this.id = id;
 		this.patientId = patientId;
@@ -98,12 +98,12 @@ public class CallLogsForm {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CallLogsForm(Integer id) {
+	public CallLogsForm(Long id) {
 		this.id = id;
 	}
 
-	public CallLogsForm(Integer id, Integer patientId, Integer appointmentId,
-			String timeStamp, String response, String notes, String callerName) {
+	public CallLogsForm(Long id, Integer patientId, Integer appointmentId,
+			String timeStamp, Integer response, String notes, String callerName) {
 		// TODO Auto-generated constructor stub
 		super();
 		this.id = id;
@@ -116,8 +116,8 @@ public class CallLogsForm {
 
 	}
 
-	public CallLogsForm(Integer id, Integer patientId, String timeStamp,
-			String response, String notes, String callerName) {
+	public CallLogsForm(Long id, Integer patientId, String timeStamp,
+			Integer response, String notes, String callerName) {
 		super();
 		this.id = id;
 		this.patientId = patientId;

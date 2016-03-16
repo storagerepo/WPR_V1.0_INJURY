@@ -3,12 +3,12 @@ package com.deemsys.project.Clinics;
 import java.util.List;
 
 import com.deemsys.project.common.IGenericDAO;
-import com.deemsys.project.entity.Clinics;
+import com.deemsys.project.entity.Clinic;
 
-public interface ClinicsDAO extends IGenericDAO<Clinics> {
+public interface ClinicsDAO extends IGenericDAO<Clinic> {
 
-	public List<Clinics> getClinicsLists();
+	public List<Clinic> getClinicsLists();
 
-	public List<Clinics> getClinicId();
+	public List<Clinic> getClinicId();
 
 }

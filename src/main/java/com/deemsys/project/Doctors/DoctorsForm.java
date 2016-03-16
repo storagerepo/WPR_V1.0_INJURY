@@ -113,17 +113,11 @@ public class DoctorsForm {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DoctorsForm(Integer id, Integer clinicId, String doctorName,
-			String emailId, String contactNumber, String specialistIn,
-			String notes) {
+	public DoctorsForm(Integer id, Integer clinicId, String doctorName) {
 		super();
 		this.id = id;
 		this.clinicId = clinicId;
 		this.doctorName = doctorName;
-		this.emailId = emailId;
-		this.contactNumber = contactNumber;
-		this.specialistIn = specialistIn;
-		this.notes = notes;
 	}
 
 	public DoctorsForm(Integer id, Integer clinicId, String clinicName,

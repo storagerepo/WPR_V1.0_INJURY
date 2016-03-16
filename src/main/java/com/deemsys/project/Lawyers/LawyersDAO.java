@@ -3,12 +3,12 @@ package com.deemsys.project.Lawyers;
 import java.util.List;
 
 import com.deemsys.project.common.IGenericDAO;
-import com.deemsys.project.entity.Lawyers;
+import com.deemsys.project.entity.Lawyer;
 
-public interface LawyersDAO extends IGenericDAO<Lawyers> {
+public interface LawyersDAO extends IGenericDAO<Lawyer> {
 
-	public List<Lawyers> getLawyersByLawyerAdmin(Integer lawyerAdminId);
+	public List<Lawyer> getLawyersByLawyerAdmin(Integer lawyerAdminId);
 
-	public Lawyers getLawyersByUserId(Integer userId);
+	public Lawyer getLawyersByUserId(Integer userId);
 
 }

@@ -20,6 +20,6 @@ public interface AppointmentsDAO extends IGenericDAO<Appointments> {
 	public List<Appointments> getAppointmentsBetweenDates(Date startDate,
 			Date endDate);
 
-	public List<AppointmentsForm> getAppointmentsBetweenDatesByStaffId(
+	public List<AppointmentsForm> getAppointmentsBetweenDatesByCallerId(
 			String startDate, String endDate, Integer staffId);
 }

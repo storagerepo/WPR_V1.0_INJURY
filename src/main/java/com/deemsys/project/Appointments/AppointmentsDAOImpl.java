@@ -172,7 +172,7 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 
 	@SuppressWarnings("unused")
 	@Override
-	public List<AppointmentsForm> getAppointmentsBetweenDatesByStaffId(
+	public List<AppointmentsForm> getAppointmentsBetweenDatesByCallerId(
 			String startDate, String endDate,Integer staffId) {
 		// TODO Auto-generated method stub
 		List<Appointments> appointments=new ArrayList<Appointments>();

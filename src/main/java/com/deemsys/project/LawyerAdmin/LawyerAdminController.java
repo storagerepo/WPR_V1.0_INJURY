@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.deemsys.project.LawyerAdmin.LawyerAdminForm;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
-import com.deemsys.project.Staff.StaffService;
+import com.deemsys.project.Caller.CallerService;
 
 @Controller
 public class LawyerAdminController {
@@ -19,7 +19,7 @@ public class LawyerAdminController {
 	LawyerAdminService lawyerAdminService;
 
 	@Autowired
-	StaffService staffService;
+	CallerService callerService;
 
 	@RequestMapping(value = "/Admin/getLawyerAdmin", method = RequestMethod.GET)
 	public String getLawyerAdmin(@RequestParam("id") Integer id, ModelMap model) {
@@ -40,7 +40,7 @@ public class LawyerAdminController {
 	@RequestMapping(value = "/Admin/saveUpdateLawyerAdmin", method = RequestMethod.POST)
 	public String saveLawyerAdmin(@RequestBody LawyerAdminForm lawyerAdminForm,
 			ModelMap model) {
-		if (lawyerAdminForm.getId() == null)
+		if (lawyerAdminForm.getLawyerAdminId() == null)
 			lawyerAdminService.saveLawyerAdmin(lawyerAdminForm);
 		else
 			lawyerAdminService.updateLawyerAdmin(lawyerAdminForm);
@@ -79,7 +79,7 @@ public class LawyerAdminController {
 	public String getUsername(@RequestParam("username") String username,
 			ModelMap model) {
 		model.addAttribute("isUserNameExist",
-				staffService.getUsername(username));
+				callerService.getUsername(username));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

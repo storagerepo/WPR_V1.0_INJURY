@@ -10,19 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.deemsys.project.entity.Patients;
+import com.deemsys.project.entity.Patient;
 import com.deemsys.project.CallLogs.CallLogsDAO;
 import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.Doctors.DoctorsDAO;
-import com.deemsys.project.Staff.StaffDAO;
-import com.deemsys.project.Staff.StaffService;
+import com.deemsys.project.Caller.CallerDAO;
+import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
-import com.deemsys.project.entity.CallLogs;
-import com.deemsys.project.entity.Clinics;
-import com.deemsys.project.entity.Doctors;
-import com.deemsys.project.patients.PatientsDAO;
-import com.deemsys.project.patients.PatientsForm;
+import com.deemsys.project.entity.CallLog;
+import com.deemsys.project.entity.Clinic;
+import com.deemsys.project.entity.Doctor;
+import com.deemsys.project.patient.PatientDAO;
+import com.deemsys.project.patient.PatientForm;
 
 /**
  * 
@@ -44,10 +44,10 @@ public class AppointmentsService {
 	ClinicsDAO clinicsDAO;
 
 	@Autowired
-	PatientsDAO patientsDAO;
+	PatientDAO patientDAO;
 
 	@Autowired
-	StaffService staffService;
+	CallerService callerService;
 
 	@Autowired
 	CallLogsDAO callLogsDAO;
@@ -56,7 +56,7 @@ public class AppointmentsService {
 	DoctorsDAO doctorsDAO;
 
 	@Autowired
-	StaffDAO staffDAO;
+	CallerDAO callerDAO;
 
 	// Get All Entries
 	public List<AppointmentsForm> getAppointmentsList() {
@@ -68,13 +68,13 @@ public class AppointmentsService {
 
 		for (Appointments appointments : appointmentss) {
 			// TODO: Fill the List
-			AppointmentsForm appointmentsForm = new AppointmentsForm(
-					appointments.getId(), appointments.getPatients().getId(),
-					appointments.getPatients().getName(),
+		/*	AppointmentsForm appointmentsForm = new AppointmentsForm(
+					appointments.getAppointmentId(), appointments.getPatient().getId(),
+					appointments.getPatient().getName(),
 					InjuryConstants.convertMonthFormat(appointments
 							.getScheduledDate()), appointments.getNotes(),
 					appointments.getStatus());
-			appointmentsForms.add(appointmentsForm);
+			appointmentsForms.add(appointmentsForm);*/
 		}
 
 		return appointmentsForms;
@@ -88,13 +88,13 @@ public class AppointmentsService {
 
 		// TODO: Convert Entity to Form
 		// Start
-
-		AppointmentsForm appointmentsForm = new AppointmentsForm(
-				appointments.getId(), appointments.getPatients().getId(),
-				appointments.getPatients().getName(),
+		AppointmentsForm appointmentsForm = new AppointmentsForm();
+		/*AppointmentsForm appointmentsForm = new AppointmentsForm(
+				appointments.getId(), appointments.getPatient().getId(),
+				appointments.getPatient().getName(),
 				InjuryConstants.convertMonthFormat(appointments
 						.getScheduledDate()), appointments.getNotes(),
-				appointments.getStatus());
+				appointments.getStatus());*/
 
 		// End
 
@@ -107,14 +107,15 @@ public class AppointmentsService {
 
 		// Logic Starts
 
-		Patients patients = new Patients();
-		patients.setId(appointmentsForm.getPatientId());
+		Patient patient = new Patient();
+		Appointments appointments = new Appointments();
+		/*patient.setId(appointmentsForm.getPatientId());
 
-		Appointments appointments = new Appointments(patients,
+		Appointments appointments = new Appointments(patient,
 				InjuryConstants.convertYearFormat(appointmentsForm
 						.getScheduledDate()), appointmentsForm.getNotes(),
 				appointmentsForm.getStatus(), null);
-		appointments.setId(appointmentsForm.getId());
+		appointments.setId(appointmentsForm.getId());*/
 		// Logic Ends
 
 		appointmentsDAO.merge(appointments);
@@ -126,27 +127,13 @@ public class AppointmentsService {
 		// TODO: Convert Form to Entity Here
 
 		// Logic Starts
-		Clinics clinics = clinicsDAO.get(appointmentsForm.getClinicId());
-		Doctors doctors = doctorsDAO.get(appointmentsForm.getDoctorId());
 
-		Patients patients = patientsDAO.get(appointmentsForm.getPatientId());
-		patients.setClinics(clinics);
-		patients.setDoctors(doctors);
-
-		Appointments appointments = new Appointments(patients,
-				InjuryConstants.convertYearFormat(appointmentsForm
-						.getScheduledDate()), appointmentsForm.getNotes(), 0,
-				null);
-
+		Patient patient = patientDAO.get(appointmentsForm.getPatientId());
+		
 		// Logic Ends
-		CallLogs callLogs = callLogsDAO.get(appointmentsForm.getCallLogId());
-		callLogs.setAppointments(appointments);
-		callLogsDAO.update(callLogs);
+		patientDAO.update(patient);
 
-		// Logic Ends
-		patientsDAO.update(patients);
-
-		patientsDAO.updatePatientStatus(appointmentsForm.getPatientId());
+		patientDAO.updatePatientStatus(appointmentsForm.getPatientId());
 		return 1;
 	}
 
@@ -164,15 +151,8 @@ public class AppointmentsService {
 	// Update an Entry
 	public int updateAppointments(AppointmentsForm appointmentsForm) {
 
-		Patients patients = new Patients();
-		patients.setId(appointmentsForm.getPatientId());
 
-		Appointments appointments = new Appointments(patients,
-				InjuryConstants.convertYearFormat(appointmentsForm
-						.getScheduledDate()), appointmentsForm.getNotes(),
-				appointmentsForm.getStatus(), null);
-		appointments.setId(appointmentsForm.getId());
-
+		Appointments appointments = new Appointments();		
 		appointmentsDAO.update(appointments);
 		return 1;
 	}
@@ -183,34 +163,18 @@ public class AppointmentsService {
 		return 1;
 	}
 
-	public PatientsForm getPatientDetails(Integer getId) {
-		Patients patients = new Patients();
+	public PatientForm getPatientDetails(Integer getId) {
+		Patient patient = new Patient();
 
-		patients = patientsDAO.get(getId);
+		patient = patientDAO.get(getId);
 
 		// TODO: Convert Entity to Form
 		// Start
-		PatientsForm patientsForm = new PatientsForm();
-		if (patients == null) {
+		PatientForm patientForm = new PatientForm();
+		if (patient == null) {
 
 		} else {
-			patientsForm = new PatientsForm(patients.getId(), patients
-					.getStaff().getId(), patients.getClinics().getClinicId(),
-					patients.getDoctors().getId(),
-					patients.getLocalReportNumber(),
-					patients.getCrashSeverity(),
-					patients.getReportingAgencyName(),
-					patients.getNumberOfUnits(), patients.getUnitInError(),
-					patients.getCountry(), patients.getCityVillageTownship(),
-					patients.getCrashDate().toString(), patients
-							.getTimeOfCrash().toString(),
-					patients.getUnitNumber(), patients.getName(), patients
-							.getDateOfBirth().toString(), patients.getGender(),
-					patients.getAddress(), patients.getPhoneNumber(),
-					patients.getInjuries(), patients.getEmsAgency(),
-					patients.getMedicalFacility(),
-					patients.getCrashReportFileName(),
-					patients.getPatientStatus());
+			patientForm = new PatientForm();
 
 		}
 
@@ -218,7 +182,7 @@ public class AppointmentsService {
 
 		// End
 
-		return patientsForm;
+		return patientForm;
 	}
 
 	public List<AppointmentsForm> monthwiseAppointment(Integer year,
@@ -226,7 +190,7 @@ public class AppointmentsService {
 		List<AppointmentsForm> appointmentsForms = new ArrayList<AppointmentsForm>();
 
 		List<Appointments> appointmentss = new ArrayList<Appointments>();
-		String role = staffService.getCurrentRole();
+		String role = callerService.getCurrentRole();
 		Date monthBegin = new Date();
 		Date monthEnd = new Date();
 		if (month == 0) {
@@ -243,24 +207,25 @@ public class AppointmentsService {
 					monthBegin, monthEnd);
 			for (Appointments appointments : appointmentss) {
 				// TODO: Fill the List
-				AppointmentsForm appointmentsForm = new AppointmentsForm(
-						appointments.getId(), appointments.getPatients()
-								.getId(), appointments.getPatients().getName(),
+				AppointmentsForm appointmentsForm = new AppointmentsForm();
+				/*AppointmentsForm appointmentsForm = new AppointmentsForm(
+						appointments.getId(), appointments.getPatient()
+								.getId(), appointments.getPatient().getName(),
 						appointments.getScheduledDate().toString(),
-						appointments.getNotes(), appointments.getStatus());
+						appointments.getNotes(), appointments.getStatus());*/
 				appointmentsForms.add(appointmentsForm);
 			}
 		} else if (role == "ROLE_STAFF") {
-			Integer userId = staffService.getCurrentUserId();
-			// get Staff Id
-			Integer staffId = staffDAO.getByUserId(userId).getId();
+			Integer userId = callerService.getCurrentUserId();
+			// get Caller Id
+			Integer callerId = callerDAO.getByUserId(userId).getCallerId();
 
 			SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String startDate = yearFormat.format(monthBegin);
 			String endDate = yearFormat.format(monthEnd);
 			appointmentsForms = appointmentsDAO
-					.getAppointmentsBetweenDatesByStaffId(startDate, endDate,
-							staffId);
+					.getAppointmentsBetweenDatesByCallerId(startDate, endDate,
+							callerId);
 
 		}
 
@@ -274,25 +239,20 @@ public class AppointmentsService {
 		List<Appointments> appointmentss = new ArrayList<Appointments>();
 		// TODO: Convert Entity to Form
 		// Start
-		String role = staffService.getCurrentRole();
+		String role = callerService.getCurrentRole();
 		if (role == "ROLE_ADMIN") {
 			appointmentss = appointmentsDAO.getByDates(date);
 
 			for (Appointments appointments : appointmentss) {
 				// TODO: Fill the List
-				AppointmentsForm appointmentsForm = new AppointmentsForm(
-						appointments.getId(), appointments.getPatients()
-								.getId(), appointments.getPatients().getName(),
-						appointments.getScheduledDate().toString(),
-						appointments.getNotes(), appointments.getStatus());
-				appointmentsForms.add(appointmentsForm);
+				AppointmentsForm appointmentsForm = new AppointmentsForm();
 			}
 		} else if (role == "ROLE_STAFF") {
-			Integer userId = staffService.getCurrentUserId();
-			// get Staff Id
-			Integer staffId = staffDAO.getByUserId(userId).getId();
-			appointmentsForms = patientsDAO
-					.getParticularDayAppointmentListByStaffId(date, staffId);
+			Integer userId = callerService.getCurrentUserId();
+			// get Caller Id
+			Integer callerId = callerDAO.getByUserId(userId).getCallerId();
+			appointmentsForms = patientDAO
+					.getParticularDayAppointmentListByCallerId(date, callerId);
 		}
 
 		// End
@@ -304,26 +264,26 @@ public class AppointmentsService {
 		Integer count = 0;
 
 		List<Appointments> appointmentss = new ArrayList<Appointments>();
-		String role = staffService.getCurrentRole();
+		String role = callerService.getCurrentRole();
 		if (role == "ROLE_ADMIN") {
 			appointmentss = appointmentsDAO.getAll();
 			count=appointmentss.size();
 		} else if (role == "ROLE_STAFF") {
-			Integer userId = staffService.getCurrentUserId();
-			// Get Staff Id
-			Integer staffId = staffDAO.getByUserId(userId).getId();
-			count = patientsDAO.getAppointmentListByStaffId(staffId).size();
+			Integer userId = callerService.getCurrentUserId();
+			// Get Caller Id
+			Integer callerId = callerDAO.getByUserId(userId).getCallerId();
+			count = patientDAO.getAppointmentListByCallerId(callerId).size();
 		}
 
 		return count;
 
 	}
 
-	public List<AppointmentsForm> getAppointmentListByStaffId(Integer staffId) {
+	public List<AppointmentsForm> getAppointmentListByCallerId(Integer callerId) {
 		// TODO Auto-generated method stub
 		List<AppointmentsForm> appointmentsForms = new ArrayList<AppointmentsForm>();
 
-		appointmentsForms = patientsDAO.getAppointmentListByStaffId(staffId);
+		appointmentsForms = patientDAO.getAppointmentListByCallerId(callerId);
 
 		return appointmentsForms;
 
@@ -332,18 +292,12 @@ public class AppointmentsService {
 	public Integer removeAppointment(Integer appointmentId) {
 		// TODO Auto-generated method stub
 		Integer status = 0;
-		CallLogs callLogs = callLogsDAO.getCallLogsByAppointment(appointmentId);
-		callLogs.setAppointments(null);
+		CallLog callLogs = callLogsDAO.getCallLogsByAppointment(appointmentId);;
 		callLogsDAO.update(callLogs);
 
 		appointmentsDAO.delete(appointmentId);
 
 		// Change Patient Status
-		Patients patients = patientsDAO.get(callLogs.getPatients().getId());
-		patients.setClinics(null);
-		patients.setDoctors(null);
-		patients.setPatientStatus(1);
-		patientsDAO.update(patients);
 		status = 1;
 
 		return status;

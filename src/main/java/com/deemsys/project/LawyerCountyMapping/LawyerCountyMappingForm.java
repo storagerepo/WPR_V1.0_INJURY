@@ -3,15 +3,10 @@ package com.deemsys.project.LawyerCountyMapping;
 
 public class LawyerCountyMappingForm {
 
-	private Integer mappingId;
 	private Integer lawyerId;
 	private Integer countyId;
-	public Integer getMappingId() {
-		return mappingId;
-	}
-	public void setMappingId(Integer mappingId) {
-		this.mappingId = mappingId;
-	}
+	private Integer status;
+	
 	public Integer getLawyerId() {
 		return lawyerId;
 	}
@@ -24,13 +19,18 @@ public class LawyerCountyMappingForm {
 	public void setCountyId(Integer countyId) {
 		this.countyId = countyId;
 	}
-	
-	public LawyerCountyMappingForm(Integer mappingId, Integer lawyerId,
-			Integer countyId) {
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public LawyerCountyMappingForm(Integer lawyerId,
+			Integer countyId,Integer status) {
 		super();
-		this.mappingId = mappingId;
 		this.lawyerId = lawyerId;
 		this.countyId = countyId;
+		this.status=status;
 	}
 	public LawyerCountyMappingForm() {
 		super();

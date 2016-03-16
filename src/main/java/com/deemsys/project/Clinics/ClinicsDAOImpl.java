@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
-import com.deemsys.project.entity.Clinics;
+import com.deemsys.project.entity.Clinic;
 
 /**
  * 
@@ -25,27 +25,27 @@ public class ClinicsDAOImpl implements ClinicsDAO {
 	SessionFactory sessionFactory;
 
 	@Override
-	public void save(Clinics entity) {
+	public void save(Clinic entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().save(entity);
 	}
 
 	@Override
-	public void merge(Clinics entity) {
+	public void merge(Clinic entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().merge(entity);
 	}
 
 	@Override
-	public Clinics get(Integer id) {
+	public Clinic get(Integer id) {
 		// TODO Auto-generated method stub
-		Clinics clinics = (Clinics) this.sessionFactory.getCurrentSession()
-				.get(Clinics.class, id);
+		Clinic clinics = (Clinic) this.sessionFactory.getCurrentSession()
+				.get(Clinic.class, id);
 		return clinics;
 	}
 
 	@Override
-	public Clinics update(Clinics entity) {
+	public Clinic update(Clinic entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().update(entity);
 		return null;
@@ -59,51 +59,51 @@ public class ClinicsDAOImpl implements ClinicsDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Clinics> getAll() {
+	public List<Clinic> getAll() {
 		// TODO Auto-generated method stub
 		return this.sessionFactory.getCurrentSession()
-				.createCriteria(Clinics.class).list();
+				.createCriteria(Clinic.class).list();
 	}
 
 	@Override
-	public List<Clinics> find(String paramName, String paramValue) {
+	public List<Clinic> find(String paramName, String paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Clinics> find(String paramName, Long paramValue) {
+	public List<Clinic> find(String paramName, Long paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Clinics> find(String paramName, Integer paramValue) {
+	public List<Clinic> find(String paramName, Integer paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Clinics> find(BasicQuery query) {
+	public List<Clinic> find(BasicQuery query) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Clinics> find(String queryString, String[] paramNames,
+	public List<Clinic> find(String queryString, String[] paramNames,
 			String[] paramValues) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Clinics> find(String ParamName, Date date1, Date date2) {
+	public List<Clinic> find(String ParamName, Date date1, Date date2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Clinics> find(String ParamName, Date date) {
+	public List<Clinic> find(String ParamName, Date date) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -133,27 +133,27 @@ public class ClinicsDAOImpl implements ClinicsDAO {
 	}
 
 	@Override
-	public List<Clinics> getActiveList() {
+	public List<Clinic> getActiveList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Clinics> getClinicsLists() {
+	public List<Clinic> getClinicsLists() {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
-		List<Clinics> clinics = this.sessionFactory.getCurrentSession()
-				.createCriteria(Clinics.class).list();
+		List<Clinic> clinics = this.sessionFactory.getCurrentSession()
+				.createCriteria(Clinic.class).list();
 		return clinics;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Clinics> getClinicId() {
+	public List<Clinic> getClinicId() {
 		// TODO Auto-generated method stubCriteria
 		Criteria cr = sessionFactory
 				.getCurrentSession()
-				.createCriteria(Clinics.class)
+				.createCriteria(Clinic.class)
 				.setProjection(
 						Projections
 								.projectionList()
@@ -162,9 +162,9 @@ public class ClinicsDAOImpl implements ClinicsDAO {
 								.add(Projections.property("clinicName"),
 										"clinicName"))
 
-				.setResultTransformer(Transformers.aliasToBean(Clinics.class));
+				.setResultTransformer(Transformers.aliasToBean(Clinic.class));
 
-		List<Clinics> list = cr.list();
+		List<Clinic> list = cr.list();
 
 		return list;
 	}

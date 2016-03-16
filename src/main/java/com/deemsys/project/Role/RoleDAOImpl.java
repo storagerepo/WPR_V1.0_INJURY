@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
-import com.deemsys.project.entity.Role;
+import com.deemsys.project.entity.Roles;
 
 @Repository
 public class RoleDAOImpl implements RoleDAO {
@@ -17,26 +17,26 @@ public class RoleDAOImpl implements RoleDAO {
 	SessionFactory sessionFactory;
 	
 	@Override
-	public void save(Role entity) {
+	public void save(Roles entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().save(entity);
 	}
 
 	@Override
-	public void merge(Role entity) {
+	public void merge(Roles entity) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Role get(Integer id) {
+	public Roles get(Integer id) {
 		// TODO Auto-generated method stub
-		Role role = (Role) this.sessionFactory.getCurrentSession().get(Role.class, id);
+		Roles role = (Roles) this.sessionFactory.getCurrentSession().get(Roles.class, id);
 		return role;
 	}
 
 	@Override
-	public Role update(Role entity) {
+	public Roles update(Roles entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -48,50 +48,50 @@ public class RoleDAOImpl implements RoleDAO {
 	}
 
 	@Override
-	public List<Role> getAll() {
+	public List<Roles> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Role> find(String paramName, String paramValue) {
+	public List<Roles> find(String paramName, String paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Role> find(String paramName, Long paramValue) {
+	public List<Roles> find(String paramName, Long paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Role> find(String paramName, Integer paramValue) {
+	public List<Roles> find(String paramName, Integer paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Role> find(BasicQuery query) {
+	public List<Roles> find(BasicQuery query) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Role> find(String queryString, String[] paramNames,
+	public List<Roles> find(String queryString, String[] paramNames,
 			String[] paramValues) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Role> find(String ParamName, Date date1, Date date2) {
+	public List<Roles> find(String ParamName, Date date1, Date date2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Role> find(String ParamName, Date date) {
+	public List<Roles> find(String ParamName, Date date) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -121,7 +121,7 @@ public class RoleDAOImpl implements RoleDAO {
 	}
 
 	@Override
-	public List<Role> getActiveList() {
+	public List<Roles> getActiveList() {
 		// TODO Auto-generated method stub
 		return null;
 	}

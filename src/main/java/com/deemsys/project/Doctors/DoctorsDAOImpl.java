@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
-import com.deemsys.project.entity.Doctors;
+import com.deemsys.project.entity.Doctor;
 
 /**
  * 
@@ -27,26 +27,26 @@ public class DoctorsDAOImpl implements DoctorsDAO {
 	SessionFactory sessionFactory;
 
 	@Override
-	public void save(Doctors entity) {
+	public void save(Doctor entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().merge(entity);
 	}
 
 	@Override
-	public void merge(Doctors entity) {
+	public void merge(Doctor entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().merge(entity);
 	}
 
 	@Override
-	public Doctors get(Integer id) {
+	public Doctor get(Integer id) {
 		// TODO Auto-generated method stub
-		return (Doctors) this.sessionFactory.getCurrentSession().get(
-				Doctors.class, id);
+		return (Doctor) this.sessionFactory.getCurrentSession().get(
+				Doctor.class, id);
 	}
 
 	@Override
-	public Doctors update(Doctors entity) {
+	public Doctor update(Doctor entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().update(entity);
 		return null;
@@ -61,51 +61,51 @@ public class DoctorsDAOImpl implements DoctorsDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Doctors> getAll() {
+	public List<Doctor> getAll() {
 		// TODO Auto-generated method stub
 		return this.sessionFactory.getCurrentSession()
-				.createCriteria(Doctors.class).list();
+				.createCriteria(Doctor.class).list();
 	}
 
 	@Override
-	public List<Doctors> find(String paramName, String paramValue) {
+	public List<Doctor> find(String paramName, String paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Doctors> find(String paramName, Long paramValue) {
+	public List<Doctor> find(String paramName, Long paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Doctors> find(String paramName, Integer paramValue) {
+	public List<Doctor> find(String paramName, Integer paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Doctors> find(BasicQuery query) {
+	public List<Doctor> find(BasicQuery query) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Doctors> find(String queryString, String[] paramNames,
+	public List<Doctor> find(String queryString, String[] paramNames,
 			String[] paramValues) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Doctors> find(String ParamName, Date date1, Date date2) {
+	public List<Doctor> find(String ParamName, Date date1, Date date2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Doctors> find(String ParamName, Date date) {
+	public List<Doctor> find(String ParamName, Date date) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -135,18 +135,18 @@ public class DoctorsDAOImpl implements DoctorsDAO {
 	}
 
 	@Override
-	public List<Doctors> getActiveList() {
+	public List<Doctor> getActiveList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Doctors> getDoctorId() {
+	public List<Doctor> getDoctorId() {
 		// TODO Auto-generated method stubCriteria
 		Criteria cr = sessionFactory
 				.getCurrentSession()
-				.createCriteria(Doctors.class)
+				.createCriteria(Doctor.class)
 				.setProjection(
 						Projections
 								.projectionList()
@@ -154,19 +154,19 @@ public class DoctorsDAOImpl implements DoctorsDAO {
 								.add(Projections.property("doctorName"),
 										"doctorName"))
 
-				.setResultTransformer(Transformers.aliasToBean(Doctors.class));
+				.setResultTransformer(Transformers.aliasToBean(Doctor.class));
 
-		List<Doctors> list = cr.list();
+		List<Doctor> list = cr.list();
 
 		return list;
 	}
 
 	@Override
-	public List<Doctors> getDoctorsByClinicId(Integer clinicId) {
+	public List<Doctor> getDoctorsByClinicId(Integer clinicId) {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
-		List<Doctors> doctors = this.sessionFactory.getCurrentSession()
-				.createCriteria(Doctors.class)
+		List<Doctor> doctors = this.sessionFactory.getCurrentSession()
+				.createCriteria(Doctor.class)
 				.add(Restrictions.eq("clinics.clinicId", clinicId)).list();
 		return doctors;
 	}
@@ -175,8 +175,8 @@ public class DoctorsDAOImpl implements DoctorsDAO {
 	@Override
 	public Integer getDoctorsSizeByClinicId(Integer clinicId) {
 		// TODO Auto-generated method stub
-		List<Doctors> doctors = this.sessionFactory.getCurrentSession()
-				.createCriteria(Doctors.class)
+		List<Doctor> doctors = this.sessionFactory.getCurrentSession()
+				.createCriteria(Doctor.class)
 				.add(Restrictions.eq("clinics.clinicId", clinicId)).list();
 		return doctors.size();
 	}
@@ -186,7 +186,7 @@ public class DoctorsDAOImpl implements DoctorsDAO {
 		// TODO Auto-generated method stub
 		Query query = this.sessionFactory.getCurrentSession()
 				.createQuery(
-						"update Doctors set clinics.clinicId=NULL where id="
+						"update Doctor set clinics.clinicId=NULL where id="
 								+ doctorId);
 		query.executeUpdate();
 		return null;
@@ -194,10 +194,10 @@ public class DoctorsDAOImpl implements DoctorsDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Doctors> getDoctorsByClinic(Integer clinicId) {
+	public List<Doctor> getDoctorsByClinic(Integer clinicId) {
 		// TODO Auto-generated method stub
-		return (List<Doctors>) this.sessionFactory.getCurrentSession()
-				.createCriteria(Doctors.class)
+		return (List<Doctor>) this.sessionFactory.getCurrentSession()
+				.createCriteria(Doctor.class)
 				.add(Restrictions.eq("clinics.clinicId", clinicId)).list();
 
 	}

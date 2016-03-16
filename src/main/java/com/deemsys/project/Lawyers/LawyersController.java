@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersForm;
-import com.deemsys.project.Staff.StaffService;
+import com.deemsys.project.Caller.CallerService;
 
 @Controller
 @RequestMapping("/Lawyer")
@@ -20,7 +20,7 @@ public class LawyersController {
 	LawyersService lawyersService;
 
 	@Autowired
-	StaffService staffService;
+	CallerService callerService;
 
 	@Autowired
 	LawyerAdminService lawyerAdminService;
@@ -43,7 +43,7 @@ public class LawyersController {
 	@RequestMapping(value = "/saveUpdateLawyers", method = RequestMethod.POST)
 	public String saveLawyers(@RequestBody LawyersForm lawyersForm,
 			ModelMap model) {
-		if (lawyersForm.getId() == null)
+		if (lawyersForm.getLawyerId() == null)
 			lawyersService.saveLawyers(lawyersForm);
 		else
 			lawyersService.updateLawyers(lawyersForm);
@@ -69,7 +69,7 @@ public class LawyersController {
 
 	@RequestMapping(value = "/getLawyersByLawyerAdmin", method = RequestMethod.GET)
 	public String getLawyersByLawyerAdmin(ModelMap model) {
-		Integer currentUserId = staffService.getCurrentUserId();
+		Integer currentUserId = callerService.getCurrentUserId();
 		Integer lawyerAdminId = lawyerAdminService
 				.getLawyerAdminIdByUserId(currentUserId);
 		model.addAttribute("lawyersForms",
@@ -80,7 +80,7 @@ public class LawyersController {
 
 	@RequestMapping(value = "/getNoOfLawyers", method = RequestMethod.GET)
 	public String getNoOfLawyerAdmin(ModelMap model) {
-		Integer currentUserId = staffService.getCurrentUserId();
+		Integer currentUserId = callerService.getCurrentUserId();
 		Integer lawyerAdminId = lawyerAdminService
 				.getLawyerAdminIdByUserId(currentUserId);
 		model.addAttribute("noOfLawyers",

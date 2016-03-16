@@ -47,6 +47,10 @@ public class UsersDAOImpl implements UsersDAO{
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
+		Users users=this.get(id);
+		if(users!=null){
+			this.sessionFactory.getCurrentSession().delete(users);
+		}
 		
 	}
 

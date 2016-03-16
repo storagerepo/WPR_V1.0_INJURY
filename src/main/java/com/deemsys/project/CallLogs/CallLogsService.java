@@ -8,16 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.Appointments.AppointmentsDAO;
-import com.deemsys.project.Staff.StaffDAO;
-import com.deemsys.project.Staff.StaffService;
+import com.deemsys.project.Caller.CallerDAO;
+import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
-import com.deemsys.project.entity.CallLogs;
-import com.deemsys.project.entity.Patients;
-import com.deemsys.project.entity.Staff;
+import com.deemsys.project.entity.CallLog;
+import com.deemsys.project.entity.CallerAdmin;
+import com.deemsys.project.entity.Patient;
+import com.deemsys.project.entity.Caller;
+import com.deemsys.project.entity.PatientCallerAdminMap;
+import com.deemsys.project.entity.PatientCallerAdminMapId;
 import com.deemsys.project.entity.Users;
-import com.deemsys.project.patients.PatientsDAO;
+import com.deemsys.project.patient.PatientDAO;
 
 /**
  * 
@@ -36,13 +39,13 @@ public class CallLogsService {
 	CallLogsDAO callLogsDAO;
 
 	@Autowired
-	StaffDAO staffDAO;
+	CallerDAO callerDAO;
 
 	@Autowired
-	StaffService staffService;
+	CallerService callerService;
 
 	@Autowired
-	PatientsDAO patientsDAO;
+	PatientDAO patientDAO;
 
 	@Autowired
 	AppointmentsDAO appointmentsDAO;
@@ -54,19 +57,18 @@ public class CallLogsService {
 	public List<CallLogsForm> getCallLogsList() {
 		List<CallLogsForm> callLogsForms = new ArrayList<CallLogsForm>();
 
-		List<CallLogs> callLogss = new ArrayList<CallLogs>();
+		List<CallLog> callLogss = new ArrayList<CallLog>();
 
 		callLogss = callLogsDAO.getAll();
 
-		for (CallLogs callLogs : callLogss) {
-			// TODO: Fill the List
+		for (CallLog callLogs : callLogss) {
+			/*// TODO: Fill the List
 			CallLogsForm callLogsForm = new CallLogsForm(callLogs.getId(),
-					callLogs.getPatients().getId(), callLogs.getAppointments()
-							.getId(),
+					callLogs.getPatient().getId(),
 					InjuryConstants.convertUSAFormatWithTime(callLogs
 							.getTimeStamp()), callLogs.getResponse(),
 					callLogs.getNotes());
-			callLogsForms.add(callLogsForm);
+			callLogsForms.add(callLogsForm);*/
 		}
 
 		return callLogsForms;
@@ -74,28 +76,28 @@ public class CallLogsService {
 
 	// Get Particular Entry
 	public CallLogsForm getCallLogs(Integer getId) {
-		CallLogs callLogs = new CallLogs();
+		CallLog callLogs = new CallLog();
 
 		callLogs = callLogsDAO.get(getId);
 		CallLogsForm callLogsForm = new CallLogsForm();
 		// TODO: Convert Entity to Form
 		// Start
 		try {
-			if (callLogs.getAppointments() == null) {
+			/*if (callLogs.getAppointments() == null) {
 				callLogsForm = new CallLogsForm(callLogs.getId(), callLogs
-						.getPatients().getId(),
+						.getPatient().getId(),
 						InjuryConstants.convertUSAFormatWithTime(callLogs
 								.getTimeStamp()), callLogs.getResponse(),
 						callLogs.getNotes());
 			} else {
 				callLogsForm = new CallLogsForm(callLogs.getId(), callLogs
-						.getPatients().getId(), callLogs.getAppointments()
+						.getPatient().getId(), callLogs.getAppointments()
 						.getId(),
 						InjuryConstants.convertUSAFormatWithTime(callLogs
 								.getTimeStamp()), callLogs.getResponse(),
 						callLogs.getNotes());
 
-			}
+			}*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -109,19 +111,23 @@ public class CallLogsService {
 
 		// Logic Starts
 
-		Appointments appointments = new Appointments();
-		appointments.setId(callLogsForm.getAppointmentId());
+		Patient patient = new Patient();
 
-		Patients patients = new Patients();
-		patients.setId(callLogsForm.getPatientId());
-
-		Users users = usersDAO.get(staffService.getCurrentUserId());
-
-		CallLogs callLogs = new CallLogs(patients, appointments, users,
+		
+		Users users = usersDAO.get(callerService.getCurrentUserId());
+		// Caller Admin
+		CallerAdmin callerAdmin = new CallerAdmin();
+		// Caller
+		Caller caller=new Caller();
+				
+		PatientCallerAdminMapId patientCallerAdminMapId=new PatientCallerAdminMapId();
+		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap(patientCallerAdminMapId, callerAdmin, caller, patient, "", 0, 1, null, null);
+		
+		CallLog callLogs = new CallLog(patientCallerAdminMap,
 				InjuryConstants.convertYearFormatWithTime(callLogsForm
 						.getTimeStamp()), callLogsForm.getResponse(),
-				callLogsForm.getNotes());
-		callLogs.setId(callLogsForm.getId());
+				callLogsForm.getNotes(),1,null);
+		callLogs.setCallLogId(callLogsForm.getId());
 		// Logic Ends
 
 		callLogsDAO.merge(callLogs);
@@ -133,30 +139,35 @@ public class CallLogsService {
 		// TODO: Convert Form to Entity Here
 
 		// Logic Starts
-		Patients patients = patientsDAO.get(callLogsForm.getPatientId());
+		Patient patient = patientDAO.get(callLogsForm.getPatientId());
+		// Caller Admin
+		CallerAdmin callerAdmin = new CallerAdmin();
+		// Caller
+		Caller caller=new Caller();
+						
+		PatientCallerAdminMapId patientCallerAdminMapId=new PatientCallerAdminMapId();
+		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap(patientCallerAdminMapId, callerAdmin, caller, patient, "", 0, 1, null, null);
+				
+		Users users = usersDAO.get(callerService.getCurrentUserId());
 
-		Users users = usersDAO.get(staffService.getCurrentUserId());
-
-		CallLogs callLogs = new CallLogs(patients, null, users,
+		CallLog callLogs = new CallLog(patientCallerAdminMap,
 				InjuryConstants.convertYearFormatWithTime(callLogsForm
 						.getTimeStamp()), callLogsForm.getResponse(),
-				callLogsForm.getNotes());
+				callLogsForm.getNotes(),1,null);
 
-		String status = callLogsForm.getResponse();
-		if (status.equals("3")) {
-			patients.setClinics(null);
-			patients.setDoctors(null);
-			patients.setPatientStatus(3);
-			patientsDAO.update(patients);
+		Integer status = callLogsForm.getResponse();
+		if (status==3) {
+			patient.setPatientStatus(3);
+			patientDAO.update(patient);
 
 			callLogsDAO.save(callLogs);
 		} else {
-			if (patients.getPatientStatus() == 2) {
-				patients.setPatientStatus(2);
+			if (patient.getPatientStatus() == 2) {
+				patient.setPatientStatus(2);
 			} else {
-				patients.setPatientStatus(1);
+				patient.setPatientStatus(1);
 			}
-			patientsDAO.update(patients);
+			patientDAO.update(patient);
 			callLogsDAO.save(callLogs);
 		}
 		// Logic Ends
@@ -169,60 +180,59 @@ public class CallLogsService {
 		// TODO: Convert Form to Entity Here
 
 		// Logic Starts
-		Patients patients = patientsDAO.get(callLogsForm.getPatientId());
-		patients.setId(callLogsForm.getPatientId());
+		Patient patient = patientDAO.get(callLogsForm.getPatientId());
 
 		Appointments appointments = new Appointments();
-		CallLogs callLogs = new CallLogs();
+		CallLog callLogs = new CallLog();
+		// Caller Admin
+					CallerAdmin callerAdmin = new CallerAdmin();
+					// Caller
+					Caller caller=new Caller();
+									
+					PatientCallerAdminMapId patientCallerAdminMapId=new PatientCallerAdminMapId();
+					PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap(patientCallerAdminMapId, callerAdmin, caller, patient, "", 0, 1, null, null);
 		if (callLogsForm.getAppointmentId() != null) {
-			appointments = appointmentsDAO.get(callLogsForm.getAppointmentId());
-			appointments.setPatients(patients);
 
-			Users users = usersDAO.get(staffService.getCurrentUserId());
-
-			callLogs = new CallLogs(patients, appointments, users,
+			Users users = usersDAO.get(callerService.getCurrentUserId());
+			callLogs = new CallLog(patientCallerAdminMap,
 					InjuryConstants.convertYearFormatWithTime(callLogsForm
 							.getTimeStamp()), callLogsForm.getResponse(),
-					callLogsForm.getNotes());
-			callLogs.setId(callLogsForm.getId());
-			String status = callLogsForm.getResponse();
-			if (status.equals("3")) {
-				patients.setPatientStatus(3);
-				patients.setClinics(null);
-				patients.setDoctors(null);
-				patientsDAO.update(patients);
+					callLogsForm.getNotes(),1,null);
+			callLogs.setCallLogId(callLogsForm.getId());
+			Integer status = callLogsForm.getResponse();
+			if (status==3) {
+				patient.setPatientStatus(3);
+				patientDAO.update(patient);
 				callLogsDAO.update(callLogs);
 			} else {
-				if (patients.getPatientStatus() == 2) {
-					patients.setPatientStatus(2);
+				if (patient.getPatientStatus() == 2) {
+					patient.setPatientStatus(2);
 				} else {
-					patients.setPatientStatus(1);
+					patient.setPatientStatus(1);
 				}
-				patientsDAO.update(patients);
+				patientDAO.update(patient);
 				callLogsDAO.update(callLogs);
 			}
 		} else {
-			Users users = usersDAO.get(staffService.getCurrentUserId());
+			Users users = usersDAO.get(callerService.getCurrentUserId());
 
-			callLogs = new CallLogs(patients, null, users,
+			callLogs = new CallLog(patientCallerAdminMap,
 					InjuryConstants.convertYearFormatWithTime(callLogsForm
 							.getTimeStamp()), callLogsForm.getResponse(),
-					callLogsForm.getNotes());
-			callLogs.setId(callLogsForm.getId());
-			String status = callLogsForm.getResponse();
-			if (status.equals("3")) {
-				patients.setPatientStatus(3);
-				patients.setClinics(null);
-				patients.setDoctors(null);
-				patientsDAO.update(patients);
+					callLogsForm.getNotes(),1,null);
+			callLogs.setCallLogId(callLogsForm.getId());
+			Integer status = callLogsForm.getResponse();
+			if (status==3) {
+				patient.setPatientStatus(3);
+				patientDAO.update(patient);
 				callLogsDAO.update(callLogs);
 			} else {
-				if (patients.getPatientStatus() == 2) {
-					patients.setPatientStatus(2);
+				if (patient.getPatientStatus() == 2) {
+					patient.setPatientStatus(2);
 				} else {
-					patients.setPatientStatus(1);
+					patient.setPatientStatus(1);
 				}
-				patientsDAO.update(patients);
+				patientDAO.update(patient);
 				callLogsDAO.update(callLogs);
 			}
 		}
@@ -240,82 +250,23 @@ public class CallLogsService {
 	public CallLogsForm getCallLogsByAppointment(Integer appointmentId) {
 
 		CallLogsForm callLogsForm = new CallLogsForm();
-		CallLogs callLogs = callLogsDAO.getCallLogsByAppointment(appointmentId);
-		callLogsForm = new CallLogsForm(callLogs.getId(), callLogs
-				.getPatients().getId(), callLogs.getAppointments().getId(),
-				InjuryConstants.convertUSAFormatWithTime(callLogs
-						.getTimeStamp()), callLogs.getResponse(),
-				callLogs.getNotes());
+		CallLog callLogs = callLogsDAO.getCallLogsByAppointment(appointmentId);
+		
+		// Call Logs Form Need to add
 
 		return callLogsForm;
 	}
 
-	public List<CallLogsForm> getCallLogsByPatientsId(Integer patientId) {
+	public List<CallLogsForm> getCallLogsByPatientId(Integer patientId) {
 
 		List<CallLogsForm> callLogsForm = new ArrayList<CallLogsForm>();
-		List<CallLogs> callLogs = new ArrayList<CallLogs>();
+		List<CallLog> callLogs = new ArrayList<CallLog>();
 		callLogs = callLogsDAO.getCallLogsByPatientsId(patientId);
 		CallLogsForm callLogsForms = new CallLogsForm();
-		for (CallLogs callLogss : callLogs) {
-			try {
-				Integer id = callLogss.getUsers().getUserId();
+		for (CallLog callLogss : callLogs) {
+			
+			callLogsForm.add(callLogsForms);
 
-				Staff staff = new Staff();
-				String staffName = "";
-				if (id == 1) {
-					staffName = callLogss.getUsers().getUsername();
-				} else {
-					staff = staffDAO.getByUserId(id);
-					staffName = staff.getFirstName() + " "
-							+ staff.getLastName();
-				}
-
-				if (callLogss.getAppointments() == null) {
-					if (staffName == null) {
-						callLogsForms = new CallLogsForm(callLogss.getId(),
-								callLogss.getPatients().getId(),
-								InjuryConstants
-										.convertUSAFormatWithTime(callLogss
-												.getTimeStamp()),
-								callLogss.getResponse(), callLogss.getNotes(),
-								null);
-					} else {
-						callLogsForms = new CallLogsForm(callLogss.getId(),
-								callLogss.getPatients().getId(),
-								InjuryConstants
-										.convertUSAFormatWithTime(callLogss
-												.getTimeStamp()),
-								callLogss.getResponse(), callLogss.getNotes(),
-								staffName);
-
-					}
-				} else {
-					if (staffName == null) {
-						callLogsForms = new CallLogsForm(callLogss.getId(),
-								callLogss.getPatients().getId(), callLogss
-										.getAppointments().getId(),
-								InjuryConstants
-										.convertUSAFormatWithTime(callLogss
-												.getTimeStamp()),
-								callLogss.getResponse(), callLogss.getNotes(),
-								null);
-					} else {
-						callLogsForms = new CallLogsForm(callLogss.getId(),
-								callLogss.getPatients().getId(), callLogss
-										.getAppointments().getId(),
-								InjuryConstants
-										.convertUSAFormatWithTime(callLogss
-												.getTimeStamp()),
-								callLogss.getResponse(), callLogss.getNotes(),
-								staffName);
-
-					}
-				}
-				callLogsForm.add(callLogsForms);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 		return callLogsForm;
 
@@ -324,13 +275,13 @@ public class CallLogsService {
 	public List<CallLogsForm> getCallLogsId() {
 		List<CallLogsForm> callLogsForms = new ArrayList<CallLogsForm>();
 
-		List<CallLogs> callLogss = new ArrayList<CallLogs>();
+		List<CallLog> callLogss = new ArrayList<CallLog>();
 
 		callLogss = callLogsDAO.getCallLogsId();
 
-		for (CallLogs callLogs : callLogss) {
+		for (CallLog callLogs : callLogss) {
 			// TODO: Fill the List
-			CallLogsForm callLogsForm = new CallLogsForm(callLogs.getId());
+			CallLogsForm callLogsForm = new CallLogsForm(callLogs.getCallLogId());
 			callLogsForms.add(callLogsForm);
 		}
 
