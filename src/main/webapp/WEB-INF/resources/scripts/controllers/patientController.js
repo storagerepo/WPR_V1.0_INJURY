@@ -27,12 +27,12 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	// Number of Records Per Page
 	$scope.noOfRows="10";
 	if($rootScope.isAdmin==4){
-		  requestHandler.getRequest("/Patient/getPatientsByLawyer.json","").then(function(response){
+		  requestHandler.getRequest("/Patient/getPatientByLawyer.json","").then(function(response){
 				 $scope.patientss= response.data.patientsForms;
 			     $scope.sort('name');
 			   	});
 	   }else{
-		   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
+		   requestHandler.getRequest("Caller/getAllPatients.json","").then(function(response){
 			   $scope.patientss= response.data.patientsForms;
 				     $scope.sort('patientStatus');
 				     $.each($scope.patientss,function(index,value) {
@@ -56,7 +56,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	
 		    
 	$scope.updateList=function(){
-		requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
+		requestHandler.getRequest("Caller/getAllPatients.json","").then(function(response){
 		     $scope.patientss= response.data.patientsForms;
 		     $.each($scope.patientss,function(index,value) {
 		    	 switch(value.patientStatus) {
@@ -81,7 +81,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 
 	
 	$scope.getPatientList=function(){
-		 requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
+		 requestHandler.getRequest("Caller/getAllPatients.json","").then(function(response){
 		     $scope.patients= response.patientsForms;
 		     $scope.sort('name');
 		     $.each($scope.patientss,function(index,value) {
@@ -104,7 +104,7 @@ adminApp.controller('ShowPatientController', function($scope,$http,$location,$st
 	$scope.deletePatient=function(id){
 		$("#deletePatientModal").modal("show");
 		$scope.deleteOnePatient=function(){
-			  requestHandler.deletePostRequest("Staff/deletePatients.json?id=",id).then(function(response){
+			  requestHandler.deletePostRequest("Caller/deletePatient.json?id=",id).then(function(response){
 				  $("#deletePatientModal").modal("hide");
 				  $('.modal-backdrop').hide();
 				  Flash.create('success', "You have Successfully Deleted!");  
@@ -140,7 +140,7 @@ $("#file").val("");
 	$scope.viewPatientModal=function(id){
 		$scope.viewPatientTitle="View Patient";
 		$("#viewPatientModal").modal("show");
-		  requestHandler.getRequest("Patient/getPatients.json?id="+id).then( function(response) {
+		  requestHandler.getRequest("Patient/getPatient.json?id="+id).then( function(response) {
 			$scope.patients= response.data.patientsForm;
 		  });
 
@@ -163,10 +163,10 @@ $("#file").val("");
 		$scope.title="Assign Caller";
 		$scope.assignPatientId=id;
 		$scope.selectedCaller=callerId;
-		requestHandler.getRequest("Staff/getPatients.json?id="+$scope.assignPatientId).then( function(response) {
+		requestHandler.getRequest("Caller/getPatient.json?id="+$scope.assignPatientId).then( function(response) {
 			$scope.patients= response.data.patientsForm;
 		});
-		requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {			
+		requestHandler.getRequest("Admin/getCallerId.json","").then( function(response) {			
 			     $scope.staffs= response.data.staffForms;
 			     $("#assignCallerModel").modal("show");
 			});
@@ -178,7 +178,7 @@ $("#file").val("");
 	//Update the caller
 	$scope.updateCaller=function()
 	{
-		var doUpdate=requestHandler.postRequest('Staff/saveUpdatePatients.json',$scope.patients).then(function(response) {
+		var doUpdate=requestHandler.postRequest('Caller/saveUpdatePatient.json',$scope.patients).then(function(response) {
 			$("#assignCallerModel").modal("hide");
 			$('.modal-backdrop').hide();
 
@@ -199,10 +199,10 @@ $("#file").val("");
 			
 		$scope.assignPatientId=id;
 		$scope.selectedCaller=callerId;
-		requestHandler.getRequest("Staff/getPatients.json?id="+$scope.assignPatientId).then( function(response) {
+		requestHandler.getRequest("Caller/getPatient.json?id="+$scope.assignPatientId).then( function(response) {
 			$scope.patients= response.data.patientsForm;
 		
-		requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
+		requestHandler.getRequest("Caller/getClinicId.json","").then( function(response) {
 			$scope.clinic= response.data.clinicsForms;
 		 
 		   var ClinicId=0;
@@ -235,7 +235,7 @@ $("#file").val("");
 	//Update the Doctor
 	$scope.updateDoctor=function()
 	{
-		var doUpdate=requestHandler.postRequest('Staff/saveUpdatePatients.json',$scope.patients).then(function(response) {
+		var doUpdate=requestHandler.postRequest('Caller/saveUpdatePatient.json',$scope.patients).then(function(response) {
 			$("#assignDoctorModel").modal("hide");
 			$('.modal-backdrop').hide();
 		});
@@ -251,7 +251,7 @@ $("#file").val("");
 	};
 	$scope.patientStatus=function(){
 			 if($scope.Status=="" || $scope.Status==undefined){
-				   requestHandler.getRequest("Staff/getAllPatientss.json","").then(function(response){
+				   requestHandler.getRequest("Caller/getAllPatients.json","").then(function(response){
 						
 					     $scope.patientss= response.data.patientsForms;
 					     $.each($scope.patientss,function(index,value) {
@@ -271,7 +271,7 @@ $("#file").val("");
 				   
 				 }
 			 else{
-			requestHandler.getRequest("Staff/getPatientsByStatus.json?patientStatus="+$scope.Status,"").then( function(response) {
+			requestHandler.getRequest("Caller/getPatientByStatus.json?patientStatus="+$scope.Status,"").then( function(response) {
 			 $scope.patientss= response.data.patientsForms;
 			 $.each($scope.patientss,function(index,value) {
 		    	 switch(value.patientStatus) {
@@ -301,12 +301,12 @@ adminApp.controller('AddPatientController', function($scope,$state,$http,$locati
 	$scope.title=$state.current.title;
 	 $scope.patient.patientId =$stateParams.id;
 	
-	 requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {
+	 requestHandler.getRequest("Admin/getCallerId.json","").then( function(response) {
 		$scope.staff= response.data.staffForms;
 	    });
 
 		//getting patient details by id
-	 	requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
+	 	requestHandler.getRequest("Caller/getClinicId.json","").then( function(response) {
 			$scope.clinic= response.data.clinicsForms;
 	 	});
 	
@@ -329,7 +329,7 @@ adminApp.controller('AddPatientController', function($scope,$state,$http,$locati
 	{
 		//$scope.patient.gender=$scope.patientGender;
 		
-	requestHandler.postRequest("Staff/saveUpdatePatients.json",$scope.patient).then(function(response){
+	requestHandler.postRequest("Caller/saveUpdatePatient.json",$scope.patient).then(function(response){
 		  
 			Flash.create('success', "You have Successfully Added Patient!");
             
@@ -349,7 +349,7 @@ adminApp.controller('EditPatientController', function($scope,$http,$state,$locat
 	 $scope.patient.patientId =$stateParams.id;
 
 	
-	 requestHandler.getRequest("Admin/getStaffId.json","").then( function(response) {
+	 requestHandler.getRequest("Admin/getCallerId.json","").then( function(response) {
 			
 	     $scope.staff= response.data.staffForms;
 	   
@@ -358,7 +358,7 @@ adminApp.controller('EditPatientController', function($scope,$http,$state,$locat
 	     });
 
 		//getting patient details by id
-		requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
+		requestHandler.getRequest("Caller/getPatient.json?id="+$stateParams.id,"").then( function(response) {
 			//alert(JSON.stringify(response));
 			patientOriginal=angular.copy(response.data.patientsForm);
 			
@@ -383,7 +383,7 @@ else
 		}
 		
 	
-		requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
+		requestHandler.getRequest("Caller/getClinicId.json","").then( function(response) {
 			
 		     $scope.clinic= response.data.clinicsForms;
 		 
@@ -413,7 +413,7 @@ else
 	
 
 $scope.updatePatient=function(){
-	requestHandler.postRequest('Staff/saveUpdatePatients.json',$scope.patient).then(function(response) {
+	requestHandler.postRequest('Caller/saveUpdatePatient.json',$scope.patient).then(function(response) {
 	            Flash.create("success","You have Successfully updated!");
 				$location.path("dashboard/patient");
 			});
@@ -429,7 +429,7 @@ $scope.updatePatient=function(){
 
 adminApp.controller('roleController', function($scope,$http,$location,requestHandler) {
 	 
-	  requestHandler.postRequest("Staff/getCurrentRole.json","").then(function(response) {
+	  requestHandler.postRequest("Caller/getCurrentRole.json","").then(function(response) {
 		 
 	   $scope.admin=false;
 	   $scope.staff=false;

@@ -8,44 +8,44 @@
  */
 var adminApp=angular.module('sbAdminApp',['requestModule']);
 adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$rootScope) {
-	/*requestHandler.getRequest("Staff/getNoOfStaffs.json","").then( function(response) {
+	/*requestHandler.getRequest("Caller/getNoOfCallers.json","").then( function(response) {
 	     $scope.staff= response.data.staffForms;
 	     
 	     $scope.numberStaff=$scope.staff;
 	     
 	     });
 	// No of Clinics
-	requestHandler.getRequest("Staff/getNoOfClinics.json","").then( function(response) {
+	requestHandler.getRequest("StaCallertNoOfClinics.json","").then( function(response) {
 	      $scope.numberClinics=response.data.NoOfClinics;
 	     
 	     });*/
 	
 		if($rootScope.isAdmin==1){
 			// No of Clinics
-			requestHandler.getRequest("Staff/getNoOfClinics.json","").then( function(response) {
+			requestHandler.getRequest("Caller/getNoOfClinics.json","").then( function(response) {
 			      $scope.numberClinics=response.data.NoOfClinics;
 			     
 			     });
-			requestHandler.getRequest("Staff/getNoOfStaffs.json","").then( function(response) {
-			     $scope.staff= response.data.staffForms;
+			requestHandler.getRequest("Caller/getNoOfCallers.json","").then( function(response) {
+			     $scope.staff= response.data.callerForms;
 			     
 			     $scope.numberStaff=$scope.staff;
 			     
 			     });
-			   	requestHandler.getRequest("Staff/getNoOfDoctors.json","").then( function(response) {
+			   	requestHandler.getRequest("Caller/getNoOfDoctors.json","").then( function(response) {
 				     $scope.doctors= response.data.doctorsForms;
 				     
 				     $scope.numberDoctors=$scope.doctors;
 				     });
 					
-					 requestHandler.getRequest("Staff/getNoOfPatientss.json","").then( function(response) {
-					     $scope.patients= response.data.patientsForms;
+					 requestHandler.getRequest("Caller/getNoOfPatients.json","").then( function(response) {
+					     $scope.patients= response.data.patientForms;
 					   
 
 					     $scope.numberPatients=$scope.patients;
 					     });
 				  
-				   requestHandler.getRequest("Staff/getNoOfAppointments.json","").then( function(response) {
+				   requestHandler.getRequest("Caller/getNoOfAppointments.json","").then( function(response) {
 						     $scope.appointments= response.data.appointmentsForms;
 
 						     
@@ -56,20 +56,20 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 					     });
 			}
 		   else if($rootScope.isAdmin==2){
-			   requestHandler.getRequest("Staff/getNoOfDoctors.json","").then( function(response) {
+			   requestHandler.getRequest("Caller/getNoOfDoctors.json","").then( function(response) {
 				     $scope.doctors= response.data.doctorsForms;
 				     
 				     $scope.numberDoctors=$scope.doctors;
 				     });
 			   
-			   requestHandler.getRequest("Staff/getNoOfPatientss.json","").then( function(response) {
-				     $scope.patients= response.data.patientsForms;
+			   requestHandler.getRequest("Caller/getNoOfPatients.json","").then( function(response) {
+				     $scope.patients= response.data.patientForms;
 				   
 
 				     $scope.numberPatients=$scope.patients;
 				     });
 			  
-			   requestHandler.getRequest("Staff/getNoOfAppointments.json","").then( function(response) {
+			   requestHandler.getRequest("Caller/getNoOfAppointments.json","").then( function(response) {
 					     $scope.appointments= response.data.appointmentsForms;
 
 					     

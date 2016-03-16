@@ -9,7 +9,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	    };
 	    
 	   $scope.getCallLogsList=function(){
-		    requestHandler.postRequest("Staff/getCallLogsById.json?id="+$stateParams.id,"").then( function(response) {
+		    requestHandler.postRequest("Caller/getCallLogsById.json?id="+$stateParams.id,"").then( function(response) {
 		    	$scope.callLogs= response.data.callLogsForms;
 		    	$.each($scope.callLogs,function(index,value) {
 			    	 switch(value.response) {
@@ -29,7 +29,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		    });
 	   };
 	   
-	    requestHandler.postRequest("Staff/getCallLogsById.json?id="+$stateParams.id,"").then( function(response) {
+	    requestHandler.postRequest("Caller/getCallLogsById.json?id="+$stateParams.id,"").then( function(response) {
 	    	$scope.callLogs= response.data.callLogsForms;
 	    	 $.each($scope.callLogs,function(index,value) {
 		    	 switch(value.response) {
@@ -47,7 +47,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		    	} 
 		     });
 	    	$scope.sort('timeStamp');
-	    	requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
+	    	requestHandler.getRequest("Caller/getPatients.json?id="+$stateParams.id,"").then( function(response) {
 	    		$scope.patient= response.data.patientsForm;
 	    		if($scope.patient.patientStatus==3)
 	    			{
@@ -62,7 +62,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	    
 	    $scope.viewPatients=function(id)
 	    {
-	    	requestHandler.getRequest("/Staff/getPatients.json?id="+id,"").then( function(response) {
+	    	requestHandler.getRequest("/Caller/getPatients.json?id="+id,"").then( function(response) {
 	    		$scope.patients=response.data.patientsForm;
 	    	      $("#myModal").modal("show");
 	         });
@@ -72,7 +72,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	  {
 		
 		  if(confirm("Are you sure to delete CallLogs ?")){
-			  requestHandler.deletePostRequest("Staff/deleteCallLogs.json?id=",id)
+			  requestHandler.deletePostRequest("Caller/deleteCallLogs.json?id=",id)
 			  .success(function(response){
 				  Flash.create("success","You have Successfully Deleted!");
 				  $scope.getCallLogsList();
@@ -185,7 +185,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	{
 		$("#calllogsModel").modal("hide");
 		$('.modal-backdrop').hide();
-		requestHandler.postRequest("Staff/saveUpdateCallLogs.json",$scope.calllogs)
+		requestHandler.postRequest("Caller/saveUpdateCallLogs.json",$scope.calllogs)
 			.then(function(response)
 				{
 				Flash.create("success","You have Successfully Added!");
@@ -203,7 +203,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		var callLogsOriginal="";
 		
 		
-		requestHandler.getRequest("Staff/getCallLogs.json?id="+id,"").then( function(response) {
+		requestHandler.getRequest("Caller/getCallLogs.json?id="+id,"").then( function(response) {
 			callLogsOriginal=angular.copy(response.data.callLogsForm);
 			
 		    $scope.calllogs=response.data.callLogsForm;
@@ -224,7 +224,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	  $scope.update=function(){
 		  $("#calllogsModel").modal("hide");
 		  $('.modal-backdrop').hide();
-		  requestHandler.postRequest("Staff/saveUpdateCallLogs.json",$scope.calllogs).then(function (status) {
+		  requestHandler.postRequest("Caller/saveUpdateCallLogs.json",$scope.calllogs).then(function (status) {
 			  Flash.create("success","You have Successfully Updated!");
 			  $state.reload('dashboard.Calllogs/:id');
 			  $scope.getCallLogsList();
@@ -242,7 +242,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	$scope.addAppointment=function(callLogId){
 		$scope.Appointments.callLogId =callLogId;
 		//getting patient details by id
-		requestHandler.getRequest("Staff/getPatients.json?id="+$stateParams.id,"").then( function(response) {
+		requestHandler.getRequest("Caller/getPatients.json?id="+$stateParams.id,"").then( function(response) {
 			$scope.patient= response.data.patientsForm;
 			
 		 });
@@ -269,7 +269,7 @@ else
 	$("#scheduledDate").val("");
 		$("#appointmentNotes").val("");
 		//getting doctor id
-		requestHandler.getRequest("Staff/getClinicId.json","").then( function(response) {
+		requestHandler.getRequest("Caller/getClinicId.json","").then( function(response) {
 			
 		     $scope.clinic= response.data.clinicsForms;
 		 
@@ -303,7 +303,7 @@ else
 
 		$("#AppointmentsModal").modal("hide");
 		  $('.modal-backdrop').hide();
-		  requestHandler.postRequest("Staff/saveUpdateAppointments.json",$scope.Appointments)
+		  requestHandler.postRequest("Caller/saveUpdateAppointments.json",$scope.Appointments)
 			.then(function(response)
 					{
 				Flash.create("success","You have Successfully Added!");
@@ -317,10 +317,10 @@ else
 			
 			if(confirm("Are you sure to cancel appointment ?")){
 				 
-			  requestHandler.deletePostRequest("Staff/removeAppointment.json?appointmentId=",id)
+			  requestHandler.deletePostRequest("Caller/removeAppointment.json?appointmentId=",id)
 				.then(function(response)
 						{
-					requestHandler.getRequest("Staff/activeStatusByPatientId.json?id="+iD,"")
+					requestHandler.getRequest("Caller/activeStatusByPatientId.json?id="+iD,"")
 					.then(function(results)
 							{
 						$scope.response=results.data.requestSuccess;
@@ -342,7 +342,7 @@ else
 			 $scope.appointments.notavailable=true;
 			}
 		else{
-		requestHandler.getRequest("Staff/getAppointments.json?id="+id,"").then( function(response) {
+		requestHandler.getRequest("Caller/getAppointments.json?id="+id,"").then( function(response) {
 			
 			    $scope.appointments=response.data.appointmentsForm;
 			    $scope.appointments.notavailable=false;

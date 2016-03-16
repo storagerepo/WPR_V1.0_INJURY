@@ -7,7 +7,7 @@ adminApp.controller('ShowCallLogs', function($scope,$http,$location) {
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
 	    };
 
-    $http.get("http://localhost:8080/Injury/getAllStaffs.json").success( function(response) {
+    $http.get("http://localhost:8080/Injury/getAllCallers.json").success( function(response) {
      $scope.staffs= response.staffForms;
      $scope.sort('username');
      
@@ -18,7 +18,7 @@ adminApp.controller('ShowCallLogs', function($scope,$http,$location) {
 		  if(confirm("Are you sure to delete customer ?")){
 		  $http({
 			  method : "POST",
-			  url : "http://localhost:8080/Injury/deleteStaff.json?id="+id,
+			  url : "http://localhost:8080/Injury/deleteCaller.json?id="+id,
 			  }).success(function(response){
 			 
 			  alert("Deleted");
@@ -33,7 +33,7 @@ adminApp.controller('SaveCallLogs', function($scope,$http,$location) {
 	$scope.save=function()
 	{
 		alert("called");
-		$http.post("http://localhost:8080/Injury/saveUpdateStaff",$scope.jsonString)
+		$http.post("http://localhost:8080/Injury/saveUpdateCaller",$scope.jsonString)
 			.success(function(response)
 					{
 				alert("saved");
@@ -45,12 +45,12 @@ adminApp.controller('SaveCallLogs', function($scope,$http,$location) {
 adminApp.controller('EditCallLogs', function($scope,$http,$location,$stateParams) {
 	 
 	
-	$http.get('http://localhost:8080/Injury/getStaff.json?id='+ $stateParams.id).success( function(response) {
+	$http.get('http://localhost:8080/Injury/getCaller.json?id='+ $stateParams.id).success( function(response) {
 	    $scope.jsonString=response.staffForm;
 	});
 	
 	$scope.update=function(){
-	$http.post('http://localhost:8080/Injury/saveUpdateStaff.json', {id:$scope.jsonString.id, customer:$scope.jsonString}).success(function (status) {
+	$http.post('http://localhost:8080/Injury/saveUpdateCaller.json', {id:$scope.jsonString.id, customer:$scope.jsonString}).success(function (status) {
 	          $location.path('/ShowOrders');
 	      });
 	};

@@ -10,13 +10,13 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
 	    };
 	    
-	    requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
+	    requestHandler.getRequest("Admin/getAllCallers.json","").then(function(results){
 	    	 $scope.staffs= results.data.staffForms;
 	         $scope.sort('username');
 	     });
 	    
 	$scope.getStaffList=function() {
-    requestHandler.getRequest("Admin/getAllStaffs.json","").then(function(results){
+    requestHandler.getRequest("Admin/getAllCallers.json","").then(function(results){
     	 $scope.staffs= results.data.staffForms;
      });
 	};
@@ -26,7 +26,7 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
     	  $("#disableStaff").modal("show");
     	  $scope.disable=function()
 		   {
-    	  requestHandler.getRequest("Admin/disableStaff.json?id="+id,"").then(function(results){
+    	  requestHandler.getRequest("Admin/disableCaller.json?id="+id,"").then(function(results){
     		 
  $scope.response=results.data.enableOrDisable;
 			  
@@ -49,7 +49,7 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
     	  $("#enableStaff").modal("show");
     	  $scope.enable=function()
 		   {
-    	  requestHandler.getRequest("Admin/disableStaff.json?id="+id,"").then(function(results){
+    	  requestHandler.getRequest("Admin/disableCaller.json?id="+id,"").then(function(results){
  $scope.result=results.data.enableOrDisable;
 			  
 			  if($scope.result==1)
@@ -94,7 +94,7 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
     	  $("#releasePatient").modal("show");
     	  $scope.release=function()
 		   {
-    	  requestHandler.postRequest("Staff/releasePatientsFromStaff.json?id="+id).then(function(results){
+    	  requestHandler.postRequest("Caller/releasePatientsFromCaller.json?id="+id).then(function(results){
 			 $scope.response=results.data.requestSuccess;
 			 if($scope.response==true)
 			 {
@@ -115,7 +115,7 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 	  {
     	$("#deleteStaffModal1").modal("show");
 		  $scope.deleteStaffNormal=function(){
-			requestHandler.deletePostRequest("Admin/deleteStaff.json?id=",id).then(function(results){
+			requestHandler.deletePostRequest("Admin/deleteCaller.json?id=",id).then(function(results){
 			  $scope.value=results.data.requestSuccess;
 			  
 			  if($scope.value==true)
@@ -134,9 +134,9 @@ adminApp.controller('ShowStaffController', function($rootScope,$scope,$state,$ht
 				    $scope.deleteStaffFromPatients=function()
 				    {
 				    	
-				    	requestHandler.postRequest("Staff/releasePatientsFromStaff.json?id="+id).then(function(response){
+				    	requestHandler.postRequest("Caller/releasePatientsFromCaller.json?id="+id).then(function(response){
 				    		
-				    		 requestHandler.deletePostRequest("Admin/deleteStaff.json?id=",id).then(function(results){
+				    		 requestHandler.deletePostRequest("Admin/deleteCaller.json?id=",id).then(function(results){
 				    			 $("#deleteStaffModal2").modal("hide");
 							    	$('.modal-backdrop').hide();
 						          Flash.create('success', "You have Successfully Deleted!");
@@ -175,7 +175,7 @@ adminApp.controller('SaveStaffController', function($scope,$http,$location,$stat
 			var isNew=response.data.staffForms;
 			if(isNew==0){
 				$("#username_exists").text("");
-			 requestHandler.postRequest("Admin/saveUpdateStaff.json",$scope.staff).then(function(response){
+			 requestHandler.postRequest("Admin/saveUpdateCaller.json",$scope.staff).then(function(response){
 				  Flash.create('success', "You have Successfully Added!");
 				  $location.path('dashboard/staff');
 				});
@@ -196,14 +196,14 @@ adminApp.controller('EditStaffController', function($scope,$http,$location,$stat
 	$scope.options=false;
 	$scope.title=$state.current.title;
 	var staffOriginal="";
-	requestHandler.getRequest("Admin/getStaff.json?id="+$stateParams.id,"").then(function(response){
+	requestHandler.getRequest("Admin/getCaller.json?id="+$stateParams.id,"").then(function(response){
 		staffOriginal=angular.copy(response.data.staffForm);
 		$scope.staff=response.data.staffForm;
 	});
 	
 
 	  $scope.update=function(){
-		  requestHandler.postRequest("Admin/saveUpdateStaff.json",$scope.staff).then(function(response){
+		  requestHandler.postRequest("Admin/saveUpdateCaller.json",$scope.staff).then(function(response){
 			  Flash.create('success', "You have Successfully Updated!");
 			  $location.path('dashboard/staff');
 			});

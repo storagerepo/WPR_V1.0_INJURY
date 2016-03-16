@@ -588,18 +588,39 @@ sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"
                 }
               }
             
-        });// End Change password
+        }).state('dashboard.CountyList',{
+            url:'/CountyList',
+            templateUrl:'views/patient/CountyList.html',
+            resolve: {
+              loadMyFiles:function($ocLazyLoad) {
+              }
+            }
+          }).state('dashboard.TierType',{
+              url:'/TierType',
+              templateUrl:'views/patient/TierType.html',
+              resolve: {
+                loadMyFiles:function($ocLazyLoad) {
+                }
+              }
+            }).state('dashboard.PatientList',{
+                url:'/PatientList',
+                templateUrl:'views/patient/PatientList.html',
+                resolve: {
+                  loadMyFiles:function($ocLazyLoad) {
+                  }
+                }
+              });// End Change password
      
   }]).controller('authenticationController', function($rootScope,$scope,$http,$location,requestHandler) {
      var authenticate=function(){
        requestHandler.postRequest("getCurrentRole.json","").then(function(response) {
        
-        if(response.data.role=="ROLE_ADMIN"){
+        if(response.data.role=="ROLE_SUPER_ADMIN"){
             $rootScope.authenticated=true;
             $rootScope.isAdmin=1;
             $rootScope.username=response.data.username;
          }
-       else if(response.data.role=="ROLE_STAFF"){
+       else if(response.data.role=="ROLE_CALLER_ADMIN"){
             $rootScope.authenticated=true;
             $rootScope.isAdmin=2;
             $rootScope.username=response.data.username;
@@ -614,6 +635,12 @@ sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"
       {
          $rootScope.authenticated=true;
          $rootScope.isAdmin=4;
+         $rootScope.username=response.data.username;
+      }
+      else if(response.data.role=="ROLE_CALLER")
+      {
+         $rootScope.authenticated=true;
+         $rootScope.isAdmin=5;
          $rootScope.username=response.data.username;
       }
        });

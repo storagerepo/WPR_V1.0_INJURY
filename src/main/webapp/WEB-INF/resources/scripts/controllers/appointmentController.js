@@ -24,7 +24,7 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
     	$scope.searchDate=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
     }
 */
-    requestHandler.getRequest("Staff/monthwiseAppointment.json?month=0&year=0","").then(function(response){
+    requestHandler.getRequest("Caller/monthwiseAppointment.json?month=0&year=0","").then(function(response){
 		//alert(JSON.stringify(response));
     	 $scope.appointments = response.data.appointmentsForms;
          $scope.appointments.status = true;
@@ -38,7 +38,7 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
  
 $scope.viewPatients=function(id)
 {
-	requestHandler.getRequest("/Staff/getPatients.json?id="+id,"").then( function(response) {
+	requestHandler.getRequest("/Caller/getPatients.json?id="+id,"").then( function(response) {
 		$scope.patients=response.data.patientsForm;
 	      $("#myModal").modal("show");
      });
@@ -47,7 +47,7 @@ $scope.getByDates=function()
 {
 if($scope.searchMonth)
 	{
-	requestHandler.getRequest("Staff/monthwiseAppointment.json?month="+$scope.searchMonth+"&year="+$scope.searchYear,"").then(function (response) {
+	requestHandler.getRequest("Caller/monthwiseAppointment.json?month="+$scope.searchMonth+"&year="+$scope.searchYear,"").then(function (response) {
 			$scope.appointments=response.data.appointmentsForms;
 			 $.each($scope.appointments,function(index,value){
 	        	 if(value.status==0){
@@ -59,7 +59,7 @@ if($scope.searchMonth)
 
 else
 {
-	requestHandler.getRequest("Staff/monthwiseAppointment.json?month=0&year=0").then( function(response) {
+	requestHandler.getRequest("Caller/monthwiseAppointment.json?month=0&year=0").then( function(response) {
 	     $scope.appointments = response.data.appointmentsForms;
 	     $.each($scope.appointments,function(index,value){
         	 if(value.status==0){

@@ -113,6 +113,8 @@
 
 .bootstrap-datetimepicker-widget .picker-switch {
     text-align: center;
+  /*   background-color:red;
+    border:1px solid red; */
 }
 
 .bootstrap-datetimepicker-widget table {
