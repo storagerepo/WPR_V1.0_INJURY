@@ -3,7 +3,7 @@ var myApp=angular.module("requestModule",[]);
 myApp.factory("requestHandler",['$http',function($http){
     
     var requestObj={};
-    var appURL="http://192.168.1.236:8086";
+    var appURL="http://localhost:8081";
     
     
     requestObj.getURL=function(){
@@ -36,7 +36,6 @@ requestObj.postFileUpload=function(requestURL,data,params){
     requestObj.postRequest=function(requestURL,params){      
        
         requestURL=appURL+"/Injury/"+requestURL;
-      
         return $http.post(requestURL,params).then(function (results) {
                 return results;
          });
