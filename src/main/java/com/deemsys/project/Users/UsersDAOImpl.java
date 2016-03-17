@@ -21,7 +21,7 @@ public class UsersDAOImpl implements UsersDAO{
 	@Override
 	public void save(Users entity) {
 		// TODO Auto-generated method stub
-		
+		this.sessionFactory.getCurrentSession().save(entity);
 	}
 
 	@Override
