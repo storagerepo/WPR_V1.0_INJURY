@@ -46,13 +46,13 @@ public class SchedulerService {
 		worker.work();
 			try
 			{
-				System.out.println("Start Read PDF From Folder");
+				/*System.out.println("Start Read PDF From Folder");
 				if(injuryProperties.getProperty("autoDownloadCrash").equals("on")){
 					crashReportReader.downloadPDFFile(crashReportReader.getCrashId());
 				}else{
 					System.out.println("Auto Download Off");
 				}
-				System.out.println("End PDF Read from folder");
+				System.out.println("End PDF Read from folder");*/
 			}
 			catch(Exception ex)
 			{

@@ -41,6 +41,7 @@ public class UsersDAOImpl implements UsersDAO{
 	@Override
 	public Users update(Users entity) {
 		// TODO Auto-generated method stub
+		this.sessionFactory.getCurrentSession().update(entity);
 		return null;
 	}
 
