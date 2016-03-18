@@ -1,5 +1,8 @@
 package com.deemsys.project.LawyerAdmin;
 
+import java.util.List;
+
+import com.deemsys.project.County.CountyForm;
 import com.deemsys.project.entity.Users;
 
 
@@ -18,6 +21,8 @@ public class LawyerAdminForm {
 	private String phoneNumber;
 	private String notes;
 	private Integer status;
+	List<Integer> county;
+	List<CountyForm> countyform;
 	
 	public Integer getLawyerAdminId() {
 		return lawyerAdminId;
@@ -121,6 +126,27 @@ public class LawyerAdminForm {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+
+	
+
+	public List<Integer> getCounty() {
+		return county;
+	}
+
+	public void setCounty(List<Integer> county) {
+		this.county = county;
+	}
+	
+	
+
+	public List<CountyForm> getCountyform() {
+		return countyform;
+	}
+
+	public void setCountyform(List<CountyForm> countyform) {
+		this.countyform = countyform;
 	}
 
 	public LawyerAdminForm(Integer lawyerAdminId, Integer userId,

@@ -22,9 +22,9 @@ public class LawyerAdminController {
 	CallerService callerService;
 
 	@RequestMapping(value = "/Admin/getLawyerAdmin", method = RequestMethod.GET)
-	public String getLawyerAdmin(@RequestParam("id") Integer id, ModelMap model) {
+	public String getLawyerAdmin(@RequestParam("lawyerAdminId") Integer lawyerAdminId, ModelMap model) {
 		model.addAttribute("lawyerAdminForm",
-				lawyerAdminService.getLawyerAdmin(id));
+				lawyerAdminService.getLawyerAdmin(lawyerAdminId));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
@@ -48,6 +48,27 @@ public class LawyerAdminController {
 		return "/returnPage";
 	}
 
+	@RequestMapping(value = "/Admin/enableOrDisableLawyerAdmin", method = RequestMethod.POST)
+	public String enableOrDisableLawyerAdmin(@RequestParam("lawyerAdminId") Integer lawyerAdminId,
+			ModelMap model) {
+
+		lawyerAdminService.enableOrDisableLawyerAdmin(lawyerAdminId);
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
+	@RequestMapping(value = "/Admin/resetLawyerAdminPassword", method = RequestMethod.POST)
+	public String resetLawyerAdminPassword(@RequestParam("lawyerAdminId") Integer lawyerAdminId,
+			ModelMap model) {
+		
+		lawyerAdminService.resetLawyerAdminPassword(lawyerAdminId);
+		model.addAttribute("requestSuccess", true);
+		
+		return "/returnPage";
+	}
+
+	
+	
 	@RequestMapping(value = "/Admin/deleteLawyerAdmin", method = RequestMethod.POST)
 	public String deleteLawyerAdmin(@RequestParam("id") Integer id,
 			ModelMap model) {
@@ -84,16 +105,5 @@ public class LawyerAdminController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Admin/resetLawyerAdminPassword", method = RequestMethod.GET)
-	public String resetLawyerAdminPassword(@RequestParam("id") Integer id,
-			ModelMap model) {
-		Integer status = lawyerAdminService.resetLawyerAdminPassword(id);
-		if (status == 0) {
-			model.addAttribute("requestSuccess", true);
-		} else {
-			model.addAttribute("requestSuccess", false);
-		}
-		return "/returnPage";
-	}
 
 }

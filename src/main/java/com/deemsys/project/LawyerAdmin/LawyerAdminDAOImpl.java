@@ -3,6 +3,8 @@ package com.deemsys.project.LawyerAdmin;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,9 @@ public class LawyerAdminDAOImpl implements LawyerAdminDAO {
 	@Override
 	public LawyerAdmin get(Integer id) {
 		// TODO Auto-generated method stub
-		LawyerAdmin lawyerAdmin = (LawyerAdmin) this.sessionFactory
-				.getCurrentSession().get(LawyerAdmin.class, id);
+		Session session = this.sessionFactory.openSession();
+		LawyerAdmin lawyerAdmin = (LawyerAdmin) session.get(LawyerAdmin.class, id);
+		session.flush();
 		return lawyerAdmin;
 	}
 
@@ -109,13 +112,15 @@ public class LawyerAdminDAOImpl implements LawyerAdminDAO {
 	@Override
 	public boolean disable(Integer id) {
 		// TODO Auto-generated method stub
-		return false;
+	Query query=this.sessionFactory.getCurrentSession().createQuery("update LawyerAdmin set status=0 where lawyerAdminId="+id+"");
+		return true;
 	}
 
 	@Override
 	public boolean enable(Integer id) {
 		// TODO Auto-generated method stub
-		return false;
+		Query query=this.sessionFactory.getCurrentSession().createQuery("update LawyerAdmin set status=1 where lawyerAdminId="+id+"");
+		return true;
 	}
 
 	@Override
@@ -143,6 +148,13 @@ public class LawyerAdminDAOImpl implements LawyerAdminDAO {
 				.getCurrentSession().createCriteria(LawyerAdmin.class)
 				.add(Restrictions.eq("users.userId", userId)).uniqueResult();
 		return lawyerAdmin;
+	}
+
+	@Override
+	public Integer getUserIdByLawyerAdminId(Integer lawyerAdminId) {
+		// TODO Auto-generated method stub
+		return this.get(lawyerAdminId).getUsers().getUserId();
+		
 	}
 
 }
