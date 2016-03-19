@@ -800,7 +800,7 @@ public class PDFCrashReportReader {
 			patientsForm.setCrashSeverity(firstPageForm.getCrashSeverity());
 			patientsForm.setReportingAgencyName(firstPageForm
 					.getReportingAgencyName());
-			patientsForm.setCountry(firstPageForm.getCounty());
+			patientsForm.setCounty(firstPageForm.getCounty());
 			patientsForm.setNumberOfUnits(firstPageForm.getNumberOfUnits());
 			patientsForm.setUnitInError(firstPageForm.getUnitInError());
 			patientsForm.setCityVillageTownship(firstPageForm

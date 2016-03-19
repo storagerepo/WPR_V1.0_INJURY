@@ -12,6 +12,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -365,15 +368,32 @@ public class PatientService {
 	}
 
 	// Get Total Patient Count By Page Limit
-	public Integer getTotalPatient(String name, String phoneNumber,
-			String localReportNumber, String callerName) {
+	public Integer getTotalPatient(String localReportNumber,String county, 
+			String crashDate,Integer days,String recordedFromDate,String recordedToDate, String name) {
 		Integer count = 0;
-		if (name.equals("")&&phoneNumber.equals("")&&localReportNumber.equals("")&&callerName.equals("")) {
-			count = this.getPatientList().size();
-		} else {
-			count = patientDAO.getTotalPatientCount(name, phoneNumber,
-					localReportNumber, callerName);
-		}
+		String toDate="";
+		count = patientDAO.getTotalPatientCount(localReportNumber, county, crashDate, toDate, recordedFromDate, recordedToDate, name);
+		
 		return count;
 	}
+	
+	
+	// Get Patient List By Page Limit
+		public List<PatientViewForm> searchPatients(Integer pageNumber, Integer itemsPerPage,String localReportNumber,String county, 
+				String crashDate,Integer days,String recordedFromDate,String recordedToDate, String name, String customDate) {
+			List<Patient> patients = new ArrayList<Patient>();
+			List<PatientViewForm> patientViewForms = new ArrayList<PatientViewForm>();
+			
+			String toDate="";
+			
+			patients = patientDAO.searchPatients(pageNumber, itemsPerPage,localReportNumber, county, crashDate, toDate, recordedFromDate, recordedToDate, name, customDate);
+
+			for (Patient patient : patients) {
+				PatientViewForm patientViewForm=new PatientViewForm(patient.getLocalReportNumber(), patient.getCounty(), patient.getCrashDate(), patient.getCrashSeverity(), patient.getAddedDate(), patient.getName());
+				patientViewForms.add(patientViewForm);
+			}
+
+			return patientViewForms;
+		}
+	
 }

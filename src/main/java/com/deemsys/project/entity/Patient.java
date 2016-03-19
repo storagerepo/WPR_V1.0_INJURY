@@ -28,6 +28,7 @@ public class Patient implements java.io.Serializable {
 	private String county;
 	private String cityVillageTownship;
 	private String crashDate;
+	private String addedDate;
 	private String timeOfCrash;
 	private String unitNumber;
 	private String name;
@@ -62,7 +63,7 @@ public class Patient implements java.io.Serializable {
 	public Patient(byte[] patientId, String localReportNumber,
 			String crashSeverity, String reportingAgencyName,
 			String numberOfUnits, String unitInError, String county,
-			String cityVillageTownship, String crashDate, String timeOfCrash,
+			String cityVillageTownship, String crashDate,String addedDate, String timeOfCrash,
 			String unitNumber, String name, String dateOfBirth, String gender,
 			String address, Double latitude, Double longitude,
 			String phoneNumber, String injuries, String emsAgency,
@@ -81,6 +82,7 @@ public class Patient implements java.io.Serializable {
 		this.county = county;
 		this.cityVillageTownship = cityVillageTownship;
 		this.crashDate = crashDate;
+		this.addedDate = addedDate;
 		this.timeOfCrash = timeOfCrash;
 		this.unitNumber = unitNumber;
 		this.name = name;
@@ -184,6 +186,16 @@ public class Patient implements java.io.Serializable {
 
 	public void setCrashDate(String crashDate) {
 		this.crashDate = crashDate;
+	}
+
+	
+	@Column(name = "added_date", length = 45)
+	public String getAddedDate() {
+		return addedDate;
+	}
+
+	public void setAddedDate(String addedDate) {
+		this.addedDate = addedDate;
 	}
 
 	@Column(name = "time_of_crash", length = 45)
@@ -376,5 +388,7 @@ public class Patient implements java.io.Serializable {
 			Set<PatientLawyerAdminMap> patientLawyerAdminMaps) {
 		this.patientLawyerAdminMaps = patientLawyerAdminMaps;
 	}
+
+	
 
 }

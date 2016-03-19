@@ -6,8 +6,8 @@ package com.deemsys.project.patient;
  * 
  */
 public class PatientForm {
-
-	private Integer id;
+	
+	private String id;
 	private Integer callerId;
 	private String callerName;
 	private Integer clinicId;
@@ -19,9 +19,10 @@ public class PatientForm {
 	private String reportingAgencyName;
 	private String numberOfUnits;
 	private String unitInError;
-	private String country;
+	private String county;
 	private String cityVillageTownship;
 	private String crashDate;
+	private String addedDate;
 	private String timeOfCrash;
 	private String unitNumber;
 	private String name;
@@ -41,11 +42,11 @@ public class PatientForm {
 	private String crashReportFileName;
 	private Integer patientStatus;
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -113,12 +114,14 @@ public class PatientForm {
 		this.unitInError = unitInError;
 	}
 
-	public String getCountry() {
-		return country;
+
+
+	public String getCounty() {
+		return county;
 	}
 
-	public void setCountry(String country) {
-		this.country = country;
+	public void setCounty(String county) {
+		this.county = county;
 	}
 
 	public String getCityVillageTownship() {
@@ -135,6 +138,15 @@ public class PatientForm {
 
 	public void setCrashDate(String crashDate) {
 		this.crashDate = crashDate;
+	}
+
+	
+	public String getAddedDate() {
+		return addedDate;
+	}
+
+	public void setAddedDate(String addedDate) {
+		this.addedDate = addedDate;
 	}
 
 	public String getTimeOfCrash() {
@@ -273,10 +285,10 @@ public class PatientForm {
 		this.patientStatus = patientStatus;
 	}
 
-	public PatientForm(Integer id, Integer callerId, Integer clinicId,
+	public PatientForm(String id, Integer callerId, Integer clinicId,
 			Integer doctorId, String localReportNumber, String crashSeverity,
 			String reportingAgencyName, String numberOfUnits,
-			String unitInError, String country, String cityVillageTownship,
+			String unitInError, String county, String cityVillageTownship,
 			String crashDate, String timeOfCrash, String unitNumber,
 			String name, String dateOfBirth, String gender, String address,
 			String phoneNumber, String injuries, String emsAgency,
@@ -292,7 +304,7 @@ public class PatientForm {
 		this.reportingAgencyName = reportingAgencyName;
 		this.numberOfUnits = numberOfUnits;
 		this.unitInError = unitInError;
-		this.country = country;
+		this.county = county;
 		this.cityVillageTownship = cityVillageTownship;
 		this.crashDate = crashDate;
 		this.timeOfCrash = timeOfCrash;
@@ -309,6 +321,8 @@ public class PatientForm {
 		this.patientStatus = patientStatus;
 	}
 
+	
+	
 	public PatientForm() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -352,4 +366,46 @@ public class PatientForm {
 		this.crashReportFileName = crashReportFileName;
 	}
 
+	public PatientForm(String localReportNumber,
+			String crashSeverity, String reportingAgencyName,
+			String numberOfUnits, String unitInError, String county,
+			String cityVillageTownship, String crashDate, String addedDate, String timeOfCrash,
+			String unitNumber, String name, String dateOfBirth, String gender,
+			String address, Double latitude, Double longitude,
+			String phoneNumber, String injuries, String emsAgency,
+			String medicalFacility, String insuranceCompany,
+			String policyNumber, String atFaultInsuranceCompany,
+			String atFaultPolicyNumber, String crashReportFileName,
+			Integer patientStatus) {
+		super();
+		this.localReportNumber = localReportNumber;
+		this.crashSeverity = crashSeverity;
+		this.reportingAgencyName = reportingAgencyName;
+		this.numberOfUnits = numberOfUnits;
+		this.unitInError = unitInError;
+		this.county = county;
+		this.cityVillageTownship = cityVillageTownship;
+		this.crashDate = crashDate;
+		this.addedDate= addedDate;
+		this.timeOfCrash = timeOfCrash;
+		this.unitNumber = unitNumber;
+		this.name = name;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.address = address;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.phoneNumber = phoneNumber;
+		this.injuries = injuries;
+		this.emsAgency = emsAgency;
+		this.medicalFacility = medicalFacility;
+		this.insuranceCompany = insuranceCompany;
+		this.policyNumber = policyNumber;
+		this.atFaultInsuranceCompany = atFaultInsuranceCompany;
+		this.atFaultPolicyNumber = atFaultPolicyNumber;
+		this.crashReportFileName = crashReportFileName;
+		this.patientStatus = patientStatus;
+	}
+
+	
 }

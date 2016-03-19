@@ -321,7 +321,7 @@ public class LawyersService {
 		for (CountyForm countyForms1 : countyForms) {
 			for (PatientForm patientForm : patientForms) {
 				if (countyForms1.getName().equals(
-						patientForm.getCountry().split("\\s+")[0])) {
+						patientForm.getCounty().split("\\s+")[0])) {
 					matchedPatientForms.add(patientForm);
 				}
 			}

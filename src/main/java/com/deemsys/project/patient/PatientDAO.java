@@ -1,5 +1,6 @@
 package com.deemsys.project.patient;
 
+import java.util.Date;
 import java.util.List;
 
 import com.deemsys.project.Appointments.AppointmentsForm;
@@ -51,7 +52,11 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 			Integer itemsPerPage, String name, String phoneNumber,
 			String localReportNumber, String callerName);
 
-	public Integer getTotalPatientCount(String name, String phoneNumber,
-			String localReportNumber, String callerName);
+	public Integer getTotalPatientCount(String localReportNumber, String county,
+			String crashDate, String toDate, String recordedFromDate,
+			String recordedToDate, String name);
+	
+	public List<Patient> searchPatients(Integer pageNumber, Integer itemsPerPage,String localReportNumber,String county, 
+			String crashDate,String toDate,String recordedFromDate,String recordedToDate, String name, String customDate);
 
 }

@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
-
+import com.deemsys.project.LawyerAdmin.LawyerAdminForm;
 import com.deemsys.project.Lawyers.LawyersService;
 import com.deemsys.project.Map.ClinicLocationForm;
 import com.deemsys.project.Map.SearchClinicsService;
@@ -243,11 +243,19 @@ public class PatientController {
 		model.addAttribute("patientForms", patientService.getPatientByLimit(
 				pageNumber, itemsPerPage, name, phoneNumber, localReportNumber,
 				callerName));
-		model.addAttribute("totalCount", patientService.getTotalPatient(name,
-				phoneNumber, localReportNumber, callerName));
+		
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
+	
+	@RequestMapping(value = { "/Admin/searchPatients" }, method = RequestMethod.POST)
+	public String searchPatients(@RequestBody PatientSearchForm patientsearchForm,ModelMap model) {
+		model.addAttribute("patientViewForms", patientService.searchPatients(patientsearchForm.getPageNumber(),patientsearchForm.getItemsPerPage(),patientsearchForm.getLocalReportNumber(), patientsearchForm.getCounty(), patientsearchForm.getCrashDate(),patientsearchForm.getDays() , patientsearchForm.getRecordedFromDate(),patientsearchForm.getRecordedToDate() , patientsearchForm.getName(), patientsearchForm.getCustomDate()));
+		model.addAttribute("noOfRecords", patientService.getTotalPatient(patientsearchForm.getLocalReportNumber(), patientsearchForm.getCounty(), patientsearchForm.getCrashDate(),patientsearchForm.getDays() , patientsearchForm.getRecordedFromDate(),patientsearchForm.getRecordedToDate() , patientsearchForm.getName()));
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
 	
 	@RequestMapping(value = { "/Caller/checkRead" }, method = RequestMethod.GET)
 	public @ResponseBody String getAllPatientsByLimit(ModelMap model) {
