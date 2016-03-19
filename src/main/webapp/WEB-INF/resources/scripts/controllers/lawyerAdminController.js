@@ -20,12 +20,23 @@ adminApp.controller('ShowLawyerAdminController',function($http,$state,$scope,req
     	});
     };
 	
-	
-	$scope.resetPassword=function(id){
+    $scope.enableOrDisableLawyerAdmin=function(lawyerAdminId){
+    	
+    	requestHandler.postRequest("Admin/enableOrDisableLawyerAdmin.json?lawyerAdminId="+lawyerAdminId,"").then(function(response){
+    		 $scope.response=response.data.requestSuccess;
+			 if($scope.response==true)
+			 {
+			 Flash.create('success', "You have Successfully Updated!");
+			 $scope.getLawyerAdminList();
+    	}
+    	});
+    };
+    
+	$scope.resetPassword=function(lawyerAdminId){
 		$("#resetLawyerAdminPassword").modal("show");
   	  $scope.resetLawyerAdminPassword=function()
 		   {
-  		requestHandler.getRequest("Admin/resetLawyerAdminPassword.json?id="+id,"").then(function(response) {
+  		requestHandler.postRequest("Admin/resetLawyerAdminPassword.json?lawyerAdminId="+lawyerAdminId,"").then(function(response) {
 			 $scope.response=response.data.requestSuccess;
 			 if($scope.response==true)
 			 {
@@ -46,21 +57,42 @@ adminApp.controller('SaveLawyerAdminController', function($http,$state,$scope,$l
 	$scope.options=true;
 	$scope.title=$state.current.title;
 	
+	$scope.lawyerAdmin={};
+	$scope.lawyerAdmin.county=[];
+	$scope.lawyerAdmin.countyForms=[];
+	$scope.selectedCounties=function(countyId){
+		var idx=$scope.lawyerAdmin.county.indexOf(countyId);
+		// Already Selected Items
+		if(idx>-1){
+			$scope.lawyerAdmin.county.splice(idx,1);
+		}
+		// Add New Items
+		else{
+			$scope.lawyerAdmin.county.push(countyId);
+		}
+		console.log($scope.lawyerAdmin.county);
+	};
+	
+	// Get County List
+	 requestHandler.getRequest("Admin/getAllCountys.json","").then(function(response){
+			$scope.lawyerAdmin.countyForms=response.data.countyForms;
+	});
+	
 	$scope.saveLawyerAdmin=function(){
-		$("#username_exists").text("");
+		/*$("#username_exists").text("");
 		requestHandler.getRequest("Admin/checkUsernameExist.json?username="+$scope.lawyerAdmin.username,"").then(function(response){
 			var isNew=response.data.isUserNameExist;
 			if(isNew==0){
-				$("#username_exists").text("");
+				$("#username_exists").text("");*/
 			 requestHandler.postRequest("Admin/saveUpdateLawyerAdmin.json",$scope.lawyerAdmin).then(function(response){
 				  Flash.create('success', "You have Successfully Added!");
 				  $location.path('dashboard/LawyerAdmin');
 				});
-			}
+			/*}
 			else{
 				$("#username_exists").text("UserName already exists");
 			}
-		});
+		});*/
 	};
 });
 
@@ -69,7 +101,7 @@ adminApp.controller('EditLawyerAdminController', function($http,$state,$location
 	$scope.title=$state.current.title;
 	
 	var lawyerAdminOriginal="";
-	requestHandler.getRequest("Admin/getLawyerAdmin.json?id="+$stateParams.id,"").then(function(response){
+	requestHandler.getRequest("Admin/getLawyerAdmin.json?lawyerAdminId="+$stateParams.lawyerAdminId,"").then(function(response){
 		lawyerAdminOriginal=angular.copy(response.data.lawyerAdminForm);
 		$scope.lawyerAdmin=response.data.lawyerAdminForm;
 	});
@@ -80,6 +112,21 @@ adminApp.controller('EditLawyerAdminController', function($http,$state,$location
 			  $location.path('dashboard/LawyerAdmin');
 			});
 	};
+	
+	
+	// County Selection
+	$scope.selectedCounties=function(countyId){
+		var idx=$scope.lawyerAdmin.county.indexOf(countyId);
+		// Already Selected Items
+		if(idx>-1){
+			$scope.lawyerAdmin.county.splice(idx,1);
+		}
+		// Add New Items
+		else{
+			$scope.lawyerAdmin.county.push(countyId);
+		}
+	};
+	
 	$scope.isClean = function() {
         return angular.equals (lawyerAdminOriginal, $scope.lawyerAdmin);
     };

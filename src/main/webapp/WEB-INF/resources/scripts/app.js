@@ -511,7 +511,7 @@ sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"
          templateUrl:'views/lawyeradmin/add-lawyer-admin.html',
          url:'/add-lawyer-admin',
          title:'Add Lawyer Admin'
-   }).state('dashboard.EditLawyerAdmin/:id',{
+   }).state('dashboard.EditLawyerAdmin/:lawyerAdminId',{
        
        resolve: {
            loadMyFile:function($ocLazyLoad) {
@@ -524,9 +524,59 @@ sbAdminApp.config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',"
          },
          controller:'EditLawyerAdminController',
          templateUrl:'views/lawyeradmin/add-lawyer-admin.html',
-         url:'/EditLawyerAdmin/:id',
+         url:'/EditLawyerAdmin/:lawyerAdminId',
          title:'Edit Lawyer Admin'
    })//End Lawyer Admin
+   //Caller Admin starts
+   .state('dashboard.CallerAdmin',{
+       	 resolve: {
+                loadMyFile:function($ocLazyLoad) {
+                  return $ocLazyLoad.load({
+                      name:'sbAdminApp',
+                      files:['scripts/controllers/callerAdminController.js',
+                             'js/mask.js']
+                  });
+                }
+              },
+           controller:'ShowCallerAdminController',
+           templateUrl:'views/calleradmin/view-caller-admin.html',
+           url:'/CallerAdmin'
+       
+       })
+    .state('dashboard.add-caller-admin',{
+      
+       resolve: {
+           loadMyFiles:function($ocLazyLoad) {
+             return $ocLazyLoad.load({
+                 name:'sbAdminApp',
+                 files:['scripts/controllers/callerAdminController.js',
+                        'js/mask.js']
+             });
+           }
+         },
+         controller:'SaveCallerAdminController',
+         templateUrl:'views/calleradmin/add-caller-admin.html',
+         url:'/add-caller-admin',
+         title:'Add Caller Admin'
+    })
+    .state('dashboard.EditCallerAdmin/:callerAdminId',{
+       
+       resolve: {
+           loadMyFile:function($ocLazyLoad) {
+             
+             return $ocLazyLoad.load({
+                 name:'sbAdminApp',
+                 files:['scripts/controllers/callerAdminController.js']
+             });
+           }
+         },
+         controller:'EditCallerAdminController',
+         templateUrl:'views/calleradmin/add-caller-admin.html',
+         url:'/EditCallerAdmin/:callerAdminId',
+         title:'Edit Caller Admin'
+   })
+   //Caller Admin Ends
+   
    //Lawyers starts
         .state('dashboard.Lawyer',{
        	 resolve: {
@@ -741,6 +791,20 @@ sbAdminApp.directive('validateNumber',function(){
 	        link: function(scope, elm, attrs, ngModel) {
 	           	ngModel.$validators.validateNumber = function(modelValue) {
 	                    return NUMBER_EXPR.test(modelValue);//||USA_MOB_EXPR_WITH_BR.test(modelValue);
+	                };
+	        }
+	    };
+});
+
+sbAdminApp.directive('validateZipcode',function(){
+	 var ZIPCODE_EXPR = /^[0-9]{5}$/;
+	// var USA_MOB_EXPR_WITH_BR=/^(\([0-9]{3}\)|[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+	    return {
+	        require: 'ngModel',
+	        restrict: '',
+	        link: function(scope, elm, attrs, ngModel) {
+	           	ngModel.$validators.validateZipcode = function(modelValue) {
+	                    return ZIPCODE_EXPR.test(modelValue);//||USA_MOB_EXPR_WITH_BR.test(modelValue);
 	                };
 	        }
 	    };

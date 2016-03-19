@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="col-lg-12">
-		<a ui-sref="dashboard.add-lawyer-admin"
-			class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-plus-circle fa-lg"></i> Add Lawyer Admin</a>
-		<h2 class="page-header">Lawyer Admin</h2>
+		<a ui-sref="dashboard.add-caller-admin"
+			class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-plus-circle fa-lg"></i> Add Caller Admin</a>
+		<h2 class="page-header">Caller Admin</h2>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -20,7 +20,7 @@
 		<option value="25">Show 25 Per Page</option>
 		<option value="50">Show 50 Per Page</option>
 		<option value="100">Show 100 Per Page</option>
-		<option value="{{lawyerAdmins.length}}">Show All</option>
+		<option value="{{callerAdmins.length}}">Show All</option>
 	</select> 
 </div>
 					<table class="table table-hover">
@@ -56,35 +56,35 @@
 								
 							</tr>
 						</thead>
-						<tbody ng-show="lawyerAdmins.length>0"  dir-paginate="lawyerAdmin in lawyerAdmins|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows">
+						<tbody ng-show="callerAdmins.length>0"  dir-paginate="callerAdmin in callerAdmins|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows">
 
 							<tr>
-								<td ng-cloak>{{lawyerAdmin.username}}</td>
-								<td ng-cloak>{{lawyerAdmin.firstName}}</td>
-								<td ng-cloak>{{lawyerAdmin.lastName}}</td>
+								<td ng-cloak>{{callerAdmin.username}}</td>
+								<td ng-cloak>{{callerAdmin.firstName}}</td>
+								<td ng-cloak>{{callerAdmin.lastName}}</td>
 
-								<td ng-cloak>{{lawyerAdmin.phoneNumber}}</td>
-								<td ng-cloak>{{lawyerAdmin.emailAddress}}</td>
+								<td ng-cloak>{{callerAdmin.phoneNumber}}</td>
+								<td ng-cloak>{{callerAdmin.emailAddress}}</td>
 								
 								<td>
-								<a href="#/dashboard/EditLawyerAdmin/{{lawyerAdmin.lawyerAdminId}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Lawyer Admin"><i
+								<a href="#/dashboard/EditCallerAdmin/{{callerAdmin.callerAdminId}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Caller Admin"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
-							
-								<a href="" ng-cloak ng-show="lawyerAdmin.status==1" ng-click="enableOrDisableLawyerAdmin(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Lawyer Admin"><i
+						
+								<a href="" ng-cloak ng-show="callerAdmin.status==1" ng-click="enableOrDisbaleCallerAdmin(callerAdmin.callerAdminId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Caller Admin"><i
 								class="fa fa-unlock-alt"></i>
 						</a>
-								<a href="" ng-cloak ng-show="lawyerAdmin.status==0" ng-click="enableOrDisableLawyerAdmin(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Lawyer Admin"><i
+								<a href="" ng-cloak ng-show="callerAdmin.status==0" ng-click="enableOrDisbaleCallerAdmin(callerAdmin.callerAdminId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Caller Admin"><i
 								class="fa fa-lock"></i>
 						</a>
-						<a href="" ng-cloak ng-click="resetPassword(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-primary hint--top" data-hint="Reset Password"><i
+						<a href="" ng-cloak ng-click="resetPassword(callerAdmin.callerAdminId)" class="btn btn-xs btn-primary hint--top" data-hint="Reset Password"><i
 								class="fa fa-key"></i>
 						</a>
 								
 							 </td>
 							</tr>
 						</tbody>
-						<tbody ng-show="!lawyerAdmins.length">
+						<tbody ng-show="!callerAdmins.length">
 				<tr>
 				<td colspan="5" align="center">No Record Found</td>
 				</tr>
@@ -97,7 +97,7 @@
 	<!-- /.col-lg-12 -->
 </div>
 
-  <div class="modal fade" id="resetLawyerAdminPassword" role="dialog">
+  <div class="modal fade" id="resetCallerAdminPassword" role="dialog">
     <div class="modal-dialog">    
       <!-- Modal content-->
       <div class="modal-content">
@@ -110,7 +110,7 @@
         </div>
         <div class="modal-footer" >
          <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
-             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-disabled='myForm.$invalid' ng-click="resetLawyerAdminPassword()">Yes</a>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-disabled='myForm.$invalid' ng-click="resetCallerAdminPassword()">Yes</a>
         </div>
       </div>
       
