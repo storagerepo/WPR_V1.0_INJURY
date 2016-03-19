@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.joda.time.LocalDate;
+
 public class InjuryConstants {
 	
 	public static Integer INJURY_SUPER_ADMIN_ROLE_ID=1;
@@ -186,16 +188,31 @@ public class InjuryConstants {
 		}
 		
 		// Convert Date Time To String Time
-			public static String convertToStringFormatTimeAm(Date time) 
-			{
-					SimpleDateFormat monthFormat = new SimpleDateFormat("hh:mm a");
-					String convertedTime="";
-					try{
-					convertedTime=monthFormat.format(time);
-					}
-					catch(Exception e){
-						e.printStackTrace();
-					}
-					return convertedTime;
+		public static String convertToStringFormatTimeAm(Date time) 
+		{
+				SimpleDateFormat monthFormat = new SimpleDateFormat("hh:mm a");
+				String convertedTime="";
+				try{
+				convertedTime=monthFormat.format(time);
+				}
+				catch(Exception e){
+				e.printStackTrace();
+				}
+				return convertedTime;
+		}
+		// Get To Date By adding Number Of Days to From Date
+		public static String getToDateByAddingNumberOfDays(String fromDate,Integer numberOfDays){
+			String toDate="";
+			SimpleDateFormat dateFormat=new SimpleDateFormat("MM/dd/yyyy");
+			try {
+				Date convertedDate=dateFormat.parse(fromDate);
+				LocalDate fromLocalDate=new LocalDate(convertedDate);
+				fromLocalDate=fromLocalDate.plusDays(numberOfDays);
+				toDate=dateFormat.format(fromLocalDate.toDate());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			return toDate;
+		}
 }

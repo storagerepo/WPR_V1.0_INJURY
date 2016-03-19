@@ -24,7 +24,7 @@ public class CrashReport implements java.io.Serializable {
 	private String localReportNumber;
 	private String crashId;
 	private String crashDate;
-	private String county;
+	private County county;
 	private String addedDate;
 	private String filePath;
 	private Integer status;
@@ -34,7 +34,7 @@ public class CrashReport implements java.io.Serializable {
 
 	public CrashReport(CrashReportError crashReportError,
 			String localReportNumber, String crashId, String crashDate,
-			String county, String addedDate, String filePath, Integer status) {
+			County county, String addedDate, String filePath, Integer status) {
 		this.crashReportError = crashReportError;
 		this.localReportNumber = localReportNumber;
 		this.crashId = crashId;
@@ -93,12 +93,13 @@ public class CrashReport implements java.io.Serializable {
 		this.crashDate = crashDate;
 	}
 
-	@Column(name = "county", length = 45)
-	public String getCounty() {
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "county_id")
+	public County getCounty() {
 		return this.county;
 	}
 
-	public void setCounty(String county) {
+	public void setCounty(County county) {
 		this.county = county;
 	}
 

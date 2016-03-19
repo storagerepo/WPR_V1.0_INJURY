@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.deemsys.project.CrashReport.CrashReportService;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.patient.PatientForm;
 import com.deemsys.project.patient.PatientService;
@@ -46,6 +47,9 @@ public class PDFCrashReportReader {
 	
 	@Autowired
 	PatientService patientsService;
+	
+	@Autowired
+	CrashReportService crashReportService;
 
 	protected static Logger logger = LoggerFactory.getLogger("service");
 
@@ -746,6 +750,7 @@ public class PDFCrashReportReader {
 						}
 					}else{
 						//#7 Skip the unit
+						// Insert into Crash report Table.
 					}
 				}
 			}
@@ -818,6 +823,8 @@ public class PDFCrashReportReader {
 	
 				UUID uuid=UUID.randomUUID();
 		
+				String fileName=uuid+"_"+ crashId + ".pdf";
+				
 				//Convert PDF data to Parsed JSON
 				PDFCrashReportJson pdfCrashReportJson=null;
 				try {
@@ -838,23 +845,28 @@ public class PDFCrashReportReader {
 					patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
 					patientsForms=filterPatientForms(patientsForms);
 					if(patientsForms.size()==0){
-						//Error None of the Patient are not having address and the phone number
+						//#9 Tier 1 Error None of the Patient are not having address and the phone number
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 9));
 					}else{
 						//Insert patients
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 1));
 						this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
 					}
 					break;
 				case 2:
 					patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
 					if(patientsForms.size()==0){
-						//Victim units not having insurance
+						//#7 Victim units not having insurance
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 7));
 					}else{
 						patientsForms=filterPatientForms(patientsForms);
 						if(patientsForms.size()==0){
-							//No patient have insurance and phone number
+							//#10 Tier2 No patient have address and phone number
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 10));
 						}else{
 							//Insert patients
 							this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 2));
 						}
 					}
 					
@@ -862,28 +874,37 @@ public class PDFCrashReportReader {
 				case 3:
 					patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
 					if(patientsForms.size()==0){
-						//Error None of the Patient satisfy injuries scale 2 to 4
+						//#8 Error None of the Patient satisfy injuries scale 2 to 4
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 8));
 					}else{
 						patientsForms=filterPatientForms(patientsForms);
 						if(patientsForms.size()==0){
-							//Patient Not having address and phone numbers
+							//#11 Tier3 Patient Not having address and phone numbers
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 11));
 						}else{
 							//Insert patients
 							this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 3));
 						}
 					}
 					break;
 				case 4:
 					//Insert into crash report table number of units > 1 and unit in error is an animal
+					crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 4));
+					break;
 				case 5:
 					//Insert into crash report table number of units == 1 and unit in error is an animal
+					crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 5));
+					break;
 				case 6:
 					//Insert into crash report table number of units == 1 and unit in error not having insurance details
+					crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 6));
+					break;
 				default:
 					break;
 				}
 								
-				awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), uuid+"_"+ crashId + ".pdf");
+				awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);
  	}
 	
 	

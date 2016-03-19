@@ -31,7 +31,8 @@ public class County implements java.io.Serializable {
 			0);
 	private Set<CallerAdminCountyMap> callerAdminCountyMaps = new HashSet<CallerAdminCountyMap>(
 			0);
-
+	private Set<CrashReport> crashReports = new HashSet<CrashReport>(
+			0);
 	public County() {
 	}
 
@@ -113,6 +114,16 @@ public class County implements java.io.Serializable {
 	public void setCallerAdminCountyMaps(
 			Set<CallerAdminCountyMap> callerAdminCountyMaps) {
 		this.callerAdminCountyMaps = callerAdminCountyMaps;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "county")
+	public Set<CrashReport> getCrashReports() {
+		return this.crashReports;
+	}
+
+	public void setCrashReports(
+			Set<CrashReport> crashReports) {
+		this.crashReports = crashReports;
 	}
 
 }
