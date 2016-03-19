@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -147,6 +148,13 @@ public class CallerAdminDAOImpl implements CallerAdminDAO{
 		Integer userId=this.get(callerAdminId).getUsers().getUserId();
 		
 		return userId;
+	}
+
+	@Override
+	public CallerAdmin getCallerAdminByUserId(Integer userId) {
+		// TODO Auto-generated method stub
+		CallerAdmin callerAdmin=(CallerAdmin) this.sessionFactory.getCurrentSession().createCriteria(CallerAdmin.class).add(Restrictions.eq("users.userId", userId)).uniqueResult();
+		return callerAdmin;
 	}
 
 }

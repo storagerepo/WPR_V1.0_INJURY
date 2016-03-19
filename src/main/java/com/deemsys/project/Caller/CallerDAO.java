@@ -26,17 +26,9 @@ public interface CallerDAO extends IGenericDAO<Caller> {
 
 	public List<Patient> getPatientStatus(Integer patientStatus,
 			Integer callerId);
-
-	public Integer changePassword(String oldPassword, String userName);
-
-	public List<Caller> checkPassword(String newPassword, String userName);
-
+	
 	public Caller getDetails(String userName);
-
-	public Integer isDisable(Integer getId);
-
-	public Integer isEnable(Integer getId);
-
-	public Integer resetPassword(Integer id);
+	
+	public List<Caller> getCallerByCallerAdminId(Integer callerAdminId);
 
 }

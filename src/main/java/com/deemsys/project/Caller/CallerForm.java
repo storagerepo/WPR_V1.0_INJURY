@@ -1,5 +1,10 @@
 package com.deemsys.project.Caller;
 
+import java.util.List;
+
+import com.deemsys.project.County.CountyForm;
+
+
 /**
  * 
  * @author Deemsys
@@ -7,42 +12,41 @@ package com.deemsys.project.Caller;
  */
 public class CallerForm {
 
-	private Integer id;
-	private String role;
+	private Integer callerId;
+	private Integer callerAdminId;
+	private Integer userId;
 	private String username;
-	private String password;
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
 	private String emailAddress;
 	private String notes;
 	private Integer status;
-	private Integer assignedPatientSize;
-	private String callerName;
-	
-	public Integer getId() {
-		return id;
+	private List<Integer> county;
+	private List<CountyForm> countyForms;
+	public Integer getCallerId() {
+		return callerId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setCallerId(Integer callerId) {
+		this.callerId = callerId;
 	}
-	public String getRole() {
-		return role;
+	public Integer getCallerAdminId() {
+		return callerAdminId;
 	}
-	public void setRole(String role) {
-		this.role = role;
+	public void setCallerAdminId(Integer callerAdminId) {
+		this.callerAdminId = callerAdminId;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -74,70 +78,44 @@ public class CallerForm {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	
-	public Integer getAssignedPatientSize() {
-		return assignedPatientSize;
+	public Integer getStatus() {
+		return status;
 	}
-	public void setAssignedPatientSize(Integer assignedPatientSize) {
-		this.assignedPatientSize = assignedPatientSize;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
-	public String getCallerName() {
-		return callerName;
+	public List<Integer> getCounty() {
+		return county;
 	}
-	public void setCallerName(String callerName) {
-		this.callerName = callerName;
+	public void setCounty(List<Integer> county) {
+		this.county = county;
+	}
+	public List<CountyForm> getCountyForms() {
+		return countyForms;
+	}
+	public void setCountyForms(List<CountyForm> countyForms) {
+		this.countyForms = countyForms;
+	}
+	public CallerForm(Integer callerId, Integer callerAdminId, Integer userId,
+			String username, String firstName, String lastName,
+			String phoneNumber, String emailAddress, String notes,
+			Integer status) {
+		super();
+		this.callerId = callerId;
+		this.callerAdminId = callerAdminId;
+		this.userId = userId;
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.emailAddress = emailAddress;
+		this.notes = notes;
+		this.status = status;
 	}
 	public CallerForm() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CallerForm(Integer id, String username, String password,
-			String firstName, String lastName, String phoneNumber,
-			String emailAddress, String notes,Integer status) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.emailAddress = emailAddress;
-		this.notes = notes;
-		this.status=status;
-	}
-	// Only For get All Callers
-	public CallerForm(Integer id, String username, String password,
-			String firstName, String lastName, String phoneNumber,
-			String emailAddress, String notes,Integer status,Integer assignedPatientSize) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.emailAddress = emailAddress;
-		this.notes = notes;
-		this.status=status;
-		this.assignedPatientSize=assignedPatientSize;
-	}
-	public Integer getstatus() {
-		return status;
-	}
-	public void setstatus(Integer status) {
-		this.status = status;
-	}
 	
 	
-	
-	public CallerForm(Integer id, String firstName)
-	{
-		this.id=id;
-		this.firstName=firstName;
-	}
-	public CallerForm(String username)
-	{
-		this.username=username;
-		
-	}
 }

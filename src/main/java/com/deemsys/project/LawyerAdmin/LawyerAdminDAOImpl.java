@@ -113,13 +113,15 @@ public class LawyerAdminDAOImpl implements LawyerAdminDAO {
 	public boolean disable(Integer id) {
 		// TODO Auto-generated method stub
 	Query query=this.sessionFactory.getCurrentSession().createQuery("update LawyerAdmin set status=0 where lawyerAdminId="+id+"");
-		return true;
+	query.executeUpdate();
+	return true;
 	}
 
 	@Override
 	public boolean enable(Integer id) {
 		// TODO Auto-generated method stub
 		Query query=this.sessionFactory.getCurrentSession().createQuery("update LawyerAdmin set status=1 where lawyerAdminId="+id+"");
+		query.executeUpdate();
 		return true;
 	}
 

@@ -272,9 +272,8 @@ public class LawyerAdminService {
 	public Integer resetLawyerAdminPassword(Integer lawyerAdminId){
 
 		LawyerAdmin lawyerAdmin = lawyerAdminDAO.get(lawyerAdminId);
-		Users users = usersDAO.get(lawyerAdmin.getUsers().getUserId());
-		users.setPassword(users.getUsername());
-		usersDAO.update(users);
+		usersDAO.resetUserPassword(lawyerAdmin.getUsers().getUserId());
+		
 		return 1;
 	}
 	

@@ -113,12 +113,16 @@ public class CallerDAOImpl implements CallerDAO{
 	@Override
 	public boolean disable(Integer id) {
 		// TODO Auto-generated method stub
+		Query query=sessionFactory.getCurrentSession().createQuery("update Caller set status='0' where id='"+id+"'");
+		query.executeUpdate();
 		return false;
 	}
 
 	@Override
 	public boolean enable(Integer id) {
 		// TODO Auto-generated method stub
+		Query query=sessionFactory.getCurrentSession().createQuery("update Caller set status='1' where id='"+id+"'");
+		query.executeUpdate();
 		return false;
 	}
 
@@ -186,23 +190,6 @@ public class CallerDAOImpl implements CallerDAO{
 		return (List<Patient>)this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.eq("staff.id", id)).list();
 	}
 
-	@Override
-	public Integer changePassword(String oldPassword,String userName) {
-		// TODO Auto-generated method stub
-		Query query=sessionFactory.getCurrentSession().createQuery("update Caller set password='"+oldPassword+"' where userName='"+userName+"'");
-		query.executeUpdate();
-			return 1;
-	}
-
-
-	@Override
-	public List<Caller> checkPassword(String newPassword, String userName) {
-		// TODO Auto-generated method stub
-		@SuppressWarnings("unchecked")
-		List<Caller> staff=(List<Caller>) this.sessionFactory.getCurrentSession().createQuery("FROM  Caller WHERE password='"+newPassword+"' and userName='"+userName+"'").list();
-		return staff;
-		
-	}
 	
 	@Override
 	public Caller getDetails(String userName) {
@@ -212,35 +199,19 @@ public class CallerDAOImpl implements CallerDAO{
 	
 	}
 
-	@Override
-	public Integer isDisable(Integer getId) {
-		// TODO Auto-generated method stub
-		Query query=sessionFactory.getCurrentSession().createQuery("update Caller set status='0' where id='"+getId+"'");
-		query.executeUpdate();
-			return 0;
-	
-	}
-	@Override
-	public Integer isEnable(Integer getId) {
-		// TODO Auto-generated method stub
-		Query query=sessionFactory.getCurrentSession().createQuery("update Caller set status='1' where id='"+getId+"'");
-		query.executeUpdate();
-			return 1;
-	
-	}
-
-	@Override
-	public Integer resetPassword(Integer id) {
-		// TODO Auto-generated method stub11
-		Query query=sessionFactory.getCurrentSession().createQuery("update Caller set password=userName where id='"+id+"'");
-		query.executeUpdate();
-			return 0;
-	}
 
 	@Override
 	public Caller getByUserId(Integer userId) {
 		// TODO Auto-generated method stub
 		return (Caller) this.sessionFactory.getCurrentSession().createCriteria(Caller.class).add(Restrictions.eq("users.userId", userId)).uniqueResult();
+	}
+
+	@Override
+	public List<Caller> getCallerByCallerAdminId(Integer callerAdminId) {
+		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
+		List<Caller> callers=this.sessionFactory.getCurrentSession().createCriteria(Caller.class).add(Restrictions.eq("callerAdmin.callerAdminId", callerAdminId)).list();
+		return callers;
 	}
 
 

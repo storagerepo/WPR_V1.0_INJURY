@@ -13,7 +13,7 @@ import com.deemsys.project.Lawyers.LawyersForm;
 import com.deemsys.project.Caller.CallerService;
 
 @Controller
-@RequestMapping("/Lawyer")
+@RequestMapping("/LAdmin")
 public class LawyersController {
 
 	@Autowired
@@ -26,8 +26,8 @@ public class LawyersController {
 	LawyerAdminService lawyerAdminService;
 
 	@RequestMapping(value = "/getLawyers", method = RequestMethod.GET)
-	public String getLawyers(@RequestParam("id") Integer id, ModelMap model) {
-		model.addAttribute("lawyersForm", lawyersService.getLawyers(id));
+	public String getLawyers(@RequestParam("lawyerId") Integer lawyerId, ModelMap model) {
+		model.addAttribute("lawyersForm", lawyersService.getLawyers(lawyerId));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
@@ -78,18 +78,16 @@ public class LawyersController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/getNoOfLawyers", method = RequestMethod.GET)
+	@RequestMapping(value = "/getNumberOfLawyers", method = RequestMethod.GET)
 	public String getNoOfLawyerAdmin(ModelMap model) {
 		Integer currentUserId = callerService.getCurrentUserId();
-		Integer lawyerAdminId = lawyerAdminService
-				.getLawyerAdminIdByUserId(currentUserId);
-		model.addAttribute("noOfLawyers",
-				lawyersService.getNumberOfLawyers(lawyerAdminId));
+		Integer lawyerAdminId = lawyerAdminService.getLawyerAdminIdByUserId(currentUserId);
+		model.addAttribute("noOfLawyers",lawyersService.getNumberOfLawyers(lawyerAdminId));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/enableDisableLawyers", method = RequestMethod.GET)
+	@RequestMapping(value = "/enableOrDisableLawyers", method = RequestMethod.POST)
 	public String enableDisableLawyers(
 			@RequestParam("lawyerId") Integer lawyerId, ModelMap model) {
 
@@ -98,7 +96,7 @@ public class LawyersController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/resetLawyerPassword", method = RequestMethod.GET)
+	@RequestMapping(value = "/resetLawyerPassword", method = RequestMethod.POST)
 	public String resetLawyerPassword(
 			@RequestParam("lawyerId") Integer lawyerId, ModelMap model) {
 		Integer status = lawyersService.resetLawyerPassword(lawyerId);

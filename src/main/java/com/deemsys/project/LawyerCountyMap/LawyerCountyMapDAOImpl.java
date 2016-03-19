@@ -1,4 +1,4 @@
-package com.deemsys.project.LawyerCountyMapping;
+package com.deemsys.project.LawyerCountyMap;
 
 import java.util.Date;
 import java.util.List;
@@ -10,12 +10,13 @@ import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.LawyerCountyMap;
+
 @Repository
-public class LawyerCountyMappingDAOImpl implements LawyerCountyMappingDAO{
+public class LawyerCountyMapDAOImpl implements LawyerCountyMapDAO{
 
 	@Autowired
 	SessionFactory sessionFactory;
-	
+
 	@Override
 	public void save(LawyerCountyMap entity) {
 		// TODO Auto-generated method stub
@@ -31,23 +32,21 @@ public class LawyerCountyMappingDAOImpl implements LawyerCountyMappingDAO{
 	@Override
 	public LawyerCountyMap get(Integer id) {
 		// TODO Auto-generated method stub
-		LawyerCountyMap lawyerCountyMapping=(LawyerCountyMap) this.sessionFactory.getCurrentSession().get(LawyerCountyMap.class, id);
-		return lawyerCountyMapping;
+		LawyerCountyMap lawyerCountyMap=(LawyerCountyMap) this.sessionFactory.getCurrentSession().get(LawyerCountyMap.class, id);
+		return lawyerCountyMap;
 	}
 
 	@Override
 	public LawyerCountyMap update(LawyerCountyMap entity) {
 		// TODO Auto-generated method stub
+		this.sessionFactory.getCurrentSession().update(entity);
 		return null;
 	}
 
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
-		LawyerCountyMap lawyerCountyMapping=this.get(id);
-		if(lawyerCountyMapping!=null){
-			this.sessionFactory.getCurrentSession().delete(lawyerCountyMapping);
-		}
+		
 	}
 
 	@Override
@@ -81,15 +80,14 @@ public class LawyerCountyMappingDAOImpl implements LawyerCountyMappingDAO{
 	}
 
 	@Override
-	public List<LawyerCountyMap> find(String queryString,
-			String[] paramNames, String[] paramValues) {
+	public List<LawyerCountyMap> find(String queryString, String[] paramNames,
+			String[] paramValues) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LawyerCountyMap> find(String ParamName, Date date1,
-			Date date2) {
+	public List<LawyerCountyMap> find(String ParamName, Date date1, Date date2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -131,22 +129,31 @@ public class LawyerCountyMappingDAOImpl implements LawyerCountyMappingDAO{
 	}
 
 	@Override
-	public List<LawyerCountyMap> getLawyerCountyMappingsByLawyerId(
-			Integer lawyerId) {
+	public List<LawyerCountyMap> getLawyerCountyMapByLawyerId(Integer lawyerId) {
 		// TODO Auto-generated method stub
-		@SuppressWarnings("unchecked")
-		List<LawyerCountyMap> lawyerCountyMappings=this.sessionFactory.getCurrentSession().createCriteria(LawyerCountyMap.class).add(Restrictions.eq("id.lawyerId", lawyerId)).list();
-		return lawyerCountyMappings;
+		List<LawyerCountyMap> lawyerCountyMaps=this.sessionFactory.getCurrentSession().createCriteria(LawyerCountyMap.class).add(Restrictions.eq("id.lawyerId", lawyerId)).list();
+		return lawyerCountyMaps;
 	}
 
 	@Override
-	public void deleteLawyerCountyMappingsByLawyerIdAndCountyId(
-			Integer lawyerId, Integer countyId) {
+	public void deleteLawyerCountyMapByLawyerIdAndCountyId(Integer lawyerId,
+			Integer countyId) {
 		// TODO Auto-generated method stub
 		LawyerCountyMap lawyerCountyMap=(LawyerCountyMap) this.sessionFactory.getCurrentSession().createCriteria(LawyerCountyMap.class).add(Restrictions.and(Restrictions.eq("id.countyId", countyId),Restrictions.eq("id.lawyerId", lawyerId))).uniqueResult();
-		this.sessionFactory.getCurrentSession().delete(lawyerCountyMap);
+		if (lawyerCountyMap!=null) {
+			this.sessionFactory.getCurrentSession().delete(lawyerCountyMap);
+		}
 		
 	}
 
+	@Override
+	public void deleteLawyerCountyMapByLawyerId(Integer lawyerId) {
+		// TODO Auto-generated method stub
+		List<LawyerCountyMap> lawyerCountyMaps=this.sessionFactory.getCurrentSession().createCriteria(LawyerCountyMap.class).add(Restrictions.eq("id.lawyerId", lawyerId)).list();
+		for (LawyerCountyMap lawyerCountyMap : lawyerCountyMaps) {
+			this.sessionFactory.getCurrentSession().delete(lawyerCountyMap);
+		}
+	}
+	
 	
 }

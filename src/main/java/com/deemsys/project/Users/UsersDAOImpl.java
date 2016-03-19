@@ -138,14 +138,14 @@ public class UsersDAOImpl implements UsersDAO{
 	@Override
 	public List<Users> checkPassword(String password, String userName) {
 		// TODO Auto-generated method stub
-			List<Users> users=(List<Users>) this.sessionFactory.getCurrentSession().createQuery("FROM  Users WHERE password='"+password+"' and userName='"+userName+"'").list();
+			List<Users> users=(List<Users>) this.sessionFactory.getCurrentSession().createQuery("FROM  Users WHERE password='"+password+"' and username='"+userName+"'").list();
 			return users;
 	}
 
 	@Override
 	public Integer changePassword(String newPassword, String userName) {
 		// TODO Auto-generated method stub
-			Query query=sessionFactory.getCurrentSession().createQuery("update Users set password='"+newPassword+"' where userName='"+userName+"'");
+			Query query=sessionFactory.getCurrentSession().createQuery("update Users set password='"+newPassword+"' where username='"+userName+"'");
 			query.executeUpdate();
 				return 1;
 	}
@@ -159,7 +159,7 @@ public class UsersDAOImpl implements UsersDAO{
 	@Override
 	public Integer resetUserPassword(Integer id) {
 		// TODO Auto-generated method stub
-		Query query=sessionFactory.getCurrentSession().createQuery("update Users set password=userName where userId='"+id+"'");
+		Query query=sessionFactory.getCurrentSession().createQuery("update Users set password=username where userId='"+id+"'");
 		query.executeUpdate();
 		return 0;
 	}

@@ -151,8 +151,8 @@ public class CallerAdminCountyMapDAOImpl implements CallerAdminCountyMapDAO{
 	@Override
 	public void deleteCallerAdminCountyMapByCallerAdminId(Integer callerAdminId) {
 		// TODO Auto-generated method stub
-		CallerAdminCountyMap callerAdminCountyMap=(CallerAdminCountyMap) this.sessionFactory.getCurrentSession().createCriteria(CallerAdminCountyMap.class).add(Restrictions.eq("id.callerAdminId", callerAdminId)).uniqueResult();
-		if(callerAdminCountyMap!=null){
+		List<CallerAdminCountyMap> callerAdminCountyMaps=this.sessionFactory.getCurrentSession().createCriteria(CallerAdminCountyMap.class).add(Restrictions.eq("id.callerAdminId", callerAdminId)).list();
+		for (CallerAdminCountyMap callerAdminCountyMap : callerAdminCountyMaps) {
 			this.sessionFactory.getCurrentSession().delete(callerAdminCountyMap);
 		}
 	}

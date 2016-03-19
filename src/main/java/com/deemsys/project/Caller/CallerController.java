@@ -22,23 +22,23 @@ public class CallerController {
 	@Autowired
 	CallerService callerService;
 
-	@RequestMapping(value = "/Admin/getCaller", method = RequestMethod.GET)
-	public String getCaller(@RequestParam("id") Integer id, ModelMap model) {
-		model.addAttribute("callerForm", callerService.getCaller(id));
+	@RequestMapping(value = "/CAdmin/getCaller", method = RequestMethod.GET)
+	public String getCaller(@RequestParam("callerId") Integer callerId, ModelMap model) {
+		model.addAttribute("callerForm", callerService.getCaller(callerId));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Admin/mergeCaller", method = RequestMethod.POST)
+	@RequestMapping(value = "/CAdmin/mergeCaller", method = RequestMethod.POST)
 	public String mergeCaller(@RequestBody CallerForm callerForm, ModelMap model) {
 		callerService.mergeCaller(callerForm);
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Admin/saveUpdateCaller", method = RequestMethod.POST)
+	@RequestMapping(value = "/CAdmin/saveUpdateCaller", method = RequestMethod.POST)
 	public String saveCaller(@RequestBody CallerForm callerForm, ModelMap model) {
-		if (callerForm.getId() == null)
+		if (callerForm.getCallerId() == null)
 			callerService.saveCaller(callerForm);
 		else
 			callerService.updateCaller(callerForm);
@@ -46,7 +46,7 @@ public class CallerController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Admin/deleteCaller", method = RequestMethod.POST)
+	@RequestMapping(value = "/CAdmin/deleteCaller", method = RequestMethod.POST)
 	public String deleteCaller(@RequestParam("id") Integer id, ModelMap model) {
 		int i = 0;
 		try {
@@ -65,16 +65,23 @@ public class CallerController {
 		}
 	}
 
-	@RequestMapping(value = "/Admin/getAllCallers", method = RequestMethod.GET)
+	@RequestMapping(value = "/CAdmin/getAllCallers", method = RequestMethod.GET)
 	public String getAllCallers(ModelMap model) {
 		model.addAttribute("callerForms", callerService.getCallerList());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Caller/getNoOfCallers", method = RequestMethod.GET)
+	@RequestMapping(value = "/CAdmin/getCallersByCallerAdmin", method = RequestMethod.GET)
+	public String getCallersByCallerAdmin(ModelMap model) {
+		model.addAttribute("callerForms", callerService.getCallerListByCallerAdmin());
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
+	@RequestMapping(value = "/CAdmin/getNumberOfCallers", method = RequestMethod.GET)
 	public String getNoOfCallers(ModelMap model) {
-		model.addAttribute("callerForms", callerService.getNoOfCallers());
+		model.addAttribute("numberOfCallers", callerService.getNoOfCallers());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
@@ -89,7 +96,7 @@ public class CallerController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Admin/getCallerId", method = RequestMethod.GET)
+	@RequestMapping(value = "/CAdmin/getCallerId", method = RequestMethod.GET)
 	public String getCallerId(ModelMap model) {
 		model.addAttribute("callerForms", callerService.getCallerId());
 		model.addAttribute("requestSuccess", true);
@@ -97,7 +104,7 @@ public class CallerController {
 	}
 
 	
-	@RequestMapping(value = "/Admin/getUsername", method = RequestMethod.GET)
+	@RequestMapping(value = "/CAdmin/getUsername", method = RequestMethod.GET)
 	public String getUsername(@RequestParam("username") String username,
 			ModelMap model) {
 		model.addAttribute("callerForms", callerService.getUsername(username));
@@ -105,16 +112,9 @@ public class CallerController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Admin/getDetails", method = RequestMethod.GET)
+	@RequestMapping(value = "/CAdmin/getDetails", method = RequestMethod.GET)
 	public String getAdminDetails(ModelMap model) {
 		model.addAttribute("adminDetails", callerService.getDetails());
-		model.addAttribute("requestSuccess", true);
-		return "/returnPage";
-	}
-
-	@RequestMapping(value = "/Caller/getDetails", method = RequestMethod.GET)
-	public String getCallerDetails(ModelMap model) {
-		model.addAttribute("callerDetails", callerService.getDetails());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
@@ -138,23 +138,17 @@ public class CallerController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Admin/disableCaller", method = RequestMethod.GET)
-	public String disableCaller(@RequestParam("id") Integer id, ModelMap model) {
-		Integer status = callerService.disableCaller(id);
-		if (status == 0) {
-			model.addAttribute("enableOrDisable", 0);
-			model.addAttribute("requestSuccess", true);
-		} else {
-			model.addAttribute("enableOrDisable", 1);
-			model.addAttribute("requestSuccess", true);
+	@RequestMapping(value = "/CAdmin/enableOrDisableCaller", method = RequestMethod.POST)
+	public String disableCaller(@RequestParam("callerId") Integer callerId, ModelMap model) {
+		callerService.enableOrDisableCaller(callerId);
+		model.addAttribute("requestSuccess", true);
 
-		}
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Admin/resetPassword", method = RequestMethod.GET)
-	public String resetPassword(@RequestParam("id") Integer id, ModelMap model) {
-		Integer status = callerService.resetPassword(id);
+	@RequestMapping(value = "/CAdmin/resetCallerPassword", method = RequestMethod.POST)
+	public String resetPassword(@RequestParam("callerId") Integer callerId, ModelMap model) {
+		Integer status = callerService.resetPassword(callerId);
 		if (status == 0) {
 			model.addAttribute("requestSuccess", true);
 		}

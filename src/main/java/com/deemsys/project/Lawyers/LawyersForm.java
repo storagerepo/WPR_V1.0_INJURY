@@ -23,7 +23,7 @@ public class LawyersForm {
 	private String notes;
 	private Integer status;
 	private List<CountyForm> countyForms;
-	private Integer[] countyId;
+	private List<Integer> county;
 	
 	
 	public Integer getLawyerId() {
@@ -111,11 +111,11 @@ public class LawyersForm {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public Integer[] getCountyId() {
-		return countyId;
+	public List<Integer> getCounty() {
+		return county;
 	}
-	public void setCountyId(Integer[] countyId) {
-		this.countyId = countyId;
+	public void setCounty(List<Integer> county) {
+		this.county = county;
 	}
 	public List<CountyForm> getCountyForms() {
 		return countyForms;

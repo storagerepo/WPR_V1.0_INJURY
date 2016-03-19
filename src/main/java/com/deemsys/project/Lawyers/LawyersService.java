@@ -1,6 +1,7 @@
 package com.deemsys.project.Lawyers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,17 +139,13 @@ public class LawyersService {
 		List<LawyerCountyMappingForm> lawyerCountyMappingForms = lawyerCountyMappingService
 				.getLawyerCountyMappingByLaweyerId(getId);
 
-		int i = 0;
-		Integer[] county = new Integer[lawyerCountyMappingForms.size()];
+		List<Integer> county = new ArrayList<Integer>();
 		for (LawyerCountyMappingForm lawyerCountyMappingForms1 : lawyerCountyMappingForms) {
 			if (lawyerCountyMappingForms1.getCountyId() != null) {
-				System.out.println("Layer County Id"
-						+ lawyerCountyMappingForms1.getCountyId());
-				county[i] = lawyerCountyMappingForms1.getCountyId();
+				county.add(lawyerCountyMappingForms1.getCountyId());
 			}
-			i++;
 		}
-		lawyersForm.setCountyId(county);
+		lawyersForm.setCounty(county);
 		// End
 
 		return lawyersForm;
@@ -199,7 +196,11 @@ public class LawyersService {
 		users.setUsername(lawyersForm.getUsername());
 		users.setPassword(lawyersForm.getUsername());
 		users.setIsEnable(1);
-
+		users.setStatus(1);
+		roles = roleDAO.get(InjuryConstants.INJURY_LAWYER_ROLE_ID);
+		users.setRoles(roles);
+		usersDAO.save(users);
+		
 		Integer currentUserId = callerService.getCurrentUserId();
 		LawyerAdmin lawyerAdmin = lawyerAdminDAO.getByUserId(currentUserId);
 
@@ -211,17 +212,14 @@ public class LawyersService {
 				lawyersForm.getNotes(), 1, null,null);
 		lawyersDAO.save(lawyers);
 
-		roles = roleDAO.get(InjuryConstants.INJURY_LAWYER_ROLE_ID);
-		users.setRoles(roles);
-		usersDAO.save(users);
 
-		Integer[] countyMapped = lawyersForm.getCountyId();
+		List<Integer> countyMapped = lawyersForm.getCounty();
 
 		// Map the County
 		for (Integer countyId : countyMapped) {
 			County county = countyDAO.get(countyId);
 			LawyerCountyMapId lawyerCountyMapId=new LawyerCountyMapId(lawyers.getLawyerId(), countyId);
-			LawyerCountyMap lawyerCountyMapping = new LawyerCountyMap(lawyerCountyMapId,lawyers, county,1);
+			LawyerCountyMap lawyerCountyMapping = new LawyerCountyMap(lawyerCountyMapId,lawyers, county,new Date(),1);
 			lawyerCountyMappingDAO.save(lawyerCountyMapping);
 		}
 
@@ -258,16 +256,15 @@ public class LawyersService {
 
 		// Map the County
 		// Delete the Unmatched County
-		Integer[] countyMapped = lawyersForm.getCountyId();
+		List<Integer> countyMapped = lawyersForm.getCounty();
 		lawyerCountyMappingService.deleteLawyerCountyMapping(countyMapped,
 				lawyersForm.getLawyerId());
 		// Add a New County List
-		List<Integer> newlyAddedCounty = lawyerCountyMappingService
-				.getNewlyAddedCountyId(countyMapped, lawyersForm.getLawyerId());
+		List<Integer> newlyAddedCounty = lawyerCountyMappingService.getNewlyAddedCountyId(countyMapped, lawyersForm.getLawyerId());
 		for (Integer countyId : newlyAddedCounty) {
 			County county = countyDAO.get(countyId);
 			LawyerCountyMapId lawyerCountyMapId=new LawyerCountyMapId(lawyers.getLawyerId(), countyId);
-			LawyerCountyMap lawyerCountyMapping = new LawyerCountyMap(lawyerCountyMapId,lawyers, county,1);
+			LawyerCountyMap lawyerCountyMapping = new LawyerCountyMap(lawyerCountyMapId,lawyers, county,new Date(),1);
 			lawyerCountyMappingDAO.save(lawyerCountyMapping);
 		}
 		// Logic Ends
@@ -291,14 +288,11 @@ public class LawyersService {
 		return 1;
 	}
 
-	// Get Number of Lawyer Admin Available in System
+	// Get Number of Lawyers Under Lawyer Admin
 	public Integer getNumberOfLawyers(Integer lawyerAdminId) {
-		Integer numberOfLawyerAdmin = 0;
-
-		numberOfLawyerAdmin = this.getLawyersListByLawyerAdmin(lawyerAdminId)
-				.size();
-
-		return numberOfLawyerAdmin;
+		Integer numberOfLawyers = 0;
+		numberOfLawyers = lawyersDAO.getLawyersByLawyerAdmin(lawyerAdminId).size();
+		return numberOfLawyers;
 	}
 
 	// Get Patient By Lawyer
@@ -343,14 +337,13 @@ public class LawyersService {
 		try {
 			Lawyer lawyers = lawyersDAO.get(lawyerId);
 			Users users = usersDAO.get(lawyers.getUsers().getUserId());
-			if (lawyers.getStatus() == 1) {
-				lawyers.setStatus(0);
+			if (users.getIsEnable() == 1) {
+				lawyersDAO.disable(lawyerId);
 				users.setIsEnable(0);
-			} else if (lawyers.getStatus() == 0) {
-				lawyers.setStatus(1);
+			} else if (users.getIsEnable() == 0) {
+				lawyersDAO.enable(lawyerId);
 				users.setIsEnable(1);
 			}
-			lawyersDAO.merge(lawyers);
 			usersDAO.merge(users);
 		} catch (Exception e) {
 			status = 1;
@@ -359,11 +352,10 @@ public class LawyersService {
 		return status;
 	}
 
-	// Reset the Password
+	// Reset the Lawyer Password
 	public Integer resetLawyerPassword(Integer lawyerId) {
 		Integer status = 1;
 		Lawyer lawyers = lawyersDAO.get(lawyerId);
-
 		status = usersDAO.resetUserPassword(lawyers.getUsers().getUserId());
 		return status;
 	}

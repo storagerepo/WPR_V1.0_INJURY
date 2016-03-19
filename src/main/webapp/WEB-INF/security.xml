@@ -23,12 +23,12 @@
 	</http>
 
 	<!-- Roles and URL protection -->
-	<http pattern="/Staff/**" create-session="never" use-expressions="true"
+	<http pattern="/CAdmin/**" create-session="never" use-expressions="true"
 		entry-point-ref="oauthAuthenticationEntryPoint"
 		access-decision-manager-ref="accessDecisionManager"
 		xmlns="http://www.springframework.org/schema/security">
 		<anonymous enabled="false" />
-		<intercept-url pattern="/Caller/**" access="hasAnyRole('ROLE_CALLER_ADMIN','ROLE_SUPER_ADMIN','ROLE_CALLER')" />
+		<intercept-url pattern="/CAdmin/**" access="hasAnyRole('ROLE_CALLER_ADMIN','ROLE_SUPER_ADMIN')" />
 		
 		<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 		<session-management invalid-session-url="/logout" />
@@ -44,12 +44,12 @@
 		<session-management invalid-session-url="/logout" />
 	</http> 
 	
-	<http pattern="/Lawyer/**" create-session="never" use-expressions="true"
+	<http pattern="/LAdmin/**" create-session="never" use-expressions="true"
 		entry-point-ref="oauthAuthenticationEntryPoint"
 		access-decision-manager-ref="accessDecisionManager"
 		xmlns="http://www.springframework.org/schema/security">
 		<anonymous enabled="false" />
-		<intercept-url pattern="/Lawyer/**" access="hasAnyRole('ROLE_LAWYER_ADMIN','ROLE_SUPER_ADMIN','ROLE_LAWYER')" />
+		<intercept-url pattern="/LAdmin/**" access="hasAnyRole('ROLE_LAWYER_ADMIN','ROLE_SUPER_ADMIN')" />
 		
 		<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 		<session-management invalid-session-url="/logout" />
@@ -60,7 +60,7 @@
 		access-decision-manager-ref="accessDecisionManager"
 		xmlns="http://www.springframework.org/schema/security">
 		<anonymous enabled="false" />
-		<intercept-url pattern="/Lawyer/**" access="hasAnyRole('ROLE_LAWYER_ADMIN','ROLE_SUPER_ADMIN','ROLE_LAWYER','ROLE_CALLER_ADMIN','ROLE_CALLER')" />
+		<intercept-url pattern="/Patient/**" access="hasAnyRole('ROLE_LAWYER_ADMIN','ROLE_SUPER_ADMIN','ROLE_LAWYER','ROLE_CALLER_ADMIN','ROLE_CALLER')" />
 		
 		<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 		<session-management invalid-session-url="/logout" />

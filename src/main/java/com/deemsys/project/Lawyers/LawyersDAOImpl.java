@@ -3,6 +3,7 @@ package com.deemsys.project.Lawyers;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,12 +109,16 @@ public class LawyersDAOImpl implements LawyersDAO {
 	@Override
 	public boolean disable(Integer id) {
 		// TODO Auto-generated method stub
+		Query query=this.sessionFactory.getCurrentSession().createQuery("Update Lawyer set status=0 where lawyerId='"+id+"'");
+		query.executeUpdate();
 		return false;
 	}
 
 	@Override
 	public boolean enable(Integer id) {
 		// TODO Auto-generated method stub
+		Query query=this.sessionFactory.getCurrentSession().createQuery("Update Lawyer set status=1 where lawyerId='"+id+"'");
+		query.executeUpdate();
 		return false;
 	}
 
@@ -141,7 +146,7 @@ public class LawyersDAOImpl implements LawyersDAO {
 		@SuppressWarnings("unchecked")
 		List<Lawyer> lawyers = this.sessionFactory.getCurrentSession()
 				.createCriteria(Lawyer.class)
-				.add(Restrictions.eq("lawyerAdmin.id", lawyerAdminId)).list();
+				.add(Restrictions.eq("lawyerAdmin.lawyerAdminId", lawyerAdminId)).list();
 		return lawyers;
 	}
 

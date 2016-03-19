@@ -87,4 +87,10 @@ public class CallerAdminController {
    		return "/returnPage";
    	}
 	
+    @RequestMapping(value = "/getNumberOfCallerAdmin", method = RequestMethod.GET)
+	public String getNoOfCallerAdmin(ModelMap model) {
+		model.addAttribute("numberOfCallerAdmin", callerAdminService.getNumberOfCallerAdmins());
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
 }

@@ -10,4 +10,5 @@ import com.deemsys.project.entity.CallerAdmin;
 public interface CallerAdminDAO extends IGenericDAO<CallerAdmin>{
 
 	public Integer getUserIdByCallerAdminId(Integer callerAdminId);
+	public CallerAdmin getCallerAdminByUserId(Integer userId);
 }

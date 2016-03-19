@@ -226,9 +226,13 @@ public class CallerAdminService {
 	public Integer resetCallerAdminPassword(Integer callerAdminId){
 		Integer status=1;
 		CallerAdmin callerAdmin=callerAdminDAO.get(callerAdminId);
-		Users users=usersDAO.get(callerAdmin.getUsers().getUserId());
-		users.setPassword(users.getUsername());
-		usersDAO.update(users);
+		usersDAO.resetUserPassword(callerAdmin.getUsers().getUserId());
 		return status;
+	}
+	
+	// Get Number of Caller Admin
+	public Integer getNumberOfCallerAdmins(){
+		List<CallerAdmin> callerAdmins=callerAdminDAO.getAll();
+		return callerAdmins.size();
 	}
 }

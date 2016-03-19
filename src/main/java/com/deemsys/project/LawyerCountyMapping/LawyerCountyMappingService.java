@@ -32,12 +32,11 @@ public class LawyerCountyMappingService {
 	}
 	
 	// Delete Lawyer County Mapping
-	public void deleteLawyerCountyMapping(Integer[] countyId,Integer lawyerId){
+	public void deleteLawyerCountyMapping(List<Integer> countyId,Integer lawyerId){
 		List<LawyerCountyMappingForm> lawyerCountyMappingForms=this.getLawyerCountyMappingByLaweyerId(lawyerId);
 		
 		for (LawyerCountyMappingForm lawyerCountyMappingForm : lawyerCountyMappingForms) {
-			for(int i=0;i<countyId.length;i++){
-				if(lawyerCountyMappingForm.getCountyId().equals(countyId[i]))
+				if(countyId.contains(lawyerCountyMappingForm.getCountyId()))
 				{
 					// Do Nothing
 				}
@@ -46,30 +45,27 @@ public class LawyerCountyMappingService {
 				}
 			}
 		}
-	}
 	
 	// Return a New County Ids
-	public List<Integer> getNewlyAddedCountyId(Integer[] countyId,Integer lawyerId)
+	public List<Integer> getNewlyAddedCountyId(List<Integer> county,Integer lawyerId)
 	{
 		List<Integer> newCountyId =new ArrayList<Integer>();
 		List<LawyerCountyMappingForm> lawyerCountyMappingForms=this.getLawyerCountyMappingByLaweyerId(lawyerId);
+		// Inserted County
+		List<Integer> insertedCounty=new ArrayList<Integer>();
+		for (LawyerCountyMappingForm lawyerCountyMappingForm : lawyerCountyMappingForms) {
+			insertedCounty.add(lawyerCountyMappingForm.getCountyId());
+		}
+		
 		// New County list
-			for(int i=0;i<countyId.length;i++){
-				if(lawyerCountyMappingForms.size()>0){
-				for (LawyerCountyMappingForm lawyerCountyMappingForm : lawyerCountyMappingForms) {
-						if(lawyerCountyMappingForm.getCountyId().equals(countyId[i]))
-						{
-							// Do Nothing
-						}
-						else{
-							newCountyId.add(countyId[i]);
-						}
-					}
-				}
-				else{
-					newCountyId.add(countyId[i]);
-				}
+		for (Integer countyId : county) {
+			if(insertedCounty.contains(countyId)){
+				// Do Nothing
 			}
+			else{
+				newCountyId.add(countyId);
+			}
+		}
 			
 			return newCountyId;
 	}
