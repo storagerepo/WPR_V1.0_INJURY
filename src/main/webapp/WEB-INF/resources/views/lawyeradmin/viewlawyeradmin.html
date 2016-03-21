@@ -22,55 +22,73 @@
 		<option value="100">Show 100 Per Page</option>
 		<option value="{{lawyerAdmins.length}}">Show All</option>
 	</select> 
+	<br/>
 </div>
-					<table class="table table-hover">
+					<table class="table table-hover table-striped table-bordered">
 
 						<thead>
 							<tr>
-								<th ng-mousedown="sort('username')">User Name&nbsp;&nbsp;<span
+								<th width="20%" ng-mousedown="sort('username')">Username&nbsp;&nbsp;<span
 									class="glyphicon sort-icon" ng-show="sortKey=='username'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-								<th ng-mousedown="sort('firstName')">First Name&nbsp;&nbsp;<span
+								<th width="20%" ng-mousedown="sort('firstName')">Firstname&nbsp;&nbsp;<span
 									class="glyphicon sort-icon" ng-show="sortKey=='firstName'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-								<th>Last Name</th>
-								<th>Phone Number</th>
-								<th>Email Id</th>
+								<th width="15%">Lastname</th>
+								<th width="15%">Phone Number</th>
+								<th width="20%">Email ID</th>
 
-								<th width="20%">Action</th>
+								<th width="10%">Actions</th>
 						
 							</tr>
 
 							<tr>
-								<th><input class="form-control" type="text"
-									ng-model="search.username" placeholder="Search by User Name"></th>
-								<th><input class="form-control" type="text"
-									ng-model="search.firstName" placeholder="Search by First Name"></th>
-								<th><input class="form-control" type="text"
-									ng-model="search.lastName" placeholder="Search by Last Name"></th>
-									<th><input class="form-control" type="text"
-									ng-model="search.phoneNumber" placeholder="Search by Phone Number"></th>
-								<th><input class="form-control" type="text"
-									ng-model="search.emailAddress" placeholder="Search by Email"></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon1"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.username" placeholder="Username"></div></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon2"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.firstName" placeholder="Firstname"></div></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.lastName" placeholder="Lastname"></div></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon4"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.phoneNumber" placeholder="Phone No"></div></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon5"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.emailAddress" placeholder="Email ID"></div></th>
 								<th></th>	
 								
 							</tr>
 						</thead>
-						<tbody ng-show="lawyerAdmins.length>0"  dir-paginate="lawyerAdmin in lawyerAdmins|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows">
+						<tbody >
 
-							<tr>
-								<td ng-cloak>{{lawyerAdmin.username}}</td>
-								<td ng-cloak>{{lawyerAdmin.firstName}}</td>
-								<td ng-cloak>{{lawyerAdmin.lastName}}</td>
+							<tr ng-show="lawyerAdmins.length>0"  dir-paginate="lawyerAdmin in lawyerAdmins|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows">
+								<td class="wrap" ng-cloak>{{lawyerAdmin.username}}</td>
+								<td class="wrap" ng-cloak>{{lawyerAdmin.firstName}}</td>
+								<td class="wrap" ng-cloak>{{lawyerAdmin.lastName}}</td>
 
-								<td ng-cloak>{{lawyerAdmin.phoneNumber}}</td>
-								<td ng-cloak>{{lawyerAdmin.emailAddress}}</td>
+								<td class="wrap" ng-cloak>{{lawyerAdmin.phoneNumber}}</td>
+								<td class="wrap" ng-cloak>{{lawyerAdmin.emailAddress}}</td>
 								
 								<td>
 								<a href="#/dashboard/EditLawyerAdmin/{{lawyerAdmin.lawyerAdminId}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Lawyer Admin"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
 							
+							
+
 								<a href="" ng-cloak ng-show="lawyerAdmin.status==1" ng-click="enableOrDisableLawyerAdmin(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Lawyer Admin"><i
 								class="fa fa-unlock-alt"></i>
 						</a>
@@ -83,12 +101,9 @@
 								
 							 </td>
 							</tr>
+							<tr ng-show="!lawyerAdmins.length"><td colspan="6" align="center">No Records Found</td></tr>
 						</tbody>
-						<tbody ng-show="!lawyerAdmins.length">
-				<tr>
-				<td colspan="5" align="center">No Record Found</td>
-				</tr>
-				</tbody>
+						
 					</table>
 					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
     					</dir-pagination-controls>   

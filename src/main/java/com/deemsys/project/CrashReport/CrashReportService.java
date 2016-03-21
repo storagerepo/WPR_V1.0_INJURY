@@ -137,7 +137,7 @@ public class CrashReportService {
 	
 	// Get Crash Report Form Details from Patient Form
 	public CrashReportForm getCrashReportFormDetails(PatientForm patientForm,Integer crashId,String filePath,Integer crashReportErrorId){
-		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), patientForm.getLocalReportNumber(), crashId.toString(), patientForm.getCrashDate(), patientForm.getCountry(),
+		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), patientForm.getLocalReportNumber(), crashId.toString(), patientForm.getCrashDate(), patientForm.getCounty(),
 				InjuryConstants.convertMonthFormat(new Date()), filePath, 1);
 		return crashReportForm;
 	}

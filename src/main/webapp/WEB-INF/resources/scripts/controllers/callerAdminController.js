@@ -21,7 +21,7 @@ adminApp.controller('ShowCallerAdminController',function($http,$state,$scope,req
     };
     
     $scope.enableOrDisbaleCallerAdmin=function(callerAdminId){
-    	alert("hi");
+ 
     	requestHandler.postRequest("Admin/enableOrDisableCallerAdmin.json?callerAdminId="+callerAdminId,"").then(function(response){
     		 $scope.response=response.data.requestSuccess;
 			 if($scope.response==true)
@@ -34,7 +34,6 @@ adminApp.controller('ShowCallerAdminController',function($http,$state,$scope,req
 	
 	
 	$scope.resetPassword=function(callerAdminId){
-		alert("hi");
 		$("#resetCallerAdminPassword").modal("show");
   	  $scope.resetCallerAdminPassword=function()
 		   {
@@ -42,7 +41,6 @@ adminApp.controller('ShowCallerAdminController',function($http,$state,$scope,req
 			 $scope.response=response.data.requestSuccess;
 			 if($scope.response==true)
 			 {
-				 alert("true");
 			 $("#resetCallerAdminPassword").modal("hide");
 			 $('.modal-backdrop').hide();
 			 Flash.create('success', "You have Successfully Reset the Password!");
@@ -63,7 +61,9 @@ adminApp.controller('SaveCallerAdminController', function($http,$state,$scope,$l
 	$scope.callerAdmin={};
 	$scope.callerAdmin.county=[];
 	$scope.callerAdmin.countyForms=[];
+	$scope.requiredValue= false;
 	$scope.selectedCounties=function(countyId){
+		
 		var idx=$scope.callerAdmin.county.indexOf(countyId);
 		// Already Selected Items
 		if(idx>-1){
@@ -73,7 +73,14 @@ adminApp.controller('SaveCallerAdminController', function($http,$state,$scope,$l
 		else{
 			$scope.callerAdmin.county.push(countyId);
 		}
-		console.log($scope.callerAdmin.county);
+		console.log($scope.callerAdmin.county.length);
+		if($scope.callerAdmin.county.length==0){
+			$scope.requiredValue= false;
+		}
+		else if($scope.callerAdmin.county.length>0){
+		$scope.requiredValue= true;
+		}
+		
 	};
 	
 	// Get County List
@@ -103,7 +110,7 @@ adminApp.controller('SaveCallerAdminController', function($http,$state,$scope,$l
 adminApp.controller('EditCallerAdminController', function($http,$state,$location,$scope,$stateParams,requestHandler,Flash){
 	$scope.options=false;
 	$scope.title=$state.current.title;
-	
+	$scope.requiredValue=true;
 	
 	
 	var callerAdminOriginal="";
@@ -131,6 +138,12 @@ adminApp.controller('EditCallerAdminController', function($http,$state,$location
 		// Add New Items
 		else{
 			$scope.callerAdmin.county.push(countyId);
+		}
+		if($scope.callerAdmin.county.length==0){
+			$scope.requiredValue= false;
+		}
+		else if($scope.callerAdmin.county.length>0){
+		$scope.requiredValue= true;
 		}
 	};
 	

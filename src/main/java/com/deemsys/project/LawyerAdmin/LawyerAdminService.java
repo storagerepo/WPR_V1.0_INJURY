@@ -185,7 +185,7 @@ public class LawyerAdminService {
 				lawyerAdminForm.getZipcode(),
 				lawyerAdminForm.getEmailAddress(),
 				lawyerAdminForm.getPhoneNumber(), lawyerAdminForm.getNotes(),
-				lawyerAdminForm.getStatus(), null,null,null);
+				1, null,null,null);
 		
 		lawyerAdminDAO.save(lawyerAdmin);
 
@@ -249,6 +249,9 @@ public class LawyerAdminService {
 	}
 	
 	//Enable/Disable
+	
+
+
 	public int enableOrDisableLawyerAdmin(Integer lawyerAdminId){
 		
 		LawyerAdmin lawyerAdmin = lawyerAdminDAO.get(lawyerAdminId);

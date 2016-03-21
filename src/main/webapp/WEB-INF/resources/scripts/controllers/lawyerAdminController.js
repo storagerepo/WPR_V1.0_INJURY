@@ -59,7 +59,8 @@ adminApp.controller('SaveLawyerAdminController', function($http,$state,$scope,$l
 	
 	$scope.lawyerAdmin={};
 	$scope.lawyerAdmin.county=[];
-	$scope.lawyerAdmin.countyForms=[];
+	$scope.lawyerAdmin.countyform=[];
+	$scope.requiredValue=false;
 	$scope.selectedCounties=function(countyId){
 		var idx=$scope.lawyerAdmin.county.indexOf(countyId);
 		// Already Selected Items
@@ -71,11 +72,17 @@ adminApp.controller('SaveLawyerAdminController', function($http,$state,$scope,$l
 			$scope.lawyerAdmin.county.push(countyId);
 		}
 		console.log($scope.lawyerAdmin.county);
+		if($scope.lawyerAdmin.county.length==0){
+			$scope.requiredValue=false;
+		}
+		else if($scope.lawyerAdmin.county.length>0){
+			$scope.requiredValue=true;
+		}
 	};
 	
 	// Get County List
 	 requestHandler.getRequest("Admin/getAllCountys.json","").then(function(response){
-			$scope.lawyerAdmin.countyForms=response.data.countyForms;
+			$scope.lawyerAdmin.countyform=response.data.countyForms;
 	});
 	
 	$scope.saveLawyerAdmin=function(){
@@ -84,7 +91,8 @@ adminApp.controller('SaveLawyerAdminController', function($http,$state,$scope,$l
 			var isNew=response.data.isUserNameExist;
 			if(isNew==0){
 				$("#username_exists").text("");*/
-			 requestHandler.postRequest("Admin/saveUpdateLawyerAdmin.json",$scope.lawyerAdmin).then(function(response){
+			 requestHandler.postRequest("/Admin/saveUpdateLawyerAdmin.json",$scope.lawyerAdmin).then(function(response){
+				 console.log("$scope.lawyerAdmin");
 				  Flash.create('success', "You have Successfully Added!");
 				  $location.path('dashboard/LawyerAdmin');
 				});
@@ -99,12 +107,14 @@ adminApp.controller('SaveLawyerAdminController', function($http,$state,$scope,$l
 adminApp.controller('EditLawyerAdminController', function($http,$state,$location,$scope,$stateParams,requestHandler,Flash){
 	$scope.options=false;
 	$scope.title=$state.current.title;
-	
+	$scope.requiredValue=true;
 	var lawyerAdminOriginal="";
 	requestHandler.getRequest("Admin/getLawyerAdmin.json?lawyerAdminId="+$stateParams.lawyerAdminId,"").then(function(response){
 		lawyerAdminOriginal=angular.copy(response.data.lawyerAdminForm);
 		$scope.lawyerAdmin=response.data.lawyerAdminForm;
 	});
+	
+	
 	$scope.updateLawyerAdmin=function(){
 		console.log("lawyer",$scope.lawyerAdmin);
 		requestHandler.postRequest("Admin/saveUpdateLawyerAdmin.json",$scope.lawyerAdmin).then(function(response){
@@ -124,6 +134,12 @@ adminApp.controller('EditLawyerAdminController', function($http,$state,$location
 		// Add New Items
 		else{
 			$scope.lawyerAdmin.county.push(countyId);
+		}
+		if($scope.lawyerAdmin.county.length==0){
+			$scope.requiredValue=false;
+		}
+		else if($scope.lawyerAdmin.county.length>0){
+			$scope.requiredValue=true;
 		}
 	};
 	

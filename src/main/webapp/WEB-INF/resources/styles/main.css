@@ -32,6 +32,17 @@ table tr td {
     padding-bottom: 10px;
 }
 
+table tbody tr{
+    background-color: transparent;
+}
+
+
+.table > thead {
+    background-color: #eee !important;
+}
+
+
+
 
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
@@ -446,4 +457,21 @@ input[type=text]::-ms-clear { display: none; }
    line-height:20px;
    border-radius:50%;
    box-shadow:0 0 1px #333;
+}
+.redText{
+	color:red;
+}
+
+
+.wrap{
+	word-wrap: break-word !important;
+}
+
+.margin-top35{
+	margin-top: 35px;
+}
+
+.search{
+	background-color:#1A4D81;
+	color: #fff; 
 }
