@@ -9,6 +9,7 @@ public class PatientViewForm {
 	
 	
 	private String localReportNumber;
+	private Integer countyId;
 	private String county;
 	private String crashDate;
 	private String crashSeverity;
@@ -19,6 +20,13 @@ public class PatientViewForm {
 	}
 	public void setLocalReportNumber(String localReportNumber) {
 		this.localReportNumber = localReportNumber;
+	}
+	
+	public Integer getCountyId() {
+		return countyId;
+	}
+	public void setCountyId(Integer countyId) {
+		this.countyId = countyId;
 	}
 	public String getCounty() {
 		return county;
@@ -55,12 +63,11 @@ public class PatientViewForm {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public PatientViewForm(String localReportNumber, String county,
+	public PatientViewForm(String localReportNumber,
 			String crashDate, String crashSeverity, String addedDate,
 			 String name) {
 		super();
 		this.localReportNumber = localReportNumber;
-		this.county = county;
 		this.crashDate = crashDate;
 		this.crashSeverity = crashSeverity;
 		this.addedDate = addedDate;

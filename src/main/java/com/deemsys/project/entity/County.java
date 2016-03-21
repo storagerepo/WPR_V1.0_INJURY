@@ -33,6 +33,8 @@ public class County implements java.io.Serializable {
 			0);
 	private Set<CrashReport> crashReports = new HashSet<CrashReport>(
 			0);
+	private Set<Patient> patients=new HashSet<Patient>(0);
+	
 	public County() {
 	}
 
@@ -124,6 +126,15 @@ public class County implements java.io.Serializable {
 	public void setCrashReports(
 			Set<CrashReport> crashReports) {
 		this.crashReports = crashReports;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "county")
+	public Set<Patient> getPatients() {
+		return patients;
+	}
+
+	public void setPatients(Set<Patient> patients) {
+		this.patients = patients;
 	}
 
 }

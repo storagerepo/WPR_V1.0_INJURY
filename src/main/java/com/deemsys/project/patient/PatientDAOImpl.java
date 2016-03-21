@@ -3,14 +3,21 @@ package com.deemsys.project.patient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.id.Assigned;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.Appointments.AppointmentsForm;
@@ -32,12 +39,14 @@ public class PatientDAOImpl implements PatientDAO{
 	SessionFactory sessionFactory;
 
 	@Override
-	public void save(Patient entity) {
-		// TODO Auto-generated method stub
-		System.out.println("checking4");
+	public void save(Patient entity) {		
+		try{
+			String UUIDString=UUID.randomUUID().toString();
+			entity.setPatientId(UUIDString.replaceAll("-", ""));
 			this.sessionFactory.getCurrentSession().save(entity);
-			System.out.println("checking5");
-			
+		}catch(DataIntegrityViolationException exception){
+			this.save(entity);
+		}			
 	}
 
 	@Override
@@ -322,37 +331,68 @@ public List<Patient> getPatientListByLimit(Integer pageNumber,
 
 @SuppressWarnings("unchecked")
 @Override
-public Integer getTotalPatientCount(String localReportNumber, String county,
-		String crashDate, String toDate, String recordedFromDate,
+public Integer getTotalPatientCount(String localReportNumber, Integer county,
+		String crashDate,String crashToDate, String recordedFromDate,
 		String recordedToDate, String name) {
 	// TODO Auto-generated method stub
-	List<Patient> patient=new ArrayList<Patient>();
-	Criterion criterion = Restrictions.eq("county", county);
-	Criterion criterion1=Restrictions.or(criterion ,(Restrictions.like("name", name, MatchMode.ANYWHERE)));
-	Criterion criterion2=Restrictions.or(criterion1, Restrictions.eq("localReportNumber", localReportNumber));
-	Criterion criterion3=Restrictions.or(criterion2, Restrictions.between("addedDate", recordedFromDate, recordedToDate));
-	patient=this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(criterion3).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+	Criteria cr=this.sessionFactory.getCurrentSession().createCriteria(Patient.class);
+	
+	Criterion countyCriterion=Restrictions.eq("county.countyId", county);
+	cr.add(countyCriterion);
+	
+	Criterion nameCriterion=Restrictions.like("name", name,MatchMode.ANYWHERE);
+	cr.add(nameCriterion);
+	
+	Criterion localReportNumberCriterion=Restrictions.like("localReportNumber",localReportNumber,MatchMode.START);
+	cr.add(localReportNumberCriterion);
+	
+	if(recordedFromDate!=""&&recordedToDate!=""){
+		Criterion addedDateCriterion=Restrictions.between("addedDate", recordedFromDate, recordedToDate);
+		cr.add(addedDateCriterion);
+	}
+	
+	if(crashDate!=""&&crashToDate!=""){
+		Criterion crashDateCriterion=Restrictions.between("crashDate", crashDate, crashToDate);
+		cr.add(crashDateCriterion);
+	}
+	List<Patient> patients=new ArrayList<Patient>();
+	patients=cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
-	return patient.size();
+	return patients.size();
 }
 
+@SuppressWarnings("unchecked")
 @Override
-public List<Patient> searchPatients(Integer pageNumber, Integer itemsPerPage,String localReportNumber, String county,
-		String crashDate, String toDate, String recordedFromDate,
-		String recordedToDate, String name, String customDate) {
-	// TODO Auto-generated method stub
+public List<Patient> searchPatients(Integer pageNumber, Integer itemsPerPage,String localReportNumber, Integer county,
+		String crashDate, String crashToDate, String recordedFromDate,
+		String recordedToDate, String name) {
+		// TODO Auto-generated method stub
+		//(county_id=60 and name like '%%' )and (local_report_number like '%%'  and (added_date between '03/02/2016' and '03/21/2016')) and (crash_date between '03/06/2016' and '03/22/2016');
+		Criteria cr=this.sessionFactory.getCurrentSession().createCriteria(Patient.class);
 	
-	List<Patient> patient=new ArrayList<Patient>();
-	
-		Criterion criterion = Restrictions.eq("county", county);
-		Criterion criterion1=Restrictions.or(criterion ,(Restrictions.like("name", name, MatchMode.ANYWHERE)));
-		Criterion criterion2=Restrictions.or(criterion1, Restrictions.eq("localReportNumber", localReportNumber));
-		Criterion criterion3=Restrictions.or(criterion2, Restrictions.between("addedDate", recordedFromDate, recordedToDate));
-		patient=this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(criterion3).setFirstResult((pageNumber-1)*itemsPerPage).setMaxResults(itemsPerPage).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-	
+		Criterion countyCriterion=Restrictions.eq("county.countyId", county);
+		cr.add(countyCriterion);
 		
-	
-	return patient;
+		Criterion nameCriterion=Restrictions.like("name", name,MatchMode.ANYWHERE);
+		cr.add(nameCriterion);
+		
+		Criterion localReportNumberCriterion=Restrictions.like("localReportNumber",localReportNumber,MatchMode.START);
+		cr.add(localReportNumberCriterion);
+		
+		if(recordedFromDate!=""&&recordedToDate!=""){
+			Criterion addedDateCriterion=Restrictions.between("addedDate", recordedFromDate, recordedToDate);
+			cr.add(addedDateCriterion);
+		}
+		
+		if(crashDate!=""&&crashToDate!=""){
+			Criterion crashDateCriterion=Restrictions.between("crashDate", crashDate, crashToDate);
+			cr.add(crashDateCriterion);
+		}
+		
+		
+		List<Patient> patient=new ArrayList<Patient>();			
+		patient=cr.setFirstResult((pageNumber-1)*itemsPerPage).setMaxResults(itemsPerPage).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+		return patient;
 }
 
 private Object value(String string, String localReportNumber, MatchMode anywhere) {

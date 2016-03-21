@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +16,9 @@ import java.util.regex.Pattern;
 
 
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -26,6 +30,8 @@ import com.deemsys.project.entity.Patient;
 import com.deemsys.project.Appointments.AppointmentsDAO;
 import com.deemsys.project.CallLogs.CallLogsDAO;
 import com.deemsys.project.Clinics.ClinicsDAO;
+import com.deemsys.project.County.CountyDAO;
+import com.deemsys.project.CrashReport.CrashReportService;
 import com.deemsys.project.Map.GeoLocation;
 import com.deemsys.project.Caller.CallerDAO;
 import com.deemsys.project.Caller.CallerService;
@@ -33,6 +39,7 @@ import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.Clinic;
+import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.Doctor;
 import com.deemsys.project.entity.Caller;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
@@ -52,23 +59,22 @@ public class PatientService {
 
 	@Autowired
 	PatientDAO patientDAO;
-	@Autowired
-	CallLogsDAO callLogsDAO;
-	@Autowired
-	ClinicsDAO clinicsDAO;
+	
 	@Autowired
 	CallerDAO callerDAO;
+	
 	@Autowired
-	PDFCrashReportReader crashReportReader;
-
-	@Autowired
-	CallerService callerService;
-	@Autowired
-	AppointmentsDAO appointmentsDAO;
+	CallerService callerService;	
 
 	@Autowired
 	GeoLocation geoLocation;
 
+	@Autowired
+	CountyDAO countyDAO;
+	
+	@Autowired
+	CrashReportService crashReportService;
+	
 	/*
 	 * @Autowired PatientFileRead patientFileRead;
 	 */
@@ -93,133 +99,19 @@ public class PatientService {
 
 		for (Patient patient : patients) {
 			// TODO: Fill the List
-			patientForms.add(this.getPatientFormDetails(patient));
+			patientForms.add(this.getPatientForm(patient));
 		}
 
 		return patientForms;
 	}
 
-	// Add to patient to Patient Forms
-	public PatientForm getPatientFormDetails(Patient patient){
 	
-		Integer callerId = 0, clinicId = 0, doctorId = 0;
-		String callerName = "N/A";
-		String clinicName = "N/A";
-		String doctorName = "N/A";
-		callerName = "N/A";
-		clinicName = "N/A";
-		doctorName = "N/A";
-		/*if (patient.getCaller() != null) {
-			callerId = patient.getCaller().getId();
-			callerName = patient.getCaller().getFirstName() + " "
-					+ patient.getCaller().getLastName();
-		}
-		if (patient.getClinic() != null) {
-			clinicId = patient.getClinics().getClinicId();
-			clinicName = patient.getClinics().getClinicName();
-		}
-		if (patient.getDoctors() != null) {
-			doctorId = patient.getDoctors().getId();
-			doctorName = patient.getDoctors().getDoctorName();
-		}
-		PatientForm patientForm = new PatientForm(patient.getId(),
-				callerId, clinicId, doctorId,
-				patient.getLocalReportNumber(),
-				patient.getCrashSeverity(),
-				patient.getReportingAgencyName(),
-				patient.getNumberOfUnits(), patient.getUnitInError(),
-				patient.getCountry(), patient.getCityVillageTownship(),
-				patient.getCrashDate(), patient.getTimeOfCrash()
-						.toString(), patient.getUnitNumber(),
-				patient.getName(), patient.getDateOfBirth(),
-				patient.getGender(), patient.getAddress(),
-				patient.getPhoneNumber(), patient.getInjuries(),
-				patient.getEmsAgency(), patient.getMedicalFacility(),
-				patient.getCrashReportFileName(),
-				patient.getPatientStatus());
-		patientForm.setCallerName(callerName);
-		patientForm.setClinicName(clinicName);
-		patientForm.setDoctorName(doctorName);
-		*/
-
-		PatientForm patientForm = new PatientForm();
-		
-		return patientForm;
-	}
 	
 	// Get Particular Entry
 	public PatientForm getPatient(Integer getId) {
-		Patient patient = new Patient();
-
-		patient = patientDAO.get(getId);
-
-		// TODO: Convert Entity to Form
-		// Start
-		PatientForm patientForm = new PatientForm();
 		
-		patientForm = this.getPatientFormDetails(patient);
-		// End
+		return this.getPatientForm(patientDAO.get(getId));
 		
-		return patientForm;
-	}
-
-	// Get Particular Entry
-	public PatientForm getPatientWithLatLong(Integer getId) {
-		Patient patient = new Patient();
-
-		patient = patientDAO.get(getId);
-
-		// TODO: Convert Entity to Form
-		// Start
-		PatientForm patientForm = new PatientForm();
-		Integer callerId = 0, clinicId = 0, doctorId = 0;
-		String callerName = "N/A";
-		String clinicName = "N/A";
-		String doctorName = "N/A";
-		/*if (patient != null) {
-			callerId = 0;
-			clinicId = 0;
-			doctorId = 0;
-			if (patient.getCaller() != null) {
-				callerId = patient.getCaller().getId();
-				callerName = patient.getCaller().getFirstName() + " "
-						+ patient.getCaller().getLastName();
-			}
-			if (patient.getClinics() != null) {
-				clinicId = patient.getClinics().getClinicId();
-				clinicName = patient.getClinics().getClinicName();
-			}
-			if (patient.getDoctors() != null) {
-				doctorId = patient.getDoctors().getId();
-				doctorName = patient.getDoctors().getDoctorName();
-			}
-
-			patientForm = new PatientForm(patient.getId(), callerId,
-					clinicId, doctorId, patient.getLocalReportNumber(),
-					patient.getCrashSeverity(),
-					patient.getReportingAgencyName(),
-					patient.getNumberOfUnits(), patient.getUnitInError(),
-					patient.getCountry(), patient.getCityVillageTownship(),
-					patient.getCrashDate(),
-					InjuryConstants.convertAMPMTime(patient.getTimeOfCrash()
-							.toString()), patient.getUnitNumber(),
-					patient.getName(), patient.getDateOfBirth(),
-					patient.getGender(), patient.getAddress(),
-					patient.getPhoneNumber(), patient.getInjuries(),
-					patient.getEmsAgency(), patient.getMedicalFacility(),
-					patient.getCrashReportFileName(),
-					patient.getPatientStatus());
-			patientForm.setLatitude(patient.getLatitude());
-			patientForm.setLongitude(patient.getLongitude());
-			patientForm.setCallerName(callerName);
-			patientForm.setClinicName(clinicName);
-			patientForm.setDoctorName(doctorName);
-
-		}
-*/
-		// End
-
-		return patientForm;
 	}
 
 	// Update an Entry
@@ -236,19 +128,19 @@ public class PatientService {
 			longitude = Double.parseDouble(latitudeLongitude[1]);
 		}
 		
-		Patient patient= new Patient();
-		patientDAO.update(patient);
+		patientForm.setLatitude(latitude);
+		patientForm.setLongitude(longitude);
+		
+		patientDAO.update(this.getPatient(patientForm));
 
 		return 1;
 	}
 
+	//Save an Entity
 	public int savePatient(PatientForm patientForm) {
 		// TODO: Convert Form to Entity Here
 
 		// Logic Starts
-
-		Caller caller = null;
-		
 
 		String latLong = geoLocation.getLocation(patientForm.getAddress());
 
@@ -260,8 +152,9 @@ public class PatientService {
 			longitude = Double.parseDouble(latitudeLongitude[1]);
 		}
 
-		Patient patient = new Patient();
-			patientDAO.save(patient);
+		patientForm.setLatitude(latitude);
+		patientForm.setLongitude(longitude);
+		patientDAO.save(this.getPatient(patientForm));
 
 		return 1;
 	}
@@ -337,7 +230,7 @@ public class PatientService {
 
 		for (Patient patient : patients) {
 			// TODO: Fill the List
-			patientForms.add(this.getPatientFormDetails(patient));
+			patientForms.add(this.getPatientForm(patient));
 		}
 
 		return patientForms;
@@ -361,39 +254,151 @@ public class PatientService {
 				name, phoneNumber, localReportNumber, callerName);
 
 		for (Patient patient : patients) {
-			patientForms.add(this.getPatientFormDetails(patient));
+			patientForms.add(this.getPatientForm(patient));
 		}
 
 		return patientForms;
 	}
 
 	// Get Total Patient Count By Page Limit
-	public Integer getTotalPatient(String localReportNumber,String county, 
-			String crashDate,Integer days,String recordedFromDate,String recordedToDate, String name) {
+	public Integer getTotalPatient(String localReportNumber,Integer county, 
+			String crashDate,Integer days,String recordedFromDate,String recordedToDate, String name,String customDate) {
 		Integer count = 0;
 		String toDate="";
-		count = patientDAO.getTotalPatientCount(localReportNumber, county, crashDate, toDate, recordedFromDate, recordedToDate, name);
+		
+		String crashToDate="";
+		if(crashDate!=""){
+			DateTime crashStartDate=DateTime.parse(crashDate,DateTimeFormat.forPattern("MM/dd/yyyy"));
+			DateTime crashEndDate=crashStartDate.plusDays(days);
+			
+			if(days!=0)
+				crashToDate=crashEndDate.toString("MM/dd/yyyy");
+			else
+				crashToDate=customDate;
+		}
+		
+		count = patientDAO.getTotalPatientCount(localReportNumber, county, crashDate, crashToDate, recordedFromDate, recordedToDate, name);
 		
 		return count;
 	}
 	
 	
 	// Get Patient List By Page Limit
-		public List<PatientViewForm> searchPatients(Integer pageNumber, Integer itemsPerPage,String localReportNumber,String county, 
+		public List<PatientViewForm> searchPatients(Integer pageNumber, Integer itemsPerPage,String localReportNumber,Integer county, 
 				String crashDate,Integer days,String recordedFromDate,String recordedToDate, String name, String customDate) {
 			List<Patient> patients = new ArrayList<Patient>();
 			List<PatientViewForm> patientViewForms = new ArrayList<PatientViewForm>();
+			String crashToDate="";
+			if(crashDate!=""){
+				DateTime crashStartDate=DateTime.parse(crashDate,DateTimeFormat.forPattern("MM/dd/yyyy"));
+				DateTime crashEndDate=crashStartDate.plusDays(days);
+				
+				if(days!=0)
+					crashToDate=crashEndDate.toString("MM/dd/yyyy");
+				else
+					crashToDate=customDate;
+			}
 			
-			String toDate="";
 			
-			patients = patientDAO.searchPatients(pageNumber, itemsPerPage,localReportNumber, county, crashDate, toDate, recordedFromDate, recordedToDate, name, customDate);
+			patients = patientDAO.searchPatients(pageNumber, itemsPerPage,localReportNumber,county, crashDate,crashToDate, recordedFromDate, recordedToDate, name);
 
-			for (Patient patient : patients) {
-				PatientViewForm patientViewForm=new PatientViewForm(patient.getLocalReportNumber(), patient.getCounty(), patient.getCrashDate(), patient.getCrashSeverity(), patient.getAddedDate(), patient.getName());
-				patientViewForms.add(patientViewForm);
+			for (Patient patient : patients) {				
+				patientViewForms.add(getPatientViewForm(patient));
 			}
 
 			return patientViewForms;
 		}
+		
+	//Patient -> Patient Form	
+	public PatientForm getPatientForm(Patient patient) {
+
+		PatientForm patientForm = new PatientForm(patient.getPatientId(),
+				patient.getLocalReportNumber(), patient.getCrashSeverity(),
+				patient.getReportingAgencyName(), patient.getNumberOfUnits(),
+				patient.getUnitInError(), patient.getCityVillageTownship(),
+				patient.getCrashDate(), patient.getAddedDate(),
+				patient.getTimeOfCrash(), patient.getUnitNumber(),
+				patient.getName(), patient.getDateOfBirth(),
+				patient.getGender(), patient.getAddress(),
+				patient.getLatitude(), patient.getLongitude(),
+				patient.getPhoneNumber(), patient.getInjuries(),
+				patient.getEmsAgency(), patient.getMedicalFacility(),
+				patient.getAtFaultInsuranceCompany(),
+				patient.getAtFaultPolicyNumber(),
+				patient.getVictimInsuranceCompany(),
+				patient.getVictimPolicyNumber(), patient.getPatientStatus(),
+				patient.getCrashReportFileName(), patient.getStatus());
+
+		// Null Exception Check
+		if (patient.getCounty() != null) {
+			patientForm.setCountyId(patient.getCounty().getCountyId());
+			patientForm.setCounty(patient.getCounty().getName());
+		}
+
+		return patientForm;
+	}
+	
+		//Patient -> Patient Form	
+	public Patient getPatient(PatientForm patientForm) {
+	
+	//Check Condition
+	County county=new County();		
+	if(patientForm.getCountyId()==null){
+		try{
+			county=countyDAO.getCountyByName(crashReportService.splitCountyName(patientForm.getCounty()));			
+		}catch(Exception ex){
+			
+		}
+	}else{
+		county=countyDAO.get(patientForm.getCountyId());
+	}
+	
+	//Date 
+	LocalDate addedDate=new LocalDate();
+	
+	//Mapping
+	Patient patient = new Patient(patientForm.getPatientId(),
+			patientForm.getLocalReportNumber(),
+			patientForm.getCrashSeverity(),
+			patientForm.getReportingAgencyName(),
+			patientForm.getNumberOfUnits(), patientForm.getUnitInError(),
+			county, patientForm.getCityVillageTownship(),
+			patientForm.getCrashDate(), addedDate.toString("MM/dd/yyyy"),
+			patientForm.getTimeOfCrash(), patientForm.getUnitNumber(),
+			patientForm.getName(), patientForm.getDateOfBirth(),
+			patientForm.getGender(), patientForm.getAddress(),
+			patientForm.getLatitude(), patientForm.getLongitude(),
+			patientForm.getPhoneNumber(), patientForm.getInjuries(),
+			patientForm.getEmsAgency(), patientForm.getMedicalFacility(),
+			patientForm.getAtFaultInsuranceCompany(),
+			patientForm.getAtFaultPolicyNumber(),
+			patientForm.getVictimInsuranceCompany(),
+			patientForm.getVictimPolicyNumber(),
+			patientForm.getPatientStatus(),
+			patientForm.getCrashReportFileName(), patientForm.getStatus(),
+			null, null);
+		
+		return patient;
+	}
+	
+	
+	//Patient -> Patient View Form
+	public PatientViewForm getPatientViewForm(Patient patient) {
+
+		PatientViewForm patientViewForm = new PatientViewForm(
+				patient.getLocalReportNumber(),
+				patient.getCrashDate(), patient.getCrashSeverity(),
+				patient.getAddedDate(), patient.getName());
+
+		// Null Exception Check
+		if (patient.getCounty() != null) {
+			patientViewForm.setCountyId(patient.getCounty().getCountyId());
+			patientViewForm.setCounty(patient.getCounty().getName());
+		}
+
+		return patientViewForm;
+	}
+	
+	
 	
 }

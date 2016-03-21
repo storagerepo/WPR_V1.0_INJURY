@@ -72,7 +72,7 @@ public class PatientController {
 	@RequestMapping(value = "/Caller/saveUpdatePatient", method = RequestMethod.POST)
 	public String updatePatient(@RequestBody PatientForm patientForm,
 			ModelMap model) {
-		if (patientForm.getId() == null)
+		if (patientForm.getPatientId() == null)
 			patientService.savePatient(patientForm);
 		else
 			patientService.updatePatient(patientForm);
@@ -143,8 +143,7 @@ public class PatientController {
 	@RequestMapping(value = "/Caller/getPatientWithLatLong", method = RequestMethod.GET)
 	public String getPatientWithLatLong(@RequestParam("id") Integer id,
 			ModelMap model) {
-		model.addAttribute("patientForm",
-				patientService.getPatientWithLatLong(id));
+		model.addAttribute("patientForm",patientService.getPatient(id));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
@@ -250,8 +249,9 @@ public class PatientController {
 	
 	@RequestMapping(value = { "/Admin/searchPatients" }, method = RequestMethod.POST)
 	public String searchPatients(@RequestBody PatientSearchForm patientsearchForm,ModelMap model) {
+		
 		model.addAttribute("patientViewForms", patientService.searchPatients(patientsearchForm.getPageNumber(),patientsearchForm.getItemsPerPage(),patientsearchForm.getLocalReportNumber(), patientsearchForm.getCounty(), patientsearchForm.getCrashDate(),patientsearchForm.getDays() , patientsearchForm.getRecordedFromDate(),patientsearchForm.getRecordedToDate() , patientsearchForm.getName(), patientsearchForm.getCustomDate()));
-		model.addAttribute("noOfRecords", patientService.getTotalPatient(patientsearchForm.getLocalReportNumber(), patientsearchForm.getCounty(), patientsearchForm.getCrashDate(),patientsearchForm.getDays() , patientsearchForm.getRecordedFromDate(),patientsearchForm.getRecordedToDate() , patientsearchForm.getName()));
+		model.addAttribute("totalNoOfRecords", patientService.getTotalPatient(patientsearchForm.getLocalReportNumber(), patientsearchForm.getCounty(), patientsearchForm.getCrashDate(),patientsearchForm.getDays() , patientsearchForm.getRecordedFromDate(),patientsearchForm.getRecordedToDate() , patientsearchForm.getName(),patientsearchForm.getCustomDate()));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

@@ -5,10 +5,14 @@ package com.deemsys.project.entity;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,13 +23,13 @@ import javax.persistence.Table;
 @Table(name = "patient", catalog = "injury_latest")
 public class Patient implements java.io.Serializable {
 
-	private byte[] patientId;
+	private String patientId;
 	private String localReportNumber;
 	private String crashSeverity;
 	private String reportingAgencyName;
 	private String numberOfUnits;
 	private String unitInError;
-	private String county;
+	private County county;
 	private String cityVillageTownship;
 	private String crashDate;
 	private String addedDate;
@@ -56,13 +60,13 @@ public class Patient implements java.io.Serializable {
 	public Patient() {
 	}
 
-	public Patient(byte[] patientId) {
+	public Patient(String patientId) {
 		this.patientId = patientId;
 	}
 
-	public Patient(byte[] patientId, String localReportNumber,
+	public Patient(String patientId, String localReportNumber,
 			String crashSeverity, String reportingAgencyName,
-			String numberOfUnits, String unitInError, String county,
+			String numberOfUnits, String unitInError, County county,
 			String cityVillageTownship, String crashDate,String addedDate, String timeOfCrash,
 			String unitNumber, String name, String dateOfBirth, String gender,
 			String address, Double latitude, Double longitude,
@@ -108,11 +112,11 @@ public class Patient implements java.io.Serializable {
 
 	@Id
 	@Column(name = "patient_id", unique = true, nullable = false)
-	public byte[] getPatientId() {
+	public String getPatientId() {
 		return this.patientId;
 	}
 
-	public void setPatientId(byte[] patientId) {
+	public void setPatientId(String patientId) {
 		this.patientId = patientId;
 	}
 
@@ -161,12 +165,13 @@ public class Patient implements java.io.Serializable {
 		this.unitInError = unitInError;
 	}
 
-	@Column(name = "county", length = 60)
-	public String getCounty() {
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "county_id")
+	public County getCounty() {
 		return this.county;
 	}
 
-	public void setCounty(String county) {
+	public void setCounty(County county) {
 		this.county = county;
 	}
 

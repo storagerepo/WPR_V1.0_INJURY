@@ -52,11 +52,11 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 			Integer itemsPerPage, String name, String phoneNumber,
 			String localReportNumber, String callerName);
 
-	public Integer getTotalPatientCount(String localReportNumber, String county,
+	public Integer getTotalPatientCount(String localReportNumber, Integer county,
 			String crashDate, String toDate, String recordedFromDate,
 			String recordedToDate, String name);
 	
-	public List<Patient> searchPatients(Integer pageNumber, Integer itemsPerPage,String localReportNumber,String county, 
-			String crashDate,String toDate,String recordedFromDate,String recordedToDate, String name, String customDate);
+	public List<Patient> searchPatients(Integer pageNumber, Integer itemsPerPage,String localReportNumber,Integer county, 
+			String crashDate,String toDate,String recordedFromDate,String recordedToDate, String name);
 
 }

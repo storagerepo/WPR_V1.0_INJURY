@@ -10,7 +10,7 @@ public class PatientSearchForm {
 	private Integer pageNumber;
 	private Integer itemsPerPage;
 	private String localReportNumber;
-	private String county;
+	private Integer county;
 	private String crashDate;
 	private Integer days;
 	private String recordedFromDate;
@@ -39,10 +39,10 @@ public class PatientSearchForm {
 	public void setLocalReportNumber(String localReportNumber) {
 		this.localReportNumber = localReportNumber;
 	}
-	public String getCounty() {
+	public Integer getCounty() {
 		return county;
 	}
-	public void setCounty(String county) {
+	public void setCounty(Integer county) {
 		this.county = county;
 	}
 	public String getCrashDate() {
@@ -91,7 +91,7 @@ public class PatientSearchForm {
 		// TODO Auto-generated constructor stub
 	}
 	public PatientSearchForm(Integer pageNumber, Integer itemsPerPage, String localReportNumber,
-			String county, String crashDate,Integer days,String recordedFromDate,String recordedToDate, String name, String customDate) {
+			Integer county, String crashDate,Integer days,String recordedFromDate,String recordedToDate, String name, String customDate) {
 		super();
 		this.pageNumber =pageNumber;
 		this.itemsPerPage=itemsPerPage;
