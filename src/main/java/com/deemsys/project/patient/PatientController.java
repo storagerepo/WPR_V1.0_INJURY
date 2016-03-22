@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.deemsys.project.common.InjuryProperties;
+import com.deemsys.project.login.LoginService;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 import com.deemsys.project.LawyerAdmin.LawyerAdminForm;
@@ -27,6 +28,7 @@ import com.deemsys.project.Lawyers.LawyersService;
 import com.deemsys.project.Map.ClinicLocationForm;
 import com.deemsys.project.Map.SearchClinicsService;
 import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.CallerAdmin.CallerAdminService;
 
 /**
  * 
@@ -52,7 +54,13 @@ public class PatientController {
 	CallerService callerService;
 	
 	@Autowired
+	CallerAdminService callerAdminService;
+	
+	@Autowired
 	InjuryProperties injuryProperties;
+	
+	@Autowired
+	LoginService loginService;
 
 	@RequestMapping(value = { "/Patient/getAllPatients",
 			"/Caller/getAllPatients" }, method = RequestMethod.GET)
@@ -262,5 +270,14 @@ public class PatientController {
 		
 		return injuryProperties.getProperty("tempFolder");
 	}
+	
+	@RequestMapping(value = { "/CAdmin/patientSearchByCAdmin" }, method = RequestMethod.POST)
+	public @ResponseBody List<PatientViewForm> searchPatientsByCAdmin(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
+		
+		callerPatientSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
+		return patientService.getPatientsByCAdmin(callerPatientSearchForm);
+		
+	}
+	
 
 }

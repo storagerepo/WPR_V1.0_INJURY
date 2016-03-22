@@ -34,6 +34,18 @@
 		<session-management invalid-session-url="/logout" />
 	</http>
 	
+	<!-- Roles and URL protection -->
+	<http pattern="/Caller/**" create-session="never" use-expressions="true"
+		entry-point-ref="oauthAuthenticationEntryPoint"
+		access-decision-manager-ref="accessDecisionManager"
+		xmlns="http://www.springframework.org/schema/security">
+		<anonymous enabled="false" />
+		<intercept-url pattern="/Caller/**" access="hasAnyRole('ROLE_CALLER_ADMIN','ROLE_CALLER')" />
+		
+		<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
+		<session-management invalid-session-url="/logout" />
+	</http>
+	
 	<http pattern="/Admin/**" create-session="never"
 		entry-point-ref="oauthAuthenticationEntryPoint"
 		access-decision-manager-ref="accessDecisionManager"

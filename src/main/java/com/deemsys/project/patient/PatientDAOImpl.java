@@ -5,17 +5,23 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.criteria.JoinType;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 import org.hibernate.id.Assigned;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
@@ -25,6 +31,7 @@ import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.Patient;
+import com.deemsys.project.entity.PatientCallerAdminMap;
 
 /**
  * 
@@ -398,6 +405,49 @@ public List<Patient> searchPatients(Integer pageNumber, Integer itemsPerPage,Str
 private Object value(String string, String localReportNumber, MatchMode anywhere) {
 	// TODO Auto-generated method stub
 	return null;
+}
+
+@SuppressWarnings("unchecked")
+@Override
+public List<Patient> searchPatientsByCAdmin(
+		CallerPatientSearchForm callerPatientSearchForm) {
+	// TODO Auto-generated method stub
+	
+	List<Patient> patients=new ArrayList<Patient>();	
+	Session session=this.sessionFactory.getCurrentSession();
+	
+	Criteria criteria=session.createCriteria(Patient.class, "t1");
+	
+	criteria.createAlias("patientCallerAdminMaps", "t2", Criteria.LEFT_JOIN);
+	
+	//Check for caller admin id equal or null
+	LogicalExpression logicalExpression=Restrictions.or(Restrictions.eq("t2.id.callerAdminId", callerPatientSearchForm.getCallerAdminId()),Restrictions.isNull("t2.id.callerAdminId"));
+	criteria.add(logicalExpression);
+	
+	//Add Projections
+	//criteria.setProjection(Projections.property("t1"));
+	ProjectionList projectionList = Projections.projectionList();
+	
+	projectionList.add(Projections.property("t1.patientId"),"patientId");
+	projectionList.add(Projections.property("t1.localReportNumber"),"localReportNumber");
+	projectionList.add(Projections.property("t1.county.countyId"),"countyId");
+	projectionList.add(Projections.property("t1.crashDate"),"crashDate");
+	projectionList.add(Projections.property("t1.crashSeverity"),"crashSeverity");
+	projectionList.add(Projections.property("t1.addedDate"),"addedDate");
+	projectionList.add(Projections.property("t1.name"),"name");
+	projectionList.add(Projections.property("t1.phoneNumber"),"phoneNumber");
+	projectionList.add(Projections.property("t1.address"),"address");
+	projectionList.add(Projections.property("t1.crashReportFileName"),"crashReportFileName");
+	projectionList.add(Projections.property("t2.callerAdmin.callerAdminId"),"callerAdminId");
+	projectionList.add(Projections.property("t2.caller.callerId"),"callerId");
+	projectionList.add(Projections.property("t2.notes"),"notes");
+	projectionList.add(Projections.property("t2.isArchived"),"isArchived");
+	projectionList.add(Projections.property("t2.patientStatus"),"patientStatus");
+	
+	criteria.setProjection(projectionList);
+	List<PatientSearchList> patientSearchLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).list();
+	return (List<Patient>) criteria.list();
+
 }
 
 

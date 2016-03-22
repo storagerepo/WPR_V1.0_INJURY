@@ -308,6 +308,20 @@ public class PatientService {
 
 			return patientViewForms;
 		}
+	
+	public List<PatientViewForm> getPatientsByCAdmin(CallerPatientSearchForm callerPatientSearchForm){
+		List<Patient> patients=patientDAO.searchPatientsByCAdmin(callerPatientSearchForm);
+		List<PatientViewForm> patientViewForms=new ArrayList<PatientViewForm>();
+		
+		for (Patient patient : patients) {
+			patientViewForms.add(getPatientViewForm(patient));
+		}
+		
+		return patientViewForms;
+	}
+		
+		
+		
 		
 	//Patient -> Patient Form	
 	public PatientForm getPatientForm(Patient patient) {
@@ -385,10 +399,10 @@ public class PatientService {
 	//Patient -> Patient View Form
 	public PatientViewForm getPatientViewForm(Patient patient) {
 
-		PatientViewForm patientViewForm = new PatientViewForm(
+		PatientViewForm patientViewForm = new PatientViewForm(patient.getPatientId(),
 				patient.getLocalReportNumber(),
 				patient.getCrashDate(), patient.getCrashSeverity(),
-				patient.getAddedDate(), patient.getName());
+				patient.getAddedDate(), patient.getName(),patient.getCrashReportFileName());
 
 		// Null Exception Check
 		if (patient.getCounty() != null) {

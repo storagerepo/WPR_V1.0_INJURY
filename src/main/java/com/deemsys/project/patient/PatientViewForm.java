@@ -7,7 +7,7 @@ package com.deemsys.project.patient;
  */
 public class PatientViewForm {
 	
-	
+	private String patientId;
 	private String localReportNumber;
 	private Integer countyId;
 	private String county;
@@ -15,6 +15,8 @@ public class PatientViewForm {
 	private String crashSeverity;
 	private String addedDate;
 	private String name;
+	private String crashReportLink;
+	
 	public String getLocalReportNumber() {
 		return localReportNumber;
 	}
@@ -59,20 +61,38 @@ public class PatientViewForm {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	
+	public String getPatientId() {
+		return patientId;
+	}
+	public void setPatientId(String patientId) {
+		this.patientId = patientId;
+	}
+	public String getCrashReportLink() {
+		return crashReportLink;
+	}
+	public void setCrashReportLink(String crashReportLink) {
+		this.crashReportLink = crashReportLink;
+	}
 	public PatientViewForm() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public PatientViewForm(String localReportNumber,
-			String crashDate, String crashSeverity, String addedDate,
-			 String name) {
+	public PatientViewForm(String patientId, String localReportNumber,
+			String crashDate,
+			String crashSeverity, String addedDate, String name,
+			String crashReportLink) {
 		super();
+		this.patientId = patientId;
 		this.localReportNumber = localReportNumber;
 		this.crashDate = crashDate;
 		this.crashSeverity = crashSeverity;
 		this.addedDate = addedDate;
 		this.name = name;
+		this.crashReportLink = crashReportLink;
 	}
+	
 	
 	
 }

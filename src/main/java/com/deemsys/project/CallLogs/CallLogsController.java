@@ -8,21 +8,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.Caller;
+import com.deemsys.project.login.LoginService;
+
 /**
  * 
  * @author Deemsys
  * 
  */
 @Controller
-@RequestMapping("/Caller")
 public class CallLogsController {
 
 	@Autowired
 	CallLogsService callLogsService;
+	
+	@Autowired
+	CallerService callerService;
+	
+	@Autowired
+	LoginService loginService;
+	
 
-	@RequestMapping(value = "/getCallLogs", method = RequestMethod.GET)
-	public String getCallLogs(@RequestParam("id") Integer id, ModelMap model) {
-		model.addAttribute("callLogsForm", callLogsService.getCallLogs(id));
+	@RequestMapping(value = "/Caller/getCallLogs", method = RequestMethod.GET)
+	public String getCallLogs(ModelMap model) {
+		System.out.println(loginService.getCurrentUserID());
+		System.out.println(loginService.getCurrentRole());
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
+	@RequestMapping(value = "/CallerAdmin/getCallLogs", method = RequestMethod.GET)
+	public String getCallLogsByAdmin(ModelMap model) {
+		//model.addAttribute("callLogsForm", callLogsService.getCallLogs(id));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

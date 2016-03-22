@@ -28,6 +28,7 @@ import com.deemsys.project.entity.Patient;
 import com.deemsys.project.entity.Roles;
 import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.Users;
+import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientDAO;
 import com.deemsys.project.patient.PatientForm;
 
@@ -69,6 +70,9 @@ public class CallerService {
 	
 	@Autowired
 	CountyService countyService;
+	
+	@Autowired
+	LoginService loginService;
 	
 	// Get All Entries
 	public List<CallerForm> getCallerList() {
@@ -272,8 +276,7 @@ public class CallerService {
 
 	// Get Current User Role
 	public String getCurrentRole() {
-
-		return InjuryConstants.getCurrentRole();
+		return loginService.getCurrentRole();
 	}
 
 	public List<CallerForm> getCallerId() {
