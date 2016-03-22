@@ -273,28 +273,7 @@ public class CallerService {
 	// Get Current User Role
 	public String getCurrentRole() {
 
-		String currentRole = "";
-		User user = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-		Object[] role = user.getAuthorities().toArray();
-
-		if (role[0].toString().equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)) {
-			currentRole = InjuryConstants.INJURY_SUPER_ADMIN_ROLE;
-		} else if (role[0].toString().equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)) {
-			currentRole = InjuryConstants.INJURY_CALLER_ADMIN_ROLE;
-		} else if (role[0].toString().equals(
-				InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)) {
-			currentRole = InjuryConstants.INJURY_LAWYER_ADMIN_ROLE;
-		} 
-		else if (role[0].toString()
-				.equals(InjuryConstants.INJURY_CALLER_ROLE)) {
-			currentRole = InjuryConstants.INJURY_CALLER_ROLE;
-		}
-		else if (role[0].toString()
-				.equals(InjuryConstants.INJURY_LAWYER_ROLE)) {
-			currentRole = InjuryConstants.INJURY_LAWYER_ROLE;
-		}
-		return currentRole;
+		return InjuryConstants.getCurrentRole();
 	}
 
 	public List<CallerForm> getCallerId() {
@@ -426,5 +405,9 @@ public class CallerService {
 		Caller caller = callerDAO.get(callerId);
 		status = usersDAO.resetUserPassword(caller.getUsers().getUserId());
 		return status;
+	}
+	
+	public Caller getCallerByUserId(Integer userId){
+		return callerDAO.getByUserId(userId);
 	}
 }

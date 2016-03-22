@@ -303,9 +303,8 @@ public class LawyerAdminService {
 	
 
 	// Get Lawyer Admin By UserId
-	public Integer getLawyerAdminIdByUserId(Integer userId) {
-		LawyerAdmin lawyerAdmin = lawyerAdminDAO.getByUserId(userId);
-		return lawyerAdmin.getLawyerAdminId();
+	public LawyerAdmin getLawyerAdminIdByUserId(Integer userId) {
+		return lawyerAdminDAO.getByUserId(userId);
 	}
 
 }

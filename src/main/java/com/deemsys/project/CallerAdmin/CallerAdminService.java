@@ -235,4 +235,11 @@ public class CallerAdminService {
 		List<CallerAdmin> callerAdmins=callerAdminDAO.getAll();
 		return callerAdmins.size();
 	}
+	
+	//Get Caller Admin by User Id
+	public CallerAdmin getCallerAdminByUserId(Integer userId){
+		return callerAdminDAO.getCallerAdminByUserId(userId);
+	}
+	
+	
 }

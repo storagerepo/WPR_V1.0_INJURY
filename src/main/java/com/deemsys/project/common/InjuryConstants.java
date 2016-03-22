@@ -9,8 +9,15 @@ import java.util.List;
 import java.util.Set;
 
 import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+
+import com.deemsys.project.CallerAdmin.CallerAdminService;
+import com.deemsys.project.entity.CallerAdmin;
 
 public class InjuryConstants {
+	
 	
 	public static Integer INJURY_SUPER_ADMIN_ROLE_ID=1;
 	public static Integer INJURY_CALLER_ADMIN_ROLE_ID=2;
@@ -215,4 +222,34 @@ public class InjuryConstants {
 			}
 			return toDate;
 		}
+		
+		
+		// Get Current User Role
+		public static String getCurrentRole() {
+
+			String currentRole = "";
+			User user = (User) SecurityContextHolder.getContext()
+					.getAuthentication().getPrincipal();
+			Object[] role = user.getAuthorities().toArray();
+
+			if (role[0].toString().equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)) {
+				currentRole = InjuryConstants.INJURY_SUPER_ADMIN_ROLE;
+			} else if (role[0].toString().equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)) {
+				currentRole = InjuryConstants.INJURY_CALLER_ADMIN_ROLE;
+			} else if (role[0].toString().equals(
+					InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)) {
+				currentRole = InjuryConstants.INJURY_LAWYER_ADMIN_ROLE;
+			} 
+			else if (role[0].toString()
+					.equals(InjuryConstants.INJURY_CALLER_ROLE)) {
+				currentRole = InjuryConstants.INJURY_CALLER_ROLE;
+			}
+			else if (role[0].toString()
+					.equals(InjuryConstants.INJURY_LAWYER_ROLE)) {
+				currentRole = InjuryConstants.INJURY_LAWYER_ROLE;
+			}
+			return currentRole;
+		}
+		
+
 }

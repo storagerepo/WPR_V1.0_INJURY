@@ -70,10 +70,9 @@ public class LawyersController {
 	@RequestMapping(value = "/getLawyersByLawyerAdmin", method = RequestMethod.GET)
 	public String getLawyersByLawyerAdmin(ModelMap model) {
 		Integer currentUserId = callerService.getCurrentUserId();
-		Integer lawyerAdminId = lawyerAdminService
-				.getLawyerAdminIdByUserId(currentUserId);
 		model.addAttribute("lawyersForms",
-				lawyersService.getLawyersListByLawyerAdmin(lawyerAdminId));
+				lawyersService.getLawyersListByLawyerAdmin(lawyerAdminService
+						.getLawyerAdminIdByUserId(currentUserId).getLawyerAdminId()));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
@@ -81,8 +80,7 @@ public class LawyersController {
 	@RequestMapping(value = "/getNumberOfLawyers", method = RequestMethod.GET)
 	public String getNoOfLawyerAdmin(ModelMap model) {
 		Integer currentUserId = callerService.getCurrentUserId();
-		Integer lawyerAdminId = lawyerAdminService.getLawyerAdminIdByUserId(currentUserId);
-		model.addAttribute("noOfLawyers",lawyersService.getNumberOfLawyers(lawyerAdminId));
+		model.addAttribute("noOfLawyers",lawyersService.getNumberOfLawyers(lawyerAdminService.getLawyerAdminIdByUserId(currentUserId).getLawyerAdminId()));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
