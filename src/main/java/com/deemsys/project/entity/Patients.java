@@ -25,7 +25,7 @@ public class Patients implements java.io.Serializable {
 	private Integer id;
 	private Staff staff;
 	private Clinics clinics;
-	private Doctors doctors;
+	private Doctor doctors;
 	private String localReportNumber;
 	private String crashSeverity;
 	private String reportingAgencyName;
@@ -58,7 +58,7 @@ public class Patients implements java.io.Serializable {
 	public Patients() {
 	}
 
-	public Patients(Staff staff, Clinics clinics, Doctors doctors,
+	public Patients(Staff staff, Clinics clinics, Doctor doctors,
 			String localReportNumber, String crashSeverity,
 			String reportingAgencyName, String numberOfUnits,
 			String unitInError, String country, String cityVillageTownship,
@@ -132,11 +132,11 @@ public class Patients implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "doctor_id")
-	public Doctors getDoctors() {
+	public Doctor getDoctors() {
 		return this.doctors;
 	}
 
-	public void setDoctors(Doctors doctors) {
+	public void setDoctors(Doctor doctors) {
 		this.doctors = doctors;
 	}
 

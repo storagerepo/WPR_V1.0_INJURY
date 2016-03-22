@@ -50,7 +50,7 @@ public class DoctorsService {
 			// TODO: Fill the List
 			DoctorsForm doctorsForm = new DoctorsForm(doctors.getDoctorId(),
 					doctors.getDoctorName(), doctors.getTitleDr(),
-					doctors.getTitleDc());
+					doctors.getTitleDc(),doctors.getStatus());
 
 			doctorsForms.add(doctorsForm);
 		}
@@ -67,7 +67,7 @@ public class DoctorsService {
 		if (doctors != null) {
 			doctorsForm = new DoctorsForm(doctors.getDoctorId(),
 					doctors.getDoctorName(), doctors.getTitleDr(),
-					doctors.getTitleDc());
+					doctors.getTitleDc(),doctors.getStatus());
 		} else {
 			doctorsForm = new DoctorsForm();
 		}
@@ -108,7 +108,7 @@ public class DoctorsService {
 		if (doctors != null) {
 			doctorsForm = new DoctorsForm(doctors.getDoctorId(),
 					doctors.getDoctorName(), doctors.getTitleDr(),
-					doctors.getTitleDc());
+					doctors.getTitleDc(),doctors.getStatus());
 		} else {
 			doctorsForm = new DoctorsForm();
 		}
@@ -131,6 +131,7 @@ public class DoctorsService {
 		doctors.setDoctorName(doctorsForm.getDoctorName());
 		doctors.setTitleDr(doctorsForm.getTitleDr());
 		doctors.setTitleDc(doctorsForm.getTitleDc());
+		doctors.setStatus(1);
 		doctorsDAO.save(doctors);
 		return 1;
 	}
@@ -153,6 +154,7 @@ public class DoctorsService {
 		doctors.setTitleDr(doctorsForm.getTitleDr());
 		doctors.setTitleDc(doctorsForm.getTitleDc());
 		doctors.setDoctorId(doctorsForm.getId());
+		doctors.setStatus(1);
 		// Logic Ends
 
 		doctorsDAO.update(doctors);
@@ -277,7 +279,7 @@ public class DoctorsService {
 		for (Doctor doctorss : doctors) {
 			doctorsForms = new DoctorsForm(doctorss.getDoctorId(),
 					doctorss.getDoctorName(), doctorss.getTitleDr(),
-					doctorss.getTitleDc());
+					doctorss.getTitleDc(),doctorss.getStatus());
 			doctorsForms.setIsRemoveable(this
 					.getDoctorsRemoveableStatus(doctorss.getDoctorId()));
 			doctorsForm.add(doctorsForms);
@@ -297,7 +299,7 @@ public class DoctorsService {
 		for (Doctor doctorss : doctors) {
 			String doctorName = this.getDoctorNameWithTitle(doctorss);
 			doctorsForms = new DoctorsForm(doctorss.getDoctorId(), doctorName,
-					doctorss.getTitleDr(), doctorss.getTitleDc());
+					doctorss.getTitleDr(), doctorss.getTitleDc(),doctorss.getStatus());
 			doctorsForm.add(doctorsForms);
 
 		}

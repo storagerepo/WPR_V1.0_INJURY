@@ -7,6 +7,7 @@ import com.deemsys.project.Doctors.DoctorsForm;
 
 public class ClinicsForm {
 	private Integer clinicId;
+	private Integer callerAdminId;
 	private String clinicName;
 	private String address;
 	private String city;
@@ -21,6 +22,7 @@ public class ClinicsForm {
 	private String serviceArea;
 	private String directions;
 	private String notes;
+	private Integer status;
 	private Double farAway;
 	private List<ClinicTimingList> clinicTimingList;
 	private List<DoctorsForm> doctorsForms;
@@ -31,6 +33,14 @@ public class ClinicsForm {
 
 	public void setClinicId(Integer clinicId) {
 		this.clinicId = clinicId;
+	}
+
+	public Integer getCallerAdminId() {
+		return callerAdminId;
+	}
+
+	public void setCallerAdminId(Integer callerAdminId) {
+		this.callerAdminId = callerAdminId;
 	}
 
 	public String getClinicName() {
@@ -145,6 +155,14 @@ public class ClinicsForm {
 		this.notes = notes;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	public Double getFarAway() {
 		return farAway;
 	}
@@ -173,7 +191,7 @@ public class ClinicsForm {
 			String city, String state, String county, String country,
 			String zipcode, Double latitude, Double longitude,
 			String officeNumber, String faxNumber, String serviceArea,
-			String directions, String notes, Double farAway,
+			String directions, String notes,Integer status, Double farAway,
 			List<ClinicTimingList> clinicTimingList) {
 		super();
 		this.clinicId = clinicId;
@@ -191,6 +209,7 @@ public class ClinicsForm {
 		this.serviceArea = serviceArea;
 		this.directions = directions;
 		this.notes = notes;
+		this.status=status;
 		this.farAway = farAway;
 		this.clinicTimingList = clinicTimingList;
 	}
@@ -198,7 +217,7 @@ public class ClinicsForm {
 	public ClinicsForm(Integer clinicId, String clinicName, String address,
 			String city, String state, String county, String country,
 			String zipcode, String officeNumber, String faxNumber,
-			String serviceArea, String directions, String notes,
+			String serviceArea, String directions, String notes,Integer status,
 			List<ClinicTimingList> clinicTimingList,
 			List<DoctorsForm> doctorsForms) {
 		super();
@@ -215,6 +234,7 @@ public class ClinicsForm {
 		this.serviceArea = serviceArea;
 		this.directions = directions;
 		this.notes = notes;
+		this.status=status;
 		this.clinicTimingList = clinicTimingList;
 		this.doctorsForms = doctorsForms;
 	}

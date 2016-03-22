@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -111,12 +113,16 @@ public class ClinicsDAOImpl implements ClinicsDAO {
 	@Override
 	public boolean disable(Integer id) {
 		// TODO Auto-generated method stub
+		Query query=this.sessionFactory.getCurrentSession().createQuery("Update Clinic set status=0 where clinicId='"+id+"'");
+		query.executeUpdate();
 		return false;
 	}
 
 	@Override
 	public boolean enable(Integer id) {
 		// TODO Auto-generated method stub
+		Query query=this.sessionFactory.getCurrentSession().createQuery("Update Clinic set status=1 where clinicId='"+id+"'");
+		query.executeUpdate();
 		return false;
 	}
 
@@ -167,6 +173,14 @@ public class ClinicsDAOImpl implements ClinicsDAO {
 		List<Clinic> list = cr.list();
 
 		return list;
+	}
+
+	@Override
+	public List<Clinic> getClinicsByCallerAdmin(Integer callerAdmin) {
+		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
+		List<Clinic> clinics=this.sessionFactory.getCurrentSession().createCriteria(Clinic.class).add(Restrictions.eq("callerAdmin.callerAdminId", callerAdmin)).list();
+		return clinics;
 	}
 
 }

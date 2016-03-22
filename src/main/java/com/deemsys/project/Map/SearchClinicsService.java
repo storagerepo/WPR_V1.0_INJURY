@@ -64,7 +64,7 @@ public class SearchClinicsService {
 						clinics2.getLatitude(), clinics2.getLongitude(),
 						clinics2.getOfficeNumber(), clinics2.getFaxNumber(),
 						clinics2.getDirections(), clinics2.getServiceArea(),
-						clinics2.getNotes(),
+						clinics2.getNotes(), clinics2.getStatus(),
 						geoLocation.convertKiloMeterToMiles(distance),
 						clinicTimingLists);
 				clinicsForms.add(clinicsForm);

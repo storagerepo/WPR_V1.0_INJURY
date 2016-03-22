@@ -12,12 +12,9 @@ public class DoctorsForm {
 	private Integer clinicId;
 	private String clinicName;
 	private String doctorName;
-	private String emailId;
-	private String contactNumber;
-	private String specialistIn;
-	private String notes;
 	private Integer titleDr;
 	private Integer titleDc;
+	private Integer status;
 	private Integer isRemoveable;
 
 	public Integer getId() {
@@ -38,38 +35,6 @@ public class DoctorsForm {
 
 	public void setClinicId(Integer clinicId) {
 		this.clinicId = clinicId;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-	public String getContactNumber() {
-		return contactNumber;
-	}
-
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
-	}
-
-	public String getSpecialistIn() {
-		return specialistIn;
-	}
-
-	public void setSpecialistIn(String specialistIn) {
-		this.specialistIn = specialistIn;
-	}
-
-	public String getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
 	}
 
 	public Integer getClinicId() {
@@ -100,6 +65,14 @@ public class DoctorsForm {
 		this.titleDc = titleDc;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	public Integer getIsRemoveable() {
 		return isRemoveable;
 	}
@@ -121,17 +94,13 @@ public class DoctorsForm {
 	}
 
 	public DoctorsForm(Integer id, Integer clinicId, String clinicName,
-			String doctorName, String emailId, String contactNumber,
-			String specialistIn, String notes) {
+			String doctorName, Integer status) {
 		super();
 		this.id = id;
 		this.clinicId = clinicId;
 		this.clinicName = clinicName;
 		this.doctorName = doctorName;
-		this.emailId = emailId;
-		this.contactNumber = contactNumber;
-		this.specialistIn = specialistIn;
-		this.notes = notes;
+		this.status=status;
 	}
 
 	public DoctorsForm(Integer id, String doctorName) {
@@ -140,12 +109,13 @@ public class DoctorsForm {
 	}
 
 	public DoctorsForm(Integer id, String doctorName, Integer titleDr,
-			Integer titleDc) {
+			Integer titleDc,Integer status) {
 		super();
 		this.id = id;
 		this.doctorName = doctorName;
 		this.titleDr = titleDr;
 		this.titleDc = titleDc;
+		this.status=status;
 	}
 
 }

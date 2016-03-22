@@ -29,7 +29,7 @@ public class DoctorsDAOImpl implements DoctorsDAO {
 	@Override
 	public void save(Doctor entity) {
 		// TODO Auto-generated method stub
-		this.sessionFactory.getCurrentSession().merge(entity);
+		this.sessionFactory.getCurrentSession().save(entity);
 	}
 
 	@Override
@@ -167,7 +167,7 @@ public class DoctorsDAOImpl implements DoctorsDAO {
 		@SuppressWarnings("unchecked")
 		List<Doctor> doctors = this.sessionFactory.getCurrentSession()
 				.createCriteria(Doctor.class)
-				.add(Restrictions.eq("clinics.clinicId", clinicId)).list();
+				.add(Restrictions.eq("clinic.clinicId", clinicId)).list();
 		return doctors;
 	}
 
@@ -177,7 +177,7 @@ public class DoctorsDAOImpl implements DoctorsDAO {
 		// TODO Auto-generated method stub
 		List<Doctor> doctors = this.sessionFactory.getCurrentSession()
 				.createCriteria(Doctor.class)
-				.add(Restrictions.eq("clinics.clinicId", clinicId)).list();
+				.add(Restrictions.eq("clinic.clinicId", clinicId)).list();
 		return doctors.size();
 	}
 
@@ -186,7 +186,7 @@ public class DoctorsDAOImpl implements DoctorsDAO {
 		// TODO Auto-generated method stub
 		Query query = this.sessionFactory.getCurrentSession()
 				.createQuery(
-						"update Doctor set clinics.clinicId=NULL where id="
+						"update Doctor set clinic.clinicId=NULL where id="
 								+ doctorId);
 		query.executeUpdate();
 		return null;
@@ -198,7 +198,7 @@ public class DoctorsDAOImpl implements DoctorsDAO {
 		// TODO Auto-generated method stub
 		return (List<Doctor>) this.sessionFactory.getCurrentSession()
 				.createCriteria(Doctor.class)
-				.add(Restrictions.eq("clinics.clinicId", clinicId)).list();
+				.add(Restrictions.eq("clinic.clinicId", clinicId)).list();
 
 	}
 

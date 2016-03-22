@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.CallerAdmin.CallerAdminDAO;
 import com.deemsys.project.ClinicTimings.ClinicTimingList;
 import com.deemsys.project.ClinicTimings.ClinicTimingsDAO;
 import com.deemsys.project.Doctors.DoctorsDAO;
@@ -15,10 +17,12 @@ import com.deemsys.project.Doctors.DoctorsForm;
 import com.deemsys.project.Doctors.DoctorsService;
 import com.deemsys.project.Map.GeoLocation;
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.CallerAdmin;
 import com.deemsys.project.entity.ClinicTimings;
 import com.deemsys.project.entity.ClinicTimingsId;
 import com.deemsys.project.entity.Clinic;
 import com.deemsys.project.entity.Patient;
+import com.deemsys.project.entity.Users;
 import com.deemsys.project.patient.PatientDAO;
 
 /**
@@ -46,6 +50,12 @@ public class ClinicsService {
 
 	@Autowired
 	DoctorsService doctorsService;
+	
+	@Autowired
+	CallerAdminDAO callerAdminDAO;
+	
+	@Autowired
+	CallerService callerService;
 
 	/**
 	 * Get Clinic Details For Edit
@@ -87,7 +97,7 @@ public class ClinicsService {
 				clinics.getCountry(), clinics.getZipcode(),
 				clinics.getOfficeNumber(), clinics.getFaxNumber(),
 				clinics.getServiceArea(), clinics.getDirections(),
-				clinics.getNotes(), clinicTimingLists, doctorsForms);
+				clinics.getNotes(),clinics.getStatus(), clinicTimingLists, doctorsForms);
 
 		return clinicsForm;
 	}
@@ -132,7 +142,7 @@ public class ClinicsService {
 				clinics.getCountry(), clinics.getZipcode(),
 				clinics.getOfficeNumber(), clinics.getFaxNumber(),
 				clinics.getServiceArea(), clinics.getDirections(),
-				clinics.getNotes(), clinicTimingLists, doctorsForms);
+				clinics.getNotes(), clinics.getStatus(), clinicTimingLists, doctorsForms);
 
 		return clinicsForm;
 	}
@@ -145,7 +155,8 @@ public class ClinicsService {
 	public List<ClinicsForm> getClinicsList() {
 		List<ClinicsForm> clinicsForms = new ArrayList<ClinicsForm>();
 		List<Clinic> clinicses = new ArrayList<Clinic>();
-		clinicses = clinicsDAO.getAll();
+		Integer callerAdminId=callerAdminDAO.getCallerAdminByUserId(callerService.getCurrentUserId()).getCallerAdminId();
+		clinicses = clinicsDAO.getClinicsByCallerAdmin(callerAdminId);
 
 		for (Clinic clinics : clinicses) {
 			ClinicsForm clinicsForm = new ClinicsForm(clinics.getClinicId(),
@@ -154,7 +165,7 @@ public class ClinicsService {
 					clinics.getCountry(), clinics.getZipcode(),
 					clinics.getOfficeNumber(), clinics.getFaxNumber(),
 					clinics.getServiceArea(), clinics.getDirections(),
-					clinics.getNotes(), null, null);
+					clinics.getNotes(),clinics.getStatus(), null, null);
 			clinicsForms.add(clinicsForm);
 		}
 
@@ -176,9 +187,9 @@ public class ClinicsService {
 		System.out.println("CONVERT ADDRESS--"
 				+ this.getAddressForGeoCode(clinicsForm));
 		String[] latiudeLongitude = latLong.split(",");
-
+		CallerAdmin callerAdmin=callerAdminDAO.getCallerAdminByUserId(callerService.getCurrentUserId());
 		// Save Clinic
-		Clinic clinics = new Clinic(null,clinicsForm.getClinicName(),
+		Clinic clinics = new Clinic(callerAdmin,clinicsForm.getClinicName(),
 				clinicsForm.getAddress(), 
 				Double.parseDouble(latiudeLongitude[0]),
 				Double.parseDouble(latiudeLongitude[1]),
@@ -234,9 +245,9 @@ public class ClinicsService {
 		String latLong = geoLocation.getLocation(this
 				.getAddressForGeoCode(clinicsForm));
 		String[] latiudeLongitude = latLong.split(",");
-
+		CallerAdmin callerAdmin=callerAdminDAO.getCallerAdminByUserId(callerService.getCurrentUserId());
 		// Update Clinics
-		Clinic clinics = new Clinic(null,clinicsForm.getClinicName(),
+		Clinic clinics = new Clinic(callerAdmin,clinicsForm.getClinicName(),
 				clinicsForm.getAddress(),Double.parseDouble(latiudeLongitude[0]),
 				Double.parseDouble(latiudeLongitude[1]), clinicsForm.getCity(),
 				clinicsForm.getState(), clinicsForm.getCounty(),
@@ -328,7 +339,8 @@ public class ClinicsService {
 	 */
 	public Integer getNoOfClinics() {
 		Integer noOfClinics = 0;
-		noOfClinics = clinicsDAO.getAll().size();
+		Integer callerAdminId=callerAdminDAO.getCallerAdminByUserId(callerService.getCurrentUserId()).getCallerAdminId();
+		noOfClinics = clinicsDAO.getClinicsByCallerAdmin(callerAdminId).size();
 		return noOfClinics;
 	}
 
@@ -386,6 +398,18 @@ public class ClinicsService {
 		}
 
 		return status;
+	}
+	
+	// Enable or Disable Clinic
+	public int enableOrDisableClinic(Integer clinicId)
+	{ 
+		Clinic clinic=clinicsDAO.get(clinicId);
+		if(clinic.getStatus()==1){
+			clinicsDAO.disable(clinicId);
+		}else if(clinic.getStatus()==0){
+			clinicsDAO.enable(clinicId);
+		}
+		return 1;
 	}
 
 }
