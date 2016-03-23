@@ -920,8 +920,14 @@ sbAdminApp
 												resolve : {
 													loadMyFiles : function(
 															$ocLazyLoad) {
+														return $ocLazyLoad
+														.load({
+															name : 'sbAdminApp',
+															files : [ 'scripts/controllers/countyController.js' ]
+														});
 													}
-												}
+												},
+												controller:'CountyController'
 											})
 									.state(
 											'dashboard.TierType',

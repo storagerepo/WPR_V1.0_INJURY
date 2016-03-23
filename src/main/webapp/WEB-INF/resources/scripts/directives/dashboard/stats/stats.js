@@ -35,7 +35,7 @@ angular.module('sbAdminApp')
     'model': '=',
     'county': '@',
     'colour':'@',
-    'totalcount': '@',
+    'newcount': '@',
     'goto':'@',
     'activecount':'@',
     'voicemailcount':'@',

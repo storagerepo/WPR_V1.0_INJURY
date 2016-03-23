@@ -56,5 +56,14 @@ public class CountyController {
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
+	
+	@RequestMapping(value = { "/Patient/getMyCounties", "/Lawyer/getMyCounties","/LAdmin/getMyCounties","/CAdmin/getMyCounties","/Caller/getMyCounties" }, method = RequestMethod.GET)
+	public String getMyCounties(ModelMap model) {
+		
+		model.addAttribute("countyList",countyService.getMyCountyList());
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
 
 }

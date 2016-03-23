@@ -36,6 +36,7 @@ public class PatientForm {
 	private String atFaultPolicyNumber;
 	private String victimInsuranceCompany;
 	private String victimPolicyNumber;
+	private Integer tier;
 	private Integer patientStatus;
 	private String crashReportFileName;
 	private Integer status;
@@ -215,6 +216,13 @@ public class PatientForm {
 	public void setVictimPolicyNumber(String victimPolicyNumber) {
 		this.victimPolicyNumber = victimPolicyNumber;
 	}
+	
+	public Integer getTier() {
+		return tier;
+	}
+	public void setTier(Integer tier) {
+		this.tier = tier;
+	}
 	public Integer getPatientStatus() {
 		return patientStatus;
 	}
@@ -242,7 +250,7 @@ public class PatientForm {
 			String phoneNumber, String injuries, String emsAgency,
 			String medicalFacility, String atFaultInsuranceCompany,
 			String atFaultPolicyNumber, String victimInsuranceCompany,
-			String victimPolicyNumber, Integer patientStatus,
+			String victimPolicyNumber,Integer tier, Integer patientStatus,
 			String crashReportFileName, Integer status) {
 		super();
 		this.patientId = patientId;
@@ -270,6 +278,7 @@ public class PatientForm {
 		this.atFaultPolicyNumber = atFaultPolicyNumber;
 		this.victimInsuranceCompany = victimInsuranceCompany;
 		this.victimPolicyNumber = victimPolicyNumber;
+		this.tier=tier;
 		this.patientStatus = patientStatus;
 		this.crashReportFileName = crashReportFileName;
 		this.status = status;

@@ -5,11 +5,6 @@
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
-    <div class="row">
-    	<county ng-cloak totalcount="2" activecount="0" voicemailcount="28" scheduledcount="0" county="Brown" colour="primary" type="location-arrow" goto="dashboard.TierType"></county>
-        <county ng-cloak totalcount="18" activecount="5" voicemailcount="4" scheduledcount="9" county="Clark" colour="primary" type="location-arrow" goto="dashboard.TierType"></county>
-        <county ng-cloak totalcount="200" activecount="40" voicemailcount="80" scheduledcount="80" county="Delaware" colour="primary" type="location-arrow" goto="dashboard.TierType"></county>
-        <county ng-cloak totalcount="5000" activecount="2000" voicemailcount="1511" scheduledcount="1489" county="Franklin" colour="primary" type="location-arrow" goto="dashboard.TierType"></county>
-        <county ng-cloak totalcount="1" activecount="1" voicemailcount="13" scheduledcount="2" county="Stark" colour="primary" type="location-arrow" goto="dashboard.TierType"></county>
-        <county ng-cloak totalcount="0" activecount="17" voicemailcount="0" scheduledcount="43" county="Warren" colour="primary" type="location-arrow" goto="dashboard.TierType""></county>
+    <div class="row" >
+    	<county  ng-repeat="county in countyList" ng-cloak newcount="{{county.newCount}}" county="{{county.countyName}}" colour="primary" type="location-arrow" countyid="{{county.countyId}}" goto="dashboard.TierType"></county>
     </div>

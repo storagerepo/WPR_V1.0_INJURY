@@ -23,7 +23,7 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 	
 		if($rootScope.isAdmin==1){
 			// No of Clinics
-			requestHandler.getRequest("Caller/getNoOfClinics.json","").then( function(response) {
+			/*requestHandler.getRequest("Caller/getNoOfClinics.json","").then( function(response) {
 			      $scope.numberClinics=response.data.NoOfClinics;
 			     
 			     });
@@ -54,7 +54,7 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 						     });
 				   requestHandler.getRequest("Admin/getNoOfLawyerAdmin.json","").then( function(response) {
 					    	$scope.numberLawyerAdmin=response.data.noOfLawyerAdmin;
-					     });
+					     });*/
 			}
 		   else if($rootScope.isAdmin==2){
 			   requestHandler.getRequest("CAdmin/getNumberOfCallers.json","").then( function(response) {

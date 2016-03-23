@@ -415,7 +415,7 @@ private Object value(String string, String localReportNumber, MatchMode anywhere
 
 @SuppressWarnings("unchecked")
 @Override
-public List<PatientSearchList> searchPatientsByCAdmin(
+public PatientSearchResult searchPatientsByCAdmin(
 		CallerPatientSearchForm callerPatientSearchForm) {
 	// TODO Auto-generated method stub
 		
@@ -555,8 +555,12 @@ public List<PatientSearchList> searchPatientsByCAdmin(
 	
 	
 	criteria.setProjection(projectionList);
-	List<PatientSearchList> patientSearchLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).list();
-	return patientSearchLists;
+	Integer totalNumberOfRecords=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).list().size();
+	List<PatientSearchList> patientSearchLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).setFirstResult((callerPatientSearchForm.getPageNumber()-1)*callerPatientSearchForm.getItemsPerPage()).setMaxResults(callerPatientSearchForm.getItemsPerPage()).list();
+	
+	PatientSearchResult patientSearchResult=new PatientSearchResult(totalNumberOfRecords, patientSearchLists);
+	
+	return patientSearchResult;
 
 }
 

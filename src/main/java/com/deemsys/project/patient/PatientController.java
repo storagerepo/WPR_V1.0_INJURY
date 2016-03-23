@@ -275,43 +275,20 @@ public class PatientController {
 		return injuryProperties.getProperty("tempFolder");
 	}
 	
-	@RequestMapping(value = { "/CAdmin/patientSearchByCAdmin" }, method = RequestMethod.POST)
-	public @ResponseBody List<PatientSearchList> searchPatientsByCAdmin(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
+	@RequestMapping(value = { "/Patient/searchPatients" }, method = RequestMethod.POST)
+	public String searchPatientsByAdmin(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
 		
-		callerPatientSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
-		return patientService.getPatientsByCAdmin(callerPatientSearchForm);
+		PatientSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 		
-	}
-	
-	@RequestMapping(value = { "/Admin/patientSearchByAdmin" }, method = RequestMethod.POST)
-	public @ResponseBody List<PatientSearchList> searchPatientsByAdmin(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
-		
-		return patientService.getPatientsByCAdmin(callerPatientSearchForm);
-		
-	}
-	@RequestMapping(value = { "/LAdmin/patientSearchByLAdmin" }, method = RequestMethod.POST)
-	public @ResponseBody List<PatientSearchList> searchPatientsByLawyerAdmin(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
-		
-		callerPatientSearchForm.setLawyerAdminId(lawyerAdminService.getLawyerAdminIdByUserId(loginService.getCurrentUserID()).getLawyerAdminId());
-		return patientService.getPatientsByCAdmin(callerPatientSearchForm);
-		
-	}
-	
-	@RequestMapping(value = { "/Lawyer/patientSearchByLawyer" }, method = RequestMethod.POST)
-	public @ResponseBody List<PatientSearchList> searchPatientsByLawyer(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
-		
-		callerPatientSearchForm.setLawyerAdminId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerAdmin().getLawyerAdminId());
-		callerPatientSearchForm.setLawyerId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId());
-		return patientService.getPatientsByCAdmin(callerPatientSearchForm);
-		
-	}
-	
-	@RequestMapping(value = { "/Caller/patientSearchByCaller" }, method = RequestMethod.POST)
-	public @ResponseBody List<PatientSearchList> searchPatientsByCaller(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
-		
-		callerPatientSearchForm.setCallerAdminId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId());
-		callerPatientSearchForm.setCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
-		return patientService.getPatientsByCAdmin(callerPatientSearchForm);
+		if(patientSearchResult.getTotalNoOfRecord()==null){
+			model.addAttribute("Access Denied","You don't have permission to access the requested county!");
+			model.addAttribute("status",0);
+		}else{
+			model.addAttribute("status",1);
+			model.addAttribute(patientSearchResult);
+		}
+		model.addAttribute("requestSuccess", true);
+		return "ok";
 		
 	}
 	

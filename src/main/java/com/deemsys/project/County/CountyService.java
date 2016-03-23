@@ -7,15 +7,62 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.CallerAdminCountyMap;
+import com.deemsys.project.entity.CallerCountyMap;
 import com.deemsys.project.entity.County;
+import com.deemsys.project.entity.LawyerAdminCountyMap;
+import com.deemsys.project.login.LoginService;
+import com.deemsys.project.patient.CallerPatientSearchForm;
+import com.deemsys.project.patient.PatientDAO;
+import com.deemsys.project.patient.PatientService;
+import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.CallerAdmin.CallerAdminService;
+import com.deemsys.project.CallerAdminCountyMapping.CallerAdminCountyMapDAO;
+import com.deemsys.project.CallerCountyMap.CallerCountyMapDAO;
 import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.County.CountyForm;
+import com.deemsys.project.LawyerAdmin.LawyerAdminService;
+import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingDAO;
+import com.deemsys.project.LawyerCountyMap.LawyerCountyMapDAO;
+import com.deemsys.project.Lawyers.LawyersService;
 
 @Service
 @Transactional
 public class CountyService {
 	@Autowired
 	CountyDAO countyDAO;
+	
+	@Autowired
+	CallerAdminCountyMapDAO callerAdminCountyMapDAO;
+	
+	@Autowired
+	CallerCountyMapDAO callerCountyMapDAO;
+	
+	@Autowired
+	LawyerAdminCountyMappingDAO lawyerAdminCountyMappingDAO;
+	
+	@Autowired
+	LawyerCountyMapDAO lawyerCountyMapDAO;
+	
+	
+	@Autowired
+	LoginService loginService;
+	
+	@Autowired
+	CallerService callerService;
+	
+	@Autowired
+	CallerAdminService callerAdminService;
+	
+	@Autowired
+	LawyerAdminService lawyerAdminService;
+	
+	@Autowired
+	LawyersService lawyersService;
+	
+	@Autowired
+	PatientService patientService;
 
 	// Get All Entries
 	public List<CountyForm> getCountyList() {
@@ -103,5 +150,39 @@ public class CountyService {
 	public int deleteCounty(Integer id) {
 		countyDAO.delete(id);
 		return 1;
+	}
+	
+	// Update an Entry
+	public List<CountyList> getMyCountyList() {
+		// TODO: Convert Form to Entity Here
+
+		// Logic Starts
+		String role=loginService.getCurrentRole();
+		List<CountyList> countyLists=new ArrayList<CountyList>();
+		
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+			countyLists=callerAdminCountyMapDAO.getCountyListByCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			callerCountyMapDAO.getCallerCountyMapByCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
+		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+			lawyerAdminCountyMappingDAO.getLawyerAdminCountyMappingsByLawyerAdminId(lawyerAdminService.getLawyerAdminIdByUserId(loginService.getCurrentUserID()).getLawyerAdminId());
+		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
+			lawyerCountyMapDAO.getLawyerCountyMapByLawyerId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId());
+		}
+		
+		//Set New Count status
+		//getNewPatientCount(countyLists);
+		
+		// Logic Ends
+
+		return countyLists;
+	}
+	
+	public List<CountyList> getNewPatientCount(List<CountyList> countyLists){
+		for (CountyList countyList : countyLists) {
+			CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(null, countyList.getCountyId(), 0, 0, "", 0, "", "", "", 0, 0, 0, "", 0, 0);
+			countyList.setNewCount(patientService.getCurrentPatientList(callerPatientSearchForm).getTotalNoOfRecord());
+		}
+		return countyLists;
 	}
 }

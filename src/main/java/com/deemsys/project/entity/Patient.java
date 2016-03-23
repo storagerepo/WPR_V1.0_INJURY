@@ -49,6 +49,7 @@ public class Patient implements java.io.Serializable {
 	private String atFaultPolicyNumber;
 	private String victimInsuranceCompany;
 	private String victimPolicyNumber;
+	private Integer tier;
 	private Integer patientStatus;
 	private String crashReportFileName;
 	private Integer status;
@@ -73,7 +74,7 @@ public class Patient implements java.io.Serializable {
 			String phoneNumber, String injuries, String emsAgency,
 			String medicalFacility, String atFaultInsuranceCompany,
 			String atFaultPolicyNumber, String victimInsuranceCompany,
-			String victimPolicyNumber, Integer patientStatus,
+			String victimPolicyNumber,Integer tier, Integer patientStatus,
 			String crashReportFileName, Integer status,
 			Set<PatientCallerAdminMap> patientCallerAdminMaps,
 			Set<PatientLawyerAdminMap> patientLawyerAdminMaps) {
@@ -103,6 +104,7 @@ public class Patient implements java.io.Serializable {
 		this.atFaultPolicyNumber = atFaultPolicyNumber;
 		this.victimInsuranceCompany = victimInsuranceCompany;
 		this.victimPolicyNumber = victimPolicyNumber;
+		this.tier=tier;
 		this.patientStatus = patientStatus;
 		this.crashReportFileName = crashReportFileName;
 		this.status = status;
@@ -347,6 +349,15 @@ public class Patient implements java.io.Serializable {
 		this.victimPolicyNumber = victimPolicyNumber;
 	}
 
+	@Column(name = "tier")
+	public Integer getTier() {
+		return this.tier;
+	}
+
+	public void setTier(Integer tier) {
+		this.tier = tier;
+	}
+	
 	@Column(name = "patient_status")
 	public Integer getPatientStatus() {
 		return this.patientStatus;

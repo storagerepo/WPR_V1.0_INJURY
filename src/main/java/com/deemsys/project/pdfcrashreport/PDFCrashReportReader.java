@@ -731,6 +731,7 @@ public class PDFCrashReportReader {
 					.getReportMotoristPageForms()) {
 				PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 				if(patientsForm!=null){
+					patientsForm.setTier(1);
 					patientsForms.add(patientsForm);
 				}
 			}
@@ -744,6 +745,7 @@ public class PDFCrashReportReader {
 							if(motoristPageForm.getUnitNumber()==reportUnitPageForm.getUnitNumber()){
 								PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 								if(patientsForm!=null){
+									patientsForm.setTier(2);
 									patientsForms.add(patientsForm);
 								}
 							}							
@@ -770,6 +772,7 @@ public class PDFCrashReportReader {
 				}else{
 					PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 					if(patientsForm!=null){
+						patientsForm.setTier(3);
 						patientsForms.add(patientsForm);
 					}
 				}
@@ -904,7 +907,7 @@ public class PDFCrashReportReader {
 					break;
 				}
 								
-				awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);
+				//awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);
  	}
 	
 	

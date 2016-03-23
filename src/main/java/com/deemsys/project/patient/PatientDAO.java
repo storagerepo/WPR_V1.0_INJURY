@@ -59,6 +59,6 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 	public List<Patient> searchPatients(Integer pageNumber, Integer itemsPerPage,String localReportNumber,Integer county, 
 			String crashDate,String toDate,String recordedFromDate,String recordedToDate, String name);
 
-	public List<PatientSearchList> searchPatientsByCAdmin(CallerPatientSearchForm callerPatientSearchForm);
+	public PatientSearchResult searchPatientsByCAdmin(CallerPatientSearchForm callerPatientSearchForm);
 	
 }

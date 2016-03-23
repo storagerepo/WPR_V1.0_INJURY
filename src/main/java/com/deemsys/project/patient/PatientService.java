@@ -31,10 +31,15 @@ import com.deemsys.project.Appointments.AppointmentsDAO;
 import com.deemsys.project.CallLogs.CallLogsDAO;
 import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.County.CountyDAO;
+import com.deemsys.project.County.CountyList;
+import com.deemsys.project.County.CountyService;
 import com.deemsys.project.CrashReport.CrashReportService;
+import com.deemsys.project.LawyerAdmin.LawyerAdminService;
+import com.deemsys.project.Lawyers.LawyersService;
 import com.deemsys.project.Map.GeoLocation;
 import com.deemsys.project.Caller.CallerDAO;
 import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
@@ -42,6 +47,8 @@ import com.deemsys.project.entity.Clinic;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.Doctor;
 import com.deemsys.project.entity.Caller;
+import com.deemsys.project.entity.Lawyer;
+import com.deemsys.project.login.LoginService;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 
 /**
@@ -75,6 +82,20 @@ public class PatientService {
 	@Autowired
 	CrashReportService crashReportService;
 	
+	@Autowired
+	CallerAdminService callerAdminService;
+	
+	@Autowired
+	LawyerAdminService lawyerAdminService;
+	
+	@Autowired
+	LawyersService lawyersService;
+	
+	@Autowired
+	LoginService loginService;
+	
+	@Autowired
+	CountyService countyService;
 	/*
 	 * @Autowired PatientFileRead patientFileRead;
 	 */
@@ -309,18 +330,43 @@ public class PatientService {
 			return patientViewForms;
 		}
 	
-	public List<PatientSearchList> getPatientsByCAdmin(CallerPatientSearchForm callerPatientSearchForm){
-		List<PatientSearchList> patientSearchLists=patientDAO.searchPatientsByCAdmin(callerPatientSearchForm);
-		/*List<PatientViewForm> patientViewForms=new ArrayList<PatientViewForm>();
+	public PatientSearchResult getPatientsByCAdmin(CallerPatientSearchForm callerPatientSearchForm){
 		
-		for (Patient patient : patients) {
-			patientViewForms.add(getPatientViewForm(patient));
-		}
-		*/
-		return patientSearchLists;
+		return patientDAO.searchPatientsByCAdmin(callerPatientSearchForm);
 	}
 		
+	public PatientSearchResult getCurrentPatientList(CallerPatientSearchForm callerPatientSearchForm){
 		
+		PatientSearchResult patientSearchResult=new PatientSearchResult();
+		
+		String role="";
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+			callerPatientSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			callerPatientSearchForm.setCallerAdminId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId());
+			callerPatientSearchForm.setCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
+		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+			callerPatientSearchForm.setLawyerAdminId(lawyerAdminService.getLawyerAdminIdByUserId(loginService.getCurrentUserID()).getLawyerAdminId());
+		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
+			callerPatientSearchForm.setLawyerAdminId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerAdmin().getLawyerAdminId());
+			callerPatientSearchForm.setLawyerId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId());
+		}
+		
+		if(!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+			List<CountyList> countyLists=new ArrayList<CountyList>();
+			countyLists=countyService.getMyCountyList();
+			for (CountyList countyList : countyLists) {
+				if(countyList.getCountyId()==callerPatientSearchForm.getCountyId()){
+					patientSearchResult=patientDAO.searchPatientsByCAdmin(callerPatientSearchForm);
+					break;
+				}
+			}	
+		}else{
+			patientSearchResult=patientDAO.searchPatientsByCAdmin(callerPatientSearchForm);
+		}
+		
+		return patientSearchResult;
+	}	
 		
 		
 	//Patient -> Patient Form	
@@ -340,7 +386,7 @@ public class PatientService {
 				patient.getAtFaultInsuranceCompany(),
 				patient.getAtFaultPolicyNumber(),
 				patient.getVictimInsuranceCompany(),
-				patient.getVictimPolicyNumber(), patient.getPatientStatus(),
+				patient.getVictimPolicyNumber(),patient.getTier(),patient.getPatientStatus(),
 				patient.getCrashReportFileName(), patient.getStatus());
 
 		// Null Exception Check
@@ -387,7 +433,7 @@ public class PatientService {
 			patientForm.getAtFaultInsuranceCompany(),
 			patientForm.getAtFaultPolicyNumber(),
 			patientForm.getVictimInsuranceCompany(),
-			patientForm.getVictimPolicyNumber(),
+			patientForm.getVictimPolicyNumber(),patientForm.getTier(),
 			patientForm.getPatientStatus(),
 			patientForm.getCrashReportFileName(), patientForm.getStatus(),
 			null, null);
@@ -412,6 +458,8 @@ public class PatientService {
 
 		return patientViewForm;
 	}
+	
+	
 	
 	
 	
