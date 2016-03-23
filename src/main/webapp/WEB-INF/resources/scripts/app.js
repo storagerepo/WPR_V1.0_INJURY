@@ -826,6 +826,71 @@ sbAdminApp
 												title : 'Edit Lawyer'
 											})
 									// End Lawyers
+											
+									// Caller starts
+									.state(
+											'dashboard.callers',
+											{
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/callersController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'ShowCallersController',
+												templateUrl : 'views/caller/view-callers.html',
+												url : '/Callers'
+
+											})
+									.state(
+											'dashboard.addCaller',
+											{
+
+												resolve : {
+													loadMyFiles : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/callersController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'SaveCallerController',
+												templateUrl : 'views/caller/add-caller.html',
+												url : '/addCaller',
+												title : 'Add Caller'
+											})
+									.state(
+											'dashboard.EditCaller/:callerId',
+											{
+
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [ 'scripts/controllers/callersController.js' ]
+																});
+													}
+												},
+												controller : 'EditCallerController',
+												templateUrl : 'views/caller/add-caller.html',
+												url : '/EditCaller/:callerId',
+												title : 'Edit Caller'
+											})
+									// Caller Ends
+											
 									.state(
 											'dashboard.Changepassword',
 											{

@@ -18,6 +18,20 @@
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.SearchPatients"><i ng-cloak class="fa fa-search fa-fw"></i>Search Patients<span></span></a>
             </li>
+            
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
+                <a ui-sref="dashboard.callers"><i ng-cloak class="fa fa-search fa-fw"></i>Callers<span></span></a>
+            </li>
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
+                <a ui-sref="dashboard.clinics"><i ng-cloak class="fa fa-search fa-fw"></i>Clinics<span></span></a>
+            </li>
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
+                <a ui-sref="dashboard.appointment"><i ng-cloak class="fa fa-search fa-fw"></i>Appointments<span></span></a>
+            </li>
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
+                <a ui-sref="dashboard.patient"><i ng-cloak class="fa fa-search fa-fw"></i>Patients<span></span></a>
+            </li>
+            
             <!-- <li ui-sref-active="active">
                 <a ui-sref="dashboard.clinic" ng-hide="{{$root.isAdmin==3 || $root.isAdmin==4}}"><i ng-cloak class="fa fa-hospital-o fa-fw"></i> Clinic<span></span></a>
             </li>

@@ -20,6 +20,7 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 	     
 	     });*/
 	
+	
 		if($rootScope.isAdmin==1){
 			// No of Clinics
 			requestHandler.getRequest("Caller/getNoOfClinics.json","").then( function(response) {
@@ -56,25 +57,28 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 					     });
 			}
 		   else if($rootScope.isAdmin==2){
-			   requestHandler.getRequest("Caller/getNoOfDoctors.json","").then( function(response) {
+			   requestHandler.getRequest("CAdmin/getNumberOfCallers.json","").then( function(response) {
+				   $scope.numberOfCallers= response.data.numberOfCallers;
+			   });
+			   /*requestHandler.getRequest("CAdmin/getNoOfDoctors.json","").then( function(response) {
 				     $scope.doctors= response.data.doctorsForms;
 				     
 				     $scope.numberDoctors=$scope.doctors;
 				     });
 			   
-			   requestHandler.getRequest("Caller/getNoOfPatients.json","").then( function(response) {
+			   requestHandler.getRequest("CAdmin/getNoOfPatients.json","").then( function(response) {
 				     $scope.patients= response.data.patientForms;
 				   
 
 				     $scope.numberPatients=$scope.patients;
 				     });
 			  
-			   requestHandler.getRequest("Caller/getNoOfAppointments.json","").then( function(response) {
+			   requestHandler.getRequest("CAdmin/getNoOfAppointments.json","").then( function(response) {
 					     $scope.appointments= response.data.appointmentsForms;
 
 					     
 					     $scope.numberappointments=$scope.appointments;
-					     });
+					     });*/
 		   }else if($rootScope.isAdmin==3){
 			   requestHandler.getRequest("Lawyer/getNoOfLawyers.json","").then( function(response) {
 				   $scope.numberLawyer=response.data.noOfLawyers;
