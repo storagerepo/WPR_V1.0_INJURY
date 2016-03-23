@@ -2,6 +2,8 @@
 	<div class="col-lg-12">
 		<a ui-sref="dashboard.add-lawyer-admin"
 			class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-plus-circle fa-lg"></i> Add Lawyer Admin</a>
+			
+		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
 		<h2 class="page-header">Lawyer Admin</h2>
 	</div>
 	<!-- /.col-lg-12 -->
@@ -10,19 +12,7 @@
 <div class="row">
 	 		<!-- /.panel-heading -->
 			<div class="col-md-12">
-			<div flash-message="2000" class="col-md-5"></div><div class="col-md-2"></div>
-			 <div class="col-md-4 pull-right">
-<label>Number of Records</label>
-	<select
-		class="form-control" ng-model="noOfRows" name="noOfRows"
-		id="noOfRows">
-		<option value="10">Show 10 Per Page</option>
-		<option value="25">Show 25 Per Page</option>
-		<option value="50">Show 50 Per Page</option>
-		<option value="100">Show 100 Per Page</option>
-		<option value="{{lawyerAdmins.length}}">Show All</option>
-	</select> 
-	<br/>
+		
 </div>
 					<table class="table table-hover table-striped table-bordered">
 
@@ -106,7 +96,18 @@
 						
 					</table>
 					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
-    					</dir-pagination-controls>   
+    					</dir-pagination-controls>
+    					 <div class="col-md-4 pull-right">
+<label>Number of Records</label>
+	<select
+		class="form-control" ng-model="noOfRows" name="noOfRows"
+		id="noOfRows">
+		<option value="10">Show 10 Per Page</option>
+		<option value="25">Show 25 Per Page</option>
+		<option value="50">Show 50 Per Page</option>
+		<option value="100">Show 100 Per Page</option>
+		<option value="{{lawyerAdmins.length}}">Show All</option>
+	</select>    
 			</div>
 		<!-- /.panel -->
 	<!-- /.col-lg-12 -->

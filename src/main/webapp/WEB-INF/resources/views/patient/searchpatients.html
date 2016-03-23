@@ -102,26 +102,26 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th class="col-md-1">County</th>
+                                <th class="col-md-2">Patient Name</th>
                                 <th class="col-md-2">Local Report Number</th>
-                                <th class="col-md-1">Crash ID</th>
                                 <th class="col-md-2">Crash Date</th>
-                                <th class="col-md-2">Added Date</th>
-                                <th class="col-md-3">Crash Report Status</th>
+                                <th class="col-md-2">Phone Number</th>
+                                <th class="col-md-2">Address</th>
                                 <th class="col-md-1">Actions</th>
                             </tr>
                             <tr>
-								<th></th>
 								<th>
 								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon2"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
-									ng-model="search.localReportNumber" placeholder="Local Report Number"></div></th>
+									ng-model="search.patientName" placeholder="Patient Name"></div>
+								</th>
 								<th>
 								<div class="input-group">
-  								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
+  								<span class="input-group-addon search" id="basic-addon2"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
-									ng-model="search.crashId" placeholder="Crash ID"></div></th>
+									ng-model="search.localReportNumber" placeholder="Local Report No"></div></th>
+								
 								<th>
 								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon4"><i class="fa fa-search"></i></span>
@@ -129,10 +129,14 @@
 									ng-model="search.crashDate" placeholder="Crash Date"></div></th>
 								<th>
 								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.phoneNumber" placeholder="Phone Number"></div></th>									
+								<th>
+								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon5"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
-									ng-model="search.addedDate" placeholder="Added Date"></div></th>
-								<th></th>
+									ng-model="search.address" placeholder="Address"></div></th>
 								<th></th>	
 								
 							</tr>
@@ -141,7 +145,6 @@
                             <tr ng-show="crashSearchData.length>0"  dir-paginate="crashReport in crashSearchData|itemsPerPage:crashreport.recordsPerPage" total-items="totalRecords">
                                 <td>{{crashReport.county}}</td>
                                 <td>{{crashReport.localReportNumber}}</td>
-                                <td>{{crashReport.crashId}}</td>
                                 <td>{{crashReport.crashDate}}</td>
                                 <td>{{crashReport.addedDate}}</td>
                                 <td>{{crashReport.crashReportError}}</td>

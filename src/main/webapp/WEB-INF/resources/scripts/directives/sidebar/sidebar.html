@@ -32,6 +32,16 @@
                 <a ui-sref="dashboard.patient"><i ng-cloak class="fa fa-male fa-fw"></i> Patients<span></span></a>
             </li>
             
+            
+              
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
+                <a ui-sref="dashboard.Lawyer"><i ng-cloak class="fa fa-users fa-fw"></i> Lawyer</a>
+            </li>
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
+                <a ui-sref="dashboard.LAdminPatients"><i ng-cloak class="fa fa-search fa-fw"></i> Patients<span></span></a>
+            </li>
+            
+            
             <!-- <li ui-sref-active="active">
                 <a ui-sref="dashboard.clinic" ng-hide="{{$root.isAdmin==3 || $root.isAdmin==4}}"><i ng-cloak class="fa fa-hospital-o fa-fw"></i> Clinic<span></span></a>
             </li>
