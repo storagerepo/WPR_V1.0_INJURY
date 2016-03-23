@@ -7,11 +7,16 @@ public class CallerPatientSearchForm {
 	private Integer tier;
 	private Integer patientStatus;
 	private String crashFromDate;
+	private Integer numberOfDays;
 	private String crashToDate;
 	private String localReportNumber;
 	private String patientName;
-	private String callerId;
+	private Integer callerId;
+	private Integer lawyerAdminId;
+	private Integer lawyerId;
 	private String phoneNumber;
+	private Integer pageNumber;
+	private Integer itemsPerPage;
 	
 	public Integer getCallerAdminId() {
 		return callerAdminId;
@@ -61,10 +66,10 @@ public class CallerPatientSearchForm {
 	public void setPatientName(String patientName) {
 		this.patientName = patientName;
 	}
-	public String getCallerId() {
+	public Integer getCallerId() {
 		return callerId;
 	}
-	public void setCallerId(String callerId) {
+	public void setCallerId(Integer callerId) {
 		this.callerId = callerId;
 	}
 	public String getPhoneNumber() {
@@ -73,21 +78,58 @@ public class CallerPatientSearchForm {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	
+	
+	public Integer getLawyerAdminId() {
+		return lawyerAdminId;
+	}
+	public void setLawyerAdminId(Integer lawyerAdminId) {
+		this.lawyerAdminId = lawyerAdminId;
+	}
+	public Integer getPageNumber() {
+		return pageNumber;
+	}
+	public void setPageNumber(Integer pageNumber) {
+		this.pageNumber = pageNumber;
+	}
+	public Integer getItemsPerPage() {
+		return itemsPerPage;
+	}
+	public void setItemsPerPage(Integer itemsPerPage) {
+		this.itemsPerPage = itemsPerPage;
+	}
+	public Integer getNumberOfDays() {
+		return numberOfDays;
+	}
+	public void setNumberOfDays(Integer numberOfDays) {
+		this.numberOfDays = numberOfDays;
+	}
+	public Integer getLawyerId() {
+		return lawyerId;
+	}
+	public void setLawyerId(Integer lawyerId) {
+		this.lawyerId = lawyerId;
+	}
 	public CallerPatientSearchForm(Integer callerAdminId, Integer countyId,
-			Integer tier, Integer patientStatus, String crashFromDate,
+			Integer tier, Integer patientStatus, String crashFromDate,Integer numberOfDays,
 			String crashToDate, String localReportNumber, String patientName,
-			String callerId, String phoneNumber) {
+			Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.countyId = countyId;
 		this.tier = tier;
 		this.patientStatus = patientStatus;
 		this.crashFromDate = crashFromDate;
+		this.numberOfDays=numberOfDays;
 		this.crashToDate = crashToDate;
 		this.localReportNumber = localReportNumber;
 		this.patientName = patientName;
 		this.callerId = callerId;
+		this.lawyerAdminId=lawyerAdminId;
+		this.lawyerId=lawyerId;
 		this.phoneNumber = phoneNumber;
+		this.pageNumber=pageNumber;
+		this.itemsPerPage=itemsPerPage;
 	}
 	public CallerPatientSearchForm() {
 		super();

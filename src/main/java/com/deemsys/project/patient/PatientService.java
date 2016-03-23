@@ -309,15 +309,15 @@ public class PatientService {
 			return patientViewForms;
 		}
 	
-	public List<PatientViewForm> getPatientsByCAdmin(CallerPatientSearchForm callerPatientSearchForm){
-		List<Patient> patients=patientDAO.searchPatientsByCAdmin(callerPatientSearchForm);
-		List<PatientViewForm> patientViewForms=new ArrayList<PatientViewForm>();
+	public List<PatientSearchList> getPatientsByCAdmin(CallerPatientSearchForm callerPatientSearchForm){
+		List<PatientSearchList> patientSearchLists=patientDAO.searchPatientsByCAdmin(callerPatientSearchForm);
+		/*List<PatientViewForm> patientViewForms=new ArrayList<PatientViewForm>();
 		
 		for (Patient patient : patients) {
 			patientViewForms.add(getPatientViewForm(patient));
 		}
-		
-		return patientViewForms;
+		*/
+		return patientSearchLists;
 	}
 		
 		

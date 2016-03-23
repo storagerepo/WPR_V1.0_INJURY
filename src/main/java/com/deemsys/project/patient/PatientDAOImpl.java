@@ -5,8 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.criteria.JoinType;
-
+import org.apache.xmlbeans.impl.regex.RegularExpression;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -22,16 +21,20 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 import org.hibernate.id.Assigned;
 import org.hibernate.transform.AliasToBeanResultTransformer;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.Appointments.AppointmentsForm;
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.Patient;
 import com.deemsys.project.entity.PatientCallerAdminMap;
+import com.deemsys.project.login.LoginService;
 
 /**
  * 
@@ -44,6 +47,9 @@ public class PatientDAOImpl implements PatientDAO{
 	
 	@Autowired
 	SessionFactory sessionFactory;
+	
+	@Autowired
+	LoginService loginService;
 
 	@Override
 	public void save(Patient entity) {		
@@ -409,44 +415,148 @@ private Object value(String string, String localReportNumber, MatchMode anywhere
 
 @SuppressWarnings("unchecked")
 @Override
-public List<Patient> searchPatientsByCAdmin(
+public List<PatientSearchList> searchPatientsByCAdmin(
 		CallerPatientSearchForm callerPatientSearchForm) {
 	// TODO Auto-generated method stub
-	
-	List<Patient> patients=new ArrayList<Patient>();	
+		
 	Session session=this.sessionFactory.getCurrentSession();
 	
+	
+	//Patient Table Must be included
 	Criteria criteria=session.createCriteria(Patient.class, "t1");
+	           
+	//Common Constrains - County
+	Criterion countyCriterion=Restrictions.eq("t1.county.countyId", callerPatientSearchForm.getCountyId());
+	criteria.add(countyCriterion);
 	
-	criteria.createAlias("patientCallerAdminMaps", "t2", Criteria.LEFT_JOIN);
+	//Common Constrains - Tier
+	if(callerPatientSearchForm.getTier()!=0){
+		Criterion tierCriterion=Restrictions.eq("t1.patientStatus", callerPatientSearchForm.getTier());
+		criteria.add(tierCriterion);
+	}
 	
-	//Check for caller admin id equal or null
-	LogicalExpression logicalExpression=Restrictions.or(Restrictions.eq("t2.id.callerAdminId", callerPatientSearchForm.getCallerAdminId()),Restrictions.isNull("t2.id.callerAdminId"));
-	criteria.add(logicalExpression);
+	//Common Constrains - Crash Date
+	if(!callerPatientSearchForm.getCrashFromDate().equals("")){		
+		DateTime crashStartDate=DateTime.parse(callerPatientSearchForm.getCrashFromDate(),DateTimeFormat.forPattern("MM/dd/yyyy"));
+		DateTime crashToDate=new DateTime();		
+		if(callerPatientSearchForm.getNumberOfDays()==0){
+			crashToDate=DateTime.parse(callerPatientSearchForm.getCrashToDate(),DateTimeFormat.forPattern("MM/dd/yyyy"));
+			callerPatientSearchForm.setCrashToDate(crashToDate.toString("MM/dd/yyyy"));
+		}else{
+			crashToDate=crashStartDate.plusDays(callerPatientSearchForm.getNumberOfDays());		
+			callerPatientSearchForm.setCrashToDate(crashToDate.toString("MM/dd/yyyy"));
+		}
+		
+		//Set Criterion
+		Criterion crashDateCriterion=Restrictions.between("t1.crashDate", callerPatientSearchForm.getCrashFromDate(), callerPatientSearchForm.getCrashToDate());
+		criteria.add(crashDateCriterion);
+	}
+	
+	//Common Constrain Patient Name
+	Criterion patientNameCriterion=Restrictions.like("t1.name", callerPatientSearchForm.getPatientName(),MatchMode.ANYWHERE);
+	criteria.add(patientNameCriterion);
+	
+	//Common Constrain Patient Name
+	if(!callerPatientSearchForm.getPhoneNumber().equals("")){
+		Criterion patientPhoneCriterion=Restrictions.like("t1.phoneNumber", callerPatientSearchForm.getPhoneNumber(),MatchMode.START);
+		criteria.add(patientPhoneCriterion);
+	}
+	
+	
+	//Common Constrain Local Report Number
+	if(!callerPatientSearchForm.getLocalReportNumber().equals("")){
+	Criterion localReportNumberCriterion=Restrictions.like("t1.localReportNumber", callerPatientSearchForm.getLocalReportNumber(),MatchMode.START);
+	criteria.add(localReportNumberCriterion);
+	}
+	
+		
+	String role=loginService.getCurrentRole();
+	
+	if(role.equals("ROLE_SUPER_ADMIN")){
+		
+	}else if(role.equals("ROLE_CALLER_ADMIN")||role.equals("ROLE_CALLER")){
+		
+		criteria.createAlias("patientCallerAdminMaps", "t2", Criteria.LEFT_JOIN,Restrictions.eq("t2.id.callerAdminId",callerPatientSearchForm.getCallerAdminId()));
+		
+		//Check for caller id
+		if(callerPatientSearchForm.getCallerId()!=0){
+			Criterion criterion=Restrictions.eq("t2.caller.callerId", callerPatientSearchForm.getCallerId());
+			criteria.add(criterion);
+			criteria.createAlias("t2.caller", "c2");
+		}
+				
+		
+	}else if(role.equals("ROLE_LAWYER_ADMIN")||role.equals("ROLE_LAWYER")){
+		
+		criteria.createAlias("patientLawyerAdminMaps", "t2", Criteria.LEFT_JOIN).add(Restrictions.or(Restrictions.eq("t2.id.lawyerAdminId", callerPatientSearchForm.getLawyerAdminId()),Restrictions.isNull("t2.id.lawyerAdminId")));		
+		/*LogicalExpression logicalExpression=Restrictions.or();
+		criteria.add(logicalExpression);*/
+		//Check for lawyer id
+		if(callerPatientSearchForm.getLawyerId()!=0){
+			Criterion criterion=Restrictions.eq("t2.lawyer.lawyerId", callerPatientSearchForm.getLawyerId());
+			criteria.add(criterion);
+			criteria.createAlias("t2.lawyer", "l1");
+		}
+				
+	}
+	
+	criteria.createAlias("county", "c1");
+	
+	
+	//Common Constrain - Patient Status
+	if(callerPatientSearchForm.getPatientStatus()!=0){
+		Criterion patientStatus=Restrictions.eq("t2.patientStatus", callerPatientSearchForm.getPatientStatus());
+		criteria.add(patientStatus);
+	}
+	
+	//ARCHIVED
+	
 	
 	//Add Projections
-	//criteria.setProjection(Projections.property("t1"));
 	ProjectionList projectionList = Projections.projectionList();
 	
 	projectionList.add(Projections.property("t1.patientId"),"patientId");
 	projectionList.add(Projections.property("t1.localReportNumber"),"localReportNumber");
 	projectionList.add(Projections.property("t1.county.countyId"),"countyId");
+	projectionList.add(Projections.property("c1.name"),"county");
 	projectionList.add(Projections.property("t1.crashDate"),"crashDate");
 	projectionList.add(Projections.property("t1.crashSeverity"),"crashSeverity");
 	projectionList.add(Projections.property("t1.addedDate"),"addedDate");
 	projectionList.add(Projections.property("t1.name"),"name");
 	projectionList.add(Projections.property("t1.phoneNumber"),"phoneNumber");
-	projectionList.add(Projections.property("t1.address"),"address");
+	projectionList.add(Projections.property("t1.address"),"address");	
 	projectionList.add(Projections.property("t1.crashReportFileName"),"crashReportFileName");
-	projectionList.add(Projections.property("t2.callerAdmin.callerAdminId"),"callerAdminId");
-	projectionList.add(Projections.property("t2.caller.callerId"),"callerId");
-	projectionList.add(Projections.property("t2.notes"),"notes");
-	projectionList.add(Projections.property("t2.isArchived"),"isArchived");
-	projectionList.add(Projections.property("t2.patientStatus"),"patientStatus");
+	
+	if(role.equals("ROLE_CALLER_ADMIN")||role.equals("ROLE_CALLER")){
+	
+		projectionList.add(Projections.property("t2.callerAdmin.callerAdminId"),"callerAdminId");
+		projectionList.add(Projections.property("t2.caller.callerId"),"callerId");
+		if(callerPatientSearchForm.getCallerId()!=0){
+		projectionList.add(Projections.property("c2.firstName"),"callerFirstName");
+		projectionList.add(Projections.property("c2.lastName"),"callerLastName");
+		}
+	}else if(role.equals("ROLE_LAWYER_ADMIN")||role.equals("ROLE_LAWYER")){
+		
+		projectionList.add(Projections.property("t2.lawyerAdmin.lawyerAdminId"),"lawyerAdminId");
+		projectionList.add(Projections.property("t2.lawyer.lawyerId"),"lawyerId");
+		if(callerPatientSearchForm.getLawyerId()!=0){
+		projectionList.add(Projections.property("l1.firstName"),"lawyerFirstName");
+		projectionList.add(Projections.property("l1.lastName"),"lawyerLastName");
+		}	
+	}
+	
+	if(!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+		
+		projectionList.add(Projections.property("t2.notes"),"notes");
+		projectionList.add(Projections.property("t2.isArchived"),"isArchived");
+		projectionList.add(Projections.property("t2.patientStatus"),"patientStatus");
+		
+	}
+	
 	
 	criteria.setProjection(projectionList);
 	List<PatientSearchList> patientSearchLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).list();
-	return (List<Patient>) criteria.list();
+	return patientSearchLists;
 
 }
 

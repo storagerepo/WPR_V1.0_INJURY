@@ -325,10 +325,9 @@ public class LawyersService {
 	}
 
 	// Get Lawyers Id By User Id
-	public Integer getLawyerIdByUserId(Integer userId) {
+	public Lawyer getLawyerIdByUserId(Integer userId) {
 
-		Lawyer lawyers = lawyersDAO.getLawyersByUserId(userId);
-		return lawyers.getLawyerId();
+		return lawyersDAO.getLawyersByUserId(userId);
 	}
 
 	// Enable or Disable Lawyer

@@ -24,6 +24,7 @@ import com.deemsys.project.login.LoginService;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 import com.deemsys.project.LawyerAdmin.LawyerAdminForm;
+import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersService;
 import com.deemsys.project.Map.ClinicLocationForm;
 import com.deemsys.project.Map.SearchClinicsService;
@@ -61,6 +62,9 @@ public class PatientController {
 	
 	@Autowired
 	LoginService loginService;
+	
+	@Autowired
+	LawyerAdminService lawyerAdminService;
 
 	@RequestMapping(value = { "/Patient/getAllPatients",
 			"/Caller/getAllPatients" }, method = RequestMethod.GET)
@@ -216,7 +220,7 @@ public class PatientController {
 	public String getPatientByLawyer(ModelMap model) {
 
 		Integer userId = callerService.getCurrentUserId();
-		Integer lawyerId = lawyersService.getLawyerIdByUserId(userId);
+		Integer lawyerId = lawyersService.getLawyerIdByUserId(userId).getLawyerId();
 		List<PatientForm> patientForms = lawyersService
 				.getPatientByLawyer(lawyerId);
 		model.addAttribute("patientForms", patientForms);
@@ -230,7 +234,7 @@ public class PatientController {
 	public String getNoOfPatientByLawyer(ModelMap model) {
 
 		Integer userId = callerService.getCurrentUserId();
-		Integer lawyerId = lawyersService.getLawyerIdByUserId(userId);
+		Integer lawyerId = lawyersService.getLawyerIdByUserId(userId).getLawyerId();
 		List<PatientForm> patientForms = lawyersService
 				.getPatientByLawyer(lawyerId);
 		model.addAttribute("noOfPatientByLawyer", patientForms.size());
@@ -272,12 +276,46 @@ public class PatientController {
 	}
 	
 	@RequestMapping(value = { "/CAdmin/patientSearchByCAdmin" }, method = RequestMethod.POST)
-	public @ResponseBody List<PatientViewForm> searchPatientsByCAdmin(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
+	public @ResponseBody List<PatientSearchList> searchPatientsByCAdmin(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
 		
 		callerPatientSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
 		return patientService.getPatientsByCAdmin(callerPatientSearchForm);
 		
 	}
+	
+	@RequestMapping(value = { "/Admin/patientSearchByAdmin" }, method = RequestMethod.POST)
+	public @ResponseBody List<PatientSearchList> searchPatientsByAdmin(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
+		
+		return patientService.getPatientsByCAdmin(callerPatientSearchForm);
+		
+	}
+	@RequestMapping(value = { "/LAdmin/patientSearchByLAdmin" }, method = RequestMethod.POST)
+	public @ResponseBody List<PatientSearchList> searchPatientsByLawyerAdmin(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
+		
+		callerPatientSearchForm.setLawyerAdminId(lawyerAdminService.getLawyerAdminIdByUserId(loginService.getCurrentUserID()).getLawyerAdminId());
+		return patientService.getPatientsByCAdmin(callerPatientSearchForm);
+		
+	}
+	
+	@RequestMapping(value = { "/Lawyer/patientSearchByLawyer" }, method = RequestMethod.POST)
+	public @ResponseBody List<PatientSearchList> searchPatientsByLawyer(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
+		
+		callerPatientSearchForm.setLawyerAdminId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerAdmin().getLawyerAdminId());
+		callerPatientSearchForm.setLawyerId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId());
+		return patientService.getPatientsByCAdmin(callerPatientSearchForm);
+		
+	}
+	
+	@RequestMapping(value = { "/Caller/patientSearchByCaller" }, method = RequestMethod.POST)
+	public @ResponseBody List<PatientSearchList> searchPatientsByCaller(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
+		
+		callerPatientSearchForm.setCallerAdminId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId());
+		callerPatientSearchForm.setCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
+		return patientService.getPatientsByCAdmin(callerPatientSearchForm);
+		
+	}
+	
+	
 	
 
 }
