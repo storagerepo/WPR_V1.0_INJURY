@@ -31,7 +31,7 @@
 	     <script src="resources/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="resources/components/json3/lib/json3.min.js"></script>
     <script src="resources/components/oclazyload/dist/ocLazyLoad.min.js"></script>
-    <script src="resources/components/angular-animate/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.1/angular-animate.js"></script>
     <script src="resources/components/angular-loading-bar/build/loading-bar.min.js"></script>
     <script src="resources/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="resources/components/metisMenu/dist/metisMenu.min.js"></script>

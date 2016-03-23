@@ -1,4 +1,4 @@
-var adminApp=angular.module('sbAdminApp',['requestModule','flash']);
+var adminApp=angular.module('sbAdminApp',['requestModule','flash','ngAnimate']);
 
 adminApp.controller('ShowCallerAdminController',function($http,$state,$scope,requestHandler,Flash){
 	

@@ -4,7 +4,7 @@
     <div class="row">
     <div class="col-lg-12">
         <a ui-sref="dashboard.CallerAdmin" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to the list</a>
-        <h2 ng-cloak class="page-header">{{title}}&nbsp;-&nbsp;{{callerAdmin.firstName}}&nbsp;{{callerAdmin.lastName}}</span></h2>
+        <h2 ng-cloak class="page-header">{{title}}<span ng-show="title=='Edit Caller Admin'">&nbsp;-&nbsp;{{callerAdmin.firstName}}&nbsp;{{callerAdmin.lastName}}</span></h2>
     </div>
     
     <!-- /.col-lg-12 -->
@@ -83,7 +83,7 @@
                                  </div>
                                  <div class="col-md-12">
                                   <div class="col-md-6">
-                                  <span class="redText">*</span> <label>User Name</label>
+                                  <span class="redText">*</span> <label>Username</label>
                                     <input  type="text" class="form-control inputclass" ng-show='options' ng-model="callerAdmin.username" name="username" id="username" data-mask="usernameinput" placeholder="User Name" maxlength="20" required>
     								<input  type="text" readonly="readonly" class="form-control" ng-show='!options' ng-model="callerAdmin.username" placeholder="Enter UserName" maxlength="20">
                                     <span style="color:red" id="username_exists"></span>
