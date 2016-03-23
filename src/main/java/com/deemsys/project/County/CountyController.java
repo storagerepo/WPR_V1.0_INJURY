@@ -50,7 +50,7 @@ public class CountyController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = { "/Admin/getAllCountys", "/Lawyer/getAllCountys" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/Admin/getAllCountys", "/Lawyer/getAllCountys","/Caller/getAllCountys" }, method = RequestMethod.GET)
 	public String getAllCountys(ModelMap model) {
 		model.addAttribute("countyForms", countyService.getCountyList());
 		model.addAttribute("requestSuccess", true);

@@ -60,6 +60,9 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 			   requestHandler.getRequest("CAdmin/getNumberOfCallers.json","").then( function(response) {
 				   $scope.numberOfCallers= response.data.numberOfCallers;
 			   });
+			   requestHandler.getRequest("CAdmin/getNumberOfClinics.json","").then( function(response) {
+				   $scope.numberOfClinics= response.data.NoOfClinics;
+			   });
 			   /*requestHandler.getRequest("CAdmin/getNoOfDoctors.json","").then( function(response) {
 				     $scope.doctors= response.data.doctorsForms;
 				     

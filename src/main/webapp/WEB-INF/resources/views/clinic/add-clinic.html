@@ -664,6 +664,27 @@
       
     </div>
  </div>
+ 
+ <!--  Delete Doctor Modal -->
+<div class="modal fade" id="confirmDeleteDoctorModal" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmation</h4>
+        </div>
+        <div class="modal-body">Are you sure want to delete this doctor?
+              
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-click="confirmDeleteDoctor()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
 
 <style>
 #sunday_div, #monday_div, #tuesday_div, #wednesday_div, #thusday_div, #friday_div, #saturaday_div{

@@ -47,7 +47,7 @@ public class DoctorsController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Admin/deleteDoctors", method = RequestMethod.POST)
+	@RequestMapping(value = "/CAdmin/deleteDoctors", method = RequestMethod.POST)
 	public String deleteDoctors(@RequestParam("id") Integer id, ModelMap model) {
 		int status = 0;
 		status = doctorsService.deleteDoctors(id);
@@ -60,7 +60,7 @@ public class DoctorsController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Admin/removeAssignedDoctors", method = RequestMethod.POST)
+	@RequestMapping(value = "/CAdmin/removeAssignedDoctors", method = RequestMethod.POST)
 	public String removeAssignedDoctors(@RequestParam("id") Integer id,
 			ModelMap model) {
 

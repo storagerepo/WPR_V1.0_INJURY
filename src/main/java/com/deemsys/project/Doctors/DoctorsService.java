@@ -165,14 +165,14 @@ public class DoctorsService {
 	public int deleteDoctors(Integer id) {
 		int status = 0;
 		List<Patient> patientss = new ArrayList<Patient>();
-
-		patientss = patientsDAO.getpatientByDoctorId(id);
+		doctorsDAO.delete(id);
+		/*patientss = patientsDAO.getpatientByDoctorId(id);
 		if (patientss.size() == 0) {
-			doctorsDAO.delete(id);
+			
 			status = 1;
 		} else {
 			status = 0;
-		}
+		}*/
 
 		return status;
 	}
@@ -280,8 +280,7 @@ public class DoctorsService {
 			doctorsForms = new DoctorsForm(doctorss.getDoctorId(),
 					doctorss.getDoctorName(), doctorss.getTitleDr(),
 					doctorss.getTitleDc(),doctorss.getStatus());
-			doctorsForms.setIsRemoveable(this
-					.getDoctorsRemoveableStatus(doctorss.getDoctorId()));
+			doctorsForms.setIsRemoveable(1);
 			doctorsForm.add(doctorsForms);
 
 		}

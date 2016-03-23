@@ -2,35 +2,46 @@ var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
 
 adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash){
 	$scope.noOfRows="10";
-	 $scope.sort = function(keyname){
-	        $scope.sortKey = keyname;   //set the sortKey to the param passed
-	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
-	    };
-	    
-	    requestHandler.getRequest("Caller/getAllClinics.json","").then(function(results){
-	    	 $scope.clinics= results.data.clinicsForm;
-	         $scope.sort('clinicName');
-	     });
+	$scope.sortKey='clinicName';
+
+	$scope.sort = function(keyname){
+		$scope.sortKey = keyname;   //set the sortKey to the param passed
+	    $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+	};
 	    
 	$scope.getClinicList=function() {
-		 requestHandler.getRequest("Caller/getAllClinics.json","").then(function(results){
+		 requestHandler.getRequest("CAdmin/getAllClinics.json","").then(function(results){
 		 	 $scope.clinics= results.data.clinicsForm;
-		  });
+		 });
 	};
 	
+	$scope.getClinicList();
+	
 	$scope.viewClinicDetails=function(clinicId) {
-		 requestHandler.getRequest("Caller/getClinicDetails.json?clinicId="+clinicId,"").then(function(results){
+		 requestHandler.getRequest("CAdmin/getClinicDetails.json?clinicId="+clinicId,"").then(function(results){
 		 	 $scope.clinicDetails= results.data.clinicsForm;
 		 	 $("#viewClinicDetails").modal('show');
 		  });
 	};
+	
+	//enable disable clinic
+	 $scope.enableOrDisbaleClinic=function(clinicId){
+
+		 requestHandler.postRequest("CAdmin/enableOrDisableClinic.json?clinicId="+clinicId,"").then(function(response){
+			 $scope.response=response.data.requestSuccess;
+			 if($scope.response==true){
+				 Flash.create('success', "You have Successfully Updated!");
+				 $scope.getClinicList();
+			 }
+		 });
+	 };
 	
 	// Delete the Clinic
 	$scope.deleteClinic=function(clinicId)
 	  {
 		 $("#deleteClinicModal1").modal("show");
 		  $scope.deleteClinicNormal=function(){
-			  requestHandler.deletePostRequest("Caller/deleteClinic.json?clinicId=",clinicId).then(function(results){
+			  requestHandler.deletePostRequest("CAdmin/deleteClinic.json?clinicId=",clinicId).then(function(results){
 			  $scope.value=results.data.requestSuccess;
 			  
 			  if($scope.value==true)
@@ -50,7 +61,7 @@ adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash)
 				    	
 				    	requestHandler.postRequest("Admin/deleteDoctorsByClinic.json?clinicId="+clinicId).then(function(response){
 				    		
-				    		 requestHandler.deletePostRequest("Caller/deleteClinic.json?clinicId=",clinicId).then(function(results){
+				    		 requestHandler.deletePostRequest("CAdmin/deleteClinic.json?clinicId=",clinicId).then(function(results){
 				    			 $("#deleteClinicModal2").modal("hide");
 							    	$('.modal-backdrop').hide();
 						          Flash.create('success', "You have Successfully Deleted!");
@@ -62,7 +73,7 @@ adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash)
 				  
 				  }
 		     });
-		  }
+		  };
 	};
 	$scope.viewDoctors=function(clinicId)
     {
@@ -94,7 +105,7 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 	
 	$scope.clinic.clinicTimingList=[{"day":0,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":1,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":2,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":3,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":4,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":5,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":6,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0}];
 	$scope.saveClinic=function(){
-		requestHandler.postRequest("Caller/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
+		requestHandler.postRequest("CAdmin/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
 			Flash.create('success', "You have Successfully Added!");
 				  $location.path('dashboard/clinic');
 		});
@@ -260,7 +271,7 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 	$scope.options=false;
 	$scope.title="Edit Clinic & Doctor";
 	var clinicOriginal="";
-		requestHandler.getRequest("Caller/getClinic.json?clinicId="+$stateParams.id,"").then(function(response){
+		requestHandler.getRequest("CAdmin/getClinic.json?clinicId="+$stateParams.id,"").then(function(response){
 			
 			clinicOriginal=angular.copy(response.data.clinicsForm);
 			$scope.clinic= response.data.clinicsForm;
@@ -302,18 +313,22 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 		$scope.removeDoctorInput=function(index,removeableStatus,doctorId){
 			if(doctorId!="" && doctorId!==undefined){
 				if(removeableStatus==1){
-					requestHandler.deletePostRequest("Admin/deleteDoctors.json?id=",doctorId).then(function(results){
-						  $scope.value=results.data.requestSuccess;
-						  });
-					$scope.clinic.doctorsForms.splice(index,1);
+					$("#confirmDeleteDoctorModal").modal("show");
+					$scope.confirmDeleteDoctor=function()
+				    {
+						requestHandler.deletePostRequest("CAdmin/deleteDoctors.json?id=",doctorId).then(function(results){
+							  $scope.value=results.data.requestSuccess;
+							  });
+						$scope.clinic.doctorsForms.splice(index,1);
+				    };
 				}
 				else{
 					$("#deleteDoctorModal").modal("show");
 				    $scope.deleteDoctorFromPatients=function()
 				    {
-				    	requestHandler.postRequest("Admin/removeAssignedDoctors.json?id="+doctorId).then(function(response){
+				    	requestHandler.postRequest("CAdmin/removeAssignedDoctors.json?id="+doctorId).then(function(response){
 				    		
-				    		requestHandler.deletePostRequest("Admin/deleteDoctors.json?id=",doctorId).then(function(results){
+				    		requestHandler.deletePostRequest("CAdmin/deleteDoctors.json?id=",doctorId).then(function(results){
 				    			$("#deleteDoctorModal").modal("hide");
 				    			$('.modal-backdrop').hide();
 				    			 $scope.clinic.doctorsForms.splice(index,1);
@@ -330,7 +345,7 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 		};
 		
 		$scope.updateClinic=function(){
-			requestHandler.postRequest("Caller/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
+			requestHandler.postRequest("CAdmin/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
 				Flash.create('success', "You have Successfully Updated!");
 					  $location.path('dashboard/clinic');
 			
