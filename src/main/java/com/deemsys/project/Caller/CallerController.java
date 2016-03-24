@@ -183,5 +183,19 @@ public class CallerController {
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
+	
+	@RequestMapping(value = {"/CAdmin/moveToArchive","/Caller/moveToArchive"},method = RequestMethod.POST)
+	public String moveToArchive(@RequestBody AssignCallerForm assignCallerForm, ModelMap model) {
+		model.addAttribute("success",patientCallerService.moveToArchive(assignCallerForm,1));
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
+	@RequestMapping(value = {"/CAdmin/releaseFromArchive","/Caller/releaseFromArchive"},method = RequestMethod.POST)
+	public String releaseArchive(@RequestBody AssignCallerForm assignCallerForm, ModelMap model) {
+		model.addAttribute("success",patientCallerService.moveToArchive(assignCallerForm,0));
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
 
 }
