@@ -70,21 +70,29 @@ adminApp.controller('ShowLawyerController',function($http,$state,$scope,requestH
 		   };
 	};
 	
-	// Delete Lawyer
-	$scope.deleteLawyer=function(lawyerId)
-    {
-    	$("#deleteLawyerModal").modal("show");
-    	$scope.deleteOneLawyer=function(){
-        	 requestHandler.deletePostRequest("LAdmin/deleteLawyers.json?lawyerId=",lawyerId).then(function(results){
-       			 $("#deleteLawyerModal").modal("hide");
-   			    	$('.modal-backdrop').hide();
-   		          Flash.create('success', "You have Successfully Deleted!");
-   		          $scope.getLawyerList();
-       		 });
-       		 
-    	};
-    	
-    };
+	$scope.viewLawyerModal=function(lawyerId){
+		$("#viewLawyerModal").modal("show");
+		requestHandler.getRequest("LAdmin/getLawyers.json?lawyerId="+lawyerId,"").then(function(response){
+			$scope.lawyer=response.data.lawyersForm;
+			
+			 requestHandler.getRequest("Lawyer/getAllCountys.json","").then(function(response){
+					$scope.lawyer.countyForms=response.data.countyForms;
+			});
+
+			 $scope.countyNames=[];
+			   $.each($scope.lawyer.countyForms,function(index,value){
+         
+             $.each($scope.lawyer.county,function(index,value1){
+            	
+            	if(value.id === value1){
+            		$scope.countyNames.push(value.name);
+            	}
+             });
+         });
+		});
+
+		
+	};
 	
 });
 

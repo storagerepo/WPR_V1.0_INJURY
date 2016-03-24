@@ -634,7 +634,30 @@ sbAdminApp
 												}
 
 											})
-											
+										
+											.state(
+											'dashboard.LawyerAdminSearchPatients',
+											{
+												templateUrl : 'views/patient/Lawyeradmin-searchpatients.html',
+												url : '/LawyerAdminSearchPatients',
+												controller : "LAdminSearchPatientsController",
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [ 'scripts/controllers/LAdminSearchPatientController.js',
+																	          'components/datetime/datetimepicker.css',
+																				'components/datetime/moment.js',
+																				'components/datetime/datetimepicker.js'
+																	          ]
+																});
+													}
+												}
+
+											})
 											
 									// Lawyer Admin starts
 									.state(

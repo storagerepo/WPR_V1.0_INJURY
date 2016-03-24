@@ -16,7 +16,7 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 		$scope.crashreport.addedFromDate="";
 		$scope.crashreport.addedToDate="";
 		$scope.crashreport.pageNumber= 1;
-		$scope.crashreport.recordsPerPage=10;
+		$scope.crashreport.recordsPerPage="10";
 		$scope.totalRecords=0;
 	};
 	
@@ -29,7 +29,7 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 	 
 	$scope.checkCustomDate=function(custom){
 	
-		if(custom==''){
+		if(custom=='0' && $scope.crashreport.crashFromDate!=''){
 			$scope.disableCustom=false;
 		}
 		else{

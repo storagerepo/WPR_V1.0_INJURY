@@ -81,7 +81,7 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 
 					     
 					     $scope.numberappointments=$scope.appointments;
-					     });*/
+					     });
 		   }else if($rootScope.isAdmin==3){
 			   requestHandler.getRequest("Lawyer/getNoOfLawyers.json","").then( function(response) {
 				   $scope.numberLawyer=response.data.noOfLawyers;
@@ -90,7 +90,7 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 		   else if($rootScope.isAdmin==4){
 			   requestHandler.getRequest("Patient/getNoOfPatientsByLawyer.json","").then( function(response) {
 				   $scope.numberPatients=response.data.noOfPatientsByLawyer;
-				     });
+				     });*/
 		   }
 		   
 	

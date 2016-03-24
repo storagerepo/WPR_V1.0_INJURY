@@ -46,7 +46,7 @@
        <div class="col-md-12"> <span class="redText">*</span> <label>Crash From Date</label></div>
        <div class="col-md-12"> 
        <div class="input-group">
-		<input type="text" name="crashFromDate" id="CrashFromDate" class="form-control" ng-model="crashreport.crashFromDate" placeholder="Crash From Date" ng-required="!(crashreport.crashFromDate.length || crashreport.addedFromDate.length)"> 
+		<input type="text" name="crashFromDate" id="CrashFromDate" class="form-control" ng-model="crashreport.crashFromDate" ng-change="checkCustomDate(crashreport.numberOfDays)" placeholder="Crash From Date" ng-required="!(crashreport.crashFromDate.length || crashreport.addedFromDate.length)"> 
 		<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
 		</div>
        
@@ -60,7 +60,7 @@
                                         <option value="7">7</option>
                                         <option value="15">15</option>
                                         <option value="30">30</option>
-                                        <option value="">Custom Date</option>
+                                        <option value="0">Custom</option>
                                     </select>
        </div>
         </div>
@@ -143,6 +143,18 @@
                     </table>
                     <dir-pagination-controls max-size="5" on-page-change="searchCrashReportFromPage(newPageNumber)" direction-links="true" boundary-links="true" >
     					</dir-pagination-controls> 
+    						<div class="col-md-4 pull-right">
+<label>Number of Records</label>
+	<select
+		class="form-control" ng-model="crashreport.recordsPerPage" name="recordsPerPage"
+		id="recordsPerPage">
+		<option value="10">Show 10 Per Page</option>
+		<option value="25">Show 25 Per Page</option>
+		<option value="50">Show 50 Per Page</option>
+		<option value="100">Show 100 Per Page</option>
+		<option value="{{crashSearchData.length}}">Show All</option>
+	</select> 
+</div>
 <script>
 $(function(){
 	$("html,body").scrollTop(0);
@@ -152,7 +164,11 @@ $('#CrashFromDate').datetimepicker({
 	pickTime : false,
 	format:'MM/DD/YYYY',
 	maxDate : new Date()
-});  
+}).on('dp.change', function (selected) {
+    var minimumDate = new Date(selected.date.valueOf());
+    $('#CrashToDate').data("DateTimePicker").setMinDate(minimumDate);	
+}); 
+
 $('#CrashToDate').datetimepicker({
 	pickTime : false,
 	format:'MM/DD/YYYY',
@@ -162,6 +178,9 @@ $('#AddedFromDate').datetimepicker({
 	pickTime : false,
 	format:'MM/DD/YYYY',
 	maxDate : new Date()
+}).on('dp.change', function (selected) {
+    var minimumDate = new Date(selected.date.valueOf());
+    $('#AddedToDate').data("DateTimePicker").setMinDate(minimumDate);	
 });  
 $('#AddedToDate').datetimepicker({
 	pickTime : false,

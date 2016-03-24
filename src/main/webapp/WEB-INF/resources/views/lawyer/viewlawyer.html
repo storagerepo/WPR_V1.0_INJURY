@@ -65,20 +65,21 @@
 
 							<tr ng-show="lawyers.length>0"  dir-paginate="lawyer in lawyers|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows">
 								<td ng-cloak>{{lawyer.username}}</td>
-								<td ng-cloak>{{lawyer.firstName}}</td>
+								<td ng-cloak><a href=""  ng-click="viewLawyerModal(lawyer.lawyerId)"  data-hint="View Lawyer">{{lawyer.firstName}}</a></td>
 								<td ng-cloak>{{lawyer.lastName}}</td>
 
 								<td ng-cloak>{{lawyer.phoneNumber}}</td>
 								<td ng-cloak>{{lawyer.emailAddress}}</td>
 								
 								<td>
+								<a href="" ng-cloak class="btn btn-xs btn-primary hint--top" ng-click="viewLawyerModal(lawyer.lawyerId)"  data-hint="View Lawyer"><i
+								class="glyphicon glyphicon-eye-open"></i>
+						</a>
+								
 								<a href="#/dashboard/EditLawyer/{{lawyer.lawyerId}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Lawyer"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
-						<a href="" ng-cloak ng-click="deleteLawyer(lawyer.lawyerId)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Lawyer"><i
-								class="glyphicon glyphicon-trash"></i>
-						</a>
-								
+							
 							
 								<a href="" ng-cloak ng-show="lawyer.status==1" ng-click="enableOrDisableLawyer(lawyer.lawyerId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Lawyer"><i
 								class="fa fa-unlock-alt"></i>
@@ -179,3 +180,59 @@
       
     </div>
  </div>
+ 
+ <!-- View Lawyer Modal -->
+ <div class="modal fade" id="viewLawyerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Lawyer Details</h4>
+      </div>
+      <div class="modal-body">
+	<table class="table table-striped table-bordered">
+					<tr>
+						<td class="col-md-4"><b>Username</b></td>
+						<td class="col-md-8">{{lawyer.username}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-4"><b>Firstname</b></td>
+						<td class="col-md-8">{{lawyer.firstName}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-4"><b>Lastname</b></td>
+						<td class="col-md-8">{{lawyer.lastName}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-4"><b>Phone Number</b></td>
+						<td class="col-md-8">{{lawyer.phoneNumber}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-4"><b>Email Address</b></td>
+						<td class="col-md-8">{{lawyer.emailAddress}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-4"><b>City</b></td>
+						<td class="col-md-8">{{lawyer.city}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-4"><b>State</b></td>
+						<td class="col-md-8">{{lawyer.state}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-4"><b>Zipcode</b></td>
+						<td class="col-md-8">{{lawyer.zipcode}}</td>
+						</tr>
+						<tr>
+						<td class="col-md-4"><b>County</b></td>
+						<td class="col-md-8"><span ng-repeat="county in countyNames">{{county}}{{$last ? '' : ','}}</span></td>
+						</tr>
+						
+	 				</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+         </div>
+    </div>
+  </div>
+</div>
