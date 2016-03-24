@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersForm;
+import com.deemsys.project.login.LoginService;
+import com.deemsys.project.patientLawyerMap.PatientLawyerService;
+import com.deemsys.project.Caller.AssignCallerForm;
+import com.deemsys.project.Caller.CallerForm;
 import com.deemsys.project.Caller.CallerService;
 
 @Controller
-@RequestMapping("/LAdmin")
 public class LawyersController {
 
 	@Autowired
@@ -24,15 +27,21 @@ public class LawyersController {
 
 	@Autowired
 	LawyerAdminService lawyerAdminService;
+	
+	@Autowired
+	PatientLawyerService patientLawyerService;
+	
+	@Autowired
+	LoginService loginService;
 
-	@RequestMapping(value = "/getLawyers", method = RequestMethod.GET)
+	@RequestMapping(value = "/LAdmin/getLawyers", method = RequestMethod.GET)
 	public String getLawyers(@RequestParam("lawyerId") Integer lawyerId, ModelMap model) {
 		model.addAttribute("lawyersForm", lawyersService.getLawyers(lawyerId));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/mergeLawyers", method = RequestMethod.POST)
+	@RequestMapping(value = "/LAdmin/mergeLawyers", method = RequestMethod.POST)
 	public String mergeLawyers(@RequestBody LawyersForm lawyersForm,
 			ModelMap model) {
 		lawyersService.mergeLawyers(lawyersForm);
@@ -40,7 +49,7 @@ public class LawyersController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/saveUpdateLawyers", method = RequestMethod.POST)
+	@RequestMapping(value = "/LAdmin/saveUpdateLawyers", method = RequestMethod.POST)
 	public String saveLawyers(@RequestBody LawyersForm lawyersForm,
 			ModelMap model) {
 		if (lawyersForm.getLawyerId() == null)
@@ -51,7 +60,7 @@ public class LawyersController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/deleteLawyers", method = RequestMethod.POST)
+	@RequestMapping(value = "/LAdmin/deleteLawyers", method = RequestMethod.POST)
 	public String deleteLawyers(@RequestParam("lawyerId") Integer lawyerId,
 			ModelMap model) {
 
@@ -60,14 +69,14 @@ public class LawyersController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/getAllLawyerss", method = RequestMethod.GET)
+	@RequestMapping(value = "/LAdmin/getAllLawyerss", method = RequestMethod.GET)
 	public String getAllLawyerss(ModelMap model) {
 		model.addAttribute("lawyersForms", lawyersService.getLawyersList());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/getLawyersByLawyerAdmin", method = RequestMethod.GET)
+	@RequestMapping(value = "/LAdmin/getLawyersByLawyerAdmin", method = RequestMethod.GET)
 	public String getLawyersByLawyerAdmin(ModelMap model) {
 		Integer currentUserId = callerService.getCurrentUserId();
 		model.addAttribute("lawyersForms",
@@ -77,7 +86,7 @@ public class LawyersController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/getNumberOfLawyers", method = RequestMethod.GET)
+	@RequestMapping(value = "/LAdmin/getNumberOfLawyers", method = RequestMethod.GET)
 	public String getNoOfLawyerAdmin(ModelMap model) {
 		Integer currentUserId = callerService.getCurrentUserId();
 		model.addAttribute("noOfLawyers",lawyersService.getNumberOfLawyers(lawyerAdminService.getLawyerAdminIdByUserId(currentUserId).getLawyerAdminId()));
@@ -85,7 +94,7 @@ public class LawyersController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/enableOrDisableLawyers", method = RequestMethod.POST)
+	@RequestMapping(value = "/LAdmin/enableOrDisableLawyers", method = RequestMethod.POST)
 	public String enableDisableLawyers(
 			@RequestParam("lawyerId") Integer lawyerId, ModelMap model) {
 
@@ -94,7 +103,7 @@ public class LawyersController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/resetLawyerPassword", method = RequestMethod.POST)
+	@RequestMapping(value = "/LAdmin/resetLawyerPassword", method = RequestMethod.POST)
 	public String resetLawyerPassword(
 			@RequestParam("lawyerId") Integer lawyerId, ModelMap model) {
 		Integer status = lawyersService.resetLawyerPassword(lawyerId);
@@ -103,6 +112,45 @@ public class LawyersController {
 		} else {
 			model.addAttribute("requestSuccess", false);
 		}
+		return "/returnPage";
+	}
+	
+	@RequestMapping(value = "/LAdmin/assignLawyer", method = RequestMethod.POST)
+	public String assignLawyer(@RequestBody AssignLawyerForm assignLawyerForm, ModelMap model) {
+		boolean allow=false;
+		Integer lawyerAdminId=lawyerAdminService.getLawyerAdminIdByUserId(loginService.getCurrentUserID()).getLawyerAdminId();
+		for (LawyersForm lawyersForm : lawyersService.getLawyersListByLawyerAdmin(lawyerAdminId)) {
+			if(lawyersForm.getLawyerId()==assignLawyerForm.getLawyerId()){
+				allow=true;
+			}
+		}		
+		if(allow){
+			model.addAttribute("success",patientLawyerService.assignLawyer(assignLawyerForm));
+		}else{
+			model.addAttribute("Unautorized Action");
+		}
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
+	@RequestMapping(value = {"/LAdmin/releaseLawyer","/Lawyer/releaseLawyer"},method = RequestMethod.POST)
+	public String releaseLawyer(@RequestBody AssignLawyerForm assignLawyerForm, ModelMap model) {
+		model.addAttribute("success",patientLawyerService.releaseLawyer(assignLawyerForm));
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
+	@RequestMapping(value = {"/LAdmin/moveToArchive","/Lawyer/moveToArchive"},method = RequestMethod.POST)
+	public String moveToArchive(@RequestBody AssignLawyerForm assignLawyerForm, ModelMap model) {
+		model.addAttribute("success",patientLawyerService.moveToArchive(assignLawyerForm,1));
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
+	@RequestMapping(value = {"/LAdmin/releaseFromArchive","/Lawyer/releaseFromArchive"},method = RequestMethod.POST)
+	public String releaseArchive(@RequestBody AssignLawyerForm assignLawyerForm, ModelMap model) {
+		model.addAttribute("success",patientLawyerService.moveToArchive(assignLawyerForm,0));
+		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 }

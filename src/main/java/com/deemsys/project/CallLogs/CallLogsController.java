@@ -32,21 +32,14 @@ public class CallLogsController {
 	
 
 	@RequestMapping(value = "/Caller/getCallLogs", method = RequestMethod.GET)
-	public String getCallLogs(ModelMap model) {
-		System.out.println(loginService.getCurrentUserID());
-		System.out.println(loginService.getCurrentRole());
+	public String getCallLogs(@RequestParam("callLogId") Long callLogId, ModelMap model) {
+		model.addAttribute("callLogsForm",callLogsService.getCallLogs(callLogId));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 	
-	@RequestMapping(value = "/CallerAdmin/getCallLogs", method = RequestMethod.GET)
-	public String getCallLogsByAdmin(ModelMap model) {
-		//model.addAttribute("callLogsForm", callLogsService.getCallLogs(id));
-		model.addAttribute("requestSuccess", true);
-		return "/returnPage";
-	}
-
-	@RequestMapping(value = "/mergeCallLogs", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/Caller/mergeCallLogs", method = RequestMethod.POST)
 	public String mergeCallLogs(@RequestBody CallLogsForm callLogsForm,
 			ModelMap model) {
 		callLogsService.mergeCallLogs(callLogsForm);
@@ -54,10 +47,10 @@ public class CallLogsController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/saveUpdateCallLogs", method = RequestMethod.POST)
+	@RequestMapping(value = "/Caller/saveUpdateCallLogs", method = RequestMethod.POST)
 	public String saveCallLogs(@RequestBody CallLogsForm callLogsForm,
 			ModelMap model) {
-		if (callLogsForm.getId() == null)
+		if (callLogsForm.getCallLogId() == null)
 			callLogsService.saveCallLogs(callLogsForm);
 		else
 			callLogsService.updateCallLogs(callLogsForm);
@@ -65,22 +58,22 @@ public class CallLogsController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/deleteCallLogs", method = RequestMethod.POST)
-	public String deleteCallLogs(@RequestParam("id") Integer id, ModelMap model) {
+	@RequestMapping(value = "/Caller/deleteCallLogs", method = RequestMethod.POST)
+	public String deleteCallLogs(@RequestParam("callLogsId") Integer callLogsId, ModelMap model) {
 
-		callLogsService.deleteCallLogs(id);
+		callLogsService.deleteCallLogs(callLogsId);
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/getAllCallLogss", method = RequestMethod.GET)
-	public String getAllCallLogss(ModelMap model) {
-		model.addAttribute("callLogsForms", callLogsService.getCallLogsList());
+	@RequestMapping(value = "/Caller/getAllCallLogss", method = RequestMethod.GET)
+	public String getAllCallLogss(@RequestParam("patientId") String patientId, ModelMap model) {
+		model.addAttribute("callLogsForms", callLogsService.getCallLogsFormsByUser(patientId));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/getCallLogsByAppointment", method = RequestMethod.GET)
+	@RequestMapping(value = "/Caller/getCallLogsByAppointment", method = RequestMethod.GET)
 	public String getCallLogsByAppointment(
 			@RequestParam("appointmentId") Integer appointmentId, ModelMap model) {
 		model.addAttribute("callLogsForms",
@@ -89,18 +82,10 @@ public class CallLogsController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/getCallLogsById", method = RequestMethod.POST)
+	@RequestMapping(value = "/Caller/getCallLogsById", method = RequestMethod.POST)
 	public String getCallLogsById(@RequestParam("id") Integer id, ModelMap model) {
 
-		model.addAttribute("callLogsForms",
-				callLogsService.getCallLogsByPatientId(id));
-		model.addAttribute("requestSuccess", true);
-		return "/returnPage";
-	}
-
-	@RequestMapping(value = "/getCallLogsId", method = RequestMethod.GET)
-	public String getCallLogsId(ModelMap model) {
-		model.addAttribute("callLogsForms", callLogsService.getCallLogsId());
+		model.addAttribute("callLogsForms",callLogsService.getCallLogsByPatientId(id));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

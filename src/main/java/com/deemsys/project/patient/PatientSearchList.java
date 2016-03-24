@@ -30,6 +30,8 @@ public class PatientSearchList {
 	private Integer isArchived;
 	private Integer patientStatus;
 	private boolean isSelected=false;
+	private String atFaultInsuranceCompany;
+	private String victimInsuranceCompany;
 	
 	public String getPatientId() {
 		return patientId;
@@ -162,6 +164,18 @@ public class PatientSearchList {
 	}
 	public void setPatientStatus(Integer patientStatus) {
 		this.patientStatus = patientStatus;
+	}
+	public String getAtFaultInsuranceCompany() {
+		return atFaultInsuranceCompany;
+	}
+	public void setAtFaultInsuranceCompany(String atFaultInsuranceCompany) {
+		this.atFaultInsuranceCompany = atFaultInsuranceCompany;
+	}
+	public String getVictimInsuranceCompany() {
+		return victimInsuranceCompany;
+	}
+	public void setVictimInsuranceCompany(String victimInsuranceCompany) {
+		this.victimInsuranceCompany = victimInsuranceCompany;
 	}
 	public PatientSearchList(String patientId, String localReportNumber,
 			Integer countyId, String county, String crashDate,

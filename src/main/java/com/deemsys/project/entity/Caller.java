@@ -35,7 +35,8 @@ public class Caller implements java.io.Serializable {
 			0);
 	private Set<CallerCountyMap> callerCountyMaps = new HashSet<CallerCountyMap>(
 			0);
-
+	private Set<CallLog> callLogs = new HashSet<CallLog>(
+			0);
 	public Caller() {
 	}
 
@@ -159,5 +160,16 @@ public class Caller implements java.io.Serializable {
 	public void setCallerCountyMaps(Set<CallerCountyMap> callerCountyMaps) {
 		this.callerCountyMaps = callerCountyMaps;
 	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "caller")
+	public Set<CallLog> getCallLogs() {
+		return callLogs;
+	}
+
+	public void setCallLogs(Set<CallLog> callLogs) {
+		this.callLogs = callLogs;
+	}
+	
+	
 
 }

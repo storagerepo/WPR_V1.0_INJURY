@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 @Table(name = "appointments", catalog = "injury_latest")
 public class Appointments implements java.io.Serializable {
 
-	private long appointmentId;
+	private Long appointmentId;
 	private CallLog callLog;
 	private Date scheduledDate;
 	private String notes;
@@ -44,11 +44,11 @@ public class Appointments implements java.io.Serializable {
 
 	@Id
 	@Column(name = "appointment_id", unique = true, nullable = false)
-	public long getAppointmentId() {
+	public Long getAppointmentId() {
 		return this.appointmentId;
 	}
 
-	public void setAppointmentId(long appointmentId) {
+	public void setAppointmentId(Long appointmentId) {
 		this.appointmentId = appointmentId;
 	}
 

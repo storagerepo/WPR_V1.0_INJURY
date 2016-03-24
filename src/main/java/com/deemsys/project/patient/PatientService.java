@@ -129,9 +129,12 @@ public class PatientService {
 	
 	
 	// Get Particular Entry
-	public PatientForm getPatient(Integer getId) {
-		
-		return this.getPatientForm(patientDAO.get(getId));
+	public PatientForm getPatient(String patientId) {
+		Patient patient=patientDAO.getPatientByPatientId(patientId);
+		PatientForm patientForm=this.getPatientForm(patient);
+		patientForm.setLatitude(patient.getLatitude());
+		patientForm.setLatitude(patient.getLongitude());
+		return patientForm;
 		
 	}
 
@@ -276,8 +279,7 @@ public class PatientService {
 			String localReportNumber, String callerName) {
 		List<Patient> patients = new ArrayList<Patient>();
 		List<PatientForm> patientForms = new ArrayList<PatientForm>();
-		patients = patientDAO.getPatientListByLimit(pageNumber, itemsPerPage,
-				name, phoneNumber, localReportNumber, callerName);
+		
 
 		for (Patient patient : patients) {
 			patientForms.add(this.getPatientForm(patient));

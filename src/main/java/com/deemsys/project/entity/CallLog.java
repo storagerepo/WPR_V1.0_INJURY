@@ -28,6 +28,7 @@ public class CallLog implements java.io.Serializable {
 
 	private Long callLogId;
 	private PatientCallerAdminMap patientCallerAdminMap;
+	private Caller caller;
 	private Date timeStamp;
 	private Integer response;
 	private String notes;
@@ -37,10 +38,11 @@ public class CallLog implements java.io.Serializable {
 	public CallLog() {
 	}
 
-	public CallLog(PatientCallerAdminMap patientCallerAdminMap, Date timeStamp,
+	public CallLog(PatientCallerAdminMap patientCallerAdminMap,Caller caller,Date timeStamp,
 			Integer response, String notes, Integer status,
 			Set<Appointments> appointmentses) {
 		this.patientCallerAdminMap = patientCallerAdminMap;
+		this.caller=caller;
 		this.timeStamp = timeStamp;
 		this.response = response;
 		this.notes = notes;
@@ -61,8 +63,8 @@ public class CallLog implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumns({
-			@JoinColumn(name = "caller_admin_id", referencedColumnName = "patient_id"),
-			@JoinColumn(name = "patient_id", referencedColumnName = "caller_admin_id") })
+			@JoinColumn(name = "caller_admin_id", referencedColumnName = "caller_admin_id"),
+			@JoinColumn(name = "patient_id", referencedColumnName = "patient_id") })
 	public PatientCallerAdminMap getPatientCallerAdminMap() {
 		return this.patientCallerAdminMap;
 	}
@@ -72,6 +74,16 @@ public class CallLog implements java.io.Serializable {
 		this.patientCallerAdminMap = patientCallerAdminMap;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "caller_id")
+	public Caller getCaller() {
+		return this.caller;
+	}
+
+	public void setCaller(Caller caller) {
+		this.caller = caller;
+	}
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "time_stamp", length = 19)
 	public Date getTimeStamp() {

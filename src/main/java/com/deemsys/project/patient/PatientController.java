@@ -75,8 +75,8 @@ public class PatientController {
 	}
 
 	@RequestMapping(value = { "/Patient/getPatient", "/Caller/getPatient" }, method = RequestMethod.GET)
-	public String getPatient(@RequestParam("id") Integer id, ModelMap model) {
-		model.addAttribute("patientForm", patientService.getPatient(id));
+	public String getPatient(@RequestParam("patientId") String patientId, ModelMap model) {
+		model.addAttribute("patientForm", patientService.getPatient(patientId));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
@@ -157,15 +157,6 @@ public class PatientController {
 	  }
 	  
 	
-	// Get Patient With Latitude Longitude
-	@RequestMapping(value = "/Caller/getPatientWithLatLong", method = RequestMethod.GET)
-	public String getPatientWithLatLong(@RequestParam("id") Integer id,
-			ModelMap model) {
-		model.addAttribute("patientForm",patientService.getPatient(id));
-		model.addAttribute("requestSuccess", true);
-		return "/returnPage";
-	}
-
 	// get Near By clinics
 	@RequestMapping(value = "/Caller/getNearByClincs", method = RequestMethod.GET)
 	public String searchNearByClinics(

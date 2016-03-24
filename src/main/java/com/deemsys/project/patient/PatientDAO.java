@@ -47,11 +47,10 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 	public Integer activeStatusByPatientId(Integer id);
 
 	public void updatePatientStatus(Integer patientId);
-
+	
 	public List<Patient> getPatientListByLimit(Integer pageNumber,
-			Integer itemsPerPage, String name, String phoneNumber,
-			String localReportNumber, String callerName);
-
+			Integer itemsPerPage,String name,String phoneNumber,String localReportNumber,String callerName);
+	
 	public Integer getTotalPatientCount(String localReportNumber, Integer county,
 			String crashDate, String toDate, String recordedFromDate,
 			String recordedToDate, String name);
@@ -62,5 +61,7 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 	public PatientSearchResult searchPatientsByCAdmin(CallerPatientSearchForm callerPatientSearchForm);
 
 	void savePatient(Patient entity) throws Exception;
+	
+	public Patient getPatientByPatientId(String patientId);
 	
 }

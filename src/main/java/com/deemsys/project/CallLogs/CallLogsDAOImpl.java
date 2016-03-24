@@ -5,8 +5,11 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -165,5 +168,44 @@ public class CallLogsDAOImpl implements CallLogsDAO{
 			List<CallLog> list = cr.list();
 		return list;
 	}
+
+	@Override
+	public List<CallLogsForm> getCallLogsByPatientIdAndCallerAdminIdAndCallerId(String patientId,
+			Integer callerAdminId,Integer callerId) {
+		// TODO Auto-generated method stub
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(CallLog.class);
+		criteria.createAlias("appointmentses", "a1", Criteria.LEFT_JOIN);
+		criteria.createAlias("caller", "c1");
+		// Add Projections
+		ProjectionList projectionList=Projections.projectionList();
+		projectionList.add(Projections.property("callLogId"), "callLogId");
+		projectionList.add(Projections.property("timeStamp"), "timeStamp");
+		projectionList.add(Projections.property("response"), "response");
+		projectionList.add(Projections.property("notes"), "notes");
+		projectionList.add(Projections.property("status"), "status");
+		projectionList.add(Projections.property("c1.firstName"), "callerFirstName");
+		projectionList.add(Projections.property("c1.lastName"), "callerLastName");
+		// Appointment Details
+		projectionList.add(Projections.property("a1.appointmentId"), "appointmentId");
+		criteria.setProjection(projectionList);
+		if(callerId!=0){
+			Criterion criterion=Restrictions.and(Restrictions.eq("patientCallerAdminMap.id.patientId", patientId.getBytes()),Restrictions.eq("patientCallerAdminMap.id.callerAdminId", callerAdminId));
+			Criterion callerCriterion=Restrictions.and(criterion, Restrictions.eq("caller.callerId", callerId));
+			criteria.add(callerCriterion);
+		}else{
+			criteria.add(Restrictions.and(Restrictions.eq("patientCallerAdminMap.id.patientId", patientId.getBytes()),Restrictions.eq("patientCallerAdminMap.id.callerAdminId", callerAdminId)));
+		}
+		
+		List<CallLogsForm> callLogsForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(CallLogsForm.class)).list();
+		return callLogsForms;
+	}
+
+	@Override
+	public CallLog getCallLogsByCallLogId(Long callLogId) {
+		// TODO Auto-generated method stub
+		CallLog callLog=(CallLog) this.sessionFactory.getCurrentSession().createCriteria(CallLog.class).add(Restrictions.eq("callLogId", callLogId)).uniqueResult();
+		return callLog;
+	}
+
 
 }

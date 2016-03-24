@@ -1,5 +1,7 @@
 package com.deemsys.project.CallLogs;
 
+import java.util.Date;
+
 /**
  * 
  * @author Deemsys
@@ -7,134 +9,119 @@ package com.deemsys.project.CallLogs;
  */
 public class CallLogsForm {
 
-	public CallLogsForm(Long id, Integer patientId, String timeStamp,
-			Integer response, String notes) {
-		super();
-		this.id = id;
-		this.patientId = patientId;
-		this.timeStamp = timeStamp;
-		this.response = response;
-		this.notes = notes;
-	}
-
-	private Long id;
-	private Integer patientId;
-	private Integer appointmentId;
-	private Integer callerId;
-	private String timeStamp;
+	private Long callLogId;
+	private String patientId;
+	private Integer callerAdminId;
+	private Date timeStamp;
+	private String convertedTimeStamp;
 	private Integer response;
 	private String notes;
-	private String callerName;
-
-	public Long getId() {
-		return id;
+	private Integer status;
+	private Long appointmentId;
+	private String callerFirstName;
+	private String callerLastName;
+	
+	public Long getCallLogId() {
+		return callLogId;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setCallLogId(Long callLogId) {
+		this.callLogId = callLogId;
 	}
-
-	public Integer getPatientId() {
+	public String getPatientId() {
 		return patientId;
 	}
-
-	public void setPatientId(Integer patientId) {
+	public void setPatientId(String patientId) {
 		this.patientId = patientId;
 	}
-
-	public Integer getAppointmentId() {
-		return appointmentId;
+	public Integer getCallerAdminId() {
+		return callerAdminId;
 	}
-
-	public void setAppointmentId(Integer appointmentId) {
-		this.appointmentId = appointmentId;
+	public void setCallerAdminId(Integer callerAdminId) {
+		this.callerAdminId = callerAdminId;
 	}
-
-	public Integer getCallerId() {
-		return callerId;
-	}
-
-	public void setCallerId(Integer callerId) {
-		this.callerId = callerId;
-	}
-
-	public String getTimeStamp() {
+	public Date getTimeStamp() {
 		return timeStamp;
 	}
-
-	public void setTimeStamp(String timeStamp) {
+	public void setTimeStamp(Date timeStamp) {
 		this.timeStamp = timeStamp;
 	}
-
 	public Integer getResponse() {
 		return response;
 	}
-
 	public void setResponse(Integer response) {
 		this.response = response;
 	}
-
 	public String getNotes() {
 		return notes;
 	}
-
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-
-	public CallLogsForm(Long id, Integer patientId, Integer appointmentId,
-			String timeStamp, Integer response, String notes) {
-		super();
-		this.id = id;
-		this.patientId = patientId;
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public String getCallerFirstName() {
+		return callerFirstName;
+	}
+	public void setCallerFirstName(String callerFirstName) {
+		this.callerFirstName = callerFirstName;
+	}
+	
+	public String getCallerLastName() {
+		return callerLastName;
+	}
+	public void setCallerLastName(String callerLastName) {
+		this.callerLastName = callerLastName;
+	}
+	public Long getAppointmentId() {
+		return appointmentId;
+	}
+	public void setAppointmentId(Long appointmentId) {
 		this.appointmentId = appointmentId;
-		this.timeStamp = timeStamp;
+	}
+	public String getConvertedTimeStamp() {
+		return convertedTimeStamp;
+	}
+	public void setConvertedTimeStamp(String convertedTimeStamp) {
+		this.convertedTimeStamp = convertedTimeStamp;
+	}
+	public CallLogsForm(Long callLogId, String patientId,
+			Integer callerAdminId, String convertedTimeStamp, Integer response,
+			String notes, Integer status, Long appointmentId,
+			String callerfirstName,String callerLastName) {
+		super();
+		this.callLogId = callLogId;
+		this.patientId = patientId;
+		this.callerAdminId = callerAdminId;
+		this.convertedTimeStamp = convertedTimeStamp;
 		this.response = response;
 		this.notes = notes;
+		this.status = status;
+		this.appointmentId = appointmentId;
+		this.callerFirstName=callerfirstName;
+		this.callerLastName=callerLastName;
 	}
-
+	
+	public CallLogsForm(Long callLogId, String patientId,
+			Integer callerAdminId, String convertedTimeStamp, Integer response,
+			String notes, Integer status) {
+		super();
+		this.callLogId = callLogId;
+		this.patientId = patientId;
+		this.callerAdminId = callerAdminId;
+		this.convertedTimeStamp = convertedTimeStamp;
+		this.response = response;
+		this.notes = notes;
+		this.status = status;
+	}
 	public CallLogsForm() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public CallLogsForm(Long id) {
-		this.id = id;
-	}
-
-	public CallLogsForm(Long id, Integer patientId, Integer appointmentId,
-			String timeStamp, Integer response, String notes, String callerName) {
-		// TODO Auto-generated constructor stub
-		super();
-		this.id = id;
-		this.patientId = patientId;
-		this.appointmentId = appointmentId;
-		this.timeStamp = timeStamp;
-		this.response = response;
-		this.notes = notes;
-		this.callerName = callerName;
-
-	}
-
-	public CallLogsForm(Long id, Integer patientId, String timeStamp,
-			Integer response, String notes, String callerName) {
-		super();
-		this.id = id;
-		this.patientId = patientId;
-		this.timeStamp = timeStamp;
-		this.response = response;
-		this.notes = notes;
-		this.callerName = callerName;
-
-		// TODO Auto-generated constructor stub
-	}
-
-	public String getCallerName() {
-		return callerName;
-	}
-
-	public void setCallerName(String callerName) {
-		this.callerName = callerName;
-	}
+ 
+	
 
 }

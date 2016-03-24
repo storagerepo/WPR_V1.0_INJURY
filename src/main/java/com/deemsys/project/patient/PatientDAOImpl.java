@@ -539,6 +539,8 @@ public PatientSearchResult searchPatientsByCAdmin(
 		
 		projectionList.add(Projections.property("t2.lawyerAdmin.lawyerAdminId"),"lawyerAdminId");
 		projectionList.add(Projections.property("t2.lawyer.lawyerId"),"lawyerId");
+		projectionList.add(Projections.property("t1.atFaultInsuranceCompany"),"atFaultInsuranceCompany");
+		projectionList.add(Projections.property("t1.victimInsuranceCompany"),"victimInsuranceCompany");
 		if(callerPatientSearchForm.getLawyerId()!=0){
 		projectionList.add(Projections.property("l1.firstName"),"lawyerFirstName");
 		projectionList.add(Projections.property("l1.lastName"),"lawyerLastName");
@@ -568,6 +570,13 @@ public PatientSearchResult searchPatientsByCAdmin(
 public void save(Patient entity) {
 	// TODO Auto-generated method stub
 	
+}
+
+@Override
+public Patient getPatientByPatientId(String patientId) {
+	// TODO Auto-generated method stub
+	Patient patient=(Patient) this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.eq("patientId", patientId)).uniqueResult();
+	return patient;
 }
 
 
