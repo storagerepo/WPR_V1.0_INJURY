@@ -187,7 +187,7 @@
     <div class="modal-content ">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Lawyer Details</h4>
+        <h4 class="modal-title" id="myModalLabel">Lawyer Details&nbsp;-&nbsp;{{lawyer.firstName}}&nbsp;{{lawyer.lastName}}</h4>
       </div>
       <div class="modal-body">
 	<table class="table table-striped table-bordered">
@@ -225,7 +225,7 @@
 						</tr>
 						<tr>
 						<td class="col-md-4"><b>County</b></td>
-						<td class="col-md-8"><span ng-repeat="county in countyNames">{{county}}{{$last ? '' : ','}}</span></td>
+						<td class="col-md-8"><p ng-repeat="county in countyNames"><b>{{$index+1}}.{{county}}</b></p></td>
 						</tr>
 						
 	 				</table>

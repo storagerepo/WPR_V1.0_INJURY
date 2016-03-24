@@ -27,6 +27,15 @@
         <stats ng-cloak number="nil" comments="Appointments" colour="yellow" type="calendar" goto="dashboard.SearchCrashreport" ng-show="{{isAdmin==2}}"></stats>
         <stats ng-cloak number="nil" comments="Patients" colour="red" type="male" goto="dashboard.SearchPatients" ng-show="{{isAdmin==2}}"></stats>
       <!-- Caller Admin Dashboard Ends-->   
+      
+      
+      <!-- Caller Dashboard Starts -->
+       <stats ng-cloak number="15" comments="Patients" colour="green" type="search" goto="dashboard.CallerSearchPatients" ng-show="{{isAdmin==4}}"></stats>
+      <!-- Caller Dashboard Ends -->
+      
+      <!-- Lawyer Dashboard Starts -->
+       <stats ng-cloak number="15" comments="Patients" colour="green" type="search" goto="dashboard.LawyerSearchPatients" ng-show="{{isAdmin==5}}"></stats>
+      <!-- Lawyer Dashboard Ends -->
      </div>
     
     

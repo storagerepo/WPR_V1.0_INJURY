@@ -20,7 +20,6 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 	     
 	     });*/
 	
-	
 		if($rootScope.isAdmin==1){
 			// No of Clinics
 			/*requestHandler.getRequest("Caller/getNoOfClinics.json","").then( function(response) {

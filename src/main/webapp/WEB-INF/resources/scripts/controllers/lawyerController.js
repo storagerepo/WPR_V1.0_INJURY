@@ -168,14 +168,14 @@ adminApp.controller('EditLawyerController', function($http,$state,$location,$sco
 	// County Selection
 	
 	$scope.selectedCounties=function(countyId){
-		var idx=$scope.lawyer.countyId.indexOf(countyId);
+		var idx=$scope.lawyer.county.indexOf(countyId);
 		// Already Selected Items
 		if(idx>-1){
-			$scope.lawyer.countyId.splice(idx,1);
+			$scope.lawyer.county.splice(idx,1);
 		}
 		// Add New Items
 		else{
-			$scope.lawyer.countyId.push(countyId);
+			$scope.lawyer.county.push(countyId);
 		}
 		if($scope.lawyer.county.length==0){
 			$scope.requiredValue= false;

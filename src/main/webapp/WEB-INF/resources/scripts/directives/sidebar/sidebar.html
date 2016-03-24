@@ -60,6 +60,14 @@
             <li ui-sref-active="active" ng-hide="{{$root.isAdmin==3 || $root.isAdmin==4}}">
                 <a ui-sref="dashboard.appointment"><i ng-cloak class="fa fa-calendar fa-fw"></i> Appointment</a>
             </li> -->
+            
+             <li ui-sref-active="active" ng-show="{{$root.isAdmin==4}}">
+                <a ui-sref="dashboard.CallerSearchPatients"><i ng-cloak class="fa fa-search fa-fw"></i> Patients<span></span></a>
+            </li>
+            
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==5}}">
+                <a ui-sref="dashboard.LawyerSearchPatients"><i ng-cloak class="fa fa-search fa-fw"></i> Patients<span></span></a>
+            </li>
         </ul>
     </div>
     <!-- /.sidebar-collapse -->

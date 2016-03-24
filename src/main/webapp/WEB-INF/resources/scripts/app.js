@@ -659,6 +659,53 @@ sbAdminApp
 
 											})
 											
+											.state(
+											'dashboard.LawyerSearchPatients',
+											{
+												templateUrl : 'views/patient/lawyer-searchpatients.html',
+												url : '/LawyerSearchPatients',
+												controller : "LawyerSearchPatientsController",
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [ 'scripts/controllers/LawyerSearchPatientController.js',
+																	          'components/datetime/datetimepicker.css',
+																				'components/datetime/moment.js',
+																				'components/datetime/datetimepicker.js'
+																	          ]
+																});
+													}
+												}
+
+											})
+											.state(
+											'dashboard.CallerSearchPatients',
+											{
+												templateUrl : 'views/patient/caller-searchpatients.html',
+												url : '/CallerSearchPatients',
+												controller : "CallerSearchPatientsController",
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [ 'scripts/controllers/CallerSearchPatientController.js',
+																	          'components/datetime/datetimepicker.css',
+																				'components/datetime/moment.js',
+																				'components/datetime/datetimepicker.js'
+																	          ]
+																});
+													}
+												}
+
+											})
+											
 									// Lawyer Admin starts
 									.state(
 											'dashboard.LawyerAdmin',
@@ -995,11 +1042,11 @@ sbAdminApp
 												$rootScope.authenticated = true;
 												$rootScope.isAdmin = 3;
 												$rootScope.username = response.data.username;
-											} else if (response.data.role == "ROLE_LAWYER") {
+											} else if (response.data.role == "ROLE_CALLER") {
 												$rootScope.authenticated = true;
 												$rootScope.isAdmin = 4;
 												$rootScope.username = response.data.username;
-											} else if (response.data.role == "ROLE_CALLER") {
+											} else if (response.data.role == "ROLE_LAWYER") {
 												$rootScope.authenticated = true;
 												$rootScope.isAdmin = 5;
 												$rootScope.username = response.data.username;
