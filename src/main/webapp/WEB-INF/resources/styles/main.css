@@ -11,6 +11,15 @@ body {
   padding-right: 15px;
 }
 
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: .65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
 /* Custom page header */
 .header {
   border-bottom: 1px solid #e5e5e5;
@@ -125,8 +134,19 @@ background-color: #eee;
     margin-top: 5px !important;
 }
 
+.margin-top-10{
+    margin-top: 10px !important;
+}
+
 .margin-bottom-10{
     margin-bottom: 10px !important;
+}
+
+.hr-tag-alter{
+	margin:20px 10px 10px 10px;
+	padding:10px 5px;
+	border-top:1px solid #eee;
+	border-bottom:1px solid #eee
 }
 
 .navbar-blue {

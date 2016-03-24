@@ -831,6 +831,29 @@ sbAdminApp
 												url : '/EditCallerAdmin/:callerAdminId',
 												title : 'Edit Caller Admin'
 											})
+											.state(
+											'dashboard.callerAdminSearchPatients',
+											{
+												templateUrl : 'views/calleradmin/caller-admin-search-patients.html',
+												url : '/callerAdminSearchPatients',
+												controller : "searchPatientsController",
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [ 'scripts/controllers/callerAdminSearchPatientsController.js',
+																	          'components/datetime/datetimepicker.css',
+																				'components/datetime/moment.js',
+																				'components/datetime/datetimepicker.js'
+																	          ]
+																});
+													}
+												}
+
+											})
 									// Caller Admin Ends
 
 									// Lawyers starts
