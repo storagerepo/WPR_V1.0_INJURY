@@ -168,9 +168,11 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 	};
 	
 	$scope.secoundarySearchPatient=function(){
-		$scope.patient.pageNumber= 1;
-		$scope.setPage=1;
-		$scope.searchItems($scope.patient);
+		if($scope.patientSearchData.length>0){
+			$scope.patient.pageNumber= 1;
+			$scope.setPage=1;
+			$scope.searchItems($scope.patient);
+		}
 	};
 	
 	$scope.searchPatientsFromPage = function(pageNum){
