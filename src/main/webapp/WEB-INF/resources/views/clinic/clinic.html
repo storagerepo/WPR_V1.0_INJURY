@@ -78,9 +78,9 @@
 			</tbody>
 
   
-			<tbody ng-show="doctors.length==0">
+			<tbody ng-show="clinics.length==0">
 				<tr>
-					<td colspan="5" align="center">No Record Found</td>
+					<td colspan="5" align="center">No Records Found!!</td>
 				</tr>
 			</tbody>
 		</table>
@@ -389,19 +389,16 @@
 				</td>
 				</tr>
 				<tr>
-				<td class="col-md-12" colspan="4"><b>Doctor Details</b></td>
-				</tr>
-				<tr>
 				<td class="col-md-12" colspan="4">
 				<table class="table">
 				<thead>
 				<tr>
-				<th>Doctor Name</th>
+				<th>Doctors List</th>
 				</tr>
 				</thead>
 				<tbody>
 				<tr ng-repeat="doctorDetails in clinicDetails.doctorsForms">
-				<td>{{doctorDetails.doctorName}}</td>
+				<td><i class="fa fa-user-md"></i>&nbsp;&nbsp;{{doctorDetails.doctorName}}</td>
 				</tr>
 				</tbody>
 				<tbody ng-show="!clinicDetails.doctorsForms.length">

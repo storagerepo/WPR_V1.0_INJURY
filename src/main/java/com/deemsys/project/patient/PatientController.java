@@ -277,13 +277,8 @@ public class PatientController {
 		
 		PatientSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 		
-		if(patientSearchResult.getTotalNoOfRecord()==null){
-			model.addAttribute("Access Denied","You don't have permission to access the requested county!");
-			model.addAttribute("status",0);
-		}else{
-			model.addAttribute("status",1);
-			model.addAttribute(patientSearchResult);
-		}
+		model.addAttribute("status", 1);
+		model.addAttribute(patientSearchResult);
 		model.addAttribute("requestSuccess", true);
 		return "ok";
 		

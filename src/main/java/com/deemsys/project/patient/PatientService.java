@@ -358,20 +358,8 @@ public class PatientService {
 			callerPatientSearchForm.setLawyerAdminId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerAdmin().getLawyerAdminId());
 			callerPatientSearchForm.setLawyerId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId());
 		}
-		
-		if(!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
-			List<CountyList> countyLists=new ArrayList<CountyList>();
-			countyLists=countyService.getMyCountyList();
-			for (CountyList countyList : countyLists) {
-				if(countyList.getCountyId()==callerPatientSearchForm.getCountyId()){
-					patientSearchResult=patientDAO.searchPatientsByCAdmin(callerPatientSearchForm);
-					break;
-				}
-			}	
-		}else{
-			patientSearchResult=patientDAO.searchPatientsByCAdmin(callerPatientSearchForm);
-		}
-		
+		patientSearchResult=patientDAO.searchPatientsByCAdmin(callerPatientSearchForm);
+			
 		return patientSearchResult;
 	}	
 		

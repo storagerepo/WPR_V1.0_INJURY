@@ -152,16 +152,23 @@ public class PDFCrashReportReader {
 						+ "CrashReport_"
 						+ crashId + ".pdf";
 				try {
-					InputStream in = url.openStream();					
+					InputStream in = url.openStream();	
 					Files.copy(in, Paths.get(filePath),
 							StandardCopyOption.REPLACE_EXISTING);
 					in.close();
 					
-					//Parse the PDF
-					parsePDFDocument(new File(filePath),Integer.parseInt(crashId));
+					File file=new File(filePath);
 					
-					// Update Crash Id
-					this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
+					if(file.length()>0){
+						//Parse the PDF
+						parsePDFDocument(new File(filePath),Integer.parseInt(crashId));
+						
+						// Update Crash Id
+						this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
+					}else{
+						System.out.println("Waiting.....");
+					}
+					
 					
 				} catch (Exception e) {
 					// TODO: handle exception

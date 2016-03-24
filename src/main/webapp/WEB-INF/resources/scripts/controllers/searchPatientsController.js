@@ -76,11 +76,11 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler', func
 	};
 	
 	$scope.resetSearchData = function(){
-		 $scope.patient={};
-		 $scope.patient.numberOfDays="1";
+		 
+		
 	     $scope.patientSearchForm.$setPristine();
 	     $scope.patientSearchData="";
-	     $scope.totalRecords="";
+	     $scope.init();
 	};
 	
 }]); 

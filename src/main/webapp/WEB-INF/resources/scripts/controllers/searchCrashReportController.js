@@ -69,11 +69,9 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 	};
 	
 	$scope.resetSearchData = function(){
-		 $scope.crashreport={};
-		 $scope.crashreport.numberOfDays="1";
-	     $scope.crashSearchForm.$setPristine();
+		 $scope.crashSearchForm.$setPristine();
 	     $scope.crashSearchData="";
-	     $scope.totalRecords="";
+	     $scope.init();
 	     
 	};
 	

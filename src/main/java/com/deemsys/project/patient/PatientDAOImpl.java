@@ -421,13 +421,15 @@ public PatientSearchResult searchPatientsByCAdmin(
 		
 	Session session=this.sessionFactory.getCurrentSession();
 	
-	
 	//Patient Table Must be included
 	Criteria criteria=session.createCriteria(Patient.class, "t1");
-	           
+	
 	//Common Constrains - County
-	Criterion countyCriterion=Restrictions.eq("t1.county.countyId", callerPatientSearchForm.getCountyId());
-	criteria.add(countyCriterion);
+	if(callerPatientSearchForm.getCountyId()!=0){
+		Criterion countyCriterion=Restrictions.eq("t1.county.countyId", callerPatientSearchForm.getCountyId());
+		criteria.add(countyCriterion);
+	}
+	
 	
 	//Common Constrains - Tier
 	if(callerPatientSearchForm.getTier()!=0){
@@ -472,6 +474,9 @@ public PatientSearchResult searchPatientsByCAdmin(
 		
 	String role=loginService.getCurrentRole();
 	
+	//Join County
+	criteria.createAlias("county", "c1");
+	
 	if(role.equals("ROLE_SUPER_ADMIN")){
 		
 	}else if(role.equals("ROLE_CALLER_ADMIN")||role.equals("ROLE_CALLER")){
@@ -482,9 +487,10 @@ public PatientSearchResult searchPatientsByCAdmin(
 		if(callerPatientSearchForm.getCallerId()!=0){
 			Criterion criterion=Restrictions.eq("t2.caller.callerId", callerPatientSearchForm.getCallerId());
 			criteria.add(criterion);
-			criteria.createAlias("t2.caller", "c2");
 		}
-				
+		criteria.createAlias("t2.caller", "c2",Criteria.LEFT_JOIN);
+		
+		criteria.createAlias("c1.callerAdminCountyMaps","cmap",Criteria.INNER_JOIN,Restrictions.eq("callerAdmin.callerAdminId",callerPatientSearchForm.getCallerAdminId()));		
 		
 	}else if(role.equals("ROLE_LAWYER_ADMIN")||role.equals("ROLE_LAWYER")){
 		
@@ -494,13 +500,15 @@ public PatientSearchResult searchPatientsByCAdmin(
 		//Check for lawyer id
 		if(callerPatientSearchForm.getLawyerId()!=0){
 			Criterion criterion=Restrictions.eq("t2.lawyer.lawyerId", callerPatientSearchForm.getLawyerId());
-			criteria.add(criterion);
-			criteria.createAlias("t2.lawyer", "l1");
+			criteria.add(criterion);			
 		}
+		criteria.createAlias("t2.lawyer", "l1",Criteria.LEFT_JOIN);
+		
+		criteria.createAlias("c1.lawyerAdminCountyMaps","lmap",Criteria.INNER_JOIN,Restrictions.eq("lawyerAdmin.lawyerAdminId",callerPatientSearchForm.getLawyerAdminId()));
 				
 	}
 	
-	criteria.createAlias("county", "c1");
+	
 	
 	
 	//Common Constrain - Patient Status
@@ -531,20 +539,17 @@ public PatientSearchResult searchPatientsByCAdmin(
 	
 		projectionList.add(Projections.property("t2.callerAdmin.callerAdminId"),"callerAdminId");
 		projectionList.add(Projections.property("t2.caller.callerId"),"callerId");
-		if(callerPatientSearchForm.getCallerId()!=0){
 		projectionList.add(Projections.property("c2.firstName"),"callerFirstName");
 		projectionList.add(Projections.property("c2.lastName"),"callerLastName");
-		}
+		
 	}else if(role.equals("ROLE_LAWYER_ADMIN")||role.equals("ROLE_LAWYER")){
 		
 		projectionList.add(Projections.property("t2.lawyerAdmin.lawyerAdminId"),"lawyerAdminId");
 		projectionList.add(Projections.property("t2.lawyer.lawyerId"),"lawyerId");
 		projectionList.add(Projections.property("t1.atFaultInsuranceCompany"),"atFaultInsuranceCompany");
 		projectionList.add(Projections.property("t1.victimInsuranceCompany"),"victimInsuranceCompany");
-		if(callerPatientSearchForm.getLawyerId()!=0){
 		projectionList.add(Projections.property("l1.firstName"),"lawyerFirstName");
 		projectionList.add(Projections.property("l1.lastName"),"lawyerLastName");
-		}	
 	}
 	
 	if(!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){

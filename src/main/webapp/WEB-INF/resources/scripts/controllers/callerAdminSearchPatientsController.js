@@ -181,12 +181,10 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 	};
 	
 	$scope.resetSearchData = function(){
-		 $scope.patient={};
-		 $scope.patient.numberOfDays="1";
-		 $scope.patient.callerId="0";
+		
 	     $scope.patientSearchForm.$setPristine();
 	     $scope.patientSearchData="";
-	     $scope.totalRecords=0;
+	     $scope.init();
 	};
 	
 	$scope.isCleanCheckbox=function(){
