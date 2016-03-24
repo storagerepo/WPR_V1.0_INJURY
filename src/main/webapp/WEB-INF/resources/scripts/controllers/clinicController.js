@@ -503,7 +503,31 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 	    
 });
 
+adminApp.controller('CallerClinicController',function($scope,requestHandler,Flash){
+	$scope.noOfRows="10";
+	$scope.sortKey='clinicName';
 
+	$scope.sort = function(keyname){
+		$scope.sortKey = keyname;   //set the sortKey to the param passed
+	    $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+	};
+	    
+	$scope.getClinicList=function() {
+		 requestHandler.getRequest("Caller/getAllClinics.json","").then(function(results){
+		 	 $scope.clinics= results.data.clinicsForm;
+		 });
+	};
+	
+	$scope.getClinicList();
+	
+	$scope.viewClinicDetails=function(clinicId) {
+		 requestHandler.getRequest("Caller/getClinicDetails.json?clinicId="+clinicId,"").then(function(results){
+		 	 $scope.clinicDetails= results.data.clinicsForm;
+		 	 $("#viewClinicDetails").modal('show');
+		  });
+	};
+	
+});
 
 
 adminApp.directive('higherThan',function() {
@@ -648,6 +672,7 @@ adminApp.directive('higherThan',function() {
 	}
 	};
 	});
+
 
 
 

@@ -16,8 +16,8 @@
     <!-- SuperAdmin Dashboard Ends-->
     
     <!-- Lawyer Admin Dashboard Starts-->  
-        <stats ng-cloak number="15" comments="Lawyers" colour="green" type="users" goto="dashboard.Lawyer" ng-show="{{isAdmin==3}}"></stats>
-        <stats ng-cloak number="20" comments="Patients" colour="primary" type="search" goto="dashboard.LawyerAdminSearchPatients" ng-show="{{isAdmin==3}}"></stats>
+        <stats ng-cloak number="15" comments="Lawyers" colour="primary" type="users" goto="dashboard.Lawyer" ng-show="{{isAdmin==3}}"></stats>
+        <stats ng-cloak number="20" comments="Patients" colour="green" type="search" goto="dashboard.LawyerAdminSearchPatients" ng-show="{{isAdmin==3}}"></stats>
     <!-- Lawyer Admin Dashboard Ends-->
     
     
@@ -30,11 +30,12 @@
       
       
       <!-- Caller Dashboard Starts -->
-       <stats ng-cloak number="15" comments="Patients" colour="green" type="search" goto="dashboard.CallerSearchPatients" ng-show="{{isAdmin==4}}"></stats>
+       <stats ng-cloak number="15" comments="Patients" colour="primary" type="search" goto="dashboard.CallerSearchPatients" ng-show="{{isAdmin==4}}"></stats>
+        <stats ng-cloak number="10" comments="Clinics" colour="green" type="hospital-o" goto="dashboard.clinics" ng-show="{{isAdmin==4}}"></stats>
       <!-- Caller Dashboard Ends -->
       
       <!-- Lawyer Dashboard Starts -->
-       <stats ng-cloak number="15" comments="Patients" colour="green" type="search" goto="dashboard.LawyerSearchPatients" ng-show="{{isAdmin==5}}"></stats>
+       <stats ng-cloak number="15" comments="Patients" colour="primary" type="search" goto="dashboard.LawyerSearchPatients" ng-show="{{isAdmin==5}}"></stats>
       <!-- Lawyer Dashboard Ends -->
      </div>
     

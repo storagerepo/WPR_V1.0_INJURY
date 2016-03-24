@@ -11,17 +11,7 @@
 <div class="row">
 	<!-- /.panel-heading -->
 	<div class="col-md-12">
-		<div class="col-md-9 text-right margin-top-5"><label>Number of Records</label></div>
-
-		<div class="col-md-3 no-padding margin-bottom-10">
-			<select class="form-control" ng-model="noOfRows" name="noOfRows" id="noOfRows">
-				<option value="10">Show 10 Per Page</option>
-				<option value="25">Show 25 Per Page</option>
-				<option value="50">Show 50 Per Page</option>
-				<option value="100">Show 100 Per Page</option>
-				<option value="{{clinics.length}}">Show All</option>
-			</select> 
-		</div>
+		
 
 		<table class="table table-hover table-striped table-bordered">
 			<thead>
@@ -74,10 +64,10 @@
 						<a href="#/dashboard/edit-clinic/{{clinic.clinicId}}" ng-cloak data-hint="Edit Clinic" class="btn btn-xs btn-warning hint--top" ng-show="{{isAdmin==2}}">
 							<i class="glyphicon glyphicon-edit"></i>
 						</a>
-						<a href="" ng-cloak ng-show="clinic.status==1" ng-click="enableOrDisbaleClinic(clinic.clinicId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Clinic">
+						<a href="" ng-cloak ng-show="clinic.status==1 && {{isAdmin==2}}" ng-click="enableOrDisbaleClinic(clinic.clinicId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Clinic">
 							<i class="fa fa-unlock-alt"></i>
 						</a>
-						<a href="" ng-cloak ng-show="clinic.status==0" ng-click="enableOrDisbaleClinic(clinic.clinicId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Clinic">
+						<a href="" ng-cloak ng-show="clinic.status==0 && {{isAdmin==2}}" ng-click="enableOrDisbaleClinic(clinic.clinicId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Clinic">
 							<i class="fa fa-lock"></i>
 						</a>
 						<!--  <a href="" ng-cloak ng-click="viewDoctors(clinic.clinicId)" class="btn btn-xs btn-primary hint--top" data-hint="View Doctors">
@@ -96,6 +86,19 @@
 		</table>
 
 		<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" ></dir-pagination-controls>
+		 <div class="col-md-4 pull-right">
+<label>Number of Records</label>
+	<select
+		class="form-control" ng-model="noOfRows" name="noOfRows"
+		id="noOfRows">
+		<option value="10">Show 10 Per Page</option>
+		<option value="25">Show 25 Per Page</option>
+		<option value="50">Show 50 Per Page</option>
+		<option value="100">Show 100 Per Page</option>
+		<option value="{{clinics.length}}">Show All</option>
+	</select> 
+</div>
+
 	</div>
 	<!-- /.panel -->
     <!-- /.col-lg-12 -->

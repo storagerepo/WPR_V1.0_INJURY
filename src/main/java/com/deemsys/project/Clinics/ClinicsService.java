@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +22,7 @@ import com.deemsys.project.entity.ClinicTimingsId;
 import com.deemsys.project.entity.Clinic;
 import com.deemsys.project.entity.Patient;
 import com.deemsys.project.entity.Users;
+import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientDAO;
 
 /**
@@ -56,6 +56,9 @@ public class ClinicsService {
 	
 	@Autowired
 	CallerService callerService;
+	
+	@Autowired
+	LoginService loginService;
 
 	/**
 	 * Get Clinic Details For Edit
@@ -155,7 +158,14 @@ public class ClinicsService {
 	public List<ClinicsForm> getClinicsList() {
 		List<ClinicsForm> clinicsForms = new ArrayList<ClinicsForm>();
 		List<Clinic> clinicses = new ArrayList<Clinic>();
-		Integer callerAdminId=callerAdminDAO.getCallerAdminByUserId(callerService.getCurrentUserId()).getCallerAdminId();
+		String role=loginService.getCurrentRole();
+		Integer callerAdminId=0;
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+			callerAdminId=callerAdminDAO.getCallerAdminByUserId(callerService.getCurrentUserId()).getCallerAdminId();
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			callerAdminId=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId();
+		}
+		
 		clinicses = clinicsDAO.getClinicsByCallerAdmin(callerAdminId);
 
 		for (Clinic clinics : clinicses) {

@@ -303,6 +303,24 @@ sbAdminApp
 											})
 									// End Staff
 									.state(
+											'dashboard.clinics',
+											{
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [ 'scripts/controllers/clinicController.js' ]
+																});
+													}
+												},
+												controller : 'CallerClinicController',
+												templateUrl : 'views/clinic/clinic.html',
+												url : '/clinics'
+											})
+											
+									.state(
 											'dashboard.clinic',
 											{
 												resolve : {
@@ -319,6 +337,7 @@ sbAdminApp
 												templateUrl : 'views/clinic/clinic.html',
 												url : '/clinic'
 											})
+											
 									.state(
 											'dashboard.add-clinic',
 											{

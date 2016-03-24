@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * 
  */
 @Controller
-@RequestMapping("/CAdmin")
+
 public class ClinicsController {
 
 	@Autowired
@@ -30,7 +30,7 @@ public class ClinicsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/getClinic", method = RequestMethod.GET)
+	@RequestMapping(value = "/CAdmin/getClinic", method = RequestMethod.GET)
 	public String getClinicDetails(@RequestParam("clinicId") Integer clinicId,
 			Model model) {
 		ClinicsForm clinicsForm = clinicsService.getClinic(clinicId);
@@ -46,7 +46,7 @@ public class ClinicsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/getClinicDetails", method = RequestMethod.GET)
+	@RequestMapping(value = {"/CAdmin/getClinicDetails","/Caller/getClinicDetails"}, method = RequestMethod.GET)
 	public String getOneClinicDetails(
 			@RequestParam("clinicId") Integer clinicId, Model model) {
 		ClinicsForm clinicsForm = clinicsService.getClinicDetails(clinicId);
@@ -61,7 +61,7 @@ public class ClinicsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/getAllClinics", method = RequestMethod.GET)
+	@RequestMapping(value ={ "/CAdmin/getAllClinics","/Caller/getAllClinics"}, method = RequestMethod.GET)
 	public String getAllClinics(Model model) {
 		List<ClinicsForm> clinicsForm = clinicsService.getClinicsList();
 		model.addAttribute("clinicsForm", clinicsForm);
@@ -74,7 +74,7 @@ public class ClinicsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/saveOrUpdateClinic", method = RequestMethod.POST)
+	@RequestMapping(value = "/CAdmin/saveOrUpdateClinic", method = RequestMethod.POST)
 	public String saveClinic(@RequestBody ClinicsForm clinicsForm, Model model) {
 		if (clinicsForm.getClinicId() == null)
 			clinicsService.saveClinic(clinicsForm);
@@ -93,7 +93,7 @@ public class ClinicsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/deleteClinic", method = RequestMethod.POST)
+	@RequestMapping(value = "/CAdmin/deleteClinic", method = RequestMethod.POST)
 	public String deleteClinic(@RequestParam("clinicId") Integer clinicId,
 			Model model) {
 
@@ -106,7 +106,7 @@ public class ClinicsController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value="/enableOrDisableClinic",method=RequestMethod.POST)
+	@RequestMapping(value="/CAdmin/enableOrDisableClinic",method=RequestMethod.POST)
    	public String enableOrDisableClinic(@RequestParam("clinicId") Integer clinicId,ModelMap model)
    	{
     	clinicsService.enableOrDisableClinic(clinicId);
@@ -114,7 +114,7 @@ public class ClinicsController {
    		return "/returnPage";
    	}
 	
-	@RequestMapping(value = "/getClinicId", method = RequestMethod.GET)
+	@RequestMapping(value = "/CAdmin/getClinicId", method = RequestMethod.GET)
 	public String getClinicId(ModelMap model) {
 		model.addAttribute("clinicsForms", clinicsService.getClinicId());
 		model.addAttribute("requestSuccess", true);
@@ -125,7 +125,7 @@ public class ClinicsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/getNumberOfClinics", method = RequestMethod.GET)
+	@RequestMapping(value = "/CAdmin/getNumberOfClinics", method = RequestMethod.GET)
 	public String getNoOfClinics(Model model) {
 
 		model.addAttribute("NoOfClinics", clinicsService.getNoOfClinics());
