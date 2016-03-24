@@ -51,13 +51,11 @@ sbAdminApp
 															break;
 														}
 														case 401: {
-															alert("restricted");
-															window.location.href = "/Injury/logout";
+															window.location.href = "/Injury/logout?sessionout";
 
 														}
 														case 403: {
-															alert("forbidden");
-															window.location.href = "/Injury/logout";
+															window.location.href = "/Injury/logout?sessionout";
 															break;
 														}
 														case 500: {

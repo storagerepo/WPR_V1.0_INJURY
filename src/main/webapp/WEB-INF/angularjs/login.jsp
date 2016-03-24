@@ -15,6 +15,7 @@
                 </div>
                 <div class="panel-body">
                     <form role="form" action="j_spring_security_check" method="post">
+                    <div id="sessionout" style="color:#FF0000">Your Session has been expired. Please login again!<br/><br/></div>
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control" placeholder="Username" name="username" type="text" autofocus>
@@ -33,3 +34,13 @@
         </div>
     </div>
 </div>
+
+<script>
+
+if(location.search=='?sessionout'){
+	document.getElementById('sessionout').style.display = 'inline';
+}else{
+	document.getElementById('sessionout').style.display = 'none';
+}
+	/* element.style.display = 'none';  */
+</script>
