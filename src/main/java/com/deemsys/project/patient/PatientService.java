@@ -339,7 +339,7 @@ public class PatientService {
 		
 		PatientSearchResult patientSearchResult=new PatientSearchResult();
 		
-		String role="";
+		String role=loginService.getCurrentRole();
 		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
 			callerPatientSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
 		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
