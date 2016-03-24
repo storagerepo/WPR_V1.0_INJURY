@@ -29,6 +29,8 @@ public class PatientSearchList {
 	private String notes;
 	private Integer isArchived;
 	private Integer patientStatus;
+	private boolean isSelected=false;
+	
 	public String getPatientId() {
 		return patientId;
 	}
@@ -196,6 +198,12 @@ public class PatientSearchList {
 	public PatientSearchList() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	public boolean isSelected() {
+		return isSelected;
+	}
+	public void setSelected(boolean isSelected) {
+		this.isSelected = isSelected;
 	}
 	
 	
