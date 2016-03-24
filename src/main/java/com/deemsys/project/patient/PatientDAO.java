@@ -60,5 +60,7 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 			String crashDate,String toDate,String recordedFromDate,String recordedToDate, String name);
 
 	public PatientSearchResult searchPatientsByCAdmin(CallerPatientSearchForm callerPatientSearchForm);
+
+	void savePatient(Patient entity) throws Exception;
 	
 }

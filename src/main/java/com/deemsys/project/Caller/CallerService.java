@@ -15,6 +15,7 @@ import com.deemsys.project.CallerCountyMap.CallerCountyMapDAO;
 import com.deemsys.project.CallerCountyMap.CallerCountyMapService;
 import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.County.CountyService;
+import com.deemsys.project.PatientCallerMap.PatientCallerService;
 import com.deemsys.project.Role.RoleDAO;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
@@ -70,6 +71,9 @@ public class CallerService {
 	
 	@Autowired
 	CountyService countyService;
+	
+	@Autowired
+	PatientCallerService patientCallerService;
 	
 	@Autowired
 	LoginService loginService;
@@ -413,4 +417,5 @@ public class CallerService {
 	public Caller getCallerByUserId(Integer userId){
 		return callerDAO.getByUserId(userId);
 	}
+	
 }

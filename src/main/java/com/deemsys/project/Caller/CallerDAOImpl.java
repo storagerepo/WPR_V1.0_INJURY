@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.Patient;
 import com.deemsys.project.entity.Caller;
+import com.deemsys.project.entity.PatientCallerAdminMap;
 
 /**
  * 
@@ -214,7 +215,5 @@ public class CallerDAOImpl implements CallerDAO{
 		return callers;
 	}
 
-
-	
-	
+		
 }

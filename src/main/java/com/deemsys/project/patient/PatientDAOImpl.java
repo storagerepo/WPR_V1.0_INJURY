@@ -52,14 +52,14 @@ public class PatientDAOImpl implements PatientDAO{
 	LoginService loginService;
 
 	@Override
-	public void save(Patient entity) {		
+	public void savePatient(Patient entity) throws Exception {		
 		try{
 			String UUIDString=UUID.randomUUID().toString();
 			entity.setPatientId(UUIDString.replaceAll("-", ""));
 			this.sessionFactory.getCurrentSession().save(entity);
-		}catch(DataIntegrityViolationException exception){
-			this.save(entity);
-		}			
+		}catch(Exception exception){
+			throw exception;
+		}
 	}
 
 	@Override
@@ -562,6 +562,12 @@ public PatientSearchResult searchPatientsByCAdmin(
 	
 	return patientSearchResult;
 
+}
+
+@Override
+public void save(Patient entity) {
+	// TODO Auto-generated method stub
+	
 }
 
 

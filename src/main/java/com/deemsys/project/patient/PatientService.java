@@ -158,7 +158,7 @@ public class PatientService {
 	}
 
 	//Save an Entity
-	public int savePatient(PatientForm patientForm) {
+	public int savePatient(PatientForm patientForm) throws Exception {
 		// TODO: Convert Form to Entity Here
 
 		// Logic Starts
@@ -175,7 +175,12 @@ public class PatientService {
 
 		patientForm.setLatitude(latitude);
 		patientForm.setLongitude(longitude);
-		patientDAO.save(this.getPatient(patientForm));
+		try{
+			patientDAO.savePatient(this.getPatient(patientForm));
+		}catch(Exception exception){
+			throw exception;
+		}
+		
 
 		return 1;
 	}

@@ -83,9 +83,15 @@ public class PatientController {
 
 	@RequestMapping(value = "/Caller/saveUpdatePatient", method = RequestMethod.POST)
 	public String updatePatient(@RequestBody PatientForm patientForm,
-			ModelMap model) {
-		if (patientForm.getPatientId() == null)
-			patientService.savePatient(patientForm);
+			ModelMap model) throws Exception {
+		if (patientForm.getPatientId() == null){
+			try {
+				patientService.savePatient(patientForm);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				throw e;
+			}
+		}
 		else
 			patientService.updatePatient(patientForm);
 

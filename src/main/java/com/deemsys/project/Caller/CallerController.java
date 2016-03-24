@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.deemsys.project.PatientCallerMap.PatientCallerService;
+
 
 /**
  * 
@@ -21,6 +23,9 @@ public class CallerController {
 
 	@Autowired
 	CallerService callerService;
+	
+	@Autowired
+	PatientCallerService patientCallerService;
 
 	@RequestMapping(value = "/CAdmin/getCaller", method = RequestMethod.GET)
 	public String getCaller(@RequestParam("callerId") Integer callerId, ModelMap model) {
@@ -152,6 +157,30 @@ public class CallerController {
 		if (status == 0) {
 			model.addAttribute("requestSuccess", true);
 		}
+		return "/returnPage";
+	}
+	
+	@RequestMapping(value = "/CAdmin/assignCaller", method = RequestMethod.POST)
+	public String assignCaller(@RequestBody AssignCallerForm assignCallerForm, ModelMap model) {
+		boolean allow=false;
+		for (CallerForm callerForm : callerService.getCallerListByCallerAdmin()) {
+			if(callerForm.getCallerId()==assignCallerForm.getCallerId()){
+				allow=true;
+			}
+		}		
+		if(allow){
+			model.addAttribute("success",patientCallerService.assignCaller(assignCallerForm));
+		}else{
+			model.addAttribute("Unautorized Action");
+		}
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
+	@RequestMapping(value = {"/CAdmin/releaseCaller","/Caller/releaseCaller"},method = RequestMethod.POST)
+	public String releaseCaller(@RequestBody AssignCallerForm assignCallerForm, ModelMap model) {
+		model.addAttribute("success",patientCallerService.releaseCaller(assignCallerForm));
+		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 

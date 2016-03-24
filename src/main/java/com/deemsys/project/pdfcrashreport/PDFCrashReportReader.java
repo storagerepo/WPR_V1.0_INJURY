@@ -14,19 +14,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.hibernate.mapping.Array;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.deemsys.project.CrashReport.CrashReportDAO;
 import com.deemsys.project.CrashReport.CrashReportService;
+import com.deemsys.project.CrashReportError.CrashReportErrorDAO;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.common.InjuryProperties;
+import com.deemsys.project.entity.CrashReport;
+import com.deemsys.project.entity.CrashReportError;
 import com.deemsys.project.patient.PatientForm;
 import com.deemsys.project.patient.PatientService;
 import com.itextpdf.text.pdf.PdfReader;
@@ -36,6 +44,7 @@ import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 import java.io.*;
 
 @Service
+@Transactional
 public class PDFCrashReportReader {
 	
 	
@@ -50,6 +59,12 @@ public class PDFCrashReportReader {
 	
 	@Autowired
 	CrashReportService crashReportService;
+	
+	@Autowired
+	CrashReportDAO crashReportDAO;
+	
+	@Autowired
+	CrashReportErrorDAO crashReportErrorDAO;
 
 	protected static Logger logger = LoggerFactory.getLogger("service");
 
@@ -150,6 +165,10 @@ public class PDFCrashReportReader {
 					
 				} catch (Exception e) {
 					// TODO: handle exception
+					this.crashLogUpdate(crashId, e);
+					this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
+					CrashReportError crashReportError=crashReportErrorDAO.get(12);
+					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, "", null, InjuryConstants.convertMonthFormat(new Date()) , "", 0));
 					System.out.println("Failed"+e.toString());
 				}
 				
@@ -311,6 +330,16 @@ public class PDFCrashReportReader {
 				}			
 		}
 	
+	//Crash Log Update
+		public void crashLogUpdate(String crashId,Exception exe){			
+				try {
+					String content="Crash ID: "+crashId+" -"+exe.toString()+"/////";
+					FileUtils.writeStringToFile(new File(injuryProperties.getProperty("crashIDLog")), content, true);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}			
+		}
 	
 	public PDFCrashReportJson getValuesFromPDF(List<List<String>> content)
 			throws IOException {
@@ -821,7 +850,7 @@ public class PDFCrashReportReader {
 	
 	
 	//Main function for PDF Parsing
-	public void parsePDFDocument(File file,Integer crashId){
+	public void parsePDFDocument(File file,Integer crashId) throws Exception{
 		
 	
 				UUID uuid=UUID.randomUUID();
@@ -853,7 +882,12 @@ public class PDFCrashReportReader {
 					}else{
 						//Insert patients
 						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 1));
-						this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
+						try {
+							this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							throw e;
+						}
 					}
 					break;
 				case 2:
@@ -868,7 +902,12 @@ public class PDFCrashReportReader {
 							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 10));
 						}else{
 							//Insert patients
-							this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
+							try {
+								this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								throw e;
+							}
 							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 2));
 						}
 					}
@@ -886,7 +925,12 @@ public class PDFCrashReportReader {
 							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 11));
 						}else{
 							//Insert patients
-							this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
+							try {
+								this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								throw e;
+							}
 							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 3));
 						}
 					}
@@ -911,10 +955,15 @@ public class PDFCrashReportReader {
  	}
 	
 	
-	public void savePatientList(List<PatientForm> patientsForms,String uuid,String crashId){
+	public void savePatientList(List<PatientForm> patientsForms,String uuid,String crashId) throws Exception{
 		for (PatientForm patientsForm : patientsForms) {
 			patientsForm.setCrashReportFileName(uuid.toString()+"_"+crashId+".pdf");
-			patientsService.savePatient(patientsForm);
+			try {
+				patientsService.savePatient(patientsForm);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				throw e;
+			}
 		}		
 	}
 	
