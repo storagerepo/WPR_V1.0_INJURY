@@ -163,11 +163,11 @@ public class CountyService {
 		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
 			countyLists=callerAdminCountyMapDAO.getCountyListByCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
 		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
-			callerCountyMapDAO.getCallerCountyMapByCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
+			countyLists=callerCountyMapDAO.getCountyListByCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
 		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
-			lawyerAdminCountyMappingDAO.getLawyerAdminCountyMappingsByLawyerAdminId(lawyerAdminService.getLawyerAdminIdByUserId(loginService.getCurrentUserID()).getLawyerAdminId());
+			countyLists=lawyerAdminCountyMappingDAO.getCountyListByLawyerAdminId(lawyerAdminService.getLawyerAdminIdByUserId(loginService.getCurrentUserID()).getLawyerAdminId());
 		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
-			lawyerCountyMapDAO.getLawyerCountyMapByLawyerId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId());
+			countyLists=lawyerCountyMapDAO.getCountyListByLawyerId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId());
 		}
 		
 		//Set New Count status

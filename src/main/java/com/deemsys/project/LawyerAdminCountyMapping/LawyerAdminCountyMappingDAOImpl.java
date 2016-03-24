@@ -3,14 +3,19 @@ package com.deemsys.project.LawyerAdminCountyMapping;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.deemsys.project.County.CountyList;
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.LawyerAdminCountyMap;
-import com.deemsys.project.entity.LawyerCountyMap;
 
 @Repository
 public class LawyerAdminCountyMappingDAOImpl implements LawyerAdminCountyMappingDAO {
@@ -159,4 +164,29 @@ public class LawyerAdminCountyMappingDAOImpl implements LawyerAdminCountyMapping
 		
 	}
 
+	@Override
+	public List<CountyList> getCountyListByLawyerAdminId(
+			Integer lawyerAdminId) {
+		
+		Session session=this.sessionFactory.getCurrentSession();
+		
+		Criteria criteria=session.createCriteria(LawyerAdminCountyMap.class);		
+		criteria.createAlias("county", "c1");
+		
+		criteria.add(Restrictions.eq("id.lawyerAdminId", lawyerAdminId));
+		
+		ProjectionList projectionList=Projections.projectionList();
+		projectionList.add(Projections.property("c1.countyId"),"countyId");
+		projectionList.add(Projections.property("c1.name"),"countyName");
+		
+		criteria.setProjection(projectionList);
+		
+		@SuppressWarnings("unchecked")
+		List<CountyList> countyLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(CountyList.class)).list();
+		
+		return countyLists;
+		
+		
+	}
+	
 }

@@ -3,13 +3,18 @@ package com.deemsys.project.CallerCountyMap;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.deemsys.project.County.CountyList;
 import com.deemsys.project.common.BasicQuery;
-import com.deemsys.project.entity.CallerAdminCountyMap;
 import com.deemsys.project.entity.CallerCountyMap;
 
 @Repository
@@ -154,6 +159,28 @@ public class CallerCountyMapDAOImpl implements CallerCountyMapDAO{
 		for (CallerCountyMap callerCountyMap : callerCountyMaps) {
 			this.sessionFactory.getCurrentSession().delete(callerCountyMap);
 		}
+	}
+
+	@Override
+	public List<CountyList> getCountyListByCallerId(Integer callerId) {
+		// TODO Auto-generated method stub
+		Session session=this.sessionFactory.getCurrentSession();
+		
+		Criteria criteria=session.createCriteria(CallerCountyMap.class);		
+		criteria.createAlias("county", "c1");
+		
+		criteria.add(Restrictions.eq("id.callerId", callerId));
+		
+		ProjectionList projectionList=Projections.projectionList();
+		projectionList.add(Projections.property("c1.countyId"),"countyId");
+		projectionList.add(Projections.property("c1.name"),"countyName");
+		
+		criteria.setProjection(projectionList);
+		
+		@SuppressWarnings("unchecked")
+		List<CountyList> countyLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(CountyList.class)).list();
+		
+		return countyLists;
 	}
 	
 	
