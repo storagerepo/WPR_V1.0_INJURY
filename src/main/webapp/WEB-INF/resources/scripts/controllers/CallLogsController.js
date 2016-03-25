@@ -86,10 +86,11 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	    };
 	    
 	    $scope.getDoctors=function(){
-	    	alert("ok");
-	    	alert($scope.appointment.clinicId);
-	    	if($scope.appointment.clinicId!=""){
-	    		requestHandler.getRequest("getNameByClinicId.json?clinicId="+$scope.appointment.clinicId,"").then( function(response) {
+	    	if($scope.calllogs.appointmentsForm.clinicId==null){
+	    		$scope.calllogs.appointmentsForm.clinicId="";
+	    	}
+	    	if($scope.calllogs.appointmentsForm.clinicId!=""){
+	    		requestHandler.getRequest("getNameByClinicId.json?clinicId="+$scope.calllogs.appointmentsForm.clinicId,"").then( function(response) {
 					    $scope.doctor= response.data.doctorsForm;
 				 });
 	    	}
@@ -116,6 +117,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		$scope.options=true;
 		$scope.myForm.$setPristine();
 		$scope.calllogs={};
+		$scope.calllogs.appointmentsForm="";
 		$scope.calllogs.patientId =$stateParams.id;
 		$scope.calllogs.timeStamp=moment().format('MM/DD/YYYY h:mm A');
 		
@@ -135,20 +137,24 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		
 	};
 	
-	$scope.editModal=function(id)
+	$scope.editModal=function(callLogId,appointmentId)
 	{
 		$scope.calllogs={};
+		$scope.calllogs.appointmentsForm="";
 		$scope.calllogs.appointmentId = appointmentId;
 		$scope.title="Edit Call Log";
 		$scope.options=false;
 		var callLogsOriginal="";
-		
-		
-		requestHandler.getRequest("Caller/getCallLogs.json?callLogId="+id,"").then( function(response) {
-			callLogsOriginal=angular.copy(response.data.callLogsForm);			
+		if(appointmentId==null){
+			appointmentId="";
+		}
+		requestHandler.getRequest("Caller/getCallLogs.json?callLogId="+callLogId+"&appointmentId="+appointmentId,"").then( function(response) {
+			callLogsOriginal=angular.copy(response.data.callLogsForm);
 		    $scope.calllogs=response.data.callLogsForm;		    
 		    $scope.calllogs.response=$scope.calllogs.response.toString();
-		    $('#timeStamp').data("DateTimePicker").setDate($scope.calllogs.timeStamp);
+		    $scope.calllogs.appointmentsForm=response.data.callLogsForm.appointmentsForm;
+		   $('#timeStamp').data("DateTimePicker").setDate($scope.calllogs.timeStamp);
+		   $scope.getDoctors();
 		    $("#calllogsModel").modal("show");
 		});
 		
@@ -159,6 +165,15 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	
 	};
 	
+	$scope.appointmentAlert=function(){
+		if($scope.calllogs.response!=3){
+			if(confirm("Are you sure want to remove appointment?")){
+				$scope.calllogs.appointmentsForm.doctorId="";
+				$scope.calllogs.appointmentsForm.clinicId="";
+				$scope.calllogs.appointmentsForm.scheduledDate="";
+			}
+		}
+	};
 
 	
 	

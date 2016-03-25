@@ -140,10 +140,54 @@ public class PDFCrashReportReader {
 	 * @throws IOException
 	 */
 	public boolean downloadPDFFile(String crashId) throws IOException {
+			
+			try{
+					File file=getPDFFile(crashId);
+					for (int tryCrash = 1; tryCrash < 3; tryCrash++) {						
+						if(file!=null){
+							if(file.length()>0){
+								System.out.println("Got it!!");
+								break;
+							}else{
+								System.out.println(crashId+"..Failed..Lets try next.!");
+								crashId=String.valueOf(Integer.parseInt(crashId)+1);
+								System.out.println("Trying..."+crashId);
+								file=getPDFFile(crashId);
+							}
+						}else{
+							crashId=String.valueOf(Integer.parseInt(crashId)+1);
+							file=getPDFFile(crashId);
+						}
+						
+					}		
+					
+					if(file.length()>0){
+						//Parse the PDF
+						parsePDFDocument(new File(file.getAbsoluteFile().getAbsolutePath()),Integer.parseInt(crashId));
+						
+						// Update Crash Id
+						this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
+					}else{
+						System.out.println("Waiting.....");
+					}
+					
+				} catch (Exception e) {
+					// TODO: handle exception
+					this.crashLogUpdate(crashId, e);
+					this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
+					CrashReportError crashReportError=crashReportErrorDAO.get(12);
+					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, "", null, InjuryConstants.convertMonthFormat(new Date()) , "", 0));
+					System.out.println("Failed"+e.toString());
+				}
+
+			return true;
+				
+	}  
+	
+	public File getPDFFile(String crashId) throws Exception{
+		File file=null;
 		try{
-			
 			URL url=new URL("https://ext.dps.state.oh.us/CrashRetrieval/ViewCrashReport.aspx?redirectPage=ViewCrashReport.aspx&RequestFrom=ViewEfilePDF&CrashId="+crashId);
-			
 			HttpURLConnection httpURLConnection=(HttpURLConnection) url.openConnection();
 			if(httpURLConnection.getResponseCode()==200)
 			{
@@ -156,40 +200,18 @@ public class PDFCrashReportReader {
 					Files.copy(in, Paths.get(filePath),
 							StandardCopyOption.REPLACE_EXISTING);
 					in.close();
-					
-					File file=new File(filePath);
-					
-					if(file.length()>0){
-						//Parse the PDF
-						parsePDFDocument(new File(filePath),Integer.parseInt(crashId));
-						
-						// Update Crash Id
-						this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
-					}else{
-						System.out.println("Waiting.....");
+					file=new File(filePath);				
 					}
-					
-					
-				} catch (Exception e) {
-					// TODO: handle exception
-					this.crashLogUpdate(crashId, e);
-					this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
-					CrashReportError crashReportError=crashReportErrorDAO.get(12);
-					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, "", null, InjuryConstants.convertMonthFormat(new Date()) , "", 0));
-					System.out.println("Failed"+e.toString());
+				catch(Exception ex){
+					throw ex;
 				}
-				
-				
-				
 			}
-			
+		}catch(Exception ex){
+			throw ex;
 		}
-		catch(Exception ex){
-			logger.error(ex.toString());
-			return false;
-		}
-		return true;
-	}  
+		
+		return file;
+	}
 	
 	
 	/**

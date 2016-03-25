@@ -22,4 +22,10 @@ public interface AppointmentsDAO extends IGenericDAO<Appointments> {
 
 	public List<AppointmentsForm> getAppointmentsBetweenDatesByCallerId(
 			String startDate, String endDate, Integer staffId);
+	
+	public Appointments getAppointmentsByAppintementId(Long appointmentId);
+	
+	public void deleteAppointmentsByAppointmentId(Long appointmentId);
+	
+	public List<AppointmentsForm> searchAppointments(AppointmentSearchForm appointmentSearchForm);
 }

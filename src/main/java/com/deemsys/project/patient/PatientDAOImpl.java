@@ -190,7 +190,7 @@ public class PatientDAOImpl implements PatientDAO{
 		AppointmentsForm appointmentsForm=new AppointmentsForm();
 		for(Object[] arr : list){
 			
-			appointmentsForm=new AppointmentsForm(Integer.parseInt(arr[0].toString()), Integer.parseInt(arr[1].toString()),arr[2].toString(),arr[3].toString(), arr[4].toString(), Integer.parseInt(arr[5].toString()));
+		//	appointmentsForm=new AppointmentsForm(Integer.parseInt(arr[0].toString()), Integer.parseInt(arr[1].toString()),arr[2].toString(),arr[3].toString(), arr[4].toString(), Integer.parseInt(arr[5].toString()));
 			forms.add(appointmentsForm);
 				
 		}
@@ -211,7 +211,7 @@ public class PatientDAOImpl implements PatientDAO{
 		AppointmentsForm appointmentsForm=new AppointmentsForm();
 		for(Object[] arr : list){
 			
-			appointmentsForm=new AppointmentsForm(Integer.parseInt(arr[0].toString()), Integer.parseInt(arr[1].toString()),arr[2].toString(),arr[3].toString(), arr[4].toString(), Integer.parseInt(arr[5].toString()));
+		//	appointmentsForm=new AppointmentsForm(Integer.parseInt(arr[0].toString()), Integer.parseInt(arr[1].toString()),arr[2].toString(),arr[3].toString(), arr[4].toString(), Integer.parseInt(arr[5].toString()));
 			forms.add(appointmentsForm);
 				
 		}
@@ -232,7 +232,7 @@ public class PatientDAOImpl implements PatientDAO{
 		AppointmentsForm appointmentsForm=new AppointmentsForm();
 		for(Object[] arr : list){
 			
-			appointmentsForm=new AppointmentsForm(Integer.parseInt(arr[0].toString()), Integer.parseInt(arr[1].toString()),arr[2].toString(),arr[3].toString(), arr[4].toString(), Integer.parseInt(arr[5].toString()));
+			//appointmentsForm=new AppointmentsForm(Integer.parseInt(arr[0].toString()), Integer.parseInt(arr[1].toString()),arr[2].toString(),arr[3].toString(), arr[4].toString(), Integer.parseInt(arr[5].toString()));
 			forms.add(appointmentsForm);
 				
 		}

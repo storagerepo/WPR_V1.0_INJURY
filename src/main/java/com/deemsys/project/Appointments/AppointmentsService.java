@@ -16,11 +16,14 @@ import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.Doctors.DoctorsDAO;
 import com.deemsys.project.Caller.CallerDAO;
 import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
+import com.deemsys.project.entity.CallerAdmin;
 import com.deemsys.project.entity.Clinic;
 import com.deemsys.project.entity.Doctor;
+import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientDAO;
 import com.deemsys.project.patient.PatientForm;
 
@@ -57,6 +60,12 @@ public class AppointmentsService {
 
 	@Autowired
 	CallerDAO callerDAO;
+	
+	@Autowired
+	LoginService loginService;
+	
+	@Autowired
+	CallerAdminService callerAdminService;
 
 	// Get All Entries
 	public List<AppointmentsForm> getAppointmentsList() {
@@ -128,12 +137,12 @@ public class AppointmentsService {
 
 		// Logic Starts
 
-		Patient patient = patientDAO.get(appointmentsForm.getPatientId());
+		//Patient patient = patientDAO.get(appointmentsForm.getPatientId());
 		
 		// Logic Ends
-		patientDAO.update(patient);
+		//patientDAO.update(patient);
 
-		patientDAO.updatePatientStatus(appointmentsForm.getPatientId());
+	//	patientDAO.updatePatientStatus(appointmentsForm.getPatientId());
 		return 1;
 	}
 
@@ -185,50 +194,10 @@ public class AppointmentsService {
 		return patientForm;
 	}
 
-	public List<AppointmentsForm> monthwiseAppointment(Integer year,
-			Integer month) {
+	public List<AppointmentsForm> searchAppointments(AppointmentSearchForm appointmentSearchForm) {
 		List<AppointmentsForm> appointmentsForms = new ArrayList<AppointmentsForm>();
-
-		List<Appointments> appointmentss = new ArrayList<Appointments>();
-		String role = callerService.getCurrentRole();
-		Date monthBegin = new Date();
-		Date monthEnd = new Date();
-		if (month == 0) {
-			monthBegin = new LocalDate().withDayOfMonth(1).toDate();
-			monthEnd = new LocalDate().plusMonths(1).withDayOfMonth(1)
-					.minusDays(1).toDate();
-		} else {
-			monthBegin = new LocalDate(year, month, 1).toDate();
-			monthEnd = new LocalDate(year, month, 1).plusMonths(1)
-					.withDayOfMonth(1).minusDays(1).toDate();
-		}
-		if (role == "ROLE_ADMIN") {
-			appointmentss = appointmentsDAO.getAppointmentsBetweenDates(
-					monthBegin, monthEnd);
-			for (Appointments appointments : appointmentss) {
-				// TODO: Fill the List
-				AppointmentsForm appointmentsForm = new AppointmentsForm();
-				/*AppointmentsForm appointmentsForm = new AppointmentsForm(
-						appointments.getId(), appointments.getPatient()
-								.getId(), appointments.getPatient().getName(),
-						appointments.getScheduledDate().toString(),
-						appointments.getNotes(), appointments.getStatus());*/
-				appointmentsForms.add(appointmentsForm);
-			}
-		} else if (role == "ROLE_STAFF") {
-			Integer userId = callerService.getCurrentUserId();
-			// get Caller Id
-			Integer callerId = callerDAO.getByUserId(userId).getCallerId();
-
-			SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd");
-			String startDate = yearFormat.format(monthBegin);
-			String endDate = yearFormat.format(monthEnd);
-			appointmentsForms = appointmentsDAO
-					.getAppointmentsBetweenDatesByCallerId(startDate, endDate,
-							callerId);
-
-		}
-
+		appointmentSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
+		appointmentsForms=appointmentsDAO.searchAppointments(appointmentSearchForm);
 		return appointmentsForms;
 
 	}

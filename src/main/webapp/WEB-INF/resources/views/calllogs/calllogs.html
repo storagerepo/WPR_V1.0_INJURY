@@ -91,7 +91,7 @@
 							<a ng-cloak type="submit"
 								class="btn btn-xs btn-warning hint--top"
 								data-hint="Edit Call Log"
-								ng-click="editModal(callLog.callLogId)">&nbsp;<i
+								ng-click="editModal(callLog.callLogId,callLog.appointmentId)">&nbsp;<i
 									class="glyphicon glyphicon-edit"></i>&nbsp;
 							</a> <a href="#" ng-cloak ng-click="deleteCalllogs(callLog.callLogId)"
 								class="btn btn-xs btn-danger hint--top"
@@ -169,7 +169,7 @@
 						id="appointmentId" class="form-control"
 						ng-model="calllogs.appointmentId"> <label>Response</label>
 					<select class="form-control" ng-model="calllogs.response"
-						name="response" id="response" required>
+						name="response" id="response" ng-change="appointmentAlert()" required>
 						<option value="">-- Select Response --</option>
 						<option value="1">Not Interested/Injured</option>
 						<option value="2">Voice Mail</option>
@@ -184,10 +184,10 @@
 					<div class="well" ng-show="calllogs.response==3">
 					<p>Please Provide Appointment Details</p>
 					<label>Select Clinic</label> <select class="form-control"
-						ng-change="getDoctors()" ng-model="appointment.clinicId"
+						ng-change="getDoctors()" ng-model="calllogs.appointmentsForm.clinicId"
 						name="clinicId" id="clinicId"
 						ng-options="clinics.clinicId as clinics.clinicName for clinics in clinic"
-						required>
+						ng-required="calllogs.response==3">
 						<option value="">-- Select Clinic --</option>
 					</select> <span class="error-container"
 						ng-show="myForms.clinicId.$dirty && myForms.clinicId.$invalid">
@@ -195,10 +195,10 @@
 						ng-show="myForms.clinicId.$error.required">Please Select
 							Clinic</span>
 					</span> <br> <label>Select Doctor</label> <select
-						class="form-control" ng-model="appointment.doctorId"
+						class="form-control" ng-model="calllogs.appointmentsForm.doctorId"
 						name="doctorId" id="doctorId"
 						ng-options="doctors.id as doctors.doctorName for doctors in doctor"
-						required>
+						ng-required="calllogs.response==3">
 						<option value="">-- Select Doctor --</option>
 					</select> <span class="error-container"
 						ng-show="myForms.doctorId.$dirty && myForms.doctorId.$invalid">
@@ -208,8 +208,8 @@
 					</span> <br> <label>Date & Time</label>
 					<div class="input-group">
 						<input type="text" name="scheduledDate" id="scheduledDate"
-							class="form-control" ng-model="appointment.scheduledDate"
-							placeholder="Enter Date" required>
+							class="form-control" ng-model="calllogs.appointmentsForm.scheduledDate"
+							placeholder="Enter Date" ng-required="calllogs.response==3">
 						<span class="input-group-addon white-color-bg"> <span
 							class="glyphicon glyphicon-calendar"></span></span>
 					</div>

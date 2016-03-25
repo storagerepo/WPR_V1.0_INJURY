@@ -2,6 +2,8 @@ package com.deemsys.project.CallLogs;
 
 import java.util.Date;
 
+import com.deemsys.project.Appointments.AppointmentsForm;
+
 /**
  * 
  * @author Deemsys
@@ -17,6 +19,7 @@ public class CallLogsForm {
 	private String notes;
 	private Integer status;
 	private Long appointmentId;
+	private AppointmentsForm appointmentsForm;
 	private String callerFirstName;
 	private String callerLastName;
 	
@@ -75,16 +78,17 @@ public class CallLogsForm {
 	public void setCallerLastName(String callerLastName) {
 		this.callerLastName = callerLastName;
 	}
-	public Long getAppointmentId() {
-		return appointmentId;
-	}
-	public void setAppointmentId(Long appointmentId) {
-		this.appointmentId = appointmentId;
-	}
 	
+	
+	public AppointmentsForm getAppointmentsForm() {
+		return appointmentsForm;
+	}
+	public void setAppointmentsForm(AppointmentsForm appointmentsForm) {
+		this.appointmentsForm = appointmentsForm;
+	}
 	public CallLogsForm(Long callLogId, String patientId,
 			Integer callerAdminId, String timeStamp, Integer response,
-			String notes, Integer status, Long appointmentId,
+			String notes, Integer status, AppointmentsForm appointmentsForm,
 			String callerfirstName,String callerLastName) {
 		super();
 		this.callLogId = callLogId;
@@ -94,26 +98,19 @@ public class CallLogsForm {
 		this.response = response;
 		this.notes = notes;
 		this.status = status;
-		this.appointmentId = appointmentId;
+		this.appointmentsForm = appointmentsForm;
 		this.callerFirstName=callerfirstName;
 		this.callerLastName=callerLastName;
-	}
-	
-	public CallLogsForm(Long callLogId, String patientId,
-			Integer callerAdminId, String timeStamp, Integer response,
-			String notes, Integer status) {
-		super();
-		this.callLogId = callLogId;
-		this.patientId = patientId;
-		this.callerAdminId = callerAdminId;
-		this.timeStamp = timeStamp;
-		this.response = response;
-		this.notes = notes;
-		this.status = status;
 	}
 	public CallLogsForm() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	public Long getAppointmentId() {
+		return appointmentId;
+	}
+	public void setAppointmentId(Long appointmentId) {
+		this.appointmentId = appointmentId;
 	}
  
 	

@@ -2,10 +2,13 @@ package com.deemsys.project.entity;
 
 // Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,10 +26,11 @@ public class Appointments implements java.io.Serializable {
 	private Long appointmentId;
 	private CallLog callLog;
 	private Clinic clinic;
-	private Date scheduledDate;
+	private String scheduledDate;
 	private String notes;
 	private Integer status;
-
+	private Integer doctorId;
+	
 	public Appointments() {
 	}
 
@@ -34,16 +38,18 @@ public class Appointments implements java.io.Serializable {
 		this.appointmentId = appointmentId;
 	}
 
-	public Appointments(long appointmentId, CallLog callLog,
-			Date scheduledDate, String notes, Integer status) {
-		this.appointmentId = appointmentId;
+	public Appointments(CallLog callLog,
+			String scheduledDate, String notes, Integer status,Clinic clinic,Integer doctorId) {
 		this.callLog = callLog;
 		this.scheduledDate = scheduledDate;
 		this.notes = notes;
 		this.status = status;
+		this.clinic=clinic;
+		this.doctorId=doctorId;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "appointment_id", unique = true, nullable = false)
 	public Long getAppointmentId() {
 		return this.appointmentId;
@@ -73,13 +79,13 @@ public class Appointments implements java.io.Serializable {
 		this.clinic = clinic;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "scheduled_date", length = 10)
-	public Date getScheduledDate() {
+	
+	@Column(name = "scheduled_date")
+	public String getScheduledDate() {
 		return this.scheduledDate;
 	}
 
-	public void setScheduledDate(Date scheduledDate) {
+	public void setScheduledDate(String scheduledDate) {
 		this.scheduledDate = scheduledDate;
 	}
 
@@ -92,6 +98,15 @@ public class Appointments implements java.io.Serializable {
 		this.notes = notes;
 	}
 
+	@Column(name = "doctor_id")
+	public Integer getDoctorId() {
+		return this.doctorId;
+	}
+
+	public void setDoctorId(Integer doctorId) {
+		this.doctorId = doctorId;
+	}
+	
 	@Column(name = "status")
 	public Integer getStatus() {
 		return this.status;

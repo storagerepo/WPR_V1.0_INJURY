@@ -7,29 +7,31 @@ package com.deemsys.project.Appointments;
  */
 public class AppointmentsForm {
 
-	private Integer id;
-	private Integer patientId;
+	private Long id;
+	private String patientId;
 	private String patientName;
 	private String scheduledDate;
 	private String notes;
 	private Integer status;
-	private Integer callLogId;
+	private Long callLogId;
 	private Integer clinicId;
+	private Integer doctorId;
+	private String doctorName;
 	private String clinicName;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Integer getPatientId() {
+	public String getPatientId() {
 		return patientId;
 	}
 
-	public void setPatientId(Integer patientId) {
+	public void setPatientId(String patientId) {
 		this.patientId = patientId;
 	}
 
@@ -57,11 +59,11 @@ public class AppointmentsForm {
 		this.status = status;
 	}
 
-	public Integer getCallLogId() {
+	public Long getCallLogId() {
 		return callLogId;
 	}
 
-	public void setCallLogId(Integer callLogId) {
+	public void setCallLogId(Long callLogId) {
 		this.callLogId = callLogId;
 	}
 
@@ -80,9 +82,11 @@ public class AppointmentsForm {
 	public void setClinicName(String clinicName) {
 		this.clinicName = clinicName;
 	}
-
-	public AppointmentsForm(Integer id, Integer patientId, String patientName,
-			String scheduledDate, String notes, Integer status) {
+	
+	public AppointmentsForm(Long id, String patientId, String patientName,
+			String scheduledDate, String notes, Integer status,
+			Long callLogId, Integer clinicId, Integer doctorId,
+			String doctorName, String clinicName) {
 		super();
 		this.id = id;
 		this.patientId = patientId;
@@ -90,6 +94,11 @@ public class AppointmentsForm {
 		this.scheduledDate = scheduledDate;
 		this.notes = notes;
 		this.status = status;
+		this.callLogId = callLogId;
+		this.clinicId = clinicId;
+		this.doctorId = doctorId;
+		this.doctorName = doctorName;
+		this.clinicName = clinicName;
 	}
 
 	public AppointmentsForm(Integer status) {
@@ -110,4 +119,22 @@ public class AppointmentsForm {
 		this.patientName = patientName;
 	}
 
+	public Integer getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(Integer doctorId) {
+		this.doctorId = doctorId;
+	}
+
+	public String getDoctorName() {
+		return doctorName;
+	}
+
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
+	}
+
+	
+	
 }

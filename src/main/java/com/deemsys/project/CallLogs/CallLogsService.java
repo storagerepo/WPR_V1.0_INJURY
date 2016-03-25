@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.Appointments.AppointmentsDAO;
+import com.deemsys.project.Appointments.AppointmentsForm;
 import com.deemsys.project.Caller.CallerDAO;
 import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminDAO;
@@ -19,6 +20,7 @@ import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.CallerAdmin;
+import com.deemsys.project.entity.Clinic;
 import com.deemsys.project.entity.Patient;
 import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.PatientCallerAdminMap;
@@ -92,16 +94,22 @@ public class CallLogsService {
 	}
 
 	// Get Particular Entry
-	public CallLogsForm getCallLogs(Long callLogId) {
+	public CallLogsForm getCallLogsWithAppointment(Long callLogId,Long appointmentId) {
 		CallLog callLogs = new CallLog();
 
 		callLogs = callLogsDAO.getCallLogsByCallLogId(callLogId);
+		Appointments appointments=appointmentsDAO.getAppointmentsByAppintementId(appointmentId);
+		AppointmentsForm appointmentsForm=new AppointmentsForm();
 		CallLogsForm callLogsForm = new CallLogsForm();
 		// TODO: Convert Entity to Form
 		// Start
 		try {
-			callLogsForm = new CallLogsForm(callLogs.getCallLogId(),
-					new String(callLogs.getPatientCallerAdminMap().getId().getPatientId(), StandardCharsets.UTF_8), callLogs.getPatientCallerAdminMap().getId().getCallerAdminId(),callLogs.getTimeStamp(), callLogs.getResponse(), callLogs.getNotes(), callLogs.getStatus());	
+			if(appointments!=null){
+				appointmentsForm=new AppointmentsForm(appointments.getAppointmentId(), "", "", appointments.getScheduledDate(), appointments.getNotes(), appointments.getStatus(), appointments.getCallLog().getCallLogId(), appointments.getClinic().getClinicId(), appointments.getDoctorId(), "", "");
+			}
+			callLogsForm = new CallLogsForm(callLogs.getCallLogId(), new String(callLogs.getPatientCallerAdminMap().getId().getPatientId(), StandardCharsets.UTF_8), callLogs.getPatientCallerAdminMap().getCallerAdmin().getCallerAdminId(), callLogs.getTimeStamp(), callLogs.getResponse(), callLogs.getNotes(), callLogs.getStatus(), appointmentsForm, "", "");
+					
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -109,6 +117,27 @@ public class CallLogsService {
 		return callLogsForm;
 	}
 
+	// Get Call Logs Only
+	// Get Particular Entry
+		public CallLogsForm getCallLogs(Long callLogId) {
+			CallLog callLogs = new CallLog();
+
+			callLogs = callLogsDAO.getCallLogsByCallLogId(callLogId);
+			AppointmentsForm appointmentsForm=new AppointmentsForm();
+			CallLogsForm callLogsForm = new CallLogsForm();
+			// TODO: Convert Entity to Form
+			// Start
+			try {
+				callLogsForm = new CallLogsForm(callLogs.getCallLogId(), new String(callLogs.getPatientCallerAdminMap().getId().getPatientId(), StandardCharsets.UTF_8), callLogs.getPatientCallerAdminMap().getCallerAdmin().getCallerAdminId(), callLogs.getTimeStamp(), callLogs.getResponse(), callLogs.getNotes(), callLogs.getStatus(), appointmentsForm, "", "");
+						
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return callLogsForm;
+		}
+	
 	public List<CallLogsForm> getCallLogsFormsByUser(String patientId){
 		
 		String role=loginService.getCurrentRole();
@@ -180,6 +209,14 @@ public class CallLogsService {
 
 		callLogsDAO.save(callLogs);
 		
+		
+		if(callLogsForm.getResponse()==3){
+			Clinic clinic=new Clinic();
+			clinic.setClinicId(callLogsForm.getAppointmentsForm().getClinicId());
+			Appointments appointments=new Appointments(callLogs, callLogsForm.getAppointmentsForm().getScheduledDate(), "", 1,clinic,callLogsForm.getAppointmentsForm().getDoctorId());
+			appointmentsDAO.save(appointments);
+		}
+		
 		// Logic Ends
 
 		return 1;
@@ -210,6 +247,16 @@ public class CallLogsService {
 			
 		 callLogsDAO.update(callLogs);
 		patientCallerDAO.merge(patientCallerAdminMap);
+		
+		if(callLogsForm.getResponse()==3){
+			Clinic clinic=new Clinic();
+			clinic.setClinicId(callLogsForm.getAppointmentsForm().getClinicId());
+			Appointments appointments=new Appointments(callLogs, callLogsForm.getAppointmentsForm().getScheduledDate(), "", 1,clinic,callLogsForm.getAppointmentsForm().getDoctorId());
+			appointments.setAppointmentId(callLogsForm.getAppointmentsForm().getId());
+			appointmentsDAO.save(appointments);
+		}else{
+			appointmentsDAO.deleteAppointmentsByAppointmentId(callLogsForm.getAppointmentsForm().getId());
+		}
 		
 		// Logic Ends
 		return 1;

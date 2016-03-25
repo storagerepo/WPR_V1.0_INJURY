@@ -32,12 +32,18 @@ public class CallLogsController {
 	
 
 	@RequestMapping(value = "/Caller/getCallLogs", method = RequestMethod.GET)
-	public String getCallLogs(@RequestParam("callLogId") Long callLogId, ModelMap model) {
-		model.addAttribute("callLogsForm",callLogsService.getCallLogs(callLogId));
+	public String getCallLogs(@RequestParam("callLogId") Long callLogId,@RequestParam("appointmentId") Long appointmentId, ModelMap model) {
+		model.addAttribute("callLogsForm",callLogsService.getCallLogsWithAppointment(callLogId,appointmentId));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
 	
+	@RequestMapping(value = "/Caller/getCallLogsByCallLogId", method = RequestMethod.GET)
+	public String getCallLogsByCallLogId(@RequestParam("callLogId") Long callLogId, ModelMap model) {
+		model.addAttribute("callLogsForm",callLogsService.getCallLogs(callLogId));
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
 	
 	@RequestMapping(value = "/Caller/mergeCallLogs", method = RequestMethod.POST)
 	public String mergeCallLogs(@RequestBody CallLogsForm callLogsForm,

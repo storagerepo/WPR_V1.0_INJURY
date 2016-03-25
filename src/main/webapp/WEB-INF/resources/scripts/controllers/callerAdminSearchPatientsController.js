@@ -20,6 +20,8 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		$scope.patient.numberOfDays="1";
 		$scope.patient.pageNumber= 1;
 		$scope.patient.itemsPerPage=10;
+		$scope.patient.addedOnFromDate="";
+		$scope.patient.addedOnToDate="";
 		$scope.totalRecords=0;
 	};
 	

@@ -81,11 +81,9 @@ public class AppointmentsController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/monthwiseAppointment", method = RequestMethod.GET)
-	public String todaysAppointment(@RequestParam("month") Integer month,
-			@RequestParam("year") Integer year, ModelMap model) {
-		model.addAttribute("appointmentsForms",
-				appointmentsService.monthwiseAppointment(year, month));
+	@RequestMapping(value = "/searchAppointments", method = RequestMethod.POST)
+	public String searchAppointment(@RequestBody AppointmentSearchForm appointmentSearchForm, ModelMap model) {
+		model.addAttribute("appointmentsForms",appointmentsService.searchAppointments(appointmentSearchForm));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
