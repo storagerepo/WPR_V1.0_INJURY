@@ -11,6 +11,6 @@ import com.deemsys.project.entity.CrashReport;
  */
 public interface CrashReportDAO extends IGenericDAO<CrashReport>{
 
-	public List<CrashReport> searchCrashReports(String localReportNumber,String crashId,String crashFromDate,String crashToDate,String county,String addedFromDate,String addedToDate,Integer recordsPerPage,Integer pageNumber);
+	public CrashReportList searchCrashReports(String localReportNumber,String crashId,String crashFromDate,String crashToDate,String county,String addedFromDate,String addedToDate,Integer recordsPerPage,Integer pageNumber);
 	public Integer getTotalRecords(String localReportNumber,String crashId,String crashFromDate,String crashToDate,String county,String addedFromDate,String addedToDate);
 }

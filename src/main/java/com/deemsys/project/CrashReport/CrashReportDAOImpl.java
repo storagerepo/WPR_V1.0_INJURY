@@ -9,8 +9,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.mapping.Array;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -143,47 +147,57 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CrashReport> searchCrashReports(String localReportNumber,
+	public CrashReportList searchCrashReports(String localReportNumber,
 			String crashId, String crashFromDate, String crashToDate,
 			String county, String addedFromDate, String addedToDate,
 			Integer recordsPerPage, Integer pageNumber) {
 		// TODO Auto-generated method stub
-		List<CrashReport> crashReports=new ArrayList<CrashReport>();
-		Integer start=(pageNumber-1)*recordsPerPage;
-		if(localReportNumber.equals("")&&crashId.equals("")&&crashFromDate.equals("")&&crashToDate.equals("")&&county.equals("")&&addedFromDate.equals("")&&addedToDate.equals("")){
-		   crashReports=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).setFirstResult(start).setMaxResults(recordsPerPage).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-		}else if(county.equals("")){
-			if(!crashFromDate.equals("")){
-				Criterion criterion=Restrictions.and(Restrictions.like("localReportNumber", localReportNumber, MatchMode.ANYWHERE), Restrictions.like("crashId", crashId,MatchMode.ANYWHERE));
-				Criterion criterion2=Restrictions.and(criterion, Restrictions.between("crashDate", crashFromDate, crashToDate));
-				crashReports=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).add(criterion2).setFirstResult(start).setMaxResults(recordsPerPage).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-			}else if(!addedFromDate.equals("")){
-				Criterion criterion=Restrictions.and(Restrictions.like("localReportNumber", localReportNumber, MatchMode.ANYWHERE), Restrictions.like("crashId", crashId,MatchMode.ANYWHERE));
-				Criterion criterion2=Restrictions.and(criterion, Restrictions.between("addedDate", addedFromDate, addedToDate));
-				crashReports=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).add(criterion2).setFirstResult(start).setMaxResults(recordsPerPage).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-			}else if(!crashFromDate.equals("")&&!addedFromDate.equals("")){
-				Criterion criterion=Restrictions.and(Restrictions.like("localReportNumber", localReportNumber, MatchMode.ANYWHERE), Restrictions.like("crashId", crashId,MatchMode.ANYWHERE));
-				Criterion criterion2=Restrictions.and(criterion, Restrictions.between("addedDate", addedFromDate, addedToDate));
-				Criterion criterion3=Restrictions.and(criterion2, Restrictions.between("crashDate", crashFromDate, crashToDate));
-				crashReports=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).add(criterion3).setFirstResult(start).setMaxResults(recordsPerPage).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-			}
-			else {
-				Criterion criterion=Restrictions.and(Restrictions.like("localReportNumber", localReportNumber, MatchMode.ANYWHERE), Restrictions.like("crashId", crashId,MatchMode.ANYWHERE));
-				crashReports=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).add(criterion).setFirstResult(start).setMaxResults(recordsPerPage).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-			}
-		}else if(!county.equals("")){
-			if(!crashFromDate.equals("")){
-				crashReports=this.sessionFactory.getCurrentSession().createQuery("from County c1 join c1.crashReports cr1 where (c1.name like '%"+county+"%') and cr1.localReportNumber like '%"+localReportNumber+"%' and cr1.crashId like '%"+crashId+"%' and (cr1.crashDate between '"+crashFromDate+"' and '"+crashToDate+"')").setFirstResult(start).setMaxResults(recordsPerPage).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-			}else if(!addedFromDate.equals("")){
-				crashReports=this.sessionFactory.getCurrentSession().createQuery("from County c1 join c1.crashReports cr1 where (c1.name like '%"+county+"%') and cr1.localReportNumber like '%"+localReportNumber+"%' and cr1.crashId like '%"+crashId+"%' and (cr1.addedDate between '"+addedFromDate+"' and '"+addedToDate+"')").setFirstResult(start).setMaxResults(recordsPerPage).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-			}else if(!crashFromDate.equals("")&&!addedFromDate.equals("")){
-				crashReports=this.sessionFactory.getCurrentSession().createQuery("from County c1 join c1.crashReports cr1 where (c1.name like '%"+county+"%') and cr1.localReportNumber like '%"+localReportNumber+"%' and cr1.crashId like '%"+crashId+"%' and (cr1.crashDate between '"+crashFromDate+"' and '"+crashToDate+"') and (cr1.addedDate between '"+addedFromDate+"' and '"+addedToDate+"')").setFirstResult(start).setMaxResults(recordsPerPage).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-			}
-			else{
-				crashReports=this.sessionFactory.getCurrentSession().createQuery("from County c1 join c1.crashReports cr1 where (c1.name like '%"+county+"%') and cr1.localReportNumber like '%"+localReportNumber+"%' and cr1.crashId like '%"+crashId+"%'").setFirstResult(start).setMaxResults(recordsPerPage).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-			}
+		List<CrashReportForm> crashReportForms=new ArrayList<CrashReportForm>();
+		
+		Session session=this.sessionFactory.getCurrentSession();
+		
+		Criteria criteria=session.createCriteria(CrashReport.class);
+		
+		criteria.createAlias("county", "c1");
+		criteria.createAlias("crashReportError", "e1");
+		
+		//Check Local Report Number
+		if(localReportNumber!=""){
+			criteria.add(Restrictions.like("localReportNumber", localReportNumber,MatchMode.ANYWHERE));
 		}
-		return crashReports;
+		if(county!=""){
+			criteria.add(Restrictions.eq("c1.countyId", Integer.parseInt(county)));
+		}
+		if(crashFromDate!=""){
+			criteria.add(Restrictions.between("crashDate", crashFromDate, crashToDate));
+		}
+		if(addedFromDate!=""){
+			criteria.add(Restrictions.between("addedDate", addedFromDate, addedToDate));
+		}
+		if(crashId!=""){
+			criteria.add(Restrictions.eq("crashId", crashId));
+		}
+		
+		//Projections
+		ProjectionList projectionList=Projections.projectionList();
+		
+		projectionList.add(Projections.alias(Projections.property("crashReportId"), "crashReportId"));
+		projectionList.add(Projections.alias(Projections.property("e1.description"), "crashReportError"));
+		projectionList.add(Projections.alias(Projections.property("localReportNumber"), "localReportNumber"));
+		projectionList.add(Projections.alias(Projections.property("crashId"), "crashId"));
+		projectionList.add(Projections.alias(Projections.property("crashDate"), "crashDate"));
+		projectionList.add(Projections.alias(Projections.property("c1.name"), "county"));
+		projectionList.add(Projections.alias(Projections.property("addedDate"), "addedDate"));
+		projectionList.add(Projections.alias(Projections.property("filePath"), "filePath"));
+		projectionList.add(Projections.alias(Projections.property("status"), "status"));
+		
+		criteria.setProjection(projectionList);
+		
+		Integer totalNoOfRecords=criteria.setResultTransformer(new AliasToBeanResultTransformer(CrashReportForm.class)).list().size();
+		
+		crashReportForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(CrashReportForm.class)).setFirstResult((pageNumber-1)*recordsPerPage).setMaxResults(recordsPerPage).list();
+				
+		return new CrashReportList(totalNoOfRecords, crashReportForms);
 	}
 
 	@SuppressWarnings("unchecked")

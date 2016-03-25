@@ -152,27 +152,16 @@ public class CrashReportService {
 	}
 	
 	// Search Crash Report
-	public CrashReportSearchForm searchCrashReports(CrashReportSearchForm crashReportSearchForm){
-		List<CrashReportForm> crashReportForms = new ArrayList<CrashReportForm>();
+	public CrashReportList searchCrashReports(CrashReportSearchForm crashReportSearchForm){
 		if(!crashReportSearchForm.getNumberOfDays().equals("")){
 			if(!crashReportSearchForm.getCrashFromDate().equals("")){
 				crashReportSearchForm.setCrashToDate(InjuryConstants.getToDateByAddingNumberOfDays(crashReportSearchForm.getCrashFromDate(), Integer.parseInt(crashReportSearchForm.getNumberOfDays())));
 			}
 		}
-		List<CrashReport> crashReports=crashReportDAO.searchCrashReports(crashReportSearchForm.getLocalReportNumber(), crashReportSearchForm.getCrashId(), 
+		CrashReportList crashReportList=crashReportDAO.searchCrashReports(crashReportSearchForm.getLocalReportNumber(), crashReportSearchForm.getCrashId(), 
 													crashReportSearchForm.getCrashFromDate(), crashReportSearchForm.getCrashToDate(), crashReportSearchForm.getCounty(), crashReportSearchForm.getAddedFromDate(), crashReportSearchForm.getAddedToDate(), crashReportSearchForm.getRecordsPerPage(), crashReportSearchForm.getPageNumber());
 		
-		for (CrashReport crashReport : crashReports) {
-			CrashReportForm crashReportForm=new CrashReportForm(crashReport.getCrashReportId(),crashReport.getCrashReportError().getDescription(),crashReport.getLocalReportNumber() , crashReport.getCrashId(), crashReport.getCrashDate(), crashReport.getCounty().getName(), crashReport.getAddedDate(), crashReport.getFilePath(), crashReport.getStatus());
-			crashReportForms.add(crashReportForm);
-		}
-		
-		Integer totalRecords=crashReportDAO.getTotalRecords(crashReportSearchForm.getLocalReportNumber(), crashReportSearchForm.getCrashId(), 
-													crashReportSearchForm.getCrashFromDate(), crashReportSearchForm.getCrashToDate(), crashReportSearchForm.getCounty(), crashReportSearchForm.getAddedFromDate(), crashReportSearchForm.getAddedToDate());
-		
-		CrashReportSearchForm crashReportSearchList=new CrashReportSearchForm(crashReportForms, totalRecords);
-		
-		return crashReportSearchList;
+		return crashReportList;
 	}
 	
 	// Split the PDF County and get Exact county Name

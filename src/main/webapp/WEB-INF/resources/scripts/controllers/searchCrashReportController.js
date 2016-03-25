@@ -49,9 +49,8 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 			$scope.addedToRequired=false;
 			$scope.crashToRequired=false;
 		requestHandler.postRequest("Admin/searchCrashReport.json",$scope.crashreport).then(function(response){
-			 $scope.totalRecords=response.data.crashReportForm.totalRecords;
-				$scope.crashSearchData=response.data.crashReportForm.crashReportForms;
-				console.log($scope.crashSearchData);
+			$scope.totalRecords=response.data.searchResults.totalNoOfRecords;
+			$scope.crashSearchData=response.data.searchResults.crashReportForms;
 		});
 		}
 	};
@@ -62,9 +61,8 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 		
 		 $scope.crashreport.pageNumber=pageNum;
 		requestHandler.postRequest("Admin/searchCrashReport.json",$scope.crashreport).then(function(response){
-			 $scope.totalRecords=response.data.crashReportForm.totalRecords;
-				$scope.crashSearchData=response.data.crashReportForm.crashReportForms;
-				console.log($scope.crashSearchData);
+			 $scope.totalRecords=response.data.searchResults.totalNoOfRecords;
+				$scope.crashSearchData=response.data.searchResults.crashReportForms;
 		});
 	};
 	

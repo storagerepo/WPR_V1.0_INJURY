@@ -68,7 +68,7 @@ public class CrashReportController {
     @RequestMapping(value="/searchCrashReport",method=RequestMethod.POST)
 	public String getCrashReportSearch(@RequestBody CrashReportSearchForm crashReportSearchForm,ModelMap model)
 	{
-    	model.addAttribute("crashReportForm",crashReportService.searchCrashReports(crashReportSearchForm));
+    	model.addAttribute("searchResults",crashReportService.searchCrashReports(crashReportSearchForm));
     	model.addAttribute("requestSuccess",true);
 		return "/returnPage";
 	}
