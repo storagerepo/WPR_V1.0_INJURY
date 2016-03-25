@@ -50,7 +50,7 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
 adminApp.controller('SaveCallerController', function($http,$state,$scope,$location,requestHandler,Flash) {
 	$scope.options=true;
 	$scope.title=$state.current.title;
-	
+	$scope.isAdd=true;
 	$scope.caller={};
 	$scope.caller.county=[];
 	$scope.caller.countyForms=[];
@@ -103,6 +103,7 @@ adminApp.controller('EditCallerController', function($http,$state,$location,$sco
 	$scope.options=false;
 	$scope.title=$state.current.title;
 	$scope.requiredValue=true;
+	$scope.isAdd=false;
 	
 	
 	var callerOriginal="";

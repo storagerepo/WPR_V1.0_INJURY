@@ -14,6 +14,7 @@ import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingDAO;
 import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingForm;
 import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingService;
 import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingForm;
+import com.deemsys.project.Lawyers.LawyersDAO;
 import com.deemsys.project.Role.RoleDAO;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
@@ -49,6 +50,9 @@ public class LawyerAdminService {
 	
 	@Autowired
 	CountyService countyService;
+	
+	@Autowired
+	LawyersDAO lawyersDAO;
 	
 	@Autowired
 	LawyerAdminCountyMappingService lawyerAdminCountyMappingService;
@@ -259,10 +263,29 @@ public class LawyerAdminService {
 		if(users.getIsEnable()==0){
 			users.setIsEnable(1);
 			lawyerAdminDAO.enable(lawyerAdminId);
+			
+			//Disable Lawyer
+			List<Lawyer> lawyers=lawyersDAO.getLawyersByLawyerAdmin(lawyerAdminId);
+			for (Lawyer lawyer : lawyers) {
+				Users lawyerUser=lawyer.getUsers();
+				if(lawyer.getStatus()==1){
+					lawyerUser.setIsEnable(1);
+					usersDAO.update(lawyerUser);
+				}
+			}
+			
 		}
 		else if(users.getIsEnable()==1){
 			users.setIsEnable(0);
 			lawyerAdminDAO.disable(lawyerAdminId);
+			
+			//Disable Lawyer
+			List<Lawyer> lawyers=lawyersDAO.getLawyersByLawyerAdmin(lawyerAdminId);
+			for (Lawyer lawyer : lawyers) {
+				Users lawyerUser=lawyer.getUsers();
+				lawyerUser.setIsEnable(0);
+				usersDAO.update(lawyerUser);
+			}
 		}
 		
 		usersDAO.update(users);

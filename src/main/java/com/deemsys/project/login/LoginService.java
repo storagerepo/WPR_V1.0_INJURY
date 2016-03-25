@@ -53,18 +53,15 @@ public class LoginService {
 	
 	//Check UserName Exist
 	public Integer checkUsernameExist(String username) {
-		Integer count = 0;
-
 		Users users = new Users();
 
 		users = usersDAO.getByUserName(username);
 		// Start
 		if (users != null) {
-			System.out.println(count++);
-			return count++;
+			return 0;
 		} else {
 
-			return count;
+			return 1;
 		}
 		// End
 	}

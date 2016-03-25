@@ -149,12 +149,12 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 			
 			//Load User Who having the User name
 			Users userLoginDetails=this.getByUserName(userName);
-			if(userName.equals(userLoginDetails.getUsername())){
+			/*if(userName.equals(userLoginDetails.getUsername())){
 				userName=userLoginDetails.getUsername();
 			}
 			else{
 				userName="";
-			}
+			}*/
 			List<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
 			
 			if(userLoginDetails!=null)

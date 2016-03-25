@@ -84,11 +84,12 @@
                                  <div class="col-md-12">
                                   <div class="col-md-6">
                                   <span class="redText">*</span> <label>User Name</label>
-                                    <input  type="text" class="form-control inputclass" ng-show='options' ng-model="caller.username" name="username" id="username" data-mask="usernameinput" placeholder="User Name" maxlength="20" required>
+                                    <input  type="text" class="form-control inputclass" ng-show='options' ng-model="caller.username" name="username" id="username" data-mask="usernameinput" usernameexists placeholder="User Name" maxlength="20" required>
     								<input  type="text" readonly="readonly" class="form-control" ng-show='!options' ng-model="caller.username" placeholder="Enter UserName" maxlength="20">
                                     <span style="color:red" id="username_exists"></span>
                                     <span class="error-container" ng-show="myForm.username.$dirty && myForm.username.$invalid">
                                        <span ng-cloak style="color:red" ng-show="myForm.username.$error.required">Please Enter Username</span>
+                                       <span ng-cloak style="color:red" ng-show="myForm.username.$error.usernameexists">Username Already Exists</span>
                                        </span><br/>
                                       </div>
                                <div class="col-md-6">

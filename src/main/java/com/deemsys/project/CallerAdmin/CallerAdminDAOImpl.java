@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.CallerAdmin;
 
 /**
@@ -113,6 +114,11 @@ public class CallerAdminDAOImpl implements CallerAdminDAO{
 		// TODO Auto-generated method stub
 		Query query=this.sessionFactory.getCurrentSession().createQuery("update CallerAdmin set status=0 where callerAdminId="+id+"");
 		query.executeUpdate();
+		
+		@SuppressWarnings("unchecked")
+		List<Caller> callers=this.sessionFactory.getCurrentSession().createCriteria(Caller.class).add(Restrictions.eq("callerAdmin.callerAdminId", id)).list();
+		
+		
 		return true;
 	}
 
@@ -121,6 +127,7 @@ public class CallerAdminDAOImpl implements CallerAdminDAO{
 		// TODO Auto-generated method stub
 		Query query=this.sessionFactory.getCurrentSession().createQuery("update CallerAdmin set status=1 where callerAdminId="+id+"");
 		query.executeUpdate();
+				
 		return true;
 	}
 

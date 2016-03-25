@@ -57,6 +57,7 @@ adminApp.controller('ShowCallerAdminController',function($http,$state,$scope,req
 adminApp.controller('SaveCallerAdminController', function($http,$state,$scope,$location,requestHandler,Flash) {
 	$scope.options=true;
 	$scope.title=$state.current.title;
+	$scope.isAdd=true;
 	
 	$scope.callerAdmin={};
 	$scope.callerAdmin.county=[];
@@ -111,6 +112,7 @@ adminApp.controller('EditCallerAdminController', function($http,$state,$location
 	$scope.options=false;
 	$scope.title=$state.current.title;
 	$scope.requiredValue=true;
+	$scope.isAdd=false;
 	
 	
 	var callerAdminOriginal="";

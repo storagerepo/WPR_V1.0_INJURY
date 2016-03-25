@@ -98,7 +98,7 @@
 		<form-login 
 		    login-page="/user-login" 
 		    default-target-url="/dashboard"
-			authentication-failure-url="/login-failed" 
+			authentication-failure-url="/login-failed?error=1"
 			username-parameter="username"
 			password-parameter="password" 
 			always-use-default-target="true" />

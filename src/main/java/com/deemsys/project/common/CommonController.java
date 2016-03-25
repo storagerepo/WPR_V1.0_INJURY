@@ -63,10 +63,10 @@ public class CommonController {
    		return "/login";
    	}
     
-    @RequestMapping(value = {"/Admin/checkUserNameExist","/CAdmin/checkUserNameExist","/LAdmin/checkUserNameExist"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/checkUserNameExist"}, method = RequestMethod.GET)
 	public String getUsername(@RequestParam("username") String username,
 			ModelMap model) {
-		model.addAttribute("callerForms",loginService.checkUsernameExist(username));
+		model.addAttribute("status",loginService.checkUsernameExist(username));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

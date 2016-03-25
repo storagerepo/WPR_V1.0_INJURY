@@ -56,6 +56,7 @@ adminApp.controller('ShowLawyerAdminController',function($http,$state,$scope,req
 adminApp.controller('SaveLawyerAdminController', function($http,$state,$scope,$location,requestHandler,Flash) {
 	$scope.options=true;
 	$scope.title=$state.current.title;
+	$scope.isAdd=true;
 	
 	$scope.lawyerAdmin={};
 	$scope.lawyerAdmin.county=[];
@@ -108,6 +109,8 @@ adminApp.controller('EditLawyerAdminController', function($http,$state,$location
 	$scope.options=false;
 	$scope.title=$state.current.title;
 	$scope.requiredValue=true;
+	$scope.isAdd=false;
+	
 	var lawyerAdminOriginal="";
 	requestHandler.getRequest("Admin/getLawyerAdmin.json?lawyerAdminId="+$stateParams.lawyerAdminId,"").then(function(response){
 		lawyerAdminOriginal=angular.copy(response.data.lawyerAdminForm);

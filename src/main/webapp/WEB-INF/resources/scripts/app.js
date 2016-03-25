@@ -1238,7 +1238,7 @@ sbAdminApp.directive('validateCitytownship', function() {
 	};
 });
 
-/*sbAdminApp.directive('usernameexists',['$q','$timeout','requestHandler',function($q, $timeout, requestHandler) {
+sbAdminApp.directive('usernameexists',['$q','$timeout','requestHandler',function($q, $timeout, requestHandler) {
 		var CheckUsernameExists = function(isNew) {
 			if (isNew === 1)
 				return true;
@@ -1251,10 +1251,11 @@ sbAdminApp.directive('validateCitytownship', function() {
 				link : function(scope, element, attributes,ngModel) {
 					ngModel.$asyncValidators.usernameexists = function(modelValue) {
 					var defer = $q.defer();
-					$timeout(function() {
+					if(scope.isAdd){
+						$timeout(function() {
 							var isNew;
-							var sendRequest = requestHandler.getRequest('Admin/checkUsernameExist.json',{'username' : modelValue}).then(function(response) {
-								isNew = response.data.isUserNameExist;
+							var sendRequest = requestHandler.getRequest('checkUserNameExist.json?username='+modelValue).then(function(response) {
+								isNew = response.data.status;
 							});
 							sendRequest.then(function() {
 									if (CheckUsernameExists(isNew)) {
@@ -1265,8 +1266,15 @@ sbAdminApp.directive('validateCitytownship', function() {
 									});
 									isNew = false;
 									}, 10);
+					}else{
+						defer.resolve();
+					}
+					
+					
+					
+					
 										return defer.promise;
 									};
 								}
 							};
-						} ]);*/
+} ]);

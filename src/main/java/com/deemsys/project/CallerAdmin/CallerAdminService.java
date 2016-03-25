@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.Caller.CallerDAO;
+import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdminCountyMapping.CallerAdminCountyMapDAO;
 import com.deemsys.project.CallerAdminCountyMapping.CallerAdminCountyMapService;
 import com.deemsys.project.County.CountyDAO;
@@ -15,6 +17,7 @@ import com.deemsys.project.County.CountyService;
 import com.deemsys.project.Role.RoleDAO;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.CallerAdmin;
 import com.deemsys.project.entity.CallerAdminCountyMap;
 import com.deemsys.project.entity.CallerAdminCountyMapId;
@@ -54,6 +57,9 @@ public class CallerAdminService {
 	
 	@Autowired
 	CountyService countyService;
+	
+	@Autowired
+	CallerDAO callerDAO;
 	
 	@Autowired
 	CallerAdminCountyMapService callerAdminCountyMapService;
@@ -213,9 +219,28 @@ public class CallerAdminService {
 		if(users.getIsEnable()==0){
 			users.setIsEnable(1);
 			callerAdminDAO.enable(callerAdminId);
+			
+			//Disable Callers
+			List<Caller> callers=callerDAO.getCallerByCallerAdminId(callerAdminId);			
+			for (Caller caller : callers) {
+				Users callerUser=caller.getUsers();
+				if(caller.getStatus()==1){
+					callerUser.setIsEnable(1);
+					usersDAO.update(caller.getUsers());
+				}			
+			}
+			
 		}else if(users.getIsEnable()==1){
 			users.setIsEnable(0);
 			callerAdminDAO.disable(callerAdminId);
+			
+			//Disable Callers
+			List<Caller> callers=callerDAO.getCallerByCallerAdminId(callerAdminId);			
+			for (Caller caller : callers) {
+				Users callerUser=caller.getUsers();
+				callerUser.setIsEnable(0);
+				usersDAO.update(caller.getUsers());
+			}
 		}
 		
 		usersDAO.update(users);

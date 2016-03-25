@@ -99,6 +99,7 @@ adminApp.controller('ShowLawyerController',function($http,$state,$scope,requestH
 adminApp.controller('SaveLawyerController', function($http,$state,$scope,$location,requestHandler,Flash) {
 	$scope.options=true;
 	$scope.title=$state.current.title;
+	$scope.isAdd=true;
 	
 	$scope.lawyer={};
 	$scope.lawyer.county=[];
@@ -151,6 +152,7 @@ adminApp.controller('EditLawyerController', function($http,$state,$location,$sco
 	$scope.options=false;
 	$scope.title=$state.current.title;
 	$scope.requiredValue=true;
+	$scope.isAdd=false;
 	
 	var lawyerOriginal="";
 	requestHandler.getRequest("LAdmin/getLawyers.json?lawyerId="+$stateParams.lawyerId,"").then(function(response){
