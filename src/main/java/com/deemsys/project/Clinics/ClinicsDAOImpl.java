@@ -155,11 +155,11 @@ public class ClinicsDAOImpl implements ClinicsDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Clinic> getClinicId() {
+	public List<Clinic> getClinicId(Integer callerAdminId) {
 		// TODO Auto-generated method stubCriteria
 		Criteria cr = sessionFactory
 				.getCurrentSession()
-				.createCriteria(Clinic.class)
+				.createCriteria(Clinic.class).add(Restrictions.eq("callerAdmin.callerAdminId", callerAdminId))
 				.setProjection(
 						Projections
 								.projectionList()

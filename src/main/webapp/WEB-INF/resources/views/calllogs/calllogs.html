@@ -5,14 +5,15 @@
 <script src="resources/components/datetime/datetimepicker.js"></script>
 <div ng-cloak>
 <div class="row">
-	<div class="col-lg-12">
-		<a ui-sref="dashboard.patient"
+	<div class="col-lg-12">	
+		<a ui-sref="dashboard.CallerSearchPatients"
 			class="btn-sm btn-primary pull-right margin-top-40 btn-margin-left"><i class="fa fa-arrow-circle-left fa-lg"></i> Back
 			to Patient</a> <span ng-hide="patient.patientStatus==3"> <a
 			ng-click="addModel()" href=""
 			class="btn-sm btn-primary pull-right margin-top-40 margin-left-5 btn-margin-left"><i class="fa fa-plus-circle fa-lg"></i> Add
 				Call Logs</a>
 		</span>
+		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div> 
 		<h2 class="page-header">
 			Call Logs<br>
 		</h2>
@@ -32,7 +33,6 @@
 </div>
 <!-- /.row -->
 <div class="row" ng-cloak>
-	<div flash-message="2000" class="col-md-5 pull-right"></div>
 	<div class="col-lg-12">
 		<!-- /.panel-heading -->
 		<div class="col-md-12">
@@ -47,9 +47,9 @@
 							class="glyphicon sort-icon" ng-show="sortKey=='timeStamp'"
 							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 						<th class="col-md-2">Response</th>
-						<th class="col-md-4">Notes</th>
+						<th class="col-md-3">Notes</th>
 						<th class="col-md-2">Caller Name</th>
-						<th class="col-md-3">Actions</th>
+						<th class="col-md-2">Actions</th>
 					</tr>
 					<tr>
 					<th>
@@ -82,26 +82,22 @@
 				<tbody ng-show="callLogs.length>0"
 					dir-paginate=" callLog in callLogs|filter:search|orderBy:sortKey:reverse|itemsPerPage:20">
 					<tr>
-						<td ng-cloak>{{callLog.convertedTimeStamp}}</td>
+						<td ng-cloak>{{callLog.timeStamp}}</td>
 
 						<td ng-cloak>{{callLog.response}}</td>
-						<td ng-cloak class="col-md-4 wrap">{{callLog.notes}}</td>
+						<td ng-cloak class="col-md-3 wrap">{{callLog.notes}}</td>
 						<td ng-cloak class="col-md-2">{{callLog.callerFirstName}} {{callLog.callerLastName}}</td>
-						<td><a ng-cloak type="submit" title=""
-							class="btn btn-xs btn-primary hint--top"
-							data-hint="View Appointment"
-							ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i
-								class="glyphicon glyphicon-eye-open"></i> &nbsp;
-						</a> <span ng-hide="doNotCall"> <a ng-cloak type="submit"
+						<td class="col-md-2">
+							<a ng-cloak type="submit"
 								class="btn btn-xs btn-warning hint--top"
-								data-hint="Edit Call Logs"
-								ng-click="editModal(callLogss.id,callLogss.appointmentId)">&nbsp;<i
+								data-hint="Edit Call Log"
+								ng-click="editModal(callLog.callLogId)">&nbsp;<i
 									class="glyphicon glyphicon-edit"></i>&nbsp;
-							</a> <a href="#" ng-cloak ng-click="deleteCalllogs(callLogss.id)"
+							</a> <a href="#" ng-cloak ng-click="deleteCalllogs(callLog.callLogId)"
 								class="btn btn-xs btn-danger hint--top"
-								data-hint="Delete Call Logs">&nbsp;<i
+								data-hint="Delete Call Log">&nbsp;<i
 									class="glyphicon glyphicon-trash"></i>&nbsp;
-							</a> <a ng-cloak ng-click="addAppointment(callLogss.id)"
+							</a> <a ng-cloak ng-click="addAppointment(callLog.callLogId)"
 								class="btn btn-xs btn-success hint--top"
 								data-hint="Add Appointment"
 								ng-show="callLogss.appointmentId==null">&nbsp;<i
@@ -113,7 +109,13 @@
 								ng-show="callLogss.appointmentId!=null">&nbsp;<i
 									class="glyphicon glyphicon-minus"></i>&nbsp;
 							</a>
-						</span></td>
+							<a ng-cloak type="submit" title=""
+							class="btn btn-xs btn-primary hint--top"
+							data-hint="View Appointment"
+							ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i
+								class="glyphicon glyphicon-eye-open"></i> &nbsp;
+						</a> 
+					</td>
 					</tr>
 				</tbody>
 				<tbody ng-show="!callLogs.length">
@@ -169,15 +171,60 @@
 					<select class="form-control" ng-model="calllogs.response"
 						name="response" id="response" required>
 						<option value="">-- Select Response --</option>
-
-						<option value="1">Not interested/Injured</option>
-						<option value="2">Voice mail</option>
-						<option value="3">Do not call</option>
+						<option value="1">Not Interested/Injured</option>
+						<option value="2">Voice Mail</option>
+						<option value="3">Schedule Appointment</option>
+						<option value="4">Do Not Call</option>
 					</select> <span class="error-container"
 						ng-show="myForm.response.$dirty && myForm.response.$invalid && !myForm.notes.$prestine">
 						<span style="color: red" ng-show="myForm.response.$error.required">Please
 							Select Response</span>
-					</span> <br> <label>Notes</label>
+					</span><br>
+					<!-- Appointment Block -->
+					<div class="well" ng-show="calllogs.response==3">
+					<p>Please Provide Appointment Details</p>
+					<label>Select Clinic</label> <select class="form-control"
+						ng-change="getDoctors()" ng-model="appointment.clinicId"
+						name="clinicId" id="clinicId"
+						ng-options="clinics.clinicId as clinics.clinicName for clinics in clinic"
+						required>
+						<option value="">-- Select Clinic --</option>
+					</select> <span class="error-container"
+						ng-show="myForms.clinicId.$dirty && myForms.clinicId.$invalid">
+						<span style="color: red"
+						ng-show="myForms.clinicId.$error.required">Please Select
+							Clinic</span>
+					</span> <br> <label>Select Doctor</label> <select
+						class="form-control" ng-model="appointment.doctorId"
+						name="doctorId" id="doctorId"
+						ng-options="doctors.id as doctors.doctorName for doctors in doctor"
+						required>
+						<option value="">-- Select Doctor --</option>
+					</select> <span class="error-container"
+						ng-show="myForms.doctorId.$dirty && myForms.doctorId.$invalid">
+						<span style="color: red"
+						ng-show="myForms.doctorId.$error.required">Please Select
+							 Doctor</span>
+					</span> <br> <label>Date & Time</label>
+					<div class="input-group">
+						<input type="text" name="scheduledDate" id="scheduledDate"
+							class="form-control" ng-model="appointment.scheduledDate"
+							placeholder="Enter Date" required>
+						<span class="input-group-addon white-color-bg"> <span
+							class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+					<span class="error-container"
+						ng-show="myForms.scheduledDate.$dirty && myForms.scheduledDate.$invalid">
+						<span style="color: red"
+						ng-show="myForms.scheduledDate.$error.required">Please
+							Enter Date</span>
+					</span>
+					</div>
+					<!-- End Appointment Block -->
+					
+					
+					
+					 <label>Notes</label>
 					<textarea name="notes" id="notes" class="form-control height-100"
 						ng-model="calllogs.notes" placeholder="Notes" required
 						maxlength="400"></textarea>
@@ -192,7 +239,7 @@
 					<button class="btn btn-danger" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-success" data-dismiss="modal"
 						ng-class="{'button-disable':myForm.$invalid}"
-						ng-disabled='myForm.$invalid' ng-show="options" ng-click="save()">Save</button>
+						ng-disabled='myForm.$invalid' ng-show="options" ng-click="save()">Add</button>
 					<button type="button" class="btn btn-success" data-dismiss="modal"
 						ng-class="{'button-disable':myForm.$invalid || isClean()}"
 						ng-disabled='isClean() || myForm.$invalid' ng-show='!options'
@@ -215,42 +262,7 @@
 					<h4 class="modal-title">Add Appointment</h4>
 				</div>
 				<div class="modal-body">
-					<label>Select Clinic:</label> <select class="form-control"
-						ng-change="doctorName()" ng-model="Appointments.clinicId"
-						name="clinicId" id="clinicId"
-						ng-options="clinics.clinicId as clinics.clinicName for clinics in clinic"
-						required>
-						<option value="">-- Select Clinic --</option>
-					</select> <span class="error-container"
-						ng-show="myForms.clinicId.$dirty && myForms.clinicId.$invalid">
-						<span style="color: red"
-						ng-show="myForms.clinicId.$error.required">Please Select
-							Clinic</span>
-					</span> <br> <label>Select Doctor:</label> <select
-						class="form-control" ng-model="Appointments.doctorId"
-						name="doctorId" id="doctorId"
-						ng-options="doctors.id as doctors.doctorName for doctors in doctor"
-						required>
-						<option value="">-- Select Doctor --</option>
-					</select> <span class="error-container"
-						ng-show="myForms.doctorId.$dirty && myForms.doctorId.$invalid">
-						<span style="color: red"
-						ng-show="myForms.doctorId.$error.required">Please Select
-							 Doctor</span>
-					</span> <br> <label>Scheduled Date</label>
-					<div class="input-group">
-						<input type="text" name="scheduledDate" id="scheduledDate"
-							class="form-control" ng-model="Appointments.scheduledDate"
-							placeholder="Enter Date" required>
-						<span class="input-group-addon white-color-bg"> <span
-							class="glyphicon glyphicon-calendar"></span></span>
-					</div>
-					<span class="error-container"
-						ng-show="myForms.scheduledDate.$dirty && myForms.scheduledDate.$invalid">
-						<span style="color: red"
-						ng-show="myForms.scheduledDate.$error.required">Please
-							Enter Date</span>
-					</span> <br /> <input type="hidden" name="patientId" class="form-control"
+					 <br /> <input type="hidden" name="patientId" class="form-control"
 						ng-model="Appointments.patientId"> <input type="hidden"
 						name="callLogId" class="form-control"
 						ng-model="Appointments.callLogId"> <label>Notes</label>
@@ -391,7 +403,7 @@
 						<td class="col-md-3">{{patient.atFaultPolicyNumber}}</td>
 					</tr>
 					<tr>
-						<<td class="col-md-3"><b>Victim INS. Company</b></td>
+						<td class="col-md-3"><b>Victim INS. Company</b></td>
 						<td class="col-md-3">{{patient.victimInsuranceCompany}}</td>
 						<td class="col-md-3"><b>Victim Policy Number</b></td>
 						<td class="col-md-3">{{patient.victimPolicyNumber}}</td>
@@ -413,7 +425,7 @@
 
 $('#timeStamp').datetimepicker({
 			pickTime : true,
-			format:'MM/DD/YYYY hh:mm:ss A',
+			format:'MM/DD/YYYY hh:mm A',
 			maxDate : new Date()
 		});
 $('#timeStamp').keydown(function(e){
@@ -425,8 +437,8 @@ $('#timeStamp').bind("cut copy paste",function(e) {
 		
 		
 $('#scheduledDate').datetimepicker({
-	pickTime : false,
-	format:'MM/DD/YYYY',
+	pickTime : true,
+	format:'MM/DD/YYYY hh:mm A',
 	minDate : new Date()
 });
 

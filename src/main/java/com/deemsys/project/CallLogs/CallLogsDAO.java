@@ -21,4 +21,6 @@ public interface CallLogsDAO extends IGenericDAO<CallLog> {
 	public CallLog getCallLogsByCallLogId(Long callLogId);
 	
 	public List<CallLog> getCallLogsId();
+
+	public void deleteCallLog(Long id);
 }

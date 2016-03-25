@@ -11,6 +11,5 @@ public interface ClinicsDAO extends IGenericDAO<Clinic> {
 	
 	public List<Clinic> getClinicsByCallerAdmin(Integer callerAdmin);
 
-	public List<Clinic> getClinicId();
-
+	public List<Clinic> getClinicId(Integer callerAdminId);
 }

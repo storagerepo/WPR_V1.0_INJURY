@@ -330,7 +330,7 @@ public class ClinicsService {
 
 		List<Clinic> clinicss = new ArrayList<Clinic>();
 
-		clinicss = clinicsDAO.getClinicId();
+		clinicss = clinicsDAO.getClinicId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId());
 
 		for (Clinic clinics : clinicss) {
 			// TODO: Fill the List

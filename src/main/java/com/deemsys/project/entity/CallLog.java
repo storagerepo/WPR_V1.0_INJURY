@@ -29,7 +29,7 @@ public class CallLog implements java.io.Serializable {
 	private Long callLogId;
 	private PatientCallerAdminMap patientCallerAdminMap;
 	private Caller caller;
-	private Date timeStamp;
+	private String timeStamp;
 	private Integer response;
 	private String notes;
 	private Integer status;
@@ -38,7 +38,7 @@ public class CallLog implements java.io.Serializable {
 	public CallLog() {
 	}
 
-	public CallLog(PatientCallerAdminMap patientCallerAdminMap,Caller caller,Date timeStamp,
+	public CallLog(PatientCallerAdminMap patientCallerAdminMap,Caller caller,String timeStamp,
 			Integer response, String notes, Integer status,
 			Set<Appointments> appointmentses) {
 		this.patientCallerAdminMap = patientCallerAdminMap;
@@ -84,13 +84,12 @@ public class CallLog implements java.io.Serializable {
 		this.caller = caller;
 	}
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "time_stamp", length = 19)
-	public Date getTimeStamp() {
+	@Column(name = "time_stamp")
+	public String getTimeStamp() {
 		return this.timeStamp;
 	}
 
-	public void setTimeStamp(Date timeStamp) {
+	public void setTimeStamp(String timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 

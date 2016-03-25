@@ -12,8 +12,7 @@ public class CallLogsForm {
 	private Long callLogId;
 	private String patientId;
 	private Integer callerAdminId;
-	private Date timeStamp;
-	private String convertedTimeStamp;
+	private String timeStamp;
 	private Integer response;
 	private String notes;
 	private Integer status;
@@ -39,10 +38,10 @@ public class CallLogsForm {
 	public void setCallerAdminId(Integer callerAdminId) {
 		this.callerAdminId = callerAdminId;
 	}
-	public Date getTimeStamp() {
+	public String getTimeStamp() {
 		return timeStamp;
 	}
-	public void setTimeStamp(Date timeStamp) {
+	public void setTimeStamp(String timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 	public Integer getResponse() {
@@ -82,21 +81,16 @@ public class CallLogsForm {
 	public void setAppointmentId(Long appointmentId) {
 		this.appointmentId = appointmentId;
 	}
-	public String getConvertedTimeStamp() {
-		return convertedTimeStamp;
-	}
-	public void setConvertedTimeStamp(String convertedTimeStamp) {
-		this.convertedTimeStamp = convertedTimeStamp;
-	}
+	
 	public CallLogsForm(Long callLogId, String patientId,
-			Integer callerAdminId, String convertedTimeStamp, Integer response,
+			Integer callerAdminId, String timeStamp, Integer response,
 			String notes, Integer status, Long appointmentId,
 			String callerfirstName,String callerLastName) {
 		super();
 		this.callLogId = callLogId;
 		this.patientId = patientId;
 		this.callerAdminId = callerAdminId;
-		this.convertedTimeStamp = convertedTimeStamp;
+		this.timeStamp=timeStamp;
 		this.response = response;
 		this.notes = notes;
 		this.status = status;
@@ -106,13 +100,13 @@ public class CallLogsForm {
 	}
 	
 	public CallLogsForm(Long callLogId, String patientId,
-			Integer callerAdminId, String convertedTimeStamp, Integer response,
+			Integer callerAdminId, String timeStamp, Integer response,
 			String notes, Integer status) {
 		super();
 		this.callLogId = callLogId;
 		this.patientId = patientId;
 		this.callerAdminId = callerAdminId;
-		this.convertedTimeStamp = convertedTimeStamp;
+		this.timeStamp = timeStamp;
 		this.response = response;
 		this.notes = notes;
 		this.status = status;

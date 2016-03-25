@@ -1,6 +1,11 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
 adminApp.controller('showCallLogsController', function($scope,$http,$location,$stateParams,$state,requestHandler,Flash) {
 
+	$scope.appointment={};
+	$scope.appointment.clinicId="";
+	$scope.appointment.doctorId="";
+	$scope.appointment.scheduledDate="";
+	
 	
 	$("#calllogsModel").modal("hide");
 	 $scope.sort = function(keyname){
@@ -32,7 +37,8 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	   $scope.init=function(){
 		   $scope.getCallLogsList();
 		   $scope.getPatientDetails();
-	   }
+		   $scope.getClinics();
+	   };
 	   
 	  
 	    
@@ -52,27 +58,49 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	  	    	$scope.callLogs= response.data.callLogsForms;
 	  	    	 $.each($scope.callLogs,function(index,value) {
 	  		    	 switch(value.response) {
-	  		    	    case "1":
-	  		    	        value.response="Not interested/injured";
+	  		    	    case 1:
+	  		    	        value.response="Not Interested/Injured";
 	  		    	        break;
-	  		    	    case "2":
+	  		    	    case 2:
 	  		    	    	value.response="Voice mail";
 	  		    	        break;
-	  		    	    case "3":
+	  		    	    case 3:
+	  		    	    	value.response="Appointment Scheduled";
+	  		    	    	break;
+	  		    	    case 4:
 	  		    	    	value.response="Do not call";
 	  		    	    	break;
 	  		    	    default:
 	  		    	    	break;
 	  		    	} 
 	  		     });
-	  	  });
-	    }
+	  	  });	
+	    };
+	    
+	    $scope.getClinics=function(){
+	    	requestHandler.getRequest("Caller/getClinicId.json","").then( function(response) {
+				
+			     $scope.clinic= response.data.clinicsForms;
+			 
+			     });
+	    };
+	    
+	    $scope.getDoctors=function(){
+	    	alert("ok");
+	    	alert($scope.appointment.clinicId);
+	    	if($scope.appointment.clinicId!=""){
+	    		requestHandler.getRequest("getNameByClinicId.json?clinicId="+$scope.appointment.clinicId,"").then( function(response) {
+					    $scope.doctor= response.data.doctorsForm;
+				 });
+	    	}
+	    	
+	    };
 	    
    $scope.deleteCalllogs=function(id)
 	  {
 		
-		  if(confirm("Are you sure to delete CallLogs ?")){
-			  requestHandler.deletePostRequest("Caller/deleteCallLogs.json?id=",id)
+		  if(confirm("Are you sure to delete the call log?")){
+			  requestHandler.deletePostRequest("Caller/deleteCallLogs.json?callLogsId=",id)
 			  .success(function(response){
 				  Flash.create("success","You have Successfully Deleted!");
 				  $scope.getCallLogsList();
@@ -88,97 +116,10 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		$scope.options=true;
 		$scope.myForm.$setPristine();
 		$scope.calllogs={};
-		 $scope.calllogs.patientId =$stateParams.id;
-		 var date=new Date();
-		if(date.getMonth()<=8 && date.getDate()<=9 && date.getHours()<=9 && date.getMinutes()<=9 && date.getSeconds()<=9){
-			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
-		   }
-		else if(date.getMonth()<=8 && date.getDate()<=9 && date.getHours()<=9 && date.getMinutes()<=9){
-			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
-			   }
-		 else if(date.getMonth()<=8 && date.getHours()<=9 && date.getMinutes()<=9 && date.getSeconds()<=9){
-			$scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
-			   }
-	 	 else if(date.getMonth()<=8 && date.getDate()<=9 && date.getHours()<=9){
-			$scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-	 		   }
-		 else if(date.getMonth()<=8 && date.getDate()<=9 && date.getMinutes()<=9){
-			$scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
-	 		   }
-		 else if(date.getMonth()<=8 && date.getDate()<=9 && date.getSeconds()<=9){
-			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
-	 		   }
-		 else if(date.getMonth()<=8 && date.getHours()<=9 && date.getMinutes()<=9){
-			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
-			   }
-		 else if(date.getMonth()<=8 && date.getHours()<=9 && date.getSeconds()<=9){
-			$scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
-			   }
-		 else if(date.getMonth()<=8 && date.getMinutes()<=9 && date.getSeconds()<=9){
-			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
-			   }
-	 	else if(date.getMonth()<=8 && date.getDate()<=9){
-			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-			   }
-		 else if(date.getMonth()<=8 && date.getHours()<=9){
-			$scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-			   }
-		 else if(date.getMonth()<=8 && date.getMinutes()<=9){
-			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
-			   }
-		 else if(date.getMonth()<=8 && date.getSeconds()<=9){
-			$scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
-			   }
-		 else if(date.getMonth()<=8){
-			 $scope.calllogs.timeStamp="0"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-		     }
-		 else if(date.getDate()<=9 && date.getHours()<=9 && date.getMinutes()<=9 && date.getSeconds()<=9){
-			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
-			   }
-		  else if(date.getDate()<=9 && date.getHours()<=9 && date.getMinutes()<=9){
-			  $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
-}
-		 else if(date.getDate()<=9 && date.getHours()<=9 && date.getSeconds()<=9){
-			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
-}	 
-  else if(date.getDate()<=9 && date.getHours()<=9){
-			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-			   }
-		 else if(date.getDate()<=9 && date.getMinutes()<=9){
-			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
-			   }
-		 else if(date.getDate()<=9 && date.getSeconds()<=9){
-			  $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
-			   }
-		 else if(date.getDate()<=9){
-			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/0"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-			   }
-		  else if(date.getHours()<=9 && date.getMinutes()<=9 && date.getSeconds()<=9){
-			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
-			   }
-		 else if(date.getHours()<=9 && date.getMinutes()<=9){
-			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
-			   }
-		 else if(date.getHours()<=9 && date.getSeconds()<=9){
-			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
-			   }
-		  else if(date.getHours()<=9){
-			  $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+"0"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-		}
-		  else if(date.getMinutes()<=9 && date.getSeconds()<=9){
-			 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":0"+date.getMinutes()+":0"+date.getSeconds();
-			   }
-		 else if(date.getMinutes()<=9){
-		     $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":0"+date.getMinutes()+":"+date.getSeconds();
-			}
-		     else if(date.getSeconds()<=9){
-		    	  $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":0"+date.getSeconds();
-			 }
-		     else{
-		    	 $scope.calllogs.timeStamp=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-		     }
-		 
-		 	$("#calllogsModel").modal("show");
+		$scope.calllogs.patientId =$stateParams.id;
+		$scope.calllogs.timeStamp=moment().format('MM/DD/YYYY h:mm A');
+		
+		$("#calllogsModel").modal("show");
 	};
 	
 	$scope.save=function()
@@ -194,7 +135,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		
 	};
 	
-	$scope.editModal=function(id,appointmentId)
+	$scope.editModal=function(id)
 	{
 		$scope.calllogs={};
 		$scope.calllogs.appointmentId = appointmentId;
@@ -203,10 +144,10 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		var callLogsOriginal="";
 		
 		
-		requestHandler.getRequest("Caller/getCallLogs.json?id="+id,"").then( function(response) {
-			callLogsOriginal=angular.copy(response.data.callLogsForm);
-			
-		    $scope.calllogs=response.data.callLogsForm;
+		requestHandler.getRequest("Caller/getCallLogs.json?callLogId="+id,"").then( function(response) {
+			callLogsOriginal=angular.copy(response.data.callLogsForm);			
+		    $scope.calllogs=response.data.callLogsForm;		    
+		    $scope.calllogs.response=$scope.calllogs.response.toString();
 		    $('#timeStamp').data("DateTimePicker").setDate($scope.calllogs.timeStamp);
 		    $("#calllogsModel").modal("show");
 		});
@@ -235,8 +176,6 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	
 	
 	$scope.Appointments={};
-	$scope.Appointments.clinicId="";
-	 $scope.Appointments.patientId =$stateParams.id;
 
 	
 	$scope.addAppointment=function(callLogId){
@@ -269,17 +208,9 @@ else
 	$("#scheduledDate").val("");
 		$("#appointmentNotes").val("");
 		//getting doctor id
-		requestHandler.getRequest("Caller/getClinicId.json","").then( function(response) {
-			
-		     $scope.clinic= response.data.clinicsForms;
-		 
-		     });
+		
 		var ClinicId=$scope.patient.clinicId;
-		requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
-			
-		    $scope.doctor= response.data.doctorsForm;
-		  
-		   });
+		
 		$scope.doctorName=function(){
 			var ClinicId=0;
 			if($scope.Appointments.clinicId==null){

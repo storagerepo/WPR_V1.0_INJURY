@@ -60,6 +60,11 @@ public class CallLogsDAOImpl implements CallLogsDAO{
 		this.sessionFactory.getCurrentSession().delete(this.get(id));
 		
 	}
+	
+	@Override
+	public void deleteCallLog(Long id){
+		this.sessionFactory.getCurrentSession().delete(this.getCallLogsByCallLogId(id));
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

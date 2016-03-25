@@ -59,7 +59,7 @@ public class CallLogsController {
 	}
 
 	@RequestMapping(value = "/Caller/deleteCallLogs", method = RequestMethod.POST)
-	public String deleteCallLogs(@RequestParam("callLogsId") Integer callLogsId, ModelMap model) {
+	public String deleteCallLogs(@RequestParam("callLogsId") Long callLogsId, ModelMap model) {
 
 		callLogsService.deleteCallLogs(callLogsId);
 		model.addAttribute("requestSuccess", true);

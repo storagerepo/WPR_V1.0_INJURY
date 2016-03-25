@@ -114,7 +114,7 @@ public class ClinicsController {
    		return "/returnPage";
    	}
 	
-	@RequestMapping(value = "/CAdmin/getClinicId", method = RequestMethod.GET)
+	@RequestMapping(value = {"/CAdmin/getClinicId","/Caller/getClinicId"}, method = RequestMethod.GET)
 	public String getClinicId(ModelMap model) {
 		model.addAttribute("clinicsForms", clinicsService.getClinicId());
 		model.addAttribute("requestSuccess", true);

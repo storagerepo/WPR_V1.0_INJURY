@@ -101,7 +101,7 @@ public class CallLogsService {
 		// Start
 		try {
 			callLogsForm = new CallLogsForm(callLogs.getCallLogId(),
-					new String(callLogs.getPatientCallerAdminMap().getId().getPatientId(), StandardCharsets.UTF_8), callLogs.getPatientCallerAdminMap().getId().getCallerAdminId(), InjuryConstants.convertUSAFormatWithTime(callLogs.getTimeStamp()), callLogs.getResponse(), callLogs.getNotes(), callLogs.getStatus());	
+					new String(callLogs.getPatientCallerAdminMap().getId().getPatientId(), StandardCharsets.UTF_8), callLogs.getPatientCallerAdminMap().getId().getCallerAdminId(),callLogs.getTimeStamp(), callLogs.getResponse(), callLogs.getNotes(), callLogs.getStatus());	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -122,9 +122,7 @@ public class CallLogsService {
 			callerAdminId=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId();
 		}
 		List<CallLogsForm> callLogsForms=callLogsDAO.getCallLogsByPatientIdAndCallerAdminIdAndCallerId(patientId, callerAdminId, callerId);
-		for (CallLogsForm callLogsForm : callLogsForms) {
-			callLogsForm.setConvertedTimeStamp(InjuryConstants.convertUSAFormatWithTime(callLogsForm.getTimeStamp()));
-		}
+		
 		return callLogsForms;
 	}
 	
@@ -147,8 +145,7 @@ public class CallLogsService {
 		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap(patientCallerAdminMapId, callerAdmin, caller, patient, "", 0, 1, null, null);
 		
 		CallLog callLogs = new CallLog(patientCallerAdminMap, caller,
-				InjuryConstants.convertYearFormatWithTime(callLogsForm
-						.getConvertedTimeStamp()), callLogsForm.getResponse(),
+				callLogsForm.getTimeStamp(), callLogsForm.getResponse(),
 				callLogsForm.getNotes(),1,null);
 		callLogs.setCallLogId(callLogsForm.getCallLogId());
 		// Logic Ends
@@ -178,7 +175,7 @@ public class CallLogsService {
 		patientCallerAdminMap.setCaller(caller);
 		patientCallerDAO.merge(patientCallerAdminMap);
 		
-		CallLog callLogs = new CallLog(patientCallerAdminMap,caller,InjuryConstants.convertYearFormatWithTime(callLogsForm.getConvertedTimeStamp()), callLogsForm.getResponse(),
+		CallLog callLogs = new CallLog(patientCallerAdminMap,caller,callLogsForm.getTimeStamp(), callLogsForm.getResponse(),
 				callLogsForm.getNotes(),1,null);
 
 		callLogsDAO.save(callLogs);
@@ -205,10 +202,9 @@ public class CallLogsService {
 		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap();
 		patientCallerAdminMap.setId(patientCallerAdminMapId);
 		patientCallerAdminMap.setPatientStatus(callLogsForm.getResponse());
+		patientCallerAdminMap.setCaller(caller);
 		
-		callLogs = new CallLog(patientCallerAdminMap, caller,
-					InjuryConstants.convertYearFormatWithTime(callLogsForm
-							.getConvertedTimeStamp()), callLogsForm.getResponse(),
+		callLogs = new CallLog(patientCallerAdminMap, caller,callLogsForm.getTimeStamp(), callLogsForm.getResponse(),
 					callLogsForm.getNotes(),1,null);
 			callLogs.setCallLogId(callLogsForm.getCallLogId());
 			
@@ -220,8 +216,8 @@ public class CallLogsService {
 	}
 
 	// Delete an Entry
-	public int deleteCallLogs(Integer callLogsId) {
-		callLogsDAO.delete(callLogsId);
+	public int deleteCallLogs(Long callLogsId) {
+		callLogsDAO.deleteCallLog(callLogsId);
 		return 1;
 	}
 
