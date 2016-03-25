@@ -15,26 +15,25 @@
 	<form name="patientSearchForm" novalidate ng-cloak>
     	<div class="col-md-12 no-padding">
         	<div class="col-md-3">
-       			<div class="col-md-12"> <span class="redText">*</span> <label>County</label></div>
+       			<div class="col-md-12"><label>County</label></div>
        			<div class="col-md-12"> 
-       				<select class="form-control" ng-model="patient.countyId" required>
-          				<option value="" ng-selected="true">--Select County--</option>
-          				<option ng-repeat="county in countylist" value="{{county.id}}" ng-selected="{{county.name === patient.county}}">{{county.name}}</option>
+       				<select class="form-control" ng-model="patient.countyId" ng-options="county.id as county.name for county in countylist">
+       				<option value="" selected="selected">-- Select County --</option>	
      				</select>
        			</div>
         	</div>
           	<div class="col-md-3">
-       		<div class="col-md-12"> <span class="redText">*</span> <label>Crash From Date</label></div>
+       		<div class="col-md-12"><label>Crash From Date</label></div>
        		<div class="col-md-12"> 
        			<div class="input-group">
-					<input type="text" name="crashFromDate" id="CrashFromDate" ng-change="checkCustomDate(patient.numberOfDays)" class="form-control" ng-model="patient.crashFromDate" placeholder="Crash From Date" ng-required="!(patient.crashFromDate.length || patient.addedFromDate.length)"> 
+					<input type="text" name="crashFromDate" id="CrashFromDate" ng-change="checkCustomDate(patient.numberOfDays)" class="form-control" ng-model="patient.crashFromDate" placeholder="Crash From Date"> 
 					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
 				</div>
        		</div>
         </div>
         
         <div class="col-md-3">
-       		<div class="col-md-12"> <span class="redText">*</span> <label>Number of Days</label></div>
+       		<div class="col-md-12"><label>Number of Days</label></div>
        		<div class="col-md-12"> 
          		<select class="form-control"  ng-model="patient.numberOfDays" name="numberOfDays" ng-change="checkCustomDate(patient.numberOfDays)">
                     <option value="1" ng-selected="true">1</option>
@@ -49,7 +48,7 @@
        		<div class="col-md-12"><label>Crash To Date</label></div>
        		<div class="col-md-12"> 
         		<div class="input-group">
-					<input type="text" name="crashToDate" id="CrashToDate" class="form-control" ng-model="patient.crashToDate" placeholder="Crash To Date"  ng-disabled="disableCustom"> 
+					<input type="text" name="crashToDate" id="CrashToDate" class="form-control" ng-model="patient.crashToDate" placeholder="Crash To Date"  ng-disabled="disableCustom" ng-required="{{patient.crashFromDate!=''}}"> 
 					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
 				</div>
 				<span style="color:red" ng-if="crashToRequired==true">Please Enter Crash To Date</span>

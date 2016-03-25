@@ -1,12 +1,17 @@
 package com.deemsys.project.patient;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.CallerAdmin;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.Patient;
 import com.deemsys.project.entity.PatientCallerAdminMapId;
 
-public class PatientSearchList {
+public class PatientSearchList extends InjuryProperties{
 	private String patientId;
 	private String localReportNumber;
 	private Integer countyId;
@@ -97,7 +102,7 @@ public class PatientSearchList {
 		return crashReportFileName;
 	}
 	public void setCrashReportFileName(String crashReportFileName) {
-		this.crashReportFileName = crashReportFileName;
+		this.crashReportFileName = getProperty("bucketURL")+crashReportFileName;
 	}
 	public Integer getCallerAdminId() {
 		return callerAdminId;

@@ -4,34 +4,6 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 
-	
-	$scope.init=function(){
-
-		$scope.patient={};
-		$scope.patient.countyId="";
-		$scope.patient.tier=0;
-		$scope.patient.patientStatus=0;
-		$scope.patient.crashFromDate="";
-		$scope.patient.crashToDate="";
-		$scope.patient.localReportNumber="";
-		$scope.patient.patientName="";
-		$scope.patient.callerId=0;
-		$scope.patient.phoneNumber= "";
-		$scope.patient.lawyerId="0";
-		$scope.patient.numberOfDays="1";
-		$scope.patient.pageNumber= 1;
-		$scope.patient.itemsPerPage="10";
-		$scope.totalRecords=0;
-		$scope.callerPatientSearchData="";
-	
-		
-	};
-	
-	$scope.init();
-	
-	
-	
-	    
 	 $scope.getMyCountyList=function(){
 	    	requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
 	    		$scope.mycounties=response.data.countyList;
@@ -52,6 +24,11 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 		};
 	
 	$scope.searchItems=function(searchObj){
+		
+		if(searchObj.countyId==""){
+			searchObj.countyId=0;
+		}
+		
 			requestHandler.postRequest("Patient/searchPatients.json",searchObj).then(function(response){
 				$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
 				$scope.callerPatientSearchData=response.data.patientSearchResult.patientSearchLists;
@@ -94,6 +71,36 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 	     $scope.init();
 	     
 	};
+	
+
+	$scope.init=function(){
+
+		$scope.patient={};
+		$scope.patient.countyId="";
+		$scope.patient.tier=0;
+		$scope.patient.patientStatus=0;
+		$scope.patient.crashFromDate="";
+		$scope.patient.crashToDate="";
+		$scope.patient.localReportNumber="";
+		$scope.patient.patientName="";
+		$scope.patient.callerId=0;
+		$scope.patient.phoneNumber= "";
+		$scope.patient.lawyerId="0";
+		$scope.patient.numberOfDays="1";
+		$scope.patient.pageNumber= 1;
+		$scope.patient.itemsPerPage="10";
+		$scope.totalRecords=0;
+		$scope.callerPatientSearchData="";
+		$scope.patient.addedOnFromDate="";
+		$scope.patient.addedOnToDate="";
+		
+		
+		//Initial Search
+		$scope.searchItems($scope.patient);
+		
+	};
+	
+	$scope.init();
 	
 }]); 
 

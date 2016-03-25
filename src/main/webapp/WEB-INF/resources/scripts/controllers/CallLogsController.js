@@ -29,44 +29,44 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		    });
 	   };
 	   
-	    requestHandler.postRequest("Caller/getCallLogsById.json?id="+$stateParams.id,"").then( function(response) {
-	    	$scope.callLogs= response.data.callLogsForms;
-	    	 $.each($scope.callLogs,function(index,value) {
-		    	 switch(value.response) {
-		    	    case "1":
-		    	        value.response="Not interested/injured";
-		    	        break;
-		    	    case "2":
-		    	    	value.response="Voice mail";
-		    	        break;
-		    	    case "3":
-		    	    	value.response="Do not call";
-		    	    	break;
-		    	    default:
-		    	    	break;
-		    	} 
-		     });
-	    	$scope.sort('timeStamp');
-	    	requestHandler.getRequest("Caller/getPatients.json?id="+$stateParams.id,"").then( function(response) {
-	    		$scope.patient= response.data.patientsForm;
-	    		if($scope.patient.patientStatus==3)
-	    			{
-	    		$scope.doNotCall=true;
-	    			}
-	    		else
-	    			{
-	    			$scope.doNotCall=false;
-	    			}
-	    	});
-	  });
+	   $scope.init=function(){
+		   $scope.getCallLogsList();
+		   $scope.getPatientDetails();
+	   }
+	   
+	  
 	    
 	    $scope.viewPatients=function(id)
 	    {
-	    	requestHandler.getRequest("/Caller/getPatients.json?id="+id,"").then( function(response) {
-	    		$scope.patients=response.data.patientsForm;
 	    	      $("#myModal").modal("show");
-	         });
 	    };
+	    
+	    $scope.getPatientDetails=function(){
+	    	requestHandler.getRequest("/Patient/getPatient.json?patientId="+$stateParams.id,"").then( function(response) {
+	    		$scope.patient=response.data.patientForm;
+	    	});
+	    };
+	    
+	    $scope.getCallLogsList=function(){
+	    	  requestHandler.getRequest("Caller/getAllCallLogss.json?patientId="+$stateParams.id,"").then( function(response) {
+	  	    	$scope.callLogs= response.data.callLogsForms;
+	  	    	 $.each($scope.callLogs,function(index,value) {
+	  		    	 switch(value.response) {
+	  		    	    case "1":
+	  		    	        value.response="Not interested/injured";
+	  		    	        break;
+	  		    	    case "2":
+	  		    	    	value.response="Voice mail";
+	  		    	        break;
+	  		    	    case "3":
+	  		    	    	value.response="Do not call";
+	  		    	    	break;
+	  		    	    default:
+	  		    	    	break;
+	  		    	} 
+	  		     });
+	  	  });
+	    }
 	    
    $scope.deleteCalllogs=function(id)
 	  {
@@ -352,5 +352,8 @@ else
 			 
 		
 		};
+		
+		
+		$scope.init();
 	
 });

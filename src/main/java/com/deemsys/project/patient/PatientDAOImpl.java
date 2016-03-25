@@ -454,6 +454,14 @@ public PatientSearchResult searchPatientsByCAdmin(
 		criteria.add(crashDateCriterion);
 	}
 	
+	//Common Constrains - Added Date
+	if(!callerPatientSearchForm.getAddedOnFromDate().equals("")){
+		//Set Criterion
+		Criterion crashDateCriterion=Restrictions.between("t1.addedDate", callerPatientSearchForm.getAddedOnFromDate(), callerPatientSearchForm.getAddedOnToDate());
+		criteria.add(crashDateCriterion);
+	}
+	
+	
 	//Common Constrain Patient Name
 	Criterion patientNameCriterion=Restrictions.like("t1.name", callerPatientSearchForm.getPatientName(),MatchMode.ANYWHERE);
 	criteria.add(patientNameCriterion);

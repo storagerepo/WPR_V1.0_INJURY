@@ -21,6 +21,8 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler', func
 		$scope.patient.pageNumber= 1;
 		$scope.patient.itemsPerPage=10;
 		$scope.totalRecords=0;
+		$scope.patient.addedOnFromDate="";
+		$scope.patient.addedOnToDate="";
 	};
 	
 	$scope.init();
@@ -60,6 +62,8 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler', func
 			$scope.patient.patientName="";
 			$scope.patient.phoneNumber= "";
 			$scope.patient.localReportNumber="";
+			if($scope.patient.countyId=="")
+				$scope.patient.countyId=0;
 			$scope.searchItems($scope.patient);
 		}
 	};

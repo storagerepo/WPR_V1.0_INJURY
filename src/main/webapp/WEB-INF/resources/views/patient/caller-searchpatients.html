@@ -12,7 +12,7 @@
 </div>
 <!-- /.row -->
 <div class="row">
- <form name="patientSearchForm" novalidate>
+ <form name="patientSearchForm" novalidate ng-cloak> 
         <div class="col-md-12">
         <div class="col-md-3">
        <div class="col-md-12"> <span class="redText">*</span> <label>County</label></div>
@@ -89,7 +89,7 @@
                     
                     
                     
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-striped table-bordered" ng-cloak>
                         <thead>
                             <tr>
                                 <th class="col-md-2">Patient Name</th>
@@ -97,8 +97,6 @@
                                 <th class="col-md-2">Phone Number</th>
                                 <th class="col-md-1">Crash Date</th>
                                 <th class="col-md-1">Address</th>
-                                 <th class="col-md-1">Fault Insurance</th>
-                                  <th class="col-md-1">Victim Insurance</th>
                                 <th class="col-md-1">Actions</th>
                             </tr>
                             <tr>
@@ -121,8 +119,6 @@
 									ng-model="patient.phoneNumber" ng-change="secoundarySearchPatient()" placeholder="Phone Number"></div></th>
 								<th></th>
 								<th></th>
-								<th></th>									
-								<th></th>
 								<th></th>	
 								
 							</tr>
@@ -134,9 +130,13 @@
                                 <td>{{callerData.phoneNumber}}</td>
                                	<td>{{callerData.crashDate}}</td>
                                 <td>{{callerData.address}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>
+                                	<a href="{{patient.crashReportFileName}}" ng-cloak target="_blank" class="btn btn-xs btn-info hint--top" data-hint="View Crash Report"><i
+								class="fa fa-file-pdf-o"></i></a>&nbsp;
+								<a href="" ng-cloak ng-show={{patient.callerId!=null}} class="btn btn-xs btn-success hint--top" data-hint="Release Patient"><i class="fa fa-external-link-square"></i></a>
+								<a href="#/dashboard/Calllogs/{{callerData.patientId}}" ng-cloak class="btn btn-xs btn-info hint--top" data-hint="View Call Logs"><i
+								class="fa fa-eye"></i></a>&nbsp;
+								</td>
                             </tr>
                             <tr ng-show="callerPatientSearchData.length==0">
                             <td colspan="8"><center><strong>No Records Found!!!</strong></center></td>
