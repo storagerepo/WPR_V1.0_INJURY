@@ -41,6 +41,7 @@ public class Clinic implements java.io.Serializable {
 	private Integer status;
 	private Set<Doctor> doctors = new HashSet<Doctor>(0);
 	private Set<ClinicTimings> clinicTimingses = new HashSet<ClinicTimings>(0);
+	private Set<Appointments> appointmentses = new HashSet<Appointments>(0);
 
 	public Clinic() {
 	}
@@ -243,6 +244,15 @@ public class Clinic implements java.io.Serializable {
 
 	public void setClinicTimingses(Set<ClinicTimings> clinicTimingses) {
 		this.clinicTimingses = clinicTimingses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "clinic")
+	public Set<Appointments> getAppointmentses() {
+		return appointmentses;
+	}
+
+	public void setAppointmentses(Set<Appointments> appointmentses) {
+		this.appointmentses = appointmentses;
 	}
 
 }

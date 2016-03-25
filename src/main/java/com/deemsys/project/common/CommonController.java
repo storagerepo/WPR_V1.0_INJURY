@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.deemsys.project.login.LoginService;
 
 
 /**
@@ -21,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class CommonController {
 
+	
+	@Autowired
+	LoginService loginService;
 	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String getInit(ModelMap model)
@@ -56,5 +62,14 @@ public class CommonController {
        	model.addAttribute("Success",true);
    		return "/login";
    	}
+    
+    @RequestMapping(value = {"/Admin/checkUserNameExist","/CAdmin/checkUserNameExist","/LAdmin/checkUserNameExist"}, method = RequestMethod.GET)
+	public String getUsername(@RequestParam("username") String username,
+			ModelMap model) {
+		model.addAttribute("callerForms",loginService.checkUsernameExist(username));
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+
     
 }

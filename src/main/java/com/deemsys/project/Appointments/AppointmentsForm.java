@@ -15,7 +15,7 @@ public class AppointmentsForm {
 	private Integer status;
 	private Integer callLogId;
 	private Integer clinicId;
-	private Integer doctorId;
+	private String clinicName;
 
 	public Integer getId() {
 		return id;
@@ -27,14 +27,6 @@ public class AppointmentsForm {
 
 	public Integer getPatientId() {
 		return patientId;
-	}
-
-	public Integer getDoctorId() {
-		return doctorId;
-	}
-
-	public void setDoctorId(Integer doctorId) {
-		this.doctorId = doctorId;
 	}
 
 	public void setPatientId(Integer patientId) {
@@ -79,6 +71,14 @@ public class AppointmentsForm {
 
 	public void setClinicId(Integer clinicId) {
 		this.clinicId = clinicId;
+	}
+
+	public String getClinicName() {
+		return clinicName;
+	}
+
+	public void setClinicName(String clinicName) {
+		this.clinicName = clinicName;
 	}
 
 	public AppointmentsForm(Integer id, Integer patientId, String patientName,

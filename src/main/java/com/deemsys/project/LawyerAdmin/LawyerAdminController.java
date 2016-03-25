@@ -94,16 +94,6 @@ public class LawyerAdminController {
 		return "/returnPage";
 	}
 
-	// CheckUserName Exists
-	@RequestMapping(value = { "/Admin/checkUsernameExist",
-			"/Lawyer/checkUsernameExist" }, method = RequestMethod.GET)
-	public String getUsername(@RequestParam("username") String username,
-			ModelMap model) {
-		model.addAttribute("isUserNameExist",
-				callerService.getUsername(username));
-		model.addAttribute("requestSuccess", true);
-		return "/returnPage";
-	}
-
+	
 
 }

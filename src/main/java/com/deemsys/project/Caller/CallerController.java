@@ -108,15 +108,6 @@ public class CallerController {
 		return "/returnPage";
 	}
 
-	
-	@RequestMapping(value = "/CAdmin/getUsername", method = RequestMethod.GET)
-	public String getUsername(@RequestParam("username") String username,
-			ModelMap model) {
-		model.addAttribute("callerForms", callerService.getUsername(username));
-		model.addAttribute("requestSuccess", true);
-		return "/returnPage";
-	}
-
 	@RequestMapping(value = "/CAdmin/getDetails", method = RequestMethod.GET)
 	public String getAdminDetails(ModelMap model) {
 		model.addAttribute("adminDetails", callerService.getDetails());

@@ -22,6 +22,7 @@ public class Appointments implements java.io.Serializable {
 
 	private Long appointmentId;
 	private CallLog callLog;
+	private Clinic clinic;
 	private Date scheduledDate;
 	private String notes;
 	private Integer status;
@@ -62,6 +63,16 @@ public class Appointments implements java.io.Serializable {
 		this.callLog = callLog;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "clinic_id")
+	public Clinic getClinic() {
+		return clinic;
+	}
+
+	public void setClinic(Clinic clinic) {
+		this.clinic = clinic;
+	}
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "scheduled_date", length = 10)
 	public Date getScheduledDate() {
@@ -90,4 +101,5 @@ public class Appointments implements java.io.Serializable {
 		this.status = status;
 	}
 
+	
 }
