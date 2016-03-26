@@ -502,7 +502,7 @@ public PatientSearchResult searchPatientsByCAdmin(
 			Criterion isArchivecriterion=Restrictions.eq("t2.isArchived", callerPatientSearchForm.getIsArchived());
 			criteria.add(isArchivecriterion);
 		}else{
-			Criterion isArchivecriterion=Restrictions.or(Restrictions.ne("t2.isArchived", callerPatientSearchForm.getIsArchived()), Restrictions.isNull("t2.isArchived"));
+			Criterion isArchivecriterion=Restrictions.or(Restrictions.eq("t2.isArchived", callerPatientSearchForm.getIsArchived()), Restrictions.isNull("t2.isArchived"));
 			criteria.add(isArchivecriterion);
 		}
 		
@@ -538,7 +538,7 @@ public PatientSearchResult searchPatientsByCAdmin(
 			Criterion isArchivecriterion=Restrictions.eq("t2.isArchived", callerPatientSearchForm.getIsArchived());
 			criteria.add(isArchivecriterion);
 		}else{
-			Criterion isArchivecriterion=Restrictions.or(Restrictions.ne("t2.isArchived", callerPatientSearchForm.getIsArchived()), Restrictions.isNull("t2.isArchived"));
+			Criterion isArchivecriterion=Restrictions.or(Restrictions.eq("t2.isArchived", callerPatientSearchForm.getIsArchived()), Restrictions.isNull("t2.isArchived"));
 			criteria.add(isArchivecriterion);
 		}
 		
