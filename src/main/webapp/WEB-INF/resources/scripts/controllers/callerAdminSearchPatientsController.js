@@ -4,10 +4,11 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.patientSearchData=$scope.patientSearchDataOrginal=[];
+	$scope.isSelectedAddedFromDate=true;
 	
 	$scope.init=function(){
 		$scope.patient={};
-		$scope.patient.countyId="";
+		$scope.patient.countyId="0";
 		$scope.patient.tier="0";
 		$scope.patient.patientStatus="0";
 		$scope.patient.crashFromDate="";
@@ -19,13 +20,14 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		$scope.patient.lawyerId=0;
 		$scope.patient.numberOfDays="1";
 		$scope.patient.pageNumber= 1;
-		$scope.patient.itemsPerPage=10;
+		$scope.patient.itemsPerPage="25";
 		$scope.patient.addedOnFromDate="";
 		$scope.patient.addedOnToDate="";
+		$scope.patient.isArchived="0";
+		$scope.patient.patientStatus="6";
 		$scope.totalRecords=0;
+		$scope.searchItems($scope.patient);
 	};
-	
-	$scope.init();
 
 	requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
 		$scope.countylist=response.data.countyList;
@@ -61,8 +63,18 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 	};
 	
 	$scope.assignCallerPopup=function(){
+		$scope.isIndividual=false;
+		$scope.myForm.callerId="";
 		$("#assignCallerModal").modal('show');
-		$scope.myForm.callerId="1";
+	};
+	
+	$scope.assignIndividualCallerPopup=function(id,name,callerId){
+		$scope.isIndividual=true;
+		$scope.assignPatientName=name;
+		$scope.assignPatientId=id;
+		if(callerId!=null)$scope.myForm.callerId=callerId.toString();
+		else $scope.myForm.callerId="";
+		$("#assignCallerModal").modal('show');
 	};
 	
 	$scope.releaseCaller=function(){
@@ -84,6 +96,16 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		});
 	};
 	
+	$scope.assignCallerRequest=function(assignCallerObject){
+		requestHandler.postRequest("/CAdmin/assignCaller.json",assignCallerObject).then(function(response){
+			Flash.create('success', "You have Successfully Assinged Caller!");
+			$scope.searchPatients();
+			$(function(){
+				$("html,body").scrollTop(0);
+			});
+		});
+	};
+	
 	$scope.assignCaller=function(){
 		var assignCallerObj ={};
 		assignCallerObj.callerId=$scope.myForm.callerId;
@@ -94,14 +116,16 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 			}
 		});
 		assignCallerObj.patientId=patientIdArray;
-		
-		requestHandler.postRequest("/CAdmin/assignCaller.json",assignCallerObj).then(function(response){
-			Flash.create('success', "You have Successfully Assinged Caller!");
-			$scope.searchPatients();
-			$(function(){
-				$("html,body").scrollTop(0);
-			});
-		});
+		$scope.assignCallerRequest(assignCallerObj);
+	};
+	
+
+	$scope.assignIndividualCaller=function(id){
+		var assignCallerObj ={};
+		assignCallerObj.callerId=$scope.myForm.callerId;
+		assignCallerObj.patientId=[];
+		assignCallerObj.patientId.push(id);
+		$scope.assignCallerRequest(assignCallerObj);
 	};
 	
 	$scope.moveArchive=function(){
@@ -146,18 +170,44 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		requestHandler.postRequest("/Patient/searchPatients.json",searchObj).then(function(response){
 			$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
 			$scope.patientSearchData=response.data.patientSearchResult.patientSearchLists;
+			$.each($scope.patientSearchData, function(index,value) {
+				switch(value.patientStatus) {
+				    case null:
+				        value.patientStatusName="New";
+				        break;
+				    case 1:
+				    	value.patientStatusName="Active";
+				        break;
+				    case 2:
+				    	value.patientStatusName="Not Interested/Injured";
+				        break;
+				    case 3:
+				    	value.patientStatusName="Voice Mail";
+				        break;
+				    case 4:
+				    	value.patientStatusName="Schedule Appointment";
+				        break;
+				    case 5:
+				    	value.patientStatusName="Do Not Call";
+				        break;
+				    default:
+				        null;
+				};
+			});
 			$scope.patientSearchDataOrginal=angular.copy($scope.patientSearchData);
 			$scope.isCheckedIndividual();
 		});
 	};
 	 
 	$scope.searchPatients = function(){
-		
 		if($scope.patient.addedFromDate!="" && $scope.patient.addedToDate==""){
 			$scope.addedToRequired=true;
 		}
-		else if($scope.patient.crashFromDate!="" && $scope.patient.numberOfDays=="" && $scope.patient.crashToDate==""){
+		else if($scope.patient.crashFromDate!="" && $scope.patient.numberOfDays=="0" && $scope.patient.crashToDate==""){
 			$scope.crashToRequired=true;
+		}
+		else if($scope.patient.addedOnFromDate!="" && $scope.patient.addedOnToDate==""){
+			$scope.AddedOnToRequired=true;
 		}
 		else{
 			$scope.addedToRequired=false;
@@ -170,11 +220,9 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 	};
 	
 	$scope.secoundarySearchPatient=function(){
-		if($scope.patientSearchData.length>0){
-			$scope.patient.pageNumber= 1;
-			$scope.setPage=1;
-			$scope.searchItems($scope.patient);
-		}
+		$scope.patient.pageNumber= 1;
+		$scope.setPage=1;
+		$scope.searchItems($scope.patient);
 	};
 	
 	$scope.searchPatientsFromPage = function(pageNum){
@@ -183,7 +231,6 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 	};
 	
 	$scope.resetSearchData = function(){
-		
 	     $scope.patientSearchForm.$setPristine();
 	     $scope.patientSearchData="";
 	     $scope.init();
@@ -192,6 +239,8 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 	$scope.isCleanCheckbox=function(){
 		return angular.equals($scope.patientSearchData,$scope.patientSearchDataOrginal);
 	};
+	
+	$scope.init();
 	
 }]); 
 
