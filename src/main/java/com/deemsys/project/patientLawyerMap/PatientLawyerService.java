@@ -49,7 +49,7 @@ public class PatientLawyerService {
 			//Generate Patient
 			Patient patient=new Patient(patientId);
 			
-			patientLawyerAdminMap=new PatientLawyerAdminMap(new PatientLawyerAdminMapId(patientId.getBytes(),lawyerAdmin.getLawyerAdminId()),lawyer,lawyerAdmin, patient, "", 1, 0,1);
+			patientLawyerAdminMap=new PatientLawyerAdminMap(new PatientLawyerAdminMapId(patientId,lawyerAdmin.getLawyerAdminId()),lawyer,lawyerAdmin, patient, "", 1, 0,1);
 			patientLawyerDAO.merge(patientLawyerAdminMap);
 			
 		}else{
@@ -100,10 +100,12 @@ public boolean moveToArchive(AssignLawyerForm assignLawyerForm,Integer archiveSt
 	for (String patientId : assignLawyerForm.getPatientId()) {
 		PatientLawyerAdminMap patientLawyerAdminMap=new PatientLawyerAdminMap();
 		patientLawyerAdminMap=patientLawyerDAO.getPatientMapsByLawyerAdminId(patientId, lawyerAdmin.getLawyerAdminId());
-		if(patientLawyerAdminMap!=null){
-			patientLawyerAdminMap.setIsArchived(archiveStatus);
-			patientLawyerDAO.merge(patientLawyerAdminMap);			
+		if(patientLawyerAdminMap==null){
+			patientLawyerAdminMap=new PatientLawyerAdminMap(new PatientLawyerAdminMapId(patientId, lawyerAdmin.getLawyerAdminId()), lawyerAdmin, new Patient(patientId));
 		}
+		patientLawyerAdminMap.setIsArchived(1);
+		patientLawyerDAO.merge(patientLawyerAdminMap);			
+		
 	}
 	
 	return true;

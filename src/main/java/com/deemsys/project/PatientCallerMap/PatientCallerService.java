@@ -49,7 +49,7 @@ public class PatientCallerService {
 			//Generate Patient
 			Patient patient=new Patient(patientId);
 			
-			patientCallerAdminMap=new PatientCallerAdminMap(new PatientCallerAdminMapId(patientId.getBytes(),callerAdmin.getCallerAdminId()),callerAdmin,caller, patient, "", 0, 1, null, null);
+			patientCallerAdminMap=new PatientCallerAdminMap(new PatientCallerAdminMapId(patientId,callerAdmin.getCallerAdminId()),callerAdmin,caller, patient, "", 0, 1, null, null);
 			patientCallerDAO.merge(patientCallerAdminMap);
 			
 		}else{
@@ -101,9 +101,11 @@ public boolean moveToArchive(AssignCallerForm assignCallerForm,Integer archiveSt
 		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap();
 		patientCallerAdminMap=patientCallerDAO.getPatientMapsByCallerAdminId(patientId, callerAdmin.getCallerAdminId());
 		if(patientCallerAdminMap!=null){
-			patientCallerAdminMap.setIsArchived(archiveStatus);
-			patientCallerDAO.merge(patientCallerAdminMap);			
+			patientCallerAdminMap=new PatientCallerAdminMap(new PatientCallerAdminMapId(patientId, callerAdmin.getCallerAdminId()), callerAdmin, new Patient(patientId));
 		}
+		patientCallerAdminMap.setIsArchived(archiveStatus);
+		patientCallerDAO.merge(patientCallerAdminMap);			
+		
 	}
 	
 	return true;

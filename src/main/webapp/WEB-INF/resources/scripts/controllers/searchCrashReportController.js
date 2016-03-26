@@ -18,9 +18,11 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 		$scope.crashreport.pageNumber= 1;
 		$scope.crashreport.recordsPerPage="10";
 		$scope.totalRecords=0;
+		
+		$scope.searchCrashReport();
 	};
 	
-	$scope.init();
+	
 	
 	
 	 requestHandler.getRequest("Admin/getAllCountys.json","").then(function(response){
@@ -72,5 +74,7 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 	     $scope.init();
 	     
 	};
+	
+	$scope.init();
 	
 }]); 

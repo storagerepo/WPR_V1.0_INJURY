@@ -134,7 +134,7 @@ public class PatientLawyerDAOImpl implements PatientLawyerDAO{
 		
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(PatientLawyerAdminMap.class);
 		
-		criteria.add(Restrictions.eq("id.patientId",patientId.getBytes()));
+		criteria.add(Restrictions.eq("id.patientId",patientId));
 		criteria.add(Restrictions.eq("lawyer.lawyerId", LawyerId));
 		
 		return (PatientLawyerAdminMap) criteria.uniqueResult();
@@ -146,7 +146,7 @@ public class PatientLawyerDAOImpl implements PatientLawyerDAO{
 		
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(PatientLawyerAdminMap.class);
 		
-		criteria.add(Restrictions.eq("id.patientId",patientId.getBytes()));
+		criteria.add(Restrictions.eq("id.patientId",patientId));
 		criteria.add(Restrictions.eq("id.lawyerAdminId", LawyerAdminId));
 		
 		return (PatientLawyerAdminMap) criteria.uniqueResult();

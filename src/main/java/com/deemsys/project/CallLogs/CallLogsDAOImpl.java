@@ -194,7 +194,7 @@ public class CallLogsDAOImpl implements CallLogsDAO{
 		projectionList.add(Projections.property("a1.appointmentId"), "appointmentId");
 		criteria.setProjection(projectionList);
 		
-		criteria.add(Restrictions.and(Restrictions.eq("patientCallerAdminMap.id.patientId", patientId.getBytes()),Restrictions.eq("patientCallerAdminMap.id.callerAdminId", callerAdminId)));
+		criteria.add(Restrictions.and(Restrictions.eq("patientCallerAdminMap.id.patientId", patientId),Restrictions.eq("patientCallerAdminMap.id.callerAdminId", callerAdminId)));
 		
 		
 		List<CallLogsForm> callLogsForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(CallLogsForm.class)).list();

@@ -107,7 +107,7 @@ public class CallLogsService {
 			if(appointments!=null){
 				appointmentsForm=new AppointmentsForm(appointments.getAppointmentId(), "", "", appointments.getScheduledDateTime(), appointments.getNotes(), appointments.getStatus(), appointments.getCallLog().getCallLogId(), appointments.getClinic().getClinicId(), appointments.getDoctorId(), "", "");
 			}
-			callLogsForm = new CallLogsForm(callLogs.getCallLogId(), new String(callLogs.getPatientCallerAdminMap().getId().getPatientId(), StandardCharsets.UTF_8), callLogs.getPatientCallerAdminMap().getCallerAdmin().getCallerAdminId(), callLogs.getTimeStamp(), callLogs.getResponse(), callLogs.getNotes(), callLogs.getStatus(), appointmentsForm, "", "");
+			callLogsForm = new CallLogsForm(callLogs.getCallLogId(),callLogs.getPatientCallerAdminMap().getId().getPatientId(), callLogs.getPatientCallerAdminMap().getCallerAdmin().getCallerAdminId(), callLogs.getTimeStamp(), callLogs.getResponse(), callLogs.getNotes(), callLogs.getStatus(), appointmentsForm, "", "");
 					
 		
 		} catch (Exception e) {
@@ -128,7 +128,7 @@ public class CallLogsService {
 			// TODO: Convert Entity to Form
 			// Start
 			try {
-				callLogsForm = new CallLogsForm(callLogs.getCallLogId(), new String(callLogs.getPatientCallerAdminMap().getId().getPatientId(), StandardCharsets.UTF_8), callLogs.getPatientCallerAdminMap().getCallerAdmin().getCallerAdminId(), callLogs.getTimeStamp(), callLogs.getResponse(), callLogs.getNotes(), callLogs.getStatus(), appointmentsForm, "", "");
+				callLogsForm = new CallLogsForm(callLogs.getCallLogId(),callLogs.getPatientCallerAdminMap().getId().getPatientId(), callLogs.getPatientCallerAdminMap().getCallerAdmin().getCallerAdminId(), callLogs.getTimeStamp(), callLogs.getResponse(), callLogs.getNotes(), callLogs.getStatus(), appointmentsForm, "", "");
 						
 			
 			} catch (Exception e) {
@@ -196,7 +196,7 @@ public class CallLogsService {
 		CallerAdmin callerAdmin = callerAdminDAO.get(caller.getCallerAdmin().getCallerAdminId());
 		
 						
-		PatientCallerAdminMapId patientCallerAdminMapId=new PatientCallerAdminMapId(callLogsForm.getPatientId().getBytes(), callerAdmin.getCallerAdminId());
+		PatientCallerAdminMapId patientCallerAdminMapId=new PatientCallerAdminMapId(callLogsForm.getPatientId(), callerAdmin.getCallerAdminId());
 		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap();
 		patientCallerAdminMap.setId(patientCallerAdminMapId);
 		patientCallerAdminMap.setPatientStatus(callLogsForm.getResponse());
@@ -235,7 +235,7 @@ public class CallLogsService {
 		// Caller Admin
 		CallerAdmin callerAdmin = callerAdminDAO.get(caller.getCallerAdmin().getCallerAdminId());
 							
-		PatientCallerAdminMapId patientCallerAdminMapId=new PatientCallerAdminMapId(callLogsForm.getPatientId().getBytes(), callerAdmin.getCallerAdminId());
+		PatientCallerAdminMapId patientCallerAdminMapId=new PatientCallerAdminMapId(callLogsForm.getPatientId(), callerAdmin.getCallerAdminId());
 		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap();
 		patientCallerAdminMap.setId(patientCallerAdminMapId);
 		patientCallerAdminMap.setPatientStatus(callLogsForm.getResponse());

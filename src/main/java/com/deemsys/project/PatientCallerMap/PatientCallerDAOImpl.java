@@ -135,7 +135,7 @@ public class PatientCallerDAOImpl implements PatientCallerDAO{
 		
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(PatientCallerAdminMap.class);
 		
-		criteria.add(Restrictions.eq("id.patientId",patientId.getBytes()));
+		criteria.add(Restrictions.eq("id.patientId",patientId));
 		criteria.add(Restrictions.eq("caller.callerId", callerId));
 		
 		return (PatientCallerAdminMap) criteria.uniqueResult();
@@ -147,9 +147,8 @@ public class PatientCallerDAOImpl implements PatientCallerDAO{
 		
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(PatientCallerAdminMap.class);
 		
-		criteria.add(Restrictions.eq("id.patientId",patientId.getBytes()));
+		criteria.add(Restrictions.eq("id.patientId",patientId));
 		criteria.add(Restrictions.eq("id.callerAdminId", callerAdminId));
-		
 		return (PatientCallerAdminMap) criteria.uniqueResult();
 	}
 

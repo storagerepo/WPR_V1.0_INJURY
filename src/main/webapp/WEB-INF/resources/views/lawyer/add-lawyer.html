@@ -50,6 +50,7 @@
                                     <span style="color:red" id="username_exists"></span>
                                     <span class="error-container" ng-show="myForm.username.$dirty && myForm.username.$invalid">
                                        <span ng-cloak style="color:red" ng-show="myForm.username.$error.required">Please Enter Username</span>
+                                       <span ng-cloak style="color:red" ng-show="myForm.username.$error.usernameexists">Username Already Exists</span>
                                        </span><br/>
                                       </div>
                                        <div class="col-md-6">
