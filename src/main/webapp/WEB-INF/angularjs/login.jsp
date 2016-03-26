@@ -29,8 +29,8 @@
 	}
 	#header h2{
 		padding:20px 40px;
-		color:rgba(0, 51, 102,1);
-		background:rgba(255, 255, 255,0.6);
+		background:rgba(0, 77, 153,0.9);
+		color:rgba(255, 255, 255,1);
 		width:30%;
 		font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 	}
@@ -54,20 +54,20 @@
 	.panel-override{
 		border-radius:0!important;
 		border:0!important;
-		background:rgba(255, 255, 255,0.4)!important;
+		background:rgba(255, 255, 255,0.7)!important;
 	}
 	
 	.panel-override .panel-heading{
 		border-radius:0!important;
 		border:0!important;
-		background:rgba(255, 255, 255,0.4)!important;
-		color:rgba(0, 51, 102,1)!important;
+		background:rgba(0, 77, 153,0.9)!important;
+		color:rgba(255, 255, 255,1)!important;
 		padding:20px!important;
 	}
 	
 	.panel-override .form-control{
 		border-radius:0!important;
-		border:1px solid rgba(255, 255, 255,0.4)!important;
+		border:1px solid rgba(0, 0, 0,0.2)!important;
 		/* background:rgba(0, 51, 102,0.2)!important;
 		color:#fff!important; */
 		padding:20px!important;
