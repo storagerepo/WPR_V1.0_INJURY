@@ -119,14 +119,16 @@
 		                    <div id="sessionout" style="color:#FF0000">Your Session has been expired. Please login again!<br/><br/></div>
 		                        <fieldset>
 		                            <div class="form-group">
-		                                <input class="form-control input-md" placeholder="Username" name="username" type="text" autofocus>
+		                                <input class="form-control input-md" placeholder="Username" name="username" id="username" type="text" autofocus>
+		                                <span style="color:#FF0000" id="username_error"></span>
 		                            </div>
 		                            <div class="form-group">
-		                                <input class="form-control input-md" placeholder="Password" name="password" type="password" value="">
+		                                <input class="form-control input-md" placeholder="Password" name="password" id="password" type="password" value="">
+		                                <span style="color:#FF0000" id="password_error"></span>
 		                            </div>
 		                                             
 		                            <!-- Change this to a button or input when using this as a form -->
-		                            <input type="submit" value="Login" class="btn btn-primary btn-login pull-right"> 
+		                            <input type="submit" onclick="return checkValidation()" value="Login" class="btn btn-primary btn-login pull-right"> 
 		                         </fieldset>
 		                    </form>
 		                </div>
@@ -148,7 +150,30 @@ if(location.search=='?sessionout'){
 }else{
 	document.getElementById('sessionout').style.display = 'none';
 }
-	/* element.style.display = 'none';  */
+
+function checkValidation(){
+	var username=document.getElementById("username").value;
+	var password=document.getElementById("password").value;
+
+	document.getElementById("username_error").innerText="";
+	document.getElementById("password_error").innerText="";
+	
+	var error=false;
+	if(username==""){
+		error=true;
+		document.getElementById("username_error").innerText="Please Enter Username";
+	}
+	if(password==""){
+		error=true;
+		document.getElementById("password_error").innerText="Please Enter Password";
+	}
+	if(error){
+		return false;
+	}else{
+		return true;
+	}
+}
+
 </script>
 </body>
 </html>
