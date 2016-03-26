@@ -506,15 +506,15 @@ public PatientSearchResult searchPatientsByCAdmin(
 			criteria.add(isArchivecriterion);
 		}
 		
-		//Common Constrains - Tier
+		//Common Constrains - Patient Status
 		if(callerPatientSearchForm.getPatientStatus()!=6){
 			Criterion patientStatusCriterion;
-			if(callerPatientSearchForm.getPatientStatus()!=0){
-				patientStatusCriterion=Restrictions.eq("t2.patientStatus", callerPatientSearchForm.getPatientStatus());
-				criteria.add(patientStatusCriterion);
-			}else{
+			if(callerPatientSearchForm.getPatientStatus()==0){
 				patientStatusCriterion=Restrictions.isNull("t2.patientStatus");
-				criteria.add(patientStatusCriterion);
+				criteria.add(patientStatusCriterion);				
+			}else{
+				patientStatusCriterion=Restrictions.eq("t2.patientStatus", callerPatientSearchForm.getPatientStatus());
+				criteria.add(patientStatusCriterion);	
 			}
 			
 		}
@@ -547,16 +547,6 @@ public PatientSearchResult searchPatientsByCAdmin(
 				
 	}
 	
-	
-	
-	
-	//Common Constrain - Patient Status
-	if(callerPatientSearchForm.getPatientStatus()!=0){
-		Criterion patientStatus=Restrictions.eq("t2.patientStatus", callerPatientSearchForm.getPatientStatus());
-		criteria.add(patientStatus);
-	}
-	
-	//ARCHIVED
 	
 	
 	//Add Projections
