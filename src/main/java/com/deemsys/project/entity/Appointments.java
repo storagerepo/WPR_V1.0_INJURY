@@ -26,7 +26,8 @@ public class Appointments implements java.io.Serializable {
 	private Long appointmentId;
 	private CallLog callLog;
 	private Clinic clinic;
-	private String scheduledDate;
+	private Date scheduledDate;
+	private String scheduledDateTime;
 	private String notes;
 	private Integer status;
 	private Integer doctorId;
@@ -39,9 +40,10 @@ public class Appointments implements java.io.Serializable {
 	}
 
 	public Appointments(CallLog callLog,
-			String scheduledDate, String notes, Integer status,Clinic clinic,Integer doctorId) {
+			Date scheduledDate, String scheduledDateTime,String notes, Integer status,Clinic clinic,Integer doctorId) {
 		this.callLog = callLog;
 		this.scheduledDate = scheduledDate;
+		this.scheduledDateTime=scheduledDateTime;
 		this.notes = notes;
 		this.status = status;
 		this.clinic=clinic;
@@ -79,14 +81,23 @@ public class Appointments implements java.io.Serializable {
 		this.clinic = clinic;
 	}
 
-	
-	@Column(name = "scheduled_date")
-	public String getScheduledDate() {
+	@Temporal(TemporalType.DATE)
+	@Column(name = "scheduled_date",length = 10)
+	public Date getScheduledDate() {
 		return this.scheduledDate;
 	}
 
-	public void setScheduledDate(String scheduledDate) {
+	public void setScheduledDate(Date scheduledDate) {
 		this.scheduledDate = scheduledDate;
+	}
+	
+	@Column(name = "scheduled_date_time")
+	public String getScheduledDateTime() {
+		return scheduledDateTime;
+	}
+
+	public void setScheduledDateTime(String scheduledDateTime) {
+		this.scheduledDateTime = scheduledDateTime;
 	}
 
 	@Column(name = "notes", length = 300)
