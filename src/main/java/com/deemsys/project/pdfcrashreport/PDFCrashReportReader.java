@@ -143,7 +143,8 @@ public class PDFCrashReportReader {
 			
 			try{
 					File file=getPDFFile(crashId);
-					for (int tryCrash = 1; tryCrash < 3; tryCrash++) {						
+					Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportTryTimes"));
+					for (int tryCrash = 1; tryCrash < tryCount; tryCrash++) {						
 						if(file!=null){
 							if(file.length()>0){
 								System.out.println("Got it!!");
