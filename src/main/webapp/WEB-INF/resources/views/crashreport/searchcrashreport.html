@@ -18,7 +18,7 @@
        <div class="col-md-12"><label>County</label></div>
        <div class="col-md-12"> 
        <select class="form-control" ng-model="crashreport.county">
-          <option value="" ng-selected="true">--Select County--</option>
+          <option value="" ng-selected="true">--All--</option>
           <option ng-repeat="county in countylist"
           value="{{county.id}}"
           ng-selected="{{county.id === crashreport.county}}">{{county.name}}</option>
