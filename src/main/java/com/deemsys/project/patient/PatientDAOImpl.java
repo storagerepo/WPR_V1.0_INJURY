@@ -525,7 +525,8 @@ public PatientSearchResult searchPatientsByCAdmin(
 		
 	}else if(role.equals("ROLE_LAWYER_ADMIN")||role.equals("ROLE_LAWYER")){
 		
-		criteria.createAlias("patientLawyerAdminMaps", "t2", Criteria.LEFT_JOIN).add(Restrictions.or(Restrictions.eq("t2.id.lawyerAdminId", callerPatientSearchForm.getLawyerAdminId()),Restrictions.isNull("t2.id.lawyerAdminId")));		
+		criteria.createAlias("patientLawyerAdminMaps", "t2", Criteria.LEFT_JOIN,Restrictions.eq("t2.id.lawyerAdminId", callerPatientSearchForm.getLawyerAdminId()));		
+				
 		
 		//Check for lawyer id
 		if(callerPatientSearchForm.getLawyerId()!=0){
@@ -537,7 +538,7 @@ public PatientSearchResult searchPatientsByCAdmin(
 			Criterion isArchivecriterion=Restrictions.eq("t2.isArchived", callerPatientSearchForm.getIsArchived());
 			criteria.add(isArchivecriterion);
 		}else{
-			Criterion isArchivecriterion=Restrictions.ne("t2.isArchived", callerPatientSearchForm.getIsArchived());
+			Criterion isArchivecriterion=Restrictions.or(Restrictions.ne("t2.isArchived", callerPatientSearchForm.getIsArchived()), Restrictions.isNull("t2.isArchived"));
 			criteria.add(isArchivecriterion);
 		}
 		
