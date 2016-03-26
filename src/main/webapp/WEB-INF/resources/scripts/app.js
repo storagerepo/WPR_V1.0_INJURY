@@ -1102,7 +1102,7 @@ sbAdminApp
 		.directive(
 				'validateEmail',
 				function() {
-					var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/;
+					var EMAIL_REGEXP = /^[_a-zA-Z0-9]+(\.[_a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,5})$/;
 					return {
 						require : 'ngModel',
 						restrict : '',

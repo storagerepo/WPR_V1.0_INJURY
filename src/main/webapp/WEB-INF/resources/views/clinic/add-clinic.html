@@ -17,20 +17,21 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 Enter Clinic & Doctor Details
+                <span class="pull-right"><span class="redText">*</span> Required Fields</span>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <div class="dataTable_wrapper">
                     <div class="col-md-12">
                                 <div class="col-md-6">
-                                    <label>Clinic Name</label>
+                                    <span class="redText">*</span> <label>Clinic Name</label>
                                     <input type="text" name="clinicName" class="form-control" ng-model="clinic.clinicName" placeholder="Clinic Name" required>
                                     <span class="error-container" ng-show="myForm.clinicName.$dirty && myForm.clinicName.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter ClinicName</span>
                               </span><br>
                                  </div>    
                                  <div class="col-md-6">
-                                <label>Address</label>
+                                <span class="redText">*</span> <label>Address</label>
                                     <input type="text" name="address" class="form-control" ng-model="clinic.address" placeholder="Address" required>
                                     <span class="error-container" ng-show="myForm.address.$dirty && myForm.address.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.address.$error.required">Please Enter Address</span>
@@ -39,7 +40,7 @@
                            </div>
                            <div class="col-md-12">
                            <div class="col-md-6">
-                               <label>City</label>
+                               <span class="redText">*</span> <label>City</label>
                                     <input type="text" name="city" class="form-control" ng-model="clinic.city" placeholder="City" validate-name required>
                                     <span class="error-container" ng-show="myForm.city.$dirty && myForm.city.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.city.$error.required">Please Enter City</span>
@@ -48,7 +49,7 @@
                                     <br/>
                               </div>
                             <div class="col-md-6">
-                      			<label>Country</label>
+                      			<span class="redText">*</span> <label>Country</label>
                            <select class="form-control" ng-init="clinic.country='United States'" ng-model="clinic.country" name="country" id="country" required>
   							  <option value="">-- Select Country --</option>
   							  <option value="United States">United States</option>
@@ -61,7 +62,7 @@
                                  </div>
                                  <div class="col-md-12">  
                                  <div class="col-md-6">
-                                   <label>State</label>
+                                   <span class="redText">*</span> <label>State</label>
                            <select class="form-control" ng-init="clinic.state='Ohio'" ng-model="clinic.state" name="state" id="state" required>
   							  <option value="">-- Select State --</option>
   							  <option value="Ohio">Ohio</option>
@@ -73,7 +74,7 @@
                            <br> 
                            </div> 
                            <div class="col-md-6">
-                                 <label>County</label>
+                                 <span class="redText">*</span> <label>County</label>
                            <select class="form-control" ng-model="clinic.county" name="county" id="county" required>
   							  <option value="">-- Select County --</option>
   							  <option value="Adams">Adams</option>
@@ -174,7 +175,7 @@
                            </div>
                          <div class="col-md-12">
                          <div class="col-md-6">
-                             <label>Zip</label>
+                             <span class="redText">*</span> <label>Zip</label>
                                     <input type="text" name="zip" class="form-control" ng-model="clinic.zipcode" placeholder="Zip" validate-number required maxlength="5">
                                     <span class="error-container" ng-show="myForm.zip.$dirty && myForm.zip.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.zip.$error.required">Please Enter Zip</span>
@@ -183,7 +184,7 @@
                                     <br/>
                               </div>
                                 <div class="col-md-6">
-                                 <label>Office Number</label>
+                                 <span class="redText">*</span> <label>Office Number</label>
                                     <input type="text" name="officeNumber" class="form-control" ng-model="clinic.officeNumber" placeholder="Office Number eg: (123) 456-7890 or 123-456-7890" validate-mobile required>
                                     <span class="error-container" ng-show="myForm.officeNumber.$dirty && myForm.officeNumber.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.officeNumber.$error.required">Please Enter Office Number</span>
@@ -202,7 +203,7 @@
                                    <br/>
                                </div>
                                 <div class="col-md-6">
-                                 <label>Service Area</label>
+                                 <span class="redText">*</span> <label>Service Area</label>
                                     <input type="text" name="serviceArea" class="form-control" ng-model="clinic.serviceArea" placeholder="Service Area" validate-name required>
                                     <span class="error-container" ng-show="myForm.serviceArea.$dirty && myForm.serviceArea.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.serviceArea.$error.required">Please Enter Service Area</span>

@@ -64,7 +64,7 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 					    	value.patientStatusName="Voice Mail";
 					        break;
 					    case 4:
-					    	value.patientStatusName="Schedule Appointment";
+					    	value.patientStatusName="Appointment Scheduled";
 					        break;
 					    case 5:
 					    	value.patientStatusName="Do Not Call";

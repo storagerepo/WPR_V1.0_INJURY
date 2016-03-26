@@ -100,7 +100,7 @@ public boolean moveToArchive(AssignCallerForm assignCallerForm,Integer archiveSt
 	for (String patientId : assignCallerForm.getPatientId()) {
 		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap();
 		patientCallerAdminMap=patientCallerDAO.getPatientMapsByCallerAdminId(patientId, callerAdmin.getCallerAdminId());
-		if(patientCallerAdminMap!=null){
+		if(patientCallerAdminMap==null){
 			patientCallerAdminMap=new PatientCallerAdminMap(new PatientCallerAdminMapId(patientId, callerAdmin.getCallerAdminId()), callerAdmin, new Patient(patientId));
 		}
 		patientCallerAdminMap.setIsArchived(archiveStatus);
