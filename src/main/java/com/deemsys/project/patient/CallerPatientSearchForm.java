@@ -19,6 +19,7 @@ public class CallerPatientSearchForm {
 	private Integer itemsPerPage;
 	private String addedOnFromDate;
 	private String addedOnToDate;
+	private Integer isArchived;
 	
 	public Integer getCallerAdminId() {
 		return callerAdminId;
@@ -125,10 +126,17 @@ public class CallerPatientSearchForm {
 	public void setAddedOnToDate(String addedOnToDate) {
 		this.addedOnToDate = addedOnToDate;
 	}
+	
+	public Integer getIsArchived() {
+		return isArchived;
+	}
+	public void setIsArchived(Integer isArchived) {
+		this.isArchived = isArchived;
+	}
 	public CallerPatientSearchForm(Integer callerAdminId, Integer countyId,
 			Integer tier, Integer patientStatus, String crashFromDate,Integer numberOfDays,
 			String crashToDate, String localReportNumber, String patientName,
-			Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate) {
+			Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.countyId = countyId;
@@ -147,6 +155,7 @@ public class CallerPatientSearchForm {
 		this.itemsPerPage=itemsPerPage;
 		this.addedOnFromDate=addedOnFromDate;
 		this.addedOnToDate=addedOnToDate;
+		this.isArchived=isArchived;
 	}
 	public CallerPatientSearchForm() {
 		super();

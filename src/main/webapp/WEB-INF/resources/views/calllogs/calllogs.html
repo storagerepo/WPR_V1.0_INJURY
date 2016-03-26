@@ -171,23 +171,23 @@
 					<select class="form-control" ng-model="calllogs.response"
 						name="response" id="response" ng-change="appointmentAlert()" required>
 						<option value="">-- Select Response --</option>
-						<option value="1">Not Interested/Injured</option>
-						<option value="2">Voice Mail</option>
-						<option value="3">Schedule Appointment</option>
-						<option value="4">Do Not Call</option>
+						<option value="2">Not Interested/Injured</option>
+						<option value="3">Voice Mail</option>
+						<option value="4">Schedule Appointment</option>
+						<option value="5">Do Not Call</option>
 					</select> <span class="error-container"
 						ng-show="myForm.response.$dirty && myForm.response.$invalid && !myForm.notes.$prestine">
 						<span style="color: red" ng-show="myForm.response.$error.required">Please
 							Select Response</span>
 					</span><br>
 					<!-- Appointment Block -->
-					<div class="well" ng-show="calllogs.response==3">
+					<div class="well" ng-show="calllogs.response==4">
 					<p>Please Provide Appointment Details</p>
 					<label>Select Clinic</label> <select class="form-control"
 						ng-change="getDoctors()" ng-model="calllogs.appointmentsForm.clinicId"
 						name="clinicId" id="clinicId"
 						ng-options="clinics.clinicId as clinics.clinicName for clinics in clinic"
-						ng-required="calllogs.response==3">
+						ng-required="calllogs.response==4">
 						<option value="">-- Select Clinic --</option>
 					</select> <span class="error-container"
 						ng-show="myForms.clinicId.$dirty && myForms.clinicId.$invalid">
@@ -198,7 +198,7 @@
 						class="form-control" ng-model="calllogs.appointmentsForm.doctorId"
 						name="doctorId" id="doctorId"
 						ng-options="doctors.id as doctors.doctorName for doctors in doctor"
-						ng-required="calllogs.response==3">
+						ng-required="calllogs.response==4">
 						<option value="">-- Select Doctor --</option>
 					</select> <span class="error-container"
 						ng-show="myForms.doctorId.$dirty && myForms.doctorId.$invalid">
@@ -209,7 +209,7 @@
 					<div class="input-group">
 						<input type="text" name="scheduledDate" id="scheduledDate"
 							class="form-control" ng-model="calllogs.appointmentsForm.scheduledDate"
-							placeholder="Enter Date" ng-required="calllogs.response==3">
+							placeholder="Enter Date" ng-required="calllogs.response==4">
 						<span class="input-group-addon white-color-bg"> <span
 							class="glyphicon glyphicon-calendar"></span></span>
 					</div>

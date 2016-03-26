@@ -822,6 +822,7 @@ public class PDFCrashReportReader {
 					if(!motoristPageForm.getInjuries().equals("1")&&!motoristPageForm.getInjuries().equals("5")){
 						PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 						if(patientsForm!=null){
+							patientsForm.setTier(3);
 							patientsForms.add(patientsForm);
 						}
 					}else{

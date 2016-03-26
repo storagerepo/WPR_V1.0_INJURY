@@ -37,6 +37,7 @@ public class PatientSearchList extends InjuryProperties{
 	private boolean isSelected=false;
 	private String atFaultInsuranceCompany;
 	private String victimInsuranceCompany;
+	private Integer tier;
 	
 	public String getPatientId() {
 		return patientId;
@@ -189,7 +190,7 @@ public class PatientSearchList extends InjuryProperties{
 			Integer callerAdminId, Integer callerId, String callerFirstName,
 			String callerLastName, Integer lawyerAdminId, Integer lawyerId,
 			String lawyerFirstName, String lawyerLastName, String notes,
-			Integer isArchived, Integer patientStatus) {
+			Integer isArchived, Integer patientStatus,Integer tier) {
 		super();
 		this.patientId = patientId;
 		this.localReportNumber = localReportNumber;
@@ -213,6 +214,7 @@ public class PatientSearchList extends InjuryProperties{
 		this.notes = notes;
 		this.isArchived = isArchived;
 		this.patientStatus = patientStatus;
+		this.tier=tier;
 	}
 	public PatientSearchList() {
 		super();
@@ -223,6 +225,12 @@ public class PatientSearchList extends InjuryProperties{
 	}
 	public void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
+	}
+	public Integer getTier() {
+		return tier;
+	}
+	public void setTier(Integer tier) {
+		this.tier = tier;
 	}
 	
 	
