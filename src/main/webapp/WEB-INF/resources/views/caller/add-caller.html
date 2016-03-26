@@ -93,10 +93,9 @@
                                        </span><br/>
                                       </div>
                                <div class="col-md-6">
-                              <span class="redText">*</span> <label>Phone Number</label>
-                                    <input type="text" class="form-control inputclass"  ng-model="caller.phoneNumber" name="phoneNumber" placeholder="Phone Number eg: (123)456-7890 or 123-456-7890" maxlength="15" validate-mobile required>
+                               <label>Phone Number</label>
+                                    <input type="text" class="form-control inputclass"  ng-model="caller.phoneNumber" name="phoneNumber" placeholder="Phone Number eg: (123)456-7890 or 123-456-7890" maxlength="15" validate-mobile >
                                    <span class="error-container" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
-                                     <span ng-cloak style="color:red" ng-show="myForm.phoneNumber.$error.required">Please Enter Phone Number</span>
                                      <span ng-cloak style="color:red" ng-show="!myForm.phoneNumber.$error.required&&myForm.phoneNumber.$error.validateMobile">Enter Valid Phone Number</span>
                                    </span> 
                                      <br/>
@@ -104,10 +103,9 @@
                                   </div>
                                 <div class="col-md-12">
                                   <div class="col-md-6">
-                                 <span class="redText">*</span> <label>Email ID</label>
-                                    <input type="email" class="form-control"  ng-model="caller.emailAddress" name="emailAddress" placeholder="Email ID" maxlength="60" required validate-email>
+								 <label>Email ID</label>
+                                    <input type="email" class="form-control"  ng-model="caller.emailAddress" name="emailAddress" placeholder="Email ID" maxlength="60"  validate-email>
                                     <span class="error-container" ng-show="myForm.emailAddress.$dirty && myForm.emailAddress.$invalid">
-                                   			 <span ng-cloak style="color:red" ng-show="myForm.emailAddress.$error.required">Please Enter Email ID</span>
                                             <span ng-cloak style="color:red" ng-show="myForm.emailAddress.$error.email">Enter a valid Email ID</span>
                                     </span>                                    
                                     <br/>

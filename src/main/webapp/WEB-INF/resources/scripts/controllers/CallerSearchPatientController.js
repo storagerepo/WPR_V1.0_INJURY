@@ -40,8 +40,12 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 	if($scope.patient.crashFromDate!="" && $scope.patient.numberOfDays=="" && $scope.patient.crashToDate==""){
 			$scope.crashToRequired=true;
 		}
+	else if($scope.patient.addedOnFromDate!="" && $scope.patient.addedOnToDate==""){
+		$scope.addedToRequired=true;
+	}
 	else{
 			$scope.crashToRequired=false;
+			$scope.addedToRequired=false;
 			$scope.patient.patientName="";
 			$scope.patient.phoneNumber= "";
 			$scope.patient.localReportNumber="";
@@ -61,23 +65,11 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 	};
 	
 	
-	$scope.resetSearchData = function(){
-		 $scope.patient={};
-		 $scope.patient.numberOfDays="1";
-		 $scope.patient.lawyerId="0";
-	     $scope.patientSearchForm.$setPristine();
-	     $scope.callerPatientSearchData="";
-	     $scope.totalRecords="";
-	     $scope.init();
-	     
-	};
-	
-
 	$scope.init=function(){
 
 		$scope.patient={};
-		$scope.patient.countyId="";
-		$scope.patient.tier=0;
+		$scope.patient.countyId="0";
+		$scope.patient.tier="0";
 		$scope.patient.patientStatus=0;
 		$scope.patient.crashFromDate="";
 		$scope.patient.crashToDate="";
@@ -96,11 +88,23 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 		
 		
 		//Initial Search
+	
 		$scope.searchItems($scope.patient);
 		
 	};
 	
 	$scope.init();
+	
+	$scope.resetSearchData = function(){
+		 $scope.patient={};
+		 $scope.patient.numberOfDays="1";
+		 $scope.patient.lawyerId="0";
+	     $scope.patientSearchForm.$setPristine();
+	     $scope.callerPatientSearchData="";
+	     $scope.totalRecords="";
+	     $scope.init();
+	     
+	};
 	
 }]); 
 

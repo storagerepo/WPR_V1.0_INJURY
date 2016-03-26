@@ -16,10 +16,10 @@
  <form name="patientSearchForm" novalidate ng-cloak> 
         <div class="col-md-12">
         <div class="col-md-3">
-       <div class="col-md-12"> <span class="redText">*</span> <label>County</label></div>
+       <div class="col-md-12"> <label>County</label></div>
        <div class="col-md-12"> 
-       <select class="form-control" ng-model="patient.countyId" required>
-          <option value="" ng-selected="true">--Select County--</option>
+       <select class="form-control" ng-model="patient.countyId">
+          <option value="0" ng-selected="true">All</option>
           <option ng-repeat="county in mycounties"
           value="{{county.countyId}}"
           ng-selected="{{county.countyName === patient.county}}">{{county.countyName}}</option>
@@ -61,20 +61,37 @@
         </div> 
          <div class="col-md-12"> <br/>  </div>           
           <div class="col-md-12">
-      
+      <div class="col-md-3">
+       <div class="col-md-12"> <label>Added On From Date</label></div>
+       <div class="col-md-12"> 
+       <div class="input-group">
+		<input type="text" name="addedOnFromDate" id="AddedFromDate" class="form-control" ng-model="patient.addedOnFromDate" ng-change="checkCustomDate(patient.numberOfDays)" placeholder="Added On From Date" > 
+		<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+		</div>
+       
+       </div>
+        </div>
+         <div class="col-md-3">
+       <div class="col-md-12"> <label>Added On To Date</label></div>
+       <div class="col-md-12"> 
+       <div class="input-group">
+		<input type="text" name="addedOnToDate" id="AddedToDate" class="form-control" ng-model="patient.addedOnToDate" ng-change="checkCustomDate(patient.numberOfDays)" placeholder="Added On To Date" > 
+		<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+		</div>
+       <span style="color:red" ng-if="addedToRequired==true">Please Enter Added On To Date</span>
+       </div>
+        </div>
        <div class="col-md-3">
        <div class="col-md-12">  <label>Tier</label></div>
        <div class="col-md-12"> 
          <select class="form-control"  ng-model="patient.tier" name="tier">
-                                        <option value="0" ng-selected="true">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        <option value="0" ng-selected="true">All</option>
+                                        <option value="1">Tier1</option>
+                                        <option value="2">Tier2</option>
+                                        <option value="3">Tier3</option>
                                     </select>
        </div>
         </div>
-         <div class="col-md-3"></div>
-       <div class="col-md-3"></div>
          <div class="col-md-3">
          <div class="col-md-12"><br/></div>
        <div class="col-md-12">
@@ -179,5 +196,20 @@ $('#CrashToDate').datetimepicker({
 	format:'MM/DD/YYYY',
 	maxDate : new Date()
 });  
+
+$('#AddedFromDate').datetimepicker({
+	pickTime : false,
+	format:'MM/DD/YYYY',
+	maxDate : new Date()
+}).on('dp.change', function (selected) {
+    var minimumDate = new Date(selected.date.valueOf());
+    $('#AddedToDate').data("DateTimePicker").setMinDate(minimumDate);
+});
+
+$('#AddedToDate').datetimepicker({
+	pickTime : false,
+	format:'MM/DD/YYYY',
+	maxDate : new Date()
+});
 
 </script>

@@ -8,22 +8,22 @@
     <!-- /.row -->
     <div class="row">
     	 <!-- SuperAdmin Dashboard Starts-->
-    	<stats ng-cloak number="10" comments="Caller Admin" colour="primary" type="user" goto="dashboard.CallerAdmin" ng-show="{{isAdmin==1}}"></stats>
-        <stats ng-cloak number="12" comments="Lawyer Admin" colour="green" type="user" goto="dashboard.LawyerAdmin" ng-show="{{isAdmin==1}}"></stats>
+    	<stats ng-cloak number="{{numberCallerAdmin}}" comments="Caller Admin" colour="primary" type="user" goto="dashboard.CallerAdmin" ng-show="{{isAdmin==1}}"></stats>
+        <stats ng-cloak number="{{numberLawyerAdmin}}" comments="Lawyer Admin" colour="green" type="user" goto="dashboard.LawyerAdmin" ng-show="{{isAdmin==1}}"></stats>
         <stats ng-cloak number="10" comments="Crash Report" colour="yellow" type="file" goto="dashboard.SearchCrashreport" ng-show="{{isAdmin==1}}"></stats>
         <stats ng-cloak number="10" comments="Search Patients" colour="red" type="search" goto="dashboard.SearchPatients" ng-show="{{isAdmin==1}}"></stats>
     
     <!-- SuperAdmin Dashboard Ends-->
     
     <!-- Lawyer Admin Dashboard Starts-->  
-        <stats ng-cloak number="15" comments="Lawyers" colour="primary" type="users" goto="dashboard.Lawyer" ng-show="{{isAdmin==3}}"></stats>
+        <stats ng-cloak number="{{numberLawyer}}" comments="Lawyers" colour="primary" type="users" goto="dashboard.Lawyer" ng-show="{{isAdmin==3}}"></stats>
         <stats ng-cloak number="20" comments="Patients" colour="green" type="search" goto="dashboard.LawyerAdminSearchPatients" ng-show="{{isAdmin==3}}"></stats>
     <!-- Lawyer Admin Dashboard Ends-->
     
     
     <!-- Caller Admin Dashboard Starts-->
         <stats ng-cloak number="{{numberOfCallers}}" comments="Callers" colour="primary" type="user" goto="dashboard.callers" ng-show="{{isAdmin==2}}"></stats>
-        <stats ng-cloak number="{{numberOfClinics}}" comments="Clinics" colour="green" type="hospital-o" goto="dashboard.clinic" ng-show="{{isAdmin==2}}"></stats>
+        <stats ng-cloak number="10" comments="Clinics" colour="green" type="hospital-o" goto="dashboard.clinic" ng-show="{{isAdmin==2}}"></stats>
         <stats ng-cloak number="nil" comments="Appointments" colour="yellow" type="calendar" goto="dashboard.SearchCrashreport" ng-show="{{isAdmin==2}}"></stats>
         <stats ng-cloak number="nil" comments="Patients" colour="red" type="male" goto="dashboard.callerAdminSearchPatients" ng-show="{{isAdmin==2}}"></stats>
       <!-- Caller Admin Dashboard Ends-->   
