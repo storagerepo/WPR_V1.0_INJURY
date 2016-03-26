@@ -32,7 +32,7 @@ public class SearchClinicsService {
 	ClinicsService clinicsService;
 
 	@SuppressWarnings("static-access")
-	public ClinicLocationForm getNearByClinics(Integer patientId,
+	public ClinicLocationForm getNearByClinics(String patientId,
 			Integer searchRange) {
 
 		List<ClinicsForm> clinicsForms = new ArrayList<ClinicsForm>();
@@ -45,7 +45,7 @@ public class SearchClinicsService {
 		// Convert Miles to Meter for Circle in Map
 		Double radius = geoLocation.convertMilesToMeter(searchRange);
 
-		Patient patients = patientDAO.get(patientId);
+		Patient patients = patientDAO.getPatientByPatientId(patientId);
 		List<Clinic> clinics = new ArrayList<Clinic>();
 		clinics = clinicsDAO.getClinicsLists();
 
@@ -63,7 +63,7 @@ public class SearchClinicsService {
 						clinics2.getCountry(), clinics2.getZipcode(),
 						clinics2.getLatitude(), clinics2.getLongitude(),
 						clinics2.getOfficeNumber(), clinics2.getFaxNumber(),
-						clinics2.getDirections(), clinics2.getServiceArea(),
+						clinics2.getServiceArea(), clinics2.getDirections(),
 						clinics2.getNotes(), clinics2.getStatus(),
 						geoLocation.convertKiloMeterToMiles(distance),
 						clinicTimingLists);

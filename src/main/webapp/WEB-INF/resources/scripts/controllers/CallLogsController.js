@@ -18,13 +18,16 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		    	$scope.callLogs= response.data.callLogsForms;
 		    	$.each($scope.callLogs,function(index,value) {
 			    	 switch(value.response) {
-			    	    case "1":
+			    	    case 2:
 			    	        value.response="Not interested/injured";
 			    	        break;
-			    	    case "2":
+			    	    case 3:
 			    	    	value.response="Voice mail";
 			    	        break;
-			    	    case "3":
+			    	    case 4:
+	  		    	    	value.response="Appointment Scheduled";
+	  		    	    	break;
+			    	    case 5:
 			    	    	value.response="Do not call";
 			    	    	break;
 			    	    default:
@@ -58,16 +61,16 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	  	    	$scope.callLogs= response.data.callLogsForms;
 	  	    	 $.each($scope.callLogs,function(index,value) {
 	  		    	 switch(value.response) {
-	  		    	    case 1:
+	  		    	    case 2:
 	  		    	        value.response="Not Interested/Injured";
 	  		    	        break;
-	  		    	    case 2:
+	  		    	    case 3:
 	  		    	    	value.response="Voice mail";
 	  		    	        break;
-	  		    	    case 3:
+	  		    	    case 4:
 	  		    	    	value.response="Appointment Scheduled";
 	  		    	    	break;
-	  		    	    case 4:
+	  		    	    case 5:
 	  		    	    	value.response="Do not call";
 	  		    	    	break;
 	  		    	    default:
@@ -117,7 +120,8 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		$scope.options=true;
 		$scope.myForm.$setPristine();
 		$scope.calllogs={};
-		$scope.calllogs.appointmentsForm="";
+		$scope.isAlert=false;
+		$scope.calllogs.appointmentsForm={};
 		$scope.calllogs.patientId =$stateParams.id;
 		$scope.calllogs.timeStamp=moment().format('MM/DD/YYYY h:mm A');
 		
@@ -139,6 +143,8 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	
 	$scope.editModal=function(callLogId,appointmentId)
 	{
+		$scope.isAlert=true;
+		$scope.response="";
 		$scope.calllogs={};
 		$scope.calllogs.appointmentsForm="";
 		$scope.calllogs.appointmentId = appointmentId;
@@ -166,11 +172,18 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	};
 	
 	$scope.appointmentAlert=function(){
-		if($scope.calllogs.response!=3){
-			if(confirm("Are you sure want to remove appointment?")){
-				$scope.calllogs.appointmentsForm.doctorId="";
-				$scope.calllogs.appointmentsForm.clinicId="";
-				$scope.calllogs.appointmentsForm.scheduledDate="";
+		if($scope.isAlert){
+			if($scope.calllogs.response!=4){
+				if($scope.response!=""){
+					$scope.response="";
+					if(confirm("Are you sure want to remove appointment?")){
+						$scope.calllogs.appointmentsForm.doctorId="";
+						$scope.calllogs.appointmentsForm.clinicId="";
+						$scope.calllogs.appointmentsForm.scheduledDate="";
+					}
+				}
+			}else if($scope.calllogs.response==4){
+				$scope.response=$scope.calllogs.response;
 			}
 		}
 	};
@@ -280,15 +293,15 @@ else
 			}
 		};
 		
-		$scope.viewAppointments=function(id)
+		$scope.viewAppointments=function(appointmentId)
 		{
-		if(id==null)
+		if(appointmentId==null)
 			{
 			 $scope.appointments={};
 			 $scope.appointments.notavailable=true;
 			}
 		else{
-		requestHandler.getRequest("Caller/getAppointments.json?id="+id,"").then( function(response) {
+		requestHandler.getRequest("Caller/getAppointments.json?appointmentId="+appointmentId,"").then( function(response) {
 			
 			    $scope.appointments=response.data.appointmentsForm;
 			    $scope.appointments.notavailable=false;

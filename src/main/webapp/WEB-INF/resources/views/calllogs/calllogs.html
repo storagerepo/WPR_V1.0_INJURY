@@ -6,9 +6,14 @@
 <div ng-cloak>
 <div class="row">
 	<div class="col-lg-12">	
-		<a ui-sref="dashboard.CallerSearchPatients"
+		<a ng-show="{{isAdmin==4}}" ui-sref="dashboard.CallerSearchPatients"
 			class="btn-sm btn-primary pull-right margin-top-40 btn-margin-left"><i class="fa fa-arrow-circle-left fa-lg"></i> Back
-			to Patient</a> <span ng-hide="patient.patientStatus==3"> <a
+			to Patient</a>
+			<a ng-show="{{isAdmin==2}}" ui-sref="dashboard.callerAdminSearchPatients"
+			class="btn-sm btn-primary pull-right margin-top-40 btn-margin-left"><i class="fa fa-arrow-circle-left fa-lg"></i> Back
+			to Patient</a>
+			
+			 <span ng-show="{{isAdmin==4}}"> <a
 			ng-click="addModel()" href=""
 			class="btn-sm btn-primary pull-right margin-top-40 margin-left-5 btn-margin-left"><i class="fa fa-plus-circle fa-lg"></i> Add
 				Call Logs</a>
@@ -23,7 +28,7 @@
 			| <a ng-click="viewPatients(patient.id)"
 				class="btn btn-xs btn-primary"><i
 				class="glyphicon glyphicon-eye-open"></i>&nbsp; View More Details</a> |
-			<a href="#/dashboard/viewlocations/{{patient.id}}"
+			<a href="#/dashboard/viewlocations/{{patient.patientId}}"
 				class="btn btn-xs btn-warning"><i
 				class="glyphicon glyphicon-map-marker"></i>&nbsp; View Near By
 				Clinics</a>
@@ -88,31 +93,16 @@
 						<td ng-cloak class="col-md-3 wrap">{{callLog.notes}}</td>
 						<td ng-cloak class="col-md-2">{{callLog.callerFirstName}} {{callLog.callerLastName}}</td>
 						<td class="col-md-2">
-							<a ng-cloak type="submit"
+							<a ng-show="{{isAdmin==4}}" ng-cloak type="submit"
 								class="btn btn-xs btn-warning hint--top"
 								data-hint="Edit Call Log"
 								ng-click="editModal(callLog.callLogId,callLog.appointmentId)">&nbsp;<i
 									class="glyphicon glyphicon-edit"></i>&nbsp;
-							</a> <a href="#" ng-cloak ng-click="deleteCalllogs(callLog.callLogId)"
-								class="btn btn-xs btn-danger hint--top"
-								data-hint="Delete Call Log">&nbsp;<i
-									class="glyphicon glyphicon-trash"></i>&nbsp;
-							</a> <a ng-cloak ng-click="addAppointment(callLog.callLogId)"
-								class="btn btn-xs btn-success hint--top"
-								data-hint="Add Appointment"
-								ng-show="callLogss.appointmentId==null">&nbsp;<i
-									class="glyphicon glyphicon-plus"></i>&nbsp;
-							</a> <a ng-cloak
-								ng-click="removeAppointment(callLogss.appointmentId,callLogss.patientId)"
-								class="btn btn-xs btn-danger hint--top"
-								data-hint="Cancel Appointment"
-								ng-show="callLogss.appointmentId!=null">&nbsp;<i
-									class="glyphicon glyphicon-minus"></i>&nbsp;
-							</a>
-							<a ng-cloak type="submit" title=""
+							</a>  
+							<a ng-cloak
 							class="btn btn-xs btn-primary hint--top"
 							data-hint="View Appointment"
-							ng-click="viewAppointments(callLogss.appointmentId)"> &nbsp;<i
+							ng-click="viewAppointments(callLog.appointmentId)"> &nbsp;<i
 								class="glyphicon glyphicon-eye-open"></i> &nbsp;
 						</a> 
 					</td>
@@ -197,18 +187,12 @@
 					</span> <br> <label>Select Doctor</label> <select
 						class="form-control" ng-model="calllogs.appointmentsForm.doctorId"
 						name="doctorId" id="doctorId"
-						ng-options="doctors.id as doctors.doctorName for doctors in doctor"
-						ng-required="calllogs.response==4">
+						ng-options="doctors.id as doctors.doctorName for doctors in doctor">
 						<option value="">-- Select Doctor --</option>
-					</select> <span class="error-container"
-						ng-show="myForms.doctorId.$dirty && myForms.doctorId.$invalid">
-						<span style="color: red"
-						ng-show="myForms.doctorId.$error.required">Please Select
-							 Doctor</span>
-					</span> <br> <label>Date & Time</label>
+					</select><br> <label>Date & Time</label>
 					<div class="input-group">
 						<input type="text" name="scheduledDate" id="scheduledDate"
-							class="form-control" ng-model="calllogs.appointmentsForm.scheduledDate"
+							class="form-control" ng-model="calllogs.appointmentsForm.scheduledDateTime"
 							placeholder="Enter Date" ng-required="calllogs.response==4">
 						<span class="input-group-addon white-color-bg"> <span
 							class="glyphicon glyphicon-calendar"></span></span>
@@ -250,43 +234,7 @@
 		</div>
 	</div>
 </form>
-<!--  Add Appointments Model-->
-<form id="myForms" name="myForms" novalidate ng-cloak>
-	<div class="modal fade" id="AppointmentsModal" role="dialog">
-		<div class="modal-dialog">
 
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Add Appointment</h4>
-				</div>
-				<div class="modal-body">
-					 <br /> <input type="hidden" name="patientId" class="form-control"
-						ng-model="Appointments.patientId"> <input type="hidden"
-						name="callLogId" class="form-control"
-						ng-model="Appointments.callLogId"> <label>Notes</label>
-					<textarea name="notes" id="appointmentNotes"
-						class="form-control height-100" ng-model="Appointments.notes"
-						placeholder="Enter Notes" required></textarea>
-					<span class="error-container"
-						ng-show="myForms.notes.$dirty && myForms.notes.$invalid"> <span
-						style="color: red" ng-show="myForms.notes.$error.required">Please
-							Enter Notes</span>
-					</span> <br />
-				</div>
-
-				<div class="modal-footer">
-					<button class="btn btn-danger" data-dismiss="modal">Close</button>
-					<button class="btn btn-success" data-dismiss="modal"
-						ng-class="{'button-disable':myForms.$invalid}"
-						ng-disabled='myForms.$invalid' ng-click="saveAppointments()">Save</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-</form>
 <!--  View Appointments Modal-->
 
 <div class="modal fade" id="viewAppointmentsModal" role="dialog">
@@ -302,12 +250,12 @@
 				<table class="table table-striped table-bordered">
 					<tbody ng-show="!appointments.notavailable">
 						<tr>
-							<td>Scheduled Date</td>
-							<td class="col-md-9">{{appointments.scheduledDate}}</td>
+							<td>Scheduled Date & Time</td>
+							<td class="col-md-8">{{appointments.scheduledDateTime}}</td>
 						</tr>
 						<tr>
-						<td>Notes</td>
-						<td class="col-md-9 wrap">{{appointments.notes}}</td>
+						<td>Clinic Name</td>
+						<td class="col-md-8 wrap">{{appointments.clinicName}}</td>
 						</tr>
 					</tbody>
 					<tbody ng-show="appointments.notavailable">

@@ -11,17 +11,6 @@ import com.deemsys.project.entity.Appointments;
  * 
  */
 public interface AppointmentsDAO extends IGenericDAO<Appointments> {
-	public Integer updates(Integer id, Integer status);
-
-	public List<Appointments> todaysAppointment();
-
-	public List<Appointments> getByDates(String date);
-
-	public List<Appointments> getAppointmentsBetweenDates(Date startDate,
-			Date endDate);
-
-	public List<AppointmentsForm> getAppointmentsBetweenDatesByCallerId(
-			String startDate, String endDate, Integer staffId);
 	
 	public Appointments getAppointmentsByAppintementId(Long appointmentId);
 	
@@ -32,4 +21,8 @@ public interface AppointmentsDAO extends IGenericDAO<Appointments> {
 	public Integer getAppointmentsCount(Integer callerAdminId);
 	
 	public Integer changeAppointmentStatus(Long appointmentId,Integer status);
+	
+	public AppointmentsForm getAppointmentsByAppointmentIdWithFullDetails(Long appointmentId);
+	
+	public void deleteAppointmentsByCalllogId(Long calllogId);
 }

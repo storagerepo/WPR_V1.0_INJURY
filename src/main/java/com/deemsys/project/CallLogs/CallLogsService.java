@@ -210,7 +210,7 @@ public class CallLogsService {
 		callLogsDAO.save(callLogs);
 		
 		
-		if(callLogsForm.getResponse()==3){
+		if(callLogsForm.getResponse()==4){
 			Clinic clinic=new Clinic();
 			clinic.setClinicId(callLogsForm.getAppointmentsForm().getClinicId());
 			Appointments appointments=new Appointments(callLogs, InjuryConstants.convertDateFromDateAndTime(callLogsForm.getAppointmentsForm().getScheduledDateTime()),callLogsForm.getAppointmentsForm().getScheduledDateTime(), "", 1,clinic,callLogsForm.getAppointmentsForm().getDoctorId());
@@ -248,7 +248,7 @@ public class CallLogsService {
 		 callLogsDAO.update(callLogs);
 		patientCallerDAO.merge(patientCallerAdminMap);
 		
-		if(callLogsForm.getResponse()==3){
+		if(callLogsForm.getResponse()==4){
 			Clinic clinic=new Clinic();
 			clinic.setClinicId(callLogsForm.getAppointmentsForm().getClinicId());
 			Appointments appointments=new Appointments(callLogs, InjuryConstants.convertDateFromDateAndTime(callLogsForm.getAppointmentsForm().getScheduledDateTime()),callLogsForm.getAppointmentsForm().getScheduledDateTime(), "", 1,clinic,callLogsForm.getAppointmentsForm().getDoctorId());
@@ -264,6 +264,8 @@ public class CallLogsService {
 
 	// Delete an Entry
 	public int deleteCallLogs(Long callLogsId) {
+		
+		appointmentsDAO.deleteAppointmentsByCalllogId(callLogsId);
 		callLogsDAO.deleteCallLog(callLogsId);
 		return 1;
 	}

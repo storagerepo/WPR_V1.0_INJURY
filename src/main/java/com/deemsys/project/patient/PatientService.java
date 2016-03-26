@@ -133,7 +133,7 @@ public class PatientService {
 		Patient patient=patientDAO.getPatientByPatientId(patientId);
 		PatientForm patientForm=this.getPatientForm(patient);
 		patientForm.setLatitude(patient.getLatitude());
-		patientForm.setLatitude(patient.getLongitude());
+		patientForm.setLongitude(patient.getLongitude());
 		return patientForm;
 		
 	}
@@ -165,26 +165,28 @@ public class PatientService {
 		// TODO: Convert Form to Entity Here
 
 		// Logic Starts
-
-		String latLong = geoLocation.getLocation(patientForm.getAddress());
-
-		double longitude = 0.0;
-		double latitude = 0.0;
-		if (!latLong.equals("NONE")) {
-			String[] latitudeLongitude = latLong.split(",");
-			latitude = Double.parseDouble(latitudeLongitude[0]);
-			longitude = Double.parseDouble(latitudeLongitude[1]);
-		}
-
-		patientForm.setLatitude(latitude);
-		patientForm.setLongitude(longitude);
 		try{
-			patientDAO.savePatient(this.getPatient(patientForm));
-		}catch(Exception exception){
-			throw exception;
+			String latLong = geoLocation.getLocation(patientForm.getAddress());
+	
+			double longitude = 0.0;
+			double latitude = 0.0;
+			if (!latLong.equals("NONE")) {
+				String[] latitudeLongitude = latLong.split(",");
+				latitude = Double.parseDouble(latitudeLongitude[0]);
+				longitude = Double.parseDouble(latitudeLongitude[1]);
+			}
+	
+			patientForm.setLatitude(latitude);
+			patientForm.setLongitude(longitude);
+			try{
+				patientDAO.savePatient(this.getPatient(patientForm));
+			}catch(Exception exception){
+				throw exception;
+			}
+		}catch(Exception ex){
+			
 		}
 		
-
 		return 1;
 	}
 

@@ -22,9 +22,9 @@ public class AppointmentsController {
 	AppointmentsService appointmentsService;
 
 	@RequestMapping(value = "/getAppointments", method = RequestMethod.GET)
-	public String getAppointments(@RequestParam("id") Integer id, ModelMap model) {
+	public String getAppointments(@RequestParam("appointmentId") Long appointmentId, ModelMap model) {
 		model.addAttribute("appointmentsForm",
-				appointmentsService.getAppointments(id));
+				appointmentsService.getAppointmentsByWithFullDetails(appointmentId));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
@@ -63,36 +63,10 @@ public class AppointmentsController {
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
-
-	@RequestMapping(value = "/getAllAppointmentsByPatient", method = RequestMethod.GET)
-	public String getAllAppointmentsByPatient(
-			@RequestParam("patientId") Integer patientId, ModelMap model) {
-		model.addAttribute("patientsForms",
-				appointmentsService.getPatientDetails(patientId));
-		model.addAttribute("requestSuccess", true);
-		return "/returnPage";
-	}
-
-	@RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-	public String updateStatus(@RequestParam("id") Integer id,
-			@RequestParam("status") Integer status, ModelMap model) {
-		appointmentsService.updateStatu(id, status);
-		model.addAttribute("requestSuccess", true);
-		return "/returnPage";
-	}
-
+	
 	@RequestMapping(value = "/searchAppointments", method = RequestMethod.POST)
 	public String searchAppointment(@RequestBody AppointmentSearchForm appointmentSearchForm, ModelMap model) {
 		model.addAttribute("appointmentsSearchRessult",appointmentsService.searchAppointments(appointmentSearchForm));
-		model.addAttribute("requestSuccess", true);
-		return "/returnPage";
-	}
-
-	@RequestMapping(value = "/getByDates", method = RequestMethod.GET)
-	public String getAppointments(@RequestParam("date") String date,
-			ModelMap model) {
-		model.addAttribute("appointmentsForms",
-				appointmentsService.getByDates(date));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

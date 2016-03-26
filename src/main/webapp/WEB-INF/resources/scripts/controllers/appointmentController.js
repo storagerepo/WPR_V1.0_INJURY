@@ -32,7 +32,12 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
 	
 
 	$scope.init();
-    
+	$scope.searchAppointmentByPage=function(newPageNumber){
+		 $scope.searchAppointment.pageNumber=newPageNumber;
+		$scope.searchAppointments();
+	};
+	
+	
 	$scope.changeAppointmentStatus=function(appointmentId,status){
 		requestHandler.postRequest("Caller/changeAppointmentStatus.json?appointmentId="+appointmentId+"&status="+status,"").then(function(results){
 			$scope.searchAppointments();

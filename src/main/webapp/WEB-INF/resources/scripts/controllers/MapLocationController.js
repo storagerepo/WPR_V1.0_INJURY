@@ -2,37 +2,48 @@ var adminApp=angular.module('sbAdminApp',['requestModule','uiGmapgoogle-maps']);
 
 adminApp.controller('showNearByClinicController',function($scope,$log,$stateParams,requestHandler,$compile,$q){
 	
+	$scope.init=function(){
+		$scope.searchRange=50;
+		$scope.clinicsForms="";
+		$scope.getPatient();
+		$scope.getNearByClinics();
+	};
+	
 	// Get Patient Id
-	requestHandler.getRequest("Staff/getPatientWithLatLong.json?id="+$stateParams.id,"").then( function(response) {
-		console.log(response.data.patientsForm);
-		$scope.patient= response.data.patientsForm;
-		$scope.map = {center: {latitude: $scope.patient.latitude, longitude: $scope.patient.longitude }, zoom: 13, markers:[] };
-	    $scope.options = {scrollwheel: true};
-	    $scope.clinicMarkers = [];
-	    var markers = [];
-		var idKey="id";
-		var marker = {
-		        latitude: $scope.patient.latitude,
-		        longitude: $scope.patient.longitude,
-		        title: $scope.patient.address,
-		        show:false,
-		        icon:'resources/images/map/map_icon_green.png'
-		    };
-		marker[idKey]=0;
-		markers.push(marker);
-		$scope.clinicMarkers = markers;
-	});
-	$scope.clinicsForms="";
+	$scope.getPatient=function(){
+		requestHandler.getRequest("Patient/getPatient.json?patientId="+$stateParams.id,"").then( function(response) {
+			console.log(response.data.patientForm);
+			$scope.patient= response.data.patientForm;
+			$scope.map = {center: {latitude: $scope.patient.latitude, longitude: $scope.patient.longitude }, zoom: 8, markers:[] };
+		    $scope.options = {scrollwheel: true};
+		    $scope.clinicMarkers = [];
+		    var markers = [];
+			var idKey="id";
+			var marker = {
+			        latitude: $scope.patient.latitude,
+			        longitude: $scope.patient.longitude,
+			        title: $scope.patient.address,
+			        show:false,
+			        icon:'resources/images/map/map_icon_green.png'
+			    };
+			marker[idKey]=0;
+			markers.push(marker);
+			$scope.clinicMarkers = markers;
+		});
+	};
+	
+	
+	
 	// Search Near By Clinics
 	$scope.getNearByClinics=function(){
     	
-    	requestHandler.getRequest("Staff/getNearByClincs.json.json?patientId="+$stateParams.id+"&searchRange="+$scope.searchRange,"").then( function(response) {
+    	requestHandler.getRequest("Caller/getNearByClincs.json.json?patientId="+$stateParams.id+"&searchRange="+$scope.searchRange,"").then( function(response) {
     		$scope.clinicLocationForm= response.data.clinicLocationForm;
     		$scope.clinicsForms = response.data.clinicLocationForm.clinicsForms;
     		console.log(response.data.clinicLocationForm);
     		var clinicLocationForm= response.data.clinicLocationForm;
     		var clinicsForms =response.data.clinicLocationForm.clinicsForms;
-    		$scope.map = {center: {latitude: clinicLocationForm.centerLatitude, longitude: clinicLocationForm.centerLongitude }, zoom: 11 };
+    		$scope.map = {center: {latitude: clinicLocationForm.centerLatitude, longitude: clinicLocationForm.centerLongitude }, zoom: 8 };
     		$scope.clinicMarkers = [];
     		$scope.circles = [];
     		var markers = [];
@@ -116,10 +127,12 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     
     // Get More Details About Clinic
     $scope.viewClinicDetails=function(clinicId) {
-		 requestHandler.getRequest("Staff/getClinic.json?clinicId="+clinicId,"").then(function(results){
+		 requestHandler.getRequest("CAdmin/getClinic.json?clinicId="+clinicId,"").then(function(results){
 		 	 $scope.clinicDetails= results.data.clinicsForm;
 		 	 $("#viewClinicDetails").modal('show');
 		  });
 	};
     
+	// Initialized Function
+	$scope.init();
 });

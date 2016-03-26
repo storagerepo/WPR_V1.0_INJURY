@@ -329,8 +329,14 @@ public class ClinicsService {
 		List<ClinicsForm> clinicsForms = new ArrayList<ClinicsForm>();
 
 		List<Clinic> clinicss = new ArrayList<Clinic>();
-
-		clinicss = clinicsDAO.getClinicId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId());
+		String role=loginService.getCurrentRole();
+		Integer callerAdminId=0;
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+			callerAdminId=callerAdminDAO.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId();
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			callerAdminId=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId();
+		}
+		clinicss = clinicsDAO.getClinicId(callerAdminId);
 
 		for (Clinic clinics : clinicss) {
 			// TODO: Fill the List

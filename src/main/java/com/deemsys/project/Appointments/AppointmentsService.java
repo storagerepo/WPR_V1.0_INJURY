@@ -90,20 +90,15 @@ public class AppointmentsService {
 	}
 
 	// Get Particular Entry
-	public AppointmentsForm getAppointments(Integer getId) {
+	public AppointmentsForm getAppointments(Long appointmentId) {
 		Appointments appointments = new Appointments();
 
-		appointments = appointmentsDAO.get(getId);
+		appointments = appointmentsDAO.getAppointmentsByAppintementId(appointmentId);
 
 		// TODO: Convert Entity to Form
 		// Start
 		AppointmentsForm appointmentsForm = new AppointmentsForm();
-		/*AppointmentsForm appointmentsForm = new AppointmentsForm(
-				appointments.getId(), appointments.getPatient().getId(),
-				appointments.getPatient().getName(),
-				InjuryConstants.convertMonthFormat(appointments
-						.getScheduledDate()), appointments.getNotes(),
-				appointments.getStatus());*/
+		
 
 		// End
 
@@ -146,16 +141,6 @@ public class AppointmentsService {
 		return 1;
 	}
 
-	public Integer updateStatu(Integer getId, Integer getStatus) {
-		
-		// Logic Starts
-
-		appointmentsDAO.updates(getId, getStatus);
-
-		// End
-
-		return 1;
-	}
 
 	// Update an Entry
 	public int updateAppointments(AppointmentsForm appointmentsForm) {
@@ -172,27 +157,6 @@ public class AppointmentsService {
 		return 1;
 	}
 
-	public PatientForm getPatientDetails(Integer getId) {
-		Patient patient = new Patient();
-
-		patient = patientDAO.get(getId);
-
-		// TODO: Convert Entity to Form
-		// Start
-		PatientForm patientForm = new PatientForm();
-		if (patient == null) {
-
-		} else {
-			patientForm = new PatientForm();
-
-		}
-
-		// End
-
-		// End
-
-		return patientForm;
-	}
 
 	public AppointmentsSearchResult searchAppointments(AppointmentSearchForm appointmentSearchForm) {
 		appointmentSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
@@ -201,32 +165,6 @@ public class AppointmentsService {
 
 	}
 
-	public List<AppointmentsForm> getByDates(String date) {
-		List<AppointmentsForm> appointmentsForms = new ArrayList<AppointmentsForm>();
-
-		List<Appointments> appointmentss = new ArrayList<Appointments>();
-		// TODO: Convert Entity to Form
-		// Start
-		String role = callerService.getCurrentRole();
-		if (role == "ROLE_ADMIN") {
-			appointmentss = appointmentsDAO.getByDates(date);
-
-			for (Appointments appointments : appointmentss) {
-				// TODO: Fill the List
-				AppointmentsForm appointmentsForm = new AppointmentsForm();
-			}
-		} else if (role == "ROLE_STAFF") {
-			Integer userId = callerService.getCurrentUserId();
-			// get Caller Id
-			Integer callerId = callerDAO.getByUserId(userId).getCallerId();
-			appointmentsForms = patientDAO
-					.getParticularDayAppointmentListByCallerId(date, callerId);
-		}
-
-		// End
-
-		return appointmentsForms;
-	}
 
 	public Integer getNoOfAppointments() {
 		
@@ -263,5 +201,10 @@ public class AppointmentsService {
 	// Change Appointment Status
 	public void changeAppointmentStatus(Long appointmentId,Integer status){
 		appointmentsDAO.changeAppointmentStatus(appointmentId, status);
+	}
+	
+	// get Appointment Full Details By AppointmentId
+	public AppointmentsForm getAppointmentsByWithFullDetails(Long appointmentId){
+		return appointmentsDAO.getAppointmentsByAppointmentIdWithFullDetails(appointmentId);
 	}
 }

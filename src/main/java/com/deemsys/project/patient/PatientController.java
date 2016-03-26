@@ -160,7 +160,7 @@ public class PatientController {
 	// get Near By clinics
 	@RequestMapping(value = "/Caller/getNearByClincs", method = RequestMethod.GET)
 	public String searchNearByClinics(
-			@RequestParam("patientId") Integer patientId,
+			@RequestParam("patientId") String patientId,
 			@RequestParam("searchRange") Integer searchRange, ModelMap model) {
 
 		ClinicLocationForm clinicLocationForms = searchClinicsService
