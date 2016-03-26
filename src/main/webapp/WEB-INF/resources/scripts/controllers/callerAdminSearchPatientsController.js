@@ -26,6 +26,8 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		$scope.patient.isArchived="0";
 		$scope.patient.patientStatus="6";
 		$scope.totalRecords=0;
+		
+		//Initial Search
 		$scope.searchItems($scope.patient);
 	};
 

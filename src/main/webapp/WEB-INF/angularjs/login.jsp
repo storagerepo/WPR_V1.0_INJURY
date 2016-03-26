@@ -68,16 +68,16 @@
 	.panel-override .form-control{
 		border-radius:0!important;
 		border:1px solid rgba(0, 0, 0,0.2)!important;
-		/* background:rgba(0, 51, 102,0.2)!important;
-		color:#fff!important; */
-		padding:20px!important;
+		padding:10px!important;
+		height:40px!important;
+		line-height:19px!important;
 		box-shadow: none;
 	}
 	
 	.btn-login{
 		width:100%!important;
 		border-radius:0!important;
-		padding:15px!important;
+		padding:10px!important;
 		border:1px solid rgba(0, 77, 153,0.9)!important;
 		background:rgba(0, 77, 153,0.9)!important;
 		color:#fff!important;
@@ -90,11 +90,6 @@
 	.tag-color-white{
 		color:rgba(0, 51, 102,1)!important;
 	}
-
-	/* .panel-override .form-control::-webkit-input-placeholder { color: rgba(255, 255, 255,0.4); }
-	.panel-override .form-control:-moz-placeholder { color: rgba(255, 255, 255,0.4); }
-	.panel-override .form-control::-moz-placeholder { color: rgba(255, 255, 255,0.4); }
-	.panel-override .form-control:-ms-input-placeholder { color: rgba(255, 255, 255,0.4); } */
 	
 	</style>
 </head>
