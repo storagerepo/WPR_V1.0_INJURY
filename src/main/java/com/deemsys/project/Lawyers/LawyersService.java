@@ -17,8 +17,11 @@ import com.deemsys.project.entity.Lawyer;
 import com.deemsys.project.entity.LawyerCountyMapId;
 import com.deemsys.project.entity.Roles;
 import com.deemsys.project.entity.Users;
+import com.deemsys.project.login.LoginService;
+import com.deemsys.project.login.loginDAO;
 import com.deemsys.project.patient.PatientForm;
 import com.deemsys.project.patient.PatientService;
+import com.deemsys.project.patientLawyerMap.PatientLawyerDAO;
 import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.County.CountyForm;
 import com.deemsys.project.County.CountyService;
@@ -65,6 +68,12 @@ public class LawyersService {
 
 	@Autowired
 	PatientService patientService;
+	
+	@Autowired
+	LoginService loginService;
+	
+	@Autowired
+	PatientLawyerDAO patientLawyerDAO;
 
 	// Get All Entries
 	public List<LawyersForm> getLawyersList() {
@@ -357,5 +366,11 @@ public class LawyersService {
 		Lawyer lawyers = lawyersDAO.get(lawyerId);
 		status = usersDAO.resetUserPassword(lawyers.getUsers().getUserId());
 		return status;
+	}
+	
+	// get Number Of Assigned Patients
+	public Integer getNumberOfAssignedPatientsForLawyer(){
+		Integer lawyerId=this.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId();
+		return patientLawyerDAO.getLawyerAdminMapsByLawyerId(lawyerId).size();
 	}
 }

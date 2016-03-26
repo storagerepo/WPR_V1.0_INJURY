@@ -1,5 +1,7 @@
 package com.deemsys.project.patientLawyerMap;
 
+import java.util.List;
+
 import com.deemsys.project.common.IGenericDAO;
 import com.deemsys.project.entity.PatientCallerAdminMap;
 import com.deemsys.project.entity.PatientCallerAdminMapId;
@@ -13,5 +15,7 @@ public interface PatientLawyerDAO extends IGenericDAO<PatientLawyerAdminMap> {
 
 	public PatientLawyerAdminMap getPatientMapsByLawyerAdminId(String patientId,
 			Integer lawyerAdminId);
+	
+	public List<PatientLawyerAdminMap> getLawyerAdminMapsByLawyerId(Integer lawyerId);
 	
 }

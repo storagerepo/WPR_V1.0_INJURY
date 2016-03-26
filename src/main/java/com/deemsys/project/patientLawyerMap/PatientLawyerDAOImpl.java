@@ -152,4 +152,12 @@ public class PatientLawyerDAOImpl implements PatientLawyerDAO{
 		return (PatientLawyerAdminMap) criteria.uniqueResult();
 	}
 
+	@Override
+	public List<PatientLawyerAdminMap> getLawyerAdminMapsByLawyerId(
+			Integer lawyerId) {
+		// TODO Auto-generated method stub
+		List<PatientLawyerAdminMap> patientLawyerAdminMaps=this.sessionFactory.getCurrentSession().createCriteria(PatientLawyerAdminMap.class).add(Restrictions.eq("lawyer.lawyerId", lawyerId)).list();
+		return patientLawyerAdminMaps;
+	}
+
 }

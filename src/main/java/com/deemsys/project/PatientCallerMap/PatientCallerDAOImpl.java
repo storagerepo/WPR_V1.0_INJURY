@@ -153,4 +153,12 @@ public class PatientCallerDAOImpl implements PatientCallerDAO{
 		return (PatientCallerAdminMap) criteria.uniqueResult();
 	}
 
+
+	@Override
+	public List<PatientCallerAdminMap> getAssignedPatientsByCallerId(Integer callerId) {
+		// TODO Auto-generated method stub
+		List<PatientCallerAdminMap> patientCallerAdminMaps=this.sessionFactory.getCurrentSession().createCriteria(PatientCallerAdminMap.class).add(Restrictions.eq("caller.callerId", callerId)).list();
+		return patientCallerAdminMaps;
+	}
+
 }

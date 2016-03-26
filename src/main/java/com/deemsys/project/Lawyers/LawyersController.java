@@ -104,8 +104,7 @@ public class LawyersController {
 	}
 
 	@RequestMapping(value = "/LAdmin/resetLawyerPassword", method = RequestMethod.POST)
-	public String resetLawyerPassword(
-			@RequestParam("lawyerId") Integer lawyerId, ModelMap model) {
+	public String resetLawyerPassword(@RequestParam("lawyerId") Integer lawyerId, ModelMap model) {
 		Integer status = lawyersService.resetLawyerPassword(lawyerId);
 		if (status == 0) {
 			model.addAttribute("requestSuccess", true);
@@ -150,6 +149,13 @@ public class LawyersController {
 	@RequestMapping(value = {"/LAdmin/releaseFromArchive","/Lawyer/releaseFromArchive"},method = RequestMethod.POST)
 	public String releaseArchive(@RequestBody AssignLawyerForm assignLawyerForm, ModelMap model) {
 		model.addAttribute("success",patientLawyerService.moveToArchive(assignLawyerForm,0));
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
+	@RequestMapping(value = "/Lawyer/getNumberOfAssignedPatients", method = RequestMethod.GET)
+	public String getNumberOfAssignedPatientsForLawyer(ModelMap model) {
+		model.addAttribute("numberOfAssignedPatiets",lawyersService.getNumberOfAssignedPatientsForLawyer());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

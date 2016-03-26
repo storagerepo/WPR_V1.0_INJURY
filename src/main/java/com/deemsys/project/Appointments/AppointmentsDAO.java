@@ -27,5 +27,9 @@ public interface AppointmentsDAO extends IGenericDAO<Appointments> {
 	
 	public void deleteAppointmentsByAppointmentId(Long appointmentId);
 	
-	public List<AppointmentsForm> searchAppointments(AppointmentSearchForm appointmentSearchForm);
+	public AppointmentsSearchResult searchAppointments(AppointmentSearchForm appointmentSearchForm);
+	
+	public Integer getAppointmentsCount(Integer callerAdminId);
+	
+	public Integer changeAppointmentStatus(Long appointmentId,Integer status);
 }

@@ -125,10 +125,11 @@ public class ClinicsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/CAdmin/getNumberOfClinics", method = RequestMethod.GET)
+	@RequestMapping(value = "/Caller/getNumberOfClinics", method = RequestMethod.GET)
 	public String getNoOfClinics(Model model) {
 
-		model.addAttribute("NoOfClinics", clinicsService.getNoOfClinics());
+		model.addAttribute("NumberOfClinics", clinicsService.getNoOfClinics());
+		model.addAttribute("requestSuccess", true);
 		return "/retuenPage";
 	}
 

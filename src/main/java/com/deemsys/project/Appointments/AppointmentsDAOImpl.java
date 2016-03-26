@@ -22,6 +22,7 @@ import org.springframework.stereotype.Repository;
 import com.amazonaws.services.opsworks.model.App;
 import com.deemsys.project.CallLogs.CallLogsForm;
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 
 /**
@@ -220,34 +221,39 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 	}
 
 	@Override
-	public List<AppointmentsForm> searchAppointments(AppointmentSearchForm appointmentSearchForm) {
+	public AppointmentsSearchResult searchAppointments(AppointmentSearchForm appointmentSearchForm) {
 		// TODO Auto-generated method stub
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(Appointments.class);
 		criteria.createAlias("callLog", "c1");
 		criteria.createAlias("clinic", "c2");
+		criteria.createAlias("c1.caller", "c3");
 		criteria.createAlias("c1.patientCallerAdminMap", "pc1",Criteria.INNER_JOIN);
 		criteria.createAlias("pc1.patient", "p1",Criteria.INNER_JOIN);
 		ProjectionList projectionList=Projections.projectionList();
 		projectionList.add(Projections.property("appointmentId"),"id");
 		projectionList.add(Projections.property("scheduledDate"),"scheduledDate");
+		projectionList.add(Projections.property("scheduledDateTime"),"scheduledDateTime");
 		projectionList.add(Projections.property("status"),"status");
 		projectionList.add(Projections.property("clinic.clinicId"),"clinicId");
 		projectionList.add(Projections.property("doctorId"),"doctorId");
+		projectionList.add(Projections.property("c3.firstName"),"callerFirstName");
+		projectionList.add(Projections.property("c3.lastName"),"callerLastName");
 		projectionList.add(Projections.property("c2.clinicName"),"clinicName");
+		projectionList.add(Projections.property("p1.patientId"),"patientId");
 		projectionList.add(Projections.property("p1.name"),"patientName");
 		criteria.setProjection(projectionList);
 		
 		// Date Between Criterion
-		String monthBegin="";
-		String monthEnd="";
+		Date monthBegin=new Date();
+		Date monthEnd=new Date();
 		if (appointmentSearchForm.getMonth() == 0) {
-			monthBegin = new LocalDate().withDayOfMonth(1).toString("MM/dd/YYYY");
+			monthBegin = new LocalDate().withDayOfMonth(1).toDate();
 			monthEnd = new LocalDate().plusMonths(1).withDayOfMonth(1)
-					.minusDays(1).toString("MM/dd/YYYY");
+					.minusDays(1).toDate();
 		} else {
-			monthBegin = new LocalDate(appointmentSearchForm.getYear(), appointmentSearchForm.getMonth(), 1).toString("MM/dd/YYYY");;
+			monthBegin = new LocalDate(appointmentSearchForm.getYear(), appointmentSearchForm.getMonth(), 1).toDate();
 			monthEnd = new LocalDate(appointmentSearchForm.getYear(), appointmentSearchForm.getMonth(), 1).plusMonths(1)
-					.withDayOfMonth(1).minusDays(1).toString("MM/dd/YYYY");;
+					.withDayOfMonth(1).minusDays(1).toDate();;
 		}
 		System.out.println("Month Beginnn......"+monthBegin);
 		System.out.println("Month End......"+monthEnd);
@@ -256,12 +262,12 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		
 		// Date Search
 		if(!appointmentSearchForm.getDate().equals("")){
-			Criterion dateCriterion=Restrictions.like("scheduledDate", appointmentSearchForm.getDate(),MatchMode.ANYWHERE);
+			Criterion dateCriterion=Restrictions.eq("scheduledDate", InjuryConstants.convertYearFormat(appointmentSearchForm.getDate()));
 			criteria.add(dateCriterion);
 		}
 		// PatientName Search
 		if(!appointmentSearchForm.getPatientName().equals("")){
-			Criterion patientNameCriterion=Restrictions.like("p1.patient.name",appointmentSearchForm.getPatientName(),MatchMode.ANYWHERE);
+			Criterion patientNameCriterion=Restrictions.like("p1.name",appointmentSearchForm.getPatientName(),MatchMode.ANYWHERE);
 			criteria.add(patientNameCriterion);
 		}
 		
@@ -272,14 +278,45 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		}
 		
 		// Clinic Id Search
-		if(appointmentSearchForm.getClinicId()!=0){
-			Criterion clinicCriterion=Restrictions.eq("c2.clinicId",appointmentSearchForm.getClinicId());
+		if(!appointmentSearchForm.getClinicName().equals("")){
+			Criterion clinicCriterion=Restrictions.like("c2.clinicName",appointmentSearchForm.getClinicName(),MatchMode.ANYWHERE);
 			criteria.add(clinicCriterion);
 		}
+		
+		if(!appointmentSearchForm.getCallerFirstName().equals("")){
+			Criterion callerFirstNameCriterion=Restrictions.like("c3.firstName",appointmentSearchForm.getCallerFirstName(),MatchMode.ANYWHERE);
+			criteria.add(callerFirstNameCriterion);
+		}
+		
+		if(!appointmentSearchForm.getCallerLastName().equals("")){
+			Criterion callerLastNameCriterion=Restrictions.like("c3.lastName",appointmentSearchForm.getCallerLastName(),MatchMode.ANYWHERE);
+			criteria.add(callerLastNameCriterion);
+		}
+		
 		criteria.add(Restrictions.eq("c1.patientCallerAdminMap.id.callerAdminId", appointmentSearchForm.getCallerAdminId()));
 		Integer totalRecords=criteria.setResultTransformer(new AliasToBeanResultTransformer(AppointmentsForm.class)).list().size();
 		List<AppointmentsForm> appointmentsForms=criteria.setFirstResult((appointmentSearchForm.getPageNumber()-1)*appointmentSearchForm.getItemsPerPage()).setMaxResults(appointmentSearchForm.getItemsPerPage()).setResultTransformer(new AliasToBeanResultTransformer(AppointmentsForm.class)).list();
-		return appointmentsForms;
+		AppointmentsSearchResult appointmentsSearchResult=new AppointmentsSearchResult();
+		appointmentsSearchResult.setTotalRecords(totalRecords);
+		appointmentsSearchResult.setAppointmentsForms(appointmentsForms);
+		return appointmentsSearchResult;
+	}
+
+	@Override
+	public Integer getAppointmentsCount(Integer callerAdminId) {
+		// TODO Auto-generated method stub
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(Appointments.class);
+		criteria.createAlias("callLog", "c1");
+		List<Appointments> appointments=criteria.list();
+		return appointments.size();
+	}
+
+	@Override
+	public Integer changeAppointmentStatus(Long appointmentId,Integer status) {
+		// TODO Auto-generated method stub
+		Query query=this.sessionFactory.getCurrentSession().createQuery("Update Appointments set status="+status+" where appointmentId="+appointmentId);
+		query.executeUpdate();
+		return 1;
 	}
 	
 }

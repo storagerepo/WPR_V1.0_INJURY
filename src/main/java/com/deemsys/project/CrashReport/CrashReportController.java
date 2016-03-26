@@ -72,5 +72,14 @@ public class CrashReportController {
     	model.addAttribute("requestSuccess",true);
 		return "/returnPage";
 	}
+    
+    @RequestMapping(value="/getNumberOfCrashReport",method=RequestMethod.GET)
+	public String getNumberOFCrashReport(ModelMap model)
+	{
+    	CrashReportSearchForm crashReportSearchForm=new CrashReportSearchForm("", "", "", "", "", "", "", "", 1, 10);
+    	model.addAttribute("numberOfCrashReports",crashReportService.searchCrashReports(crashReportSearchForm).getTotalNoOfRecords());
+    	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
 	
 }

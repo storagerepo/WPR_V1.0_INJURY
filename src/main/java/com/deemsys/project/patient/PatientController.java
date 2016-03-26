@@ -284,6 +284,17 @@ public class PatientController {
 		
 	}
 	
+	@RequestMapping(value = { "/Patient/getNumberOfPatients" }, method = RequestMethod.GET)
+	public String getNumberPatients(ModelMap model) {
+		
+		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, 0, 0, 0, "", 0, "", "", "", 0, 0, 0, "", 1, 10, "", "");
+		PatientSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+		model.addAttribute("numberOfPatients",patientSearchResult.getTotalNoOfRecord());
+		model.addAttribute("requestSuccess", true);
+		return "ok";
+		
+	}
+	
 	
 	
 

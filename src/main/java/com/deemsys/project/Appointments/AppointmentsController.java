@@ -83,7 +83,7 @@ public class AppointmentsController {
 
 	@RequestMapping(value = "/searchAppointments", method = RequestMethod.POST)
 	public String searchAppointment(@RequestBody AppointmentSearchForm appointmentSearchForm, ModelMap model) {
-		model.addAttribute("appointmentsForms",appointmentsService.searchAppointments(appointmentSearchForm));
+		model.addAttribute("appointmentsSearchRessult",appointmentsService.searchAppointments(appointmentSearchForm));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
@@ -97,10 +97,9 @@ public class AppointmentsController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/getNoOfAppointments", method = RequestMethod.GET)
+	@RequestMapping(value = "/getNumberOfAppointments", method = RequestMethod.GET)
 	public String getNoOfAppointments(ModelMap model) {
-		model.addAttribute("appointmentsForms",
-				appointmentsService.getNoOfAppointments());
+		model.addAttribute("numberOfAppointments",appointmentsService.getNoOfAppointments());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
@@ -123,6 +122,15 @@ public class AppointmentsController {
 		} else {
 			model.addAttribute("requestSuccess", false);
 		}
+		return "/returnPage";
+	}
+	
+	@RequestMapping(value = "/changeAppointmentStatus", method = RequestMethod.POST)
+	public String changeAppointmentStatus(
+			@RequestParam("appointmentId") Long appointmentId,@RequestParam("status") Integer status, ModelMap model) {
+		appointmentsService.changeAppointmentStatus(appointmentId, status);
+		model.addAttribute("requestSuccess", true);
+		
 		return "/returnPage";
 	}
 }

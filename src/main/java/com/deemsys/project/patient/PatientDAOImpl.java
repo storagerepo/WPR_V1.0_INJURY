@@ -617,5 +617,4 @@ public Patient getPatientByPatientId(String patientId) {
 }
 
 
-
 }

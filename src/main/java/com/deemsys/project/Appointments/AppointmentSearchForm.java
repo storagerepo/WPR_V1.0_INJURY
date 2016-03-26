@@ -6,6 +6,9 @@ public class AppointmentSearchForm {
 	private Integer month;
 	private String date;
 	private String patientName;
+	private String clinicName;
+	private String callerFirstName;
+	private String callerLastName;
 	private Integer status;
 	private Integer clinicId;
 	private Integer pageNumber;
@@ -35,6 +38,12 @@ public class AppointmentSearchForm {
 	}
 	public void setPatientName(String patientName) {
 		this.patientName = patientName;
+	}
+	public String getClinicName() {
+		return clinicName;
+	}
+	public void setClinicName(String clinicName) {
+		this.clinicName = clinicName;
 	}
 	public Integer getStatus() {
 		return status;
@@ -66,6 +75,18 @@ public class AppointmentSearchForm {
 	}
 	public void setCallerAdminId(Integer callerAdminId) {
 		this.callerAdminId = callerAdminId;
+	}
+	public String getCallerFirstName() {
+		return callerFirstName;
+	}
+	public void setCallerFirstName(String callerFirstName) {
+		this.callerFirstName = callerFirstName;
+	}
+	public String getCallerLastName() {
+		return callerLastName;
+	}
+	public void setCallerLastName(String callerLastName) {
+		this.callerLastName = callerLastName;
 	}
 	public AppointmentSearchForm(Integer year, Integer month, String date,
 			String patientName, Integer status, Integer clinicId,

@@ -47,6 +47,22 @@ public class InjuryConstants {
 		return dateformat;
 	}
 	
+	// Convert Date To Year Format
+	public static Date convertDateFromDateAndTime(String date)
+	{   SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateformat=new Date();
+		try {
+			dateformat = monthFormat.parse(date);
+			dateformat=yearFormat.parse(yearFormat.format(dateformat));
+		} catch (ParseException e) {
+				// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return dateformat;
+	}
+	
 	// Convert DateTime to Date Format
 	public static Date convertDateTimetoDateFormat(Date date)
 	{

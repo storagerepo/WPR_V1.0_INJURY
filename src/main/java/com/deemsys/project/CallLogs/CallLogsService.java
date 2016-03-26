@@ -105,7 +105,7 @@ public class CallLogsService {
 		// Start
 		try {
 			if(appointments!=null){
-				appointmentsForm=new AppointmentsForm(appointments.getAppointmentId(), "", "", appointments.getScheduledDate(), appointments.getNotes(), appointments.getStatus(), appointments.getCallLog().getCallLogId(), appointments.getClinic().getClinicId(), appointments.getDoctorId(), "", "");
+				appointmentsForm=new AppointmentsForm(appointments.getAppointmentId(), "", "", appointments.getScheduledDateTime(), appointments.getNotes(), appointments.getStatus(), appointments.getCallLog().getCallLogId(), appointments.getClinic().getClinicId(), appointments.getDoctorId(), "", "");
 			}
 			callLogsForm = new CallLogsForm(callLogs.getCallLogId(), new String(callLogs.getPatientCallerAdminMap().getId().getPatientId(), StandardCharsets.UTF_8), callLogs.getPatientCallerAdminMap().getCallerAdmin().getCallerAdminId(), callLogs.getTimeStamp(), callLogs.getResponse(), callLogs.getNotes(), callLogs.getStatus(), appointmentsForm, "", "");
 					
@@ -213,7 +213,7 @@ public class CallLogsService {
 		if(callLogsForm.getResponse()==3){
 			Clinic clinic=new Clinic();
 			clinic.setClinicId(callLogsForm.getAppointmentsForm().getClinicId());
-			Appointments appointments=new Appointments(callLogs, callLogsForm.getAppointmentsForm().getScheduledDate(), "", 1,clinic,callLogsForm.getAppointmentsForm().getDoctorId());
+			Appointments appointments=new Appointments(callLogs, InjuryConstants.convertDateFromDateAndTime(callLogsForm.getAppointmentsForm().getScheduledDateTime()),callLogsForm.getAppointmentsForm().getScheduledDateTime(), "", 1,clinic,callLogsForm.getAppointmentsForm().getDoctorId());
 			appointmentsDAO.save(appointments);
 		}
 		
@@ -251,7 +251,7 @@ public class CallLogsService {
 		if(callLogsForm.getResponse()==3){
 			Clinic clinic=new Clinic();
 			clinic.setClinicId(callLogsForm.getAppointmentsForm().getClinicId());
-			Appointments appointments=new Appointments(callLogs, callLogsForm.getAppointmentsForm().getScheduledDate(), "", 1,clinic,callLogsForm.getAppointmentsForm().getDoctorId());
+			Appointments appointments=new Appointments(callLogs, InjuryConstants.convertDateFromDateAndTime(callLogsForm.getAppointmentsForm().getScheduledDateTime()),callLogsForm.getAppointmentsForm().getScheduledDateTime(), "", 1,clinic,callLogsForm.getAppointmentsForm().getDoctorId());
 			appointments.setAppointmentId(callLogsForm.getAppointmentsForm().getId());
 			appointmentsDAO.save(appointments);
 		}else{

@@ -1,48 +1,61 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
 
-adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$state,requestHandler) {
+adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$state,Flash,requestHandler) {
 	
-	// Number of Records per Page
-	$scope.noOfRows="10";
-	$scope.sort = function(keyname){
-        $scope.sortKey = keyname;   //set the sortKey to the param passed
-        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
-    };
-    var date=new Date();
-    $scope.searchMonth=(date.getMonth()+1).toString();
-    $scope.searchYear=date.getFullYear();
-/*if(date.getDate()<=9 && date.getMonth()<=8){
-  	$scope.searchDate=date.getFullYear()+"-0"+(date.getMonth()+1)+"-0"+date.getDate();
-  }
-    else if(date.getMonth()<=8){
-    	$scope.searchDate=date.getFullYear()+"-0"+(date.getMonth()+1)+"-"+date.getDate();
-    }
-    else if(date.getDate()<=9){
-  	$scope.searchDate=date.getFullYear()+"-"+(date.getMonth()+1)+"-0"+date.getDate();
-  }
-    else{
-    	$scope.searchDate=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-    }
-*/
-    requestHandler.getRequest("Caller/monthwiseAppointment.json?month=0&year=0","").then(function(response){
-		//alert(JSON.stringify(response));
-    	 $scope.appointments = response.data.appointmentsForms;
-         $scope.appointments.status = true;
-         $.each($scope.appointments,function(index,value){
-        	 if(value.status==0){
-        		 value.status="Not Arrived";
-        	 }
-         });
-          $scope.sort("scheduledDate");
-	     });
- 
-$scope.viewPatients=function(id)
+	$scope.init=function(){
+		$scope.searchAppointment={};
+		var date=new Date();
+	    $scope.searchAppointment.month=(date.getMonth()+1).toString();
+	    $scope.searchAppointment.year=date.getFullYear();
+	    $scope.searchAppointment.date="";
+	    $scope.searchAppointment.status="0";
+	    $scope.searchAppointment.clinicName="";
+	    $scope.searchAppointment.patientName="";
+	    $scope.searchAppointment.pageNumber=1;
+		$scope.searchAppointment.itemsPerPage="25";
+		$scope.searchAppointment.callerFirstName="";
+		$scope.searchAppointment.callerLastName="";
+		$scope.totalRecords=0;
+
+		$scope.searchAppointments();
+	};
+	$scope.searchAppointments=function(){
+	    requestHandler.postRequest("Caller/searchAppointments.json",$scope.searchAppointment).then(function(response){
+			//alert(JSON.stringify(response));
+	    	$scope.totalRecords.totalRecords=response.data.appointmentsSearchRessult.totalRecords;
+	    	 $scope.appointments = response.data.appointmentsSearchRessult.appointmentsForms;
+	       $.each($scope.appointments,function(index,value){
+	        	 value.status=(value.status).toString();
+	        });
+		  });
+	};
+	
+
+	$scope.init();
+    
+	$scope.changeAppointmentStatus=function(appointmentId,status){
+		requestHandler.postRequest("Caller/changeAppointmentStatus.json?appointmentId="+appointmentId+"&status="+status,"").then(function(results){
+			$scope.searchAppointments();
+			Flash.create('success', "You have Successfully Changed!");
+		  });
+	};
+	
+// Get Clinic Details
+	$scope.viewClinicDetailsModal=function(clinicId) {
+		 requestHandler.getRequest("CAdmin/getClinicDetails.json?clinicId="+clinicId,"").then(function(results){
+		 	 $scope.clinicDetails= results.data.clinicsForm;
+		 	 $("#viewClinicDetailsModal").modal('show');
+		  });
+	};
+	
+
+$scope.viewPatientDetailsModal=function(patientId)
 {
-	requestHandler.getRequest("/Caller/getPatients.json?id="+id,"").then( function(response) {
-		$scope.patients=response.data.patientsForm;
-	      $("#myModal").modal("show");
+	requestHandler.getRequest("Patient/getPatient.json?patientId="+patientId,"").then( function(response) {
+		$scope.patient=response.data.patientForm;
+	      $("#viewPatientDetailsModal").modal("show");
      });
-}
+};
 $scope.getByDates=function()
 {
 if($scope.searchMonth)

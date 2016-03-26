@@ -1,5 +1,7 @@
 package com.deemsys.project.Appointments;
 
+import java.util.Date;
+
 /**
  * 
  * @author Deemsys
@@ -10,7 +12,8 @@ public class AppointmentsForm {
 	private Long id;
 	private String patientId;
 	private String patientName;
-	private String scheduledDate;
+	private Date scheduledDate;
+	private String scheduledDateTime;
 	private String notes;
 	private Integer status;
 	private Long callLogId;
@@ -18,7 +21,8 @@ public class AppointmentsForm {
 	private Integer doctorId;
 	private String doctorName;
 	private String clinicName;
-
+	private String callerFirstName;
+	private String callerLastName;
 	public Long getId() {
 		return id;
 	}
@@ -35,12 +39,20 @@ public class AppointmentsForm {
 		this.patientId = patientId;
 	}
 
-	public String getScheduledDate() {
+	public Date getScheduledDate() {
 		return scheduledDate;
 	}
 
-	public void setScheduledDate(String scheduledDate) {
+	public void setScheduledDate(Date scheduledDate) {
 		this.scheduledDate = scheduledDate;
+	}
+
+	public String getScheduledDateTime() {
+		return scheduledDateTime;
+	}
+
+	public void setScheduledDateTime(String scheduledDateTime) {
+		this.scheduledDateTime = scheduledDateTime;
 	}
 
 	public String getNotes() {
@@ -83,15 +95,14 @@ public class AppointmentsForm {
 		this.clinicName = clinicName;
 	}
 	
-	public AppointmentsForm(Long id, String patientId, String patientName,
-			String scheduledDate, String notes, Integer status,
+	public AppointmentsForm(Long id, String patientId, String patientName,String scheduledDateTime, String notes, Integer status,
 			Long callLogId, Integer clinicId, Integer doctorId,
 			String doctorName, String clinicName) {
 		super();
 		this.id = id;
 		this.patientId = patientId;
 		this.patientName = patientName;
-		this.scheduledDate = scheduledDate;
+		this.scheduledDateTime=scheduledDateTime;
 		this.notes = notes;
 		this.status = status;
 		this.callLogId = callLogId;
@@ -117,6 +128,22 @@ public class AppointmentsForm {
 
 	public void setPatientName(String patientName) {
 		this.patientName = patientName;
+	}
+
+	public String getCallerFirstName() {
+		return callerFirstName;
+	}
+
+	public void setCallerFirstName(String callerFirstName) {
+		this.callerFirstName = callerFirstName;
+	}
+
+	public String getCallerLastName() {
+		return callerLastName;
+	}
+
+	public void setCallerLastName(String callerLastName) {
+		this.callerLastName = callerLastName;
 	}
 
 	public Integer getDoctorId() {

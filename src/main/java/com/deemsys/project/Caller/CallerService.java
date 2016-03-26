@@ -15,6 +15,7 @@ import com.deemsys.project.CallerCountyMap.CallerCountyMapDAO;
 import com.deemsys.project.CallerCountyMap.CallerCountyMapService;
 import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.County.CountyService;
+import com.deemsys.project.PatientCallerMap.PatientCallerDAO;
 import com.deemsys.project.PatientCallerMap.PatientCallerService;
 import com.deemsys.project.Role.RoleDAO;
 import com.deemsys.project.Users.UsersDAO;
@@ -26,6 +27,7 @@ import com.deemsys.project.entity.CallerCountyMap;
 import com.deemsys.project.entity.CallerCountyMapId;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.Patient;
+import com.deemsys.project.entity.PatientCallerAdminMap;
 import com.deemsys.project.entity.Roles;
 import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.Users;
@@ -77,6 +79,9 @@ public class CallerService {
 	
 	@Autowired
 	LoginService loginService;
+	
+	@Autowired
+	PatientCallerDAO patientCallerDAO;
 	
 	// Get All Entries
 	public List<CallerForm> getCallerList() {
@@ -399,6 +404,14 @@ public class CallerService {
 	
 	public Caller getCallerByUserId(Integer userId){
 		return callerDAO.getByUserId(userId);
+	}
+	
+	// Get Number of Assigned Patients
+	// Get No Of Callers Under Caller Admin
+	public Integer getNumberOfAssignedPatients() {
+		Integer callerId=this.getCallerByUserId(loginService.getCurrentUserID()).getCallerId();
+		return patientCallerDAO.getAssignedPatientsByCallerId(callerId).size();
+
 	}
 	
 }

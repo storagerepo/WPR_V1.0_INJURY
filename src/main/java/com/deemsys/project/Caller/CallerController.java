@@ -189,4 +189,11 @@ public class CallerController {
 		return "/returnPage";
 	}
 
+	@RequestMapping(value = "/Caller/getNumberOfAssignedPatients", method = RequestMethod.GET)
+	public String getNoOfAssignedPatients(ModelMap model) {
+		model.addAttribute("numberOfAssignedPatients", callerService.getNumberOfAssignedPatients());
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
 }

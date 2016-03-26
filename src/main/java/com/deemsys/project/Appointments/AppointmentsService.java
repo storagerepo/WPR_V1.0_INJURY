@@ -194,11 +194,10 @@ public class AppointmentsService {
 		return patientForm;
 	}
 
-	public List<AppointmentsForm> searchAppointments(AppointmentSearchForm appointmentSearchForm) {
-		List<AppointmentsForm> appointmentsForms = new ArrayList<AppointmentsForm>();
+	public AppointmentsSearchResult searchAppointments(AppointmentSearchForm appointmentSearchForm) {
 		appointmentSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
-		appointmentsForms=appointmentsDAO.searchAppointments(appointmentSearchForm);
-		return appointmentsForms;
+		AppointmentsSearchResult appointmentsSearchResult=appointmentsDAO.searchAppointments(appointmentSearchForm);
+		return appointmentsSearchResult;
 
 	}
 
@@ -230,21 +229,9 @@ public class AppointmentsService {
 	}
 
 	public Integer getNoOfAppointments() {
-		Integer count = 0;
-
-		List<Appointments> appointmentss = new ArrayList<Appointments>();
-		String role = callerService.getCurrentRole();
-		if (role == "ROLE_ADMIN") {
-			appointmentss = appointmentsDAO.getAll();
-			count=appointmentss.size();
-		} else if (role == "ROLE_STAFF") {
-			Integer userId = callerService.getCurrentUserId();
-			// Get Caller Id
-			Integer callerId = callerDAO.getByUserId(userId).getCallerId();
-			count = patientDAO.getAppointmentListByCallerId(callerId).size();
-		}
-
-		return count;
+		
+		Integer callerAdminId=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId();
+		return appointmentsDAO.getAppointmentsCount(callerAdminId);
 
 	}
 
@@ -271,5 +258,10 @@ public class AppointmentsService {
 
 		return status;
 
+	}
+	
+	// Change Appointment Status
+	public void changeAppointmentStatus(Long appointmentId,Integer status){
+		appointmentsDAO.changeAppointmentStatus(appointmentId, status);
 	}
 }
