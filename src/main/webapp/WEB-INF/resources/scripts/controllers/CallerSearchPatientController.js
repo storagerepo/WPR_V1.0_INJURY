@@ -204,7 +204,7 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 		$scope.patient.addedOnFromDate="";
 		$scope.patient.addedOnToDate="";
 		$scope.patient.isArchived="0";
-		$scope.patient.patientStatus="6";
+		$scope.patient.patientStatus="7";
 		
 		//Initial Search
 		$scope.searchItems($scope.patient);

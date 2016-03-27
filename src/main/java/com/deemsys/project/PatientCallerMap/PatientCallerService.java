@@ -39,7 +39,7 @@ public class PatientCallerService {
 		
 		for (String patientId : assignCallerForm.getPatientId()) {
 			PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap();
-			patientCallerAdminMap=patientCallerDAO.getPatientCallerAdminMap(patientId, assignCallerForm.getCallerId());
+			patientCallerAdminMap=patientCallerDAO.getPatientMapsByCallerAdminId(patientId, callerAdmin.getCallerAdminId());
 			if(patientCallerAdminMap==null){
 				
 			//Generate Caller	
@@ -80,6 +80,9 @@ public boolean releaseCaller(AssignCallerForm assignCallerForm){
 			patientCallerAdminMap=patientCallerDAO.getPatientMapsByCallerAdminId(patientId, callerAdmin.getCallerAdminId());
 			if(patientCallerAdminMap!=null){
 				patientCallerAdminMap.setCaller(null);
+				if(patientCallerAdminMap.getPatientStatus()==1){
+					patientCallerAdminMap.setPatientStatus(6);
+				}
 				patientCallerDAO.merge(patientCallerAdminMap);			
 			}
 		}

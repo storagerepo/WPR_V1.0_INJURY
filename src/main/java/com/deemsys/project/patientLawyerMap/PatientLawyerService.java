@@ -39,7 +39,7 @@ public class PatientLawyerService {
 		
 		for (String patientId : assignLawyerForm.getPatientId()) {
 			PatientLawyerAdminMap patientLawyerAdminMap=new PatientLawyerAdminMap();
-			patientLawyerAdminMap=patientLawyerDAO.getPatientLawyerAdminMap(patientId, assignLawyerForm.getLawyerId());
+			patientLawyerAdminMap=patientLawyerDAO.getPatientMapsByLawyerAdminId(patientId, lawyerAdmin.getLawyerAdminId());
 			if(patientLawyerAdminMap==null){
 				
 			//Generate Lawyer	

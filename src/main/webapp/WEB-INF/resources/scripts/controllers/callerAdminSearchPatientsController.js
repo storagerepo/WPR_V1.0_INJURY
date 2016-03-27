@@ -24,7 +24,7 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		$scope.patient.addedOnFromDate="";
 		$scope.patient.addedOnToDate="";
 		$scope.patient.isArchived="0";
-		$scope.patient.patientStatus="6";
+		$scope.patient.patientStatus="7";
 		$scope.totalRecords=0;
 		
 		//Initial Search
@@ -100,7 +100,7 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 	
 	$scope.assignCallerRequest=function(assignCallerObject){
 		requestHandler.postRequest("/CAdmin/assignCaller.json",assignCallerObject).then(function(response){
-			Flash.create('success', "You have Successfully Assinged Caller!");
+			Flash.create('success', "You have Successfully Assigned Caller!");
 			$scope.searchPatients();
 			$(function(){
 				$("html,body").scrollTop(0);
@@ -160,7 +160,7 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		assignCallerObj.patientId=patientIdArray;
 		
 		requestHandler.postRequest("/Caller/releaseFromArchive.json",assignCallerObj).then(function(response){
-			Flash.create('success', "You have Successfully released from Archive!");
+			Flash.create('success', "You have Successfully Released from Archive!");
 			$scope.searchPatients();
 			$(function(){
 				$("html,body").scrollTop(0);
@@ -192,8 +192,11 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 				    case 5:
 				    	value.patientStatusName="Do Not Call";
 				        break;
+				    case 6:
+				    	value.patientStatusName="Need Re-Assign";
+				        break;
 				    default:
-				        null;
+				        break;
 				};
 			});
 			$scope.patientSearchDataOrginal=angular.copy($scope.patientSearchData);
