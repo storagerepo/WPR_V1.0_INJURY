@@ -13,118 +13,93 @@
 <!-- /.row -->
 <div class="row">
  <form name="patientSearchForm" novalidate>
-        <div class="col-md-12">
-        <div class="col-md-3">
-       <div class="col-md-12"><label>County</label></div>
-       <div class="col-md-12"> 
-       <select class="form-control" ng-model="patient.countyId">
-          <option value="0" ng-selected="true">All</option>
-          <option ng-repeat="county in mycounties"
-          value="{{county.countyId}}"
-          ng-selected="{{county.countyName === patient.county}}">{{county.countyName}}</option>
-     </select>
-       </div>
+ 	<div class="col-md-12 no-padding">
+        <div class="col-md-5ths">
+        	<label>County</label>
+       		<select class="form-control" ng-model="patient.countyId">
+          		<option value="0" ng-selected="true">All</option>
+          		<option ng-repeat="county in mycounties" value="{{county.countyId}}" ng-selected="{{county.countyName === patient.county}}">{{county.countyName}}</option>
+     		</select>
+       	</div>
+       	<div class="col-md-5ths">
+         	<label>Crash From Date</label>
+       		<div class="input-group">
+				<input type="text" name="crashFromDate" id="CrashFromDate" class="form-control" ng-model="patient.crashFromDate" ng-change="checkCustomDate(patient.numberOfDays)" placeholder="Crash From Date" > 
+				<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+			</div>
+       	</div>
+       	
+       	<div class="col-md-5ths">
+			<label>Number of Days</label>
+         	<select class="form-control"  ng-model="patient.numberOfDays" name="numberOfDays" ng-change="checkCustomDate(patient.numberOfDays)">
+            	<option value="1" ng-selected="true">1</option>
+            	<option value="7">7</option>
+            	<option value="15">15</option>
+            	<option value="30">30</option>
+            	<option value="0">Custom</option>
+			</select>
+       	</div>
+        <div class="col-md-5ths">
+			<label>Crash To Date</label>
+        	<div class="input-group">
+				<input type="text" name="crashToDate" id="CrashToDate" class="form-control" ng-model="patient.crashToDate" placeholder="Crash To Date"  ng-disabled="disableCustom"> 
+				<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+			</div>
+			<span style="color:red" ng-if="crashToRequired==true">Please Enter Crash To Date</span>
         </div>
-         <div class="col-md-3">
-       <div class="col-md-12"> <label>Crash From Date</label></div>
-       <div class="col-md-12"> 
-       <div class="input-group">
-		<input type="text" name="crashFromDate" id="CrashFromDate" class="form-control" ng-model="patient.crashFromDate" ng-change="checkCustomDate(patient.numberOfDays)" placeholder="Crash From Date" > 
-		<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
-		</div>
-       
-       </div>
+        <div class="col-md-5ths">
+        	<label>Added On From Date</label>
+       		<div class="input-group">
+				<input type="text" name="addedOnFromDate" id="AddedFromDate" class="form-control" ng-model="patient.addedOnFromDate" ng-change="checkCustomDate(patient.numberOfDays)" placeholder="Added On From Date" > 
+				<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+			</div>
         </div>
-         <div class="col-md-3">
-       <div class="col-md-12">  <label>Number of Days</label></div>
-       <div class="col-md-12"> 
-         <select class="form-control"  ng-model="patient.numberOfDays" name="numberOfDays" ng-change="checkCustomDate(patient.numberOfDays)">
-                                        <option value="1" ng-selected="true">1</option>
-                                        <option value="7">7</option>
-                                        <option value="15">15</option>
-                                        <option value="30">30</option>
-                                        <option value="0">Custom</option>
-                                    </select>
-       </div>
+    </div>
+
+	<div class="col-md-12"><br/></div>
+	
+	<div class="col-md-12 no-padding">
+		<div class="col-md-5ths">
+			<label>Added On To Date</label>
+       		<div class="input-group">
+				<input type="text" name="addedOnToDate" id="AddedToDate" class="form-control" ng-model="patient.addedOnToDate" ng-change="checkCustomDate(patient.numberOfDays)" placeholder="Added On To Date" > 
+				<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+			</div>
+       		<span style="color:red" ng-if="addedToRequired==true">Please Enter Added On To Date</span>
+       	</div>
+       	<div class="col-md-5ths">
+       		<label>Lawyers</label>
+       		<select class="form-control" ng-model="patient.lawyerId">
+       			<option value="0" ng-selected="true">All</option>
+          		<option ng-repeat="lawyer in lawyers" value="{{lawyer.lawyerId}}" ng-selected="{{lawyer.firstName === patient.lawyer}}">{{lawyer.firstName}}&nbsp;{{lawyer.lastName}}</option>
+     		</select>
+       	</div>
+       	<div class="col-md-5ths">
+       		<label>Tier</label>
+         	<select class="form-control"  ng-model="patient.tier" name="tier">
+         		<option value="0" ng-selected="true">All</option>
+                <option value="1">Tier1</option>
+                <option value="2">Tier2</option>
+                <option value="3">Tier3</option>
+            </select>
+       	</div>
+       	
+       	<div class="col-md-5ths">
+       		<label>&nbsp;</label>
+       		<div>
+        		<a class="btn btn-success" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='patientSearchForm.$invalid' ng-click="searchPatients()">Search</a>
+        		<a class="btn btn-danger" ng-click="resetSearchData()">Reset</a>
+       		</div>
         </div>
-        <div class="col-md-3">
-       <div class="col-md-12">  <label>Crash To Date</label></div>
-       <div class="col-md-12"> 
-        <div class="input-group">
-		<input type="text" name="crashToDate" id="CrashToDate" class="form-control" ng-model="patient.crashToDate" placeholder="Crash To Date"  ng-disabled="disableCustom"> 
-		<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
-		</div>
-		<span style="color:red" ng-if="crashToRequired==true">Please Enter Crash To Date</span>
-         </div>
-        </div>
-        </div> 
-         <div class="col-md-12"> <br/>  </div>           
-          <div class="col-md-12">
-            <div class="col-md-3">
-       <div class="col-md-12"> <label>Added On From Date</label></div>
-       <div class="col-md-12"> 
-       <div class="input-group">
-		<input type="text" name="addedOnFromDate" id="AddedFromDate" class="form-control" ng-model="patient.addedOnFromDate" ng-change="checkCustomDate(patient.numberOfDays)" placeholder="Added On From Date" > 
-		<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
-		</div>
-       
-       </div>
-        </div>
-         <div class="col-md-3">
-       <div class="col-md-12"> <label>Added On To Date</label></div>
-       <div class="col-md-12"> 
-       <div class="input-group">
-		<input type="text" name="addedOnToDate" id="AddedToDate" class="form-control" ng-model="patient.addedOnToDate" ng-change="checkCustomDate(patient.numberOfDays)" placeholder="Added On To Date" > 
-		<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
-		</div>
-       <span style="color:red" ng-if="addedToRequired==true">Please Enter Added On To Date</span>
-       </div>
-        </div>
-       <div class="col-md-3">
-        <div class="col-md-12"> <label>Lawyers</label></div>
-       <div class="col-md-12"> 
-       <select class="form-control" ng-model="patient.lawyerId" >
-          <option value="0" ng-selected="true">All</option>
-          <option ng-repeat="lawyer in lawyers" value="{{lawyer.lawyerId}}"
-          ng-selected="{{lawyer.firstName === patient.lawyer}}">{{lawyer.firstName}}&nbsp;{{lawyer.lastName}}</option>
-     </select>
-       </div>
-       </div>
-       <div class="col-md-3">
-       <div class="col-md-12">  <label>Tier</label></div>
-       <div class="col-md-12"> 
-         <select class="form-control"  ng-model="patient.tier" name="tier">
-                                        <option value="0" ng-selected="true">All</option>
-                                        <option value="1">Tier1</option>
-                                        <option value="2">Tier2</option>
-                                        <option value="3">Tier3</option>
-                                    </select>
-       </div>
-        </div>
-       
-       
-        </div>             
-           <div class="col-md-12">  
-            <div class="col-md-3"></div>
-             <div class="col-md-3"></div>
-              <div class="col-md-3"></div>
-            <div class="col-md-3">
-         <div class="col-md-12"><br/></div>
-       <div class="col-md-12">
-        <a class="btn btn-success" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='patientSearchForm.$invalid' ng-click="searchPatients()">Search</a>
-        <a  class="btn btn-danger" ng-click="resetSearchData()">Reset</a>
-       </div>
-      
-     </div>   
-     </div>   
-     <div class="col-md-12"><br/></div>    
+     </div>
+     
      <div class="col-md-12">
 			<div class="col-md-12 no-padding hr-tag-alter"></div>
 				<div  class="col-md-6 no-padding">
 					<a href="" ng-disabled="isCleanCheckbox()" ng-click="assignlawyerPopup()" class="btn btn-sm btn-success">Assign Lawyer</a>
 					<a href="" ng-disabled="isCleanCheckbox()" ng-click="releaseLawyer()" class="btn btn-sm btn-danger">Release From Lawyer</a>
-					<a href="" ng-disabled="isCleanCheckbox()" ng-click="moveArchive()" class="btn btn-sm btn-warning">Move to Archive</a>
-					<a href="" ng-disabled="isCleanCheckbox()" ng-click="releaseArchive()" class="btn btn-sm btn-primary">Release from Archive</a>
+					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="moveArchive()" class="btn btn-sm btn-warning">Move to Archive</a>
+					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==0" ng-click="releaseArchive()" class="btn btn-sm btn-primary">Release from Archive</a>
 			</div>
 				<div class="col-md-6 no-padding">
 					<div class="col-md-3 margin-top-5 text-right no-padding">Records Type&nbsp;&nbsp;</div>
@@ -140,7 +115,7 @@
 		</div>
     
          </form>                    
-                    
+                    <div class="col-md-12">
                     
                     
                     
@@ -190,7 +165,7 @@
                                 <td>{{lAdminData.address}}</td>
                                 <td>
                                 <a href="{{lAdminData.crashReportFileName}}" ng-cloak target="_blank" class="btn btn-xs btn-info hint--top" data-hint="View Crash Report"><i
-								class="fa fa-file-pdf-o"></i></a>&nbsp;
+								class="fa fa-file-pdf-o"></i></a>
                                 <a href="" ng-cloak target="_blank" ng-hide={{lAdminData.lawyerId!=null}} class="btn btn-xs btn-danger hint--top" data-hint="Assign Lawyer" ng-click="assignSingleLawyerPopup(lAdminData.patientId,lAdminData.name,lAdminData.lawyerId)"><i class="fa fa-external-link-square"></i></a>
                                 <a href="" ng-cloak target="_blank" ng-show={{lAdminData.lawyerId!=null}} class="btn btn-xs btn-success hint--top" data-hint="Change Lawyer" ng-click="assignSingleLawyerPopup(lAdminData.patientId,lAdminData.name,lAdminData.lawyerId)"><i class="fa fa-external-link-square"></i></a>
                                 </td>
@@ -203,7 +178,7 @@
                     <dir-pagination-controls max-size="5" on-page-change="searchPatientsFromPage(newPageNumber)" direction-links="true" boundary-links="true" >
     					</dir-pagination-controls> 
     					
-<div class="col-md-4 pull-right">
+<div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="patient.itemsPerPage" name="itemsPerPage"
@@ -214,6 +189,7 @@
 		<option value="100">Show 100 Per Page</option>
 		<option value="{{lAdminPatientSearchData}}">Show All</option>
 	</select> 
+	</div>
 </div>  
 
 <div class="modal fade" id="assignlawyerModal" role="dialog">

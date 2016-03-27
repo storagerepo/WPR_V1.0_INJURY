@@ -1,7 +1,7 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
 
 adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash){
-	$scope.noOfRows="10";
+	$scope.noOfRows="25";
 	$scope.sortKey='clinicName';
 
 	$scope.sort = function(keyname){

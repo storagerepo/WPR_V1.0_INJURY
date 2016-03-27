@@ -12,7 +12,7 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
 	    $scope.searchAppointment.clinicName="";
 	    $scope.searchAppointment.patientName="";
 	    $scope.searchAppointment.pageNumber=1;
-		$scope.searchAppointment.itemsPerPage="10";
+		$scope.searchAppointment.itemsPerPage="25";
 		$scope.searchAppointment.callerFirstName="";
 		$scope.searchAppointment.callerLastName="";
 		$scope.totalRecords=0;

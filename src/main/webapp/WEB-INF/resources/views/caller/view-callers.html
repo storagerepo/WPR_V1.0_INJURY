@@ -10,18 +10,6 @@
 <div class="row">
 	 		<!-- /.panel-heading -->
 			<div class="col-md-12">
-				<div class="col-md-9 text-right margin-top-5"><label>Number of Records</label></div>
-				<div class="col-md-3 no-padding margin-bottom-10">
-					<select
-						class="form-control" ng-model="noOfRows" name="noOfRows"
-						id="noOfRows">
-						<option value="10">Show 10 Per Page</option>
-						<option value="25">Show 25 Per Page</option>
-						<option value="50">Show 50 Per Page</option>
-						<option value="100">Show 100 Per Page</option>
-						<option value="{{callers.length}}">Show All</option>
-					</select> 
-				</div>
 			 
 					<table class="table table-hover table-striped table-bordered">
 
@@ -105,7 +93,19 @@
 						
 					</table>
 					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
-    					</dir-pagination-controls>   
+    					</dir-pagination-controls>
+				<div class="col-md-3 no-padding margin-bottom-10">
+				<label>Number of Records</label>
+					<select
+						class="form-control" ng-model="noOfRows" name="noOfRows"
+						id="noOfRows">
+						<option value="10">Show 10 Per Page</option>
+						<option value="25">Show 25 Per Page</option>
+						<option value="50">Show 50 Per Page</option>
+						<option value="100">Show 100 Per Page</option>
+						<option value="{{callers.length}}">Show All</option>
+					</select> 
+				</div>
 			</div>
 		<!-- /.panel -->
 	<!-- /.col-lg-12 -->
