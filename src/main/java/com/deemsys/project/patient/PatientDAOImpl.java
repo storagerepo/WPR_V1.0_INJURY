@@ -507,7 +507,7 @@ public PatientSearchResult searchPatientsByCAdmin(
 		}
 		
 		//Common Constrains - Patient Status
-		if(callerPatientSearchForm.getPatientStatus()!=6){
+		if(callerPatientSearchForm.getPatientStatus()!=7){
 			Criterion patientStatusCriterion;
 			if(callerPatientSearchForm.getPatientStatus()==0){
 				patientStatusCriterion=Restrictions.isNull("t2.patientStatus");
