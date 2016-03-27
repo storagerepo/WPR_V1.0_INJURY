@@ -1,9 +1,10 @@
 .alert {
   font-size: 14px !important;
-  padding: 10px 15px;
+  padding: 5px 15px;
   margin-bottom: 20px;
   border-radius: 3px !important;
   border:2px !important;
+  
 }
 .alert h4 {
   margin-top: 0;

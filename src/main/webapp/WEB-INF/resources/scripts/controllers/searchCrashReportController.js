@@ -44,7 +44,7 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 		if($scope.crashreport.addedFromDate!="" && $scope.crashreport.addedToDate==""){
 			$scope.addedToRequired=true;
 		}
-		else if($scope.crashreport.crashFromDate!="" && $scope.crashreport.numberOfDays=="" && $scope.crashreport.crashToDate==""){
+		else if($scope.crashreport.crashFromDate!="" && $scope.crashreport.numberOfDays=="0" && $scope.crashreport.crashToDate==""){
 			$scope.crashToRequired=true;
 		}
 		else{

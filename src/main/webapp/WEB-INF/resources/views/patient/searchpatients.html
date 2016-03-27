@@ -14,15 +14,16 @@
 <div class="row">
 	<form name="patientSearchForm" novalidate ng-cloak>
     	<div class="col-md-12 no-padding">
-        	<div class="col-md-3">
+        	<div class="col-md-3 no-padding">
        			<div class="col-md-12"><label>County</label></div>
        			<div class="col-md-12"> 
-       				<select class="form-control" ng-model="patient.countyId" ng-options="county.id as county.name for county in countylist">
-       				<option value="" selected="selected">-- Select County --</option>	
+       				<select class="form-control" ng-model="patient.countyId">
+       				<option value="0" selected="selected">All</option>	
+       				<option ng-repeat="county in countylist" value="{{county.id}}" ng-selected="{{county.name === patient.county}}">{{county.name}}</option>
      				</select>
        			</div>
         	</div>
-          	<div class="col-md-3">
+          	<div class="col-md-3 no-padding">
        		<div class="col-md-12"><label>Crash From Date</label></div>
        		<div class="col-md-12"> 
        			<div class="input-group">
@@ -32,7 +33,7 @@
        		</div>
         </div>
         
-        <div class="col-md-3">
+        <div class="col-md-3 no-padding">
        		<div class="col-md-12"><label>Number of Days</label></div>
        		<div class="col-md-12"> 
          		<select class="form-control"  ng-model="patient.numberOfDays" name="numberOfDays" ng-change="checkCustomDate(patient.numberOfDays)">
@@ -44,7 +45,7 @@
                 </select>
        		</div>
         </div>
-         <div class="col-md-3">
+         <div class="col-md-3 no-padding">
        		<div class="col-md-12"><label>Crash To Date</label></div>
        		<div class="col-md-12"> 
         		<div class="input-group">
@@ -59,7 +60,7 @@
 	<div class="col-md-12"><br/></div>
 	
 	<div class="col-md-12 no-padding">
-        <div class="col-md-3">
+        <div class="col-md-3 no-padding">
        		<div class="col-md-12"><label>Added On From Date</label></div>
        		<div class="col-md-12"> 
        			<div class="input-group">
@@ -68,7 +69,7 @@
 				</div>
        		</div>
        		</div>
-       		<div class="col-md-3">
+       		<div class="col-md-3 no-padding">
        		<div class="col-md-12"><label>Added On To Date</label></div>
        		<div class="col-md-12"> 
         		<div class="input-group">
@@ -78,7 +79,7 @@
 				<span style="color:red" ng-if="AddedOnToRequired==true">Please Enter Added On To Date</span>
          	</div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 no-padding">
         <div class="col-md-12"><label>&nbsp;</label></div>
 			<div class="col-md-12">
         		<a class="btn btn-success" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='isClean() || patientSearchForm.$invalid' ng-click="searchPatients()">Search</a>
@@ -91,7 +92,7 @@
             
 </form>                    
                     
-                    
+       <div class="col-md-12">             
                     
                     
                     <table class="table table-striped table-bordered" ng-cloak>
@@ -152,7 +153,7 @@
                     </table>
                     <dir-pagination-controls max-size="5" on-page-change="searchPatientsFromPage(newPageNumber)" direction-links="true" boundary-links="true" >
     					</dir-pagination-controls> 
-    					<div class="col-md-4 pull-right">
+    					<div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="patient.itemsPerPage" name="noOfRows"
@@ -162,6 +163,7 @@
 		<option value="50">Show 50 Per Page</option>
 		<option value="100">Show 100 Per Page</option>
 	</select> 
+</div>
 </div>
 </div>
 <script>

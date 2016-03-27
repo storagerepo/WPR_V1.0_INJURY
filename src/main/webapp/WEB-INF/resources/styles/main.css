@@ -448,10 +448,10 @@ border-radius:4px !important;
 .hint--top:before {
   margin-bottom: -12px; }
 .hint--top:after {
-  margin-left: -18px; }
+  margin-right: -10px; }
 .hint--top:before, .hint--top:after {
-  bottom: 100%;
-  left: 50%; }
+  right: 25%;
+    bottom: 100% }
 .hint--top:hover:after, .hint--top:hover:before, .hint--top:focus:after, .hint--top:focus:before {
   -webkit-transform: translateY(-8px);
   -moz-transform: translateY(-8px);
@@ -531,7 +531,7 @@ input[type=text]::-ms-clear { display: none; }
 }
 
 .margin-top35{
-	margin-top: 35px;
+	margin-top: 40px;
 }
 
 .search{
