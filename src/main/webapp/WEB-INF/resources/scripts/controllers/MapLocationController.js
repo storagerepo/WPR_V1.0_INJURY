@@ -127,7 +127,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     
     // Get More Details About Clinic
     $scope.viewClinicDetails=function(clinicId) {
-		 requestHandler.getRequest("CAdmin/getClinic.json?clinicId="+clinicId,"").then(function(results){
+		 requestHandler.getRequest("Caller/getClinic.json?clinicId="+clinicId,"").then(function(results){
 		 	 $scope.clinicDetails= results.data.clinicsForm;
 		 	 $("#viewClinicDetails").modal('show');
 		  });

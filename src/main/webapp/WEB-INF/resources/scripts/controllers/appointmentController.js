@@ -12,7 +12,7 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
 	    $scope.searchAppointment.clinicName="";
 	    $scope.searchAppointment.patientName="";
 	    $scope.searchAppointment.pageNumber=1;
-		$scope.searchAppointment.itemsPerPage="25";
+		$scope.searchAppointment.itemsPerPage="10";
 		$scope.searchAppointment.callerFirstName="";
 		$scope.searchAppointment.callerLastName="";
 		$scope.totalRecords=0;
@@ -22,7 +22,7 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
 	$scope.searchAppointments=function(){
 	    requestHandler.postRequest("Caller/searchAppointments.json",$scope.searchAppointment).then(function(response){
 			//alert(JSON.stringify(response));
-	    	$scope.totalRecords.totalRecords=response.data.appointmentsSearchRessult.totalRecords;
+	    	$scope.totalRecords=response.data.appointmentsSearchRessult.totalRecords;
 	    	 $scope.appointments = response.data.appointmentsSearchRessult.appointmentsForms;
 	       $.each($scope.appointments,function(index,value){
 	        	 value.status=(value.status).toString();

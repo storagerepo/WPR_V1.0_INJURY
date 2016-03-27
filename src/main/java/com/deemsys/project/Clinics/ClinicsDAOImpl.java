@@ -145,11 +145,10 @@ public class ClinicsDAOImpl implements ClinicsDAO {
 	}
 
 	@Override
-	public List<Clinic> getClinicsLists() {
+	public List<Clinic> getEnabledClinicsListsByCallerAdmin(Integer callerAdminId) {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
-		List<Clinic> clinics = this.sessionFactory.getCurrentSession()
-				.createCriteria(Clinic.class).list();
+		List<Clinic> clinics=this.sessionFactory.getCurrentSession().createCriteria(Clinic.class).add(Restrictions.and(Restrictions.eq("status", 1),Restrictions.eq("callerAdmin.callerAdminId", callerAdminId))).list();
 		return clinics;
 	}
 
@@ -182,5 +181,6 @@ public class ClinicsDAOImpl implements ClinicsDAO {
 		List<Clinic> clinics=this.sessionFactory.getCurrentSession().createCriteria(Clinic.class).add(Restrictions.eq("callerAdmin.callerAdminId", callerAdmin)).list();
 		return clinics;
 	}
+
 
 }

@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.ClinicTimings.ClinicTimingList;
 import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.Clinics.ClinicsForm;
 import com.deemsys.project.Clinics.ClinicsService;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Clinic;
 import com.deemsys.project.entity.Patient;
+import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientDAO;
 
 @Service
@@ -30,6 +34,15 @@ public class SearchClinicsService {
 
 	@Autowired
 	ClinicsService clinicsService;
+	
+	@Autowired
+	LoginService loginService;
+	
+	@Autowired
+	CallerService callerService;
+	
+	@Autowired
+	CallerAdminService callerAdminService;
 
 	@SuppressWarnings("static-access")
 	public ClinicLocationForm getNearByClinics(String patientId,
@@ -47,7 +60,14 @@ public class SearchClinicsService {
 
 		Patient patients = patientDAO.getPatientByPatientId(patientId);
 		List<Clinic> clinics = new ArrayList<Clinic>();
-		clinics = clinicsDAO.getClinicsLists();
+		String role=loginService.getCurrentRole();
+		Integer callerAdminId=0;
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+			callerAdminId=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId();
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			callerAdminId=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId();
+		}
+		clinics = clinicsDAO.getEnabledClinicsListsByCallerAdmin(callerAdminId);
 
 		for (Clinic clinics2 : clinics) {
 			Double distance = geoLocation.distance(patients.getLatitude(),

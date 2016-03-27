@@ -30,7 +30,7 @@ public class ClinicsController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/CAdmin/getClinic", method = RequestMethod.GET)
+	@RequestMapping(value = {"/CAdmin/getClinic","/Caller/getClinic"}, method = RequestMethod.GET)
 	public String getClinicDetails(@RequestParam("clinicId") Integer clinicId,
 			Model model) {
 		ClinicsForm clinicsForm = clinicsService.getClinic(clinicId);
