@@ -54,6 +54,22 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 			requestHandler.postRequest("Patient/searchPatients.json",searchObj).then(function(response){
 				$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
 				$scope.lAdminPatientSearchData=response.data.patientSearchResult.patientSearchLists;
+				$.each($scope.lAdminPatientSearchData, function(index,value) {
+					switch(value.patientStatus) {
+					    case null:
+					        value.patientStatusName="New";
+					        break;
+					    case 1:
+					    	value.patientStatusName="Active";
+					        break;
+					   
+					    case 6:
+					    	value.patientStatusName="Need Re-assign";
+					        break;
+					    default:
+					        null;
+					};
+				});
 				$scope.patientSearchDataOrginal=angular.copy($scope.lAdminPatientSearchData);
 				$scope.isCheckedIndividual();
 			});
@@ -219,6 +235,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		$scope.lAdminPatientSearchData="";
 		$scope.patient.addedOnFromDate="";
 		$scope.patient.addedOnToDate="";
+		$scope.patient.patientStatus="7";
 		$scope.patient.isArchived="0";
 
 		//Initial Search

@@ -161,6 +161,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		$scope.lawyerPatientSearchData="";
 		$scope.patient.addedOnFromDate="";
 		$scope.patient.addedOnToDate="";
+		$scope.patient.patientStatus="7";
 		$scope.patient.isArchived="0";
 		
 		$scope.searchItems($scope.patient);

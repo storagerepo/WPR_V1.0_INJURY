@@ -534,12 +534,26 @@ public PatientSearchResult searchPatientsByCAdmin(
 			criteria.add(criterion);			
 		}
 		
+		
 		if(callerPatientSearchForm.getIsArchived()==1){
 			Criterion isArchivecriterion=Restrictions.eq("t2.isArchived", callerPatientSearchForm.getIsArchived());
 			criteria.add(isArchivecriterion);
 		}else{
 			Criterion isArchivecriterion=Restrictions.or(Restrictions.eq("t2.isArchived", callerPatientSearchForm.getIsArchived()), Restrictions.isNull("t2.isArchived"));
 			criteria.add(isArchivecriterion);
+		}
+		
+		//Common Constrains - Patient Status
+		if(callerPatientSearchForm.getPatientStatus()!=7){
+			Criterion patientStatusCriterion;
+			if(callerPatientSearchForm.getPatientStatus()==0){
+				patientStatusCriterion=Restrictions.isNull("t2.patientStatus");
+				criteria.add(patientStatusCriterion);				
+			}else{
+				patientStatusCriterion=Restrictions.eq("t2.patientStatus", callerPatientSearchForm.getPatientStatus());
+				criteria.add(patientStatusCriterion);	
+			}
+			
 		}
 		
 		criteria.createAlias("t2.lawyer", "l1",Criteria.LEFT_JOIN);
