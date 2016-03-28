@@ -184,6 +184,15 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 		});
 	};
 	
+	$scope.viewPatientModal=function(patientId){
+		$("#myModal").modal("show");
+		requestHandler.getRequest("/Patient/getPatient.json?patientId="+patientId,"").then(function(response){
+			$scope.patient=response.data.patientForm;
+		
+			});
+
+	};
+	
 	$scope.init=function(){
 
 		$scope.patient={};
