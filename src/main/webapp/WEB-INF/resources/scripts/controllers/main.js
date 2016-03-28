@@ -9,6 +9,9 @@
 var adminApp=angular.module('sbAdminApp',['requestModule']);
 adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$rootScope) {
 	
+	setTimeout(function(){
+		
+	
 	
 		if($rootScope.isAdmin==1){
 		
@@ -73,6 +76,6 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 				     });
 		   }
 		   
-	
+	}, 500);
   });
 

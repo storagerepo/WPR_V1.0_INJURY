@@ -1082,7 +1082,7 @@ sbAdminApp
 								.postRequest("getCurrentRole.json", "")
 								.then(
 										function(response) {
-
+												
 											if (response.data.role == "ROLE_SUPER_ADMIN") {
 												$rootScope.authenticated = true;
 												$rootScope.isAdmin = 1;
