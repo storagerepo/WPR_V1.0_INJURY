@@ -504,7 +504,7 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 });
 
 adminApp.controller('CallerClinicController',function($scope,requestHandler,Flash){
-	$scope.noOfRows="10";
+	$scope.noOfRows="25";
 	$scope.sortKey='clinicName';
 
 	$scope.sort = function(keyname){

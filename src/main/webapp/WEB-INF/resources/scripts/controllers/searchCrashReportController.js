@@ -16,7 +16,7 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 		$scope.crashreport.addedFromDate="";
 		$scope.crashreport.addedToDate="";
 		$scope.crashreport.pageNumber= 1;
-		$scope.crashreport.recordsPerPage="10";
+		$scope.crashreport.recordsPerPage="25";
 		$scope.totalRecords=0;
 		
 		$scope.searchCrashReport();

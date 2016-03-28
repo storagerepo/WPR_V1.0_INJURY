@@ -156,7 +156,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		$scope.patient.lawyerId="0";
 		$scope.patient.numberOfDays="1";
 		$scope.patient.pageNumber= 1;
-		$scope.patient.itemsPerPage="10";
+		$scope.patient.itemsPerPage="25";
 		$scope.totalRecords=0;
 		$scope.lawyerPatientSearchData="";
 		$scope.patient.addedOnFromDate="";

@@ -2,7 +2,7 @@ var adminApp=angular.module('sbAdminApp',['requestModule','flash','ngAnimate']);
 
 adminApp.controller('ShowCallerAdminController',function($http,$state,$scope,requestHandler,Flash){
 	
-	$scope.noOfRows="10";
+	$scope.noOfRows="25";
 	
 	$scope.sort = function(keyname){
         $scope.sortKey = keyname;   //set the sortKey to the param passed
