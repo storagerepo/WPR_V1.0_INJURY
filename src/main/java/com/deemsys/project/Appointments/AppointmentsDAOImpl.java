@@ -251,6 +251,7 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		// TODO Auto-generated method stub
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(Appointments.class);
 		criteria.createAlias("callLog", "c1");
+		criteria.add(Restrictions.eq("c1.patientCallerAdminMap.id.callerAdminId", callerAdminId));
 		List<Appointments> appointments=criteria.list();
 		return appointments.size();
 	}

@@ -14,6 +14,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
@@ -446,7 +447,7 @@ public PatientSearchResult searchPatientsByCAdmin(
 			crashToDate=DateTime.parse(callerPatientSearchForm.getCrashToDate(),DateTimeFormat.forPattern("MM/dd/yyyy"));
 			callerPatientSearchForm.setCrashToDate(crashToDate.toString("MM/dd/yyyy"));
 		}else{
-			crashToDate=crashStartDate.plusDays(callerPatientSearchForm.getNumberOfDays());		
+			crashToDate=crashStartDate.plusDays(callerPatientSearchForm.getNumberOfDays()-1);		
 			callerPatientSearchForm.setCrashToDate(crashToDate.toString("MM/dd/yyyy"));
 		}
 		
@@ -606,8 +607,10 @@ public PatientSearchResult searchPatientsByCAdmin(
 		
 	}
 	
-	
 	criteria.setProjection(projectionList);
+	
+	// Add Order
+	criteria.addOrder(Order.desc("t1.addedDate"));
 	Integer totalNumberOfRecords=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).list().size();
 	List<PatientSearchList> patientSearchLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).setFirstResult((callerPatientSearchForm.getPageNumber()-1)*callerPatientSearchForm.getItemsPerPage()).setMaxResults(callerPatientSearchForm.getItemsPerPage()).list();
 	

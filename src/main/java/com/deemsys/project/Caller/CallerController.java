@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.deemsys.project.PatientCallerMap.PatientCallerService;
+import com.deemsys.project.patient.CallerPatientSearchForm;
+import com.deemsys.project.patient.PatientSearchResult;
+import com.deemsys.project.patient.PatientService;
 
 
 /**
@@ -27,6 +30,9 @@ public class CallerController {
 	@Autowired
 	PatientCallerService patientCallerService;
 
+	@Autowired
+	PatientService patientService;
+	
 	@RequestMapping(value = "/CAdmin/getCaller", method = RequestMethod.GET)
 	public String getCaller(@RequestParam("callerId") Integer callerId, ModelMap model) {
 		model.addAttribute("callerForm", callerService.getCaller(callerId));
@@ -191,7 +197,9 @@ public class CallerController {
 
 	@RequestMapping(value = "/Caller/getNumberOfAssignedPatients", method = RequestMethod.GET)
 	public String getNoOfAssignedPatients(ModelMap model) {
-		model.addAttribute("numberOfAssignedPatients", callerService.getNumberOfAssignedPatients());
+		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, 0, 0, 7, "", 0, "", "", "", 0, 0, 0, "", 1, 10, "", "",0);
+		PatientSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+		model.addAttribute("numberOfAssignedPatients", patientSearchResult.getTotalNoOfRecord());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

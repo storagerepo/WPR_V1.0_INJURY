@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersForm;
 import com.deemsys.project.login.LoginService;
+import com.deemsys.project.patient.CallerPatientSearchForm;
+import com.deemsys.project.patient.PatientSearchResult;
+import com.deemsys.project.patient.PatientService;
 import com.deemsys.project.patientLawyerMap.PatientLawyerService;
 import com.deemsys.project.Caller.AssignCallerForm;
 import com.deemsys.project.Caller.CallerForm;
@@ -33,6 +36,9 @@ public class LawyersController {
 	
 	@Autowired
 	LoginService loginService;
+	
+	@Autowired
+	PatientService patientService;
 
 	@RequestMapping(value = "/LAdmin/getLawyers", method = RequestMethod.GET)
 	public String getLawyers(@RequestParam("lawyerId") Integer lawyerId, ModelMap model) {
@@ -155,7 +161,9 @@ public class LawyersController {
 	
 	@RequestMapping(value = "/Lawyer/getNumberOfAssignedPatients", method = RequestMethod.GET)
 	public String getNumberOfAssignedPatientsForLawyer(ModelMap model) {
-		model.addAttribute("numberOfAssignedPatiets",lawyersService.getNumberOfAssignedPatientsForLawyer());
+		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, 0, 0, 7, "", 0, "", "", "", 0, 0, 0, "", 1, 10, "", "",0);
+		PatientSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+		model.addAttribute("numberOfAssignedPatiets",patientSearchResult.getTotalNoOfRecord());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
