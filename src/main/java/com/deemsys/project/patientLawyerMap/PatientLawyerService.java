@@ -80,6 +80,9 @@ public boolean releaseLawyer(AssignLawyerForm assignLawyerForm){
 			patientLawyerAdminMap=patientLawyerDAO.getPatientMapsByLawyerAdminId(patientId, lawyerAdmin.getLawyerAdminId());
 			if(patientLawyerAdminMap!=null){
 				patientLawyerAdminMap.setLawyer(null);
+				if(patientLawyerAdminMap.getPatientStatus()==1){
+					patientLawyerAdminMap.setPatientStatus(6);
+				}
 				patientLawyerDAO.merge(patientLawyerAdminMap);			
 			}
 		}
@@ -103,7 +106,7 @@ public boolean moveToArchive(AssignLawyerForm assignLawyerForm,Integer archiveSt
 		if(patientLawyerAdminMap==null){
 			patientLawyerAdminMap=new PatientLawyerAdminMap(new PatientLawyerAdminMapId(patientId, lawyerAdmin.getLawyerAdminId()), lawyerAdmin, new Patient(patientId));
 		}
-		patientLawyerAdminMap.setIsArchived(1);
+		patientLawyerAdminMap.setIsArchived(archiveStatus);
 		patientLawyerDAO.merge(patientLawyerAdminMap);			
 		
 	}
