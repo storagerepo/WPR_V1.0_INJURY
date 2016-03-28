@@ -150,14 +150,14 @@
 								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon2"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
-									ng-model="patient.patientName" ng-change="secoundarySearchPatient()" placeholder="Patient Name"></div>
+									ng-model="patient.patientName" ng-change="secoundarySearchPatient()" placeholder="Name"></div>
 								</th>
 								
 								<th>
 								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
   								<input class="form-control" type="text"
-									ng-model="patient.localReportNumber" ng-change="secoundarySearchPatient()" placeholder="Local Report No"></div></th>
+									ng-model="patient.localReportNumber" ng-change="secoundarySearchPatient()" placeholder="Report No"></div></th>
 								<th></th>
 								<th></th>
 								<th></th>									
@@ -182,8 +182,10 @@
                                 <td>
                                 <a href="{{lAdminData.crashReportFileName}}" ng-cloak target="_blank" class="btn btn-xs btn-info hint--top" data-hint="View Crash Report"><i
 								class="fa fa-file-pdf-o"></i></a>
-                                <a href="" ng-cloak target="_blank" ng-hide={{lAdminData.lawyerId!=null}} class="btn btn-xs btn-danger hint--top" data-hint="Assign Lawyer" ng-click="assignSingleLawyerPopup(lAdminData.patientId,lAdminData.name,lAdminData.lawyerId)"><i class="fa fa-external-link-square"></i></a>
-                                <a href="" ng-cloak target="_blank" ng-show={{lAdminData.lawyerId!=null}} class="btn btn-xs btn-success hint--top" data-hint="Change Lawyer" ng-click="assignSingleLawyerPopup(lAdminData.patientId,lAdminData.name,lAdminData.lawyerId)"><i class="fa fa-external-link-square"></i></a>
+								<span ng-show={{lAdminData.isArchived==0||lAdminData.isArchived==null}}>
+                                <a href="" ng-cloak ng-hide={{lAdminData.lawyerId!=null}} class="btn btn-xs btn-danger hint--top" data-hint="Assign Lawyer" ng-click="assignSingleLawyerPopup(lAdminData.patientId,lAdminData.name,lAdminData.lawyerId)"><i class="fa fa-external-link-square"></i></a>
+                                <a href="" ng-cloak ng-show={{lAdminData.lawyerId!=null}} class="btn btn-xs btn-success hint--top" data-hint="Change Lawyer" ng-click="assignSingleLawyerPopup(lAdminData.patientId,lAdminData.name,lAdminData.lawyerId)"><i class="fa fa-external-link-square"></i></a>
+                                </span>
                                 </td>
                             </tr>
                             <tr ng-show="lAdminPatientSearchData.length==0">

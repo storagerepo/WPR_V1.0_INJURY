@@ -84,7 +84,7 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler', func
 	$scope.viewPatientModal=function(patientId){
 		$("#myModal").modal("show");
 		requestHandler.getRequest("/Patient/getPatient.json?patientId="+patientId,"").then(function(response){
-			$scope.patient=response.data.patientForm;
+			$scope.patientDetails=response.data.patientForm;
 		
 			});
 
