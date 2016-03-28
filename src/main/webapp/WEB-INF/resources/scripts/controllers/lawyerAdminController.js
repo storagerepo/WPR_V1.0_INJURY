@@ -87,21 +87,13 @@ adminApp.controller('SaveLawyerAdminController', function($http,$state,$scope,$l
 	});
 	
 	$scope.saveLawyerAdmin=function(){
-	/*	$("#username_exists").text("");
-		requestHandler.getRequest("Admin/checkUsernameExist.json?username="+$scope.lawyerAdmin.username,"").then(function(response){
-			var isNew=response.data.isUserNameExist;
-			if(isNew==0){
-				$("#username_exists").text("");*/
+	
 			 requestHandler.postRequest("/Admin/saveUpdateLawyerAdmin.json",$scope.lawyerAdmin).then(function(response){
 				 console.log("$scope.lawyerAdmin");
 				  Flash.create('success', "You have Successfully Added!");
 				  $location.path('dashboard/LawyerAdmin');
 				});
-			/*}
-			else{
-				$("#username_exists").text("UserName already exists");
-			}
-		});*/
+			
 	};
 });
 

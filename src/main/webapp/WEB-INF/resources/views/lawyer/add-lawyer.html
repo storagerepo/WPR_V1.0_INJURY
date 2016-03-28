@@ -34,7 +34,7 @@
                                   </div>
                                   <div class="col-md-6">
                                    <span class="redText">* </span> <label>Lastname</label>
-                                    <input type="text" class="form-control"  ng-model="lawyer.lastName" name="lastName" placeholder="Last Name" maxlength="20" validate-name  required>
+                                    <input type="text" class="form-control"  ng-model="lawyer.lastName" name="lastName" placeholder="Lastname" maxlength="20" validate-name  required>
                                     <span class="error-container" ng-show="myForm.lastName.$dirty && myForm.lastName.$invalid">
                                       <span ng-cloak style="color:red" ng-show="myForm.lastName.$error.required">Please Enter Lastname</span>
                                       <span ng-cloak style="color:red" ng-show="!myForm.lastName.$error.required&&myForm.lastName.$error.validateName">Enter Valid Lastname</span>
@@ -45,7 +45,7 @@
                              
                                   <div class="col-md-6">
                                   <span class="redText">* </span>  <label>Username</label>
-                                    <input  type="text" class="form-control inputclass" ng-show='options' ng-model="lawyer.username" name="username" id="username" usernameexists data-mask="usernameinput" placeholder="User Name" maxlength="20" required>
+                                    <input  type="text" class="form-control inputclass" ng-show='options' ng-model="lawyer.username" name="username" id="username" usernameexists data-mask="usernameinput" placeholder="Username" maxlength="20" required>
     								<input  type="text" readonly="readonly" class="form-control" ng-show='!options' ng-model="lawyer.username" placeholder="Enter UserName">
                                     <span style="color:red" id="username_exists"></span>
                                     <span class="error-container" ng-show="myForm.username.$dirty && myForm.username.$invalid">

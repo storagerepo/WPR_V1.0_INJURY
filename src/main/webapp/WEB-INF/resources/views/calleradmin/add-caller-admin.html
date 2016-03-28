@@ -53,7 +53,7 @@
                                      </span><br/>
                                    </div><div class="col-md-6">
                                     <span class="redText">*</span> <label>City</label>
-                                    <input type="text" class="form-control inputclass"  ng-model="callerAdmin.city" name="city" placeholder="City" maxlength="20" validate-name>
+                                    <input type="text" class="form-control inputclass"  ng-model="callerAdmin.city" name="city" placeholder="City" maxlength="20" validate-name required>
                        				 <span class="error-container" ng-show="myForm.city.$dirty && myForm.city.$invalid">
                                     <span ng-cloak style="color:red" ng-show="myForm.city.$error.required">Please Enter City</span>
                                      <span ng-cloak style="color:red" ng-show="!myForm.city.$error.required&&myForm.city.$error.validateName">Enter Valid City</span>
@@ -84,8 +84,8 @@
                                  <div class="col-md-12">
                                   <div class="col-md-6">
                                   <span class="redText">*</span> <label>Username</label>
-                                    <input  type="text" class="form-control inputclass" ng-show='options' ng-model="callerAdmin.username" name="username" id="username" data-mask="usernameinput" placeholder="User Name" maxlength="20" usernameexists  required>
-    								<input  type="text" readonly="readonly" class="form-control" ng-show='!options' ng-model="callerAdmin.username" placeholder="Enter UserName" maxlength="20">
+                                    <input  type="text" class="form-control inputclass" ng-show='options' ng-model="callerAdmin.username" name="username" id="username" data-mask="usernameinput" placeholder="Username" maxlength="20" usernameexists  required>
+    								<input  type="text" readonly="readonly" class="form-control" ng-show='!options' ng-model="callerAdmin.username" placeholder="Enter Username" maxlength="20">
                                     <span style="color:red" id="username_exists"></span>
                                     <span class="error-container" ng-show="myForm.username.$dirty && myForm.username.$invalid">
                                        <span ng-cloak style="color:red" ng-show="myForm.username.$error.required">Please Enter Username</span>

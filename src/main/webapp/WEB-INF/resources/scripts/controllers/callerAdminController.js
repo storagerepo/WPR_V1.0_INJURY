@@ -91,20 +91,12 @@ adminApp.controller('SaveCallerAdminController', function($http,$state,$scope,$l
 	
 	
 	$scope.saveCallerAdmin=function(){
-		/*$("#username_exists").text("");
-		requestHandler.getRequest("Admin/checkUsernameExist.json?username="+$scope.lawyerAdmin.username,"").then(function(response){
-			var isNew=response.data.isUserNameExist;
-			if(isNew==0){
-				$("#username_exists").text("");*/
+		
 			 requestHandler.postRequest("Admin/saveUpdateCallerAdmin.json",$scope.callerAdmin).then(function(response){
 				  Flash.create('success', "You have Successfully Added!");
 				  $location.path('dashboard/CallerAdmin');
 				});
-			 /*}
-			else{
-				$("#username_exists").text("UserName already exists");
-			}
-		});*/
+			
 	};
 });
 
