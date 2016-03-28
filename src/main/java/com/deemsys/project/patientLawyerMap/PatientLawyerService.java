@@ -58,6 +58,9 @@ public class PatientLawyerService {
 			lawyer.setLawyerId(assignLawyerForm.getLawyerId());
 			
 			patientLawyerAdminMap.setLawyer(lawyer);
+			if(patientLawyerAdminMap.getPatientStatus()==6){
+				patientLawyerAdminMap.setPatientStatus(1);
+			}
 			patientLawyerDAO.merge(patientLawyerAdminMap);
 		}
 		}
