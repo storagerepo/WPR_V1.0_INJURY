@@ -26,7 +26,7 @@
                                 <div class="col-md-6">
                                     <span class="redText">* </span> <label>Firstname</label>
                                     <input type="hidden" class="form-control inputclass"  ng-model="lawyer.lawyerId" name="lawyerId">
-                                    <input type="text" class="form-control inputclass"  ng-model="lawyer.firstName" name="firstName" placeholder="Firstname" maxlength="20" validate-name required>
+                                    <input type="text" class="form-control inputclass"  ng-model="lawyer.firstName" name="firstName" placeholder="Firstname" maxlength="45" validate-name required>
                                     <span class="error-container" ng-show="myForm.firstName.$dirty && myForm.firstName.$invalid">
                                     <span ng-cloak style="color:red" ng-show="myForm.firstName.$error.required">Please Enter Firstname</span>
                                     <span ng-cloak style="color:red" ng-show="!myForm.firstName.$error.required&&myForm.firstName.$error.validateName">Enter Valid Firstname</span>
@@ -34,7 +34,7 @@
                                   </div>
                                   <div class="col-md-6">
                                    <span class="redText">* </span> <label>Lastname</label>
-                                    <input type="text" class="form-control"  ng-model="lawyer.lastName" name="lastName" placeholder="Lastname" maxlength="20" validate-name  required>
+                                    <input type="text" class="form-control"  ng-model="lawyer.lastName" name="lastName" placeholder="Lastname" maxlength="45" validate-name  required>
                                     <span class="error-container" ng-show="myForm.lastName.$dirty && myForm.lastName.$invalid">
                                       <span ng-cloak style="color:red" ng-show="myForm.lastName.$error.required">Please Enter Lastname</span>
                                       <span ng-cloak style="color:red" ng-show="!myForm.lastName.$error.required&&myForm.lastName.$error.validateName">Enter Valid Lastname</span>
@@ -45,7 +45,7 @@
                              
                                   <div class="col-md-6">
                                   <span class="redText">* </span>  <label>Username</label>
-                                    <input  type="text" class="form-control inputclass" ng-show='options' ng-pattern="/^ *([a-zA-Z0-9]+?)+ *$/" ng-model="lawyer.username" name="username" id="username" usernameexists data-mask="usernameinput" placeholder="Username" maxlength="20" required>
+                                    <input  type="text" class="form-control inputclass" ng-show='options' ng-pattern="/^ *([a-zA-Z0-9]+?)+ *$/" ng-model="lawyer.username" name="username" id="username" usernameexists data-mask="usernameinput" placeholder="Username" maxlength="45" required>
     								<input  type="text" readonly="readonly" class="form-control" ng-show='!options' ng-model="lawyer.username" placeholder="Enter UserName">
                                     <span style="color:red" id="username_exists"></span>
                                     <span class="error-container" ng-show="myForm.username.$dirty && myForm.username.$invalid">
@@ -56,7 +56,7 @@
                                       </div>
                                        <div class="col-md-6">
                                    <span class="redText">* </span> <label>Address</label>
-                                    <input type="text" class="form-control"  ng-model="lawyer.streetAddress" name="address" placeholder="Address" maxlength="20"  required>
+                                    <input type="text" class="form-control"  ng-model="lawyer.streetAddress" name="address" placeholder="Address" maxlength="45"  required>
                                     <span class="error-container" ng-show="myForm.address.$dirty && myForm.address.$invalid">
                                       <span ng-cloak style="color:red" ng-show="myForm.address.$error.required">Please Enter Address</span>
                                       
@@ -68,7 +68,7 @@
                                  
                                 <div class="col-md-6">
                                    <span class="redText">* </span>  <label>City</label>
-                                    <input type="text" class="form-control inputclass"  ng-model="lawyer.city" name="city" placeholder="City" maxlength="20" validate-name required>
+                                    <input type="text" class="form-control inputclass"  ng-model="lawyer.city" name="city" placeholder="City" maxlength="45" validate-name required>
                                     <span class="error-container" ng-show="myForm.city.$dirty && myForm.city.$invalid">
                                     <span ng-cloak style="color:red" ng-show="myForm.city.$error.required">Please Enter City</span>
                                     <span ng-cloak style="color:red" ng-show="!myForm.city.$error.required&&myForm.city.$error.validateName">Enter Valid City</span>
@@ -76,7 +76,7 @@
                                   </div>
                                    <div class="col-md-6">
                                    <span class="redText">* </span> <label>State</label>
-                                    <input type="text" class="form-control"  ng-model="lawyer.state" name="state" placeholder="State" maxlength="20" validate-name  required>
+                                    <input type="text" class="form-control"  ng-model="lawyer.state" name="state" placeholder="State" maxlength="45" validate-name  required>
                                     <span class="error-container" ng-show="myForm.state.$dirty && myForm.state.$invalid">
                                       <span ng-cloak style="color:red" ng-show="myForm.state.$error.required">Please Enter State</span>
                                       <span ng-cloak style="color:red" ng-show="!myForm.state.$error.required&&myForm.state.$error.validateName">Enter Valid State</span>
@@ -95,7 +95,7 @@
                                   </div>
                                    <div class="col-md-6">
                                 <label>Phone Number</label>
-                                    <input type="text" class="form-control inputclass"  ng-model="lawyer.phoneNumber" name="phoneNumber" placeholder="Phone Number eg: (123)456-7890 or 123-456-7890" maxlength="15" validate-mobile>
+                                    <input type="text" class="form-control inputclass"  ng-model="lawyer.phoneNumber" name="phoneNumber" placeholder="Phone Number eg: (123)456-7890 or 123-456-7890" maxlength="20" validate-mobile>
                                     <span class="error-container" ng-show="myForm.phoneNumber.$dirty && myForm.phoneNumber.$invalid">
                                      <span ng-cloak style="color:red" ng-show="!myForm.phoneNumber.$error.required&&myForm.phoneNumber.$error.validateMobile">Enter Valid Phone Number</span>
                                    </span>

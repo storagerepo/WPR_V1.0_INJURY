@@ -41,7 +41,7 @@
                            <div class="col-md-12 no-padding">
                            <div class="col-md-6">
                                <span class="redText">*</span> <label>City</label>
-                                    <input type="text" name="city" class="form-control" ng-model="clinic.city" placeholder="City" validate-name required maxlength="20">
+                                    <input type="text" name="city" class="form-control" ng-model="clinic.city" placeholder="City" validate-name required maxlength="45">
                                     <span class="error-container" ng-show="myForm.city.$dirty && myForm.city.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.city.$error.required">Please Enter City</span>
                                 <span ng-cloak style="color:red" ng-show="!myForm.city.$error.required&&myForm.city.$error.validateName">Enter Valid City Name</span>
@@ -185,7 +185,7 @@
                               </div>
                                 <div class="col-md-6">
                                  <span class="redText">*</span> <label>Office Number</label>
-                                    <input type="text" name="officeNumber" class="form-control" ng-model="clinic.officeNumber" placeholder="Office Number eg: (123) 456-7890 or 123-456-7890" validate-mobile required>
+                                    <input type="text" name="officeNumber" class="form-control" ng-model="clinic.officeNumber" maxlength="20" placeholder="Office Number eg: (123) 456-7890 or 123-456-7890" validate-mobile required>
                                     <span class="error-container" ng-show="myForm.officeNumber.$dirty && myForm.officeNumber.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.officeNumber.$error.required">Please Enter Office Number</span>
                                 <span ng-cloak style="color:red" ng-show="!myForm.officeNumber.$error.required&&myForm.officeNumber.$error.validateMobile">Enter valid Office Number</span>
@@ -196,7 +196,7 @@
                               <div class="col-md-12 no-padding">
                               <div class="col-md-6">
                                    <label>Fax Number</label>
-                                    <input type="text" name="faxNumber" class="form-control" ng-model="clinic.faxNumber" placeholder="Fax Number eg: (123) 456-7890 or 123-456-7890" validate-mobile>
+                                    <input type="text" name="faxNumber" class="form-control" ng-model="clinic.faxNumber" maxlength="20" placeholder="Fax Number eg: (123) 456-7890 or 123-456-7890" validate-mobile>
                                    <span class="error-container" ng-show="myForm.faxNumber.$dirty && myForm.faxNumber.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.faxNumber.$error.validateMobile">Enter valid Fax Number</span>
                               </span>
@@ -586,14 +586,14 @@
                             <div class="col-md-12 no-padding">
                             <div class="col-md-12">
                                     <label>Direction</label>
-                                     <textarea class="form-control height-100" ng-model="clinic.directions" name="direction" placeholder="Direction"> </textarea>
+                                     <textarea class="form-control height-100" maxlength="500" ng-model="clinic.directions" name="direction" placeholder="Direction"> </textarea>
                                <br>
                               </div>
                             </div>
                             <div class="col-md-12 no-padding">
                             <div class="col-md-12">
                                     <label>Notes</label>
-                                     <textarea class="form-control height-100" ng-model="clinic.notes" name="notes" placeholder="Notes"> </textarea><br>
+                                     <textarea class="form-control height-100" maxlength="500" ng-model="clinic.notes" name="notes" placeholder="Notes"> </textarea><br>
                                </div>
                              </div>
                              <div class="col-md-12 no-padding">
