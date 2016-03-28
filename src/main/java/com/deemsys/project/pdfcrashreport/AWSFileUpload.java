@@ -29,7 +29,7 @@ public class AWSFileUpload {
 						injuryProperties.getProperty("accessKey"), 
 						injuryProperties.getProperty("secretKey"));
 		String bucketName =injuryProperties.getProperty("bucketName");
-		
+		String folderName =injuryProperties.getProperty("folderName");
 		// create a client connection based on credentials
 		AmazonS3 s3client = new AmazonS3Client(credentials);
 		System.out.println("Create Connection..........................");
@@ -48,7 +48,7 @@ public class AWSFileUpload {
 				*/
 				
 		// upload file to folder and set it to public
-		s3client.putObject(new PutObjectRequest(bucketName, fileName, 
+		s3client.putObject(new PutObjectRequest(bucketName, folderName+fileName, 
 						new File(filePath))
 						.withCannedAcl(CannedAccessControlList.PublicRead));
 		System.out.println("File uploaded..........................");
