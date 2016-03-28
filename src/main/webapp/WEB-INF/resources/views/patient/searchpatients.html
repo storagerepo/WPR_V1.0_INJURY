@@ -136,7 +136,7 @@
                         </thead>
                         <tbody>
                             <tr ng-show="patientSearchData.length>0"  dir-paginate="patient in patientSearchData|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
-                                <td><a href=""  ng-click="viewPatientModal(patient.patientId)"  data-hint="View Patient">{{patient.name}}</a></td>
+                                <td><a href="" class="hint--top" ng-click="viewPatientModal(patient.patientId)"  data-hint="View Patient">{{patient.name}}</a></td>
                                 <td>{{patient.localReportNumber}}</td>
                                 <td>{{patient.phoneNumber}}</td>
                                 <td>{{patient.crashDate}}</td>

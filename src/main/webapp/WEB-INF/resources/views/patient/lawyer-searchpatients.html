@@ -148,7 +148,7 @@
                         <tbody>
                             <tr ng-show="lawyerPatientSearchData.length>0"  dir-paginate="lawyerData in lawyerPatientSearchData|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
                                  <td><input type="checkbox" ng-change="isCheckedIndividual()" ng-model="lawyerData.selected"/></td>
-                                <td><a href=""  ng-click="viewPatientModal(lawyerData.patientId)"  data-hint="View Patient">{{lawyerData.name}}</a></td>
+                                <td><a href="" class="hint--top" ng-click="viewPatientModal(lawyerData.patientId)"  data-hint="View Patient">{{lawyerData.name}}</a></td>
                                 <td>{{lawyerData.localReportNumber}}</td>
                                 <td>{{lawyerData.county}}</td>
                                	<td>{{lawyerData.crashDate}}</td>

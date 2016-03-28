@@ -54,7 +54,7 @@
 			<tbody>
 				<tr ng-show="clinics.length>0" dir-paginate="clinic in clinicFilter=(clinics | filter:search | orderBy:sortKey:reverse|itemsPerPage:noOfRows)" >
 					<td ng-cloak>{{clinic.serviceArea}}</td>
-					<td><a href="" ng-cloak ng-click="viewClinicDetails(clinic.clinicId)">{{clinic.clinicName}}</a></td>
+					<td><a href="" class="hint--top" data-hint="View Clinic" ng-cloak ng-click="viewClinicDetails(clinic.clinicId)">{{clinic.clinicName}}</a></td>
 					<td ng-cloak>{{clinic.address}}</td>
 					<td ng-cloak>{{clinic.city}}</td>
 					<td>

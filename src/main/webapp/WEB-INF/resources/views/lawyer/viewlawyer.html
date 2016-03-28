@@ -65,7 +65,7 @@
 
 							<tr ng-show="lawyers.length>0"  dir-paginate="lawyer in lawyers|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows">
 								<td ng-cloak>{{lawyer.username}}</td>
-								<td ng-cloak><a href=""  ng-click="viewLawyerModal(lawyer.lawyerId)"  data-hint="View Lawyer">{{lawyer.firstName}}</a></td>
+								<td ng-cloak><a href="" class="hint--top" ng-click="viewLawyerModal(lawyer.lawyerId)"  data-hint="View Lawyer">{{lawyer.firstName}}</a></td>
 								<td ng-cloak>{{lawyer.lastName}}</td>
 
 								<td ng-cloak>{{lawyer.phoneNumber}}</td>

@@ -170,7 +170,7 @@
                         <tbody>
                             <tr ng-show="lAdminPatientSearchData.length>0"  dir-paginate="lAdminData in lAdminPatientSearchData|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
                                 <td><input type="checkbox" ng-change="isCheckedIndividual()" ng-model="lAdminData.selected"/></td>
-                                <td><a href=""  ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a></td>
+                                <td><a href="" class="hint--top" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a></td>
                                 <td>{{lAdminData.localReportNumber}}</td>
                                 <td>{{lAdminData.county}}</td>
                                 <td><span ng-if="lAdminData.lawyerFirstName==null && lAdminData.lawyerLastName==null">N/A</span>{{lAdminData.lawyerFirstName}}&nbsp;{{lAdminData.lawyerLastName}}</td>

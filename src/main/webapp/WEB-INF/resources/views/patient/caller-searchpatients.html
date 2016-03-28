@@ -161,7 +161,7 @@
                         <tbody>
                             <tr ng-show="callerPatientSearchData.length>0"  dir-paginate="callerData in callerPatientSearchData|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
                                 <td><input ng-change="isCheckedIndividual()" ng-model="callerData.selected" ng-checked="callerData.selected" type="checkbox"></td>
-                                <td><a href=""  ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Patient">{{callerData.name}}</a></td>
+                                <td><a href="" class="hint--top" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Patient">{{callerData.name}}</a></td>
                                 <td>{{callerData.localReportNumber}}</td>
                                 <td>{{callerData.phoneNumber}}</td>                                
                                 <td>{{callerData.addedDate}}</td>

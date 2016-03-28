@@ -24,7 +24,7 @@
             <div class="panel-body">
                 <div class="dataTable_wrapper">
                   
-                    		<div class="col-md-12">
+                    		<div class="col-md-12 no-padding">
                                 <div class="col-md-6">
                                    <span class="redText">*</span> <label>Firstname</label>
                                     <input type="hidden" class="form-control inputclass"  ng-model="caller.callerId" name="callerId">
@@ -43,7 +43,7 @@
                                      </span><br/>
                                    </div>
                                  </div>
-                                 <div class="col-md-12">
+                                 <div class="col-md-12 no-padding">
                                 
                                   <!-- <div class="col-md-6">
                                   <span class="redText">*</span> <label>Street Address</label>
@@ -82,7 +82,7 @@
                                   </div> -->
                                    
                                  </div>
-                                 <div class="col-md-12">
+                                 <div class="col-md-12 no-padding">
                                   <div class="col-md-6">
                                   <span class="redText">*</span> <label>User Name</label>
                                     <input  type="text" class="form-control inputclass" ng-pattern="/^ *([a-zA-Z0-9]+?)+ *$/" ng-show='options' ng-model="caller.username" name="username" id="username" data-mask="usernameinput" usernameexists placeholder="User Name" maxlength="20" required>
@@ -90,7 +90,7 @@
                                     <span style="color:red" id="username_exists"></span>
                                     <span class="error-container" ng-show="myForm.username.$dirty && myForm.username.$invalid">
                                        <span ng-cloak style="color:red" ng-show="myForm.username.$error.required">Please Enter Username</span>
-                                       <span ng-cloak style="color:red" ng-show="myForm.username.$error.pattern">Invalid Username! Should have only Alphabets and Numbers!</span>
+                                       <span ng-cloak style="color:red" ng-show="myForm.username.$error.pattern">Invalid Username! Should have only Alphabets and Numbers without Space!</span>
                                        <span ng-cloak style="color:red" ng-show="myForm.username.$error.usernameexists">Username Already Exists</span>
                                        </span><br/>
                                       </div>
@@ -103,7 +103,7 @@
                                      <br/>
                                    </div> 
                                   </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 no-padding">
                                   <div class="col-md-6">
 								 <label>Email ID</label>
                                     <input type="email" class="form-control"  ng-model="caller.emailAddress" name="emailAddress" placeholder="Email ID" maxlength="60"  validate-email>
@@ -114,7 +114,7 @@
                                     </div>
                                     
                                    </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 no-padding">
                                 <div class="col-md-12">
                                     <label>Notes</label>
                                     <textarea class="form-control height-100"  ng-model="caller.notes" name="notes" placeholder="Notes" maxlength="600"></textarea>

@@ -22,7 +22,7 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <div class="dataTable_wrapper">
-                    <div class="col-md-12">
+                    <div class="col-md-12 no-padding">
                                 <div class="col-md-6">
                                     <span class="redText">*</span> <label>Clinic Name</label>
                                     <input type="text" name="clinicName" class="form-control" ng-model="clinic.clinicName" placeholder="Clinic Name" required maxlength="80">
@@ -38,7 +38,7 @@
                               </span><br/>
                                </div>
                            </div>
-                           <div class="col-md-12">
+                           <div class="col-md-12 no-padding">
                            <div class="col-md-6">
                                <span class="redText">*</span> <label>City</label>
                                     <input type="text" name="city" class="form-control" ng-model="clinic.city" placeholder="City" validate-name required maxlength="20">
@@ -60,7 +60,7 @@
                            <br>
                       		</div>
                                  </div>
-                                 <div class="col-md-12">  
+                                 <div class="col-md-12 no-padding">  
                                  <div class="col-md-6">
                                    <span class="redText">*</span> <label>State</label>
                            <select class="form-control" ng-init="clinic.state='Ohio'" ng-model="clinic.state" name="state" id="state" required>
@@ -173,7 +173,7 @@
                                      <br>  
                            </div>
                            </div>
-                         <div class="col-md-12">
+                         <div class="col-md-12 no-padding">
                          <div class="col-md-6">
                              <span class="redText">*</span> <label>Zip</label>
                                     <input type="text" name="zip" class="form-control" ng-model="clinic.zipcode" placeholder="Zip" validate-number required maxlength="5">
@@ -193,7 +193,7 @@
                                     <br/>
                                 </div>
                               </div>
-                              <div class="col-md-12">
+                              <div class="col-md-12 no-padding">
                               <div class="col-md-6">
                                    <label>Fax Number</label>
                                     <input type="text" name="faxNumber" class="form-control" ng-model="clinic.faxNumber" placeholder="Fax Number eg: (123) 456-7890 or 123-456-7890" validate-mobile>
@@ -213,12 +213,12 @@
                                 </div>
                               </div>
                               
-                              <div class="col-md-12">
+                              <div class="col-md-12 no-padding">
                               <div class="col-md-12">
                               <label>Office Hours</label>
                               </div>
                               </div>
-                              <div class="col-md-12">
+                              <div class="col-md-12 no-padding">
                               <div class="col-md-12">
                                <table width="100%" class="table">
                                <thead>
@@ -583,25 +583,25 @@
                                </table> 
                                </div>   
                         </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 no-padding">
                             <div class="col-md-12">
                                     <label>Direction</label>
                                      <textarea class="form-control height-100" ng-model="clinic.directions" name="direction" placeholder="Direction"> </textarea>
                                <br>
                               </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 no-padding">
                             <div class="col-md-12">
                                     <label>Notes</label>
                                      <textarea class="form-control height-100" ng-model="clinic.notes" name="notes" placeholder="Notes"> </textarea><br>
                                </div>
                              </div>
-                             <div class="col-md-12">
+                             <div class="col-md-12 no-padding">
                               <div class="col-md-12">
                               <label>Doctor Details</label>
                               </div>
                                </div>
-                             <div class="col-md-12">
+                             <div class="col-md-12 no-padding">
                               	<div class="col-md-6"><br/><button class="btn btn-sm btn-primary" ng-click="addDoctorInput()"><i class="fa fa-plus-circle fa-lg"></i> Add Doctor</button> <br/></div>
                               </div>
                               <div class="col-md-12"><hr></div>
