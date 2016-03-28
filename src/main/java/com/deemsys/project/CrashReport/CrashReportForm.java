@@ -1,5 +1,7 @@
 package com.deemsys.project.CrashReport;
 
+import com.deemsys.project.common.InjuryProperties;
+
 
 
 /**
@@ -7,7 +9,7 @@ package com.deemsys.project.CrashReport;
  * @author Deemsys
  * 
  */
-public class CrashReportForm {
+public class CrashReportForm extends InjuryProperties{
 
 	private Long crashReportId;
 	private String crashReportError;
@@ -64,7 +66,7 @@ public class CrashReportForm {
 		return filePath;
 	}
 	public void setFilePath(String filePath) {
-		this.filePath = filePath;
+		this.filePath = getProperty("bucketURL")+filePath;
 	}
 	public Integer getStatus() {
 		return status;
