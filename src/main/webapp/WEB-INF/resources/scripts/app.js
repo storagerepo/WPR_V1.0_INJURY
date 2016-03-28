@@ -60,6 +60,7 @@ sbAdminApp
 														}
 														case 500: {
 															alert("Please try again!");
+															window.location.href = "/Injury/logout";
 															break;
 														}
 														default: {
@@ -142,7 +143,17 @@ sbAdminApp
 														return $ocLazyLoad
 																.load({
 																	name : 'sbAdminApp',
-																	files : [ 'scripts/controllers/main.js' ]
+																	files : [ 'scripts/controllers/main.js',
+																	          'scripts/directives/header/header-notification/header-notification.js',
+																	          'scripts/directives/sidebar/sidebar.js',
+																	          'scripts/directives/dashboard/stats/stats.js',
+																	          "resources/components/angular-toggle-switch/angular-toggle-switch.min.js",
+																				"resources/components/angular-toggle-switch/angular-toggle-switch.css" ,
+																				'resources/components/angular-animate/angular-animate.js',
+																				'resources/components/angular-cookies/angular-cookies.js',
+																				 'resources/components/angular-resource/angular-resource.js',
+																				 'resources/components/angular-sanitize/angular-sanitize.js' ,
+																				 'resources/components/angular-touch/angular-touch.js' ]
 																});
 													}
 												}
