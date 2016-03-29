@@ -1,6 +1,7 @@
 <html>
- <title>::Crash Reports::</title>
+ 
 <head>
+	<title>::Crash Reports::</title>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<link rel="icon" href="resources/images/favicon.ico" type="image/gif" sizes="16x16">
 	<link rel="stylesheet" href="resources/components/bootstrap/dist/css/bootstrap.min.css" />
