@@ -84,10 +84,33 @@ adminApp.controller('SaveCallerAdminController', function($http,$state,$scope,$l
 		
 	};
 	
+	 $scope.isChecked=function(){
+			if($scope.callerAdmin.countyForms.length>0){
+				$.each($scope.callerAdmin.countyForms, function(index,value) {
+					if(document.getElementById('checkAll').checked==true){
+						$scope.callerAdmin.county.push(value.id);
+						$("#"+value.id).checked==true;
+						//$("#"+value.id).prop('checked',$(this).prop("checked"));
+						$scope.requiredValue= true;
+					}
+					else if(document.getElementById('checkAll').checked==false){
+						$scope.callerAdmin.county=[];
+						//$("#"+value.id).prop('checked', $(this).prop("checked"));
+						$("#"+value.id).checked==false;
+						$scope.requiredValue= false;
+					}
+				});
+				
+			}
+		};
+		
+	
 	// Get County List
 	 requestHandler.getRequest("Admin/getAllCountys.json","").then(function(response){
 			$scope.callerAdmin.countyForms=response.data.countyForms;
 	});
+	 
+	 
 	
 	
 	$scope.saveCallerAdmin=function(){
@@ -106,12 +129,22 @@ adminApp.controller('EditCallerAdminController', function($http,$state,$location
 	$scope.requiredValue=true;
 	$scope.isAdd=false;
 	
+	$scope.callerAdmin={};
+	$scope.callerAdmin.county=[];
+	$scope.callerAdmin.countyForms=[];
+	
 	
 	var callerAdminOriginal="";
 	requestHandler.getRequest("Admin/getCallerAdmin.json?callerAdminId="+$stateParams.callerAdminId,"").then(function(response){
 		callerAdminOriginal=angular.copy(response.data.callerAdminForm);
 		$scope.callerAdmin=response.data.callerAdminForm;
-		console.log("selected county",$scope.callerAdmin.county);
+		
+		if($scope.callerAdmin.countyForms.length==$scope.callerAdmin.county.length){
+			document.getElementById('checkAll').checked=true;
+		}
+		else{
+			document.getElementById('checkAll').checked=false;
+		}
 	});
 	$scope.updateCallerAdmin=function(){
 		console.log("caller",$scope.callerAdmin);
@@ -120,6 +153,7 @@ adminApp.controller('EditCallerAdminController', function($http,$state,$location
 			  $location.path('dashboard/CallerAdmin');
 			});
 	};
+	
 	
 	
 // County Selection
@@ -139,7 +173,33 @@ adminApp.controller('EditCallerAdminController', function($http,$state,$location
 		else if($scope.callerAdmin.county.length>0){
 		$scope.requiredValue= true;
 		}
+		
 	};
+	 requestHandler.getRequest("Admin/getAllCountys.json","").then(function(response){
+			$scope.callerAdmin.countyForms=response.data.countyForms;
+	});
+	 
+	 
+	$scope.isChecked=function(){
+		if($scope.callerAdmin.countyForms.length>0){
+			$.each($scope.callerAdmin.countyForms, function(index,value) {
+				if(document.getElementById('checkAll').checked==true){
+					$scope.callerAdmin.county.push(value.id);
+					$("#"+value.id).checked==true;
+					//$("#"+value.id).prop('checked',$(this).prop("checked"));
+					$scope.requiredValue= true;
+				}
+				else if(document.getElementById('checkAll').checked==false){
+					$scope.callerAdmin.county=[];
+					//$("#"+value.id).prop('checked', $(this).prop("checked"));
+					$("#"+value.id).checked==false;
+					$scope.requiredValue= false;
+				}
+			});
+			
+		}
+	};
+	
 	
 	$scope.isClean = function() {
         return angular.equals (callerAdminOriginal, $scope.callerAdmin);

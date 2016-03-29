@@ -103,7 +103,7 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 		$scope.clinic.doctorsForms.splice(index,1);
 	};
 	
-	$scope.clinic.clinicTimingList=[{"day":0,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":1,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":2,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":3,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":4,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":5,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":6,"startTime":"09:00 AM","endTime":"08:00 PM","startsBreak":"02:00 PM","endsBreak":"05:00 PM","isWorkingDay":0,"isAppointmentDay":0}];
+	$scope.clinic.clinicTimingList=[{"day":0,"startTime":"09:00 AM","endTime":"06:00 PM","startsBreak":"12:00 PM","endsBreak":"02:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":1,"startTime":"09:00 AM","endTime":"06:00 PM","startsBreak":"12:00 PM","endsBreak":"02:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":2,"startTime":"09:00 AM","endTime":"06:00 PM","startsBreak":"12:00 PM","endsBreak":"02:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":3,"startTime":"09:00 AM","endTime":"06:00 PM","startsBreak":"12:00 PM","endsBreak":"02:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":4,"startTime":"09:00 AM","endTime":"06:00 PM","startsBreak":"12:00 PM","endsBreak":"02:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":5,"startTime":"09:00 AM","endTime":"06:00 PM","startsBreak":"12:00 PM","endsBreak":"02:00 PM","isWorkingDay":0,"isAppointmentDay":0},{"day":6,"startTime":"09:00 AM","endTime":"06:00 PM","startsBreak":"12:00 PM","endsBreak":"02:00 PM","isWorkingDay":0,"isAppointmentDay":0}];
 	$scope.saveClinic=function(){
 		requestHandler.postRequest("CAdmin/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
 			Flash.create('success', "You have Successfully Added!");
@@ -116,51 +116,51 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 		switch(workingDayId) {
 	    case 0:
 	    	$scope.clinic.clinicTimingList[0].startTime="09:00 AM";
-	    	$scope.clinic.clinicTimingList[0].endTime="08:00 PM";
-	    	$scope.clinic.clinicTimingList[0].startsBreak="02:00 PM";
-	    	$scope.clinic.clinicTimingList[0].endsBreak="05:00 PM";
+	    	$scope.clinic.clinicTimingList[0].endTime="06:00 PM";
+	    	$scope.clinic.clinicTimingList[0].startsBreak="12:00 PM";
+	    	$scope.clinic.clinicTimingList[0].endsBreak="02:00 PM";
 	    	$scope.sunError=false;
 	    	break;
 	    case 1:
 	    	$scope.clinic.clinicTimingList[1].startTime="09:00 AM";
-	    	$scope.clinic.clinicTimingList[1].endTime="08:00 PM";
-	    	$scope.clinic.clinicTimingList[1].startsBreak="02:00 PM";
-	    	$scope.clinic.clinicTimingList[1].endsBreak="05:00 PM";
+	    	$scope.clinic.clinicTimingList[1].endTime="06:00 PM";
+	    	$scope.clinic.clinicTimingList[1].startsBreak="12:00 PM";
+	    	$scope.clinic.clinicTimingList[1].endsBreak="02:00 PM";
 	    	$scope.monError=false;
 	        break;
 	    case 2:
 	    	$scope.clinic.clinicTimingList[2].startTime="09:00 AM";
-	    	$scope.clinic.clinicTimingList[2].endTime="08:00 PM";
-	    	$scope.clinic.clinicTimingList[2].startsBreak="02:00 PM";
-	    	$scope.clinic.clinicTimingList[2].endsBreak="05:00 PM";
+	    	$scope.clinic.clinicTimingList[2].endTime="06:00 PM";
+	    	$scope.clinic.clinicTimingList[2].startsBreak="12:00 PM";
+	    	$scope.clinic.clinicTimingList[2].endsBreak="02:00 PM";
 	    	$scope.tueError=false;
 	    	break;
 	    case 3:
 	    	$scope.clinic.clinicTimingList[3].startTime="09:00 AM";
-	    	$scope.clinic.clinicTimingList[3].endTime="08:00 PM";
-	    	$scope.clinic.clinicTimingList[3].startsBreak="02:00 PM";
-	    	$scope.clinic.clinicTimingList[3].endsBreak="05:00 PM";
+	    	$scope.clinic.clinicTimingList[3].endTime="06:00 PM";
+	    	$scope.clinic.clinicTimingList[3].startsBreak="12:00 PM";
+	    	$scope.clinic.clinicTimingList[3].endsBreak="02:00 PM";
 	    	$scope.wedError=false;
 	        break;
 	    case 4:
 	    	$scope.clinic.clinicTimingList[4].startTime="09:00 AM";
-	    	$scope.clinic.clinicTimingList[4].endTime="08:00 PM";
-	    	$scope.clinic.clinicTimingList[4].startsBreak="02:00 PM";
-	    	$scope.clinic.clinicTimingList[4].endsBreak="05:00 PM";
+	    	$scope.clinic.clinicTimingList[4].endTime="06:00 PM";
+	    	$scope.clinic.clinicTimingList[4].startsBreak="12:00 PM";
+	    	$scope.clinic.clinicTimingList[4].endsBreak="02:00 PM";
 	    	$scope.thuError=false;
 	        break;
 	    case 5:
 	    	$scope.clinic.clinicTimingList[5].startTime="09:00 AM";
-	    	$scope.clinic.clinicTimingList[5].endTime="08:00 PM";
-	    	$scope.clinic.clinicTimingList[5].startsBreak="02:00 PM";
-	    	$scope.clinic.clinicTimingList[5].endsBreak="05:00 PM";
+	    	$scope.clinic.clinicTimingList[5].endTime="06:00 PM";
+	    	$scope.clinic.clinicTimingList[5].startsBreak="12:00 PM";
+	    	$scope.clinic.clinicTimingList[5].endsBreak="02:00 PM";
 	    	$scope.friError=false;
 	        break;
 	    case 6:
 	    	$scope.clinic.clinicTimingList[6].startTime="09:00 AM";
-	    	$scope.clinic.clinicTimingList[6].endTime="08:00 PM";
-	    	$scope.clinic.clinicTimingList[6].startsBreak="02:00 PM";
-	    	$scope.clinic.clinicTimingList[6].endsBreak="05:00 PM";
+	    	$scope.clinic.clinicTimingList[6].endTime="06:00 PM";
+	    	$scope.clinic.clinicTimingList[6].startsBreak="12:00 PM";
+	    	$scope.clinic.clinicTimingList[6].endsBreak="02:00 PM";
 	    	$scope.satError=false;
 	        break;
 	    default:

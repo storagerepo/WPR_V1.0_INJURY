@@ -1,5 +1,5 @@
 <html>
-
+ <title>::Crash Reports::</title>
 <head>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<link rel="icon" href="resources/images/favicon.ico" type="image/gif" sizes="16x16">
@@ -31,7 +31,7 @@
 		padding:20px 40px;
 		background:rgba(0, 77, 153,0.9);
 		color:rgba(255, 255, 255,1);
-		width:30%;
+		width:50%;
 		font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 	}
 	#body {
@@ -96,7 +96,7 @@
 
 <div id="container">
 	<div id="header">
-		<h2>Injury Referral Center</h2>
+		<h2>Lightning fast reports upon request!</h2>
 	</div>
 	<div id="body">
 		<div class="col-md-1"></div>

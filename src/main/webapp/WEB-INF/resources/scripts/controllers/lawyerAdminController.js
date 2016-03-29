@@ -81,6 +81,27 @@ adminApp.controller('SaveLawyerAdminController', function($http,$state,$scope,$l
 		}
 	};
 	
+	
+	 $scope.isChecked=function(){
+			if($scope.lawyerAdmin.countyform.length>0){
+				$.each($scope.lawyerAdmin.countyform, function(index,value) {
+					if(document.getElementById('checkAll').checked==true){
+						$scope.lawyerAdmin.county.push(value.id);
+						$("#"+value.id).checked==true;
+						//$("#"+value.id).prop('checked',$(this).prop("checked"));
+						$scope.requiredValue= true;
+					}
+					else if(document.getElementById('checkAll').checked==false){
+						$scope.lawyerAdmin.county=[];
+						//$("#"+value.id).prop('checked', $(this).prop("checked"));
+						$("#"+value.id).checked==false;
+						$scope.requiredValue= false;
+					}
+				});
+				
+			}
+		};
+	
 	// Get County List
 	 requestHandler.getRequest("Admin/getAllCountys.json","").then(function(response){
 			$scope.lawyerAdmin.countyform=response.data.countyForms;
@@ -103,10 +124,21 @@ adminApp.controller('EditLawyerAdminController', function($http,$state,$location
 	$scope.requiredValue=true;
 	$scope.isAdd=false;
 	
+	$scope.lawyerAdmin={};
+	$scope.lawyerAdmin.county=[];
+	$scope.lawyerAdmin.countyform=[];
+	
 	var lawyerAdminOriginal="";
 	requestHandler.getRequest("Admin/getLawyerAdmin.json?lawyerAdminId="+$stateParams.lawyerAdminId,"").then(function(response){
 		lawyerAdminOriginal=angular.copy(response.data.lawyerAdminForm);
 		$scope.lawyerAdmin=response.data.lawyerAdminForm;
+		
+		if($scope.lawyerAdmin.countyform.length==$scope.lawyerAdmin.county.length){
+			document.getElementById('checkAll').checked=true;
+		}
+		else{
+			document.getElementById('checkAll').checked=false;
+		}
 	});
 	
 	
@@ -137,6 +169,30 @@ adminApp.controller('EditLawyerAdminController', function($http,$state,$location
 			$scope.requiredValue=true;
 		}
 	};
+	
+	 $scope.isChecked=function(){
+			if($scope.lawyerAdmin.countyform.length>0){
+				$.each($scope.lawyerAdmin.countyform, function(index,value) {
+					if(document.getElementById('checkAll').checked==true){
+						$scope.lawyerAdmin.county.push(value.id);
+						$("#"+value.id).checked==true;
+						//$("#"+value.id).prop('checked',$(this).prop("checked"));
+						$scope.requiredValue= true;
+					}
+					else if(document.getElementById('checkAll').checked==false){
+						$scope.lawyerAdmin.county=[];
+						//$("#"+value.id).prop('checked', $(this).prop("checked"));
+						$("#"+value.id).checked==false;
+						$scope.requiredValue= false;
+					}
+				});
+				
+			}
+		};
+		
+		requestHandler.getRequest("Admin/getAllCountys.json","").then(function(response){
+			$scope.lawyerAdmin.countyform=response.data.countyForms;
+	});
 	
 	$scope.isClean = function() {
         return angular.equals (lawyerAdminOriginal, $scope.lawyerAdmin);

@@ -175,10 +175,10 @@
                            </div>
                          <div class="col-md-12 no-padding">
                          <div class="col-md-6">
-                             <span class="redText">*</span> <label>Zip</label>
-                                    <input type="text" name="zip" class="form-control" ng-model="clinic.zipcode" placeholder="Zip" validate-number required maxlength="5">
+                             <span class="redText">*</span> <label>Zipcode</label>
+                                    <input type="text" name="zip" class="form-control" ng-model="clinic.zipcode" placeholder="Zipcode" validate-number required maxlength="5">
                                     <span class="error-container" ng-show="myForm.zip.$dirty && myForm.zip.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.zip.$error.required">Please Enter Zip</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.zip.$error.required">Please Enter Zipcode</span>
                                 <span ng-cloak style="color:red" ng-show="!myForm.zip.$error.required&&myForm.zip.$error.validateNumber">Enter Valid Zipcode</span>
                               </span>
                                     <br/>
@@ -223,7 +223,7 @@
                                <table width="100%" class="table">
                                <thead>
                                <tr>
-                               <th>Day</th><th>Start Time</th><th>End Time</th><th>Starts Break</th><th>Ends Break</th><th>Is Working Day</th><th>Appointment Only</th>
+                               <th>Day</th><th>Start Time</th><th>End Time</th><th>Start Break</th><th>End Break</th><th>Is Working Day</th><th>Appointment Only</th>
                                </tr>
                                </thead>
                                <tbody>
@@ -602,7 +602,8 @@
                               </div>
                                </div>
                              <div class="col-md-12 no-padding">
-                              	<div class="col-md-6"><br/><button class="btn btn-sm btn-primary" ng-click="addDoctorInput()"><i class="fa fa-plus-circle fa-lg"></i> Add Doctor</button> <br/></div>
+                             <div class="col-md-6"></div>
+                              	<div class="col-md-6"><br/><button class="btn btn-sm btn-primary pull-right" ng-click="addDoctorInput()"><i class="fa fa-plus-circle fa-lg"></i> Add One more Doctor</button> <br/></div>
                               </div>
                               <div class="col-md-12"><hr></div>
                                <div class="col-md-12" ng-repeat="doctorInput in clinic.doctorsForms">

@@ -839,7 +839,7 @@ sbAdminApp
 												controller : 'SaveCallerAdminController',
 												templateUrl : 'views/calleradmin/add-caller-admin.html',
 												url : '/add-caller-admin',
-												title : 'Add Caller Admin'
+												title : 'Add Caller-Center Admin'
 											})
 									.state(
 											'dashboard.EditCallerAdmin/:callerAdminId',
@@ -859,7 +859,7 @@ sbAdminApp
 												controller : 'EditCallerAdminController',
 												templateUrl : 'views/calleradmin/add-caller-admin.html',
 												url : '/EditCallerAdmin/:callerAdminId',
-												title : 'Edit Caller Admin'
+												title : 'Edit Caller-Center Admin'
 											})
 											.state(
 											'dashboard.callerAdminSearchPatients',

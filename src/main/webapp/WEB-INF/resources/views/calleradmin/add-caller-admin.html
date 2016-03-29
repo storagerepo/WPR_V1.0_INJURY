@@ -16,7 +16,7 @@
    
         <div class="panel panel-default">
             <div class="panel-heading">
-                Enter Caller Admin Details
+                Enter Caller-Center Admin Details
                 <span class="pull-right"><span class="redText">*</span> Required Fields</span>
             </div>
             <!-- /.panel-heading -->
@@ -125,11 +125,18 @@
                          	<div class="col-md-12">
                          	<span class="redText">*</span> <label>Assign County:</label>
                          	   <span ng-cloak style="color:red" ng-show="!requiredValue">Please Select atleast one county</span>
-                                           
+                         	   <br/>
+                         	    <div class="col-md-12">
+                         	   <div class="col-md-2" >
+                         	     <label class="checkbox">
+                                  <input type="checkbox" id="checkAll" ng-click="isChecked()">Select All  
+                                  </label>   
+                                  </div>
+                                  </div> 
                                 <div class="col-md-12">
                                 <div class="col-md-2" ng-repeat="county in callerAdmin.countyForms">
 							      <label class="checkbox" for="{{county.id}}"> 
-							        <input type="checkbox"   value="{{county.id}}" name="group" id="{{county.id}}" ng-checked="callerAdmin.county.indexOf(county.id)>-1" ng-click="selectedCounties(county.id)" ng-required="requiredValue==0"/>
+							        <input type="checkbox"  value="{{county.id}}" name="group" id="{{county.id}}" ng-checked="callerAdmin.county.indexOf(county.id)>-1" ng-click="selectedCounties(county.id)" ng-required="requiredValue==0"/>
 							        {{county.name}}
 							      </label>
 							      

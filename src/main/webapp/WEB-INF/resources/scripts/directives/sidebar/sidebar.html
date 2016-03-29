@@ -7,7 +7,7 @@
                 <a ui-sref="dashboard.home"><i ng-cloak class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
                 <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
-                <a ui-sref="dashboard.CallerAdmin"><i ng-cloak class="fa fa-phone fa-fw"></i> Caller Admin<span></span></a>
+                <a ui-sref="dashboard.CallerAdmin"><i ng-cloak class="fa fa-phone fa-fw"></i> Caller-Center Admin<span></span></a>
             </li>
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.LawyerAdmin"><i ng-cloak class="fa fa-gavel fa-fw"></i> Lawyer Admin<span></span></a>
@@ -41,25 +41,6 @@
                 <a ui-sref="dashboard.LawyerAdminSearchPatients"><i ng-cloak class="fa fa-search fa-fw"></i> Patients<span></span></a>
             </li>
             
-            
-            <!-- <li ui-sref-active="active">
-                <a ui-sref="dashboard.clinic" ng-hide="{{$root.isAdmin==3 || $root.isAdmin==4}}"><i ng-cloak class="fa fa-hospital-o fa-fw"></i> Clinic<span></span></a>
-            </li>
-            <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
-                <a ui-sref="dashboard.Lawyer"><i ng-cloak class="fa fa-users fa-fw"></i> Lawyer</a>
-            </li>
-             <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
-                <a ui-sref="dashboard.staff"><i ng-cloak class="fa fa-user fa-fw"></i> Caller<span></span></a>
-            </li>
-            <li ui-sref-active="active">
-                <a ui-sref="dashboard.doctor"><i ng-cloak class="fa fa-user-md fa-fw"></i> Doctor</a>
-            </li>
-            <li ui-sref-active="active">
-                <a ui-sref="dashboard.patient" ng-hide="{{$root.isAdmin==3}}"><i ng-cloak class="fa fa-male fa-fw"></i> Patient</a>
-            </li>
-            <li ui-sref-active="active" ng-hide="{{$root.isAdmin==3 || $root.isAdmin==4}}">
-                <a ui-sref="dashboard.appointment"><i ng-cloak class="fa fa-calendar fa-fw"></i> Appointment</a>
-            </li> -->
             
              <li ui-sref-active="active" ng-show="{{$root.isAdmin==4}}">
                 <a ui-sref="dashboard.CallerSearchPatients"><i ng-cloak class="fa fa-search fa-fw"></i> Patients<span></span></a>
