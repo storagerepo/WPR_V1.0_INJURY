@@ -95,7 +95,7 @@
 		p:url="${jdbc.databaseurl}" p:username="${jdbc.username}" p:password="${jdbc.password}"
 		p:testWhileIdle="true" p:validationQuery="SELECT count(*) FROM injurytest.users"
 		p:testOnBorrow="true" p:removeAbandoned="true" p:minIdle="0" p:maxIdle="8" p:maxActive="-1" p:initialSize="5"
-		p:removeAbandonedTimeout="300000" />
+		p:removeAbandonedTimeout="10" p:defaultAutoCommit="true"/>
 
 
 	<bean id="sessionFactory"

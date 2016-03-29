@@ -6,7 +6,7 @@
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
-    <div class="row">
+    <div class="row" ng-cloak>
     	 <!-- SuperAdmin Dashboard Starts-->
     	<stats ng-cloak number="{{numberCallerAdmin}}" comments="Caller-Center Admin" colour="primary" type="user" goto="dashboard.CallerAdmin" ng-show="{{isAdmin==1}}"></stats>
         <stats ng-cloak number="{{numberLawyerAdmin}}" comments="Lawyer Admin" colour="green" type="user" goto="dashboard.LawyerAdmin" ng-show="{{isAdmin==1}}"></stats>
