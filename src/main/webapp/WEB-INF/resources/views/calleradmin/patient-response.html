@@ -1,0 +1,81 @@
+<div class="row">
+	<div class="col-lg-12">
+	
+		<a ui-sref="" ng-click="addPatientResponseModel()" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-plus-circle fa-lg"></i> Add Response</a>
+			
+		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>	
+		<h2 class="page-header">Call Center Admin</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+	 		<!-- /.panel-heading -->
+			<div class="col-md-12">
+			
+			 
+					<table class="table table-hover table-striped table-bordered">
+
+						<thead>
+							<tr>
+								<th  width="15%">Sl no.</th>
+								<th  width="70%">Response</th>
+								<th width="15%">Action</th>
+						
+							</tr>
+
+							<tr>
+								<th></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon2"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.firstName" placeholder="Search response"></div></th>
+								<th></th>	
+								
+							</tr>
+						</thead>
+						<tbody>
+							<tr  ng-show="callerAdmins.length>0"  dir-paginate="callerAdmin in callerAdmins|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows">
+								<td class="wrap" ng-cloak>{{callerAdmin.phoneNumber}}</td>
+								<td class="wrap" ng-cloak>{{callerAdmin.emailAddress}}</td>
+								<td>
+									<a href="" ng-click="editPatientResponseModel(id)" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Response"><i
+									class="glyphicon glyphicon-edit"></i>
+									</a>
+							 	</td>
+							</tr>
+							<tr ng-show="!callerAdmins.length">
+								<td colspan="3" align="center">No Records Found</td>
+							</tr>
+						</tbody>
+						
+					</table>
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
+    					</dir-pagination-controls>
+			</div>
+		<!-- /.panel -->
+	<!-- /.col-lg-12 -->
+</div>
+
+  <div class="modal fade" id="patientResponseModel" role="dialog">
+  	<form id="myForm" name="myForm" novalidate ng-cloak>
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <form name="myForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{modelName}} Patient Response</h4>
+        </div>
+        <div class="modal-body">Response
+              <input name="response" ng-model="myForm.response" class="form-control" required>
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-disabled='myForm.$invalid' ng-click="addOrEditResponse()">{{modelName}} Response</a>
+        </div>
+      </div>
+    </div>
+    </form>
+ </div>

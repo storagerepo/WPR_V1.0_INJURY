@@ -820,6 +820,25 @@ sbAdminApp
 												url : '/CallerAdmin'
 
 											})
+											.state(
+											'dashboard.patientResponse',
+											{
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/callerAdminController.js', ]
+																});
+													}
+												},
+												controller : 'PatientResponseController',
+												templateUrl : 'views/calleradmin/patient-response.html',
+												url : '/PatientResponse'
+
+											})
 									.state(
 											'dashboard.add-caller-admin',
 											{

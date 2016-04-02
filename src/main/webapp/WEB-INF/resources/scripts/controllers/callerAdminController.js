@@ -205,3 +205,51 @@ adminApp.controller('EditCallerAdminController', function($http,$state,$location
         return angular.equals (callerAdminOriginal, $scope.callerAdmin);
     };
 });
+
+adminApp.controller('PatientResponseController',function($http,$state,$scope,requestHandler,Flash){
+	
+	$scope.noOfRows="25";
+	
+	$scope.addPatientResponseModel=function(){
+		$scope.modelName="Add";
+		$("#patientResponseModel").modal("show");
+		
+  	  	$scope.addResponse=function(){
+  	  		alert("call Add Response");
+  	  		/*requestHandler.postRequest("Admin/resetCallerAdminPassword.json?callerAdminId="+callerAdminId,"").then(function(response) {
+				 $scope.response=response.data.requestSuccess;
+				 if($scope.response==true)
+				 {
+				 $("#resetCallerAdminPassword").modal("hide");
+				 $('.modal-backdrop').hide();
+				 Flash.create('success', "You have Successfully Reset the Password!");
+				 $scope.getCallerAdminList();
+				
+				 }
+			});*/
+		};
+		
+	};
+	
+	$scope.EditPatientResponseModel=function(id){
+		$scope.modelName="Edit";
+		$("#patientResponseModel").modal("show");
+		
+  	  	$scope.addResponse=function(){
+  	  		alert("call Add Response");
+  	  		/*requestHandler.postRequest("Admin/resetCallerAdminPassword.json?callerAdminId="+callerAdminId,"").then(function(response) {
+				 $scope.response=response.data.requestSuccess;
+				 if($scope.response==true)
+				 {
+				 $("#resetCallerAdminPassword").modal("hide");
+				 $('.modal-backdrop').hide();
+				 Flash.create('success', "You have Successfully Reset the Password!");
+				 $scope.getCallerAdminList();
+				
+				 }
+			});*/
+		};
+		
+	};
+	
+});
