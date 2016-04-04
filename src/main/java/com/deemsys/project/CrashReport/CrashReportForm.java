@@ -19,6 +19,7 @@ public class CrashReportForm extends InjuryProperties{
 	private String county;
 	private String addedDate;
 	private String filePath;
+	private Integer numberOfPatients;
 	private Integer status;
 	public Long getCrashReportId() {
 		return crashReportId;
@@ -68,6 +69,13 @@ public class CrashReportForm extends InjuryProperties{
 	public void setFilePath(String filePath) {
 		this.filePath = getProperty("bucketURL")+filePath;
 	}
+	
+	public Integer getNumberOfPatients() {
+		return numberOfPatients;
+	}
+	public void setNumberOfPatients(Integer numberOfPatients) {
+		this.numberOfPatients = numberOfPatients;
+	}
 	public Integer getStatus() {
 		return status;
 	}
@@ -76,7 +84,7 @@ public class CrashReportForm extends InjuryProperties{
 	}
 	public CrashReportForm(Long crashReportId, String crashReportError,
 			String localReportNumber, String crashId, String crashDate,
-			String county, String addedDate, String filePath, Integer status) {
+			String county, String addedDate, String filePath,Integer numberOfPatients, Integer status) {
 		super();
 		this.crashReportId = crashReportId;
 		this.crashReportError = crashReportError;
@@ -86,11 +94,12 @@ public class CrashReportForm extends InjuryProperties{
 		this.county = county;
 		this.addedDate = addedDate;
 		this.filePath = filePath;
+		this.numberOfPatients=numberOfPatients;
 		this.status = status;
 	}
 	public CrashReportForm(String crashReportError,
 			String localReportNumber, String crashId, String crashDate,
-			String county, String addedDate, String filePath, Integer status) {
+			String county, String addedDate, String filePath,Integer numberOfPatients,Integer status) {
 		super();
 		this.crashReportError = crashReportError;
 		this.localReportNumber = localReportNumber;
@@ -99,6 +108,7 @@ public class CrashReportForm extends InjuryProperties{
 		this.county = county;
 		this.addedDate = addedDate;
 		this.filePath = filePath;
+		this.numberOfPatients=numberOfPatients;
 		this.status = status;
 	}
 	public CrashReportForm() {

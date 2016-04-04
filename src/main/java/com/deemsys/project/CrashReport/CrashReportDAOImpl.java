@@ -181,7 +181,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		//Projections
 		ProjectionList projectionList=Projections.projectionList();
 		
-		projectionList.add(Projections.alias(Projections.property("crashReportId"), "crashReportId"));
+		//projectionList.add(Projections.alias(Projections.property("crashReportId"), "crashReportId"));
 		projectionList.add(Projections.alias(Projections.property("e1.description"), "crashReportError"));
 		projectionList.add(Projections.alias(Projections.property("localReportNumber"), "localReportNumber"));
 		projectionList.add(Projections.alias(Projections.property("crashId"), "crashId"));
@@ -189,6 +189,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		projectionList.add(Projections.alias(Projections.property("c1.name"), "county"));
 		projectionList.add(Projections.alias(Projections.property("addedDate"), "addedDate"));
 		projectionList.add(Projections.alias(Projections.property("filePath"), "filePath"));
+		projectionList.add(Projections.alias(Projections.property("numberOfPatients"), "numberOfPatients"));
 		projectionList.add(Projections.alias(Projections.property("status"), "status"));
 		
 		criteria.setProjection(projectionList);
@@ -242,6 +243,11 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 			}
 		}
 		return crashReports.size();
+	}
+	
+	@Override
+	public CrashReport getCrashReport(String crashId){
+		return (CrashReport) this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).add(Restrictions.eq("crashId",crashId)).uniqueResult();
 	}
 
 }

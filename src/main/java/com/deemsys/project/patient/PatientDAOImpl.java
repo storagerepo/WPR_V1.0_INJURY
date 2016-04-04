@@ -1,5 +1,6 @@
 package com.deemsys.project.patient;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 import org.hibernate.id.Assigned;
 import org.hibernate.transform.AliasToBeanResultTransformer;
+import org.hibernate.transform.ResultTransformer;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,7 @@ import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.Patient;
 import com.deemsys.project.entity.PatientCallerAdminMap;
 import com.deemsys.project.login.LoginService;
+import com.itextpdf.text.pdf.hyphenation.TernaryTree.Iterator;
 
 /**
  * 
@@ -416,7 +419,7 @@ private Object value(String string, String localReportNumber, MatchMode anywhere
 
 @SuppressWarnings("unchecked")
 @Override
-public PatientSearchResult searchPatientsByCAdmin(
+public PatientSearchResultSet searchPatientsByCAdmin(
 		CallerPatientSearchForm callerPatientSearchForm) {
 	// TODO Auto-generated method stub
 		
@@ -424,6 +427,11 @@ public PatientSearchResult searchPatientsByCAdmin(
 	
 	//Patient Table Must be included
 	Criteria criteria=session.createCriteria(Patient.class, "t1");
+	
+	//Join Crash Report
+	criteria.createAlias("crashReport", "cr");
+	
+	
 	
 	//Common Constrains - County
 	if(callerPatientSearchForm.getCountyId()!=0){
@@ -477,7 +485,7 @@ public PatientSearchResult searchPatientsByCAdmin(
 	
 	//Common Constrain Local Report Number
 	if(!callerPatientSearchForm.getLocalReportNumber().equals("")){
-	Criterion localReportNumberCriterion=Restrictions.like("t1.localReportNumber", callerPatientSearchForm.getLocalReportNumber(),MatchMode.START);
+	Criterion localReportNumberCriterion=Restrictions.like("cr.localReportNumber", callerPatientSearchForm.getLocalReportNumber(),MatchMode.START);
 	criteria.add(localReportNumberCriterion);
 	}
 	
@@ -569,7 +577,8 @@ public PatientSearchResult searchPatientsByCAdmin(
 	ProjectionList projectionList = Projections.projectionList();
 	
 	projectionList.add(Projections.property("t1.patientId"),"patientId");
-	projectionList.add(Projections.property("t1.localReportNumber"),"localReportNumber");
+	projectionList.add(Projections.property("cr.localReportNumber"),"localReportNumber");
+	projectionList.add(Projections.property("cr.numberOfPatients"),"numberOfPatients");
 	projectionList.add(Projections.property("t1.county.countyId"),"countyId");
 	projectionList.add(Projections.property("c1.name"),"county");
 	projectionList.add(Projections.property("t1.crashDate"),"crashDate");
@@ -578,9 +587,10 @@ public PatientSearchResult searchPatientsByCAdmin(
 	projectionList.add(Projections.property("t1.name"),"name");
 	projectionList.add(Projections.property("t1.phoneNumber"),"phoneNumber");
 	projectionList.add(Projections.property("t1.address"),"address");	
-	projectionList.add(Projections.property("t1.crashReportFileName"),"crashReportFileName");
+	projectionList.add(Projections.property("cr.filePath"),"crashReportFileName");
 	projectionList.add(Projections.property("t1.tier"),"tier");
-	
+	projectionList.add(Projections.property("t1.atFaultInsuranceCompany"),"atFaultInsuranceCompany");
+	projectionList.add(Projections.property("t1.victimInsuranceCompany"),"victimInsuranceCompany");
 	
 	if(role.equals("ROLE_CALLER_ADMIN")||role.equals("ROLE_CALLER")){
 	
@@ -593,8 +603,6 @@ public PatientSearchResult searchPatientsByCAdmin(
 		
 		projectionList.add(Projections.property("t2.lawyerAdmin.lawyerAdminId"),"lawyerAdminId");
 		projectionList.add(Projections.property("t2.lawyer.lawyerId"),"lawyerId");
-		projectionList.add(Projections.property("t1.atFaultInsuranceCompany"),"atFaultInsuranceCompany");
-		projectionList.add(Projections.property("t1.victimInsuranceCompany"),"victimInsuranceCompany");
 		projectionList.add(Projections.property("l1.firstName"),"lawyerFirstName");
 		projectionList.add(Projections.property("l1.lastName"),"lawyerLastName");
 	}
@@ -607,16 +615,20 @@ public PatientSearchResult searchPatientsByCAdmin(
 		
 	}
 	
+	
+	Long totalNoOfRecords=(Long) criteria.setProjection(Projections.count("t1.patientId")).uniqueResult();
+	
 	criteria.setProjection(projectionList);
 	
 	// Add Order
 	criteria.addOrder(Order.desc("t1.addedDate"));
-	Integer totalNumberOfRecords=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).list().size();
+	criteria.addOrder(Order.desc("cr.localReportNumber"));
+		
 	List<PatientSearchList> patientSearchLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).setFirstResult((callerPatientSearchForm.getPageNumber()-1)*callerPatientSearchForm.getItemsPerPage()).setMaxResults(callerPatientSearchForm.getItemsPerPage()).list();
 	
-	PatientSearchResult patientSearchResult=new PatientSearchResult(totalNumberOfRecords, patientSearchLists);
+	PatientSearchResultSet patientSearchResultSet=new PatientSearchResultSet(totalNoOfRecords, patientSearchLists);
 	
-	return patientSearchResult;
+	return patientSearchResultSet;
 
 }
 
@@ -632,6 +644,5 @@ public Patient getPatientByPatientId(String patientId) {
 	Patient patient=(Patient) this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.eq("patientId", patientId)).uniqueResult();
 	return patient;
 }
-
 
 }

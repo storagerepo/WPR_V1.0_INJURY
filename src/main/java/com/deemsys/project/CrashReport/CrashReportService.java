@@ -105,7 +105,7 @@ public class CrashReportService {
 		County county= countyDAO.getCountyByName(this.splitCountyName(crashReportForm.getCounty()));
 		CrashReportError crashReportError=crashReportErrorDAO.get(Integer.parseInt(crashReportForm.getCrashReportError()));
 		CrashReport crashReport=new CrashReport(crashReportError, crashReportForm.getLocalReportNumber(), crashReportForm.getCrashId(), crashReportForm.getCrashDate(), 
-					county, crashReportForm.getAddedDate(), crashReportForm.getFilePath(), 1);
+					county, crashReportForm.getAddedDate(), crashReportForm.getFilePath(),crashReportForm.getNumberOfPatients(),1);
 		
 	
 		
@@ -140,14 +140,14 @@ public class CrashReportService {
 	// Get Crash Report Form Details from Patient Form
 	public CrashReportForm getCrashReportFormDetails(PatientForm patientForm,Integer crashId,String filePath,Integer crashReportErrorId){
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), patientForm.getLocalReportNumber(), crashId.toString(), patientForm.getCrashDate(), patientForm.getCounty(),
-				InjuryConstants.convertMonthFormat(new Date()), filePath, 1);
+				InjuryConstants.convertMonthFormat(new Date()), filePath,0, 1);
 		return crashReportForm;
 	}
 	
 	// Get Crash Report Form Details from PdfJson Form
-	public CrashReportForm getCrashReportFormDetails(ReportFirstPageForm reportFirstPageForm,Integer crashId,String filePath,Integer crashReportErrorId){
+	public CrashReportForm getCrashReportFormDetails(ReportFirstPageForm reportFirstPageForm,Integer crashId,String filePath,Integer crashReportErrorId,Integer numberOfPatients){
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), reportFirstPageForm.getLocalReportNumber(), crashId.toString(), reportFirstPageForm.getCrashDate(), reportFirstPageForm.getCounty(),
-				InjuryConstants.convertMonthFormat(new Date()), filePath, 1);
+				InjuryConstants.convertMonthFormat(new Date()), filePath,numberOfPatients, 1);
 		return crashReportForm;
 	}
 	

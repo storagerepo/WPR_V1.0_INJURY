@@ -8,6 +8,7 @@ package com.deemsys.project.patient;
 public class PatientForm {
 	
 	private String patientId;
+	private String crashId;
 	private Integer callerId;
 	private String callerName;
 	private String localReportNumber;
@@ -43,6 +44,12 @@ public class PatientForm {
 	
 	public String getPatientId() {
 		return patientId;
+	}
+	public String getCrashId() {
+		return crashId;
+	}
+	public void setCrashId(String crashId) {
+		this.crashId = crashId;
 	}
 	public void setPatientId(String patientId) {
 		this.patientId = patientId;
@@ -241,7 +248,7 @@ public class PatientForm {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public PatientForm(String patientId, String localReportNumber, String crashSeverity,
+	public PatientForm(String patientId,String crashId, String localReportNumber, String crashSeverity,
 			String reportingAgencyName, String numberOfUnits,
 			String unitInError, String cityVillageTownship,
 			String crashDate, String addedDate, String timeOfCrash,
@@ -254,6 +261,7 @@ public class PatientForm {
 			String crashReportFileName, Integer status) {
 		super();
 		this.patientId = patientId;
+		this.crashId=crashId;
 		this.localReportNumber = localReportNumber;
 		this.crashSeverity = crashSeverity;
 		this.reportingAgencyName = reportingAgencyName;

@@ -44,7 +44,7 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler', func
 	$scope.searchItems=function(searchObj){
 		requestHandler.postRequest("/Patient/searchPatients.json",searchObj).then(function(response){
 			$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
-			$scope.patientSearchData=response.data.patientSearchResult.patientSearchLists;
+			$scope.patientSearchData=response.data.patientSearchResult.searchResult;
 		});
 	};
 	 
@@ -72,7 +72,7 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler', func
 	
 	$scope.secoundarySearchPatient=function(){
 		$scope.patient.pageNumber= 1;
-		$scope.setPage=1;
+		/*$scope.setPage=1;*/
 		$scope.searchItems($scope.patient);
 	};
 	

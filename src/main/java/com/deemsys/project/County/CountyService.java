@@ -181,10 +181,10 @@ public class CountyService {
 	}
 	
 	public List<CountyList> getNewPatientCount(List<CountyList> countyLists){
-		for (CountyList countyList : countyLists) {
+		/*for (CountyList countyList : countyLists) {
 			CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(null, countyList.getCountyId(), 0, 0, "", 0, "", "", "", 0, 0, 0, "", 0, 0,"","",0);
 			countyList.setNewCount(patientService.getCurrentPatientList(callerPatientSearchForm).getTotalNoOfRecord());
-		}
+		}*/
 		return countyLists;
 	}
 }

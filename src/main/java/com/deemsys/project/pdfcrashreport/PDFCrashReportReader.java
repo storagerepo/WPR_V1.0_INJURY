@@ -177,7 +177,7 @@ public class PDFCrashReportReader {
 					this.crashLogUpdate(crashId, e);
 					this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
 					CrashReportError crashReportError=crashReportErrorDAO.get(12);
-					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, "", null, InjuryConstants.convertMonthFormat(new Date()) , "", 0));
+					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, "", null, InjuryConstants.convertMonthFormat(new Date()) , "", 0,null));
 					System.out.println("Failed"+e.toString());
 				}
 
@@ -909,10 +909,10 @@ public class PDFCrashReportReader {
 					patientsForms=filterPatientForms(patientsForms);
 					if(patientsForms.size()==0){
 						//#9 Tier 1 Error None of the Patient are not having address and the phone number
-						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 9));
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 9,patientsForms.size()));
 					}else{
 						//Insert patients
-						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 1));
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 1,patientsForms.size()));
 						try {
 							this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
 						} catch (Exception e) {
@@ -925,22 +925,22 @@ public class PDFCrashReportReader {
 					patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
 					if(patientsForms.size()==0){
 						//#7 Victim units not having insurance
-						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 7));
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 7,patientsForms.size()));
 					}else{
 						patientsForms=filterPatientForms(patientsForms);
 						if(patientsForms.size()==0){
 							//#10 Tier2 No patient have address and phone number
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 10));
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 10,patientsForms.size()));
 						}else{
 							//Insert patients
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 2,patientsForms.size()));
 							try {
 								this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								throw e;
 							}
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 2));
-						}
+							}
 					}
 					
 					break;
@@ -948,47 +948,50 @@ public class PDFCrashReportReader {
 					patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
 					if(patientsForms.size()==0){
 						//#8 Error None of the Patient satisfy injuries scale 2 to 4
-						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 8));
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 8,patientsForms.size()));
 					}else{
 						patientsForms=filterPatientForms(patientsForms);
 						if(patientsForms.size()==0){
 							//#11 Tier3 Patient Not having address and phone numbers
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 11));
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 11,patientsForms.size()));
 						}else{
 							//Insert patients
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 3,patientsForms.size()));
 							try {
 								this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								throw e;
 							}
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 3));
+							
 						}
 					}
 					break;
 				case 4:
 					//Insert into crash report table number of units > 1 and unit in error is an animal
-					crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 4));
+					crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 4,patientsForms.size()));
 					break;
 				case 5:
 					//Insert into crash report table number of units == 1 and unit in error is an animal
-					crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 5));
+					crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 5,patientsForms.size()));
 					break;
 				case 6:
 					//Insert into crash report table number of units == 1 and unit in error not having insurance details
-					crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 6));
+					crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 6,patientsForms.size()));
 					break;
 				default:
 					break;
 				}
-								
-				//awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);
+				if(Integer.parseInt(injuryProperties.getProperty("awsUpload"))==1)				
+					awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);				
+				file.delete();
  	}
 	
 	
 	public void savePatientList(List<PatientForm> patientsForms,String uuid,String crashId) throws Exception{
 		for (PatientForm patientsForm : patientsForms) {
 			patientsForm.setCrashReportFileName(uuid.toString()+"_"+crashId+".pdf");
+			patientsForm.setCrashId(crashId);
 			try {
 				patientsService.savePatient(patientsForm);
 			} catch (Exception e) {

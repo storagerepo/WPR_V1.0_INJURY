@@ -14,11 +14,12 @@ import com.deemsys.project.entity.PatientCallerAdminMapId;
 public class PatientSearchList extends InjuryProperties{
 	private String patientId;
 	private String localReportNumber;
+	private Integer numberOfPatients;
+	private String crashDate;
+	private String addedDate;	
 	private Integer countyId;
 	private String county;
-	private String crashDate;
-	private String crashSeverity;
-	private String addedDate;
+	private String crashSeverity;	
 	private String name;
 	private String phoneNumber;
 	private String address;
@@ -45,12 +46,6 @@ public class PatientSearchList extends InjuryProperties{
 	public void setPatientId(String patientId) {
 		this.patientId = patientId;
 	}
-	public String getLocalReportNumber() {
-		return localReportNumber;
-	}
-	public void setLocalReportNumber(String localReportNumber) {
-		this.localReportNumber = localReportNumber;
-	}
 	public Integer getCountyId() {
 		return countyId;
 	}
@@ -63,23 +58,11 @@ public class PatientSearchList extends InjuryProperties{
 	public void setCounty(String county) {
 		this.county = county;
 	}
-	public String getCrashDate() {
-		return crashDate;
-	}
-	public void setCrashDate(String crashDate) {
-		this.crashDate = crashDate;
-	}
 	public String getCrashSeverity() {
 		return crashSeverity;
 	}
 	public void setCrashSeverity(String crashSeverity) {
 		this.crashSeverity = crashSeverity;
-	}
-	public String getAddedDate() {
-		return addedDate;
-	}
-	public void setAddedDate(String addedDate) {
-		this.addedDate = addedDate;
 	}
 	public String getName() {
 		return name;
@@ -183,39 +166,6 @@ public class PatientSearchList extends InjuryProperties{
 	public void setVictimInsuranceCompany(String victimInsuranceCompany) {
 		this.victimInsuranceCompany = victimInsuranceCompany;
 	}
-	public PatientSearchList(String patientId, String localReportNumber,
-			Integer countyId, String county, String crashDate,
-			String crashSeverity, String addedDate, String name,
-			String phoneNumber, String address, String crashReportFileName,
-			Integer callerAdminId, Integer callerId, String callerFirstName,
-			String callerLastName, Integer lawyerAdminId, Integer lawyerId,
-			String lawyerFirstName, String lawyerLastName, String notes,
-			Integer isArchived, Integer patientStatus,Integer tier) {
-		super();
-		this.patientId = patientId;
-		this.localReportNumber = localReportNumber;
-		this.countyId = countyId;
-		this.county = county;
-		this.crashDate = crashDate;
-		this.crashSeverity = crashSeverity;
-		this.addedDate = addedDate;
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.address = address;
-		this.crashReportFileName = crashReportFileName;
-		this.callerAdminId = callerAdminId;
-		this.callerId = callerId;
-		this.callerFirstName = callerFirstName;
-		this.callerLastName = callerLastName;
-		this.lawyerAdminId = lawyerAdminId;
-		this.lawyerId = lawyerId;
-		this.lawyerFirstName = lawyerFirstName;
-		this.lawyerLastName = lawyerLastName;
-		this.notes = notes;
-		this.isArchived = isArchived;
-		this.patientStatus = patientStatus;
-		this.tier=tier;
-	}
 	public PatientSearchList() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -232,7 +182,69 @@ public class PatientSearchList extends InjuryProperties{
 	public void setTier(Integer tier) {
 		this.tier = tier;
 	}
-	
+	public String getLocalReportNumber() {
+		return localReportNumber;
+	}
+	public void setLocalReportNumber(String localReportNumber) {
+		this.localReportNumber = localReportNumber;
+	}
+	public String getCrashDate() {
+		return crashDate;
+	}
+	public void setCrashDate(String crashDate) {
+		this.crashDate = crashDate;
+	}
+	public String getAddedDate() {
+		return addedDate;
+	}
+	public void setAddedDate(String addedDate) {
+		this.addedDate = addedDate;
+	}
+	public Integer getNumberOfPatients() {
+		return numberOfPatients;
+	}
+	public void setNumberOfPatients(Integer numberOfPatients) {
+		this.numberOfPatients = numberOfPatients;
+	}
+	public PatientSearchList(String patientId, String localReportNumber,
+			Integer numberOfPatients, String crashDate, String addedDate,
+			Integer countyId, String county, String crashSeverity, String name,
+			String phoneNumber, String address, String crashReportFileName,
+			Integer callerAdminId, Integer callerId, String callerFirstName,
+			String callerLastName, Integer lawyerAdminId, Integer lawyerId,
+			String lawyerFirstName, String lawyerLastName, String notes,
+			Integer isArchived, Integer patientStatus, boolean isSelected,
+			String atFaultInsuranceCompany, String victimInsuranceCompany,
+			Integer tier) {
+		super();
+		this.patientId = patientId;
+		this.localReportNumber = localReportNumber;
+		this.numberOfPatients = numberOfPatients;
+		this.crashDate = crashDate;
+		this.addedDate = addedDate;
+		this.countyId = countyId;
+		this.county = county;
+		this.crashSeverity = crashSeverity;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.crashReportFileName = crashReportFileName;
+		this.callerAdminId = callerAdminId;
+		this.callerId = callerId;
+		this.callerFirstName = callerFirstName;
+		this.callerLastName = callerLastName;
+		this.lawyerAdminId = lawyerAdminId;
+		this.lawyerId = lawyerId;
+		this.lawyerFirstName = lawyerFirstName;
+		this.lawyerLastName = lawyerLastName;
+		this.notes = notes;
+		this.isArchived = isArchived;
+		this.patientStatus = patientStatus;
+		this.isSelected = isSelected;
+		this.atFaultInsuranceCompany = atFaultInsuranceCompany;
+		this.victimInsuranceCompany = victimInsuranceCompany;
+		this.tier = tier;
+	}
 	
 	
 	

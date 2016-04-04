@@ -33,6 +33,7 @@ import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.County.CountyList;
 import com.deemsys.project.County.CountyService;
+import com.deemsys.project.CrashReport.CrashReportDAO;
 import com.deemsys.project.CrashReport.CrashReportService;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersService;
@@ -45,6 +46,7 @@ import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.Clinic;
 import com.deemsys.project.entity.County;
+import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.Doctor;
 import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.Lawyer;
@@ -78,6 +80,9 @@ public class PatientService {
 
 	@Autowired
 	CountyDAO countyDAO;
+	
+	@Autowired
+	CrashReportDAO crashReportDAO;
 	
 	@Autowired
 	CrashReportService crashReportService;
@@ -184,7 +189,7 @@ public class PatientService {
 				throw exception;
 			}
 		}catch(Exception ex){
-			
+			System.out.println(ex.toString());
 		}
 		
 		return 1;
@@ -339,11 +344,6 @@ public class PatientService {
 			return patientViewForms;
 		}
 	
-	public PatientSearchResult getPatientsByCAdmin(CallerPatientSearchForm callerPatientSearchForm){
-		
-		return patientDAO.searchPatientsByCAdmin(callerPatientSearchForm);
-	}
-		
 	public PatientSearchResult getCurrentPatientList(CallerPatientSearchForm callerPatientSearchForm){
 		
 		PatientSearchResult patientSearchResult=new PatientSearchResult();
@@ -360,7 +360,7 @@ public class PatientService {
 			callerPatientSearchForm.setLawyerAdminId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerAdmin().getLawyerAdminId());
 			callerPatientSearchForm.setLawyerId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId());
 		}
-		patientSearchResult=patientDAO.searchPatientsByCAdmin(callerPatientSearchForm);
+		patientSearchResult=getFormattedSearchResult(patientDAO.searchPatientsByCAdmin(callerPatientSearchForm));
 			
 		return patientSearchResult;
 	}	
@@ -369,8 +369,8 @@ public class PatientService {
 	//Patient -> Patient Form	
 	public PatientForm getPatientForm(Patient patient) {
 
-		PatientForm patientForm = new PatientForm(patient.getPatientId(),
-				patient.getLocalReportNumber(), patient.getCrashSeverity(),
+		PatientForm patientForm = new PatientForm(patient.getPatientId(),patient.getCrashReport().getCrashId(),
+				patient.getCrashReport().getLocalReportNumber(), patient.getCrashSeverity(),
 				patient.getReportingAgencyName(), patient.getNumberOfUnits(),
 				patient.getUnitInError(), patient.getCityVillageTownship(),
 				patient.getCrashDate(), patient.getAddedDate(),
@@ -384,7 +384,7 @@ public class PatientService {
 				patient.getAtFaultPolicyNumber(),
 				patient.getVictimInsuranceCompany(),
 				patient.getVictimPolicyNumber(),patient.getTier(),patient.getPatientStatus(),
-				patient.getCrashReportFileName(), patient.getStatus());
+				patient.getCrashReport().getFilePath(), patient.getStatus());
 
 		// Null Exception Check
 		if (patient.getCounty() != null) {
@@ -410,11 +410,18 @@ public class PatientService {
 		county=countyDAO.get(patientForm.getCountyId());
 	}
 	
+	//Crash Report
+	CrashReport crashReport=new CrashReport();
+	if(patientForm.getCrashId()!=null){
+		crashReport=crashReportDAO.getCrashReport(patientForm.getCrashId());
+	}
+	
+	
 	//Date 
 	LocalDate addedDate=new LocalDate();
 	
 	//Mapping
-	Patient patient = new Patient(patientForm.getPatientId(),
+	Patient patient = new Patient(patientForm.getPatientId(),crashReport,
 			patientForm.getLocalReportNumber(),
 			patientForm.getCrashSeverity(),
 			patientForm.getReportingAgencyName(),
@@ -443,9 +450,9 @@ public class PatientService {
 	public PatientViewForm getPatientViewForm(Patient patient) {
 
 		PatientViewForm patientViewForm = new PatientViewForm(patient.getPatientId(),
-				patient.getLocalReportNumber(),
+				patient.getCrashReport().getLocalReportNumber(),
 				patient.getCrashDate(), patient.getCrashSeverity(),
-				patient.getAddedDate(), patient.getName(),patient.getCrashReportFileName());
+				patient.getAddedDate(), patient.getName(),patient.getCrashReport().getFilePath());
 
 		// Null Exception Check
 		if (patient.getCounty() != null) {
@@ -456,7 +463,31 @@ public class PatientService {
 		return patientViewForm;
 	}
 	
+	public PatientSearchResult getFormattedSearchResult(PatientSearchResultSet patientSearchResultSet){
+		
+		String localReportNumber="";
+		List<PatientSearchResultGroupBy> patientSearchResultGroupByList=new ArrayList<PatientSearchResultGroupBy>();
+		PatientSearchResultGroupBy patientSearchResultGroupBy=new PatientSearchResultGroupBy();
 	
+		int rowCount=0;		
+		for (PatientSearchList resultSet : patientSearchResultSet.getPatientSearchLists()) {
+			if(!localReportNumber.equals(resultSet.getLocalReportNumber())){
+				localReportNumber=resultSet.getLocalReportNumber();
+				if(rowCount!=0){
+					patientSearchResultGroupByList.add(patientSearchResultGroupBy);
+				}				
+				patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getNumberOfPatients(),new ArrayList<PatientSearchList>());
+			}				
+			//Set patient
+			patientSearchResultGroupBy.getPatientSearchLists().add(resultSet);
+			rowCount++;
+		}
+		if(rowCount>0)
+		patientSearchResultGroupByList.add(patientSearchResultGroupBy);
+		
+		PatientSearchResult patientSearchResult=new PatientSearchResult(patientSearchResultSet.getTotalNoOfRecords(), patientSearchResultGroupByList);
+		return patientSearchResult;
+	}
 	
 	
 	

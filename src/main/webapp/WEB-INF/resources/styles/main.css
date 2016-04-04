@@ -538,3 +538,15 @@ input[type=text]::-ms-clear { display: none; }
 	background-color:#1A4D81;
 	color: #fff; 
 }
+.group-header-back{
+	background-color:rgba(0, 109, 204,0.05)!important;
+}
+.patient-count-circle{
+	height:20px;
+	border-radius:3px;
+	padding:2px 7px;
+	text-align:center;
+	font-size:12px;
+	color:#fff;
+	background-color:#006dcc;
+}

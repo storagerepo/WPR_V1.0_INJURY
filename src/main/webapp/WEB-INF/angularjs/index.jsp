@@ -32,7 +32,7 @@
 	     <script src="resources/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="resources/components/json3/lib/json3.min.js"></script>
     <script src="resources/components/oclazyload/dist/ocLazyLoad.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.1/angular-animate.js"></script>
+   <script src="resources/components/angular-animate/angular-animate-1.4.3.js"></script>
     <script src="resources/components/angular-loading-bar/build/loading-bar.min.js"></script>
     <script src="resources/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="resources/components/metisMenu/dist/metisMenu.min.js"></script>
@@ -52,9 +52,9 @@
     <!-- endbuild -->
 	
 	<!-- Google Map-->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
-	<script src="http://rawgit.com/angular-ui/angular-google-maps/2.0.X/dist/angular-google-maps.js"></script>
-	
+	<script src="resources/components/angular-map-rawgito/lodash.min.js"></script>
+	<script src="resources/components/angular-map-rawgit/angular-google-maps.js"></script>
+	 
 
 	<!-- Load For Menu -->
 	<script src="resources/scripts/services/requestHandler.js"></script>

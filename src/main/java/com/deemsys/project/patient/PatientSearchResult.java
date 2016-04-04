@@ -4,30 +4,31 @@ import java.util.List;
 
 public class PatientSearchResult {
 
-	private Integer totalNoOfRecord;
-	private List<PatientSearchList> patientSearchLists;
-	public Integer getTotalNoOfRecord() {
+	private Long totalNoOfRecord;
+	private List<PatientSearchResultGroupBy> searchResult;
+	public Long getTotalNoOfRecord() {
 		return totalNoOfRecord;
 	}
-	public void setTotalNoOfRecord(Integer totalNoOfRecord) {
+	public void setTotalNoOfRecord(Long totalNoOfRecord) {
 		this.totalNoOfRecord = totalNoOfRecord;
 	}
-	public List<PatientSearchList> getPatientSearchLists() {
-		return patientSearchLists;
+	public List<PatientSearchResultGroupBy> getSearchResult() {
+		return searchResult;
 	}
-	public void setPatientSearchLists(List<PatientSearchList> patientSearchLists) {
-		this.patientSearchLists = patientSearchLists;
+	public void setSearchResult(List<PatientSearchResultGroupBy> searchResult) {
+		this.searchResult = searchResult;
 	}
-	public PatientSearchResult(Integer totalNoOfRecord,
-			List<PatientSearchList> patientSearchLists) {
+	public PatientSearchResult(Long totalNoOfRecord,
+			List<PatientSearchResultGroupBy> searchResult) {
 		super();
 		this.totalNoOfRecord = totalNoOfRecord;
-		this.patientSearchLists = patientSearchLists;
+		this.searchResult = searchResult;
 	}
 	public PatientSearchResult() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	
 	
 }
