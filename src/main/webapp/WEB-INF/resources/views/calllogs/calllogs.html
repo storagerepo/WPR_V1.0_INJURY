@@ -12,12 +12,9 @@
 			<a ng-show="{{isAdmin==2}}" ui-sref="dashboard.callerAdminSearchPatients"
 			class="btn-sm btn-primary pull-right margin-top-40 btn-margin-left"><i class="fa fa-arrow-circle-left fa-lg"></i> Back
 			to Patient</a>
-			
-			 <span ng-show="{{isAdmin==4}}"> <a
-			ng-click="addModel()" href=""
+			<a ng-click="addModel()" href=""
 			class="btn-sm btn-primary pull-right margin-top-40 margin-left-5 btn-margin-left"><i class="fa fa-plus-circle fa-lg"></i> Add
 				Call Logs</a>
-		</span>
 		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div> 
 		<h2 class="page-header">
 			Call Logs<br>
@@ -91,15 +88,27 @@
 
 						<td ng-cloak>{{callLog.response}}</td>
 						<td ng-cloak class="col-md-3 wrap">{{callLog.notes}}</td>
-						<td ng-cloak class="col-md-2">{{callLog.callerFirstName}} {{callLog.callerLastName}}</td>
+						<td ng-cloak class="col-md-2"><span ng-show="{{callLog.callerFirstName!=null}}">{{callLog.callerFirstName}} {{callLog.callerLastName}}</span>
+						<span ng-show="{{callLog.callerFirstName==null}}">{{callLog.callerAdminFirstName}} {{callLog.callerAdminLastName}}</span>
+						</td>
 						<td class="col-md-2">
-							<a ng-show="{{isAdmin==4}}" ng-cloak type="submit"
+							<span ng-show="{{isAdmin==2}}">
+							<a ng-cloak type="submit"
 								class="btn btn-xs btn-warning hint--top"
 								data-hint="Edit Call Log"
 								ng-click="editModal(callLog.callLogId,callLog.appointmentId)">&nbsp;<i
 									class="glyphicon glyphicon-edit"></i>&nbsp;
-							</a>  
-							<a ng-cloak
+							</a>
+							</span>
+							  <span ng-show="{{isAdmin==4}}">
+							<a ng-show="{{callLog.isAllowToEdit==1}}" ng-cloak type="submit"
+								class="btn btn-xs btn-warning hint--top"
+								data-hint="Edit Call Log"
+								ng-click="editModal(callLog.callLogId,callLog.appointmentId)">&nbsp;<i
+									class="glyphicon glyphicon-edit"></i>&nbsp;
+							</a>
+							</span>
+							<a ng-cloak ng-show="{{callLog.appointmentId!=null}}"
 							class="btn btn-xs btn-primary hint--top"
 							data-hint="View Appointment"
 							ng-click="viewAppointments(callLog.appointmentId)"> &nbsp;<i

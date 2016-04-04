@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -180,16 +181,23 @@ public class CallLogsDAOImpl implements CallLogsDAO{
 		// TODO Auto-generated method stub
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(CallLog.class);
 		criteria.createAlias("appointmentses", "a1", Criteria.LEFT_JOIN);
-		criteria.createAlias("caller", "c1");
+		criteria.createAlias("caller", "c1",Criteria.LEFT_JOIN);
+		criteria.createAlias("patientCallerAdminMap", "pc1");
+		criteria.createAlias("pc1.callerAdmin", "c2");
 		// Add Projections
 		ProjectionList projectionList=Projections.projectionList();
 		projectionList.add(Projections.property("callLogId"), "callLogId");
+		projectionList.add(Projections.property("c1.callerId"), "callerId");
 		projectionList.add(Projections.property("timeStamp"), "timeStamp");
 		projectionList.add(Projections.property("response"), "response");
 		projectionList.add(Projections.property("notes"), "notes");
 		projectionList.add(Projections.property("status"), "status");
 		projectionList.add(Projections.property("c1.firstName"), "callerFirstName");
 		projectionList.add(Projections.property("c1.lastName"), "callerLastName");
+		// Caller Admin Details
+		projectionList.add(Projections.property("c2.firstName"), "callerAdminFirstName");
+		projectionList.add(Projections.property("c2.lastName"), "callerAdminLastName");
+		
 		// Appointment Details
 		projectionList.add(Projections.property("a1.appointmentId"), "appointmentId");
 		criteria.setProjection(projectionList);

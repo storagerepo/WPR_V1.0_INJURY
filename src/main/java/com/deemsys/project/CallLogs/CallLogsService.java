@@ -151,7 +151,13 @@ public class CallLogsService {
 			callerAdminId=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId();
 		}
 		List<CallLogsForm> callLogsForms=callLogsDAO.getCallLogsByPatientIdAndCallerAdminIdAndCallerId(patientId, callerAdminId, callerId);
-		
+		for (CallLogsForm callLogsForm : callLogsForms) {
+			if(callerId==callLogsForm.getCallerId()){
+				callLogsForm.setIsAllowToEdit(1);
+			}else{
+				callLogsForm.setIsAllowToEdit(0);
+			}
+		}
 		return callLogsForms;
 	}
 	
@@ -190,18 +196,27 @@ public class CallLogsService {
 		// Logic Starts
 		Patient patient = new Patient();
 		patient.setPatientId(callLogsForm.getPatientId());
-		// Caller
-		Caller caller=callerService.getCallerByUserId(loginService.getCurrentUserID());
-		// Caller Admin
-		CallerAdmin callerAdmin = callerAdminDAO.get(caller.getCallerAdmin().getCallerAdminId());
-		
-						
-		PatientCallerAdminMapId patientCallerAdminMapId=new PatientCallerAdminMapId(callLogsForm.getPatientId(), callerAdmin.getCallerAdminId());
+		Caller caller=null;
+		CallerAdmin callerAdmin=new CallerAdmin();
+		String role=loginService.getCurrentRole();
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+				// Caller Admin
+			    callerAdmin = callerAdminDAO.getCallerAdminByUserId(loginService.getCurrentUserID());
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			// Caller
+			caller=callerService.getCallerByUserId(loginService.getCurrentUserID());
+			// Caller Admin
+			callerAdmin = callerAdminDAO.get(caller.getCallerAdmin().getCallerAdminId());
+		}
 		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap();
-		patientCallerAdminMap.setId(patientCallerAdminMapId);
-		patientCallerAdminMap.setPatientStatus(callLogsForm.getResponse());
-		patientCallerAdminMap.setCallerAdmin(callerAdmin);
-		patientCallerAdminMap.setCaller(caller);
+		patientCallerAdminMap=patientCallerDAO.getPatientMapsByCallerAdminId(callLogsForm.getPatientId(), callerAdmin.getCallerAdminId());
+		if(patientCallerAdminMap==null){
+			PatientCallerAdminMapId patientCallerAdminMapId=new PatientCallerAdminMapId(callLogsForm.getPatientId(), callerAdmin.getCallerAdminId());
+			patientCallerAdminMap=new PatientCallerAdminMap(patientCallerAdminMapId, callerAdmin, null, patient, "", 0, callLogsForm.getResponse(), null, null);
+		}else{
+			patientCallerAdminMap.setPatientStatus(callLogsForm.getResponse());
+		}
+		
 		patientCallerDAO.merge(patientCallerAdminMap);
 		
 		CallLog callLogs = new CallLog(patientCallerAdminMap,caller,callLogsForm.getTimeStamp(), callLogsForm.getResponse(),
@@ -230,16 +245,28 @@ public class CallLogsService {
 		CallLog callLogs = new CallLog();
 		Patient patient = new Patient();
 		patient.setPatientId(callLogsForm.getPatientId());
-		// Caller
-		Caller caller=callerService.getCallerByUserId(loginService.getCurrentUserID());
-		// Caller Admin
-		CallerAdmin callerAdmin = callerAdminDAO.get(caller.getCallerAdmin().getCallerAdminId());
-							
-		PatientCallerAdminMapId patientCallerAdminMapId=new PatientCallerAdminMapId(callLogsForm.getPatientId(), callerAdmin.getCallerAdminId());
+		Caller caller=null;
+		CallerAdmin callerAdmin=new CallerAdmin();
+		String role=loginService.getCurrentRole();
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+				// Caller Admin
+			    callerAdmin = callerAdminDAO.getCallerAdminByUserId(loginService.getCurrentUserID());
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			// Caller
+			caller=callerService.getCallerByUserId(loginService.getCurrentUserID());
+			// Caller Admin
+			callerAdmin = callerAdminDAO.get(caller.getCallerAdmin().getCallerAdminId());
+		}
+		
 		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap();
-		patientCallerAdminMap.setId(patientCallerAdminMapId);
-		patientCallerAdminMap.setPatientStatus(callLogsForm.getResponse());
-		patientCallerAdminMap.setCaller(caller);
+		patientCallerAdminMap=patientCallerDAO.getPatientMapsByCallerAdminId(callLogsForm.getPatientId(), callerAdmin.getCallerAdminId());
+		if(patientCallerAdminMap==null){
+			PatientCallerAdminMapId patientCallerAdminMapId=new PatientCallerAdminMapId(callLogsForm.getPatientId(), callerAdmin.getCallerAdminId());
+			patientCallerAdminMap=new PatientCallerAdminMap(patientCallerAdminMapId, callerAdmin, null, patient, "", 0, callLogsForm.getResponse(), null, null);
+		}else{
+			patientCallerAdminMap.setPatientStatus(callLogsForm.getResponse());
+		}
+		
 		
 		callLogs = new CallLog(patientCallerAdminMap, caller,callLogsForm.getTimeStamp(), callLogsForm.getResponse(),
 					callLogsForm.getNotes(),1,null);

@@ -135,6 +135,14 @@ public class PatientService {
 	
 	// Get Particular Entry
 	public PatientForm getPatient(String patientId) {
+		Integer callerAdminId=0;
+		String role=loginService.getCurrentRole();
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+			callerAdminId=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId();
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			Caller caller=callerDAO.getByUserId(loginService.getCurrentUserID());
+			callerAdminId=callerAdminService.getCallerAdmin(caller.getCallerAdmin().getCallerAdminId()).getCallerAdminId();
+		}
 		Patient patient=patientDAO.getPatientByPatientId(patientId);
 		PatientForm patientForm=this.getPatientForm(patient);
 		patientForm.setLatitude(patient.getLatitude());

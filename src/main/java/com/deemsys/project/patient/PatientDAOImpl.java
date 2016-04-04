@@ -645,4 +645,15 @@ public Patient getPatientByPatientId(String patientId) {
 	return patient;
 }
 
+@Override
+public Patient getPatientByPatientIdAndCallerAdminId(String patientId,Integer callerAdminId) {
+	// TODO Auto-generated method stub
+	Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(Patient.class);
+	criteria.createAlias("patientCallerAdminMaps", "p1");
+	criteria.add(Restrictions.and(Restrictions.eq("p1.callerAdmin.callerAdminId", callerAdminId),Restrictions.eq("p1.patient.patientId", patientId)));
+	
+	Patient patient=(Patient) criteria.uniqueResult();
+	return patient;
+}
+
 }

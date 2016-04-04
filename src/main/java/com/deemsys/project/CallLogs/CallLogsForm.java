@@ -14,6 +14,7 @@ public class CallLogsForm {
 	private Long callLogId;
 	private String patientId;
 	private Integer callerAdminId;
+	private Integer callerId;
 	private String timeStamp;
 	private Integer response;
 	private String notes;
@@ -22,6 +23,9 @@ public class CallLogsForm {
 	private AppointmentsForm appointmentsForm;
 	private String callerFirstName;
 	private String callerLastName;
+	private String callerAdminFirstName;
+	private String callerAdminLastName;
+	private Integer isAllowToEdit;
 	
 	public Long getCallLogId() {
 		return callLogId;
@@ -40,6 +44,12 @@ public class CallLogsForm {
 	}
 	public void setCallerAdminId(Integer callerAdminId) {
 		this.callerAdminId = callerAdminId;
+	}
+	public Integer getCallerId() {
+		return callerId;
+	}
+	public void setCallerId(Integer callerId) {
+		this.callerId = callerId;
 	}
 	public String getTimeStamp() {
 		return timeStamp;
@@ -79,7 +89,24 @@ public class CallLogsForm {
 		this.callerLastName = callerLastName;
 	}
 	
-	
+	public String getCallerAdminFirstName() {
+		return callerAdminFirstName;
+	}
+	public void setCallerAdminFirstName(String callerAdminFirstName) {
+		this.callerAdminFirstName = callerAdminFirstName;
+	}
+	public String getCallerAdminLastName() {
+		return callerAdminLastName;
+	}
+	public void setCallerAdminLastName(String callerAdminLastName) {
+		this.callerAdminLastName = callerAdminLastName;
+	}
+	public Integer getIsAllowToEdit() {
+		return isAllowToEdit;
+	}
+	public void setIsAllowToEdit(Integer isAllowToEdit) {
+		this.isAllowToEdit = isAllowToEdit;
+	}
 	public AppointmentsForm getAppointmentsForm() {
 		return appointmentsForm;
 	}

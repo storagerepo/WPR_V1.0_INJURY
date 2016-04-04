@@ -192,11 +192,9 @@
 								<a href="" ng-cloak target="_blank" ng-show={{patient.callerId!=null}} ng-click="assignIndividualCallerPopup(patient.patientId,patient.name,patient.callerId)" class="btn btn-xs btn-success hint--top" data-hint="Change Caller"><i class="fa fa-external-link-square"></i></a>
 								<a href="" ng-cloak target="_blank" ng-hide={{patient.callerId!=null}} ng-click="assignIndividualCallerPopup(patient.patientId,patient.name,patient.callerId)" class="btn btn-xs btn-danger hint--top" data-hint="Assign Caller"><i class="fa fa-external-link-square"></i></a>
                                 </span>  
-                                <span ng-show="{{patient.patientStatus!=null}}">    
-                                <a href="#/dashboard/Calllogs/{{patient.patientId}}" ng-cloak class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs"><i
+                                 <a href="#/dashboard/Calllogs/{{patient.patientId}}" ng-cloak class="btn btn-xs btn-primary hint--top" data-hint="View Call Logs"><i
 								class="fa fa-eye"></i></a>
-								</span>
-                                </td>
+								</td>
                             </tr>
                             <tr ng-show="patientSearchData.length==0">
                             <td colspan="11"><center><strong>No Records Found!!!</strong></center></td>
