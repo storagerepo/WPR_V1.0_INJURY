@@ -38,9 +38,23 @@ public class PatientSearchList extends InjuryProperties{
 	private Integer isArchived;
 	private Integer patientStatus;
 	private boolean isSelected=false;
+	
 	private String atFaultInsuranceCompany;
 	private String victimInsuranceCompany;
 	private Integer tier;
+	private String reportingAgencyName;
+	private String numberOfUnits;
+	private String unitInError;
+	private String cityVillageTownship;
+	private String timeOfCrash;
+	private String unitNumber;
+	private String gender;
+	private String injuries;
+	private String emsAgency;
+	private String medicalFacility;
+	private String atFaultPolicyNumber;
+	private String victimPolicyNumber;
+	
 	
 	public String getPatientId() {
 		return patientId;
@@ -220,6 +234,78 @@ public class PatientSearchList extends InjuryProperties{
 	public void setAge(String age) {
 		this.age = age;
 	}
+	public String getReportingAgencyName() {
+		return reportingAgencyName;
+	}
+	public void setReportingAgencyName(String reportingAgencyName) {
+		this.reportingAgencyName = reportingAgencyName;
+	}
+	public String getNumberOfUnits() {
+		return numberOfUnits;
+	}
+	public void setNumberOfUnits(String numberOfUnits) {
+		this.numberOfUnits = numberOfUnits;
+	}
+	public String getUnitInError() {
+		return unitInError;
+	}
+	public void setUnitInError(String unitInError) {
+		this.unitInError = unitInError;
+	}
+	public String getCityVillageTownship() {
+		return cityVillageTownship;
+	}
+	public void setCityVillageTownship(String cityVillageTownship) {
+		this.cityVillageTownship = cityVillageTownship;
+	}
+	public String getTimeOfCrash() {
+		return timeOfCrash;
+	}
+	public void setTimeOfCrash(String timeOfCrash) {
+		this.timeOfCrash = timeOfCrash;
+	}
+	public String getUnitNumber() {
+		return unitNumber;
+	}
+	public void setUnitNumber(String unitNumber) {
+		this.unitNumber = unitNumber;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getInjuries() {
+		return injuries;
+	}
+	public void setInjuries(String injuries) {
+		this.injuries = injuries;
+	}
+	public String getEmsAgency() {
+		return emsAgency;
+	}
+	public void setEmsAgency(String emsAgency) {
+		this.emsAgency = emsAgency;
+	}
+	public String getMedicalFacility() {
+		return medicalFacility;
+	}
+	public void setMedicalFacility(String medicalFacility) {
+		this.medicalFacility = medicalFacility;
+	}
+	public String getAtFaultPolicyNumber() {
+		return atFaultPolicyNumber;
+	}
+	public void setAtFaultPolicyNumber(String atFaultPolicyNumber) {
+		this.atFaultPolicyNumber = atFaultPolicyNumber;
+	}
+	public String getVictimPolicyNumber() {
+		return victimPolicyNumber;
+	}
+	public void setVictimPolicyNumber(String victimPolicyNumber) {
+		this.victimPolicyNumber = victimPolicyNumber;
+	}
 	public PatientSearchList(String patientId, String localReportNumber,
 			Integer numberOfPatients, String crashDate, String addedDate,
 			Integer countyId, String county, String crashSeverity, String name,
@@ -230,7 +316,11 @@ public class PatientSearchList extends InjuryProperties{
 			String lawyerLastName, String notes, Integer isArchived,
 			Integer patientStatus, boolean isSelected,
 			String atFaultInsuranceCompany, String victimInsuranceCompany,
-			Integer tier) {
+			Integer tier, String reportingAgencyName, String numberOfUnits,
+			String unitInError, String cityVillageTownship, String timeOfCrash,
+			String unitNumber, String gender, String injuries,
+			String emsAgency, String medicalFacility,
+			String atFaultPolicyNumber, String victimPolicyNumber) {
 		super();
 		this.patientId = patientId;
 		this.localReportNumber = localReportNumber;
@@ -261,6 +351,18 @@ public class PatientSearchList extends InjuryProperties{
 		this.atFaultInsuranceCompany = atFaultInsuranceCompany;
 		this.victimInsuranceCompany = victimInsuranceCompany;
 		this.tier = tier;
+		this.reportingAgencyName = reportingAgencyName;
+		this.numberOfUnits = numberOfUnits;
+		this.unitInError = unitInError;
+		this.cityVillageTownship = cityVillageTownship;
+		this.timeOfCrash = timeOfCrash;
+		this.unitNumber = unitNumber;
+		this.gender = gender;
+		this.injuries = injuries;
+		this.emsAgency = emsAgency;
+		this.medicalFacility = medicalFacility;
+		this.atFaultPolicyNumber = atFaultPolicyNumber;
+		this.victimPolicyNumber = victimPolicyNumber;
 	}
 	
 	

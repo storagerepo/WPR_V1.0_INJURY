@@ -594,6 +594,20 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	projectionList.add(Projections.property("t1.atFaultInsuranceCompany"),"atFaultInsuranceCompany");
 	projectionList.add(Projections.property("t1.victimInsuranceCompany"),"victimInsuranceCompany");
 	
+	projectionList.add(Projections.property("t1.reportingAgencyName"),"reportingAgencyName");
+	projectionList.add(Projections.property("t1.numberOfUnits"),"numberOfUnits");
+	projectionList.add(Projections.property("t1.unitInError"),"unitInError");
+	projectionList.add(Projections.property("t1.cityVillageTownship"),"cityVillageTownship");
+	projectionList.add(Projections.property("t1.timeOfCrash"),"timeOfCrash");
+	projectionList.add(Projections.property("t1.unitNumber"),"unitNumber");
+	projectionList.add(Projections.property("t1.gender"),"gender");
+	projectionList.add(Projections.property("t1.injuries"),"injuries");
+	projectionList.add(Projections.property("t1.emsAgency"),"emsAgency");
+	projectionList.add(Projections.property("t1.medicalFacility"),"medicalFacility");
+	projectionList.add(Projections.property("t1.atFaultPolicyNumber"),"atFaultPolicyNumber");
+	projectionList.add(Projections.property("t1.victimPolicyNumber"),"victimPolicyNumber");
+	
+	
 	if(role.equals("ROLE_CALLER_ADMIN")||role.equals("ROLE_CALLER")){
 	
 		projectionList.add(Projections.property("t2.callerAdmin.callerAdminId"),"callerAdminId");

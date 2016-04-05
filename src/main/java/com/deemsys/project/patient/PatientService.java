@@ -16,6 +16,11 @@ import java.util.regex.Pattern;
 
 
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -497,6 +502,40 @@ public class PatientService {
 		return patientSearchResult;
 	}
 	
-	
+	public void sampleExcel(){
+		XSSFWorkbook book1= new XSSFWorkbook();
+		
+		XSSFSheet sheet1=book1.createSheet("Patients");
+		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, 0, 0, 7, "", 0, "", "", "", 0, 0, 0, "", 1, 10, "", "",0);
+		PatientSearchResult patientSearchResult=this.getCurrentPatientList(callerPatientSearchForm);
+		int rowCount=0;
+		
+		for (PatientSearchResultGroupBy patientSearchResultGroupBy : patientSearchResult.getSearchResult()) {
+			Row row=sheet1.createRow(rowCount);
+			sheet1.addMergedRegion(new CellRangeAddress(rowCount, rowCount++, 0, 8));
+			Cell cell=row.createCell(0);
+			cell.setCellValue("Local Report Number - "+patientSearchResultGroupBy.getLocalReportNumber()+" | Crash Date"+patientSearchResultGroupBy.getCrashDate());
+			for (PatientSearchList patientSearchList : patientSearchResultGroupBy.getPatientSearchLists()) {
+				int cellCount=0;
+				Row row2=sheet1.createRow(rowCount++);
+				Cell cell2=row2.createCell(cellCount++);
+				cell2.setCellValue(patientSearchList.getName());
+				
+			}
+			
+		}
+		try
+		{
+            //Write the workbook in file system
+            FileOutputStream out = new FileOutputStream(new File("D:\\patientList.xlsx"));
+            book1.write(out);
+            out.close();
+            System.out.println("patientList.xlsx written successfully on disk.");
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+	}
 	
 }

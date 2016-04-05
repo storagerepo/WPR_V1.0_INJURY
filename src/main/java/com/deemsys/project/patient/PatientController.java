@@ -300,13 +300,20 @@ public class PatientController {
 		
 		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, 0, 0, 7, "", 0, "", "", "", 0, 0, 0, "", 1, 10, "", "",0);
 		PatientSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
-		//model.addAttribute("numberOfPatients",patientSearchResult.getTotalNoOfRecord());
+		model.addAttribute("numberOfPatients",patientSearchResult.getTotalNoOfRecord());
 		model.addAttribute("requestSuccess", true);
 		return "ok";
 		
 	}
 	
-	
+	@RequestMapping(value = { "/Patient/exportExcel" }, method = RequestMethod.GET)
+	public String getExportExcel(ModelMap model) {
+		
+		patientService.sampleExcel();
+		model.addAttribute("requestSuccess", true);
+		return "ok";
+		
+	}
 	
 
 }
