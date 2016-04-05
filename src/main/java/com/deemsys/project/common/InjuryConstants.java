@@ -239,4 +239,20 @@ public class InjuryConstants {
 			return toDate;
 		}
 		
+		public static List<String> getInvalidInsurance(){
+			List<String> invalidInsurance=new ArrayList<String>();
+			invalidInsurance.add("NONE");
+			invalidInsurance.add("NO INSURANCE");
+			invalidInsurance.add("N/A");
+			invalidInsurance.add("NONE");
+			invalidInsurance.add("Not Shown FRA");
+			invalidInsurance.add("None Shown");
+			invalidInsurance.add("FRA Not Shown");			
+			invalidInsurance.add("None Listed");
+			invalidInsurance.add("FR Not shown");
+			invalidInsurance.add("Not Shown");
+			invalidInsurance.add("-");
+			return invalidInsurance;			
+		}
+		
 }

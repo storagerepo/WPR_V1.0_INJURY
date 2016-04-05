@@ -18,7 +18,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.apache.commons.io.FileUtils;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.hibernate.mapping.Array;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -47,7 +49,7 @@ import java.io.*;
 @Transactional
 public class PDFCrashReportReader {
 	
-	
+		
 	@Autowired
 	InjuryProperties injuryProperties;
 	
@@ -452,14 +454,14 @@ public class PDFCrashReportReader {
   						if (motoristPage.get(index).equals("UNIT  NUMBER")
     								|| motoristPage.get(index)
       										.equals("UNIT NUMBER")) {
-							if ((Integer.parseInt(motoristPage.get(index + 1)
+						/*	if ((Integer.parseInt(motoristPage.get(index + 1)
 									.trim()) != Integer
 									.parseInt(reportFirstPageForm
 											.getUnitInError().trim()))
 									|| Integer.parseInt(reportFirstPageForm
 											.getNumberOfUnits().trim()) == 1
 									|| Integer.parseInt(reportFirstPageForm
-											.getUnitInError().trim()) == 98) {
+											.getUnitInError().trim()) == 98) {*/
 								ReportMotoristPageForm motoristPageForm = new ReportMotoristPageForm();
 								motoristPageForm.setUnitNumber(motoristPage
 										.get(index + 1));
@@ -472,6 +474,11 @@ public class PDFCrashReportReader {
 									motoristPageForm
 											.setDateOfBirth(motoristPage
 													.get(index + 5));
+								if (motoristPage.get(index + 6).equals(
+										"AGE"))
+									motoristPageForm
+											.setAge(motoristPage
+													.get(index + 7));
 								if (motoristPage.get(index + 8)
 										.equals("GENDER"))
 									motoristPageForm.setGender(motoristPage
@@ -557,8 +564,8 @@ public class PDFCrashReportReader {
 													.get(index - 19));
 
 								reportMotoristPageForms.add(motoristPageForm);
-							}
-
+							/*}
+*/
 						}
 					}
 				} else if (motoristPage.get(0).equals("OCCUPANT")) {
@@ -567,12 +574,12 @@ public class PDFCrashReportReader {
 						if (motoristPage.get(index).equals("UNIT  NUMBER")
 								|| motoristPage.get(index)
 										.equals("UNIT NUMBER")) {
-							if ((Integer.parseInt(motoristPage.get(index + 1)
+							/*if ((Integer.parseInt(motoristPage.get(index + 1)
 									.trim()) != Integer
 									.parseInt(reportFirstPageForm
 											.getUnitInError().trim()))
 									|| Integer.parseInt(reportFirstPageForm
-											.getNumberOfUnits().trim()) == 1) {
+											.getNumberOfUnits().trim()) == 1) {*/
 								ReportMotoristPageForm motoristPageForm = new ReportMotoristPageForm();
 								motoristPageForm.setUnitNumber(motoristPage
 										.get(index + 1));
@@ -585,6 +592,11 @@ public class PDFCrashReportReader {
 									motoristPageForm
 											.setDateOfBirth(motoristPage
 													.get(index + 5));
+								if (motoristPage.get(index + 6).equals(
+										"AGE"))
+									motoristPageForm
+											.setAge(motoristPage
+													.get(index + 7));
 								if (motoristPage.get(index + 8)
 										.equals("GENDER"))
 									motoristPageForm.setGender(motoristPage
@@ -693,7 +705,7 @@ public class PDFCrashReportReader {
 								}
 
 								reportMotoristPageForms.add(motoristPageForm);
-							}
+							/*}*/
 
 						}
 					}
@@ -719,6 +731,7 @@ public class PDFCrashReportReader {
 		// #5 Number of units == 1 and Unit in Error is an animal
 		// #6 Number of units == 1 and Unit in Error not having Insurance
 		
+		List<String> invalidInsurance=InjuryConstants.getInvalidInsurance();
 		
 		// Check for the report
 		try {
@@ -732,7 +745,7 @@ public class PDFCrashReportReader {
 			if(numberOfUnits==1){
 				if(unitInError==1){					
 					//Check for insurance company
-					if(!pdfCrashReportJson.getReportUnitPageForms().get(0).getInsuranceCompany().equals("")){
+					if(!pdfCrashReportJson.getReportUnitPageForms().get(0).getInsuranceCompany().equals("")&&!invalidInsurance.contains(pdfCrashReportJson.getReportUnitPageForms().get(0).getInsuranceCompany())){
 						// #3 Tier Patient 
 						return 3;
 					}else{
@@ -750,7 +763,7 @@ public class PDFCrashReportReader {
 				if(unitInError!=98&&unitInError!=99){
 					//Check for unit has insurance
 					//NOTE POLICY NUMBER IS NOT CHECKING
-					if(!pdfCrashReportJson.getReportUnitPageForms().get(unitInError-1).getInsuranceCompany().equals("")){
+					if(!pdfCrashReportJson.getReportUnitPageForms().get(unitInError-1).getInsuranceCompany().equals("")&&!invalidInsurance.contains(pdfCrashReportJson.getReportUnitPageForms().get(0).getInsuranceCompany())){
 						//#1 Tier 1 patients
 						return 1;
 					}else{
@@ -777,6 +790,9 @@ public class PDFCrashReportReader {
 			PDFCrashReportJson pdfCrashReportJson,Integer tier) {
 
 		List<PatientForm> patientsForms = new ArrayList<PatientForm>();
+		
+		//Invalid Insurance Check conditions
+		List<String> invalidInsurance=InjuryConstants.getInvalidInsurance();
 
 		//First Page
 		ReportFirstPageForm firstPageForm = pdfCrashReportJson
@@ -790,15 +806,23 @@ public class PDFCrashReportReader {
 					.getReportMotoristPageForms()) {
 				PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 				if(patientsForm!=null){
-					patientsForm.setTier(1);
-					patientsForms.add(patientsForm);
+					if(patientsForm.getUnitNumber().equals(firstPageForm.getUnitInError())){
+						if(!patientsForm.getInjuries().equals("1")&&!patientsForm.getInjuries().equals("5")){
+							patientsForm.setTier(4);
+							patientsForms.add(patientsForm);
+						}
+					}else{
+						patientsForm.setTier(1);
+						patientsForms.add(patientsForm);
+					}
+					
 				}
 			}
 		}				
 		else if(tier==2){
 			for (ReportUnitPageForm reportUnitPageForm : reportUnitPageForms) {
 				if(reportUnitPageForm.getUnitNumber()!=firstPageForm.getUnitInError()){
-					if(!reportUnitPageForm.getInsuranceCompany().equals("")){
+					if(!reportUnitPageForm.getInsuranceCompany().equals("")&&!invalidInsurance.contains(reportUnitPageForm.getInsuranceCompany())){
 						for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
 								.getReportMotoristPageForms()) {
 							if(motoristPageForm.getUnitNumber()==reportUnitPageForm.getUnitNumber()){
@@ -838,6 +862,28 @@ public class PDFCrashReportReader {
 				}
 				
 			}
+		}else if(tier==4){
+			for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
+					.getReportMotoristPageForms()) {
+				if(motoristPageForm.getInjuries()!=null){
+					if(!motoristPageForm.getInjuries().equals("1")&&!motoristPageForm.getInjuries().equals("5")){
+						PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
+						if(patientsForm!=null){
+							patientsForm.setTier(4);
+							patientsForms.add(patientsForm);
+						}
+					}else{
+						//#8 Skip the patient low injury
+					}
+				}else{
+					PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
+					if(patientsForm!=null){
+						patientsForm.setTier(3);
+						patientsForms.add(patientsForm);
+					}
+				}
+				
+			}
 		}
 
 		return patientsForms;
@@ -850,6 +896,7 @@ public class PDFCrashReportReader {
 			patientsForm.setUnitNumber(motoristPageForm.getUnitNumber()
 					.trim());
 			patientsForm.setDateOfBirth(motoristPageForm.getDateOfBirth());
+			patientsForm.setAge(motoristPageForm.getAge());
 			patientsForm.setGender(motoristPageForm.getGender());
 			patientsForm.setAddress(motoristPageForm
 					.getAdddressCityStateZip());
@@ -899,7 +946,7 @@ public class PDFCrashReportReader {
 				}
 				
 				List<PatientForm> patientsForms = new ArrayList<PatientForm>();
-				
+				List<PatientForm> patientsFormsAtFault = new ArrayList<PatientForm>();
 				//Check for report status
 				Integer tierType = this.getReportType(pdfCrashReportJson);
 						
@@ -1013,7 +1060,6 @@ public class PDFCrashReportReader {
 		}
 		return filteredPatientForms;
 	}
-	
 	
 	
 }

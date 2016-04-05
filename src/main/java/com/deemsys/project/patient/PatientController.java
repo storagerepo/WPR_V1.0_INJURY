@@ -182,13 +182,24 @@ public class PatientController {
 	}
 
 	// Upload File Get Array
-	@RequestMapping(value = "/Caller/readCrashReportJson", headers = "content-type=multipart/form-data", method = RequestMethod.POST)
+	@RequestMapping(value = "/Admin/readCrashReportJson", headers = "content-type=multipart/form-data", method = RequestMethod.POST)
 	public @ResponseBody
-	PDFCrashReportJson readUploadCrashReportArray(
+	PDFCrashReportJson readUploadCrashReportJson(
 			@RequestParam("file") MultipartFile file, ModelMap model)
 			throws IOException {
 
 		return crashReportReader.getValuesFromPDF(crashReportReader.parsePdfFromMultipartFile(file));
+
+	}
+	
+	// Upload File Get Array
+	@RequestMapping(value = "/Admin/readCrashReportArray", headers = "content-type=multipart/form-data", method = RequestMethod.POST)
+	public @ResponseBody
+	List<List<String>> readUploadCrashReportArray(
+			@RequestParam("file") MultipartFile file, ModelMap model)
+			throws IOException {
+
+		return crashReportReader.parsePdfFromMultipartFile(file);
 
 	}
 

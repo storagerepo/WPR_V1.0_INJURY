@@ -587,6 +587,8 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	projectionList.add(Projections.property("t1.name"),"name");
 	projectionList.add(Projections.property("t1.phoneNumber"),"phoneNumber");
 	projectionList.add(Projections.property("t1.address"),"address");	
+	projectionList.add(Projections.property("t1.dateOfBirth"),"dateOfBirth");	
+	projectionList.add(Projections.property("t1.age"),"age");	
 	projectionList.add(Projections.property("cr.filePath"),"crashReportFileName");
 	projectionList.add(Projections.property("t1.tier"),"tier");
 	projectionList.add(Projections.property("t1.atFaultInsuranceCompany"),"atFaultInsuranceCompany");

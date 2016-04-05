@@ -23,6 +23,8 @@ public class PatientSearchList extends InjuryProperties{
 	private String name;
 	private String phoneNumber;
 	private String address;
+	private String dateOfBirth;
+	private String age;
 	private String crashReportFileName;
 	private Integer callerAdminId;
 	private Integer callerId;
@@ -206,14 +208,27 @@ public class PatientSearchList extends InjuryProperties{
 	public void setNumberOfPatients(Integer numberOfPatients) {
 		this.numberOfPatients = numberOfPatients;
 	}
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
+	}
 	public PatientSearchList(String patientId, String localReportNumber,
 			Integer numberOfPatients, String crashDate, String addedDate,
 			Integer countyId, String county, String crashSeverity, String name,
-			String phoneNumber, String address, String crashReportFileName,
-			Integer callerAdminId, Integer callerId, String callerFirstName,
-			String callerLastName, Integer lawyerAdminId, Integer lawyerId,
-			String lawyerFirstName, String lawyerLastName, String notes,
-			Integer isArchived, Integer patientStatus, boolean isSelected,
+			String phoneNumber, String address, String dateOfBirth, String age,
+			String crashReportFileName, Integer callerAdminId,
+			Integer callerId, String callerFirstName, String callerLastName,
+			Integer lawyerAdminId, Integer lawyerId, String lawyerFirstName,
+			String lawyerLastName, String notes, Integer isArchived,
+			Integer patientStatus, boolean isSelected,
 			String atFaultInsuranceCompany, String victimInsuranceCompany,
 			Integer tier) {
 		super();
@@ -228,6 +243,8 @@ public class PatientSearchList extends InjuryProperties{
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
+		this.dateOfBirth = dateOfBirth;
+		this.age = age;
 		this.crashReportFileName = crashReportFileName;
 		this.callerAdminId = callerAdminId;
 		this.callerId = callerId;

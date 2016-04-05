@@ -25,6 +25,7 @@ public class PatientForm {
 	private String unitNumber;
 	private String name;
 	private String dateOfBirth;
+	private String age;
 	private String gender;
 	private String address;
 	private Double latitude;
@@ -150,6 +151,12 @@ public class PatientForm {
 	}
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}	
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
 	}
 	public String getGender() {
 		return gender;
@@ -252,7 +259,7 @@ public class PatientForm {
 			String reportingAgencyName, String numberOfUnits,
 			String unitInError, String cityVillageTownship,
 			String crashDate, String addedDate, String timeOfCrash,
-			String unitNumber, String name, String dateOfBirth, String gender,
+			String unitNumber, String name, String dateOfBirth,String age,String gender,
 			String address, Double latitude, Double longitude,
 			String phoneNumber, String injuries, String emsAgency,
 			String medicalFacility, String atFaultInsuranceCompany,
@@ -274,6 +281,7 @@ public class PatientForm {
 		this.unitNumber = unitNumber;
 		this.name = name;
 		this.dateOfBirth = dateOfBirth;
+		this.age=age;
 		this.gender = gender;
 		this.address = address;
 		this.latitude = latitude;

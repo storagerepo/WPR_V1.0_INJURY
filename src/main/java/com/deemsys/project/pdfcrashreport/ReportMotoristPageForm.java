@@ -4,6 +4,7 @@ public class ReportMotoristPageForm {
 	private String unitNumber;
 	private String name;
 	private String dateOfBirth;
+	private String age;
 	private String gender;
 	private String adddressCityStateZip;
 	private String contactPhone;
@@ -27,6 +28,12 @@ public class ReportMotoristPageForm {
 	}
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}	
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
 	}
 	public String getGender() {
 		return gender;
@@ -65,13 +72,14 @@ public class ReportMotoristPageForm {
 		this.medicalFacility = medicalFacility;
 	}
 	public ReportMotoristPageForm(String unitNumber, String name,
-			String dateOfBirth, String gender, String adddressCityStateZip,
+			String dateOfBirth,String age,String gender, String adddressCityStateZip,
 			String contactPhone, String injuries, String emsAgency,
 			String medicalFacility) {
 		super();
 		this.unitNumber = unitNumber;
 		this.name = name;
 		this.dateOfBirth = dateOfBirth;
+		this.age=age;
 		this.gender = gender;
 		this.adddressCityStateZip = adddressCityStateZip;
 		this.contactPhone = contactPhone;
