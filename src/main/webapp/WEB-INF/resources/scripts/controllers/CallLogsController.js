@@ -30,6 +30,9 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 			    	    case 5:
 			    	    	value.response="Do not call";
 			    	    	break;
+			    	    case 8:
+			    	    	value.response="Call Back";
+			    	    	break;
 			    	    default:
 			    	    	break;
 			    	} 
@@ -73,6 +76,9 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	  		    	    case 5:
 	  		    	    	value.response="Do not call";
 	  		    	    	break;
+	  		    	  case 8:
+			    	    	value.response="Call Back";
+			    	    	break;
 	  		    	    default:
 	  		    	    	break;
 	  		    	} 
