@@ -129,7 +129,7 @@
                             	<th width="2%"><input ng-change="isChecked()" ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
                                 <th width="20%">Patient Name</th>
                                 <!-- <th width="18%">Local Report Number</th> -->
-                                <th width="8%">Phone Number</th> 
+                                <th width="10%">Phone Number</th> 
                                 <th width="3%">Age</th>                               
                                 <!-- <th width="9%">Added On</th>
                                 <th width="10%">Crash Date</th> -->
@@ -169,7 +169,7 @@
                         </thead>
                         <tbody>
                          <tr class="group-header-back" ng-show="callerPatientSearchData.length>0"  ng-repeat-start="resultData in callerPatientSearchData">
-                       <td colspan="1"><input ng-change="selectGroup(this)" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}"></td> <td colspan="10" ><span class="col-md-3">Local Report No: 	{{resultData.localReportNumber}}  </span><span class="col-md-1"><span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></span><span class="col-md- pull-right"><span ><b>Crash Date:</b> 	{{resultData.crashDate}}  </span>|<span class="margin-left-10"><b>Added Date: </b>	{{resultData.addedDate}}  </span></span></td>
+                       <td colspan="1"><input ng-change="selectGroup(this)" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}"></td> <td colspan="10" ><span class="col-md-3">Patients Count -&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></span><span class="col-md-9 pull-right text-right"><span><b>Local Report No: </b>{{resultData.localReportNumber}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date:</b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span></span></td>
                           </tr>
                             <tr dir-paginate="callerData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
                           
