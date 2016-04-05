@@ -79,6 +79,16 @@
 				<span style="color:red" ng-if="AddedOnToRequired==true">Please Enter Added On To Date</span>
          	</div>
         </div>
+        
+        <div class="col-md-3 no-padding">
+       		<div class="col-md-12"><label>Local Report Number</label></div>
+       		<div class="col-md-12"> 
+        		<input type="text" name="localReportNumber" class="form-control" ng-model="patient.localReportNumber" placeholder="Local Report Number">
+        		</div>
+        </div>
+        
+					 
+				
         <div class="col-md-3 no-padding">
         <div class="col-md-12"><label>&nbsp;</label></div>
 			<div class="col-md-12">
@@ -135,11 +145,13 @@
                         </thead>
                         <tbody>
                         	<tr class="group-header-back" ng-show="patientSearchData.length>0"  ng-repeat-start="resultData in patientSearchData">
-                       			<td colspan="10" >Local Report No: 	{{resultData.localReportNumber}} - <span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></td>
+                       			<td colspan="10" ><span class="col-md-3">Local Report No: 	{{resultData.localReportNumber}} -</span> <span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></td>
                           	</tr>           	
                         
                             <tr dir-paginate="patient in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
-                                <td><a href="" class="hint--top" ng-click="viewPatientModal(patient.patientId)"  data-hint="View Patient">{{patient.name}}</a></td>
+                                <!-- <td colspan="7">{{patient.localReportNumber}}</td>  -->
+                                <td><span ng-if="patient.crashSeverity==2"><a href="" class="hint--top redText" ng-click="viewPatientModal(patient.patientId)"  data-hint="View Patient">{{patient.name}}</a></span>
+                                	<span ng-if="patient.crashSeverity!=2"><a href="" class="hint--top" ng-click="viewPatientModal(patient.patientId)"  data-hint="View Patient">{{patient.name}}</a></span></td>
                                 <td>{{patient.phoneNumber}}</td>
                                 <td>{{patient.crashDate}}</td>
                                 <td>{{patient.address}}</td>

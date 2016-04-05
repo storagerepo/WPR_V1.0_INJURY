@@ -63,7 +63,6 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler', func
 			$scope.crashToRequired=false;
 			$scope.patient.patientName="";
 			$scope.patient.phoneNumber= "";
-			$scope.patient.localReportNumber="";
 			if($scope.patient.countyId=="")
 			$scope.patient.countyId=0;
 			$scope.searchItems($scope.patient);

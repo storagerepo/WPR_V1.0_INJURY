@@ -52,7 +52,10 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 	$scope.isChecked=function(){
 		if($scope.patientSearchData.length>0){
 			$.each($scope.patientSearchData, function(index,value) {
-				value.selected=$scope.isCheckedAllPatients;
+				var i=0;
+				for(i;i<value.numberOfPatients;i++){
+				value.patientSearchLists[i].selected=$scope.isCheckedAllPatients;
+				}
 			});
 			$("input:checkbox").prop('checked', $(this).prop("checked"));
 		}
@@ -61,6 +64,9 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 	$scope.isCheckedIndividual=function(){
 		if($scope.isCheckedAllPatients){
 			$scope.isCheckedAllPatients=false;
+		}
+		else if($scope.isCheckedAllGroupPatients){
+			$scope.isCheckedAllGroupPatients=false;
 		}
 	};
 	
@@ -83,9 +89,11 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		var assignCallerObj ={};
 		var patientIdArray=[];
 		$.each($scope.patientSearchData, function(index,value) {
-			if(value.selected==true){
-				patientIdArray.push(value.patientId);
+			$.each(value.patientSearchLists,function(index1,value1){
+			if(value1.selected==true){
+				patientIdArray.push(value1.patientId);
 			}
+			});
 		});
 		assignCallerObj.patientId=patientIdArray;
 		
@@ -113,9 +121,12 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		assignCallerObj.callerId=$scope.myForm.callerId;
 		var patientIdArray=[];
 		$.each($scope.patientSearchData, function(index,value) {
-			if(value.selected==true){
-				patientIdArray.push(value.patientId);
-			}
+			$.each(value.patientSearchLists,function(index1,value1){
+				if(value1.selected==true){
+					patientIdArray.push(value1.patientId);
+				}
+			});
+			
 		});
 		assignCallerObj.patientId=patientIdArray;
 		$scope.assignCallerRequest(assignCallerObj);
@@ -134,9 +145,11 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		var assignCallerObj ={};
 		var patientIdArray=[];
 		$.each($scope.patientSearchData, function(index,value) {
-			if(value.selected==true){
-				patientIdArray.push(value.patientId);
+			$.each(value.patientSearchLists,function(index1,value1){
+			if(value1.selected==true){
+				patientIdArray.push(value1.patientId);
 			}
+			});
 		});
 		assignCallerObj.patientId=patientIdArray;
 		
@@ -153,9 +166,11 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		var assignCallerObj ={};
 		var patientIdArray=[];
 		$.each($scope.patientSearchData, function(index,value) {
-			if(value.selected==true){
-				patientIdArray.push(value.patientId);
+			$.each(value.patientSearchLists,function(index1,value1){
+			if(value1.selected==true){
+				patientIdArray.push(value1.patientId);
 			}
+			});
 		});
 		assignCallerObj.patientId=patientIdArray;
 		
@@ -168,36 +183,57 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		});
 	};
 	
+	
+	 $scope.selectGroup=function(id){
+				$.each($scope.patientSearchData, function(index,value) {
+				if(value.localReportNumber==id.resultData.localReportNumber){
+					
+					var i=0;
+					for(i;i<value.numberOfPatients;i++){
+						value.patientSearchLists[i].selected=id.isCheckedAllGroupPatients;
+					}
+				}
+				});
+				
+		};
+	
 	$scope.searchItems=function(searchObj){
+
 		requestHandler.postRequest("/Patient/searchPatients.json",searchObj).then(function(response){
 			$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
-			$scope.patientSearchData=response.data.patientSearchResult.patientSearchLists;
+			$scope.patientSearchData=response.data.patientSearchResult.searchResult;
+			
 			$.each($scope.patientSearchData, function(index,value) {
-				switch(value.patientStatus) {
+				$.each(value.patientSearchLists,function(index1,value1){
+				switch(value1.patientStatus) {
 				    case null:
-				        value.patientStatusName="New";
+				        value1.patientStatusName="New";
 				        break;
 				    case 1:
-				    	value.patientStatusName="Active";
+				    	value1.patientStatusName="Active";
 				        break;
 				    case 2:
-				    	value.patientStatusName="Not Interested/Injured";
+				    	value1.patientStatusName="Not Interested/Injured";
 				        break;
 				    case 3:
-				    	value.patientStatusName="Voice Mail";
+				    	value1.patientStatusName="Voice Mail";
 				        break;
 				    case 4:
-				    	value.patientStatusName="Appointment Scheduled";
+				    	value1.patientStatusName="Appointment Scheduled";
 				        break;
 				    case 5:
-				    	value.patientStatusName="Do Not Call";
+				    	value1.patientStatusName="Do Not Call";
 				        break;
 				    case 6:
-				    	value.patientStatusName="Need Re-Assign";
+				    	value1.patientStatusName="Need Re-Assign";
+				        break;
+				    case 8:
+				    	value1.patientStatusName="Call Back";
 				        break;
 				    default:
 				        break;
 				};
+				});
 			});
 			$scope.patientSearchDataOrginal=angular.copy($scope.patientSearchData);
 			$scope.isCheckedIndividual();
@@ -219,18 +255,20 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 			$scope.crashToRequired=false;
 			$scope.patient.patientName="";
 			$scope.patient.phoneNumber= "";
-			$scope.patient.localReportNumber="";
 			$scope.searchItems($scope.patient);
 		}
+		
 	};
 	
 	$scope.secoundarySearchPatient=function(){
+	
 		$scope.patient.pageNumber= 1;
-		$scope.setPage=1;
+		/*$scope.setPage=1;*/
 		$scope.searchItems($scope.patient);
 	};
 	
 	$scope.searchPatientsFromPage = function(pageNum){
+		
 		 $scope.patient.pageNumber=pageNum;
 		 $scope.searchItems($scope.patient);
 	};
@@ -243,6 +281,8 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 			});
 
 	};
+	
+	
 	
 	$scope.resetSearchData = function(){
 	     $scope.patientSearchForm.$setPristine();

@@ -48,7 +48,7 @@
          	<span style="color:red" ng-if="crashToRequired==true">Please Enter Crash To Date</span>
         </div>
         <div class="col-md-5ths">
-			<label>Tier</label>
+			<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details" data-trigger="focus" data-content="And here's some amazing content. It's very engaging. Right?"><i class="fa fa-info-circle"></i></a>
 			<select class="form-control input-sm"  ng-model="patient.tier" name="tier">
             	<option value="0" ng-selected="true">All</option>
             	<option value="1">Tier 1</option>
@@ -76,6 +76,11 @@
        		</div>
        		<span style="color:red" ng-if="addedToRequired==true">Please Enter Added On To Date</span>
        	</div>
+       	<div class="col-md-5ths">
+	       		<label>Local Report Number</label>
+					<input type="text" name="localReportNumber" class="form-control input-sm" ng-model="patient.localReportNumber" placeholder="Local Report Number"> 
+				
+	        </div>
        	<div class="col-md-5ths">
        		<label>&nbsp;</label><br/>
         	<a class="btn btn-success btn-sm" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='patientSearchForm.$invalid' ng-click="searchPatients()">Search</a>
@@ -107,6 +112,7 @@
 				          	<option value="3">Voice Mail</option>
 				          	<option value="4">Appointment Scheduled</option>
 				          	<option value="5">Do Not Call</option>
+				          	<option value="8">Call Back</option>
 				     	</select>
 					</div>
 				</div>
@@ -121,15 +127,17 @@
                         <thead>
                             <tr>
                             	<th width="2%"><input ng-change="isChecked()" ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
-                                <th width="18%">Patient Name</th>
-                                <th width="18%">Local Report Number</th>
-                                <th width="15%">Phone Number</th>                                
-                                <th width="9%">Added On</th>
-                                <th width="10%">Crash Date</th>
-                                <th width="8%">County</th>
-                                <th width="6%">Tier</th>
-                                <th width="4%">Status</th>
-                                <th width="10%">Action</th>
+                                <th width="20%">Patient Name</th>
+                                <!-- <th width="18%">Local Report Number</th> -->
+                                <th width="8%">Phone Number</th> 
+                                <th width="3%">Age</th>                               
+                                <!-- <th width="9%">Added On</th>
+                                <th width="10%">Crash Date</th> -->
+                                <th width="5%">County</th>
+                                
+                                <th width="4%">Tier</th>
+                                <th width="10%">Status</th>
+                                <th width="7%">Action</th>
                             </tr>
                             <tr>
                             	<th></th>
@@ -139,34 +147,45 @@
 								<input class="form-control" type="text"
 									ng-model="patient.patientName" ng-change="secoundarySearchPatient()" placeholder="Patient Name"></div>
 								</th>
-								<th>
+								<!-- <th>
 								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon2"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
 									ng-model="patient.localReportNumber" ng-change="secoundarySearchPatient()" placeholder="Report No"></div></th>
-								
+								 -->
 								<th>
 								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
 									ng-model="patient.phoneNumber" ng-change="secoundarySearchPatient()" placeholder="Phone No"></div></th>
 								<th></th>
+								<!-- <th></th>
+								<th></th> -->	
 								<th></th>
-								<th></th>	
 								<th></th>
 								<th></th>
 								<th></th>								
 							</tr>
                         </thead>
                         <tbody>
-                            <tr ng-show="callerPatientSearchData.length>0"  dir-paginate="callerData in callerPatientSearchData|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
+                         <tr class="group-header-back" ng-show="callerPatientSearchData.length>0"  ng-repeat-start="resultData in callerPatientSearchData">
+                       <td colspan="1"><input ng-change="selectGroup(this)" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}"></td> <td colspan="10" ><span class="col-md-3">Local Report No: 	{{resultData.localReportNumber}}  </span><span class="col-md-1"><span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></span><span class="col-md- pull-right"><span ><b>Crash Date:</b> 	{{resultData.crashDate}}  </span>|<span class="margin-left-10"><b>Added Date: </b>	{{resultData.addedDate}}  </span></span></td>
+                          </tr>
+                            <tr dir-paginate="callerData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
+                          
                                 <td><input ng-change="isCheckedIndividual()" ng-model="callerData.selected" ng-checked="callerData.selected" type="checkbox"></td>
-                                <td><a href="" class="hint--top" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Patient">{{callerData.name}}</a></td>
-                                <td>{{callerData.localReportNumber}}</td>
-                                <td>{{callerData.phoneNumber}}</td>                                
-                                <td>{{callerData.addedDate}}</td>
-                               	<td>{{callerData.crashDate}}</td>
+                                <td><span ng-if="callerData.crashSeverity==2 && callerData.age>=18"><a href="" class="hint--top redText" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Patient">{{callerData.name}}</a><span class="redText margin-left-10"><i class="fa fa-arrow-up" ></i></span></span>
+                                    <span ng-if="callerData.crashSeverity==2 && callerData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Patient">{{callerData.name}}</a><span class="redText margin-left-10"><i class="fa fa-arrow-up" ></i></span></span>
+                                    <span ng-if="callerData.crashSeverity!=2 && callerData.age>=18"><a href="" class="hint--top" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Patient">{{callerData.name}}</a></span>
+                                    <span ng-if="callerData.crashSeverity!=2 && callerData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Patient">{{callerData.name}}</a></span>
+                                </td>
+                             
+                                <td>{{callerData.phoneNumber}}</td>     
+                                <td>{{callerData.age}}</td>                           
+                                <!-- <td>{{callerData.addedDate}}</td>
+                               	<td>{{callerData.crashDate}}</td> -->
                                 <td>{{callerData.county}}</td>
+                                
                                 <td>Tier {{callerData.tier}}</td>
                                 <td>{{callerData.patientStatusName}}</td>
                                 <td>
@@ -179,12 +198,13 @@
 								</span>
 								</td>
                             </tr>
+                            <tr ng-repeat-end=""></tr>
                             <tr ng-show="callerPatientSearchData.length==0">
                             <td colspan="11"><center><strong>No Records Found!!!</strong></center></td>
                             </tr>
                         </tbody>
                     </table>
-                    <dir-pagination-controls max-size="5" on-page-change="searchPatientsFromPage(newPageNumber)" direction-links="true" boundary-links="true" >
+                    <dir-pagination-controls ng-show="callerPatientSearchData.length>0" max-size="5" on-page-change="searchPatientsFromPage(newPageNumber)" direction-links="true" boundary-links="true" >
     					</dir-pagination-controls> 
     					</div>
 <div class="col-md-3 pull-right">
@@ -288,7 +308,8 @@
 					<tr>
 						<td class="col-md-3"><b>Crash Date</b></td>
 						<td class="col-md-3">{{patientDetails.crashDate}}</td>
-						<td class="col-md-3" colspan="2"></td>
+						<td class="col-md-3"><b>Age</b></td>
+						<td class="col-md-3">{{patientDetails.age}}</td>
 					</tr>
 					<tr>
 						<td class="col-md-3"><b>At Fault INS. Company</b></td>
@@ -347,4 +368,7 @@ $('#AddedToDate').datetimepicker({
 	maxDate : new Date()
 });
 
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});
 </script>

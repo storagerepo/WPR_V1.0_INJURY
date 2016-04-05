@@ -35,10 +35,12 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		};
 		
 		$scope.isChecked=function(){
-			console.log($scope.lAdminPatientSearchData);
 			if($scope.lAdminPatientSearchData.length>0){
 				$.each($scope.lAdminPatientSearchData, function(index,value) {
-					value.selected=$scope.isCheckedAllPatients;
+					var i=0;
+					for(i;i<value.numberOfPatients;i++){
+					value.patientSearchLists[i].selected=$scope.isCheckedAllPatients;
+					}
 				});
 				$("input:checkbox").prop('checked', $(this).prop("checked"));
 			}
@@ -48,27 +50,32 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 			if($scope.isCheckedAllPatients){
 				$scope.isCheckedAllPatients=false;
 			}
+			else if($scope.isCheckedAllGroupPatients){
+				$scope.isCheckedAllGroupPatients=false;
+			}
 		};
 	
 	$scope.searchItems=function(searchObj){
 			requestHandler.postRequest("Patient/searchPatients.json",searchObj).then(function(response){
 				$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
-				$scope.lAdminPatientSearchData=response.data.patientSearchResult.patientSearchLists;
+				$scope.lAdminPatientSearchData=response.data.patientSearchResult.searchResult;
 				$.each($scope.lAdminPatientSearchData, function(index,value) {
-					switch(value.patientStatus) {
+					$.each(value.patientSearchLists,function(index1,value1){
+					switch(value1.patientStatus) {
 					    case null:
-					        value.patientStatusName="New";
+					        value1.patientStatusName="New";
 					        break;
 					    case 1:
-					    	value.patientStatusName="Active";
+					    	value1.patientStatusName="Active";
 					        break;
 					   
 					    case 6:
-					    	value.patientStatusName="Need Re-assign";
+					    	value1.patientStatusName="Need Re-assign";
 					        break;
 					    default:
 					        null;
 					};
+					});
 				});
 				$scope.patientSearchDataOrginal=angular.copy($scope.lAdminPatientSearchData);
 				$scope.isCheckedIndividual();
@@ -88,20 +95,32 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 			$scope.addedToRequired=false;
 			$scope.patient.patientName="";
 			$scope.patient.phoneNumber= "";
-			$scope.patient.localReportNumber="";
 			$scope.searchItems($scope.patient);
 		}
 	};
 	
 	$scope.secoundarySearchPatient=function(){
 		$scope.patient.pageNumber= 1;
-		$scope.setPage=1;
+		/*$scope.setPage=1;*/
 		$scope.searchItems($scope.patient);
 	};
 	
 	$scope.searchPatientsFromPage = function(pageNum){
 		 $scope.patient.pageNumber=pageNum;
 		 $scope.searchItems($scope.patient);
+	};
+	
+	 $scope.selectGroup=function(id){
+			$.each($scope.lAdminPatientSearchData, function(index,value) {
+			if(value.localReportNumber==id.resultData.localReportNumber){
+				
+				var i=0;
+				for(i;i<value.numberOfPatients;i++){
+					value.patientSearchLists[i].selected=id.isCheckedAllGroupPatients;
+				}
+			}
+			});
+			
 	};
 	
 	$scope.assignlawyerPopup=function(){
@@ -148,9 +167,11 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		assignLawyerObj.lawyerId=$scope.myForm.lawyerId;
 		var patientIdArray=[];
 		$.each($scope.lAdminPatientSearchData, function(index,value) {
-			if(value.selected==true){
-				patientIdArray.push(value.patientId);
+			$.each(value.patientSearchLists,function(index1,value1){
+			if(value1.selected==true){
+				patientIdArray.push(value1.patientId);
 			}
+			});
 		});
 		assignLawyerObj.patientId=patientIdArray;
 		$scope.assign(assignLawyerObj);
@@ -162,9 +183,11 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		var assignLawyerObj ={};
 		var patientIdArray=[];
 		$.each($scope.lAdminPatientSearchData, function(index,value) {
-			if(value.selected==true){
-				patientIdArray.push(value.patientId);
+			$.each(value.patientSearchLists,function(index1,value1){
+			if(value1.selected==true){
+				patientIdArray.push(value1.patientId);
 			}
+			});
 		});
 		assignLawyerObj.patientId=patientIdArray;
 		
@@ -181,9 +204,11 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		var assignLawyerObj ={};
 		var patientIdArray=[];
 		$.each($scope.lAdminPatientSearchData, function(index,value) {
-			if(value.selected==true){
-				patientIdArray.push(value.patientId);
+			$.each(value.patientSearchLists,function(index1,value1){
+			if(value1.selected==true){
+				patientIdArray.push(value1.patientId);
 			}
+			});
 		});
 		assignLawyerObj.patientId=patientIdArray;
 		
@@ -200,9 +225,11 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		var assignLawyerObj ={};
 		var patientIdArray=[];
 		$.each($scope.lAdminPatientSearchData, function(index,value) {
-			if(value.selected==true){
-				patientIdArray.push(value.patientId);
+			$.each(value.patientSearchLists,function(index1,value1){
+			if(value1.selected==true){
+				patientIdArray.push(value1.patientId);
 			}
+			});
 		});
 		assignLawyerObj.patientId=patientIdArray;
 		

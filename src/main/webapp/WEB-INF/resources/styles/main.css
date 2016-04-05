@@ -525,6 +525,9 @@ input[type=text]::-ms-clear { display: none; }
 	color:red;
 }
 
+.orangeText{
+	color:#ff6600;
+}
 
 .wrap{
 	word-wrap: break-word !important;
@@ -533,6 +536,21 @@ input[type=text]::-ms-clear { display: none; }
 .margin-top35{
 	margin-top: 40px;
 }
+
+.patient-count-circle{
+	height:20px;
+	border-radius:3px;
+	padding:2px 7px;
+	text-align:center;
+	font-size:12px;
+	color:#fff;
+	background-color:#006dcc;
+}
+
+.group-header-back{
+	background-color:rgba(0, 109, 204,0.05)!important;
+}
+
 
 .search{
 	background-color:#1A4D81;

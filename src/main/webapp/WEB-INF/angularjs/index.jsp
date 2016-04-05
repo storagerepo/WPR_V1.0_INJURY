@@ -52,7 +52,7 @@
     <!-- endbuild -->
 	
 	<!-- Google Map-->
-	<script src="resources/components/angular-map-rawgito/lodash.min.js"></script>
+	<script src="resources/components/angular-map-rawgit/lodash.min.js"></script>
 	<script src="resources/components/angular-map-rawgit/angular-google-maps.js"></script>
 	 
 

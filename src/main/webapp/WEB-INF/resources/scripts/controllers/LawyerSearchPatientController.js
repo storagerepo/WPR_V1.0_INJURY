@@ -33,7 +33,10 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 			console.log($scope.lAdminPatientSearchData);
 			if($scope.lawyerPatientSearchData.length>0){
 				$.each($scope.lawyerPatientSearchData, function(index,value) {
-					value.selected=$scope.isCheckedAllPatients;
+					var i=0;
+					for(i;i<value.numberOfPatients;i++){
+					value.patientSearchLists[i].selected=$scope.isCheckedAllPatients;
+					}
 				});
 				$("input:checkbox").prop('checked', $(this).prop("checked"));
 			}
@@ -43,12 +46,16 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 			if($scope.isCheckedAllPatients){
 				$scope.isCheckedAllPatients=false;
 			}
+			
+			else if($scope.isCheckedAllGroupPatients){
+				$scope.isCheckedAllGroupPatients=false;
+			}
 		};
 	
 	$scope.searchItems=function(searchObj){
 			requestHandler.postRequest("Patient/searchPatients.json",searchObj).then(function(response){
 				$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
-				$scope.lawyerPatientSearchData=response.data.patientSearchResult.patientSearchLists;
+				$scope.lawyerPatientSearchData=response.data.patientSearchResult.searchResult;
 				$scope.patientSearchDataOrginal=angular.copy($scope.lawyerPatientSearchData);
 				$scope.isCheckedIndividual();
 			});
@@ -67,14 +74,13 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 			$scope.addedToRequired=false;
 			$scope.patient.patientName="";
 			$scope.patient.phoneNumber= "";
-			$scope.patient.localReportNumber="";
 			$scope.searchItems($scope.patient);
 		}
 	};
 	
 	$scope.secoundarySearchPatient=function(){
 		$scope.patient.pageNumber= 1;
-		$scope.setPage=1;
+		/*$scope.setPage=1;*/
 		$scope.searchItems($scope.patient);
 	};
 	
@@ -84,13 +90,28 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	};
 	
 	
+	 $scope.selectGroup=function(id){
+			$.each($scope.lawyerPatientSearchData, function(index,value) {
+			if(value.localReportNumber==id.resultData.localReportNumber){
+				
+				var i=0;
+				for(i;i<value.numberOfPatients;i++){
+					value.patientSearchLists[i].selected=id.isCheckedAllGroupPatients;
+				}
+			}
+			});
+			
+	};
+	
 	$scope.releaseLawyer=function(){
 		var assignLawyerObj ={};
 		var patientIdArray=[];
 		$.each($scope.lawyerPatientSearchData, function(index,value) {
-			if(value.selected==true){
-				patientIdArray.push(value.patientId);
+			$.each(value.patientSearchLists,function(index1,value1){
+			if(value1.selected==true){
+				patientIdArray.push(value1.patientId);
 			}
+			});
 		});
 		assignLawyerObj.patientId=patientIdArray;
 		
@@ -107,9 +128,11 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		var assignLawyerObj ={};
 		var patientIdArray=[];
 		$.each($scope.lawyerPatientSearchData, function(index,value) {
-			if(value.selected==true){
-				patientIdArray.push(value.patientId);
+			$.each(value.patientSearchLists,function(index1,value1){
+			if(value1.selected==true){
+				patientIdArray.push(value1.patientId);
 			}
+			});
 		});
 		assignLawyerObj.patientId=patientIdArray;
 		
@@ -126,9 +149,11 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		var assignLawyerObj ={};
 		var patientIdArray=[];
 		$.each($scope.lawyerPatientSearchData, function(index,value) {
-			if(value.selected==true){
-				patientIdArray.push(value.patientId);
+			$.each(value.patientSearchLists,function(index1,value1){
+			if(value1.selected==true){
+				patientIdArray.push(value1.patientId);
 			}
+			});
 		});
 		assignLawyerObj.patientId=patientIdArray;
 		
