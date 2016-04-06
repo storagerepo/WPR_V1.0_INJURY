@@ -82,10 +82,20 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler', func
 	
 	$scope.viewPatientModal=function(patientId){
 		$("#myModal").modal("show");
-		requestHandler.getRequest("/Patient/getPatient.json?patientId="+patientId,"").then(function(response){
+		
+		$.each($scope.patientSearchData, function(index,value) {
+			$.each(value.patientSearchLists,function(index1,value1){
+				if(value1.patientId ==patientId){
+					$scope.patientDetails=value1;
+				}
+			});
+			
+		});
+		
+		/*requestHandler.getRequest("/Patient/getPatient.json?patientId="+patientId,"").then(function(response){
 			$scope.patientDetails=response.data.patientForm;
 		
-			});
+			});*/
 
 	};
 	

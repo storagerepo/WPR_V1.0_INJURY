@@ -76,7 +76,7 @@
      		</select>
        	</div>
        	<div class="col-md-5ths">
-       		<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details" data-trigger="focus" data-content="And here's some amazing content. It's very engaging. Right?"><i class="fa fa-info-circle"></i></a>
+       		<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details" data-trigger="focus"><i class="fa fa-info-circle"></i></a>
          	<select class="form-control"  ng-model="patient.tier" name="tier">
          		<option value="0" ng-selected="true">All</option>
                 <option value="1">Tier1</option>
@@ -140,13 +140,13 @@
                            	 	<th width="2%"><input ng-change="isChecked()" ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
                                 <th width="15%">Patient Name</th>
                                 <th width="3%">Age</th>
-                                 <th width="8%">Unit Number</th>
+                                 <th width="6%">Unit No.</th>
                                 <th width="10%">County</th>
-                                <th width="10%">Lawyer</th>
+                                <th width="8%">Lawyer</th>
                                
-                                <th width="15%">Address</th>
+                                <th width="17%">Address</th>
                                 
-                                <th width="6%">Tier</th>
+                                <th width="5%">Tier</th>
                                 <th width="6%">Status</th>
                                 <th width="4%">Actions</th>
                             </tr>
@@ -177,7 +177,7 @@
                         </thead>
                         <tbody>
                          <tr class="group-header-back" ng-show="lAdminPatientSearchData.length>0"  ng-repeat-start="resultData in lAdminPatientSearchData">
-                       <td colspan="1"><input ng-change="selectGroup(this)" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}"></td><td colspan="10" ><span><b>Local Report No:</b> 	{{resultData.localReportNumber}}  </span><span class="pull-right"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients Count:</b></span>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span>&nbsp;&nbsp;</span></td>
+                       <td colspan="1"><input ng-change="selectGroup(this)" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}"></td><td colspan="10" ><span><b>Local Report No:</b> 	{{resultData.localReportNumber}}  </span><span class="pull-right"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients Count:</b></span>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span>&nbsp;&nbsp;&nbsp;</span></td>
                           </tr>
                           <tr dir-paginate="lAdminData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
                             
@@ -296,50 +296,50 @@
 					<tr>
 						<td class="col-md-3"><b>Unit Number</b></td>
 						<td class="col-md-3">{{patientDetails.unitNumber}}</td>
-						<td class="col-md-3"><b>Crash Severity</b></td>
-						<td class="col-md-3">{{patientDetails.crashSeverity}}</td>
+						<td class="col-md-3"><b>Number of Units</b></td>
+						<td class="col-md-3">{{patientDetails.numberOfUnits}}</td>
+						
+					</tr>
+					<tr>
+						<td class="col-md-3"><b>Units in Error</b></td>
+						<td class="col-md-3">{{patientDetails.unitInError}}</td>
+						<td class="col-md-3"><b>Local Report Number</b></td>
+						<td class="col-md-3">{{patientDetails.localReportNumber}}</td>
 						
 						
 					</tr>
 					<tr>
 						<td class="col-md-3"><b>Injuries</b></td>
 						<td class="col-md-3">{{patientDetails.injuries}}</td>
-						<td class="col-md-3"><b>Crash Date</b></td>
-						<td class="col-md-3">{{patientDetails.crashDate}}</td>
-						
-					</tr>
-					<tr>
-						<td class="col-md-3"><b>Time of Crash</b></td>
-						<td class="col-md-3">{{patientDetails.timeOfCrash}}</td>
-						<td class="col-md-3"><b>Local Report Number</b></td>
-						<td class="col-md-3">{{patientDetails.localReportNumber}}</td>
-						
-					</tr>
-					<tr>
-					<td class="col-md-3"><b>Medical Facility</b></td>
-						<td class="col-md-3">{{patientDetails.medicalFacility}}</td>
-						<td colspan="2"></td>
+						<td class="col-md-3"><b>Crash Severity</b></td>
+						<td class="col-md-3">{{patientDetails.crashSeverity}}</td>
 					</tr>
 					<tr>
 					
+						<td class="col-md-3"><b>Crash Date</b></td>
+						<td class="col-md-3">{{patientDetails.crashDate}}</td>
+							<td class="col-md-3"><b>Time of Crash</b></td>
+						<td class="col-md-3">{{patientDetails.timeOfCrash}}</td>
+						
+					</tr>
+					<tr>
 						<td class="col-md-3"><b>EMS Agency</b></td>
 						<td class="col-md-3">{{patientDetails.emsAgency}}</td>
 						<td class="col-md-3"><b>Report Agency Name</b></td>
 						<td class="col-md-3">{{patientDetails.reportingAgencyName}}</td>
 					</tr>
-					<tr>
-						<td class="col-md-3"><b>Number of Units</b></td>
-						<td class="col-md-3">{{patientDetails.numberOfUnits}}</td>
-						<td class="col-md-3"><b>Units in Error</b></td>
-						<td class="col-md-3">{{patientDetails.unitInError}}</td>
-					</tr>
+					
 					<tr>
 						<td class="col-md-3"><b>County</b></td>
 						<td class="col-md-3">{{patientDetails.county}}</td>
 						<td class="col-md-3"><b>City Village Township</b></td>
 						<td class="col-md-3">{{patientDetails.cityVillageTownship}}</td>
 					</tr>
-					
+					<tr>
+					<td class="col-md-3"><b>Medical Facility</b></td>
+						<td class="col-md-3">{{patientDetails.medicalFacility}}</td>
+						<td colspan="2"></td>
+					</tr>
 					<tr>
 						<td class="col-md-3"><b>At Fault INS. Company</b></td>
 						<td class="col-md-3">{{patientDetails.atFaultInsuranceCompany}}</td>
@@ -397,6 +397,10 @@ $('#AddedToDate').datetimepicker({
 });
 
 $(document).ready(function(){
-    $('[data-toggle="popover"]').popover();   
+    $('[data-toggle="popover"]').popover({
+    	content: "<p><b>Tier 1:</b> Set of Victim Unit Patients where Number 0f Units > 2 and Unit in Error has Insurance.</p><p><b>Tier 2:</b> Set of Victim unit patients where Number of Units > 2, Unit in Error not having Insurance and Victim Unit has Insurance.</p><p><b>Tier 3:</b> Set of Patient where Number of Units = 1 and Injury scale is in between 2 to 4.</p><p><b>Tier 4:</b> Set of At fault unit patients where Number of units > 2, unit in insurance has insurance and injury scale is in between 2 to 4.</p>",
+    	html: true, 
+    	placement: "bottom"
+    });   
 });
 </script>

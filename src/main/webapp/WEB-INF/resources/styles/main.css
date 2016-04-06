@@ -557,7 +557,7 @@ input[type=text]::-ms-clear { display: none; }
 	color: #fff; 
 }
 .group-header-back{
-	background-color:rgba(0, 109, 204,0.05)!important;
+	background-color:rgba(0, 109, 204,0.1)!important;
 }
 .patient-count-circle{
 	height:20px;
@@ -569,4 +569,11 @@ input[type=text]::-ms-clear { display: none; }
 	margin-right:5px;
 	 background-color:#009933; 
 	/* background-color:#006dcc;  */
+}
+
+.popover {
+    max-width: 600px; /* optional max width */
+    width: intrinsic; /* Safari/WebKit uses a non-standard name */
+    width: -moz-max-content; /* Firefox/Gecko */
+    width: -webkit-max-content; /* Chrome */
 }
