@@ -171,11 +171,11 @@
                                     <span ng-if="lawyerData.crashSeverity!=2 && lawyerData.age>=18"><a href="" class="hint--top" ng-click="viewPatientModal(lawyerData.patientId)"  data-hint="View Patient">{{lawyerData.name}}</a></span>
                                     <span ng-if="lawyerData.crashSeverity!=2 && lawyerData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lawyerData.patientId)"  data-hint="View Patient">{{lawyerData.name}}</a></span>
                                 </td>
-                              <td>{{lawyerData.age}}</td>
-                              <td>{{lawyerData.unitNumber}}</td>
-                                <td>{{lawyerData.county}}</td>
+                              <td title="Age">{{lawyerData.age}}</td>
+                              <td title="Unit Number">{{lawyerData.unitNumber}}</td>
+                                <td title="County">{{lawyerData.county}}</td>
                                	
-                                <td>{{lawyerData.address}}</td>
+                                <td title="Address">{{lawyerData.address}}</td>
                                 
                                 <td><span ng-if="lawyerData.tier==1">Tier 1</span>
                              	   <span ng-if="lawyerData.tier==2">Tier 2</span>

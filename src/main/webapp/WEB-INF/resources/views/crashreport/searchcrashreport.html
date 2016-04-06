@@ -102,13 +102,13 @@
                         </thead>
                         <tbody>
                             <tr ng-show="crashSearchData.length>0"  dir-paginate="crashReport in crashSearchData|itemsPerPage:crashreport.recordsPerPage" total-items="totalRecords">
-                                <td>{{crashReport.county}}</td>
-                                <td>{{crashReport.localReportNumber}}</td>
-                                <td>{{crashReport.crashId}}</td>
-                                <td>{{crashReport.crashDate}}</td>
-                                <td>{{crashReport.addedDate}}</td>
-                                <td>{{crashReport.crashReportError}}</td>
-                                <td>{{crashReport.numberOfPatients}}</td>
+                                <td title="County">{{crashReport.county}}</td>
+                                <td title="Local Report Number">{{crashReport.localReportNumber}}</td>
+                                <td title="Crash Id">{{crashReport.crashId}}</td>
+                                <td title="Crash Date">{{crashReport.crashDate}}</td>
+                                <td title="Added Date">{{crashReport.addedDate}}</td>
+                                <td title="Crash Report Status">{{crashReport.crashReportError}}</td>
+                                <td title="Number of Patients">{{crashReport.numberOfPatients}}</td>
                                 <td>
                                 	<a href="{{crashReport.filePath}}" ng-cloak target="_blank" class="btn btn-xs btn-danger hint--top" data-hint="View Crash Report"><i
 								class="fa fa-file-pdf-o"></i></a>

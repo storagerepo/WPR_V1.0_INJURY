@@ -183,15 +183,13 @@
                                     <span ng-if="callerData.crashSeverity!=2 && callerData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Patient">{{callerData.name}}</a></span>
                                 </td>
                              
-                                <td>{{callerData.phoneNumber}}</td>     
-                                <td>{{callerData.age}}</td>     
-                                 <td>{{callerData.unitNumber}}</td>                       
-                                <!-- <td>{{callerData.addedDate}}</td>
-                               	<td>{{callerData.crashDate}}</td> -->
-                                <td>{{callerData.county}}</td>
+                                <td title="Phone Number">{{callerData.phoneNumber}}</td>     
+                                <td title="Age">{{callerData.age}}</td>     
+                                 <td title="Unit Number">{{callerData.unitNumber}}</td>  
+                                <td title="County">{{callerData.county}}</td>
                                 
                                 <td>Tier {{callerData.tier}}</td>
-                                <td>{{callerData.patientStatusName}}</td>
+                                <td title="Status">{{callerData.patientStatusName}}</td>
                                 <td>
                                 	<a href="{{callerData.crashReportFileName}}" ng-cloak target="_blank" class="btn btn-xs btn-info hint--top" data-hint="View Crash Report"><i
 								class="fa fa-file-pdf-o"></i></a>

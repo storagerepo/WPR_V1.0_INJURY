@@ -133,7 +133,7 @@
 		</div>
 	</form>
 	<div class="col-md-12">
-	<table class="table table-bordered" ng-cloak>
+	<table class="table table-bordered header-fixed" ng-cloak>
     	<thead>
         	<tr>
             	<th width="2%"><input ng-change="isChecked()" ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
@@ -193,16 +193,14 @@
                                	 	<span ng-if="patient.crashSeverity!=2 && patient.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(patient.patientId)"  data-hint="View Patient">{{patient.name}}</a></span>
                                 </td>
                                 
-                                <td>{{patient.phoneNumber}}</td> 
-                                 <td>{{patient.age}}</td>  
-                                 <td>{{patient.unitNumber}}</td>                             
-                                <td>{{patient.county}}</td>                                
-                               <!--  
-                                 <td>{{patient.crashDate}}</td> -->
+                                <td title="Phone Number">{{patient.phoneNumber}}</td> 
+                                 <td title="Age">{{patient.age}}</td>  
+                                 <td title="Unit Number">{{patient.unitNumber}}</td>                             
+                                <td title="County">{{patient.county}}</td>    
                                  
                                 <td>Tier {{patient.tier}}</td>
-                                <td><span ng-show="patient.callerFirstName==null && patient.callerLastName==null">N/A</span>{{patient.callerFirstName}} {{patient.callerLastName}}</td>
-                              	<td>{{patient.patientStatusName}}</td>
+                                <td title="Caller Name"><span ng-show="patient.callerFirstName==null && patient.callerLastName==null">N/A</span>{{patient.callerFirstName}} {{patient.callerLastName}}</td>
+                              	<td title="Status">{{patient.patientStatusName}}</td>
                                 <td>
                                 	<a href="{{patient.crashReportFileName}}" ng-cloak target="_blank" class="btn btn-xs btn-info hint--top" data-hint="View Crash Report"><i
 								class="fa fa-file-pdf-o"></i></a>

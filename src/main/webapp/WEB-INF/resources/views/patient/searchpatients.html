@@ -145,11 +145,11 @@
                                	 	<span ng-if="patient.crashSeverity!=2 && patient.age>=18"><a href="" class="hint--top" ng-click="viewPatientModal(patient.patientId)"  data-hint="View Patient">{{patient.name}}</a></span>
                                	 	<span ng-if="patient.crashSeverity!=2 && patient.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(patient.patientId)"  data-hint="View Patient">{{patient.name}}</a></span>
                                 </td>
-                                <td>{{patient.phoneNumber}}</td>
-                                <td>{{patient.age}}</td>
-                                <td>{{patient.unitNumber}}</td>
-                                <td>{{patient.county}}</td>
-                                <td>{{patient.address}}</td>
+                                <td title="Phone Number">{{patient.phoneNumber}}</td>
+                                <td title="Age">{{patient.age}}</td>
+                                <td title="Unit Number">{{patient.unitNumber}}</td>
+                                <td title="County">{{patient.county}}</td>
+                                <td title="Address">{{patient.address}}</td>
                                 <td>
                                 	<a href="{{patient.crashReportFileName}}" ng-cloak target="_blank" class="btn btn-xs btn-danger hint--top" data-hint="View Crash Report"><i
 								class="fa fa-file-pdf-o"></i></a>
