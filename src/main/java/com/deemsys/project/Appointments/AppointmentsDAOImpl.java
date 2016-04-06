@@ -170,8 +170,9 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(Appointments.class);
 		criteria.createAlias("callLog", "c1");
 		criteria.createAlias("clinic", "c2");
-		criteria.createAlias("c1.caller", "c3");
+		criteria.createAlias("c1.caller", "c3",Criteria.LEFT_JOIN);
 		criteria.createAlias("c1.patientCallerAdminMap", "pc1",Criteria.INNER_JOIN);
+		criteria.createAlias("pc1.callerAdmin", "ca1",Criteria.INNER_JOIN);
 		criteria.createAlias("pc1.patient", "p1",Criteria.INNER_JOIN);
 		ProjectionList projectionList=Projections.projectionList();
 		projectionList.add(Projections.property("appointmentId"),"id");
@@ -182,6 +183,8 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		projectionList.add(Projections.property("doctorId"),"doctorId");
 		projectionList.add(Projections.property("c3.firstName"),"callerFirstName");
 		projectionList.add(Projections.property("c3.lastName"),"callerLastName");
+		projectionList.add(Projections.property("ca1.firstName"),"callerAdminFirstName");
+		projectionList.add(Projections.property("ca1.lastName"),"callerAdminLastName");
 		projectionList.add(Projections.property("c2.clinicName"),"clinicName");
 		projectionList.add(Projections.property("p1.patientId"),"patientId");
 		projectionList.add(Projections.property("p1.name"),"patientName");
@@ -229,12 +232,17 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		
 		if(!appointmentSearchForm.getCallerFirstName().equals("")){
 			Criterion callerFirstNameCriterion=Restrictions.like("c3.firstName",appointmentSearchForm.getCallerFirstName(),MatchMode.ANYWHERE);
-			criteria.add(callerFirstNameCriterion);
+			Criterion callerAdminFirstNameCriterion=Restrictions.like("ca1.firstName",appointmentSearchForm.getCallerFirstName(),MatchMode.ANYWHERE);
+			Criterion cadminFirstnameCriterion=Restrictions.isNull("c3.firstName");
+			
+			criteria.add(Restrictions.or(Restrictions.and(callerAdminFirstNameCriterion, cadminFirstnameCriterion),callerFirstNameCriterion));
 		}
 		
 		if(!appointmentSearchForm.getCallerLastName().equals("")){
 			Criterion callerLastNameCriterion=Restrictions.like("c3.lastName",appointmentSearchForm.getCallerLastName(),MatchMode.ANYWHERE);
-			criteria.add(callerLastNameCriterion);
+			Criterion callerAdminLastNameCriterion=Restrictions.like("ca1.lastName",appointmentSearchForm.getCallerLastName(),MatchMode.ANYWHERE);
+			Criterion cadminLastnameCriterion=Restrictions.isNull("c3.lastName");
+			criteria.add(Restrictions.or(Restrictions.and(callerAdminLastNameCriterion,cadminLastnameCriterion),callerLastNameCriterion));
 		}
 		
 		criteria.add(Restrictions.eq("c1.patientCallerAdminMap.id.callerAdminId", appointmentSearchForm.getCallerAdminId()));

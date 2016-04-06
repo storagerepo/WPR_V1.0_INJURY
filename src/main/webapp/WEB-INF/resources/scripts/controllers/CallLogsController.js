@@ -171,6 +171,10 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		    $scope.calllogs=response.data.callLogsForm;		    
 		    $scope.calllogs.response=$scope.calllogs.response.toString();
 		    $scope.calllogs.appointmentsForm=response.data.callLogsForm.appointmentsForm;
+		    if($scope.calllogs.response=="4"){
+				$scope.response=$scope.calllogs.response;
+				$scope.isCollapse=true;
+			}
 		   $('#timeStamp').data("DateTimePicker").setDate($scope.calllogs.timeStamp);
 		   $scope.getDoctors();
 		    $("#calllogsModel").modal("show");
@@ -185,13 +189,19 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	
 	$scope.appointmentAlert=function(){
 		if($scope.isAlert){
-			if($scope.calllogs.response!=4){
+			if($scope.calllogs.appointmentsForm.appointmentId!=""){
 				if($scope.response!=""){
 					$scope.response="";
 					if(confirm("Are you sure want to remove appointment?")){
+						$scope.isCollapse=false;
 						$scope.calllogs.appointmentsForm.doctorId="";
 						$scope.calllogs.appointmentsForm.clinicId="";
 						$scope.calllogs.appointmentsForm.scheduledDate="";
+						$scope.calllogs.appointmentsForm.appointmentId="";
+					}else{
+						$scope.calllogs.response="4";
+						$scope.response="4";
+						$scope.isCollapse=true;
 					}
 				}
 			}else if($scope.calllogs.response==4){

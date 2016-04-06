@@ -88,14 +88,14 @@
              </tr>
             </thead>
             
-           	 <tbody dir-paginate="appointment in appointments|itemsPerPage:searchAppointment.itemPerPage" total-items="totalRecords">
-	<tr>
+           	 <tbody>
+	<tr dir-paginate="appointment in appointments|itemsPerPage:searchAppointment.itemsPerPage" total-items="totalRecords">
 		
 		<td ng-cloak>{{appointment.scheduledDateTime}}</td>
 		<td ng-cloak><a href=""  class="hint--top" data-hint="View Patient" ng-cloak ng-click="viewPatientDetailsModal(appointment.patientId)">{{appointment.patientName}}</a></td>
 <td ng-cloak class="col-md-2 wrap"><a href=""  class="hint--top" data-hint="View Clinic" ng-cloak ng-click="viewClinicDetailsModal(appointment.clinicId)">{{appointment.clinicName}}</a></td>
-		  <td ng-cloak>{{appointment.callerFirstName}}</td>
-		   <td ng-cloak>{{appointment.callerLastName}}</td>
+		  <td ng-cloak><span ng-show="{{appointment.callerFirstName!=null}}">{{appointment.callerFirstName}}</span><span ng-show="{{appointment.callerFirstName==null}}">{{appointment.callerAdminFirstName}}</span></td>
+		   <td ng-cloak><span ng-show="{{appointment.callerLastName!=null}}">{{appointment.callerLastName}}</span><span ng-show="{{appointment.callerLastName==null}}">{{appointment.callerAdminLastName}}</span></td>
   <td ng-cloak>
   <select class="form-control" ng-model="appointment.status" ng-change="changeAppointmentStatus(appointment.id,appointment.status)">
   <option value="1">Scheduled</option>
@@ -112,11 +112,9 @@
 				</tbody>
 
               </table>
-              <dir-pagination-controls max-size="2" on-page-change="searchAppointmentByPage(newPageNumber)" direction-links="true" boundary-links="true" >
+              <dir-pagination-controls on-page-change="searchAppointmentByPage(newPageNumber)" direction-links="true" boundary-links="true" >
     					</dir-pagination-controls>
-            </div>
-        <!-- /.panel -->
-        <div class="col-md-3 pull-right">
+    					<div class="col-md-3 pull-right">
         <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="searchAppointment.itemsPerPage" name="itemsPerPage"
@@ -127,6 +125,9 @@
 		<option value="100">Show 100 Per Page</option>
 	</select> 
 	</div>
+            </div>
+        <!-- /.panel -->
+        
     </div>
     </div>
     <!-- /.col-lg-12 -->

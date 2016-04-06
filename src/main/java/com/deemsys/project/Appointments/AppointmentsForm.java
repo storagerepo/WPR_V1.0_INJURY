@@ -23,6 +23,8 @@ public class AppointmentsForm {
 	private String clinicName;
 	private String callerFirstName;
 	private String callerLastName;
+	private String callerAdminFirstName;
+	private String callerAdminLastName;
 	public Long getId() {
 		return id;
 	}
@@ -160,6 +162,22 @@ public class AppointmentsForm {
 
 	public void setDoctorName(String doctorName) {
 		this.doctorName = doctorName;
+	}
+
+	public String getCallerAdminFirstName() {
+		return callerAdminFirstName;
+	}
+
+	public void setCallerAdminFirstName(String callerAdminFirstName) {
+		this.callerAdminFirstName = callerAdminFirstName;
+	}
+
+	public String getCallerAdminLastName() {
+		return callerAdminLastName;
+	}
+
+	public void setCallerAdminLastName(String callerAdminLastName) {
+		this.callerAdminLastName = callerAdminLastName;
 	}
 
 	
