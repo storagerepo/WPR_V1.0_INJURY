@@ -18,8 +18,8 @@
 		<div class="col-md-5ths">
 			<label>County</label>
 			<select class="form-control input-sm" ng-model="patient.countyId">
-          		<option value="0" ng-selected="true">All</option>
-          		<option ng-repeat="county in mycounties" value="{{county.countyId}}" ng-selected="{{county.countyName === patient.county}}">{{county.countyName}}</option>
+          		<option value="0">All</option>
+          		<option ng-repeat="county in mycounties" value="{{county.countyId}}" ng-selected="{{county.countyId == patient.countyId}}">{{county.countyName}}</option>
      		</select>
         </div>
         <div class="col-md-5ths">
@@ -32,7 +32,7 @@
         <div class="col-md-5ths">
        		<label>Number of Days</label>
 			<select class="form-control input-sm"  ng-model="patient.numberOfDays" name="numberOfDays" ng-change="checkCustomDate(patient.numberOfDays)">
-            	<option value="1" ng-selected="true">1</option>
+            	<option value="1">1</option>
             	<option value="7">7</option>
             	<option value="15">15</option>
             	<option value="30">30</option>
@@ -50,7 +50,7 @@
         <div class="col-md-5ths">
 			<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details" data-trigger="focus" data-content="And here's some amazing content. It's very engaging. Right?"><i class="fa fa-info-circle"></i></a>
 			<select class="form-control input-sm"  ng-model="patient.tier" name="tier">
-            	<option value="0" ng-selected="true">All</option>
+            	<option value="0">All</option>
             	<option value="1">Tier 1</option>
             	<option value="2">Tier 2</option>
             	<option value="3">Tier 3</option>
@@ -99,14 +99,14 @@
 					<div class="col-md-3 margin-top-5 text-right no-padding">Records Type&nbsp;&nbsp;</div>
 					<div class="col-md-3 no-padding">
 						<select class="form-control input-sm" ng-change="secoundarySearchPatient()" name="isArchived" ng-model="patient.isArchived">
-				          	<option value="0" ng-selected="true">Open</option>
+				          	<option value="0">Open</option>
 				          	<option value="1">Archived</option>
 				     	</select>
 					</div>
 					<div class="col-md-3 margin-top-5 text-right no-padding">Filter Status by &nbsp;&nbsp; </div>
 					<div class="col-md-3 no-padding">
 						<select class="form-control input-sm" ng-change="secoundarySearchPatient()" name="isArchived" ng-model="patient.patientStatus">
-							<option value="7" ng-selected="true">All</option>
+							<option value="7">All</option>
 				          	<!-- <option value="0">New</option> -->
 				          	<option value="1">Active</option>
 				          	<option value="2">Not Interested/Injured</option>
@@ -174,7 +174,7 @@
                          <tr class="group-header-back" ng-show="callerPatientSearchData.length>0"  ng-repeat-start="resultData in callerPatientSearchData">
                        <td colspan="1"><input ng-change="selectGroup(this)" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}"></td><td colspan="10" ><span><b>Local Report No: </b>{{resultData.localReportNumber}}</span><span class="col-md-8 no-padding pull-right text-right"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients Count:</b>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></span>&nbsp;&nbsp;</span></td>
                           </tr>
-                            <tr dir-paginate="callerData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
+                            <tr dir-paginate="callerData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords">
                           
                                 <td><input ng-change="isCheckedIndividual()" ng-model="callerData.selected" ng-checked="callerData.selected" type="checkbox"></td>
                                 <td><span ng-if="callerData.crashSeverity==2 && callerData.age>=18"><a href="" class="hint--top redText" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Patient">{{callerData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Crash Severity:{{callerData.crashSeverity}}"><i class="fa fa-arrow-up" ></i></span></span>

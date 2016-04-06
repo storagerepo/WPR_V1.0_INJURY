@@ -1,6 +1,6 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash']);
 
-adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler','Flash', function($scope,requestHandler,Flash,$state) {
+adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler','searchService','Flash','$state', function($scope,requestHandler,searchService,Flash,$state) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.callerPatientSearchData=$scope.callerPatientSearchDataOrginal=[];
@@ -93,30 +93,58 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 	};
 	 
 	$scope.searchPatients = function(){
-	if($scope.patient.crashFromDate!="" && $scope.patient.numberOfDays=="0" && $scope.patient.crashToDate==""){
-			$scope.crashToRequired=true;
+		if($scope.patient.crashFromDate!="" && $scope.patient.numberOfDays=="0" && $scope.patient.crashToDate==""){
+				$scope.crashToRequired=true;
+			}
+		else if($scope.patient.addedOnFromDate!="" && $scope.patient.addedOnToDate==""){
+			$scope.addedToRequired=true;
 		}
-	else if($scope.patient.addedOnFromDate!="" && $scope.patient.addedOnToDate==""){
-		$scope.addedToRequired=true;
-	}
-	else{
-			$scope.crashToRequired=false;
-			$scope.addedToRequired=false;
-			$scope.patient.patientName="";
-			$scope.patient.phoneNumber= "";
-			$scope.searchItems($scope.patient);
-		}
+		else{
+				$scope.crashToRequired=false;
+				$scope.addedToRequired=false;
+				$scope.patient.patientName="";
+				$scope.patient.phoneNumber= "";
+				$scope.searchItems($scope.patient);
+		 }
+		
+		$scope.patient.pageNumber=1;
+		// Set To Service
+		searchService.setCounty($scope.patient.countyId);
+		searchService.setNumberOfDays($scope.patient.numberOfDays);
+		searchService.setCrashFromDate($scope.patient.crashFromDate);
+		searchService.setCrashToDate($scope.patient.crashToDate);
+		searchService.setCallerId($scope.patient.callerId);
+		searchService.setLawyerId($scope.patient.lawyerId);
+		searchService.setPhoneNumber($scope.patient.phoneNumber);
+		searchService.setPatientName($scope.patient.patientName);
+		searchService.setLocalReportNumber($scope.patient.localReportNumber);
+		searchService.setTier($scope.patient.tier);
+		searchService.setAddedOnFromDate($scope.patient.addedOnFromDate);
+		searchService.setAddedOnToDate($scope.patient.addedOnToDate);
+		searchService.setPatientStatus($scope.patient.patientStatus);
+		searchService.setIsArchived($scope.patient.isArchived);
+		searchService.setPageNumber($scope.patient.pageNumber);
+		searchService.setItemsPerPage($scope.patient.itemsPerPage);
 	};
 	
 	$scope.secoundarySearchPatient=function(){
 		$scope.patient.pageNumber= 1;
 		$scope.setPage=1;
 		$scope.searchItems($scope.patient);
+		searchService.setPhoneNumber($scope.patient.phoneNumber);
+		searchService.setPatientName($scope.patient.patientName);
+		searchService.setIsArchived($scope.patient.isArchived);
+		searchService.setTier($scope.patient.tier);
+		searchService.setPatientStatus($scope.patient.patientStatus);
+		searchService.setPageNumber($scope.patient.pageNumber);
+		searchService.setItemsPerPage($scope.patient.itemsPerPage);
 	};
 	
 	$scope.searchPatientsFromPage = function(pageNum){
 		 $scope.patient.pageNumber=pageNum;
 		 $scope.searchItems($scope.patient);
+		 searchService.setPageNumber($scope.patient.pageNumber);
+		 searchService.setItemsPerPage($scope.patient.itemsPerPage);
 	};
 	
 	
@@ -239,27 +267,33 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 	$scope.init=function(){
 
 		$scope.patient={};
-		$scope.patient.countyId="0";
-		$scope.patient.tier="0";
-		$scope.patient.crashFromDate="";
-		$scope.patient.crashToDate="";
-		$scope.patient.localReportNumber="";
-		$scope.patient.patientName="";
-		$scope.patient.callerId=0;
-		$scope.patient.phoneNumber= "";
-		$scope.patient.lawyerId="0";
-		$scope.patient.numberOfDays="1";
-		$scope.patient.pageNumber= 1;
-		$scope.patient.itemsPerPage="25";
-		$scope.totalRecords=0;
-		$scope.callerPatientSearchData="";
-		$scope.patient.addedOnFromDate="";
-		$scope.patient.addedOnToDate="";
-		$scope.patient.isArchived="0";
-		$scope.patient.patientStatus="7";
+		$scope.patient.countyId=searchService.getCounty();
+		$scope.patient.tier=searchService.getTier();
+		$scope.patient.crashFromDate=searchService.getCrashFromDate();
+		$scope.patient.crashToDate=searchService.getCrashToDate();
+		$scope.patient.localReportNumber=searchService.getLocalReportNumber();
+		$scope.patient.patientName=searchService.getPatientName();
+		$scope.patient.callerId=searchService.getCallerId();
+		$scope.patient.phoneNumber=searchService.getPhoneNumber();
+		$scope.patient.lawyerId=searchService.getLawyerId();
+		$scope.patient.numberOfDays=searchService.getNumberOfDays();
+		$scope.patient.pageNumber= searchService.getPageNumber();
+		$scope.patient.itemsPerPage=searchService.getItemsPerPage();
+		$scope.patient.addedOnFromDate=searchService.getAddedOnFromDate();
+		$scope.patient.addedOnToDate=searchService.getAddedOnToDate();
+		$scope.patient.isArchived=searchService.getIsArchived();
+		$scope.patient.patientStatus=searchService.getPatientStatus();
 		
 		//Initial Search
 		$scope.searchItems($scope.patient);
+		$scope.disableCustom=true;
+		$scope.isSelectedAddedFromDate=true;
+		if(searchService.getCrashFromDate()!=""){
+			$scope.disableCustom=false;
+		}
+		if(searchService.getAddedOnFromDate()!=""){
+			$scope.isSelectedAddedFromDate=false;
+		}
 		
 	};
 	
@@ -267,11 +301,25 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 	
 	$scope.resetSearchData = function(){
 		 $scope.patient={};
-		 $scope.patient.numberOfDays="1";
-		 $scope.patient.lawyerId="0";
 	     $scope.patientSearchForm.$setPristine();
 	     $scope.callerPatientSearchData="";
 	     $scope.totalRecords="";
+	     	searchService.setCounty("0");
+			searchService.setNumberOfDays("1");
+			searchService.setCrashFromDate("");
+			searchService.setCrashToDate("");
+			searchService.setCallerId("0");
+			searchService.setLawyerId("0");
+			searchService.setPhoneNumber("");
+			searchService.setPatientName("");
+			searchService.setLocalReportNumber("");
+			searchService.setTier("0");
+			searchService.setAddedOnFromDate("");
+			searchService.setAddedOnToDate("");
+			searchService.setPatientStatus("7");
+			searchService.setIsArchived("0");
+			searchService.setPageNumber(1);
+			searchService.setItemsPerPage("25");
 	     $scope.init();
 	     
 	};

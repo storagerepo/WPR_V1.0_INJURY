@@ -57,6 +57,7 @@
 	 
 
 	<!-- Load For Menu -->
+	<script src="resources/scripts/services/searchService.js"></script>
 	<script src="resources/scripts/services/requestHandler.js"></script>
 	<script src='resources/scripts/directives/sidebar/sidebar.js'></script>
     <script src='resources/scripts/directives/sidebar/sidebar-search/sidebar-search.js'></script>

@@ -27,9 +27,9 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 			      $scope.numberCrashReport=response.data.numberOfCrashReports;
 			   });
 			
-			/*requestHandler.getRequest("Patient/getNumberOfPatients.json","").then( function(response) {
+			requestHandler.getRequest("Patient/getNumberOfPatients.json","").then( function(response) {
 			      $scope.numberPatient=response.data.numberOfPatients;
-			   });*/
+			   });
 			}
 		   else if($rootScope.isAdmin==2){
 			   requestHandler.getRequest("CAdmin/getNumberOfCallers.json","").then( function(response) {
@@ -44,15 +44,15 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 				   $scope.numberOfAppointments= response.data.numberOfAppointments;
 			   });
 			   
-			  /* requestHandler.getRequest("Patient/getNumberOfPatients.json","").then( function(response) {
+			  requestHandler.getRequest("Patient/getNumberOfPatients.json","").then( function(response) {
 				   $scope.numberOfPatients= response.data.numberOfPatients;
-			   });*/
+			   });
 		
 			   
 		   }else if($rootScope.isAdmin==3){
-			   /*requestHandler.getRequest("Patient/getNumberOfPatients.json","").then( function(response) {
+			   requestHandler.getRequest("Patient/getNumberOfPatients.json","").then( function(response) {
 				   $scope.numberPatients=response.data.numberOfPatients;
-				     });*/
+				     });
 			   
 			   requestHandler.getRequest("LAdmin/getNumberOfLawyers.json","").then( function(response) {
 				   $scope.numberLawyer=response.data.noOfLawyers;
@@ -65,15 +65,15 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 			   });
 			   
 			   
-			  /* requestHandler.getRequest("Caller/getNumberOfAssignedPatients.json","").then( function(response) {
+			   requestHandler.getRequest("Caller/getNumberOfAssignedPatients.json","").then( function(response) {
 				   $scope.numberPatients=response.data.numberOfAssignedPatients;
-				     });*/
+				     });
 		   }
 		
 		   else if($rootScope.isAdmin==5){
-			   /*requestHandler.getRequest("Lawyer/getNumberOfAssignedPatients.json","").then( function(response) {
+			   requestHandler.getRequest("Lawyer/getNumberOfAssignedPatients.json","").then( function(response) {
 				   $scope.numberPatients=response.data.numberOfAssignedPatiets;
-				     });*/
+				     });
 		   }
 		   
 	}, 500);
