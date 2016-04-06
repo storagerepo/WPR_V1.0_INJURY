@@ -5,6 +5,7 @@ import java.util.List;
 public class PatientSearchResultGroupBy {
 
 	private String localReportNumber;
+	private String unitInError;
 	private String crashDate;
 	private String addedDate;
 	private Integer numberOfPatients;
@@ -51,10 +52,19 @@ public class PatientSearchResultGroupBy {
 		this.numberOfPatients = numberOfPatients;
 	}
 
-	public PatientSearchResultGroupBy(String localReportNumber, String crashDate,
+	public String getUnitInError() {
+		return unitInError;
+	}
+
+	public void setUnitInError(String unitInError) {
+		this.unitInError = unitInError;
+	}
+
+	public PatientSearchResultGroupBy(String localReportNumber,String unitInError,String crashDate,
 			String addedDate,Integer numberOfPatients,List<PatientSearchList> patientSearchLists) {
 		super();
 		this.localReportNumber = localReportNumber;
+		this.unitInError=unitInError;
 		this.crashDate = crashDate;
 		this.addedDate = addedDate;
 		this.numberOfPatients=numberOfPatients;
