@@ -182,8 +182,8 @@
                           <tr dir-paginate="lAdminData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
                             
                                 <td><input type="checkbox" ng-change="isCheckedIndividual()" ng-model="lAdminData.selected"/></td>
-                                <td><span ng-if="lAdminData.crashSeverity==2 && lAdminData.age>=18"><a href="" class="hint--top redText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top"><i class="fa fa-arrow-up" ></i></span></span>
-                                	<span ng-if="lAdminData.crashSeverity==2 && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top"><i class="fa fa-arrow-up" ></i></span></span>
+                                <td><span ng-if="lAdminData.crashSeverity==2 && lAdminData.age>=18"><a href="" class="hint--top redText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Crash Severity : {{lAdminData.crashSeverity}}"><i class="fa fa-arrow-up" ></i></span></span>
+                                	<span ng-if="lAdminData.crashSeverity==2 && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Crash Severity : {{lAdminData.crashSeverity}}"><i class="fa fa-arrow-up" ></i></span></span>
                                     <span ng-if="lAdminData.crashSeverity!=2 && lAdminData.age>=18"><a href="" class="hint--top" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a></span>
                                     <span ng-if="lAdminData.crashSeverity!=2 && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a></span>
                                     </td>
@@ -398,7 +398,7 @@ $('#AddedToDate').datetimepicker({
 
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover({
-    	content: "<p><b>Tier 1:</b> Set of Victim Unit Patients where Number of Units > 2 and Unit in Error has Insurance.</p><p><b>Tier 2:</b> Set of Victim Unit Patients where Number of Units > 2, Unit in Error not having Insurance and Victim Unit has Insurance.</p><p><b>Tier 3:</b> Set of Patients where Number of Units = 1 and Injury scale is in between 2 to 4.</p><p><b>Tier 4:</b> Set of At fault Unit Patients where Number of Units > 2, Unit in Error has Insurance and injury scale is in between 2 to 4.</p>",
+    	content: "<p><b>Tier 1:</b> Set of Victim Unit Patients where Number of Units > 2 and Unit in Error has Insurance.</p><p><b>Tier 2:</b> Set of Victim Unit Patients where Number of Units > 2, Unit in Error not having Insurance and Victim Unit has Insurance.</p><p><b>Tier 3:</b> Set of Patients where Number of Units = 1 and Injury scale is in between 2 to 4.</p><p><b>Tier 4:</b> Set of At fault Unit Patients where Number of Units > 2, Unit in Error has Insurance and Injury scale is in between 2 to 4.</p>",
     	html: true, 
     	placement: "bottom"
     });   
