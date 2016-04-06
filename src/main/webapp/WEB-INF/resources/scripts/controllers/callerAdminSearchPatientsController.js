@@ -230,6 +230,9 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 				    case 8:
 				    	value1.patientStatusName="Call Back";
 				        break;
+				    case 9:
+				    	value1.patientStatusName="Unable To Reach";
+				        break;
 				    default:
 				        break;
 				};

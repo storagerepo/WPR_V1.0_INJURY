@@ -566,5 +566,7 @@ input[type=text]::-ms-clear { display: none; }
 	text-align:center;
 	font-size:12px;
 	color:#fff;
-	background-color:#006dcc;
+	margin-right:5px;
+	 background-color:#009933; 
+	/* background-color:#006dcc;  */
 }

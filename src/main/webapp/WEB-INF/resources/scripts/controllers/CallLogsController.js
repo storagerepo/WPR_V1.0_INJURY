@@ -33,6 +33,9 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 			    	    case 8:
 			    	    	value.response="Call Back";
 			    	    	break;
+			    	    case 9:
+			    	    	value.response="Unable To Reach";
+			    	    	break;
 			    	    default:
 			    	    	break;
 			    	} 
@@ -76,8 +79,11 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	  		    	    case 5:
 	  		    	    	value.response="Do not call";
 	  		    	    	break;
-	  		    	  case 8:
+	  		    	    case 8:
 			    	    	value.response="Call Back";
+			    	    	break;
+	  		    	    case 9:
+			    	    	value.response="Unable To Reach";
 			    	    	break;
 	  		    	    default:
 	  		    	    	break;

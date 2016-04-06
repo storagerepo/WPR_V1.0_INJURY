@@ -125,6 +125,7 @@
 				          	<option value="5">Do Not Call</option>
 				          	<option value="6">Need Re-Assign</option>
 				          	<option value="8">Call Back</option>
+				          	<option value="9">Unable To Reach</option>
 				     	</select>
 					</div>
 				</div>
@@ -139,13 +140,14 @@
             	<th width="20%">Patient Name</th>
             	<th width="10%">Phone Number</th>
             	  <th width="3%">Age</th>
+            	   <th width="8%">Unit Number</th>
             	<th width="5%">County</th>
-                               <!--  <th width="9%">Added On</th>
+                               <!-- 
                                 <th width="9%">Crash Date</th>  -->
                               
                                 <th width="4%">Tier</th> 
-                                <th width="10%">Caller</th>
-                                <th width="10%">Status</th>
+                                <th width="8%">Caller</th>
+                                <th width="7%">Status</th>
                                 <th width="7%">Actions</th>
                             </tr>
                             <tr>
@@ -171,8 +173,8 @@
 								<input class="form-control" type="text"
 									ng-model="search.address" placeholder="Address"></div> --></th>
 								<th>
-								<!-- <th></th>
-								<th></th> -->
+								<th></th>
+								<!-- <th></th> -->
 								 <th></th>
 								<th></th>
 								<th></th> 
@@ -180,7 +182,7 @@
                         </thead>
                         <tbody>
                         <tr class="group-header-back" ng-show="patientSearchData.length>0"  ng-repeat-start="resultData in patientSearchData">
-                       <td colspan="1"><input ng-change="selectGroup(this)" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}"></td> <td colspan="10" ><span><b>Local Report No: </b>{{resultData.localReportNumber}}</span><span class="col-md-8 pull-right text-right"><span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients Count:</b>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></span></span></td>
+                       <td colspan="1"><input ng-change="selectGroup(this)" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}"></td> <td colspan="10" ><span><b>Local Report No: </b>{{resultData.localReportNumber}}</span><span class="col-md-8 no-padding pull-right text-right"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients Count:</b>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></span></span></td>
                           </tr>
                        
                             <tr dir-paginate="patient in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
@@ -192,9 +194,10 @@
                                 </td>
                                 
                                 <td>{{patient.phoneNumber}}</td> 
-                                 <td>{{patient.age}}</td>                               
+                                 <td>{{patient.age}}</td>  
+                                 <td>{{patient.unitNumber}}</td>                             
                                 <td>{{patient.county}}</td>                                
-                               <!--  <td>{{patient.addedDate}}</td>
+                               <!--  
                                  <td>{{patient.crashDate}}</td> -->
                                  
                                 <td>Tier {{patient.tier}}</td>
@@ -297,23 +300,31 @@
 						
 					</tr>
 					<tr>
+						<td class="col-md-3"><b>Unit Number</b></td>
+						<td class="col-md-3">{{patientDetails.unitNumber}}</td>
 						<td class="col-md-3"><b>Crash Severity</b></td>
 						<td class="col-md-3">{{patientDetails.crashSeverity}}</td>
-						<td class="col-md-3"><b>Injuries</b></td>
-						<td class="col-md-3">{{patientDetails.injuries}}</td>
+						
 						
 					</tr>
 					<tr>
+						<td class="col-md-3"><b>Injuries</b></td>
+						<td class="col-md-3">{{patientDetails.injuries}}</td>
 						<td class="col-md-3"><b>Crash Date</b></td>
 						<td class="col-md-3">{{patientDetails.crashDate}}</td>
-						<td class="col-md-3"><b>Time of Crash</b></td>
-						<td class="col-md-3">{{patientDetails.timeOfCrash}}</td>
+						
 					</tr>
 					<tr>
+						<td class="col-md-3"><b>Time of Crash</b></td>
+						<td class="col-md-3">{{patientDetails.timeOfCrash}}</td>
 						<td class="col-md-3"><b>Local Report Number</b></td>
 						<td class="col-md-3">{{patientDetails.localReportNumber}}</td>
-						<td class="col-md-3"><b>Medical Facility</b></td>
+						
+					</tr>
+					<tr>
+					<td class="col-md-3"><b>Medical Facility</b></td>
 						<td class="col-md-3">{{patientDetails.medicalFacility}}</td>
+						<td colspan="2"></td>
 					</tr>
 					<tr>
 					
