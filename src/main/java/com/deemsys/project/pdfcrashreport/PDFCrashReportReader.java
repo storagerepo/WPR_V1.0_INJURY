@@ -971,10 +971,13 @@ public class PDFCrashReportReader {
 						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 9,patientsForms.size()));
 					}else{
 						//Insert patients
-						if(checkTierFourPatientsAvailable(patientsForms)){
+						Integer patientAvailableTier=checkTierFourPatientsAvailable(patientsForms);
+						if(patientAvailableTier==3){
 							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 13,patientsForms.size()));
-						}else{
+						}else if(patientAvailableTier==1){
 							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 1,patientsForms.size()));
+						}else if(patientAvailableTier==2){
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 14,patientsForms.size()));
 						}
 						
 						try {
@@ -1079,16 +1082,32 @@ public class PDFCrashReportReader {
 	}
 	
 	// Check Tier 4 Patients Available or Not
-	public boolean checkTierFourPatientsAvailable(List<PatientForm> patientForms){
-		boolean isAvailable=false;
+	public Integer checkTierFourPatientsAvailable(List<PatientForm> patientForms){
+		
+		// # 0 No Patients available Under Tier 1 and Tier 4
+		// # 1 Only Tier 1 Patients available
+		// # 2 Only Tier 4 Patients available
+		// # 3 Both Tier 1 and Tier 4 Patients available
+		
+		Integer isAvailable=0;
+		Integer tierFour=0;
+		Integer tierOne=0;
 		for (PatientForm patientsForm : patientForms) {
 			if(patientsForm.getTier()==4){
-				isAvailable=true;
-				break;
-			}else{
-				isAvailable=false;
+				tierFour++;
+			}else if(patientsForm.getTier()==1){
+				tierOne++;
 			}
 		}
+		
+		if(tierOne>0&&tierFour>0){
+			isAvailable=3;
+		}else if(tierOne>0){
+			isAvailable=1;
+		}else if(tierFour>0){
+			isAvailable=2;
+		}
+		
 		return isAvailable;
 		
 	}
