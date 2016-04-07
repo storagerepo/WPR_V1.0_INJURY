@@ -577,3 +577,13 @@ input[type=text]::-ms-clear { display: none; }
     width: -moz-max-content; /* Firefox/Gecko */
     width: -webkit-max-content; /* Chrome */
 }
+
+.floatingHeader {
+	z-index:100!important;
+	border:none!important;
+	background-color:#ddd!important;
+      position: fixed;
+      top: 50px;
+      margin-left:-1px;
+      visibility: hidden;
+    }
