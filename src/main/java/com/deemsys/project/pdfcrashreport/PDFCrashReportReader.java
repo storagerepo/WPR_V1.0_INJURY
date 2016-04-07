@@ -517,6 +517,14 @@ public class PDFCrashReportReader {
 										"INJURIES"))
 									motoristPageForm.setInjuries(motoristPage
 											.get(index - 18));
+								else if (motoristPage.get(index - 17).equals(
+										"INJURIES"))
+									motoristPageForm.setInjuries(motoristPage
+											.get(index - 16));
+								else if (motoristPage.get(index - 18).equals(
+										"INJURIES"))
+									motoristPageForm.setInjuries(motoristPage
+											.get(index - 17));
 								else if (motoristPage.get(index - 19).equals(
 										"INJURIES"))
 									motoristPageForm.setInjuries(motoristPage
@@ -692,6 +700,11 @@ public class PDFCrashReportReader {
 									motoristPageForm.setInjuries(motoristPage
 											.get(index - 17));
 								}
+								else if (motoristPage.get(index - 17).equals(
+										"INJURIES")) {
+									motoristPageForm.setInjuries(motoristPage
+											.get(index - 16));
+								}
 								else if (motoristPage.get(index - 23).equals(
 										"INJURIES")){
 									motoristPageForm.setInjuries(motoristPage
@@ -825,7 +838,7 @@ public class PDFCrashReportReader {
 					if(!reportUnitPageForm.getInsuranceCompany().equals("")&&!invalidInsurance.contains(reportUnitPageForm.getInsuranceCompany())){
 						for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
 								.getReportMotoristPageForms()) {
-							if(motoristPageForm.getUnitNumber()==reportUnitPageForm.getUnitNumber()){
+							if(motoristPageForm.getUnitNumber().equals(reportUnitPageForm.getUnitNumber())){
 								PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 								if(patientsForm!=null){
 									patientsForm.setTier(2);
@@ -946,7 +959,6 @@ public class PDFCrashReportReader {
 				}
 				
 				List<PatientForm> patientsForms = new ArrayList<PatientForm>();
-				List<PatientForm> patientsFormsAtFault = new ArrayList<PatientForm>();
 				//Check for report status
 				Integer tierType = this.getReportType(pdfCrashReportJson);
 						
@@ -959,7 +971,12 @@ public class PDFCrashReportReader {
 						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 9,patientsForms.size()));
 					}else{
 						//Insert patients
-						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 1,patientsForms.size()));
+						if(checkTierFourPatientsAvailable(patientsForms)){
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 13,patientsForms.size()));
+						}else{
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 1,patientsForms.size()));
+						}
+						
 						try {
 							this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
 						} catch (Exception e) {
@@ -1061,5 +1078,19 @@ public class PDFCrashReportReader {
 		return filteredPatientForms;
 	}
 	
+	// Check Tier 4 Patients Available or Not
+	public boolean checkTierFourPatientsAvailable(List<PatientForm> patientForms){
+		boolean isAvailable=false;
+		for (PatientForm patientsForm : patientForms) {
+			if(patientsForm.getTier()==4){
+				isAvailable=true;
+				break;
+			}else{
+				isAvailable=false;
+			}
+		}
+		return isAvailable;
+		
+	}
 	
 }
