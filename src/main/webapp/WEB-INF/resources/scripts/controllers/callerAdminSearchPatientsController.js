@@ -1,6 +1,6 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash','ngAnimate']);
 
-adminApp.controller('searchPatientsController', ['$scope','requestHandler','searchService','$state','Flash', function($scope,requestHandler,searchService,$state,Flash) {
+adminApp.controller('searchPatientsController', ['$rootScope','$scope','requestHandler','searchService','$state','Flash', function($rootScope,$scope,requestHandler,searchService,$state,Flash) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.patientSearchData=$scope.patientSearchDataOrginal=[];
@@ -333,7 +333,7 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','sear
 	
 	
 	$scope.resetSearchData = function(){
-	     $scope.patientSearchForm.$setPristine();
+	    // $scope.patientSearchForm.$setPristine();
 	     $scope.patientSearchData="";
 	     	searchService.setCounty("0");
 			searchService.setNumberOfDays("1");
@@ -353,6 +353,11 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','sear
 			searchService.setItemsPerPage("25");
 	     $scope.init();
 	};
+	
+	// Reset Search Data Based on State
+	if($rootScope.previousState!="dashboard.Calllogs/:id"){
+		$scope.resetSearchData();
+	}
 	
 	$scope.isCleanCheckbox=function(){
 		return angular.equals($scope.patientSearchData,$scope.patientSearchDataOrginal);

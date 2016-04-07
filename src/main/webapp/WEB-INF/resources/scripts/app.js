@@ -1092,11 +1092,14 @@ sbAdminApp
 												}
 											});// End Change password
 
-						} ])
-		.controller(
-				'authenticationController',
-				function($rootScope, $scope, $http, $location, requestHandler) {
-					var authenticate = function() {
+						} ]).run( [ '$rootScope', function ($rootScope,$state, $stateParams) {
+							$rootScope.$state = $state;
+				            $rootScope.$stateParams = $stateParams;
+					        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+					            $rootScope.previousState = from.name;
+					         });
+					      }]).controller('authenticationController', function($rootScope, $scope, $http, $location, requestHandler) {
+					    	  	var authenticate = function() {
 						requestHandler
 								.postRequest("getCurrentRole.json", "")
 								.then(

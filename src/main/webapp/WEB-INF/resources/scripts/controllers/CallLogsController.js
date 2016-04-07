@@ -197,7 +197,6 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 						$scope.calllogs.appointmentsForm.doctorId="";
 						$scope.calllogs.appointmentsForm.clinicId="";
 						$scope.calllogs.appointmentsForm.scheduledDate="";
-						$scope.calllogs.appointmentsForm.appointmentId="";
 					}else{
 						$scope.calllogs.response="4";
 						$scope.response="4";
@@ -225,95 +224,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 	 
 	
 	
-	$scope.Appointments={};
-
 	
-	$scope.addAppointment=function(callLogId){
-		$scope.Appointments.callLogId =callLogId;
-		//getting patient details by id
-		requestHandler.getRequest("Caller/getPatients.json?id="+$stateParams.id,"").then( function(response) {
-			$scope.patient= response.data.patientsForm;
-			
-		 });
-		//setting clinic id from patient 
-		
-		if($scope.patient.clinicId==0)
-		{
-	$scope.Appointments.clinicId="";
-	}
-else
-	{
-	$scope.Appointments.clinicId=$scope.patient.clinicId;
-	}
-		//setting doctor id from patient 
-		if($scope.patient.doctorId==0)
-			{
-		$scope.Appointments.doctorId="";
-		}
-	else
-		{
-		$scope.Appointments.doctorId=$scope.patient.doctorId;
-		}
-		
-	$("#scheduledDate").val("");
-		$("#appointmentNotes").val("");
-		//getting doctor id
-		
-		var ClinicId=$scope.patient.clinicId;
-		
-		$scope.doctorName=function(){
-			var ClinicId=0;
-			if($scope.Appointments.clinicId==null){
-				ClinicId=0;
-			}else{
-				ClinicId=$scope.Appointments.clinicId;
-			}
-			
-				 requestHandler.getRequest("getNameByClinicId.json?clinicId="+ClinicId,"").then( function(response) {
-						
-				    $scope.doctor= response.data.doctorsForm;
-				  
-				   });
-
-				}
-		$("#AppointmentsModal").modal("show");
-	};
-	
-	$scope.saveAppointments=function()
-	{
-
-		$("#AppointmentsModal").modal("hide");
-		  $('.modal-backdrop').hide();
-		  requestHandler.postRequest("Caller/saveUpdateAppointments.json",$scope.Appointments)
-			.then(function(response)
-					{
-				Flash.create("success","You have Successfully Added!");
-				  $scope.getCallLogsList();
-				});
-		 
-		};
-		
-		$scope.removeAppointment=function(id,iD)
-		{
-			
-			if(confirm("Are you sure to cancel appointment ?")){
-				 
-			  requestHandler.deletePostRequest("Caller/removeAppointment.json?appointmentId=",id)
-				.then(function(response)
-						{
-					requestHandler.getRequest("Caller/activeStatusByPatientId.json?id="+iD,"")
-					.then(function(results)
-							{
-						$scope.response=results.data.requestSuccess;
-						
-						Flash.create("success","You have Successfully Cancelled!");
-						
-					  $scope.getCallLogsList();
-					});
-						});
-			
-			}
-		};
 		
 		$scope.viewAppointments=function(appointmentId)
 		{

@@ -1,11 +1,14 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash']);
 
-adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler','searchService','Flash','$state', function($scope,requestHandler,searchService,Flash,$state) {
+adminApp.controller('CallerSearchPatientsController', ['$rootScope','$scope','requestHandler','searchService','Flash','$state', function($rootScope,$scope,requestHandler,searchService,Flash,$state) {
+	
+	console.log("root Scope",$rootScope.previousState);
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.callerPatientSearchData=$scope.callerPatientSearchDataOrginal=[];
 	$scope.isSelectedAddedFromDate=true;
-
+	
+	
 	 $scope.getMyCountyList=function(){
 		 requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
 	    	$scope.mycounties=response.data.countyList;
@@ -302,7 +305,9 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 	
 	$scope.resetSearchData = function(){
 		 $scope.patient={};
-	     $scope.patientSearchForm.$setPristine();
+		 //$scope.patientSearchForm.$setPristine();
+		 $scope.crashToRequired=false;
+		 $scope.addedToRequired=false;
 	     $scope.callerPatientSearchData="";
 	     $scope.totalRecords="";
 	     	searchService.setCounty("0");
@@ -324,10 +329,14 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 	     $scope.init();
 	     
 	};
-	
+	// Reset Search Data Based on State
+	if($rootScope.previousState!="dashboard.Calllogs/:id"){
+		$scope.resetSearchData();
+	}
 	$scope.isCleanCheckbox=function(){
 		return angular.equals($scope.callerPatientSearchData,$scope.callerPatientSearchDataOrginal);
 	};
+	
 	
 }]); 
 
