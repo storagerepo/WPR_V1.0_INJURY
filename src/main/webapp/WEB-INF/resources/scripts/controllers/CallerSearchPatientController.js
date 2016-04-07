@@ -89,6 +89,7 @@ adminApp.controller('CallerSearchPatientsController', ['$scope','requestHandler'
 				});
 				$scope.callerPatientSearchDataOrginal=angular.copy($scope.callerPatientSearchData);
 				$scope.isCheckedIndividual();
+				
 			});
 	};
 	 

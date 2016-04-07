@@ -247,6 +247,8 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','sear
 			});
 			$scope.patientSearchDataOrginal=angular.copy($scope.patientSearchData);
 			$scope.isCheckedIndividual();
+			
+			 
 		});
 	};
 	 
@@ -297,15 +299,18 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','sear
 		searchService.setPageNumber($scope.patient.pageNumber);
 		searchService.setItemsPerPage($scope.patient.itemsPerPage);
 		
+		
+		    
+		    
 	};
 	
 	$scope.searchPatientsFromPage = function(pageNum){
-		
 		 $scope.patient.pageNumber=pageNum;
 		 $scope.searchItems($scope.patient);
 		 searchService.setPageNumber($scope.patient.pageNumber);
-		 searchService.setItemsPerPage($scope.patient.itemsPerPage);
+		 searchService.setItemsPerPage($scope.patient.itemsPerPage); 
 	};
+	
 	
 	$scope.viewPatientModal=function(patientId){
 		$("#myModal").modal("show");

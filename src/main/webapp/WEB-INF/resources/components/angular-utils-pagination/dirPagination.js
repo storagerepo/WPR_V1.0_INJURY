@@ -290,6 +290,9 @@
                     num = parseInt(num, 10);
                     paginationService.setCurrentPage(paginationId, num);
                 }
+                setTimeout(function(){
+        			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+        		 },100);
             };
 
             function goToPage(num) {
