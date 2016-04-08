@@ -251,6 +251,9 @@ public class InjuryConstants {
 			invalidInsurance.add("None Listed");
 			invalidInsurance.add("FR Not shown");
 			invalidInsurance.add("Not Shown");
+			invalidInsurance.add("NO FR Shown");
+			invalidInsurance.add("No FR Shown");
+			invalidInsurance.add("UNKNOWN");
 			invalidInsurance.add("-");
 			return invalidInsurance;			
 		}

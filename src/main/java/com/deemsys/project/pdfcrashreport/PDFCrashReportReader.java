@@ -820,7 +820,12 @@ public class PDFCrashReportReader {
 				PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 				if(patientsForm!=null){
 					if(patientsForm.getUnitNumber().equals(firstPageForm.getUnitInError())){
+						if(patientsForm.getInjuries()!=null){
 						if(!patientsForm.getInjuries().equals("1")&&!patientsForm.getInjuries().equals("5")){
+							patientsForm.setTier(4);
+							patientsForms.add(patientsForm);
+							}
+						}else{
 							patientsForm.setTier(4);
 							patientsForms.add(patientsForm);
 						}
@@ -875,30 +880,7 @@ public class PDFCrashReportReader {
 				}
 				
 			}
-		}else if(tier==4){
-			for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
-					.getReportMotoristPageForms()) {
-				if(motoristPageForm.getInjuries()!=null){
-					if(!motoristPageForm.getInjuries().equals("1")&&!motoristPageForm.getInjuries().equals("5")){
-						PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
-						if(patientsForm!=null){
-							patientsForm.setTier(4);
-							patientsForms.add(patientsForm);
-						}
-					}else{
-						//#8 Skip the patient low injury
-					}
-				}else{
-					PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
-					if(patientsForm!=null){
-						patientsForm.setTier(3);
-						patientsForms.add(patientsForm);
-					}
-				}
-				
-			}
 		}
-
 		return patientsForms;
 	}
 	
@@ -944,10 +926,11 @@ public class PDFCrashReportReader {
 	public void parsePDFDocument(File file,Integer crashId) throws Exception{
 		
 	
-				UUID uuid=UUID.randomUUID();
+				//UUID uuid=UUID.randomUUID();
 		
-				String fileName=uuid+"_"+ crashId + ".pdf";
-				
+				//String fileName=uuid+"_"+ crashId + ".pdf";
+				String fileName=crashId + ".pdf";
+				String uuid=crashId.toString();
 				//Convert PDF data to Parsed JSON
 				PDFCrashReportJson pdfCrashReportJson=null;
 				try {
@@ -1050,14 +1033,14 @@ public class PDFCrashReportReader {
 					break;
 				}
 				if(Integer.parseInt(injuryProperties.getProperty("awsUpload"))==1)				
-					awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);				
-				file.delete();
+					awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);
+				//file.delete();
  	}
 	
 	
 	public void savePatientList(List<PatientForm> patientsForms,String uuid,String crashId) throws Exception{
 		for (PatientForm patientsForm : patientsForms) {
-			patientsForm.setCrashReportFileName(uuid.toString()+"_"+crashId+".pdf");
+			patientsForm.setCrashReportFileName(crashId+".pdf");
 			patientsForm.setCrashId(crashId);
 			try {
 				patientsService.savePatient(patientsForm);
