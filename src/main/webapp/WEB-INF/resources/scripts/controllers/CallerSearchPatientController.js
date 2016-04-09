@@ -133,7 +133,6 @@ adminApp.controller('CallerSearchPatientsController', ['$rootScope','$scope','re
 	
 	$scope.secoundarySearchPatient=function(){
 		$scope.patient.pageNumber= 1;
-		$scope.setPage=1;
 		$scope.searchItems($scope.patient);
 		searchService.setPhoneNumber($scope.patient.phoneNumber);
 		searchService.setPatientName($scope.patient.patientName);
@@ -144,6 +143,9 @@ adminApp.controller('CallerSearchPatientsController', ['$rootScope','$scope','re
 		searchService.setItemsPerPage($scope.patient.itemsPerPage);
 	};
 	
+	$scope.watch('patient.pageNumber',function(val){
+		alert(val);
+	});
 	$scope.searchPatientsFromPage = function(pageNum){
 		 $scope.patient.pageNumber=pageNum;
 		 $scope.searchItems($scope.patient);
