@@ -165,7 +165,7 @@ public class ClinicsDAOImpl implements ClinicsDAO {
 								.add(Projections.property("clinicId"),
 										"clinicId")
 								.add(Projections.property("clinicName"),
-										"clinicName"))
+										"clinicName")).add(Restrictions.eq("status", 1))
 
 				.setResultTransformer(Transformers.aliasToBean(Clinic.class));
 

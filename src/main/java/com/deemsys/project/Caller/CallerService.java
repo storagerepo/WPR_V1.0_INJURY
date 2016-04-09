@@ -127,6 +127,29 @@ public class CallerService {
 		return callerForms;
 	}
 	
+	// Get All Callers Under Caller Admin
+	public List<CallerForm> getCallerListForAssignCaller() {
+		List<CallerForm> callerForms = new ArrayList<CallerForm>();
+
+		List<Caller> callers = new ArrayList<Caller>();
+		Integer callerAdminId=callerAdminDAO.getCallerAdminByUserId(getCurrentUserId()).getCallerAdminId();
+		callers = callerDAO.getCallerByCallerAdminId(callerAdminId);
+		for (Caller caller : callers) {
+				// TODO: Fill the List
+			if(caller.getStatus()!=0){
+				CallerForm callerForm = new CallerForm(caller.getCallerId(),caller.getCallerAdmin().getCallerAdminId(),
+						caller.getUsers().getUserId(), caller.getUsers().getUsername(),
+						caller.getFirstName(), caller.getLastName(),
+						caller.getPhoneNumber(), caller.getEmailAddress(),
+							caller.getNotes(),caller.getStatus());
+					callerForms.add(callerForm);
+			}
+
+		}
+
+			return callerForms;
+	}
+	
 	// Get Particular Entry
 	public CallerForm getCaller(Integer callerId) {
 		Caller caller = new Caller();

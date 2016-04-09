@@ -42,7 +42,7 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','requestH
 		$scope.countylist=response.data.countyList;
 	});
 	
-	requestHandler.getRequest("CAdmin/getCallersByCallerAdmin.json","").then(function(response){
+	requestHandler.getRequest("CAdmin/getCallersForAssignCaller.json","").then(function(response){
 		$scope.callerList=response.data.callerForms;
 	});
 	 

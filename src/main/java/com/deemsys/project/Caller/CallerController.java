@@ -90,6 +90,14 @@ public class CallerController {
 		return "/returnPage";
 	}
 	
+	// Get Callers For Assign Caller
+	@RequestMapping(value = "/CAdmin/getCallersForAssignCaller", method = RequestMethod.GET)
+	public String getCallersForAssignCaller(ModelMap model) {
+		model.addAttribute("callerForms", callerService.getCallerListForAssignCaller());
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
 	@RequestMapping(value = "/CAdmin/getNumberOfCallers", method = RequestMethod.GET)
 	public String getNoOfCallers(ModelMap model) {
 		model.addAttribute("numberOfCallers", callerService.getNoOfCallers());

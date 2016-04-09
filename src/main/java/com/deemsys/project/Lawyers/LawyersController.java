@@ -91,6 +91,15 @@ public class LawyersController {
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
+	
+	@RequestMapping(value = "/LAdmin/getLawyersForAssign", method = RequestMethod.GET)
+	public String getLawyersForAssign(ModelMap model) {
+		Integer currentUserId = callerService.getCurrentUserId();
+		model.addAttribute("lawyersForms",lawyersService.getLawyersListForAssign(lawyerAdminService
+						.getLawyerAdminIdByUserId(currentUserId).getLawyerAdminId()));
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
 
 	@RequestMapping(value = "/LAdmin/getNumberOfLawyers", method = RequestMethod.GET)
 	public String getNoOfLawyerAdmin(ModelMap model) {

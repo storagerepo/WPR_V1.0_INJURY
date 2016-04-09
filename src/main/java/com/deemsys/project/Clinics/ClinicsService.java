@@ -340,9 +340,10 @@ public class ClinicsService {
 
 		for (Clinic clinics : clinicss) {
 			// TODO: Fill the List
-			ClinicsForm clinicsForm = new ClinicsForm(clinics.getClinicId(),
-					clinics.getClinicName());
-			clinicsForms.add(clinicsForm);
+				ClinicsForm clinicsForm = new ClinicsForm(clinics.getClinicId(),
+						clinics.getClinicName());
+				clinicsForms.add(clinicsForm);
+			
 		}
 
 		return clinicsForms;

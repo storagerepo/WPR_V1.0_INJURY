@@ -122,6 +122,32 @@ public class LawyersService {
 
 		return lawyersForms;
 	}
+	
+	
+	// Get Lawyers for Assign
+	public List<LawyersForm> getLawyersListForAssign(Integer lawyerAdminId) {
+		List<LawyersForm> lawyersForms = new ArrayList<LawyersForm>();
+		
+		List<Lawyer> lawyerss = new ArrayList<Lawyer>();
+		lawyerss = lawyersDAO.getLawyersByLawyerAdmin(lawyerAdminId);
+		for (Lawyer lawyers : lawyerss) {
+			// TODO: Fill the List
+			if(lawyers.getStatus()!=0){
+				LawyersForm lawyersForm = new LawyersForm(lawyers.getLawyerId(), lawyers
+						.getLawyerAdmin().getLawyerAdminId(), lawyers.getUsers().getUserId(),
+						lawyers.getFirstName(), lawyers.getLastName(),
+						lawyers.getStreet(), lawyers.getCity(),
+						lawyers.getState(), lawyers.getZipcode(),
+						lawyers.getEmailAddress(), lawyers.getPhoneNumber(),
+						lawyers.getNotes(), lawyers.getStatus());
+				lawyersForm.setUsername(lawyers.getUsers().getUsername());
+				lawyersForms.add(lawyersForm);
+			}
+		}
+
+		return lawyersForms;
+	}
+
 
 	// Get Particular Entry
 	public LawyersForm getLawyers(Integer getId) {
