@@ -290,9 +290,26 @@
                     num = parseInt(num, 10);
                     paginationService.setCurrentPage(paginationId, num);
                 }
-                setTimeout(function(){
-        			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
-        		 },100);
+
+                var myObj = $('#noOfRows');
+                var myObj1 = $('#recordsPerPage');
+                if (myObj.length){
+                	
+                	 setTimeout(function(){
+            			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+            		 },100);
+                	 
+                }
+                else if(myObj1.length){
+                	
+                	 setTimeout(function(){
+               			 $('html,body').animate({scrollTop: $('#recordsPerPage').offset().top},'slow');
+               		 },100);
+                }
+                
+               
+                
+                
             };
 
             function goToPage(num) {
