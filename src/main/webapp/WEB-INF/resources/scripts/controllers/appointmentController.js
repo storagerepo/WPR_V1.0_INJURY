@@ -5,7 +5,7 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
 	$scope.init=function(){
 		$scope.searchAppointment={};
 		var date=new Date();
-	    $scope.searchAppointment.month=(date.getMonth()+1).toString();
+	    $scope.searchAppointment.month="13";
 	    $scope.searchAppointment.year=date.getFullYear();
 	    $scope.searchAppointment.date="";
 	    $scope.searchAppointment.status="0";
@@ -61,32 +61,5 @@ $scope.viewPatientDetailsModal=function(patientId)
 	      $("#viewPatientDetailsModal").modal("show");
      });
 };
-$scope.getByDates=function()
-{
-if($scope.searchMonth)
-	{
-	requestHandler.getRequest("Caller/monthwiseAppointment.json?month="+$scope.searchMonth+"&year="+$scope.searchYear,"").then(function (response) {
-			$scope.appointments=response.data.appointmentsForms;
-			 $.each($scope.appointments,function(index,value){
-	        	 if(value.status==0){
-	        		 value.status="Not Arrived";
-	        	 }
-	         });
-	});
-	 }
 
-else
-{
-	requestHandler.getRequest("Caller/monthwiseAppointment.json?month=0&year=0").then( function(response) {
-	     $scope.appointments = response.data.appointmentsForms;
-	     $.each($scope.appointments,function(index,value){
-        	 if(value.status==0){
-        		 value.status="Not Arrived";
-        	 }
-         });
-	    $scope.appointments.status = true;
-	    });
-	}
-
-};
 });

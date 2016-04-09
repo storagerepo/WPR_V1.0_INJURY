@@ -193,19 +193,16 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		// Date Between Criterion
 		Date monthBegin=new Date();
 		Date monthEnd=new Date();
-		if (appointmentSearchForm.getMonth() == 0) {
-			monthBegin = new LocalDate().withDayOfMonth(1).toDate();
-			monthEnd = new LocalDate().plusMonths(1).withDayOfMonth(1)
-					.minusDays(1).toDate();
-		} else {
+		if(appointmentSearchForm.getMonth()!=13){
 			monthBegin = new LocalDate(appointmentSearchForm.getYear(), appointmentSearchForm.getMonth(), 1).toDate();
 			monthEnd = new LocalDate(appointmentSearchForm.getYear(), appointmentSearchForm.getMonth(), 1).plusMonths(1)
 					.withDayOfMonth(1).minusDays(1).toDate();;
-		}
+		
 		System.out.println("Month Beginnn......"+monthBegin);
 		System.out.println("Month End......"+monthEnd);
 		Criterion monthCriterion=Restrictions.between("scheduledDate", monthBegin, monthEnd);
 		criteria.add(monthCriterion);
+		}
 		
 		// Date Search
 		if(!appointmentSearchForm.getDate().equals("")){
