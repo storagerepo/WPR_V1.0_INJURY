@@ -143,9 +143,6 @@ adminApp.controller('CallerSearchPatientsController', ['$rootScope','$scope','re
 		searchService.setItemsPerPage($scope.patient.itemsPerPage);
 	};
 	
-	$scope.watch('patient.pageNumber',function(val){
-		alert(val);
-	});
 	$scope.searchPatientsFromPage = function(pageNum){
 		 $scope.patient.pageNumber=pageNum;
 		 $scope.searchItems($scope.patient);
