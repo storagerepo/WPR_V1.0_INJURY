@@ -23,6 +23,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.Period;
+import org.joda.time.Years;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +34,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.deemsys.project.Patients;
 import com.deemsys.project.entity.Patient;
 import com.deemsys.project.Appointments.AppointmentsDAO;
 import com.deemsys.project.CallLogs.CallLogsDAO;
@@ -150,8 +154,27 @@ public class PatientService {
 		}
 		Patient patient=patientDAO.getPatientByPatientId(patientId);
 		PatientForm patientForm=this.getPatientForm(patient);
-		patientForm.setLatitude(patient.getLatitude());
-		patientForm.setLongitude(patient.getLongitude());
+		if(patient.getLatitude()==0&&patient.getLongitude()==0){
+			String latLong = geoLocation.getLocation(patientForm.getAddress());
+			double longitude = 0.0;
+			double latitude = 0.0;
+			if (!latLong.equals("NONE")) {
+				String[] latitudeLongitude = latLong.split(",");
+				latitude = Double.parseDouble(latitudeLongitude[0]);
+				longitude = Double.parseDouble(latitudeLongitude[1]);
+			}
+			patientForm.setLatitude(latitude);
+			patientForm.setLongitude(longitude);
+			patient.setLatitude(latitude);
+			patient.setLongitude(longitude);
+			
+			// Update Patient With Latitude Longitude
+			patientDAO.update(patient);
+		}else{
+			patientForm.setLatitude(patient.getLatitude());
+			patientForm.setLongitude(patient.getLongitude());
+		}
+		
 		return patientForm;
 		
 	}
@@ -514,7 +537,7 @@ public class PatientService {
 			Row row=sheet1.createRow(rowCount);
 			sheet1.addMergedRegion(new CellRangeAddress(rowCount, rowCount++, 0, 8));
 			Cell cell=row.createCell(0);
-			cell.setCellValue("Local Report Number - "+patientSearchResultGroupBy.getLocalReportNumber()+" | Crash Date"+patientSearchResultGroupBy.getCrashDate());
+			cell.setCellValue("Local Report Number - "+patientSearchResultGroupBy.getLocalReportNumber()+" | Crash Date - "+patientSearchResultGroupBy.getCrashDate());
 			for (PatientSearchList patientSearchList : patientSearchResultGroupBy.getPatientSearchLists()) {
 				int cellCount=0;
 				Row row2=sheet1.createRow(rowCount++);
@@ -537,5 +560,6 @@ public class PatientService {
             e.printStackTrace();
         }
 	}
+	
 	
 }

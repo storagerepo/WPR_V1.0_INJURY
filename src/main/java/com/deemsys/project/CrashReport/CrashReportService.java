@@ -166,7 +166,14 @@ public class CrashReportService {
 	
 	// Split the PDF County and get Exact county Name
 	public String splitCountyName(String countyName){
-		return countyName.split("\\s+")[0];
+		String[] countySplit=countyName.split("\\s+");
+		String splittedcountyName="";
+		if(countySplit.length==2){
+			splittedcountyName=countyName.split("\\s+")[0];
+		}else if(countySplit.length==3){
+			splittedcountyName=countyName.split("\\s+")[0]+" "+countyName.split("\\s+")[1];
+		}
+		return splittedcountyName;
 	}
 	
 }

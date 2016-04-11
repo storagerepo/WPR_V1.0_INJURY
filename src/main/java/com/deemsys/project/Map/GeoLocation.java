@@ -48,7 +48,11 @@ public class GeoLocation {
 			// Parse the Output to Json
 			JSONParser jsonparser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonparser.parse(outputJSON);
-
+			// Google Map Status As of handled only one, In future we will handle the further staus
+			// OVER_QUERY_LIMIT
+			// REQUEST_DENIED
+			// INVALID_REQUEST
+			// UNKNOWN_ERROR
 			String status = (String) jsonObject.get("status");
 			if (!status.equals("ZERO_RESULTS")) {
 				// Convert to JSON Object
@@ -103,7 +107,7 @@ public class GeoLocation {
 		return convertedDistance;
 	}
 
-	// Convert Miles to KiloMeter
+	// Convert Miles to Meter
 	public static Double convertMilesToMeter(Integer distance) {
 
 		Double convertedMeter;
@@ -115,7 +119,7 @@ public class GeoLocation {
 		return convertedMeter;
 	}
 
-	// Convert Miles to KiloMeter
+	// Convert KiloMeter to Miles
 	public static Double convertKiloMeterToMiles(Double distance) {
 
 		Double convertedMilesDistance;
