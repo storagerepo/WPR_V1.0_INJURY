@@ -386,7 +386,7 @@ public class PDFCrashReportReader {
 			List<String> firstPage = content.get(0);
 			reportFirstPageForm = new ReportFirstPageForm(
 					firstPage
-							.get(firstPage.indexOf("LOCAL REPORT NUMBER *") + 1),
+							.get(firstPage.indexOf("LOCAL REPORT NUMBER *") + 1).replaceAll("\\s+", " ").trim(),
 					firstPage.get(firstPage.indexOf("CRASH SEVERITY HIT/SKIP") - 4),
 					firstPage.get(firstPage.indexOf("REPORTING AGENCY NAME *") + 1),
 					firstPage.get(firstPage.indexOf("NUMBER OF ") - 1),
@@ -844,6 +844,7 @@ public class PDFCrashReportReader {
 						for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
 								.getReportMotoristPageForms()) {
 							if(motoristPageForm.getUnitNumber().equals(reportUnitPageForm.getUnitNumber())){
+							
 								PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 								if(patientsForm!=null){
 									patientsForm.setTier(2);
@@ -851,13 +852,14 @@ public class PDFCrashReportReader {
 								}
 							}							
 						}
+						
 					}else{
 						//#7 Skip the unit
 						// Insert into Crash report Table.
 					}
 				}
 			}
-						
+					
 		}else if(tier==3){
 			for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
 					.getReportMotoristPageForms()) {
