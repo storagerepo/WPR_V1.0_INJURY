@@ -628,7 +628,8 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	// Add Order
 	criteria.addOrder(Order.desc("t1.addedDate"));
 	criteria.addOrder(Order.desc("cr.localReportNumber"));
-		
+	criteria.addOrder(Order.desc("t1.patientId"));
+	
 	List<PatientSearchList> patientSearchLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).setFirstResult((callerPatientSearchForm.getPageNumber()-1)*callerPatientSearchForm.getItemsPerPage()).setMaxResults(callerPatientSearchForm.getItemsPerPage()).list();
 	
 	PatientSearchResultSet patientSearchResultSet=new PatientSearchResultSet(totalNoOfRecords, patientSearchLists);

@@ -758,7 +758,7 @@ public class PDFCrashReportReader {
 			if(numberOfUnits==1){
 				if(unitInError==1){					
 					//Check for insurance company
-					if(!pdfCrashReportJson.getReportUnitPageForms().get(0).getInsuranceCompany().equals("")&&!invalidInsurance.contains(pdfCrashReportJson.getReportUnitPageForms().get(0).getInsuranceCompany())){
+					if(!pdfCrashReportJson.getReportUnitPageForms().get(0).getInsuranceCompany().equals("")&&!invalidInsurance.contains(pdfCrashReportJson.getReportUnitPageForms().get(0).getInsuranceCompany().toLowerCase())){
 						// #3 Tier Patient 
 						return 3;
 					}else{
@@ -776,7 +776,7 @@ public class PDFCrashReportReader {
 				if(unitInError!=98&&unitInError!=99){
 					//Check for unit has insurance
 					//NOTE POLICY NUMBER IS NOT CHECKING
-					if(!pdfCrashReportJson.getReportUnitPageForms().get(unitInError-1).getInsuranceCompany().equals("")&&!invalidInsurance.contains(pdfCrashReportJson.getReportUnitPageForms().get(0).getInsuranceCompany())){
+					if(!pdfCrashReportJson.getReportUnitPageForms().get(unitInError-1).getInsuranceCompany().equals("")&&!invalidInsurance.contains(pdfCrashReportJson.getReportUnitPageForms().get(0).getInsuranceCompany().toLowerCase())){
 						//#1 Tier 1 patients
 						return 1;
 					}else{
@@ -840,7 +840,7 @@ public class PDFCrashReportReader {
 		else if(tier==2){
 			for (ReportUnitPageForm reportUnitPageForm : reportUnitPageForms) {
 				if(reportUnitPageForm.getUnitNumber()!=firstPageForm.getUnitInError()){
-					if(!reportUnitPageForm.getInsuranceCompany().equals("")&&!invalidInsurance.contains(reportUnitPageForm.getInsuranceCompany())){
+					if(!reportUnitPageForm.getInsuranceCompany().equals("")&&!invalidInsurance.contains(reportUnitPageForm.getInsuranceCompany().toLowerCase())){
 						for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
 								.getReportMotoristPageForms()) {
 							if(motoristPageForm.getUnitNumber().equals(reportUnitPageForm.getUnitNumber())){
