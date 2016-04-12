@@ -196,13 +196,22 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		if(appointmentSearchForm.getMonth()!=13){
 			monthBegin = new LocalDate(appointmentSearchForm.getYear(), appointmentSearchForm.getMonth(), 1).toDate();
 			monthEnd = new LocalDate(appointmentSearchForm.getYear(), appointmentSearchForm.getMonth(), 1).plusMonths(1)
-					.withDayOfMonth(1).minusDays(1).toDate();;
+					.withDayOfMonth(1).minusDays(1).toDate();
 		
 		System.out.println("Month Beginnn......"+monthBegin);
 		System.out.println("Month End......"+monthEnd);
+		
+		}else{
+		
+			monthBegin = new LocalDate(appointmentSearchForm.getYear(), 1, 1).toDate();
+			monthEnd = new LocalDate(appointmentSearchForm.getYear(), 12, 1).plusMonths(1)
+					.withDayOfMonth(1).minusDays(1).toDate();
+			System.out.println("Month Beginnn 1......"+monthBegin);
+			System.out.println("Month End 1......"+monthEnd);
+		}
+		
 		Criterion monthCriterion=Restrictions.between("scheduledDate", monthBegin, monthEnd);
 		criteria.add(monthCriterion);
-		}
 		
 		// Date Search
 		if(!appointmentSearchForm.getDate().equals("")){
