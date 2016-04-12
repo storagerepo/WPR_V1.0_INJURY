@@ -205,8 +205,7 @@
                     </table>
                     <dir-pagination-controls ng-show="callerPatientSearchData.length>0" max-size="5" on-page-change="searchPatientsFromPage(newPageNumber)" direction-links="true" boundary-links="true" >
     					</dir-pagination-controls> 
-    					</div>
-<div class="col-md-3 pull-right">
+    					<div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>
 	<select
 		class="form-control input-sm" ng-model="patient.itemsPerPage" name="itemsPerPage"
@@ -217,6 +216,8 @@
 		<option value="100">Show 100 Per Page</option>
 	</select> 
 </div>  
+    					</div>
+
 </div>  	
 
 <div class="modal fade" id="confirmModal" role="dialog">

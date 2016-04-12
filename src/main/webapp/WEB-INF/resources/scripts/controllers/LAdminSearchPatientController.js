@@ -9,7 +9,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 
 	
 	 $scope.getLawyerList=function(){
-	    	requestHandler.getRequest("LAdmin/getLawyersForAssign.json","").then(function(response){
+	    	requestHandler.getRequest("LAdmin/getLawyersByLawyerAdmin.json","").then(function(response){
 	    		$scope.lawyers=response.data.lawyersForms;
 	    	});
 	    };

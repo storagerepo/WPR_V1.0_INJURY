@@ -13,7 +13,7 @@
 </div>
 <!-- /.row -->
 <div class="row">
- <form name="patientSearchForm" novalidate>
+ <form name="patientSearchForm" novalidate ng-cloak>
  	<div class="col-md-12 no-padding">
         <div class="col-md-5ths">
         	<label>County</label>
@@ -241,7 +241,7 @@
         	<label>Choose Lawyer</label>
        			<select class="form-control" ng-model="myForm.lawyerId" required>
        			<option value="">--Select Lawyer--</option>
-          			<option ng-repeat="lawyer in lawyers" value="{{lawyer.lawyerId}}" ng-selected="{{lawyer.lawyerId === lAdminData.lawyerId}}">{{lawyer.firstName}} {{lawyer.lastName}}</option>
+          			<option ng-repeat="lawyer in lawyers" ng-if="lawyer.status==1" value="{{lawyer.lawyerId}}" ng-selected="{{lawyer.lawyerId === lAdminData.lawyerId}}">{{lawyer.firstName}} {{lawyer.lastName}}</option>
      			</select>
         </div>
         <div class="modal-footer" >

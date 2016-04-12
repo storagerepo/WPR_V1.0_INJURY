@@ -301,7 +301,7 @@
         	<label>Choose Caller</label>
        			<select class="form-control" ng-model="myForm.callerId" required>
        				<option value="">--Select Caller--</option>
-          			<option ng-repeat="caller in callerList"  value="{{caller.callerId}}" ng-selected="{{caller.callerId === patient.callerId}}">{{caller.firstName}} {{caller.lastName}}</option>
+          			<option ng-repeat="caller in callerList"  ng-if="caller.status==1" value="{{caller.callerId}}" ng-selected="{{caller.callerId === patient.callerId}}">{{caller.firstName}} {{caller.lastName}}</option>
      			</select>
         </div>
         <div class="modal-footer" >
