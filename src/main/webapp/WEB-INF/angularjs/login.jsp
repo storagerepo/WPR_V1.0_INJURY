@@ -1,8 +1,10 @@
 <html>
  
 <head>
-	<title>::Crash Reports::</title>
+	<title>Crash Reports | crashreportsonline.com</title>
+	 <meta name="description" content="Crash reports online contains accident reports of Ohio which is easy to access, download and get Lightning fast reports upon request.">
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	
 	<link rel="icon" href="resources/images/favicon.ico" type="image/gif" sizes="16x16">
 	<link rel="stylesheet" href="resources/components/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="styles/sb-admin-2.css">

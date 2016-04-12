@@ -270,7 +270,7 @@
 			</tbody>
 		</table>
 
-		<dir-pagination-controls ng-show="patientSearchData.length>0" max-size="5" on-page-change="searchPatientsFromPage(newPageNumber)" direction-links="true" boundary-links="true" >
+		<dir-pagination-controls ng-show="patientSearchData.length>0" max-size="5" on-page-change="searchPatientsFromPage(newPageNumber)"  direction-links="true" boundary-links="true" >
     					</dir-pagination-controls>
     					
     				<div class="col-md-3 pull-right no-padding">
@@ -301,7 +301,7 @@
         	<label>Choose Caller</label>
        			<select class="form-control" ng-model="myForm.callerId" required>
        				<option value="">--Select Caller--</option>
-          			<option ng-repeat="caller in callerList" value="{{caller.callerId}}" ng-selected="{{caller.callerId === patient.callerId}}">{{caller.firstName}} {{caller.lastName}}</option>
+          			<option ng-repeat="caller in callerList"  value="{{caller.callerId}}" ng-selected="{{caller.callerId === patient.callerId}}">{{caller.firstName}} {{caller.lastName}}</option>
      			</select>
         </div>
         <div class="modal-footer" >

@@ -21,7 +21,7 @@ adminApp.controller('CallerSearchPatientsController', ['$rootScope','$scope','re
 				if($scope.callerPatientSearchData.length>0){
 					$.each($scope.callerPatientSearchData, function(index,value) {
 						var i=0;
-						for(i;i<value.numberOfPatients;i++){
+						for(i;i<value.patientSearchLists.length;i++){
 						value.patientSearchLists[i].selected=$scope.isCheckedAllPatients;
 						}
 					});

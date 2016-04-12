@@ -55,6 +55,8 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 			$scope.crashSearchData=response.data.searchResults.crashReportForms;
 		});
 		}
+		
+		
 	};
 	
 	
@@ -65,7 +67,9 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 		requestHandler.postRequest("Admin/searchCrashReport.json",$scope.crashreport).then(function(response){
 			 $scope.totalRecords=response.data.searchResults.totalNoOfRecords;
 				$scope.crashSearchData=response.data.searchResults.crashReportForms;
+				
 		});
+		
 	};
 	
 	$scope.resetSearchData = function(){

@@ -60,8 +60,9 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','requestH
 		if($scope.patientSearchData.length>0){
 			$.each($scope.patientSearchData, function(index,value) {
 				var i=0;
-				for(i;i<value.numberOfPatients;i++){
-				value.patientSearchLists[i].selected=$scope.isCheckedAllPatients;
+				for(i;i<value.patientSearchLists.length;i++){
+					
+					value.patientSearchLists[i].selected=$scope.isCheckedAllPatients;
 				}
 			});
 			$("input:checkbox").prop('checked', $(this).prop("checked"));
@@ -205,7 +206,6 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','requestH
 		};
 	
 	$scope.searchItems=function(searchObj){
-
 		requestHandler.postRequest("/Patient/searchPatients.json",searchObj).then(function(response){
 			$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
 			$scope.patientSearchData=response.data.patientSearchResult.searchResult;
@@ -251,7 +251,9 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','requestH
 			 
 		});
 	};
-	 
+	
+	
+		
 	$scope.searchPatients = function(){
 		if($scope.patient.crashFromDate!="" && $scope.patient.numberOfDays=="0" && $scope.patient.crashToDate==""){
 			$scope.crashToRequired=true;
@@ -266,7 +268,6 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','requestH
 			$scope.patient.phoneNumber= "";
 			$scope.searchItems($scope.patient);
 		}
-		
 		$scope.patient.pageNumber=1;
 		// Set To Service
 		searchService.setCounty($scope.patient.countyId);
@@ -287,30 +288,30 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','requestH
 		searchService.setItemsPerPage($scope.patient.itemsPerPage);
 	};
 	
-	$scope.secoundarySearchPatient=function(){
 	
-		$scope.patient.pageNumber= 1;
-		$scope.searchItems($scope.patient);
-		searchService.setPhoneNumber($scope.patient.phoneNumber);
-		searchService.setPatientName($scope.patient.patientName);
-		searchService.setIsArchived($scope.patient.isArchived);
-		searchService.setTier($scope.patient.tier);
-		searchService.setPatientStatus($scope.patient.patientStatus);
-		searchService.setPageNumber($scope.patient.pageNumber);
-		searchService.setItemsPerPage($scope.patient.itemsPerPage);
-		
-		
-		    
-		    
-	};
+		$scope.secoundarySearchPatient=function(){
+			$scope.patient.pageNumber= 1;
+			$scope.searchItems($scope.patient);
+			searchService.setPhoneNumber($scope.patient.phoneNumber);
+			searchService.setPatientName($scope.patient.patientName);
+			searchService.setIsArchived($scope.patient.isArchived);
+			searchService.setTier($scope.patient.tier);
+			searchService.setPatientStatus($scope.patient.patientStatus);
+			searchService.setPageNumber($scope.patient.pageNumber);
+			searchService.setItemsPerPage($scope.patient.itemsPerPage);
+				    
+		};
 	
+		
 	$scope.searchPatientsFromPage = function(pageNum){
+		
 		 $scope.patient.pageNumber=pageNum;
 		 $scope.searchItems($scope.patient);
 		 searchService.setPageNumber($scope.patient.pageNumber);
 		 searchService.setItemsPerPage($scope.patient.itemsPerPage); 
 	};
 	
+
 	
 	$scope.viewPatientModal=function(patientId){
 		$("#myModal").modal("show");
@@ -356,6 +357,7 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','requestH
 	
 	// Reset Search Data Based on State
 	if($rootScope.previousState!="dashboard.Calllogs/:id"){
+		
 		$scope.resetSearchData();
 	}
 	

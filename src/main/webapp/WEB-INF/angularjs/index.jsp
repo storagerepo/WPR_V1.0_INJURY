@@ -2,14 +2,15 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title>::Crash Reports::</title>
+    <title>Crash Reports | crashreportsonline.com</title>
     <link rel="icon" href="resources/images/favicon.ico" type="image/gif" sizes="16x16">
-    <meta name="description" content="">
+    <meta name="description" content="Crash reports online contains accident reports of Ohio which is easy to access, download and get Lightning fast reports upon request.">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="resources/components/bootstrap/dist/css/bootstrap.min.css" />
+   <!--  <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.10.3/css/bootstrap-tour.min.css"/> -->
     <!-- endbower -->
     <!-- endbuild -->
     
@@ -29,6 +30,10 @@
     <script src="resources/components/jquery/dist/jquery.min.js"></script>
     <script src="resources/components/angular/angular.min.js"></script>
 	  <script src="resources/components/bootstrap/dist/js/bootstrap.min.js"></script>
+	  
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.10.3/js/bootstrap-tour.min.js"></script> -->
+
 	     <script src="resources/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="resources/components/json3/lib/json3.min.js"></script>
     <script src="resources/components/oclazyload/dist/ocLazyLoad.min.js"></script>
@@ -65,6 +70,7 @@
     <script src="resources/scripts/directives/header/header-notification/header-notification.js"></script>
     <script src="resources/scripts/directives/dashboard/stats/stats.js"></script>
     <script src="resources/scripts/directives/errorDisplay/errordisplay.js"></script>
+    <script src="resources/js/analytics.js"></script>
     
     <!-- Controllers -->
 

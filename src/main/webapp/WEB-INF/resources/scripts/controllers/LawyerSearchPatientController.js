@@ -34,7 +34,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 			if($scope.lawyerPatientSearchData.length>0){
 				$.each($scope.lawyerPatientSearchData, function(index,value) {
 					var i=0;
-					for(i;i<value.numberOfPatients;i++){
+					for(i;i<value.patientSearchLists.length;i++){
 					value.patientSearchLists[i].selected=$scope.isCheckedAllPatients;
 					}
 				});

@@ -291,26 +291,12 @@
                     paginationService.setCurrentPage(paginationId, num);
                 }
 
-                var myObj = $('#noOfRows');
-                var myObj1 = $('#recordsPerPage');
-                if (myObj.length){
-                	
+              	
                 	 setTimeout(function(){
             			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
-            		 },100);
+            		 },1000);
                 	 
-                }
-                else if(myObj1.length){
-                	
-                	 setTimeout(function(){
-               			 $('html,body').animate({scrollTop: $('#recordsPerPage').offset().top},'slow');
-               		 },100);
-                }
-                
-               
-                
-                
-            };
+        };
 
             function goToPage(num) {
                 if (isValidPageNumber(num)) {
