@@ -91,7 +91,7 @@
 						<span ng-show="{{callLog.callerFirstName==null}}">{{callLog.callerAdminFirstName}} {{callLog.callerAdminLastName}}</span>
 						</td>
 						<td class="col-md-2">
-							<span ng-show="{{isAdmin==2}}">
+							<!-- <span ng-show="{{isAdmin==2}}">
 							<a ng-cloak type="submit"
 								class="btn btn-xs btn-warning hint--top"
 								data-hint="Edit Call Log"
@@ -106,7 +106,7 @@
 								ng-click="editModal(callLog.callLogId,callLog.appointmentId)">&nbsp;<i
 									class="glyphicon glyphicon-edit"></i>&nbsp;
 							</a>
-							</span>
+							</span> -->
 							<a ng-cloak ng-show="{{callLog.appointmentId!=null}}"
 							class="btn btn-xs btn-primary hint--top"
 							data-hint="View Appointment"

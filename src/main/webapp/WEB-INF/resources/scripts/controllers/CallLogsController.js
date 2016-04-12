@@ -216,7 +216,7 @@ adminApp.controller('showCallLogsController', function($scope,$http,$location,$s
 		  $('.modal-backdrop').hide();
 		  requestHandler.postRequest("Caller/saveUpdateCallLogs.json",$scope.calllogs).then(function (status) {
 			  Flash.create("success","You have Successfully Updated!");
-			  $state.reload('dashboard.Calllogs/:id');
+			 // $state.reload('dashboard.Calllogs/:id');
 			  $scope.getCallLogsList();
 			});
 		 		 
