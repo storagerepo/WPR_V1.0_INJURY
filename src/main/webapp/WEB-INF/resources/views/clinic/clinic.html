@@ -70,12 +70,8 @@
 						<a href="" ng-cloak ng-show="clinic.status==0 && {{isAdmin==2}}" ng-click="enableOrDisbaleClinic(clinic.clinicId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Clinic">
 							<i class="fa fa-lock"></i>
 						</a>
-						<span ng-cloak ng-show="clinic.status==1 && {{isAdmin==4}}"  class="btn btn-xs btn-success hint--top" data-hint="Enabled">
-							Enabled
-						</span>
-						<span ng-cloak ng-show="clinic.status==0 && {{isAdmin==4}}"  class="btn btn-xs btn-danger hint--top" data-hint="Enable Clinic">
-							Disabled
-						</span>
+						<span ng-cloak ng-show="clinic.status==1 && {{isAdmin==4}}"  class="patient-count-circle-green">Enabled</span>
+						<span ng-cloak ng-show="clinic.status==0 && {{isAdmin==4}}"  class="patient-count-circle-red">Disabled</span>
 						
 						<!--  <a href="" ng-cloak ng-click="viewDoctors(clinic.clinicId)" class="btn btn-xs btn-primary hint--top" data-hint="View Doctors">
 							<i class="fa fa-user-md "></i>
