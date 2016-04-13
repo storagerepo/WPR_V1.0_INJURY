@@ -210,7 +210,7 @@
     }
 
     function dirPaginationControlsTemplateInstaller($templateCache) {
-        $templateCache.put('angularUtils.directives.dirPagination.template', '<div class="col-md-5"><ul class="pagination" ng-if="1 < pages.length || !autoHide"><li ng-if="boundaryLinks" ng-class="{ disabled : pagination.current == 1 }"><a href="" ng-click="setCurrent(1)">&laquo;</a></li><li ng-if="directionLinks" ng-class="{ disabled : pagination.current == 1 }"><a href="" ng-click="setCurrent(pagination.current - 1)">&lsaquo;</a></li><li ng-repeat="pageNumber in pages track by $index" ng-class="{ active : pagination.current == pageNumber, disabled : pageNumber == \'...\' || ( ! autoHide && pages.length === 1 ) }"><a href="" ng-click="setCurrent(pageNumber)">{{ pageNumber }}</a></li><li ng-if="directionLinks" ng-class="{ disabled : pagination.current == pagination.last }"><a href="" ng-click="setCurrent(pagination.current + 1)">&rsaquo;</a></li><li ng-if="boundaryLinks"  ng-class="{ disabled : pagination.current == pagination.last }"><a href="" ng-click="setCurrent(pagination.last)">&raquo;</a></li></ul></div><div class="col-md-4 margin-top-30">Showing {{(pagination.current-1)* pagination.size+1}} - {{pagination.current*pagination.size}} of {{total}} records</div>');
+        $templateCache.put('angularUtils.directives.dirPagination.template', '<div class="col-md-5"><ul class="pagination" ng-if="1 < pages.length || !autoHide"><li ng-if="boundaryLinks" ng-class="{ disabled : pagination.current == 1 }"><a href="" ng-click="setCurrent(1)">&laquo;</a></li><li ng-if="directionLinks" ng-class="{ disabled : pagination.current == 1 }"><a href="" ng-click="setCurrent(pagination.current - 1)">&lsaquo;</a></li><li ng-repeat="pageNumber in pages track by $index" ng-class="{ active : pagination.current == pageNumber, disabled : pageNumber == \'...\' || ( ! autoHide && pages.length === 1 ) }"><a href="" ng-click="setCurrent(pageNumber)">{{ pageNumber }}</a></li><li ng-if="directionLinks" ng-class="{ disabled : pagination.current == pagination.last }"><a href="" ng-click="setCurrent(pagination.current + 1)">&rsaquo;</a></li><li ng-if="boundaryLinks"  ng-class="{ disabled : pagination.current == pagination.last }"><a href="" ng-click="setCurrent(pagination.last)">&raquo;</a></li></ul></div><div class="col-md-4 margin-top-30">Showing {{pagination.startRecord}} - {{pagination.endRecord}} of {{total}} records</div>');
     }
 
     function dirPaginationControlsDirective(paginationService, paginationTemplate) {
@@ -334,6 +334,12 @@
                     totalItems = paginationService.getCollectionLength(paginationId);
                 scope.total= totalItems;
                 scope.pagination.size = itemsPerPage;
+                
+                scope.pagination.startRecord = (scope.pagination.current-1)* itemsPerPage+1;
+                scope.pagination.endRecord=scope.pagination.current*itemsPerPage;
+                if(scope.pagination.endRecord>totalItems)
+                	scope.pagination.endRecord =  totalItems;
+                	                
                 scope.range.lower = (currentPage - 1) * itemsPerPage + 1;
                 scope.range.upper = Math.min(currentPage * itemsPerPage, totalItems);
                 scope.range.total = totalItems;
