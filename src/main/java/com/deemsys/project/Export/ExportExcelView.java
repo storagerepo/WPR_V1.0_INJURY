@@ -60,9 +60,14 @@ public class ExportExcelView extends AbstractExcelView {
 		
 		//Style for header cell
 		CellStyle style = workbook.createCellStyle();
-		style.setFillForegroundColor(IndexedColors.LEMON_CHIFFON.index);
+		style.setFillForegroundColor(IndexedColors.DARK_BLUE.index);
+		
+		Font font=workbook.createFont();
+		font.setColor(IndexedColors.WHITE.index);
+		
 		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		style.setAlignment(CellStyle.ALIGN_CENTER);
+		style.setFont(font);
 		
 		//Create header cells
 		row = sheet.createRow(r++);
