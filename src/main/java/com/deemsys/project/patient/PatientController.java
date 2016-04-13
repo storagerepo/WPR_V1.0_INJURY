@@ -306,11 +306,11 @@ public class PatientController {
 		
 	}
 	
-	@RequestMapping(value = { "/Patient/exportExcel" }, method = RequestMethod.GET)
-	public String getExportExcel(ModelMap model) {
+	@RequestMapping(value = { "/Patient/exportExcel" }, method = RequestMethod.POST)
+	public String getExportExcel(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
 		
-		patientService.sampleExcel();
 		model.addAttribute("requestSuccess", true);
+		model.addAttribute("patientSearchResultSet",patientService.getExportPatient(callerPatientSearchForm));
 		return "ok";
 		
 	}

@@ -1,46 +1,18 @@
 package com.deemsys.project.patient;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-
-
-
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.Period;
-import org.joda.time.Years;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.deemsys.project.Patients;
 import com.deemsys.project.entity.Patient;
-import com.deemsys.project.Appointments.AppointmentsDAO;
-import com.deemsys.project.CallLogs.CallLogsDAO;
-import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.County.CountyDAO;
-import com.deemsys.project.County.CountyList;
 import com.deemsys.project.County.CountyService;
 import com.deemsys.project.CrashReport.CrashReportDAO;
 import com.deemsys.project.CrashReport.CrashReportService;
@@ -53,14 +25,10 @@ import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
-import com.deemsys.project.entity.Clinic;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.CrashReport;
-import com.deemsys.project.entity.Doctor;
 import com.deemsys.project.entity.Caller;
-import com.deemsys.project.entity.Lawyer;
 import com.deemsys.project.login.LoginService;
-import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 
 /**
  * 
@@ -396,7 +364,7 @@ public class PatientService {
 			callerPatientSearchForm.setLawyerAdminId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerAdmin().getLawyerAdminId());
 			callerPatientSearchForm.setLawyerId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId());
 		}
-		patientSearchResult=getFormattedSearchResult(patientDAO.searchPatientsByCAdmin(callerPatientSearchForm));
+		patientSearchResult=getFormattedSearchResult(patientDAO.searchPatientsByCAdmin(callerPatientSearchForm,false));
 			
 		return patientSearchResult;
 	}	
@@ -525,40 +493,22 @@ public class PatientService {
 		return patientSearchResult;
 	}
 	
-	public void sampleExcel(){
-		XSSFWorkbook book1= new XSSFWorkbook();
+	public PatientSearchResultSet getExportPatient(CallerPatientSearchForm callerPatientSearchForm){
 		
-		XSSFSheet sheet1=book1.createSheet("Patients");
-		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, 0, 0, 7, "", 0, "", "", "", 0, 0, 0, "", 1, 10, "", "",0);
-		PatientSearchResult patientSearchResult=this.getCurrentPatientList(callerPatientSearchForm);
-		int rowCount=0;
-		
-		for (PatientSearchResultGroupBy patientSearchResultGroupBy : patientSearchResult.getSearchResult()) {
-			Row row=sheet1.createRow(rowCount);
-			sheet1.addMergedRegion(new CellRangeAddress(rowCount, rowCount++, 0, 8));
-			Cell cell=row.createCell(0);
-			cell.setCellValue("Local Report Number - "+patientSearchResultGroupBy.getLocalReportNumber()+" | Crash Date - "+patientSearchResultGroupBy.getCrashDate());
-			for (PatientSearchList patientSearchList : patientSearchResultGroupBy.getPatientSearchLists()) {
-				int cellCount=0;
-				Row row2=sheet1.createRow(rowCount++);
-				Cell cell2=row2.createCell(cellCount++);
-				cell2.setCellValue(patientSearchList.getName());
-				
-			}
-			
+		String role=loginService.getCurrentRole();
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+			callerPatientSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			callerPatientSearchForm.setCallerAdminId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId());
+			callerPatientSearchForm.setCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
+		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+			callerPatientSearchForm.setLawyerAdminId(lawyerAdminService.getLawyerAdminIdByUserId(loginService.getCurrentUserID()).getLawyerAdminId());
+		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
+			callerPatientSearchForm.setLawyerAdminId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerAdmin().getLawyerAdminId());
+			callerPatientSearchForm.setLawyerId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId());
 		}
-		try
-		{
-            //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream(new File("D:\\patientList.xlsx"));
-            book1.write(out);
-            out.close();
-            System.out.println("patientList.xlsx written successfully on disk.");
-        } 
-        catch (Exception e) 
-        {
-            e.printStackTrace();
-        }
+		return patientDAO.searchPatientsByCAdmin(callerPatientSearchForm,true);
+		
 	}
 	
 	

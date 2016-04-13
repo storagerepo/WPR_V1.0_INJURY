@@ -1,10 +1,12 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','flash','ngFileSaver']);
 
-adminApp.controller('searchPatientsController', ['$scope','requestHandler', function($scope,requestHandler,$state) {
+adminApp.controller('searchPatientsController', ['$scope','requestHandler','$state','FileSaver', function($scope,requestHandler,$state,FileSaver) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.patientSearchData=[];
 	$scope.isSelectedFromDate=true;
+	$scope.exportButtonText="Export to Excel";
+	$scope.exportButton=false;
 	
 	$scope.init=function(){
 		$scope.patient={};
@@ -107,7 +109,17 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler', func
 	};
 	
 	$scope.init();
-	
+	//Export Excel
+	$scope.exportToExcel=function(){
+		$scope.exportButtonText="Exporting...";
+		$scope.exportButton=true;
+		requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.patient).success(function(responseData){
+			 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+			 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
+			 $scope.exportButtonText="Export to Excel";
+			 $scope.exportButton=false;
+		});
+	};
 }]); 
 
  

@@ -409,7 +409,7 @@ private Object value(String string, String localReportNumber, MatchMode anywhere
 @SuppressWarnings("unchecked")
 @Override
 public PatientSearchResultSet searchPatientsByCAdmin(
-		CallerPatientSearchForm callerPatientSearchForm) {
+		CallerPatientSearchForm callerPatientSearchForm,boolean isExport) {
 	// TODO Auto-generated method stub
 		
 	Session session=this.sessionFactory.getCurrentSession();
@@ -630,7 +630,12 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	criteria.addOrder(Order.desc("cr.localReportNumber"));
 	criteria.addOrder(Order.desc("t1.patientId"));
 	
-	List<PatientSearchList> patientSearchLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).setFirstResult((callerPatientSearchForm.getPageNumber()-1)*callerPatientSearchForm.getItemsPerPage()).setMaxResults(callerPatientSearchForm.getItemsPerPage()).list();
+	List<PatientSearchList> patientSearchLists=new ArrayList<PatientSearchList>();
+	if(isExport){
+		patientSearchLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).list();
+	}else{
+		patientSearchLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).setFirstResult((callerPatientSearchForm.getPageNumber()-1)*callerPatientSearchForm.getItemsPerPage()).setMaxResults(callerPatientSearchForm.getItemsPerPage()).list();
+	}
 	
 	PatientSearchResultSet patientSearchResultSet=new PatientSearchResultSet(totalNoOfRecords, patientSearchLists);
 	

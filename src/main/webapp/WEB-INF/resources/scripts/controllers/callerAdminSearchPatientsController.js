@@ -1,10 +1,12 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash','ngAnimate']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash','ngAnimate','ngFileSaver']);
 
-adminApp.controller('searchPatientsController', ['$rootScope','$scope','requestHandler','searchService','$state','Flash', function($rootScope,$scope,requestHandler,searchService,$state,Flash) {
+adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','requestHandler','searchService','$state','Flash','FileSaver', function($rootScope,$scope,$http,requestHandler,searchService,$state,Flash,FileSaver) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.patientSearchData=$scope.patientSearchDataOrginal=[];
 	$scope.isSelectedAddedFromDate=true;
+	$scope.exportButtonText="Export to Excel";
+	$scope.exportButton=false;
 	
 	$scope.init=function(){
 		$scope.patient={};
@@ -363,6 +365,18 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','requestH
 	
 	$scope.isCleanCheckbox=function(){
 		return angular.equals($scope.patientSearchData,$scope.patientSearchDataOrginal);
+	};
+	
+	//Export Excel
+	$scope.exportToExcel=function(){
+		$scope.exportButtonText="Exporting...";
+		$scope.exportButton=true;
+		requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.patient).success(function(responseData){
+			 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+			 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
+			 $scope.exportButtonText="Export to Excel";
+			 $scope.exportButton=false;
+		});
 	};
 	
 	$scope.init();

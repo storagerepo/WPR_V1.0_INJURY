@@ -241,19 +241,17 @@ public class InjuryConstants {
 		
 		public static List<String> getInvalidInsurance(){
 			List<String> invalidInsurance=new ArrayList<String>();
-			invalidInsurance.add("NONE");
-			invalidInsurance.add("NO INSURANCE");
-			invalidInsurance.add("N/A");
-			invalidInsurance.add("NONE");
-			invalidInsurance.add("Not Shown FRA");
-			invalidInsurance.add("None Shown");
-			invalidInsurance.add("FRA Not Shown");			
-			invalidInsurance.add("None Listed");
-			invalidInsurance.add("FR Not shown");
-			invalidInsurance.add("Not Shown");
-			invalidInsurance.add("NO FR Shown");
-			invalidInsurance.add("No FR Shown");
-			invalidInsurance.add("UNKNOWN");
+			invalidInsurance.add("none");
+			invalidInsurance.add("no insurance");
+			invalidInsurance.add("n/a");
+			invalidInsurance.add("not shown fra");
+			invalidInsurance.add("none shown");
+			invalidInsurance.add("fra not shown");			
+			invalidInsurance.add("none listed");
+			invalidInsurance.add("fr not shown");
+			invalidInsurance.add("not shown");
+			invalidInsurance.add("no fr shown");
+			invalidInsurance.add("unknown");
 			invalidInsurance.add("-");
 			return invalidInsurance;			
 		}

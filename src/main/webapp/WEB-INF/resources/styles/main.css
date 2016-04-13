@@ -607,3 +607,45 @@ input[type=text]::-ms-clear { display: none; }
       margin-left:-1px;
       visibility: hidden;
     }
+
+.btn-export {
+  color: #fff;
+  background-color: #1A4D81;
+  border-color: #2773be;
+}
+.btn-export:hover,
+.btn-export:focus,
+.btn-export:active,
+.btn-export.active,
+.open .dropdown-toggle.btn-export {
+  color: #fff;
+  background-color: #2773be;
+  border-color: #2773be;
+}
+.btn-export:active,
+.btn-export.active,
+.open .dropdown-toggle.btn-export {
+  background-image: none;
+}
+.btn-export.disabled,
+.btn-export[disabled],
+fieldset[disabled] .btn-export,
+.btn-export.disabled:hover,
+.btn-export[disabled]:hover,
+fieldset[disabled] .btn-export:hover,
+.btn-export.disabled:focus,
+.btn-export[disabled]:focus,
+fieldset[disabled] .btn-export:focus,
+.btn-export.disabled:active,
+.btn-export[disabled]:active,
+fieldset[disabled] .btn-export:active,
+.btn-export.disabled.active,
+.btn-export[disabled].active,
+fieldset[disabled] .btn-export.active {
+  background-color: #2773be;
+  border-color: #2773be;
+}
+.btn-export .badge {
+  color: #2773be;
+  background-color: #fff;
+}

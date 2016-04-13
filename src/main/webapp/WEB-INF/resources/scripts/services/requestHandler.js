@@ -3,7 +3,7 @@ var myApp=angular.module("requestModule",[]);
 myApp.factory("requestHandler",['$http',function($http){
     
     var requestObj={};
-    var appURL="http://localhost:8080";
+    var appURL="http://192.168.1.236:8089";
     
     
     requestObj.getURL=function(){
@@ -40,7 +40,23 @@ requestObj.postFileUpload=function(requestURL,data,params){
                 return results;
          });
     };
- 
+    
+    
+    requestObj.postExportRequest=function(requestURL,params){
+        requestURL=appURL+"/Injury/"+requestURL;
+        return $http({
+		    	    url: requestURL,
+		    	    method: "POST",
+		    	    data: params, //this is your json data string
+		    	    headers: {
+		    	       'Content-type': 'application/json'
+		    	    },
+		    	    responseType: 'arraybuffer'
+    		}).success(function (results) {
+                return results;
+         });
+    };
+    
     
     requestObj.deletePostRequest=function(requestURL,params){
     	 requestURL=appURL+"/Injury/"+requestURL+params;

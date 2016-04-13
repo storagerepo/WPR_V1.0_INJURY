@@ -1,16 +1,14 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','flash','ngFileSaver']);
 
-adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler','$state','Flash', function($scope,requestHandler,$state,Flash) {
+adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler','$state','Flash','FileSaver', function($scope,requestHandler,$state,Flash,FileSaver) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.lawyerPatientSearchData=$scope.patientSearchDataOrginal=[];
 	$scope.isCheckedAllPatients=false;
+	$scope.exportButtonText="Export to Excel";
+	$scope.exportButton=false;
 	
-	
-	
-	
-	    
-	 $scope.getMyCountyList=function(){
+	$scope.getMyCountyList=function(){
 	    	requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
 	    		$scope.mycounties=response.data.countyList;
 	    	});
@@ -226,6 +224,17 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	
 	$scope.isCleanCheckbox=function(){
 		return angular.equals($scope.lawyerPatientSearchData,$scope.patientSearchDataOrginal);
+	};
+	//Export Excel
+	$scope.exportToExcel=function(){
+		$scope.exportButtonText="Exporting...";
+		$scope.exportButton=true;
+		requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.patient).success(function(responseData){
+			 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+			 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
+			 $scope.exportButtonText="Export to Excel";
+			 $scope.exportButton=false;
+		});
 	};
 	
 }]); 

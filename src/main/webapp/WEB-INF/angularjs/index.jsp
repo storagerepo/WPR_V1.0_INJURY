@@ -60,6 +60,9 @@
 	<script src="resources/components/angular-map-rawgit/lodash.min.js"></script>
 	<script src="resources/components/angular-map-rawgit/angular-google-maps.js"></script>
 	 
+	<!-- File Saver -->
+	<script src="resources/components/angular-file-saver/angular-file-saver.min.js"></script>
+	<script src="resources/components/angular-file-saver/angular-file-saver.bundle.min.js"></script>
 
 	<!-- Load For Menu -->
 	<script src="resources/scripts/services/searchService.js"></script>
