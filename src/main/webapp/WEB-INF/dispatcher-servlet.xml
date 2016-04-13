@@ -50,6 +50,7 @@
 				<entry key="json" value="application/json" />
 				 <entry key="xml" value="application/xml" />
 		  		 <entry key="rss" value="application/rss+xml" />
+		  		 <entry key="xlsx" value="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
 			</map>
 		</property>
 
@@ -72,6 +73,10 @@
 						</bean>
 					</constructor-arg>
 				  </bean>
+				  
+				  <!--  XLSX "Excel" view -->         
+                <bean class="com.deemsys.project.Export.ExportExcelView">             
+                </bean>
 				
 			</list>
 		</property>
@@ -93,7 +98,7 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
 		p:url="${jdbc.databaseurl}" p:username="${jdbc.username}" p:password="${jdbc.password}"
-		p:testWhileIdle="true" p:validationQuery="SELECT count(*) FROM injuryreportsdb.users"
+		p:testWhileIdle="true" p:validationQuery="SELECT count(*) FROM injurytest.users"
 		p:testOnBorrow="true" p:removeAbandoned="true" p:minIdle="0" p:maxIdle="8" p:maxActive="-1" p:initialSize="5"
 		p:removeAbandonedTimeout="10" p:defaultAutoCommit="true"/>
 
