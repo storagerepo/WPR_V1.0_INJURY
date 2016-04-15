@@ -214,7 +214,7 @@
 <div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>
 	<select
-		class="form-control" ng-model="patient.itemsPerPage" name="itemsPerPage"
+		class="form-control" ng-model="patient.itemsPerPage" ng-change="itemsPerFilter()" name="itemsPerPage"
 		id="noOfRows">
 		<option value="10">Show 10 Per Page</option>
 		<option value="25">Show 25 Per Page</option>

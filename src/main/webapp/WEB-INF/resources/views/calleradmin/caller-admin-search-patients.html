@@ -91,7 +91,7 @@
 	        <div class="col-md-5ths">
 	        	<label>&nbsp;</label>
 				<div class="col-md-12">
-	        		<a href="" class="btn btn-sm btn-success" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='isClean() || patientSearchForm.$invalid' ng-click="searchPatients()">Search</a>
+	        		<a href="" id="srch" class="btn btn-sm btn-success" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='isClean() || patientSearchForm.$invalid' ng-click="searchPatients()">Search</a>
 	        		<a href="" class="btn btn-sm btn-danger" ng-click="resetSearchData()">Reset</a>
 	       		</div>
 	     	</div>
@@ -100,7 +100,7 @@
 		<div class="col-md-12">
 			<div class="col-md-12 no-padding hr-tag-alter"></div>
 				<div  class="col-md-6 no-padding">
-					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="assignCallerPopup()" class="btn btn-sm btn-success">Assign Caller</a>
+					<a href="" id="assign" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="assignCallerPopup()" class="btn btn-sm btn-success">Assign Caller</a>
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="releaseCaller()" class="btn btn-sm btn-danger">Release From Caller</a>
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="moveArchive()" class="btn btn-sm btn-warning">Move to Archive</a>
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==0" ng-click="releaseArchive()" class="btn btn-sm btn-primary">Release from Archive</a>
@@ -270,20 +270,19 @@
 			</tbody>
 		</table>
 
-		<dir-pagination-controls ng-show="patientSearchData.length>0" max-size="5" on-page-change="searchPatientsFromPage(newPageNumber)"  direction-links="true" boundary-links="true" >
+	<dir-pagination-controls ng-show="patientSearchData.length>0" max-size="5" on-page-change="searchPatientsFromPage(newPageNumber)"  direction-links="true" boundary-links="true" >
     					</dir-pagination-controls>
-    					
+    				<!-- <div class="col-md-4 margin-top-30" ng-show="patientSearchData.length>0">Showing {{(patient.pageNumber-1)*patient.itemsPerPage+1}}-{{patient.pageNumber*patient.itemsPerPage}} of {{totalRecords}} Records</div> -->
     				<div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>
-	<select class="form-control input-sm" ng-model="patient.itemsPerPage" name="noOfRows" id="noOfRows">
+	<select class="form-control input-sm" ng-model="patient.itemsPerPage" ng-change=itemsPerFilter() name="noOfRows" id="noOfRows">
 		<option value="10">Show 10 Per Page</option>
 		<option value="25">Show 25 Per Page</option>
 		<option value="50">Show 50 Per Page</option>
 		<option value="100">Show 100 Per Page</option>
 	</select> 
+</div>		
 </div>
-    	</div>				
-
 <div class="modal fade" id="assignCallerModal" role="dialog">
     <div class="modal-dialog">    
       <!-- Modal content-->

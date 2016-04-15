@@ -28,6 +28,7 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 		$scope.patient.patientStatus=searchService.getPatientStatus();
 		$scope.totalRecords=0;
 		
+		
 		//Initial Search
 		$scope.searchItems($scope.patient);
 		$scope.disableCustom=true;
@@ -69,8 +70,7 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 			});
 			$("input:checkbox").prop('checked', $(this).prop("checked"));
 		}
-	};
-	
+	};	
 	$scope.isCheckedIndividual=function(){
 		if($scope.isCheckedAllPatients){
 			$scope.isCheckedAllPatients=false;
@@ -304,6 +304,14 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 				    
 		};
 	
+		
+		
+		$scope.itemsPerFilter=function(){
+			$scope.secoundarySearchPatient();
+			setTimeout(function(){
+   			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+   		 },500);	
+		};
 		
 	$scope.searchPatientsFromPage = function(pageNum){
 		

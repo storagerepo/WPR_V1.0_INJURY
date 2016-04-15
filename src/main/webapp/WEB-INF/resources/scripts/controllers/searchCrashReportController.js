@@ -58,7 +58,25 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 		
 		
 	};
+	$scope.searchItems=function(searchObj){
+		requestHandler.postRequest("Admin/searchCrashReport.json",$scope.crashreport).then(function(response){
+			$scope.totalRecords=response.data.searchResults.totalNoOfRecords;
+			$scope.crashSearchData=response.data.searchResults.crashReportForms;
+		});
+	};
 	
+	$scope.secoundarySearchCrashReport=function(){
+		$scope.crashreport.pageNumber= 1;
+		/*$scope.setPage=1;*/
+		$scope.searchItems($scope.crashreport);
+	};
+	
+	$scope.itemsPerFilter=function(){
+		$scope.secoundarySearchCrashReport();
+		setTimeout(function(){
+			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+		 },1000);	
+	};
 	
 	
 	$scope.searchCrashReportFromPage = function(pageNum){

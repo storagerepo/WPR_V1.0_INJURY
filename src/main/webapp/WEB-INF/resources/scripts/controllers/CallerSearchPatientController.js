@@ -144,6 +144,13 @@ adminApp.controller('CallerSearchPatientsController', ['$rootScope','$scope','re
 		searchService.setItemsPerPage($scope.patient.itemsPerPage);
 	};
 	
+	$scope.itemsPerFilter=function(){
+		$scope.secoundarySearchPatient();
+		setTimeout(function(){
+			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+		 },500);	
+	};
+	
 	$scope.searchPatientsFromPage = function(pageNum){
 		 $scope.patient.pageNumber=pageNum;
 		 $scope.searchItems($scope.patient);
