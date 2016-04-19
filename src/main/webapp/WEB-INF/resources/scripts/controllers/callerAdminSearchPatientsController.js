@@ -20,7 +20,6 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 		$scope.patient.phoneNumber=searchService.getPhoneNumber();
 		$scope.patient.lawyerId=searchService.getLawyerId();
 		$scope.patient.numberOfDays=searchService.getNumberOfDays();
-		$scope.patient.pageNumber= searchService.getPageNumber();
 		$scope.patient.itemsPerPage=searchService.getItemsPerPage();
 		$scope.patient.addedOnFromDate=searchService.getAddedOnFromDate();
 		$scope.patient.addedOnToDate=searchService.getAddedOnToDate();
@@ -28,9 +27,12 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 		$scope.patient.patientStatus=searchService.getPatientStatus();
 		$scope.totalRecords=0;
 		
+		//Patient Search 
+		$scope.patient.pageNumber= searchService.getPageNumber(); //This will call search function thru patient.pageNumber object $watch function 
+		$scope.oldPageNumber= $scope.patient.pageNumber;
+		
 		
 		//Initial Search
-		$scope.searchItems($scope.patient);
 		$scope.disableCustom=true;
 		$scope.isSelectedAddedFromDate=true;
 		if(searchService.getCrashFromDate()!=""){
@@ -268,9 +270,12 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 			$scope.crashToRequired=false;
 			$scope.patient.patientName="";
 			$scope.patient.phoneNumber= "";
-			$scope.searchItems($scope.patient);
+			$scope.patient.pageNumber=1;
+			if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
+				$scope.searchItems($scope.patient);
+			}
 		}
-		$scope.patient.pageNumber=1;
+		
 		// Set To Service
 		searchService.setCounty($scope.patient.countyId);
 		searchService.setNumberOfDays($scope.patient.numberOfDays);
@@ -292,8 +297,6 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 	
 	
 		$scope.secoundarySearchPatient=function(){
-			$scope.patient.pageNumber= 1;
-			$scope.searchItems($scope.patient);
 			searchService.setPhoneNumber($scope.patient.phoneNumber);
 			searchService.setPatientName($scope.patient.patientName);
 			searchService.setIsArchived($scope.patient.isArchived);
@@ -301,27 +304,26 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 			searchService.setPatientStatus($scope.patient.patientStatus);
 			searchService.setPageNumber($scope.patient.pageNumber);
 			searchService.setItemsPerPage($scope.patient.itemsPerPage);
+			
+			$scope.patient.pageNumber= 1;//This will call search function thru patient.pageNumber object $watch function 
+			if($scope.oldPageNumber==$scope.patient.pageNumber){
+				$scope.searchItems($scope.patient);
+			}
 				    
 		};
 	
-		
-		
 		$scope.itemsPerFilter=function(){
 			$scope.secoundarySearchPatient();
 			setTimeout(function(){
    			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
-   		 },500);	
+   		 },100);	
 		};
-		
-	$scope.searchPatientsFromPage = function(pageNum){
-		
-		 $scope.patient.pageNumber=pageNum;
+	
+	$scope.$watch("patient.pageNumber",function(){
 		 $scope.searchItems($scope.patient);
 		 searchService.setPageNumber($scope.patient.pageNumber);
 		 searchService.setItemsPerPage($scope.patient.itemsPerPage); 
-	};
-	
-
+	});
 	
 	$scope.viewPatientModal=function(patientId){
 		$("#myModal").modal("show");
