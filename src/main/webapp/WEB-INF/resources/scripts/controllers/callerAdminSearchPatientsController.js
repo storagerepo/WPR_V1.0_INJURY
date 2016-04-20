@@ -270,6 +270,7 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 			$scope.crashToRequired=false;
 			$scope.patient.patientName="";
 			$scope.patient.phoneNumber= "";
+			$scope.oldPageNumber=$scope.patient.pageNumber;
 			$scope.patient.pageNumber=1;
 			if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
 				$scope.searchItems($scope.patient);
@@ -304,12 +305,11 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 			searchService.setPatientStatus($scope.patient.patientStatus);
 			searchService.setPageNumber($scope.patient.pageNumber);
 			searchService.setItemsPerPage($scope.patient.itemsPerPage);
-			
+			$scope.oldPageNumber=$scope.patient.pageNumber;
 			$scope.patient.pageNumber= 1;//This will call search function thru patient.pageNumber object $watch function 
 			if($scope.oldPageNumber==$scope.patient.pageNumber){
 				$scope.searchItems($scope.patient);
 			}
-				    
 		};
 	
 		$scope.itemsPerFilter=function(){
@@ -320,10 +320,13 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 		};
 	
 	$scope.$watch("patient.pageNumber",function(){
+
 		 $scope.searchItems($scope.patient);
 		 searchService.setPageNumber($scope.patient.pageNumber);
 		 searchService.setItemsPerPage($scope.patient.itemsPerPage); 
+		
 	});
+		
 	
 	$scope.viewPatientModal=function(patientId){
 		$("#myModal").modal("show");
