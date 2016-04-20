@@ -15,9 +15,15 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 		$scope.crashreport.crashToDate="";
 		$scope.crashreport.addedFromDate="";
 		$scope.crashreport.addedToDate="";
-		$scope.crashreport.pageNumber= 1;
 		$scope.crashreport.recordsPerPage="25";
 		$scope.totalRecords=0;
+		
+		$scope.crashreport.pageNumber= 1;
+		$scope.oldPageNumber= $scope.crashreport.pageNumber;
+		
+		if($scope.oldPageNumber==$scope.crashreport.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
+			$scope.searchItems($scope.crashreport);
+		}
 		
 		$scope.searchCrashReport();
 	};
@@ -50,10 +56,12 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 		else{
 			$scope.addedToRequired=false;
 			$scope.crashToRequired=false;
-		requestHandler.postRequest("Admin/searchCrashReport.json",$scope.crashreport).then(function(response){
-			$scope.totalRecords=response.data.searchResults.totalNoOfRecords;
-			$scope.crashSearchData=response.data.searchResults.crashReportForms;
-		});
+			$scope.oldPageNumber=$scope.crashreport.pageNumber;
+			$scope.crashreport.pageNumber=1;
+			if($scope.oldPageNumber==$scope.crashreport.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
+				$scope.searchItems($scope.crashreport);
+			}
+		
 		}
 		
 		
@@ -66,9 +74,11 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 	};
 	
 	$scope.secoundarySearchCrashReport=function(){
-		$scope.crashreport.pageNumber= 1;
-		/*$scope.setPage=1;*/
-		$scope.searchItems($scope.crashreport);
+		$scope.oldPageNumber=$scope.crashreport.pageNumber;
+		$scope.crashreport.pageNumber=1;
+		if($scope.oldPageNumber==$scope.crashreport.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
+			$scope.searchItems($scope.crashreport);
+		}
 	};
 	
 	$scope.itemsPerFilter=function(){
@@ -79,16 +89,9 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 	};
 	
 	
-	$scope.searchCrashReportFromPage = function(pageNum){
-		
-		 $scope.crashreport.pageNumber=pageNum;
-		requestHandler.postRequest("Admin/searchCrashReport.json",$scope.crashreport).then(function(response){
-			 $scope.totalRecords=response.data.searchResults.totalNoOfRecords;
-				$scope.crashSearchData=response.data.searchResults.crashReportForms;
-				
-		});
-		
-	};
+	$scope.$watch("crashreport.pageNumber",function(){
+		$scope.searchItems($scope.crashreport); 
+	});
 	
 	$scope.resetSearchData = function(){
 		 $scope.crashSearchForm.$setPristine();

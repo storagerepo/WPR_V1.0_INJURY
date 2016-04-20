@@ -31,6 +31,10 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 		$scope.patient.pageNumber= searchService.getPageNumber(); //This will call search function thru patient.pageNumber object $watch function 
 		$scope.oldPageNumber= $scope.patient.pageNumber;
 		
+		if($scope.oldPageNumber==$scope.patient.pageNumber){
+			$scope.searchItems($scope.patient);
+		}
+		
 		
 		//Initial Search
 		$scope.disableCustom=true;

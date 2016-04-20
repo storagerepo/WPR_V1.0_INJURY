@@ -21,11 +21,18 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		$scope.patient.phoneNumber= "";
 		$scope.patient.lawyerId=0;
 		$scope.patient.numberOfDays="1";
-		$scope.patient.pageNumber= 1;
 		$scope.patient.itemsPerPage="25";
 		$scope.totalRecords=0;
 		$scope.patient.addedOnFromDate="";
 		$scope.patient.addedOnToDate="";
+		
+		$scope.patient.pageNumber= 1;
+		$scope.oldPageNumber= $scope.patient.pageNumber;
+		
+		if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
+			$scope.searchItems($scope.patient);
+		}
+		
 		$scope.searchItems($scope.patient);
 	};
 
@@ -67,14 +74,20 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 			$scope.patient.phoneNumber= "";
 			if($scope.patient.countyId=="")
 			$scope.patient.countyId=0;
-			$scope.searchItems($scope.patient);
+			$scope.oldPageNumber=$scope.patient.pageNumber;
+			$scope.patient.pageNumber=1;
+			if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
+				$scope.searchItems($scope.patient);
+			}
 		}
 	};
 	
 	$scope.secoundarySearchPatient=function(){
-		$scope.patient.pageNumber= 1;
-		/*$scope.setPage=1;*/
-		$scope.searchItems($scope.patient);
+		$scope.oldPageNumber=$scope.patient.pageNumber;
+		$scope.patient.pageNumber=1;
+		if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
+			$scope.searchItems($scope.patient);
+		}
 	};
 	
 	$scope.itemsPerFilter=function(){
@@ -84,10 +97,10 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		 },500);	
 	};
 	
-	$scope.searchPatientsFromPage = function(pageNum){
-		 $scope.patient.pageNumber=pageNum;
-		 $scope.searchItems($scope.patient);
-	};
+	$scope.$watch("patient.pageNumber",function(){
+		$scope.searchItems($scope.patient); 
+	});
+	
 	
 	$scope.viewPatientModal=function(patientId){
 		$("#myModal").modal("show");

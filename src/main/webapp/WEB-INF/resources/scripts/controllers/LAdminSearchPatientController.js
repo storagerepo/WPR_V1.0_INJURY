@@ -96,14 +96,20 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 			$scope.addedToRequired=false;
 			$scope.patient.patientName="";
 			$scope.patient.phoneNumber= "";
-			$scope.searchItems($scope.patient);
+			$scope.oldPageNumber=$scope.patient.pageNumber;
+			$scope.patient.pageNumber=1;
+			if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
+				$scope.searchItems($scope.patient);
+			}
 		}
 	};
 	
 	$scope.secoundarySearchPatient=function(){
-		$scope.patient.pageNumber= 1;
-		/*$scope.setPage=1;*/
-		$scope.searchItems($scope.patient);
+		$scope.oldPageNumber=$scope.patient.pageNumber;
+		$scope.patient.pageNumber=1;
+		if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
+			$scope.searchItems($scope.patient);
+		}
 	};
 	
 	$scope.itemsPerFilter=function(){
@@ -113,10 +119,12 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		 },500);	
 	};
 	
-	$scope.searchPatientsFromPage = function(pageNum){
-		 $scope.patient.pageNumber=pageNum;
-		 $scope.searchItems($scope.patient);
-	};
+	
+	$scope.$watch("patient.pageNumber",function(){
+
+		 $scope.searchItems($scope.patient); 
+		
+	});
 	
 	 $scope.selectGroup=function(id){
 			$.each($scope.lAdminPatientSearchData, function(index,value) {
@@ -282,7 +290,6 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		$scope.patient.phoneNumber= "";
 		$scope.patient.lawyerId="0";
 		$scope.patient.numberOfDays="1";
-		$scope.patient.pageNumber= 1;
 		$scope.patient.itemsPerPage="25";
 		$scope.totalRecords=0;
 		$scope.lAdminPatientSearchData="";
@@ -291,6 +298,13 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		$scope.patient.patientStatus="7";
 		$scope.patient.isArchived="0";
 
+
+		$scope.patient.pageNumber= 1;
+		$scope.oldPageNumber= $scope.patient.pageNumber;
+		if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
+			$scope.searchItems($scope.patient);
+		}
+		
 		//Initial Search
 		
 		$scope.searchItems($scope.patient);

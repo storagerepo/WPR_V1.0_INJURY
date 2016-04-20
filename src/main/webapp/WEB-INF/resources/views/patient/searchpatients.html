@@ -138,7 +138,7 @@
                        			<td colspan="10" ><span><b>Local Report No:</b> {{resultData.localReportNumber}}</span><span class="pull-right no-padding"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients Count:</b>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></span>&nbsp;</span></td>
                           	</tr>           	
                         
-                            <tr dir-paginate="patient in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="setPage" total-items="totalRecords">
+                            <tr dir-paginate="patient in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords">
                                 <!-- <td colspan="7">{{patient.localReportNumber}}</td>  -->
                                 <td><span ng-if="patient.crashSeverity==2 && patient.age>=18"><a href="" class="hint--top redText" ng-click="viewPatientModal(patient.patientId)"  data-hint="View Patient">{{patient.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Crash Severity:{{patient.crashSeverity}}"><i class="fa fa-arrow-up" ></i></span></span>
                                	 	<span ng-if="patient.crashSeverity==2 && patient.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(patient.patientId)"  data-hint="View Patient">{{patient.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Crash Severity:{{patient.crashSeverity}}"><i class="fa fa-arrow-up" ></i></span></span>
@@ -161,7 +161,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <dir-pagination-controls  ng-show="patientSearchData.length>0"  max-size="5" on-page-change="searchPatientsFromPage(newPageNumber)" direction-links="true" boundary-links="true" >
+                    <dir-pagination-controls  ng-show="patientSearchData.length>0"  max-size="5"  direction-links="true" boundary-links="true" >
     					</dir-pagination-controls> 
     					<div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>
