@@ -1,6 +1,6 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash','ngAnimate','ngFileSaver']);
 
-adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','requestHandler','searchService','$state','Flash','FileSaver', function($rootScope,$scope,$http,requestHandler,searchService,$state,Flash,FileSaver) {
+adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$http','requestHandler','searchService','$state','Flash','FileSaver', function($q,$rootScope,$scope,$http,requestHandler,searchService,$state,Flash,FileSaver) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.patientSearchData=$scope.patientSearchDataOrginal=[];
@@ -214,9 +214,12 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 		};
 	
 	$scope.searchItems=function(searchObj){
+		var defer=$q.defer();
 		requestHandler.postRequest("/Patient/searchPatients.json",searchObj).then(function(response){
 			$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
 			$scope.patientSearchData=response.data.patientSearchResult.searchResult;
+			
+			
 			
 			$.each($scope.patientSearchData, function(index,value) {
 				$.each(value.patientSearchLists,function(index1,value1){
@@ -252,12 +255,13 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 				        break;
 				};
 				});
+				defer.resolve(response);
 			});
 			$scope.patientSearchDataOrginal=angular.copy($scope.patientSearchData);
 			$scope.isCheckedIndividual();
-			
-			 
+			console.log("service call end");
 		});
+		return defer.promise;
 	};
 	
 	
@@ -307,20 +311,29 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 			searchService.setIsArchived($scope.patient.isArchived);
 			searchService.setTier($scope.patient.tier);
 			searchService.setPatientStatus($scope.patient.patientStatus);
-			searchService.setPageNumber($scope.patient.pageNumber);
-			searchService.setItemsPerPage($scope.patient.itemsPerPage);
 			$scope.oldPageNumber=$scope.patient.pageNumber;
 			$scope.patient.pageNumber= 1;//This will call search function thru patient.pageNumber object $watch function 
+			searchService.setPageNumber($scope.patient.pageNumber);
+			searchService.setItemsPerPage($scope.patient.itemsPerPage);
 			if($scope.oldPageNumber==$scope.patient.pageNumber){
-				$scope.searchItems($scope.patient);
+				return $scope.searchItems($scope.patient);
 			}
+			return null;
+					
 		};
 	
 		$scope.itemsPerFilter=function(){
-			$scope.secoundarySearchPatient();
-			setTimeout(function(){
-   			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
-   		 },100);	
+			$scope.setScrollDown=true;
+			var promise=$scope.secoundarySearchPatient();
+			if(promise!=null)
+			promise.then(function(reponse){
+				console.log("scroll down simple");
+				console.log(reponse);
+				setTimeout(function(){
+	       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+	       		 },100);
+			});
+				
 		};
 	
 	$scope.$watch("patient.pageNumber",function(){
@@ -328,6 +341,13 @@ adminApp.controller('searchPatientsController', ['$rootScope','$scope','$http','
 		 $scope.searchItems($scope.patient);
 		 searchService.setPageNumber($scope.patient.pageNumber);
 		 searchService.setItemsPerPage($scope.patient.itemsPerPage); 
+		 if($scope.setScrollDown){
+			 console.log("scroll down complex");
+			 $scope.setScrollDown=false;
+			 setTimeout(function(){
+       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+       		 },100);
+		 }
 		
 	});
 		
