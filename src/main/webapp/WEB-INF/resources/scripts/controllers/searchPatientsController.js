@@ -1,6 +1,6 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','flash','ngFileSaver']);
 
-adminApp.controller('searchPatientsController', ['$scope','requestHandler','$state','FileSaver', function($scope,requestHandler,$state,FileSaver) {
+adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler','$state','FileSaver', function($q,$scope,requestHandler,$state,FileSaver) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.patientSearchData=[];
@@ -51,10 +51,13 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 	};
 	
 	$scope.searchItems=function(searchObj){
+		var defer=$q.defer();
 		requestHandler.postRequest("/Patient/searchPatients.json",searchObj).then(function(response){
 			$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
 			$scope.patientSearchData=response.data.patientSearchResult.searchResult;
+			defer.resolve(response);
 		});
+		return defer.promise;
 	};
 	 
 	$scope.searchPatients = function(){
@@ -86,19 +89,33 @@ adminApp.controller('searchPatientsController', ['$scope','requestHandler','$sta
 		$scope.oldPageNumber=$scope.patient.pageNumber;
 		$scope.patient.pageNumber=1;
 		if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
-			$scope.searchItems($scope.patient);
+			return $scope.searchItems($scope.patient);
 		}
+		return null;
 	};
 	
 	$scope.itemsPerFilter=function(){
-		$scope.secoundarySearchPatient();
-		setTimeout(function(){
-			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
-		 },500);	
+		$scope.setScrollDown=true;
+		var promise=$scope.secoundarySearchPatient();
+		if(promise!=null)
+		promise.then(function(reponse){
+			console.log("scroll down simple");
+			console.log(reponse);
+			setTimeout(function(){
+       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+       		 },100);
+		});	
 	};
 	
 	$scope.$watch("patient.pageNumber",function(){
 		$scope.searchItems($scope.patient); 
+		if($scope.setScrollDown){
+			 console.log("scroll down complex");
+			 $scope.setScrollDown=false;
+			 setTimeout(function(){
+      			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+      		 },100);
+		 }
 	});
 	
 	

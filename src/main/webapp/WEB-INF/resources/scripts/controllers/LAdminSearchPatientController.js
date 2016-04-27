@@ -1,6 +1,6 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','flash','ngFileSaver']);
 
-adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler','$state','Flash','FileSaver', function($scope,requestHandler,$state,Flash,FileSaver) {
+adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler','$state','Flash','FileSaver','$q', function($scope,requestHandler,$state,Flash,FileSaver,$q) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.lAdminPatientSearchData=$scope.patientSearchDataOrginal=[];
@@ -57,6 +57,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		};
 	
 	$scope.searchItems=function(searchObj){
+		var defer=$q.defer();
 			requestHandler.postRequest("Patient/searchPatients.json",searchObj).then(function(response){
 				$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
 				$scope.lAdminPatientSearchData=response.data.patientSearchResult.searchResult;
@@ -77,10 +78,12 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 					        null;
 					};
 					});
+					defer.resolve(response);
 				});
 				$scope.patientSearchDataOrginal=angular.copy($scope.lAdminPatientSearchData);
 				$scope.isCheckedIndividual();
 			});
+			return defer.promise;
 	};
 	 
 	$scope.searchPatients = function(){
@@ -99,8 +102,9 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 			$scope.oldPageNumber=$scope.patient.pageNumber;
 			$scope.patient.pageNumber=1;
 			if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
-				$scope.searchItems($scope.patient);
+				 $scope.searchItems($scope.patient);
 			}
+			
 		}
 	};
 	
@@ -108,21 +112,35 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		$scope.oldPageNumber=$scope.patient.pageNumber;
 		$scope.patient.pageNumber=1;
 		if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
-			$scope.searchItems($scope.patient);
+			return $scope.searchItems($scope.patient);
 		}
+		return null;
 	};
 	
 	$scope.itemsPerFilter=function(){
-		$scope.secoundarySearchPatient();
-		setTimeout(function(){
-			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
-		 },500);	
+		$scope.setScrollDown=true;
+		var promise=$scope.secoundarySearchPatient();
+		if(promise!=null)
+		promise.then(function(reponse){
+			console.log("scroll down simple");
+			console.log(reponse);
+			setTimeout(function(){
+       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+       		 },100);
+		});	
 	};
 	
 	
 	$scope.$watch("patient.pageNumber",function(){
 
 		 $scope.searchItems($scope.patient); 
+		 if($scope.setScrollDown){
+			 console.log("scroll down complex");
+			 $scope.setScrollDown=false;
+			 setTimeout(function(){
+       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+       		 },100);
+		 }
 		
 	});
 	

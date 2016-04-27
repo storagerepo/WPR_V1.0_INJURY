@@ -1,6 +1,6 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
 
-adminApp.controller('searchCrashReportController', ['$scope','requestHandler', function($scope,requestHandler,$state) {
+adminApp.controller('searchCrashReportController', ['$scope','requestHandler','$q', function($scope,requestHandler,$q) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 
@@ -67,30 +67,47 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler', f
 		
 	};
 	$scope.searchItems=function(searchObj){
+		var defer=$q.defer();
 		requestHandler.postRequest("Admin/searchCrashReport.json",$scope.crashreport).then(function(response){
 			$scope.totalRecords=response.data.searchResults.totalNoOfRecords;
 			$scope.crashSearchData=response.data.searchResults.crashReportForms;
+			defer.resolve(response);
 		});
+		return defer.promise;
 	};
 	
 	$scope.secoundarySearchCrashReport=function(){
 		$scope.oldPageNumber=$scope.crashreport.pageNumber;
 		$scope.crashreport.pageNumber=1;
 		if($scope.oldPageNumber==$scope.crashreport.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
-			$scope.searchItems($scope.crashreport);
+			return $scope.searchItems($scope.crashreport);
 		}
+		return null;
 	};
 	
 	$scope.itemsPerFilter=function(){
-		$scope.secoundarySearchCrashReport();
-		setTimeout(function(){
-			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
-		 },1000);	
+		$scope.setScrollDown=true;
+		var promise=$scope.secoundarySearchCrashReport();
+		if(promise!=null)
+		promise.then(function(reponse){
+			console.log("scroll down simple");
+			console.log(reponse);
+			setTimeout(function(){
+       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+       		 },100);
+		});
 	};
 	
 	
 	$scope.$watch("crashreport.pageNumber",function(){
 		$scope.searchItems($scope.crashreport); 
+		if($scope.setScrollDown){
+			 console.log("scroll down complex");
+			 $scope.setScrollDown=false;
+			 setTimeout(function(){
+     			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+     		 },100);
+		 }
 	});
 	
 	$scope.resetSearchData = function(){

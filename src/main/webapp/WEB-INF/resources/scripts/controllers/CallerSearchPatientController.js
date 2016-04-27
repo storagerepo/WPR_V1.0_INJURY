@@ -1,6 +1,6 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash','ngFileSaver']);
 
-adminApp.controller('CallerSearchPatientsController', ['$rootScope','$scope','requestHandler','searchService','Flash','$state','FileSaver', function($rootScope,$scope,requestHandler,searchService,Flash,$state,FileSaver) {
+adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope','requestHandler','searchService','Flash','$state','FileSaver', function($q,$rootScope,$scope,requestHandler,searchService,Flash,$state,FileSaver) {
 	
 	console.log("root Scope",$rootScope.previousState);
 	$scope.disableCustom=true;
@@ -55,7 +55,7 @@ adminApp.controller('CallerSearchPatientsController', ['$rootScope','$scope','re
 		if(searchObj.countyId==""){
 			searchObj.countyId=0;
 		}
-		
+		var defer=$q.defer();
 			requestHandler.postRequest("Patient/searchPatients.json",searchObj).then(function(response){
 				$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
 				$scope.callerPatientSearchData=response.data.patientSearchResult.searchResult;
@@ -90,11 +90,14 @@ adminApp.controller('CallerSearchPatientsController', ['$rootScope','$scope','re
 					        null;
 					};
 					});
+					
+					defer.resolve(response);
 				});
 				$scope.callerPatientSearchDataOrginal=angular.copy($scope.callerPatientSearchData);
 				$scope.isCheckedIndividual();
 				
 			});
+			return defer.promise;
 	};
 	 
 	$scope.searchPatients = function(){
@@ -146,15 +149,22 @@ adminApp.controller('CallerSearchPatientsController', ['$rootScope','$scope','re
 		$scope.oldPageNumber=$scope.patient.pageNumber;
 		$scope.patient.pageNumber= 1;//This will call search function thru patient.pageNumber object $watch function 
 		if($scope.oldPageNumber==$scope.patient.pageNumber){
-			$scope.searchItems($scope.patient);
+			return $scope.searchItems($scope.patient);
 		}
+		return null;
 	};
 	
 	$scope.itemsPerFilter=function(){
-		$scope.secoundarySearchPatient();
-		setTimeout(function(){
-			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
-		 },500);	
+		$scope.setScrollDown=true;
+		var promise=$scope.secoundarySearchPatient();
+		if(promise!=null)
+		promise.then(function(reponse){
+			console.log("scroll down simple");
+			console.log(reponse);
+			setTimeout(function(){
+       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+       		 },100);
+		});	
 	};
 	
 	
@@ -163,6 +173,13 @@ adminApp.controller('CallerSearchPatientsController', ['$rootScope','$scope','re
 		$scope.searchItems($scope.patient);
 		 searchService.setPageNumber($scope.patient.pageNumber);
 		 searchService.setItemsPerPage($scope.patient.itemsPerPage);
+		 if($scope.setScrollDown){
+			 console.log("scroll down complex");
+			 $scope.setScrollDown=false;
+			 setTimeout(function(){
+       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+       		 },100);
+		 }
 		
 	});
 	
