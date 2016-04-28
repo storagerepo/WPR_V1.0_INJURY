@@ -140,13 +140,13 @@
 						ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
 					<th width="20%">Patient Name</th>
 					<th width="13%">Phone Number</th>
-					<th width="5%">Age</th>
+					<th width="4%">Age</th>
 					<th width="7%">Unit No.</th>
 					<th width="10%">County</th>
-
 					<th width="5%">Tier</th>
-					<th width="13%">Caller</th>
-					<th width="15%">Status</th>
+					<th width="10%">Caller</th>
+					<th width="10%">Status</th>
+					<th width="9%">Status On</th>
 					<th width="10%">Actions</th>
 				</tr>
 				<tr>
@@ -183,6 +183,7 @@
 					<th>
 					<th></th>
 					<!-- <th></th> -->
+					<th></th>
 					<th></th>
 					<th></th>
 					<th><a href="" ng-click="exportToExcel()" class="btn btn-sm btn-export" ng-disabled="exportButton || patientSearchData.length==0"><span ng-show="exportButton"><i class="glyphicon glyphicon-refresh spinning"></i>&nbsp;</span>{{exportButtonText}}</a></th>
@@ -242,7 +243,9 @@
 					<td title="Caller Name"><span
 						ng-show="patient.callerFirstName==null && patient.callerLastName==null">N/A</span>{{patient.callerFirstName}}
 						{{patient.callerLastName}}</td>
-					<td width="8%" title="Status">{{patient.patientStatusName}}</td>
+					<td title="Status">{{patient.patientStatusName}}</td>
+					<td><span
+						ng-show="patient.lastCallLogTimeStamp==null && patient.lastCallLogTimeStamp==null">-</span><b>{{patient.lastCallLogTimeStamp}}</b></td>
 					<td width="7%"><a href="{{patient.crashReportFileName}}"
 						ng-cloak target="_blank" class="btn btn-xs btn-info hint--top"
 						data-hint="View Crash Report"><i class="fa fa-file-pdf-o"></i></a>

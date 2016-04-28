@@ -10,11 +10,13 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -521,6 +523,16 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		
 		criteria.createAlias("c1.callerAdminCountyMaps","cmap",Criteria.INNER_JOIN,Restrictions.eq("callerAdmin.callerAdminId",callerPatientSearchForm.getCallerAdminId()));		
 		
+		criteria.createAlias("t2.callLogs", "cl1",Criteria.LEFT_JOIN);
+		
+		//Detached
+		DetachedCriteria maxTimeStamp = DetachedCriteria.forClass(CallLog.class, "dcl1")
+			    .add(Restrictions.and(Restrictions.eqProperty("dcl1.patientCallerAdminMap.id.patientId","t1.patientId"), Restrictions.eq("dcl1.patientCallerAdminMap.id.callerAdminId",callerPatientSearchForm.getCallerAdminId())))
+			    .setProjection(Projections.projectionList().add(Projections.max("dcl1.timeStamp")));
+		
+		criteria.add(Restrictions.or(Subqueries.propertyEq("cl1.timeStamp", maxTimeStamp), Restrictions.isNull("cl1.timeStamp")));
+		
+		
 	}else if(role.equals("ROLE_LAWYER_ADMIN")||role.equals("ROLE_LAWYER")){
 		
 		criteria.createAlias("patientLawyerAdminMaps", "t2", Criteria.LEFT_JOIN,Restrictions.eq("t2.id.lawyerAdminId", callerPatientSearchForm.getLawyerAdminId()));		
@@ -603,6 +615,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		projectionList.add(Projections.property("t2.caller.callerId"),"callerId");
 		projectionList.add(Projections.property("c2.firstName"),"callerFirstName");
 		projectionList.add(Projections.property("c2.lastName"),"callerLastName");
+		projectionList.add(Projections.property("cl1.timeStamp"),"lastCallLogTimeStamp");
 		
 	}else if(role.equals("ROLE_LAWYER_ADMIN")||role.equals("ROLE_LAWYER")){
 		

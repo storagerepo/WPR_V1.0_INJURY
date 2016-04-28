@@ -37,8 +37,7 @@ public class PatientSearchList extends InjuryProperties{
 	private String notes;
 	private Integer isArchived;
 	private Integer patientStatus;
-	private boolean isSelected=false;
-	
+	private boolean isSelected=false;	
 	private String atFaultInsuranceCompany;
 	private String victimInsuranceCompany;
 	private Integer tier;
@@ -53,7 +52,8 @@ public class PatientSearchList extends InjuryProperties{
 	private String emsAgency;
 	private String medicalFacility;
 	private String atFaultPolicyNumber;
-	private String victimPolicyNumber;
+	private String victimPolicyNumber;	
+	private String lastCallLogTimeStamp;
 	
 	
 	public String getPatientId() {
@@ -305,6 +305,12 @@ public class PatientSearchList extends InjuryProperties{
 	}
 	public void setVictimPolicyNumber(String victimPolicyNumber) {
 		this.victimPolicyNumber = victimPolicyNumber;
+	}	
+	public String getLastCallLogTimeStamp() {
+		return lastCallLogTimeStamp;
+	}
+	public void setLastCallLogTimeStamp(String lastCallLogTimeStamp) {
+		this.lastCallLogTimeStamp = lastCallLogTimeStamp;
 	}
 	public PatientSearchList(String patientId, String localReportNumber,
 			Integer numberOfPatients, String crashDate, String addedDate,
@@ -320,7 +326,7 @@ public class PatientSearchList extends InjuryProperties{
 			String unitInError, String cityVillageTownship, String timeOfCrash,
 			String unitNumber, String gender, String injuries,
 			String emsAgency, String medicalFacility,
-			String atFaultPolicyNumber, String victimPolicyNumber) {
+			String atFaultPolicyNumber, String victimPolicyNumber,String lastCallLogTimeStamp) {
 		super();
 		this.patientId = patientId;
 		this.localReportNumber = localReportNumber;
@@ -363,6 +369,7 @@ public class PatientSearchList extends InjuryProperties{
 		this.medicalFacility = medicalFacility;
 		this.atFaultPolicyNumber = atFaultPolicyNumber;
 		this.victimPolicyNumber = victimPolicyNumber;
+		this.lastCallLogTimeStamp=lastCallLogTimeStamp;
 	}
 	
 	
