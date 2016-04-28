@@ -129,14 +129,14 @@
                         <thead  class="persist-header">
                             <tr>
                             	<th width="2%"><input ng-change="isChecked()" ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
-                                <th width="25%">Patient Name</th>
+                                <th width="20%">Patient Name</th>
                                 <th width="15%">Phone Number</th> 
                                 <th width="6%">Age</th>   
                                 <th width="7%">Unit No.</th>        
                                 <th width="10%">County</th>
-                                
                                 <th width="7%">Tier</th>
-                                <th width="18%">Status</th>
+                                <th width="13%">Status</th>
+                                <th width="10%">Status On</th>
                                 <th width="10%">Actions</th>
                             </tr>
                             <tr>
@@ -164,6 +164,7 @@
 								<th></th>
 								<th></th>
 								<th></th>
+								<th></th>
 								<th><!-- <a href="" ng-click="exportToExcel()" class="btn btn-sm btn-export" ng-disabled="exportButton || callerPatientSearchData.length==0"><span ng-show="exportButton"><i class="glyphicon glyphicon-refresh spinning"></i>&nbsp;</span>{{exportButtonText}}</a> --></th>								
 							</tr>
                         </thead>
@@ -187,6 +188,8 @@
                                 
                                 <td>Tier {{callerData.tier}}</td>
                                 <td title="Status">{{callerData.patientStatusName}}</td>
+                                <td><span
+						ng-show="callerData.lastCallLogTimeStamp==null && callerData.lastCallLogTimeStamp==null">-</span><b>{{callerData.lastCallLogTimeStamp}}</b></td>
                                 <td>
                                 	<a href="{{callerData.crashReportFileName}}" ng-cloak target="_blank" class="btn btn-xs btn-info hint--top" data-hint="View Crash Report"><i
 								class="fa fa-file-pdf-o"></i></a>
