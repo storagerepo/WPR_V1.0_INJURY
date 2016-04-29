@@ -116,7 +116,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		
 		requestHandler.postRequest("/Caller/releaseCaller.json",assignCallerObj).then(function(response){
 			Flash.create('success', "You have Successfully Released Caller!");
-			$scope.searchPatients();
+			$scope.searchItems($scope.patient);
 			$(function(){
 				$("html,body").scrollTop(0);
 			});
@@ -126,7 +126,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	$scope.assignCallerRequest=function(assignCallerObject){
 		requestHandler.postRequest("/CAdmin/assignCaller.json",assignCallerObject).then(function(response){
 			Flash.create('success', "You have Successfully Assigned Caller!");
-			$scope.searchPatients();
+			$scope.searchItems($scope.patient);
 			$(function(){
 				$("html,body").scrollTop(0);
 			});
@@ -172,7 +172,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		
 		requestHandler.postRequest("/Caller/moveToArchive.json",assignCallerObj).then(function(response){
 			Flash.create('success', "You have Successfully Moved to Archive!");
-			$scope.searchPatients();
+			$scope.searchItems($scope.patient);
 			$(function(){
 				$("html,body").scrollTop(0);
 			});
@@ -193,7 +193,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		
 		requestHandler.postRequest("/Caller/releaseFromArchive.json",assignCallerObj).then(function(response){
 			Flash.create('success', "You have Successfully Released from Archive!");
-			$scope.searchPatients();
+			$scope.searchItems($scope.patient);
 			$(function(){
 				$("html,body").scrollTop(0);
 			});

@@ -150,7 +150,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		
 		requestHandler.postRequest("/Lawyer/releaseLawyer.json",assignLawyerObj).then(function(response){
 			Flash.create('success', "You have Successfully Released Lawyer!");
-			$scope.searchPatients();
+			$scope.searchItems($scope.patient);
 			$(function(){
 				$("html,body").scrollTop(0);
 			});
@@ -171,7 +171,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		
 		requestHandler.postRequest("/Lawyer/moveToArchive.json",assignLawyerObj).then(function(response){
 			Flash.create('success', "You have Successfully Moved to Archive!");
-			$scope.searchPatients();
+			$scope.searchItems($scope.patient);
 			$(function(){
 				$("html,body").scrollTop(0);
 			});
@@ -192,7 +192,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		
 		requestHandler.postRequest("/Lawyer/releaseFromArchive.json",assignLawyerObj).then(function(response){
 			Flash.create('success', "You have Successfully released from Archive!");
-			$scope.searchPatients();
+			$scope.searchItems($scope.patient);
 			$(function(){
 				$("html,body").scrollTop(0);
 			});
