@@ -7,6 +7,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	$scope.isSelectedAddedFromDate=true;
 	$scope.exportButtonText="Export to Excel";
 	$scope.exportButton=false;
+	$scope.setScrollDown=false;
 	
 	$scope.init=function(){
 		$scope.patient={};
@@ -255,6 +256,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 				        break;
 				};
 				});
+				console.log("service .....");
 				defer.resolve(response);
 			});
 			$scope.patientSearchDataOrginal=angular.copy($scope.patientSearchData);
@@ -337,16 +339,17 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		};
 	
 	$scope.$watch("patient.pageNumber",function(){
-
-		 $scope.searchItems($scope.patient);
+		 var promise=$scope.searchItems($scope.patient);
 		 searchService.setPageNumber($scope.patient.pageNumber);
 		 searchService.setItemsPerPage($scope.patient.itemsPerPage); 
 		 if($scope.setScrollDown){
-			 console.log("scroll down complex");
+			  promise.then(function(reponse){
+				  console.log("scroll down complex");
 			 $scope.setScrollDown=false;
 			 setTimeout(function(){
        			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
        		 },100);
+			 });
 		 }
 		
 	});

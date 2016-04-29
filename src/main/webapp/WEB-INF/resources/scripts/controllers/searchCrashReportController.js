@@ -3,7 +3,7 @@ var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
 adminApp.controller('searchCrashReportController', ['$scope','requestHandler','$q', function($scope,requestHandler,$q) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
-
+	$scope.setScrollDown=false;
 	
 	$scope.init=function(){
 		$scope.crashreport={};
@@ -100,14 +100,17 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler','$
 	
 	
 	$scope.$watch("crashreport.pageNumber",function(){
-		$scope.searchItems($scope.crashreport); 
+		var promise=$scope.searchItems($scope.crashreport); 
 		if($scope.setScrollDown){
+			promise.then(function(reponse){
 			 console.log("scroll down complex");
 			 $scope.setScrollDown=false;
 			 setTimeout(function(){
      			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
      		 },100);
+			});
 		 }
+		
 	});
 	
 	$scope.resetSearchData = function(){

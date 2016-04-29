@@ -7,6 +7,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	$scope.isCheckedAllPatients=false;
 	$scope.exportButtonText="Export to Excel";
 	$scope.exportButton=false;
+	$scope.setScrollDown=false;
 	
 	$scope.getMyCountyList=function(){
 	    	requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
@@ -108,14 +109,16 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	
 	$scope.$watch("patient.pageNumber",function(){
 
-		 $scope.searchItems($scope.patient);
+		var promise = $scope.searchItems($scope.patient);
 		 if($scope.setScrollDown){
-			 console.log("scroll down complex");
-			 $scope.setScrollDown=false;
-			 setTimeout(function(){
-       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
-       		 },100);
-		 }
+			promise.then(function(response){
+				 console.log("scroll down complex");
+				 $scope.setScrollDown=false;
+				 setTimeout(function(){
+	       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+	       		 },100);
+			});
+		}
 		
 	});
 	

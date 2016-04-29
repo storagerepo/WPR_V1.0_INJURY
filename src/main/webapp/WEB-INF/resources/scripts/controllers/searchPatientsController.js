@@ -7,6 +7,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	$scope.isSelectedFromDate=true;
 	$scope.exportButtonText="Export to Excel";
 	$scope.exportButton=false;
+	$scope.setScrollDown=false;
 	
 	$scope.init=function(){
 		$scope.patient={};
@@ -108,13 +109,15 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	};
 	
 	$scope.$watch("patient.pageNumber",function(){
-		$scope.searchItems($scope.patient); 
+		var promise=$scope.searchItems($scope.patient); 
 		if($scope.setScrollDown){
-			 console.log("scroll down complex");
-			 $scope.setScrollDown=false;
+			promise.then(function(response){
+				console.log("scroll down complex");
+				$scope.setScrollDown=false;
 			 setTimeout(function(){
       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
       		 },100);
+			});
 		 }
 	});
 	

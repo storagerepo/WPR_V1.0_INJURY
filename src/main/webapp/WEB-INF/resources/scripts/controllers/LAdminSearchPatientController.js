@@ -7,6 +7,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 	$scope.isCheckedAllPatients=false;
 	$scope.exportButtonText="Export to Excel";
 	$scope.exportButton=false;
+	$scope.setScrollDown=false;
 
 	
 	 $scope.getLawyerList=function(){
@@ -133,13 +134,15 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 	
 	$scope.$watch("patient.pageNumber",function(){
 
-		 $scope.searchItems($scope.patient); 
+		var promise=$scope.searchItems($scope.patient); 
 		 if($scope.setScrollDown){
+			 promise.then(function(response){
 			 console.log("scroll down complex");
 			 $scope.setScrollDown=false;
 			 setTimeout(function(){
        			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
        		 },100);
+			 });
 		 }
 		
 	});
