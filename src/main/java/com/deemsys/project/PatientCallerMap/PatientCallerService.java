@@ -58,7 +58,11 @@ public class PatientCallerService {
 			caller.setCallerId(assignCallerForm.getCallerId());
 			
 			patientCallerAdminMap.setCaller(caller);
-			if(patientCallerAdminMap.getPatientStatus()==6){
+			if(patientCallerAdminMap.getPatientStatus()!=null){
+				if(patientCallerAdminMap.getPatientStatus()==6){
+					patientCallerAdminMap.setPatientStatus(1);
+				}
+			}else if(patientCallerAdminMap.getPatientStatus()==null){
 				patientCallerAdminMap.setPatientStatus(1);
 			}
 			patientCallerDAO.merge(patientCallerAdminMap);
