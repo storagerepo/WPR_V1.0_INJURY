@@ -14,4 +14,5 @@ public interface CrashReportDAO extends IGenericDAO<CrashReport>{
 	public CrashReportList searchCrashReports(String localReportNumber,String crashId,String crashFromDate,String crashToDate,String county,String addedFromDate,String addedToDate,Integer recordsPerPage,Integer pageNumber);
 	public Integer getTotalRecords(String localReportNumber,String crashId,String crashFromDate,String crashToDate,String county,String addedFromDate,String addedToDate);
 	public CrashReport getCrashReport(String crashId);
+	public void deleteCrashReportByCrashId(String crashId);
 }

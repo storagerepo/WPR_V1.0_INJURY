@@ -192,9 +192,10 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		projectionList.add(Projections.alias(Projections.property("numberOfPatients"), "numberOfPatients"));
 		projectionList.add(Projections.alias(Projections.property("status"), "status"));
 		
-		criteria.setProjection(projectionList);
+		Long totalNoOfRecords= (Long) criteria.setProjection(Projections.count("crashId")).uniqueResult();
 		
-		Integer totalNoOfRecords=criteria.setResultTransformer(new AliasToBeanResultTransformer(CrashReportForm.class)).list().size();
+		criteria.setProjection(projectionList);
+				//criteria.setResultTransformer(new AliasToBeanResultTransformer(CrashReportForm.class)).list().size();
 		
 		crashReportForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(CrashReportForm.class)).setFirstResult((pageNumber-1)*recordsPerPage).setMaxResults(recordsPerPage).list();
 				
@@ -248,6 +249,15 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 	@Override
 	public CrashReport getCrashReport(String crashId){
 		return (CrashReport) this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).add(Restrictions.eq("crashId",crashId)).uniqueResult();
+	}
+
+	@Override
+	public void deleteCrashReportByCrashId(String crashId) {
+		// TODO Auto-generated method stub
+		CrashReport crashReport=this.getCrashReport(crashId);
+		if(crashReport!=null){
+			this.sessionFactory.getCurrentSession().delete(crashReport);
+		}
 	}
 
 }

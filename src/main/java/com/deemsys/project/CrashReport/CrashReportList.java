@@ -4,12 +4,12 @@ import java.util.List;
 
 public class CrashReportList {
 
-	private Integer totalNoOfRecords;
+	private Long totalNoOfRecords;
 	private List<CrashReportForm> crashReportForms;
-	public Integer getTotalNoOfRecords() {
+	public Long getTotalNoOfRecords() {
 		return totalNoOfRecords;
 	}
-	public void setTotalNoOfRecords(Integer totalNoOfRecords) {
+	public void setTotalNoOfRecords(Long totalNoOfRecords) {
 		this.totalNoOfRecords = totalNoOfRecords;
 	}
 	public List<CrashReportForm> getCrashReportForms() {
@@ -22,7 +22,7 @@ public class CrashReportList {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CrashReportList(Integer totalNoOfRecords,
+	public CrashReportList(Long totalNoOfRecords,
 			List<CrashReportForm> crashReportForms) {
 		super();
 		this.totalNoOfRecords = totalNoOfRecords;
