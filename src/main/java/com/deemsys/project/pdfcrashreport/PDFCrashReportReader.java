@@ -148,7 +148,7 @@ public class PDFCrashReportReader {
 					Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportTryTimes"));
 					for (int tryCrash = 1; tryCrash < tryCount; tryCrash++) {						
 						if(file!=null){
-							if(file.length()>0){
+							if(file.length()>2000){//2000 File Size refers an crash report not found exception
 								System.out.println("Got it!!");
 								break;
 							}else{
@@ -164,7 +164,7 @@ public class PDFCrashReportReader {
 						
 					}		
 					
-					if(file.length()>0){
+					if(file.length()>2000){//2000 File Size refers an crash report not found exception
 						//Parse the PDF
 						parsePDFDocument(new File(file.getAbsoluteFile().getAbsolutePath()),Integer.parseInt(crashId));
 						
