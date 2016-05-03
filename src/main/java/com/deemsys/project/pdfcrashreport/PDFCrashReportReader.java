@@ -928,11 +928,11 @@ public class PDFCrashReportReader {
 	public void parsePDFDocument(File file,Integer crashId) throws Exception{
 		
 	
-				//UUID uuid=UUID.randomUUID();
+				UUID uuid=UUID.randomUUID();
 		
-				//String fileName=uuid+"_"+ crashId + ".pdf";
-				String fileName=crashId + ".pdf";
-				String uuid=crashId.toString();
+				String fileName=uuid+"_"+ crashId + ".pdf";
+				//String fileName=crashId + ".pdf";
+				//String uuid=crashId.toString();
 				//Convert PDF data to Parsed JSON
 				PDFCrashReportJson pdfCrashReportJson=null;
 				try {
@@ -1036,13 +1036,13 @@ public class PDFCrashReportReader {
 				}
 				if(Integer.parseInt(injuryProperties.getProperty("awsUpload"))==1)				
 					awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);
-				//file.delete();
+				file.delete();
  	}
 	
 	
 	public void savePatientList(List<PatientForm> patientsForms,String uuid,String crashId) throws Exception{
 		for (PatientForm patientsForm : patientsForms) {
-			patientsForm.setCrashReportFileName(crashId+".pdf");
+			patientsForm.setCrashReportFileName(uuid+"_"+crashId+".pdf");
 			patientsForm.setCrashId(crashId);
 			try {
 				patientsService.savePatient(patientsForm);
