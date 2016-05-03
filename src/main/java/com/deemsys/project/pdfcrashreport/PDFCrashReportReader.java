@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -192,23 +193,33 @@ public class PDFCrashReportReader {
 		try{
 			URL url=new URL(injuryProperties.getProperty("odpsLink")+crashId);
 			HttpURLConnection httpURLConnection=(HttpURLConnection) url.openConnection();
-			if(httpURLConnection.getResponseCode()==200)
-			{
-				String filePath=injuryProperties
-						.getProperty("tempFolder")
-						+ "CrashReport_"
-						+ crashId + ".pdf";
-				try {
-					InputStream in = url.openStream();	
-					Files.copy(in, Paths.get(filePath),
-							StandardCopyOption.REPLACE_EXISTING);
-					in.close();
-					file=new File(filePath);				
+			
+			Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportAccessTry"));
+			
+			//Try access the same link twice to avoid loosing reports.
+			for (int accessTry = 0; accessTry < tryCount; accessTry++) {
+				if(httpURLConnection.getResponseCode()==200)
+				{
+					String filePath=injuryProperties
+							.getProperty("tempFolder")
+							+ "CrashReport_"
+							+ crashId + ".pdf";
+					try {
+						InputStream in = url.openStream();	
+						Files.copy(in, Paths.get(filePath),
+								StandardCopyOption.REPLACE_EXISTING);
+						in.close();
+						file=new File(filePath);	
+						if(file.length()>2000)
+							break;
+						else
+							System.out.println("Lets hit one more time..");
+						}
+					catch(Exception ex){
+						throw ex;
 					}
-				catch(Exception ex){
-					throw ex;
 				}
-			}
+			}			
 		}catch(Exception ex){
 			throw ex;
 		}
