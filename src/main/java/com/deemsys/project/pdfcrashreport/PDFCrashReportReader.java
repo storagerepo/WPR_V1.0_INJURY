@@ -190,7 +190,7 @@ public class PDFCrashReportReader {
 	public File getPDFFile(String crashId) throws Exception{
 		File file=null;
 		try{
-			URL url=new URL("https://ext.dps.state.oh.us/CrashRetrieval/ViewCrashReport.aspx?redirectPage=ViewCrashReport.aspx&RequestFrom=ViewEfilePDF&CrashId="+crashId);
+			URL url=new URL(injuryProperties.getProperty("odpsLink")+crashId);
 			HttpURLConnection httpURLConnection=(HttpURLConnection) url.openConnection();
 			if(httpURLConnection.getResponseCode()==200)
 			{
