@@ -190,9 +190,10 @@ public class PDFCrashReportReader {
 	
 	public File getPDFFile(String crashId) throws Exception{
 		File file=null;
+		HttpURLConnection httpURLConnection=null;
 		try{
 			URL url=new URL(injuryProperties.getProperty("odpsLink")+crashId);
-			HttpURLConnection httpURLConnection=(HttpURLConnection) url.openConnection();
+			httpURLConnection=(HttpURLConnection) url.openConnection();
 			
 			Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportAccessTry"));
 			
@@ -218,9 +219,16 @@ public class PDFCrashReportReader {
 					catch(Exception ex){
 						throw ex;
 					}
+					finally{
+						if(httpURLConnection!=null)
+						    httpURLConnection.disconnect();
+					}
 				}
 			}			
 		}catch(Exception ex){
+			if(httpURLConnection!=null)
+			    httpURLConnection.disconnect();
+			
 			throw ex;
 		}
 		

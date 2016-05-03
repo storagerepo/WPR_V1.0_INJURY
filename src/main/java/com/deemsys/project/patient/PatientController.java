@@ -122,6 +122,28 @@ public class PatientController {
 	}
 
 	// Upload PDF file
+	@RequestMapping(value = "/Admin/readCrashReportFromURLByCrashId", method = RequestMethod.POST)
+	public String readCrashReportFromURLByCrashId(@RequestParam("crashId") String crashReportId, ModelMap model)
+				throws IOException {
+		try {
+				crashReportReader.parsePDFDocument(crashReportReader.getPDFFile(crashReportId), Integer.parseInt(crashReportId));
+				model.addAttribute("requestSuccess", true);
+		} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				model.addAttribute("error", "Number Format Exception");
+				model.addAttribute("requestSuccess", false);
+				e.printStackTrace();
+		} catch (Exception e) {
+				// TODO Auto-generated catch block
+			model.addAttribute("error", e.toString());
+			model.addAttribute("requestSuccess", false);
+				e.printStackTrace();
+		}
+			return "";
+
+	}
+	
+	// Upload PDF file
 	@RequestMapping(value = "/Caller/readCrashReportFromURL", method = RequestMethod.POST)
 	public @ResponseBody
 	PDFCrashReportJson uploadCrashReportFileHandler(
