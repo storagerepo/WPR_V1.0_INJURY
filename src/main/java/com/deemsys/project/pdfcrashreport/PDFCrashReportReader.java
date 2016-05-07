@@ -150,7 +150,7 @@ public class PDFCrashReportReader {
 					for (int tryCrash = 1; tryCrash < tryCount; tryCrash++) {						
 						if(file!=null){
 							if(file.length()>2000){//2000 File Size refers an crash report not found exception
-								System.out.println("Got it!!");
+								System.out.println("Got it!!");   
 								break;
 							}else{
 								System.out.println(crashId+"..Failed..Lets try next.!");
@@ -183,7 +183,7 @@ public class PDFCrashReportReader {
 					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, "", null, InjuryConstants.convertMonthFormat(new Date()) , "", 0,null));
 					System.out.println("Failed"+e.toString());
 				}
-
+		
 			return true;
 				
 	}  
@@ -699,6 +699,23 @@ public class PDFCrashReportReader {
 									}
 								} else if (motoristPage.get(index - 26).equals(
 										"INJURIES")) {
+									if(motoristPage.get(index-21).length()>5){
+										motoristPageForm.setInjuries(motoristPage
+												.get(index - 25));
+										if (motoristPage.get(index - 22).equals(
+												"EMS AGENCY")) {
+											motoristPageForm
+													.setEmsAgency(motoristPage
+															.get(index - 21));
+										}
+										if (motoristPage
+												.get(index - 20)
+												.equals("MEDICAL FACILITY  INJURED TAKEN TO")) {
+											motoristPageForm
+													.setMedicalFacility(motoristPage
+															.get(index - 19));
+										}
+									}else{
 									motoristPageForm.setInjuries(motoristPage
 											.get(index - 21));
 									if (motoristPage.get(index - 17).equals(
@@ -714,6 +731,7 @@ public class PDFCrashReportReader {
 															.get(index - 14));
 										}
 									}
+								}
 								} else if (motoristPage.get(index - 18).equals(
 										"INJURIES")) {
 									motoristPageForm.setInjuries(motoristPage
@@ -735,6 +753,7 @@ public class PDFCrashReportReader {
 														.get(index - 18));
 									}
 								}
+								
 
 								reportMotoristPageForms.add(motoristPageForm);
 							/*}*/
