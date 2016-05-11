@@ -176,13 +176,13 @@
                          <tr class="group-header-back" ng-show="lAdminPatientSearchData.length>0"  ng-repeat-start="resultData in lAdminPatientSearchData">
                        <td colspan="1"><input ng-change="selectGroup(this)" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}"></td><td colspan="10" ><span><b>Local Report No:</b> 	{{resultData.localReportNumber}}  </span><span class="pull-right"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients Count:</b></span>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span>&nbsp;&nbsp;&nbsp;</span></td>
                           </tr>
-                          <tr dir-paginate="lAdminData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords">
+                          <tr dir-paginate="lAdminData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords" pagination-id="lawyerAdminPatientPageId">
                             
                                 <td><input type="checkbox" ng-change="isCheckedIndividual()" ng-model="lAdminData.selected"/></td>
-                                <td><span ng-if="lAdminData.crashSeverity==2 && lAdminData.age>=18"><a href="" class="hint--top redText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Crash Severity : {{lAdminData.crashSeverity}}"><i class="fa fa-arrow-up" ></i></span></span>
-                                	<span ng-if="lAdminData.crashSeverity==2 && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Crash Severity : {{lAdminData.crashSeverity}}"><i class="fa fa-arrow-up" ></i></span></span>
-                                    <span ng-if="lAdminData.crashSeverity!=2 && lAdminData.age>=18"><a href="" class="hint--top" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a></span>
-                                    <span ng-if="lAdminData.crashSeverity!=2 && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a></span>
+                                <td><span ng-if="(lAdminData.injuries==2 || lAdminData.injuries==3 || lAdminData.injuries==4) && lAdminData.age>=18"><a href="" class="hint--top redText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{lAdminData.injuries}}"><i class="fa fa-arrow-up" ></i></span></span>
+                                	<span ng-if="(lAdminData.injuries==2 || lAdminData.injuries==3 || lAdminData.injuries==4) && lAdminData.crashSeverity==2 && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{lAdminData.injuries}}"><i class="fa fa-arrow-up" ></i></span></span>
+                                    <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && lAdminData.age>=18"><a href="" class="hint--top" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a></span>
+                                    <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a></span>
                                     </td>
                               <td title="Age">{{lAdminData.age}}</td>
                               <td title="Unit Number">{{lAdminData.unitNumber}}</td>
@@ -208,7 +208,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <dir-pagination-controls ng-show="lAdminPatientSearchData.length>0" max-size="5" direction-links="true" boundary-links="true" >
+                    <dir-pagination-controls ng-show="lAdminPatientSearchData.length>0" max-size="5" direction-links="true" boundary-links="true" pagination-id="lawyerAdminPatientPageId">
     					</dir-pagination-controls> 
     					
 <div class="col-md-3 pull-right no-padding">

@@ -104,7 +104,13 @@ public class CrashReportService {
 		//Logic Starts
 		County county= countyDAO.getCountyByName(this.splitCountyName(crashReportForm.getCounty()));
 		CrashReportError crashReportError=crashReportErrorDAO.get(Integer.parseInt(crashReportForm.getCrashReportError()));
-		CrashReport crashReport=new CrashReport(crashReportError, crashReportForm.getLocalReportNumber(), crashReportForm.getCrashId(), crashReportForm.getCrashDate(), 
+		String localReportNumber=crashReportForm.getLocalReportNumber();
+		if(crashReportDAO.getCrashReportCountByLocalReportNumber(localReportNumber)>0){
+			Long localReportNumberCount=crashReportDAO.getLocalReportNumberCount(localReportNumber+"(");
+			localReportNumber=localReportNumber+"("+(localReportNumberCount+1)+")";
+			
+		}
+		CrashReport crashReport=new CrashReport(crashReportError, localReportNumber, crashReportForm.getCrashId(), crashReportForm.getCrashDate(), 
 					county, crashReportForm.getAddedDate(), crashReportForm.getFilePath(),crashReportForm.getNumberOfPatients(),1);
 		
 	

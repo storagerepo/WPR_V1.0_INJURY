@@ -206,30 +206,30 @@
 
 				<tr
 					dir-paginate="patient in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage"
-					current-page="patient.pageNumber" total-items="totalRecords">
+					current-page="patient.pageNumber" total-items="totalRecords" pagination-id="callerAdminPatientPageId">
 					<td><input ng-change="isCheckedIndividual()"
 						ng-model="patient.selected" ng-checked="patient.selected"
 						type="checkbox"></td>
 					<td><span
-						ng-if="patient.crashSeverity==2 && patient.age>=18"><a
+						ng-if="(patient.injuries==2 || patient.injuries==3 || patient.injuries==4) && patient.age>=18"><a
 							href="" class="hint--top redText"
 							ng-click="viewPatientModal(patient.patientId)"
 							data-hint="View Patient">{{patient.name}}</a><span
 							class="redText margin-left-10 hint--top"
-							data-hint="Crash Severity : {{patient.crashSeverity}}"><i
+							data-hint="injuries : {{patient.injuries}}"><i
 								class="fa fa-arrow-up"></i></span></span> <span
-						ng-if="patient.crashSeverity==2 && patient.age<18"><a
+						ng-if="(patient.injuries==2 || patient.injuries==3 || patient.injuries==4) && patient.age<18"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(patient.patientId)"
 							data-hint="View Patient">{{patient.name}}</a><span
 							class="redText margin-left-10 hint--top"
-							data-hint="Crash Severity : {{patient.crashSeverity}}"><i
+							data-hint="injuries : {{patient.injuries}}"><i
 								class="fa fa-arrow-up"></i></span></span> <span
-						ng-if="patient.crashSeverity!=2 && patient.age>=18"><a
+						ng-if="(patient.injuries!=2 && patient.injuries!=3 && patient.injuries!=4) && patient.age>=18"><a
 							href="" class="hint--top"
 							ng-click="viewPatientModal(patient.patientId)"
 							data-hint="View Patient">{{patient.name}}</a></span> <span
-						ng-if="patient.crashSeverity!=2 && patient.age<18"><a
+						ng-if="(patient.injuries!=2 && patient.injuries!=3 && patient.injuries!=4) && patient.age<18"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(patient.patientId)"
 							data-hint="View Patient">{{patient.name}}</a></span></td>
@@ -273,7 +273,7 @@
 			</tbody>
 		</table>
 
-	<dir-pagination-controls ng-show="patientSearchData.length>0" max-size="5" direction-links="true" boundary-links="true" >
+	<dir-pagination-controls ng-show="patientSearchData.length>0" max-size="5" direction-links="true" boundary-links="true" pagination-id="callerAdminPatientPageId" >
     					</dir-pagination-controls>
     				<!-- <div class="col-md-4 margin-top-30" ng-show="patientSearchData.length>0">Showing {{(patient.pageNumber-1)*patient.itemsPerPage+1}}-{{patient.pageNumber*patient.itemsPerPage}} of {{totalRecords}} Records</div> -->
     				<div class="col-md-3 pull-right no-padding">

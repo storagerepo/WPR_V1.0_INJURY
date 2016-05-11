@@ -33,6 +33,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 	public void save(CrashReport entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().save(entity);
+		
 	}
 
 	@Override
@@ -258,6 +259,26 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		if(crashReport!=null){
 			this.sessionFactory.getCurrentSession().delete(crashReport);
 		}
+	}
+
+	@Override
+	public Long getLocalReportNumberCount(String localReportNumber) {
+		// TODO Auto-generated method stub
+		Session session=this.sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(CrashReport.class);
+		criteria.add(Restrictions.like("localReportNumber", localReportNumber,MatchMode.START));
+		Long localReportNumberCount=(Long) criteria.setProjection(Projections.count("crashId")).uniqueResult();
+		return localReportNumberCount;
+	}
+	
+	@Override
+	public Long getCrashReportCountByLocalReportNumber(String localReportNumber) {
+		// TODO Auto-generated method stub
+		Session session=this.sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(CrashReport.class);
+		criteria.add(Restrictions.eq("localReportNumber", localReportNumber));
+		Long localReportNumberCount=(Long) criteria.setProjection(Projections.count("crashId")).uniqueResult();
+		return localReportNumberCount;
 	}
 
 }

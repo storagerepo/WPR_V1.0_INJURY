@@ -52,7 +52,7 @@
             </thead>
             
 			<tbody>
-				<tr ng-show="clinics.length>0" dir-paginate="clinic in clinicFilter=(clinics | filter:search | orderBy:sortKey:reverse|itemsPerPage:noOfRows)" >
+				<tr ng-show="clinics.length>0" dir-paginate="clinic in clinicFilter=(clinics | filter:search | orderBy:sortKey:reverse|itemsPerPage:noOfRows)">
 					<td ng-cloak>{{clinic.serviceArea}}</td>
 					<td><a href="" class="hint--top" data-hint="View Clinic" ng-cloak ng-click="viewClinicDetails(clinic.clinicId)">{{clinic.clinicName}}</a></td>
 					<td ng-cloak>{{clinic.address}}</td>
@@ -86,7 +86,7 @@
   
 		</table>
 
-		<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" ></dir-pagination-controls>
+		<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
 		 <div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>
 	<select
