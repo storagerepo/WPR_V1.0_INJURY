@@ -57,13 +57,34 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	});
 	 
 	$scope.checkCustomDate=function(custom){
-	
+		//Reset to date if less than from date
+		var fromDate=new Date($scope.patient.crashFromDate);
+		var toDate=new Date($scope.patient.crashToDate);
+		if(toDate<fromDate)
+			$scope.patient.crashToDate="";
+		//End Reset to date if less than from date
 		if(custom=='0'&& $scope.patient.crashFromDate!=''){
 			$scope.disableCustom=false;
 		}
 		else{
 			$scope.disableCustom=true;
+			$scope.patient.crashToDate="";
 		}
+	};
+	
+	$scope.checkAddedOnToDate=function(){
+		if($scope.patient.addedOnFromDate!="")
+			$scope.isSelectedAddedFromDate=false;
+		else{
+			$scope.patient.addedOnToDate="";
+			$scope.isSelectedAddedFromDate=true;
+		}
+		//Reset to date if less than from date
+		var fromDate=new Date($scope.patient.addedOnFromDate);
+		var toDate=new Date($scope.patient.addedOnToDate);
+		if(toDate<fromDate)
+			$scope.patient.addedOnToDate="";
+		//End Reset to date if less than from date
 	};
 	
 	$scope.isChecked=function(){

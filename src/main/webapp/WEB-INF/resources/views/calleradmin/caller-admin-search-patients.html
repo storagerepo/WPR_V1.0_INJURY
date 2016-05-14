@@ -71,14 +71,14 @@
           	<div class="col-md-5ths">
        			<label>Added On From Date</label>
        			<div class="input-group">
-					<input type="text" name="crashFromDate" id="AddedOFromDate" ng-change="isSelectedAddedFromDate=false" class="form-control input-sm" ng-model="patient.addedOnFromDate" placeholder="Added On From Date"> 
+					<input type="text" name="addedOnFromDate" id="AddedOFromDate" ng-change="checkAddedOnToDate()" class="form-control input-sm" ng-model="patient.addedOnFromDate" placeholder="Added On From Date"> 
 					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
 				</div>
         	</div>
         	<div class="col-md-5ths">
 	       		<label>Added On To Date</label>
 	       		<div class="input-group">
-					<input type="text" name="crashToDate" id="AddedOnToDate" ng-change="AddedOnToRequired=fasle" class="form-control input-sm" ng-model="patient.addedOnToDate" placeholder="Added On To Date"  ng-disabled="isSelectedAddedFromDate"> 
+					<input type="text" name="addedOnToDate" id="AddedOnToDate" ng-change="AddedOnToRequired=false" class="form-control input-sm" ng-model="patient.addedOnToDate" placeholder="Added On To Date"  ng-disabled="isSelectedAddedFromDate"> 
 					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
 				</div>
 				<span style="color:red;font-size:13px" ng-if="AddedOnToRequired==true">Please Enter Added On To Date</span>

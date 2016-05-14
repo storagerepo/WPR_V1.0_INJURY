@@ -3,8 +3,7 @@ var adminApp=angular.module('sbAdminApp', ['requestModule','flash','ngFileSaver'
 adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler','$state','FileSaver', function($q,$scope,requestHandler,$state,FileSaver) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
-	$scope.patientSearchData=[];
-	$scope.isSelectedFromDate=true;
+	$scope.patientSearchData=[];	
 	$scope.exportButtonText="Export to Excel";
 	$scope.exportButton=false;
 	$scope.setScrollDown=false;
@@ -26,6 +25,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$scope.totalRecords=0;
 		$scope.patient.addedOnFromDate="";
 		$scope.patient.addedOnToDate="";
+		$scope.isSelectedAddedFromDate=true;
 		
 		$scope.patient.pageNumber= 1;
 		$scope.oldPageNumber= $scope.patient.pageNumber;
@@ -42,13 +42,34 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	});
 	 
 	$scope.checkCustomDate=function(custom){
-	
+		//Reset to date if less than from date
+		var fromDate=new Date($scope.patient.crashFromDate);
+		var toDate=new Date($scope.patient.crashToDate);
+		if(toDate<fromDate)
+			$scope.patient.crashToDate="";
+		//End Reset to date if less than from date
 		if(custom=='0'&&$scope.patient.crashFromDate!=''){
 			$scope.disableCustom=false;
 		}
 		else{
 			$scope.disableCustom=true;
+			$scope.patient.crashToDate="";
 		}
+	};
+	
+	$scope.checkAddedOnToDate=function(){
+		if($scope.patient.addedOnFromDate!="")
+			$scope.isSelectedAddedFromDate=false;
+		else{
+			$scope.patient.addedOnToDate="";
+			$scope.isSelectedAddedFromDate=true;
+		}
+		//Reset to date if less than from date
+		var fromDate=new Date($scope.patient.addedOnFromDate);
+		var toDate=new Date($scope.patient.addedOnToDate);
+		if(toDate<fromDate)
+			$scope.patient.addedOnToDate="";
+		//End Reset to date if less than from date
 	};
 	
 	$scope.searchItems=function(searchObj){

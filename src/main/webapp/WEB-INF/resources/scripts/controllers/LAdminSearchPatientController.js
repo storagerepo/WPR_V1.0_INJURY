@@ -27,13 +27,33 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 	 
 	 
 		 $scope.checkCustomDate=function(custom){
-			
+		//Reset to date if less than from date
+			var fromDate=new Date($scope.patient.crashFromDate);
+			var toDate=new Date($scope.patient.crashToDate);
+			if(toDate<fromDate)
+				$scope.patient.crashToDate="";
+			//End Reset to date if less than from date
 		 if(custom=='0' && $scope.patient.crashFromDate!=''){
 				$scope.disableCustom=false;
 			}
 			else{
 				$scope.disableCustom=true;
+				$scope.patient.crashToDate="";
 			}
+		};
+		$scope.checkAddedOnToDate=function(){
+			if($scope.patient.addedOnFromDate!="")
+				$scope.isSelectedAddedFromDate=false;
+			else{
+				$scope.patient.addedOnToDate="";
+				$scope.isSelectedAddedFromDate=true;
+			}
+			//Reset to date if less than from date
+			var fromDate=new Date($scope.patient.addedOnFromDate);
+			var toDate=new Date($scope.patient.addedOnToDate);
+			if(toDate<fromDate)
+				$scope.patient.addedOnToDate="";
+			//End Reset to date if less than from date
 		};
 		
 		$scope.isChecked=function(){
@@ -318,7 +338,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		$scope.patient.addedOnToDate="";
 		$scope.patient.patientStatus="7";
 		$scope.patient.isArchived="0";
-
+		$scope.isSelectedAddedFromDate=true;
 
 		$scope.patient.pageNumber= 1;
 		$scope.oldPageNumber= $scope.patient.pageNumber;
@@ -341,6 +361,11 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 	     $scope.patientSearchForm.$setPristine();
 	     $scope.lAdminPatientSearchData="";
 	     $scope.totalRecords="";
+	     $scope.addedToRequired=false;
+	     $scope.crashToRequired=false;
+
+	     $scope.addedToRequired=false;
+	     $scope.crashToRequired=false;
 	     $scope.init();
 	     
 	};
