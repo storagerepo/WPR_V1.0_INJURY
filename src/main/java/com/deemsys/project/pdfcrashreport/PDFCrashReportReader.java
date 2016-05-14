@@ -180,7 +180,7 @@ public class PDFCrashReportReader {
 					this.crashLogUpdate(crashId, e);
 					this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
 					CrashReportError crashReportError=crashReportErrorDAO.get(12);
-					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, "", null, InjuryConstants.convertMonthFormat(new Date()) , "", 0,null));
+					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, null, null, new Date() , "", 0,null));
 					System.out.println("Failed"+e.toString());
 				}
 		
@@ -403,6 +403,15 @@ public class PDFCrashReportReader {
 		try {
 			// First Page
 			List<String> firstPage = content.get(0);
+			String crashDate=firstPage.get(firstPage.indexOf("CRASH DATE *") + 1);
+			String cityVillageTownship=firstPage.get(firstPage.indexOf("CITY, VILLAGE, TOWNSHIP  *") + 1);
+			if(firstPage.get(firstPage
+							.indexOf("CITY, VILLAGE, TOWNSHIP  *") + 1).equals("ROUTE  TYPES")){
+				crashDate=firstPage.get(firstPage
+						.indexOf("CITY, VILLAGE, TOWNSHIP  * CRASH DATE *") + 1);
+				cityVillageTownship="";
+						
+			}
 			reportFirstPageForm = new ReportFirstPageForm(
 					firstPage
 							.get(firstPage.indexOf("LOCAL REPORT NUMBER *") + 1).replaceAll("\\s+", " ").trim(),
@@ -411,9 +420,8 @@ public class PDFCrashReportReader {
 					firstPage.get(firstPage.indexOf("NUMBER OF ") - 1),
 					firstPage.get(firstPage.indexOf("UNIT IN ERROR") - 1),
 					firstPage.get(firstPage.indexOf("COUNTY *") + 1),
-					firstPage.get(firstPage
-							.indexOf("CITY, VILLAGE, TOWNSHIP  *") + 1),
-					firstPage.get(firstPage.indexOf("CRASH DATE *") + 1),
+					cityVillageTownship,
+					crashDate,
 					firstPage.get(firstPage.indexOf("TIME OF  CRASH") + 1));
 
 			// Unit Pages
@@ -1081,6 +1089,7 @@ public class PDFCrashReportReader {
 	public void savePatientList(List<PatientForm> patientsForms,String uuid,String crashId) throws Exception{
 		for (PatientForm patientsForm : patientsForms) {
 			patientsForm.setCrashReportFileName(uuid+"_"+crashId+".pdf");
+			//patientsForm.setCrashReportFileName(crashId+".pdf");
 			patientsForm.setCrashId(crashId);
 			try {
 				patientsService.savePatient(patientsForm);

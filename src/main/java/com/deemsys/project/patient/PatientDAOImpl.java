@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,12 +14,14 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -451,14 +454,14 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		}
 		
 		//Set Criterion
-		Criterion crashDateCriterion=Restrictions.between("t1.crashDate", callerPatientSearchForm.getCrashFromDate(), callerPatientSearchForm.getCrashToDate());
+		Criterion crashDateCriterion=Restrictions.between("t1.crashDate", InjuryConstants.convertYearFormat(callerPatientSearchForm.getCrashFromDate()), InjuryConstants.convertYearFormat(callerPatientSearchForm.getCrashToDate()));
 		criteria.add(crashDateCriterion);
 	}
 	
 	//Common Constrains - Added Date
 	if(!callerPatientSearchForm.getAddedOnFromDate().equals("")){
 		//Set Criterion
-		Criterion crashDateCriterion=Restrictions.between("t1.addedDate", callerPatientSearchForm.getAddedOnFromDate(), callerPatientSearchForm.getAddedOnToDate());
+		Criterion crashDateCriterion=Restrictions.between("t1.addedDate",InjuryConstants.convertYearFormat(callerPatientSearchForm.getAddedOnFromDate()), InjuryConstants.convertYearFormat(callerPatientSearchForm.getAddedOnToDate()));
 		criteria.add(crashDateCriterion);
 	}
 	
@@ -632,7 +635,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		projectionList.add(Projections.property("t2.patientStatus"),"patientStatus");
 		
 	}
-	
+
 	
 	Long totalNoOfRecords=(Long) criteria.setProjection(Projections.count("t1.patientId")).uniqueResult();
 	
@@ -678,6 +681,25 @@ public Patient getPatientByPatientIdAndCallerAdminId(String patientId,Integer ca
 	
 	Patient patient=(Patient) criteria.uniqueResult();
 	return patient;
+}
+
+@Override
+public void deletePatientByPatientId(String patientId) {
+	// TODO Auto-generated method stub
+	Patient patient=this.getPatientByPatientId(patientId);
+	if(patient!=null){
+		this.sessionFactory.getCurrentSession().delete(patient);
+	}
+}
+
+@Override
+public List<Patient> getSixMonthPatientsList() {
+	// TODO Auto-generated method stub
+	LocalDate localDate1=new LocalDate().minusMonths(6);
+	String date=localDate1.toString("yyyy-MM-dd");
+	System.out.println("Previous 6 Month Date 1......"+date);
+	List<Patient> patients=this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.le("addedDate", date)).addOrder(Order.desc("addedDate")).addOrder(Order.desc("patientId")).list();
+	return patients;
 }
 
 }

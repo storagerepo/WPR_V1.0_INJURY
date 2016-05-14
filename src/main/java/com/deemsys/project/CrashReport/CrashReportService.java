@@ -110,8 +110,8 @@ public class CrashReportService {
 			localReportNumber=localReportNumber+"("+(localReportNumberCount+1)+")";
 			
 		}
-		CrashReport crashReport=new CrashReport(crashReportError, localReportNumber, crashReportForm.getCrashId(), crashReportForm.getCrashDate(), 
-					county, crashReportForm.getAddedDate(), crashReportForm.getFilePath(),crashReportForm.getNumberOfPatients(),1);
+		CrashReport crashReport=new CrashReport(crashReportError, localReportNumber, crashReportForm.getCrashId(), InjuryConstants.convertYearFormat(crashReportForm.getCrashDate()), 
+					county, InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getFilePath(),crashReportForm.getNumberOfPatients(),1);
 		
 	
 		
@@ -159,7 +159,7 @@ public class CrashReportService {
 	
 	// Search Crash Report
 	public CrashReportList searchCrashReports(CrashReportSearchForm crashReportSearchForm){
-		if(!crashReportSearchForm.getNumberOfDays().equals("")){
+		if(!crashReportSearchForm.getNumberOfDays().equals("0")){
 			if(!crashReportSearchForm.getCrashFromDate().equals("")){
 				crashReportSearchForm.setCrashToDate(InjuryConstants.getToDateByAddingNumberOfDays(crashReportSearchForm.getCrashFromDate(), Integer.parseInt(crashReportSearchForm.getNumberOfDays())));
 			}

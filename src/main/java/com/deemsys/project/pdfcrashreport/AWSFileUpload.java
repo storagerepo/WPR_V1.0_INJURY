@@ -73,4 +73,18 @@ public class AWSFileUpload {
 		
 	}
 	
+	// Delete File In AWS
+	public void deleteFileInAWSS3(String fileName) {
+		// credentials object identifying user for authentication
+		// user must have AWSConnector and AmazonS3FullAccess
+		AWSCredentials credentials = new BasicAWSCredentials(injuryProperties.getProperty("accessKey"),injuryProperties.getProperty("secretKey"));
+		String bucketName =injuryProperties.getProperty("bucketName");
+		String folderName =injuryProperties.getProperty("folderName");
+		// create a client connection based on credentials
+		System.out.println("Create Connection.......");
+		AmazonS3 s3client = new AmazonS3Client(credentials);
+		s3client.deleteObject(bucketName, folderName+fileName);
+		System.out.println("File Deleted........");
+	}
+	
 }

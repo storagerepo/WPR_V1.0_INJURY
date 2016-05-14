@@ -92,7 +92,7 @@ adminApp.service('searchService',function(){
 	
 	//Phone Number
 	this.setPhoneNumber=function(phoneNumberInput){
-		patientName=phoneNumberInput;
+		phoneNumber=phoneNumberInput;
 	};
 	
 	this.getPhoneNumber=function(){

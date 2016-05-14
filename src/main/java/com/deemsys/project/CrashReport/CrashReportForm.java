@@ -1,5 +1,8 @@
 package com.deemsys.project.CrashReport;
 
+import java.util.Date;
+
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.common.InjuryProperties;
 
 
@@ -48,8 +51,8 @@ public class CrashReportForm extends InjuryProperties{
 	public String getCrashDate() {
 		return crashDate;
 	}
-	public void setCrashDate(String crashDate) {
-		this.crashDate = crashDate;
+	public void setCrashDate(Date crashDate) {
+		this.crashDate = InjuryConstants.convertMonthFormat(crashDate);
 	}
 	public String getCounty() {
 		return county;
@@ -60,8 +63,8 @@ public class CrashReportForm extends InjuryProperties{
 	public String getAddedDate() {
 		return addedDate;
 	}
-	public void setAddedDate(String addedDate) {
-		this.addedDate = addedDate;
+	public void setAddedDate(Date addedDate) {
+		this.addedDate = InjuryConstants.convertMonthFormat(addedDate);
 	}
 	public String getFilePath() {
 		return filePath;

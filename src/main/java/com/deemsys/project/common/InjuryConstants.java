@@ -81,6 +81,24 @@ public class InjuryConstants {
 		return dateformat;
 	}
 	
+	// Convert Date to USA Date Format
+		public static Date convertDatetoUSDateFormat(Date date)
+		{
+		SimpleDateFormat DateTimeFormat=new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat DateFormat=new SimpleDateFormat("MM/dd/yyyy");
+
+			Date dateformat=new Date();
+			try {
+				dateformat = DateTimeFormat.parse(DateTimeFormat.format(date));
+				dateformat=DateFormat.parse(DateFormat.format(dateformat));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return dateformat;
+		}
+	
 	// Convert To 24HourTime
 		public static String convert24HourTime(String time)
 		{
@@ -230,7 +248,7 @@ public class InjuryConstants {
 			try {
 				Date convertedDate=dateFormat.parse(fromDate);
 				LocalDate fromLocalDate=new LocalDate(convertedDate);
-				fromLocalDate=fromLocalDate.plusDays(numberOfDays);
+				fromLocalDate=fromLocalDate.plusDays(numberOfDays-1);
 				toDate=dateFormat.format(fromLocalDate.toDate());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block

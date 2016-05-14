@@ -377,7 +377,7 @@ public class PatientService {
 				patient.getCrashReport().getLocalReportNumber(), patient.getCrashSeverity(),
 				patient.getReportingAgencyName(), patient.getNumberOfUnits(),
 				patient.getUnitInError(), patient.getCityVillageTownship(),
-				patient.getCrashDate(), patient.getAddedDate(),
+				InjuryConstants.convertMonthFormat(patient.getCrashDate()), InjuryConstants.convertMonthFormat(patient.getAddedDate()),
 				patient.getTimeOfCrash(), patient.getUnitNumber(),
 				patient.getName(), patient.getDateOfBirth(),patient.getAge(),patient.getGender(), 
 				patient.getAddress(),
@@ -431,7 +431,7 @@ public class PatientService {
 			patientForm.getReportingAgencyName(),
 			patientForm.getNumberOfUnits(), patientForm.getUnitInError(),
 			county, patientForm.getCityVillageTownship(),
-			patientForm.getCrashDate(), addedDate.toString("MM/dd/yyyy"),
+			InjuryConstants.convertYearFormat(patientForm.getCrashDate()), addedDate.toDate(),
 			patientForm.getTimeOfCrash(), patientForm.getUnitNumber(),
 			patientForm.getName(), patientForm.getDateOfBirth(),patientForm.getAge(),
 			patientForm.getGender(), patientForm.getAddress(),
@@ -455,8 +455,8 @@ public class PatientService {
 
 		PatientViewForm patientViewForm = new PatientViewForm(patient.getPatientId(),
 				patient.getCrashReport().getLocalReportNumber(),
-				patient.getCrashDate(), patient.getCrashSeverity(),
-				patient.getAddedDate(), patient.getName(),patient.getCrashReport().getFilePath());
+				InjuryConstants.convertMonthFormat(patient.getCrashDate()), patient.getCrashSeverity(),
+				InjuryConstants.convertMonthFormat(patient.getAddedDate()), patient.getName(),patient.getCrashReport().getFilePath());
 
 		// Null Exception Check
 		if (patient.getCounty() != null) {

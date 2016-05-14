@@ -18,4 +18,6 @@ public interface CrashReportDAO extends IGenericDAO<CrashReport>{
 	
 	public Long getLocalReportNumberCount(String localReportNumber);
 	public Long getCrashReportCountByLocalReportNumber(String localReportNumber);
+	
+	public List<CrashReport> getSixMonthOldCrashReports();
 }

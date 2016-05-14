@@ -3,6 +3,7 @@ package com.deemsys.project.entity;
 // Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -16,6 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -33,8 +36,8 @@ public class Patient implements java.io.Serializable {
 	private String unitInError;
 	private County county;
 	private String cityVillageTownship;
-	private String crashDate;
-	private String addedDate;
+	private Date crashDate;
+	private Date addedDate;
 	private String timeOfCrash;
 	private String unitNumber;
 	private String name;
@@ -70,7 +73,7 @@ public class Patient implements java.io.Serializable {
 	public Patient(String patientId,CrashReport crashReport,String localReportNumber,
 			String crashSeverity, String reportingAgencyName,
 			String numberOfUnits, String unitInError, County county,
-			String cityVillageTownship, String crashDate,String addedDate, String timeOfCrash,
+			String cityVillageTownship, Date crashDate,Date addedDate, String timeOfCrash,
 			String unitNumber, String name, String dateOfBirth,String age,String gender,
 			String address, Double latitude, Double longitude,
 			String phoneNumber, String injuries, String emsAgency,
@@ -190,23 +193,24 @@ public class Patient implements java.io.Serializable {
 	public void setCityVillageTownship(String cityVillageTownship) {
 		this.cityVillageTownship = cityVillageTownship;
 	}
-
-	@Column(name = "crash_date", length = 45)
-	public String getCrashDate() {
+	@Temporal(TemporalType.DATE)
+	@Column(name = "crash_date", length = 10)
+	public Date getCrashDate() {
 		return this.crashDate;
 	}
 
-	public void setCrashDate(String crashDate) {
+	public void setCrashDate(Date crashDate) {
 		this.crashDate = crashDate;
 	}
 
 	
-	@Column(name = "added_date", length = 45)
-	public String getAddedDate() {
+	@Temporal(TemporalType.DATE)
+	@Column(name = "added_date",length = 10)
+	public Date getAddedDate() {
 		return addedDate;
 	}
 
-	public void setAddedDate(String addedDate) {
+	public void setAddedDate(Date addedDate) {
 		this.addedDate = addedDate;
 	}
 
@@ -390,7 +394,7 @@ public class Patient implements java.io.Serializable {
 		this.status = status;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patient", cascade=CascadeType.REMOVE)
 	public Set<PatientCallerAdminMap> getPatientCallerAdminMaps() {
 		return this.patientCallerAdminMaps;
 	}
@@ -400,7 +404,7 @@ public class Patient implements java.io.Serializable {
 		this.patientCallerAdminMaps = patientCallerAdminMaps;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patient",cascade=CascadeType.REMOVE)
 	public Set<PatientLawyerAdminMap> getPatientLawyerAdminMaps() {
 		return this.patientLawyerAdminMaps;
 	}

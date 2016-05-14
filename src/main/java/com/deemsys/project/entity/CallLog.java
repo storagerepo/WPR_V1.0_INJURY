@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -120,7 +122,7 @@ public class CallLog implements java.io.Serializable {
 		this.status = status;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "callLog")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "callLog",cascade=CascadeType.REMOVE)
 	public Set<Appointments> getAppointmentses() {
 		return this.appointmentses;
 	}

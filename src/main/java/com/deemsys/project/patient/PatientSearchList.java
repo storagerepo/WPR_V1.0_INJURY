@@ -1,15 +1,10 @@
 package com.deemsys.project.patient;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.Date;
 
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.common.InjuryProperties;
-import com.deemsys.project.entity.Caller;
-import com.deemsys.project.entity.CallerAdmin;
-import com.deemsys.project.entity.County;
-import com.deemsys.project.entity.Patient;
-import com.deemsys.project.entity.PatientCallerAdminMapId;
+
 
 public class PatientSearchList extends InjuryProperties{
 	private String patientId;
@@ -207,14 +202,14 @@ public class PatientSearchList extends InjuryProperties{
 	public String getCrashDate() {
 		return crashDate;
 	}
-	public void setCrashDate(String crashDate) {
-		this.crashDate = crashDate;
+	public void setCrashDate(Date crashDate) {
+		this.crashDate = InjuryConstants.convertMonthFormat(crashDate);
 	}
 	public String getAddedDate() {
 		return addedDate;
 	}
-	public void setAddedDate(String addedDate) {
-		this.addedDate = addedDate;
+	public void setAddedDate(Date addedDate) {
+		this.addedDate = InjuryConstants.convertMonthFormat(addedDate);
 	}
 	public Integer getNumberOfPatients() {
 		return numberOfPatients;

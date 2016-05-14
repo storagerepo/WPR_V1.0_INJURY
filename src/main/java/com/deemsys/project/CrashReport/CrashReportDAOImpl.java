@@ -14,12 +14,15 @@ import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.mapping.Array;
+import org.hibernate.transform.AliasToBeanConstructorResultTransformer;
 import org.hibernate.transform.AliasToBeanResultTransformer;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.Patient;
 import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
@@ -170,10 +173,10 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 			criteria.add(Restrictions.eq("c1.countyId", Integer.parseInt(county)));
 		}
 		if(crashFromDate!=""){
-			criteria.add(Restrictions.between("crashDate", crashFromDate, crashToDate));
+			criteria.add(Restrictions.between("crashDate", InjuryConstants.convertYearFormat(crashFromDate), InjuryConstants.convertYearFormat(crashToDate)));
 		}
 		if(addedFromDate!=""){
-			criteria.add(Restrictions.between("addedDate", addedFromDate, addedToDate));
+			criteria.add(Restrictions.between("addedDate", InjuryConstants.convertYearFormat(addedFromDate), InjuryConstants.convertYearFormat(addedToDate)));
 		}
 		if(crashId!=""){
 			criteria.add(Restrictions.eq("crashId", crashId));
@@ -197,6 +200,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		
 		criteria.setProjection(projectionList);
 				//criteria.setResultTransformer(new AliasToBeanResultTransformer(CrashReportForm.class)).list().size();
+		//new AliasToBeanConstructorResultTransformer(CrashReportForm.class.getConstructors()[1])
 		
 		crashReportForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(CrashReportForm.class)).setFirstResult((pageNumber-1)*recordsPerPage).setMaxResults(recordsPerPage).list();
 				
@@ -279,6 +283,16 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		criteria.add(Restrictions.eq("localReportNumber", localReportNumber));
 		Long localReportNumberCount=(Long) criteria.setProjection(Projections.count("crashId")).uniqueResult();
 		return localReportNumberCount;
+	}
+
+	@Override
+	public List<CrashReport> getSixMonthOldCrashReports() {
+		// TODO Auto-generated method stub
+		LocalDate localDate1=new LocalDate().minusMonths(6);
+		String date=localDate1.toString("yyyy-MM-dd");
+		System.out.println("Previous 6 Month Date 1......"+date);
+		List<CrashReport> crashReports=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).add(Restrictions.le("addedDate", date)).list();
+		return crashReports;
 	}
 
 }

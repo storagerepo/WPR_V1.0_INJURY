@@ -66,5 +66,7 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 	
 	public Patient getPatientByPatientIdAndCallerAdminId(String patientId,Integer callerAdminId);
 	
+	public void deletePatientByPatientId(String patientId);
 	
+	public List<Patient> getSixMonthPatientsList();
 }

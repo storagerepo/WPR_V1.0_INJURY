@@ -2,15 +2,19 @@ package com.deemsys.project.entity;
 
 // Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
@@ -28,9 +32,9 @@ public class CrashReport implements java.io.Serializable {
 	private CrashReportError crashReportError;
 	private String localReportNumber;
 	private String crashId;
-	private String crashDate;
+	private Date crashDate;
 	private County county;
-	private String addedDate;
+	private Date addedDate;
 	private String filePath;
 	private Integer status;
 	private Integer numberOfPatients;
@@ -40,8 +44,8 @@ public class CrashReport implements java.io.Serializable {
 	}
 
 	public CrashReport(CrashReportError crashReportError,
-			String localReportNumber, String crashId, String crashDate,
-			County county, String addedDate, String filePath,Integer numberOfPatients,Integer status) {
+			String localReportNumber, String crashId, Date crashDate,
+			County county, Date addedDate, String filePath,Integer numberOfPatients,Integer status) {
 		this.crashReportError = crashReportError;
 		this.localReportNumber = localReportNumber;
 		this.crashId = crashId;
@@ -83,12 +87,13 @@ public class CrashReport implements java.io.Serializable {
 		this.crashId = crashId;
 	}
 
-	@Column(name = "crash_date", length = 45)
-	public String getCrashDate() {
+	@Temporal(TemporalType.DATE)
+	@Column(name = "crash_date", length = 10)
+	public Date getCrashDate() {
 		return this.crashDate;
 	}
 
-	public void setCrashDate(String crashDate) {
+	public void setCrashDate(Date crashDate) {
 		this.crashDate = crashDate;
 	}
 
@@ -101,13 +106,14 @@ public class CrashReport implements java.io.Serializable {
 	public void setCounty(County county) {
 		this.county = county;
 	}
-
+	
+	@Temporal(TemporalType.DATE)
 	@Column(name = "added_date", length = 45)
-	public String getAddedDate() {
+	public Date getAddedDate() {
 		return this.addedDate;
 	}
 
-	public void setAddedDate(String addedDate) {
+	public void setAddedDate(Date addedDate) {
 		this.addedDate = addedDate;
 	}
 
@@ -138,7 +144,7 @@ public class CrashReport implements java.io.Serializable {
 		this.status = status;
 	}
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "crashReport")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "crashReport",cascade=CascadeType.ALL)
 	public Set<Patient> getPatients() {
 		return patients;
 	}

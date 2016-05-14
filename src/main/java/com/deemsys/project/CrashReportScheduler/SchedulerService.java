@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.deemsys.project.ArchivedPatient.ArchivedPatientService;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 import com.deemsys.project.pdfcrashreport.PDFReadAndInsertService;
@@ -33,6 +34,9 @@ public class SchedulerService {
 	
 	@Autowired
 	InjuryProperties injuryProperties;
+	
+	@Autowired
+	ArchivedPatientService archivedPatientService;
 	
 	/**
 	 * You can opt for cron expression or fixedRate or fixedDelay
@@ -62,5 +66,48 @@ public class SchedulerService {
 			
 	}
 	
+	// Schedule At Every Day Mid Night 12 AM For Delete Six Month Old Data
+	@Scheduled(cron="0 0 0 * * ?")
+	public void doScheduleForDeleteOldData() {
+		worker.work();
+			try
+			{
+				System.out.println("Start Delete Old Data");
+				if(injuryProperties.getProperty("sixMonthOldDataDelete").equals("on")){
+					System.out.println("Auto Delete ON");
+					archivedPatientService.getSixMonthOldPatientsAndDelete();
+				}else{
+					System.out.println("Auto Delete Off");
+				}
+				System.out.println("End Delete Old Data");
+			}
+			catch(Exception ex)
+			{
+				System.out.println(ex.toString());
+			}
+			
+	}
+	
+	/*// Schedule At Every One Hour
+	@Scheduled(cron="0 0 0/1 * * ?")
+	public void doScheduleForMissingReports() {
+		worker.work();
+		try
+			{
+				System.out.println("Start Second Scheduler for Missing Reports");
+				if(injuryProperties.getProperty("autoDownloadCrash").equals("on")){
+					archivedPatientService.saveArchivedPatientAndDeleteOldData();
+				}else{
+					System.out.println("Second Scheduler is Off");
+				}
+				System.out.println("End Second Scheduler");
+			 }
+			catch(Exception ex)
+			{
+				System.out.println(ex.toString());
+			}
+				
+	}
+	*/
 
 }

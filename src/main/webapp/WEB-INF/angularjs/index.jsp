@@ -94,9 +94,9 @@
 
 
     </head>
-    <body>
+    <body ng-app="sbAdminApp">
 	
-    <div class="margin-top-30" ng-app="sbAdminApp">
+    <div class="margin-top-30">
 
         <div ui-view></div>
 		<div ng-controller="authenticationController"></div>
