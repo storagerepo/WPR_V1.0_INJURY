@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.CrashReport.CrashReportDAO;
-import com.deemsys.project.entity.ArchivedCrashReport;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.pdfcrashreport.AWSFileUpload;
 

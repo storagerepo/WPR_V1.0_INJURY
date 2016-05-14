@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.deemsys.project.ArchivedCrashReport.ArchivedCrashReportDAO;
 import com.deemsys.project.ArchivedCrashReport.ArchivedCrashReportService;
-import com.deemsys.project.entity.ArchivedCrashReport;
-import com.deemsys.project.entity.ArchivedPatient;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.Patient;
 import com.deemsys.project.patient.PatientDAO;
