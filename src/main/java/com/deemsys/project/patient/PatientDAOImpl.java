@@ -526,11 +526,11 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		criteria.createAlias("t2.callLogs", "cl1",Criteria.LEFT_JOIN);
 		
 		//Detached
-		DetachedCriteria maxTimeStamp = DetachedCriteria.forClass(CallLog.class, "dcl1")
+		DetachedCriteria maxCallLog = DetachedCriteria.forClass(CallLog.class, "dcl1")
 			    .add(Restrictions.and(Restrictions.eqProperty("dcl1.patientCallerAdminMap.id.patientId","t1.patientId"), Restrictions.eq("dcl1.patientCallerAdminMap.id.callerAdminId",callerPatientSearchForm.getCallerAdminId())))
-			    .setProjection(Projections.projectionList().add(Projections.max("dcl1.timeStamp")));
+			    .setProjection(Projections.projectionList().add(Projections.max("dcl1.callLogId")));
 		
-		criteria.add(Restrictions.or(Subqueries.propertyEq("cl1.timeStamp", maxTimeStamp), Restrictions.isNull("cl1.timeStamp")));
+		criteria.add(Restrictions.or(Subqueries.propertyEq("cl1.callLogId", maxCallLog), Restrictions.isNull("cl1.timeStamp")));
 		
 		
 	}else if(role.equals("ROLE_LAWYER_ADMIN")||role.equals("ROLE_LAWYER")){
