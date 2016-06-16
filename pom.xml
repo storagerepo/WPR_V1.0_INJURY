@@ -317,8 +317,25 @@
 	<groupId>org.apache.httpcomponents</groupId>
 	<artifactId>httpclient</artifactId>
 	<version>4.5.2</version>
-</dependency>
-	   
+	</dependency>
+ <!--javax.mail/javax.mail-api -->
+	<dependency>
+    	<groupId>javax.mail</groupId>
+    	<artifactId>javax.mail-api</artifactId>
+    	<version>1.5.5</version>
+	</dependency>
+ <!-- http://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+	<dependency>
+    	<groupId>com.sun.mail</groupId>
+    	<artifactId>javax.mail</artifactId>
+   	 	<version>1.5.5</version>
+	</dependency>
+<!-- Veloctiy -->
+	<dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
 	            
 	    <dependency>
 	<groupId>commons-logging</groupId>

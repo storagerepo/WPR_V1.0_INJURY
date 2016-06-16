@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<body>
+Hi &nbsp;<p/>
+<br/>
+Below are the contact details of who interested in our CrashReportsOnline application.<br/>
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg .tg-942u{background-color:#cbcefb;vertical-align:top;width: 20%;}
+.tg .tg-yw4l{vertical-align:top}
+</style>
+<table class="tg">
+  <tr>
+    <td class="tg-942u">First Name</td>
+    <td class="tg-yw4l">${firstName}</td>
+  </tr>
+  <tr>
+    <td class="tg-942u">Last Name</td>
+    <td class="tg-yw4l">${lastName}</td>
+  </tr>
+  <tr>
+    <td class="tg-942u">Email ID</td>
+    <td class="tg-yw4l">${emailId}</td>
+  </tr>
+  <tr>
+    <td class="tg-942u">Phone Number</td>
+    <td class="tg-yw4l">${phoneNumber}</td>
+  </tr>
+ <tr>
+    <td class="tg-942u">Subject</td>
+    <td class="tg-yw4l">${subject}</td>
+  </tr>
+<tr>
+    <td class="tg-942u">Message</td>
+    <td class="tg-yw4l">${message}</td>
+  </tr>
+</table>
+
+<br/>
+Thanks & Regards,<br/>
+CrashReportsOnline - Sales Team,<br/>
+<br/>
+<a href="www.crashreportsonline.com">www.crashreportsonline.com </a>
+
+</body>
+</html>

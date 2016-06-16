@@ -21,7 +21,9 @@
 			after="BASIC_AUTH_FILTER" />
 		 <access-denied-handler error-page="/logout" /> 
 	</http>
-
+	<!-- Non secure URLs -->
+	<http pattern="/marketing" security='none' />
+	
 	<!-- Roles and URL protection -->
 	<http pattern="/CAdmin/**" create-session="never" use-expressions="true"
 		entry-point-ref="oauthAuthenticationEntryPoint"

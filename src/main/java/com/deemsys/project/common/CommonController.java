@@ -70,6 +70,12 @@ public class CommonController {
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
-
+    
+    @RequestMapping(value="/marketing",method=RequestMethod.GET)
+   	public String marketing(ModelMap model)
+   	{
+       	model.addAttribute("Success",true);
+   		return "/marketing";
+   	}
     
 }
