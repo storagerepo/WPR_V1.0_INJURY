@@ -1,3 +1,7 @@
+<link rel="stylesheet"
+	href="resources/components/datetime/datetimepicker.css"></link>
+<script src="resources/components/datetime/moment.js"></script>
+<script src="resources/components/datetime/datetimepicker.js"></script>
 <div class="row">
 	<div class="col-lg-12">
 		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>	
@@ -14,40 +18,53 @@
 
 						<thead>
 							<tr>
-								
-								<th  width="20%" ng-mousedown="sort('firstName')">Firstname&nbsp;&nbsp;<span
+								<th  width="14%">Date</th>
+								<th  width="13%" ng-mousedown="sort('firstName')">First Name&nbsp;&nbsp;<span
 									class="glyphicon sort-icon" ng-show="sortKey=='firstName'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-								<th  width="15%">Lastname</th>
-								<th  width="15%">Phone Number</th>
-								<th  width="20%">Email ID</th>
-								<th  width="20%">Subject</th>
-								<th width="10%">Actions</th>
+								<th  width="13%">Last Name</th>
+								<th  width="18%">Email ID</th>
+								<th  width="16%">Firm Name</th>
+								<th  width="12%">Status</th>
+								<th width="12%">Actions</th>
 						
 							</tr>
 
 							<tr>
+							<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon4"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.addedDate" placeholder="Date"></div></th>
 								<th>
 								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon2"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
-									ng-model="search.firstName" placeholder="Firstname"></div></th>
+									ng-model="search.firstName" placeholder="First Name"></div></th>
 								<th>
 								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
-									ng-model="search.lastName" placeholder="Lastname"></div></th>
-								<th>
-								<div class="input-group">
-  								<span class="input-group-addon search" id="basic-addon4"><i class="fa fa-search"></i></span>
-								<input class="form-control" type="text"
-									ng-model="search.phoneNumber" placeholder="Phone No"></div></th>
+									ng-model="search.lastName" placeholder="Last Name"></div></th>
+								
 								<th>
 								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon5"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
 									ng-model="search.email" placeholder="Email ID"></div></th>
-								<th></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon5"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.firmName" placeholder="Firm Name"></div>
+								</th>
+								<th><select ng-model="search.status" class="form-control">
+								<option value="">All</option>
+								<option value="0">Interest Received</option>
+								<option value="1">Response Sent</option>
+								<option value="2">Demo Set Up</option>
+								<option value="3">Demo Completed</option>
+								</select></th>
 								<th></th>	
 								
 							</tr>
@@ -55,29 +72,32 @@
 						<tbody>
 
 							<tr  ng-show="contactUsList.length>0"  dir-paginate="contactUs in contactFilter=(contactUsList|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows)">
+								<td class="wrap" ng-cloak>{{contactUs.addedDate}}</td>
 								<td class="wrap" ng-cloak>{{contactUs.firstName}}</td>
 								<td class="wrap" ng-cloak>{{contactUs.lastName}}</td>
-								<td class="wrap" ng-cloak>{{contactUs.phoneNumber}}</td>
 								<td class="wrap" ng-cloak>{{contactUs.email}}</td>
-								<td class="wrap" ng-cloak>{{contactUs.subject}}</td>
+								<td class="wrap" ng-cloak>{{contactUs.firmName}}</td>
+								<td class="wrap" ng-cloak>{{contactUs.statusText}}</td>
 								<td>
 								<a href="" ng-cloak class="btn btn-xs btn-primary hint--top" data-hint="View" ng-click="getContactUsDetail(contactUs.id);"><i
 								class="fa fa-eye"></i>
 								</a>
-						<a href="" ng-cloak ng-click="deleteContactUsConfirmation(contactUs.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete"><i
-								class="fa fa-trash"></i>
+								<a href="" ng-show="contactUs.status==0" ng-cloak ng-click="sendResponseMailModal(contactUs.id,contactUs.email)" class="btn btn-xs btn-success hint--top" data-hint="Send Response"><i
+								class="fa fa-envelope"></i>
 						</a>
-						<a href="" ng-show="contactUs.status==0" ng-cloak ng-click="changeContactStatus(contactUs.id)" class="btn btn-xs btn-warning hint--top" data-hint="Change Status"><i
+						<a href="" ng-show="contactUs.status!=3 && contactUs.status!=0" ng-cloak ng-click="changeContactStatusModal(contactUs.id,contactUs.status)" class="btn btn-xs btn-warning hint--top" data-hint="Change Status"><i
 								class="fa fa-phone"></i>
 						</a>
-						<label ng-show="contactUs.status==1" ng-cloak class="btn btn-xs btn-success hint--top" data-hint="Contacted"><i
+						<label ng-show="contactUs.status==3" ng-cloak class="btn btn-xs btn-success hint--top" data-hint="Date: {{contactUs.logDateTime}}&nbsp; | &nbsp;Contacted By: {{contactUs.updatedBy}}"><i
 								class="fa fa-check-square-o"></i>
 						</label>
-								
+							<a href="" ng-cloak ng-click="deleteContactUsConfirmation(contactUs.id)" class="btn btn-xs btn-danger hint--top" data-hint="Delete"><i
+								class="fa fa-trash"></i>
+						</a>	
 							 </td>
 							</tr>
 							<tr ng-show="!contactFilter.length || !contactFilter.length">
-				<td colspan="6" align="center">No Records Found</td>
+				<td colspan="7" align="center">No Records Found</td>
 				</tr>
 						</tbody>
 						
@@ -99,7 +119,7 @@
 		<!-- /.panel -->
 	<!-- /.col-lg-12 -->
 </div>
-
+<!-- Delete Confirm Modal -->
   <div class="modal fade" id="deleteContactUsModal" role="dialog">
     <div class="modal-dialog">    
       <!-- Modal content-->
@@ -143,12 +163,16 @@
               <td class="col-md-3">{{contactUsDetail.email}}</td>
               </tr>
               <tr>
-              <td class="col-md-3">Subject</td>
-              <td class="col-md-9" colspan="3" >{{contactUsDetail.subject}}</td>
+              <td class="col-md-3">Firm Name</td>
+              <td class="col-md-3">{{contactUsDetail.firmName}}</td>
+              <td class="col-md-3">Log Date Time</td>
+              <td class="col-md-3" ng-show="contactUsDetail.logDateTime!=''">{{contactUsDetail.logDateTime}}</td>
+              <td class="col-md-3" ng-show="contactUsDetail.logDateTime==''"></td>
               </tr>
                <tr>
-              <td class="col-md-3">Message</td>
-              <td class="col-md-9" colspan="3" >{{contactUsDetail.message}}</td>
+              <td class="col-md-3">Contacted By</td>
+              <td class="col-md-3" colspan="3" ng-show="contactUsDetail.updatedBy!=''">{{contactUsDetail.updatedBy}}</td>
+              <td class="col-md-3" colspan="3" ng-show="contactUsDetail.updatedBy==''"></td>
               </tr>
               </table>
         </div>
@@ -159,3 +183,116 @@
       
     </div>
  </div>
+ <!-- Change Status Modal -->
+  <div class="modal fade" id="changeStatusModal" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Change Status </h4>
+        </div>
+        <div class="modal-body">
+        <form name="contactUsChangeStatusForm" novalidate>
+         <label>Status</label>
+        <select class="form-control" ng-model="contactUsForm.status"
+						name="response" id="response" ng-change="getLogDetails()" required>
+						<option value="">-- Select Status --</option>
+						<option value="1">Response Sent </option>
+						<option value="2">Demo Set Up</option>
+						<option value="3">Demo Completed</option>
+					</select><br/>
+				<div ng-show="contactUsForm.status==3">
+              <label>Date and Time</label>
+					<div class="input-group">
+						<input type="text" name="logDateTime" id="logDateTime"
+							class="form-control" ng-model="contactUsForm.logDateTime"
+							placeholder="Date and Time" ng-required="contactUsForm.status==3">
+						<span class="input-group-addon white-color-bg"> <span
+							class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+					<span class="error-container"
+						ng-show="contactUsChangeStatusForm.logDateTime.$dirty && contactUsChangeStatusForm.logDateTime.$invalid && !contactUsChangeStatusForm.logDateTime.$prestine">
+						<span style="color: red" ng-show="contactUsChangeStatusForm.logDateTime.$error.required"
+						id="Error">Please Enter Date and Time</span>
+					</span>
+					<br/>
+					<label>Contacted By</label>
+					<input type="text" name="updatedBy"
+							class="form-control" ng-model="contactUsForm.updatedBy"
+							placeholder="Contacted By" ng-required="contactUsForm.status==3" maxlength="45">
+					<span class="error-container"
+						ng-show="contactUsChangeStatusForm.updatedBy.$dirty && contactUsChangeStatusForm.updatedBy.$invalid && !contactUsChangeStatusForm.updatedBy.$prestine">
+						<span style="color: red" ng-show="contactUsChangeStatusForm.updatedBy.$error.required"
+						id="Error">Please Enter Contacted By</span>
+						<!-- <span style="color: red" ng-show="!contactUsChangeStatusForm.updatedBy.$error.required&&contactUsChangeStatusForm.updatedBy.$error.validateName"
+						id="Error">Please Enter Valid Name</span> -->
+					</span>
+			</div>
+			</form>
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
+             <a class="btn btn-success" ng-disabled='contactUsChangeStatusForm.$invalid' ng-click="changeStatus()">Change</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+ <!-- Send Response Mail Modal -->
+  <div class="modal fade" id="sendResponseMailModal" role="dialog">
+    <div class="modal-dialog modal-lg">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Send Response</h4>
+        </div>
+        <div class="modal-body">
+        <form name="contactUsSendMailForm">
+        <label>To Email</label>
+       <input type="text" name="mailsubject"
+							class="form-control" ng-model="userEmail"
+							placeholder="Email" readonly="readonly">
+			<span style="color: red" ng-show="showError">{{error}}</span><br/>
+         <label>Subject</label>
+       <input type="text" name="mailsubject"
+							class="form-control" ng-model="contactUsFormMail.subject"
+							placeholder="Subject" required>
+							<span class="error-container"
+						ng-show="contactUsSendMailForm.mailsubject.$dirty && contactUsSendMailForm.mailsubject.$invalid && !contactUsSendMailForm.mailsubject.$prestine">
+						<span style="color: red" ng-show="contactUsSendMailForm.mailsubject.$error.required"
+						id="Error">Please Enter Subject</span>
+					</span>
+							<br/>
+				<label>Message</label>
+       <textarea name="mailmessage"
+							class="form-control" ng-model="contactUsFormMail.bodyMessage"
+							placeholder="Message" required rows="10"></textarea>
+							<span class="error-container"
+						ng-show="contactUsSendMailForm.mailmessage.$dirty && contactUsSendMailForm.mailmessage.$invalid && !contactUsSendMailForm.mailmessage.$prestine">
+						<span style="color: red" ng-show="contactUsSendMailForm.mailmessage.$error.required">Please Enter Message</span>
+					</span>
+			</form>
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
+             <a class="btn btn-success" ng-disabled='contactUsSendMailForm.$invalid || sendDisable' ng-click="sendResponseMail()">{{sendText}}</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+ <script>
+ $('#logDateTime').datetimepicker({
+		pickTime : true,
+		format:'MM/DD/YYYY hh:mm:ss A',
+		maxDate : new Date()
+	});
+$('#logDateTime').keydown(function(e){
+e.preventDefault();
+});
+$('#logDateTime').bind("cut copy paste",function(e) {
+e.preventDefault();
+});	
+ </script>

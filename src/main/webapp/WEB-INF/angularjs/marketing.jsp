@@ -3,6 +3,8 @@
 <head>
 <title>Crash Reports Online</title>
  <link rel="stylesheet" type='text/css' href="resources/components/bootstrap/dist/css/bootstrap.min.css" />
+ 
+    <link rel="stylesheet" href="resources/components/font-awesome/css/font-awesome.min.css" type="text/css">
     <link rel="icon" type="image/png" href="resources/images/favicon.ico">
 <script src="resources/components/jquery/dist/jquery.min.js"></script>
 <link href="resources/styles/marketing-style.css" rel='stylesheet' type='text/css' />
@@ -10,9 +12,12 @@
 
 <!-- Angular JS -->
 <script src="resources/components/angular/angular.min.js"></script>
+<!-- Angular Animation -->
+<script src="resources/components/angular-animate/angular-animate-1.4.3.js"></script>
 <!-- Flash -->
-<script src="resources/components/angular-flash/angular-flash.min.js"></script>
 <link rel="stylesheet" href="resources/components/angular-flash/angular-flash.css">
+<script src="resources/components/angular-flash/angular-flash.min.js"></script>
+
 <!-- Request Handler -->
 <script src="resources/scripts/services/requestHandler.js"></script>
 <!-- Common App -->
@@ -67,7 +72,7 @@
                             <li>No downloading necessary: automatically loads new reports as they come in.</li>
                             <li>4 tiers of accident types, single and multiple cars.</li>
                             <li>Sort by county, date, report number or tier.</li>
-                            <li>List groups reports by reports, so all passengers are together.</li>
+                            <li>List reports by groups, so all passengers are together</li>
                             <li>Minors and injured passengers are color coded.</li>
                             <li>Create an excel spreadsheet of report data by click of a button!</li>
                         </ul>
@@ -78,13 +83,13 @@
                     <div class="h_nav">
                         <h4>company address</h4>
                         <ul class="address">
-                            <li><b>Deemsys Inc</b></li>
+                            <li><i class="fa fa-building primary-color"></i>&nbsp;<b>Deemsys Inc</b></li>
                             <li>800 Cross Pointe Road,</li>
                             <li>Suite A,</li>
                             <li>Gahanna,</li>
                             <li>OH 43230, U.S.A.</li>
                             <li><br/><b>Email ID</b></li>
-                            <li>support@deemsysinc.com</li>
+                            <li><i class="fa fa-envelope primary-color"></i>&nbsp;support@deemsysinc.com</li>
                             <!--<li><br/><b>Follow Us</b></li>-->
                         </ul>
                     </div>
@@ -113,7 +118,7 @@
                         <h4><a>Be the first to jump...</a></h4>
                         <p>Be the first to jump on board with this super quick, state of the art software. We truly are limiting our clients per county so depending on the response; you may not be able to jump on board soon after launch. Free demo online.
                             <br/><br/>
-                            For more information or to become part of this group opportunity, please click this link and fill out your name, email and phone number. A rep will call you within 24 hours.
+                            For more information or to become part of this group opportunity, please fill out the contact us form below. Our representative can schedule a demo for you within 24 hours.
                         </p>
                     </div>
                 </div>
@@ -132,10 +137,9 @@
                         </div>
                         <div class="col-md-6">
                             <span><label>Last Name</label></span>
-                            <span><input name="lastName" ng-model="contactUsForm.lastName" type="text" class="textbox" required validate-name maxlength="45" placeholder="Last Name"></span>
+                            <span><input name="lastName" ng-model="contactUsForm.lastName" type="text" class="textbox" validate-name maxlength="45" placeholder="Last Name"></span>
                              <span class="error-container" ng-show="submitted">
-                                    <span ng-cloak ng-show="contactForm.lastName.$error.required">Please Enter Last Name</span>
-                                    <span ng-cloak ng-show="!contactForm.lastName.$error.required&&contactForm.lastName.$error.validateName">Enter Valid Last Name</span>
+                                    <span ng-cloak ng-show="contactForm.lastName.$error.validateName">Enter Valid Last Name</span>
                             </span>
                         </div>
                         </div>
@@ -149,30 +153,24 @@
                         </div>
                         <div class="col-md-6">
                             <span><label>Mobile</label></span>
-                            <span><input name="phoneNumber" type="text" class="textbox" ng-model="contactUsForm.phoneNumber" required validate-mobile maxlength="20" placeholder="Ex:123-345-6789 or 1234567890"></span>
+                            <span><input name="phoneNumber" type="text" class="textbox" ng-model="contactUsForm.phoneNumber" validate-mobile maxlength="20" placeholder="Ex:123-345-6789 or 1234567890"></span>
                               <span class="error-container" ng-show="submitted">
-	                          			<span ng-cloak ng-show="contactForm.phoneNumber.$error.required">Please Enter Phone Number</span>
-	                          			<span ng-cloak ng-show="!contactForm.phoneNumber.$error.required&&contactForm.phoneNumber.$error.validateMobile">Enter Valid Phone Number</span>
+	                          			<span ng-cloak ng-show="contactForm.phoneNumber.$error.validateMobile">Enter Valid Phone Number</span>
 	                            </span>
                         </div>
                         <div class="col-md-12">
-                            <span><label>Subject</label></span>
-                            <span><input class="fullwidth" name="subject" ng-model="contactUsForm.subject" type="text" class="textbox" required maxlength="150" placeholder="Subject"></span>
+                            <span><label>Firm Name</label></span>
+                            <span><input class="fullwidth" name="firmName" ng-model="contactUsForm.firmName" type="text" class="textbox" required maxlength="150" placeholder="Firm Name"></span>
                         	  <span class="error-container" ng-show="submitted">
-	                          			<span ng-cloak ng-show="contactForm.subject.$error.required">Please Enter Subject</span>
+	                          			<span ng-cloak ng-show="contactForm.firmName.$error.required">Please Enter Firm Name</span>
 	                          	</span>
                         </div>
-                        <div class="col-md-12">
-                            <span><label>Message</label></span>
-                            <span><textarea class="fullwidth" name="message" ng-model="contactUsForm.message" required maxlength="5000" placeholder="Message"> </textarea></span>
-                              <span class="error-container" ng-show="submitted">
-	                          			<span ng-cloak ng-show="contactForm.message.$error.required">Please Enter Messsage</span>
-	                            </span>
-                        </div>
-                        <div class="col-md-12">
+                        <div class="col-md-3">
                             <span><input type="submit" class="pull-left" value="{{submitText}}" ng-disabled="isSubmit" ng-click="submitted=true"></span>
-                            <span class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <div flash-message="2000" class="col-md-5 pull-left"></div>	
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div flash-message="2000"></div>	
                         </div>
                         <div class="col-md-12">
                             <br/><br/>

@@ -60,7 +60,7 @@ public class ContactUsDAOImpl implements ContactUsDAO{
 	@Override
 	public List<ContactUs> getAll() {
 		// TODO Auto-generated method stub
-		return this.sessionFactory.getCurrentSession().createCriteria(ContactUs.class).addOrder(Order.desc("date")).list();
+		return this.sessionFactory.getCurrentSession().createCriteria(ContactUs.class).addOrder(Order.desc("id")).list();
 	}
 
 	@Override

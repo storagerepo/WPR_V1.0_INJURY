@@ -20,9 +20,10 @@ public class ContactUs {
 	private String lastName;
 	private String email;
 	private String phoneNumber;
-	private String subject;
-	private String message;
-	private Date date;
+	private String firmName;
+	private Date addedDateTime;
+	private Date logDateTime;
+	private String updatedBy;
 	private Integer status;
 	
 	@Id
@@ -62,27 +63,35 @@ public class ContactUs {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	@Column(name = "subject", length = 150)
-	public String getSubject() {
-		return subject;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "added_date_time",length = 19)
+	public Date getAddedDateTime() {
+		return addedDateTime;
 	}
-	public void setSubject(String subject) {
-		this.subject = subject;
+	public void setAddedDateTime(Date addedDateTime) {
+		this.addedDateTime = addedDateTime;
 	}
-	@Column(name = "message", length = 5000)
-	public String getMessage() {
-		return message;
+	@Column(name = "firm_name",length = 150)
+	public String getFirmName() {
+		return firmName;
 	}
-	public void setMessage(String message) {
-		this.message = message;
+	public void setFirmName(String firmName) {
+		this.firmName = firmName;
 	}
-	@Temporal(TemporalType.DATE)
-	@Column(name = "date",length = 10)
-	public Date getDate() {
-		return date;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "log_date_time",length = 19)
+	public Date getLogDateTime() {
+		return logDateTime;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setLogDateTime(Date logDateTime) {
+		this.logDateTime = logDateTime;
+	}
+	@Column(name = "update_by",length = 45)
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 	@Column(name = "status")
 	public Integer getStatus() {
@@ -91,18 +100,19 @@ public class ContactUs {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public ContactUs(Integer id, String firstName, String lastName,
-			String email, String phoneNumber, String subject, String message, Date date,
-			Integer status) {
+	
+	public ContactUs(String firstName, String lastName, String email,
+			String phoneNumber, String firmName, Date addedDateTime, Date logDateTime,
+			String updatedBy, Integer status) {
 		super();
-		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
-		this.subject = subject;
-		this.message = message;
-		this.date = date;
+		this.firmName = firmName;
+		this.addedDateTime = addedDateTime;
+		this.logDateTime = logDateTime;
+		this.updatedBy = updatedBy;
 		this.status = status;
 	}
 	public ContactUs() {

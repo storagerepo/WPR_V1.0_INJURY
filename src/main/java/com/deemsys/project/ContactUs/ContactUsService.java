@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +44,19 @@ public class ContactUsService {
 		
 		for (ContactUs contactUs : contactUss) {
 			//TODO: Fill the List
-			ContactUsForm contactUsForm=new ContactUsForm(contactUs.getId(), contactUs.getFirstName(), contactUs.getLastName(), contactUs.getEmail(), contactUs.getPhoneNumber(), contactUs.getSubject(), contactUs.getMessage(), InjuryConstants.convertMonthFormat(contactUs.getDate()), contactUs.getStatus());
+			String logDateTime="";
+			String lastName="";
+			String phoneNumber="";
+			if(contactUs.getLogDateTime()!=null&&!contactUs.getLogDateTime().equals("")){
+			    logDateTime=InjuryConstants.convertUSAFormatWithTime(contactUs.getLogDateTime());
+			}
+			if(contactUs.getLastName()!=null&&!contactUs.getLastName().equals("")){
+				lastName=contactUs.getLastName();
+			}
+			if(contactUs.getPhoneNumber()!=null&&!contactUs.getPhoneNumber().equals("")){
+				phoneNumber=contactUs.getPhoneNumber();
+			}
+			ContactUsForm contactUsForm=new ContactUsForm(contactUs.getId(), contactUs.getFirstName(), lastName, contactUs.getEmail(), phoneNumber, contactUs.getFirmName(), InjuryConstants.convertUSAFormatWithTime(contactUs.getAddedDateTime()), logDateTime, contactUs.getUpdatedBy(), contactUs.getStatus(),this.getStatusText(contactUs.getStatus()));
 			contactUsForms.add(contactUsForm);
 		}
 		
@@ -58,8 +72,19 @@ public class ContactUsService {
 		
 		//TODO: Convert Entity to Form
 		//Start
-		
-		ContactUsForm contactUsForm=new ContactUsForm(contactUs.getId(), contactUs.getFirstName(), contactUs.getLastName(), contactUs.getEmail(), contactUs.getPhoneNumber(), contactUs.getSubject(), contactUs.getMessage(), InjuryConstants.convertMonthFormat(contactUs.getDate()), contactUs.getStatus());
+		String logDateTime="";
+		String lastName="";
+		String phoneNumber="";
+		if(contactUs.getLogDateTime()!=null&&!contactUs.getLogDateTime().equals("")){
+		    logDateTime=InjuryConstants.convertUSAFormatWithTime(contactUs.getLogDateTime());
+		}
+		if(contactUs.getLastName()!=null&&!contactUs.getLastName().equals("")){
+			lastName=contactUs.getLastName();
+		}
+		if(contactUs.getPhoneNumber()!=null&&!contactUs.getPhoneNumber().equals("")){
+			phoneNumber=contactUs.getPhoneNumber();
+		}
+		ContactUsForm contactUsForm=new ContactUsForm(contactUs.getId(), contactUs.getFirstName(), lastName, contactUs.getEmail(), phoneNumber, contactUs.getFirmName(), InjuryConstants.convertUSAFormatWithTime(contactUs.getAddedDateTime()), logDateTime, contactUs.getUpdatedBy(), contactUs.getStatus(),this.getStatusText(contactUs.getStatus()));
 		
 		//End
 		
@@ -73,7 +98,7 @@ public class ContactUsService {
 		
 		//Logic Starts
 		
-		ContactUs contactUs=new ContactUs(contactUsForm.getId(), contactUsForm.getFirstName(), contactUsForm.getLastName(), contactUsForm.getEmail(), contactUsForm.getPhoneNumber(), contactUsForm.getSubject(), contactUsForm.getMessage(), new Date(),0);
+		ContactUs contactUs= new ContactUs(contactUsForm.getFirstName(), contactUsForm.getLastName(), contactUsForm.getEmail(), contactUsForm.getPhoneNumber(), contactUsForm.getFirmName(), new Date(), null, "", 0);
 		contactUs.setId(contactUsForm.getId());
 		
 		//Logic Ends
@@ -91,7 +116,7 @@ public class ContactUsService {
 		
 		//Logic Starts
 		
-		ContactUs contactUs=new ContactUs(contactUsForm.getId(), contactUsForm.getFirstName(), contactUsForm.getLastName(), contactUsForm.getEmail(), contactUsForm.getPhoneNumber(), contactUsForm.getSubject(), contactUsForm.getMessage(), new Date(),0);
+		ContactUs contactUs= new ContactUs(contactUsForm.getFirstName(), contactUsForm.getLastName(), contactUsForm.getEmail(), contactUsForm.getPhoneNumber(), contactUsForm.getFirmName(), new Date(), null,"", 0);
 		
 		//Logic Ends
 		
@@ -106,7 +131,7 @@ public class ContactUsService {
 		
 		//Logic Starts
 		
-		ContactUs contactUs=new ContactUs(contactUsForm.getId(), contactUsForm.getFirstName(), contactUsForm.getLastName(), contactUsForm.getEmail(), contactUsForm.getPhoneNumber(), contactUsForm.getSubject(), contactUsForm.getMessage(), new Date(),0);
+		ContactUs contactUs= new ContactUs(contactUsForm.getFirstName(), contactUsForm.getLastName(), contactUsForm.getEmail(), contactUsForm.getPhoneNumber(), contactUsForm.getFirmName(), new Date(), null, "",0);
 		contactUs.setId(contactUsForm.getId());
 		//Logic Ends
 		
@@ -122,9 +147,54 @@ public class ContactUsService {
 	}
 	
 	// Change the Status
-	public void changeContactStatus(Integer id){
-		ContactUs contactUs = contactUsDAO.get(id);
+	public void changeContactStatus(ContactUsForm contactUsForm){
+		ContactUs contactUs = contactUsDAO.get(contactUsForm.getId());
+		contactUs.setStatus(contactUsForm.getStatus());
+		if(contactUsForm.getLogDateTime()!=null){
+			contactUs.setLogDateTime(InjuryConstants.convertYearFormatWithTime(contactUsForm.getLogDateTime()));
+		}
+		if(contactUsForm.getUpdatedBy()!=null){
+			contactUs.setUpdatedBy(contactUsForm.getUpdatedBy());
+		}
+		
+		contactUsDAO.merge(contactUs);
+	}
+	
+	//get Status Text
+	public String getStatusText(Integer status){
+		String statusText="";
+		
+		switch (status) {
+		case 0:
+			statusText="Interest Received";
+			break;
+		case 1:
+			statusText="Response Sent";
+			break;
+		case 2:
+			statusText="Demo Set Up";
+			break;
+		case 3:
+			statusText="Demo Completed";
+			break;
+
+		default:
+			break;
+		}
+		
+		return statusText;
+	}
+	
+	// Send Response Mail
+	public void sendResponseMail(ContactUsForm contactUsForm) throws MailSendException,MailException{
+		ContactUs contactUs = contactUsDAO.get(contactUsForm.getId());
 		contactUs.setStatus(1);
+		contactUsForm.setFirmName(contactUs.getFirmName());
+		contactUsForm.setFirstName(contactUs.getFirstName());
+		contactUsForm.setLastName(contactUs.getLastName());
+		contactUsForm.setEmail(contactUs.getEmail());
+		mailService.sendResponseMail(contactUsForm);
+		
 		contactUsDAO.merge(contactUs);
 	}
 }

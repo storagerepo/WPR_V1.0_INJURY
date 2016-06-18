@@ -149,8 +149,8 @@ public class InjuryConstants {
 	// Convert To USA Month Format With Time
 	public static String convertUSAFormatWithTime(Date date)
 	{
-		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date dateformat=new Date();
 		try {
 			dateformat =yearFormat.parse(yearFormat.format(date));

@@ -1,18 +1,18 @@
-var commonApp = angular.module('commonApp', ['requestModule', 'flash']);
+var commonApp = angular.module('commonApp', ['requestModule','flash','ngAnimate']);
 
 commonApp.controller('userContactUsController',function($scope,requestHandler,Flash){
 	$scope.init=function(){
 		$scope.contactUsForm={};
 		$scope.submitted=false;
 		$scope.isSubmit=false;
-		$scope.submitText="Submit Us";
+		$scope.submitText="Submit";
 	};
 	
 	$scope.saveContactUs=function(){
 		$scope.isSubmit=true;
 		$scope.submitText="Submitting....";
 		requestHandler.postRequest("/mergeContactUs.json",$scope.contactUsForm).then(function(){
-			Flash.create('success','Thanks! Our support team will get back soon!!!');
+			Flash.create('success',"&nbsp;&nbsp;&nbsp;&nbsp;Thanks! Our support team will get back soon!!!");
 			$scope.init();
 		});
 	};
@@ -74,7 +74,11 @@ require : 'ngModel',
 restrict : '',
 link : function(scope, elm, attrs, ngModel) {
 	ngModel.$validators.validateName = function(modelValue) {
+		if (modelValue == "" || modelValue == undefined) {
+			return true;
+		}else{
 		return NAME_EXPR.test(modelValue);// ||USA_MOB_EXPR_WITH_BR.test(modelValue);
+		}
 	};
 }
 };

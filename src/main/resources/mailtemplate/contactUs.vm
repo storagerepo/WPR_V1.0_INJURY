@@ -29,13 +29,10 @@ Below are the contact details of who interested in our CrashReportsOnline applic
     <td class="tg-yw4l">${phoneNumber}</td>
   </tr>
  <tr>
-    <td class="tg-942u">Subject</td>
-    <td class="tg-yw4l">${subject}</td>
+    <td class="tg-942u">Firm Name</td>
+    <td class="tg-yw4l">${firmName}</td>
   </tr>
-<tr>
-    <td class="tg-942u">Message</td>
-    <td class="tg-yw4l">${message}</td>
-  </tr>
+
 </table>
 
 <br/>

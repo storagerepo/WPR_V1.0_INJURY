@@ -8,6 +8,8 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -40,15 +42,23 @@ public class MailSender {
 				MimeMessagePreparator preparator = new MimeMessagePreparator() {
 		    		public void prepare(MimeMessage mimeMessage) throws Exception {
 					 MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true);
-					 message.setTo(injuryProperties.getProperty("fromMail"));
-					 message.setFrom(new InternetAddress(injuryProperties.getProperty("toMail")));
+					 message.setTo(injuryProperties.getProperty("toMail"));
+					 message.setFrom(new InternetAddress(injuryProperties.getProperty("fromMail")));
 					 message.setSubject("Contact Us Information");
 					 Map<String,String> model = new HashMap<String,String>();
 					 model.put("firstName",contactUsForm.getFirstName());
-					 model.put("lastName",contactUsForm.getLastName());
-					 model.put("subject", contactUsForm.getSubject());
-					 model.put("message", contactUsForm.getMessage());
-					 model.put("phoneNumber", contactUsForm.getPhoneNumber());
+					 if(contactUsForm.getLastName()!=null && !contactUsForm.getLastName().equals("")){
+						 model.put("lastName",contactUsForm.getLastName());
+					 }else{
+						 model.put("lastName","-");
+					 }
+					 model.put("firmName", contactUsForm.getFirmName());
+					 if(contactUsForm.getPhoneNumber()!=null && !contactUsForm.getPhoneNumber().equals("")){
+						 model.put("phoneNumber", contactUsForm.getPhoneNumber()); 
+					 }else{
+						 model.put("phoneNumber","-");
+					 }
+					
 					 model.put("emailId", contactUsForm.getEmail());
 					String body = VelocityEngineUtils.mergeTemplateIntoString(
 					         velocityEngine, "mailtemplate/" + "contactUs.vm", "UTF-8", model);
@@ -60,4 +70,35 @@ public class MailSender {
 				};
 				this.mailSender.send(preparator);
 		}
+			
+	// Send ContactUs Details As Mail
+	public void sendResponseMail(final ContactUsForm contactUsForm) throws MailSendException, MailException {
+
+		MimeMessagePreparator preparator = new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage,
+						true);
+				message.setTo(contactUsForm.getEmail());
+				message.setFrom(new InternetAddress(injuryProperties.getProperty("fromMail")));
+				message.setSubject(contactUsForm.getSubject());
+				Map<String, String> model = new HashMap<String, String>();
+				model.put("firstName", contactUsForm.getFirstName());
+				if (contactUsForm.getLastName() != null
+						&& !contactUsForm.getLastName().equals("")) {
+					model.put("lastName", contactUsForm.getLastName());
+				} else {
+					model.put("lastName", "");
+				}
+				model.put("firmName", contactUsForm.getFirmName());
+				model.put("bodyMessage", contactUsForm.getBodyMessage());
+				String body = VelocityEngineUtils.mergeTemplateIntoString(
+						velocityEngine, "mailtemplate/" + "response.vm",
+						"UTF-8", model);
+				message.setText(body, true);
+
+			}
+
+		};
+		this.mailSender.send(preparator);
+	}
 }
