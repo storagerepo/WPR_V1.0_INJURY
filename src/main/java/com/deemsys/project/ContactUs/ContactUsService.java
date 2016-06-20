@@ -3,6 +3,8 @@ package com.deemsys.project.ContactUs;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -33,6 +35,9 @@ public class ContactUsService {
 	ContactUsDAO contactUsDAO;
 	@Autowired
 	MailService mailService;
+	
+	// Executor
+	private final ExecutorService executor = Executors.newFixedThreadPool(2);
 	//Get All Entries
 	public List<ContactUsForm> getContactUsList()
 	{
@@ -92,7 +97,7 @@ public class ContactUsService {
 	}
 	
 	//Merge an Entry (Save or Update)
-	public int mergeContactUs(ContactUsForm contactUsForm)
+	public int mergeContactUs(final ContactUsForm contactUsForm)
 	{
 		//TODO: Convert Form to Entity Here
 		
@@ -105,7 +110,16 @@ public class ContactUsService {
 		contactUsDAO.merge(contactUs);
 		
 		// Send Mail
-		mailService.sendContactUsMail(contactUsForm);
+		executor.submit(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				mailService.sendContactUsMail(contactUsForm);
+				System.out.println("Mail Was Sent.....");
+			}
+		});
+		
 		return 1;
 	}
 	
@@ -186,15 +200,24 @@ public class ContactUsService {
 	}
 	
 	// Send Response Mail
-	public void sendResponseMail(ContactUsForm contactUsForm) throws MailSendException,MailException{
+	public void sendResponseMail(final ContactUsForm contactUsForm) throws MailSendException,MailException{
 		ContactUs contactUs = contactUsDAO.get(contactUsForm.getId());
 		contactUs.setStatus(1);
 		contactUsForm.setFirmName(contactUs.getFirmName());
 		contactUsForm.setFirstName(contactUs.getFirstName());
 		contactUsForm.setLastName(contactUs.getLastName());
 		contactUsForm.setEmail(contactUs.getEmail());
-		mailService.sendResponseMail(contactUsForm);
+		executor.submit(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				mailService.sendResponseMail(contactUsForm);
+				System.out.println("Mail was sent.......");
+			}
+		});
 		
 		contactUsDAO.merge(contactUs);
 	}
 }
+
