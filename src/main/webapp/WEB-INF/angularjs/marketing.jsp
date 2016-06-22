@@ -145,10 +145,10 @@
                         </div>
                         <div class="col-md-6">
                             <span><label>E-mail</label></span>
-                            <span><input name="email" ng-model="contactUsForm.email" type="email" validate-email required maxlength="60" placeholder="Email"></span>
+                            <span><input name="email" ng-model="contactUsForm.email" type="email" validate-email required maxlength="60" placeholder="E-mail"></span>
                              <span class="error-container" ng-show="submitted">
-                                    <span ng-cloak ng-show="contactForm.email.$error.required">Please Enter Email Id</span>
-                                    <span ng-cloak ng-show="!contactForm.email.$error.required&&contactForm.email.$error.email">Enter Valid Email</span>
+                                    <span ng-cloak ng-show="contactForm.email.$error.required">Please Enter E-mail</span>
+                                    <span ng-cloak ng-show="!contactForm.email.$error.required&&contactForm.email.$error.email">Enter Valid E-mail</span>
                             </span>
                         </div>
                         <div class="col-md-6">
@@ -160,17 +160,14 @@
                         </div>
                         <div class="col-md-12">
                             <span><label>Firm Name</label></span>
-                            <span><input class="fullwidth" name="firmName" ng-model="contactUsForm.firmName" type="text" class="textbox" required maxlength="150" placeholder="Firm Name"></span>
-                        	  <span class="error-container" ng-show="submitted">
-	                          			<span ng-cloak ng-show="contactForm.firmName.$error.required">Please Enter Firm Name</span>
-	                          	</span>
+                            <span><input class="fullwidth" name="firmName" ng-model="contactUsForm.firmName" type="text" class="textbox" maxlength="150" placeholder="Firm Name"></span>
                         </div>
                         <div class="col-md-3">
                             <span><input type="submit" class="pull-left" value="{{submitText}}" ng-disabled="isSubmit" ng-click="submitted=true"></span>
                         </div>
                         
                         <div class="col-md-6">
-                            <div flash-message="2000"></div>	
+                            <div flash-message="4000"></div>	
                         </div>
                         <div class="col-md-12">
                             <br/><br/>

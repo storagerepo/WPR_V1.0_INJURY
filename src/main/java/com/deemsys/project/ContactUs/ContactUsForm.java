@@ -2,8 +2,12 @@ package com.deemsys.project.ContactUs;
 
 
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
+
+import com.deemsys.project.ContactUsLog.ContactUsLogForm;
+import com.deemsys.project.entity.ContactUsLog;
 
 /**
  * 
@@ -19,12 +23,17 @@ public class ContactUsForm {
 	private String phoneNumber;
 	private String firmName;
 	private String addedDate;
-	private String logDateTime;
-	private String updatedBy;
 	private Integer status;
 	private String statusText;
 	private String subject;
 	private String bodyMessage;
+	private String logDateTime;
+	private String updatedBy;
+	private List<ContactUsLogForm> contactUsLogForms;
+	
+	// For Pojections
+	private Date addedDateTable;
+	private Date logDateTimeTable;
 	
 	public Integer getId() {
 		return id;
@@ -82,22 +91,6 @@ public class ContactUsForm {
 		this.addedDate = addedDate;
 	}
 
-	public String getLogDateTime() {
-		return logDateTime;
-	}
-
-	public void setLogDateTime(String logDateTime) {
-		this.logDateTime = logDateTime;
-	}
-
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
 	public Integer getStatus() {
 		return status;
 	}
@@ -129,10 +122,49 @@ public class ContactUsForm {
 	public void setBodyMessage(String bodyMessage) {
 		this.bodyMessage = bodyMessage;
 	}
+	
+	public String getLogDateTime() {
+		return logDateTime;
+	}
+
+	public void setLogDateTime(String logDateTime) {
+		this.logDateTime = logDateTime;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public List<ContactUsLogForm> getContactUsLogForms() {
+		return contactUsLogForms;
+	}
+
+	public void setContactUsLogForms(List<ContactUsLogForm> contactUsLogForms) {
+		this.contactUsLogForms = contactUsLogForms;
+	}
+	
+	public Date getAddedDateTable() {
+		return addedDateTable;
+	}
+
+	public void setAddedDateTable(Date addedDateTable) {
+		this.addedDateTable = addedDateTable;
+	}
+
+	public Date getLogDateTimeTable() {
+		return logDateTimeTable;
+	}
+
+	public void setLogDateTimeTable(Date logDateTimeTable) {
+		this.logDateTimeTable = logDateTimeTable;
+	}
 
 	public ContactUsForm(Integer id, String firstName, String lastName,
-			String email, String phoneNumber, String firmName, String addedDate,
-			String logDateTime, String updatedBy, Integer status,String statusText) {
+			String email, String phoneNumber, String firmName, String addedDate, Integer status,String statusText) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -141,12 +173,10 @@ public class ContactUsForm {
 		this.phoneNumber = phoneNumber;
 		this.firmName = firmName;
 		this.addedDate = addedDate;
-		this.logDateTime = logDateTime;
-		this.updatedBy = updatedBy;
 		this.status = status;
 		this.statusText = statusText;
 	}
-
+	
 	public ContactUsForm() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -33,5 +33,6 @@
         <mapping class="com.deemsys.project.entity.Users" />
         <mapping class="com.deemsys.project.entity.Roles" />
         <mapping class="com.deemsys.project.entity.ContactUs" />
+        <mapping class="com.deemsys.project.entity.ContactUsLog" />
     </session-factory>
 </hibernate-configuration>
