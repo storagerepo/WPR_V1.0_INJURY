@@ -72,6 +72,7 @@
        		<label>Lawyers</label>
        		<select class="form-control" ng-model="patient.lawyerId">
        			<option value="0" ng-selected="true">All</option>
+       			<option value="-1">N/A</option>
           		<option ng-repeat="lawyer in lawyers" value="{{lawyer.lawyerId}}" ng-selected="{{lawyer.firstName === patient.lawyer}}">{{lawyer.firstName}}&nbsp;{{lawyer.lastName}}</option>
      		</select>
        	</div>

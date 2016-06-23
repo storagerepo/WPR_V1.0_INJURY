@@ -23,9 +23,9 @@
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 								<th  width="15%">Lastname</th>
 								<th  width="15%">Phone Number</th>
-								<th  width="20%">Email ID</th>
+								<th  width="17%">Email ID</th>
 
-								<th width="10%">Actions</th>
+								<th width="13%">Actions</th>
 						
 							</tr>
 
@@ -83,6 +83,9 @@
 						<a href="" ng-cloak ng-click="resetPassword(caller.callerId)" class="btn btn-xs btn-primary hint--top" data-hint="Reset Password"><i
 								class="fa fa-key"></i>
 						</a>
+						<a href="" ng-cloak ng-click="deleteCallerConfirmModal(caller.callerId)" class="btn btn-xs btn-danger hint--top" data-hint="Delete Caller"><i
+								class="fa fa-trash"></i>
+						</a>
 								
 							 </td>
 							</tr>
@@ -125,6 +128,46 @@
         <div class="modal-footer" >
          <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
              <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-disabled='myForm.$invalid' ng-click="resetCallerPassword()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+ <!-- Delete First Confirmation -->
+ <div class="modal fade" id="deleteCallerConfirmOne" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmation </h4>
+        </div>
+        <div class="modal-body">Do you want to delete the caller?
+              
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-click="deleteCaller()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+ <!-- Delete Second Confirmation -->
+ <div class="modal fade" id="deleteCallerConfirmTwo" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmation </h4>
+        </div>
+        <div class="modal-body">Some of the patients are assigned to this caller. Do you want to release and delete the caller?
+              
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">No</button>
+             <a type="submit" class="btn btn-success"  data-dismiss="modal" ng-click="deleteCallerWithMap()">Yes</a>
         </div>
       </div>
       

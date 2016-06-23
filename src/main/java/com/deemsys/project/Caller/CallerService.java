@@ -194,7 +194,7 @@ public class CallerService {
 		users.setIsEnable(1);
 		Caller caller = new Caller(callerAdmin, users, callerForm.getFirstName(),
 				callerForm.getLastName(), callerForm.getPhoneNumber(),
-				callerForm.getEmailAddress(), callerForm.getNotes(), 1, null,null);
+				callerForm.getEmailAddress(), callerForm.getNotes(), 1, 0, null,null);
 		caller.setCallerId(callerForm.getCallerId());
 
 		callerDAO.merge(caller);
@@ -225,7 +225,7 @@ public class CallerService {
 		CallerAdmin callerAdmin = callerAdminDAO.getCallerAdminByUserId(getCurrentUserId());
 		Caller caller = new Caller(callerAdmin, users, callerForm.getFirstName(),
 				callerForm.getLastName(), callerForm.getPhoneNumber(),
-				callerForm.getEmailAddress(), callerForm.getNotes(), 1, null,null);
+				callerForm.getEmailAddress(), callerForm.getNotes(), 1, 0, null,null);
 
 		callerDAO.save(caller);
 
@@ -235,7 +235,6 @@ public class CallerService {
 			CallerCountyMapId callerCountyMapId=new CallerCountyMapId(caller.getCallerId(), countyId);
 			CallerCountyMap callerCountyMap=new CallerCountyMap(callerCountyMapId, caller, county,new Date(),1);
 			callerCountyMapDAO.save(callerCountyMap);
-			
 		}
 		
 		// Logic Ends
@@ -279,23 +278,44 @@ public class CallerService {
 
 	// Delete an Entry
 	public int deleteCaller(Integer id) {
-		List<Patient> patientss = new ArrayList<Patient>();
+		List<PatientCallerAdminMap> patientCallerAdminMaps=patientCallerDAO.getAssignedPatientsByCallerId(id);
 		int status = 0;
-		patientss = callerDAO.getPatientByCallerId(id);
-		if (patientss.size() == 0) {
-			Caller caller = callerDAO.get(id);
-			Users users = usersDAO.get(caller.getUsers().getUserId());
-			usersDAO.delete(users.getUserId());
-
-			callerDAO.delete(id);
-			status = 1;
+		if (patientCallerAdminMaps.size() == 0) {
+			this.hideEntryForDelete(id, 0);
+			status =0;
 		} else {
-			status = 0;
+			status = 1;
 		}
 
 		return status;
 	}
 
+	// Hide Entrty For Delete
+	public Integer hideEntryForDelete(Integer callerId, Integer isMapped) {
+		Integer status = 0;
+		if(isMapped==1){
+			List<PatientCallerAdminMap> patientCallerAdminMaps=patientCallerDAO.getAssignedPatientsByCallerId(callerId);
+			for (PatientCallerAdminMap patientCallerAdminMap : patientCallerAdminMaps) {
+				patientCallerAdminMap.setCaller(null);
+				if(patientCallerAdminMap.getPatientStatus()==1){
+					patientCallerAdminMap.setPatientStatus(null);
+				}
+				patientCallerDAO.merge(patientCallerAdminMap);
+			}
+		}
+		
+		Caller caller = callerDAO.get(callerId);
+		caller.setStatus(0);
+		caller.setIsDelete(1);
+		Users users = usersDAO.get(caller.getUsers().getUserId());
+		users.setIsEnable(0);
+		status = 0;
+		
+		callerDAO.update(caller);
+		usersDAO.update(users);
+		return status;
+	}
+	
 	// Get No Of Callers Under Caller Admin
 	public Integer getNoOfCallers() {
 		List<Caller> callers = new ArrayList<Caller>();

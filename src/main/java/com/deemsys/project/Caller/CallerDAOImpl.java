@@ -211,7 +211,7 @@ public class CallerDAOImpl implements CallerDAO{
 	public List<Caller> getCallerByCallerAdminId(Integer callerAdminId) {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
-		List<Caller> callers=this.sessionFactory.getCurrentSession().createCriteria(Caller.class).add(Restrictions.eq("callerAdmin.callerAdminId", callerAdminId)).list();
+		List<Caller> callers=this.sessionFactory.getCurrentSession().createCriteria(Caller.class).add(Restrictions.and(Restrictions.eq("isDelete", 0),Restrictions.eq("callerAdmin.callerAdminId", callerAdminId))).list();
 		return callers;
 	}
 

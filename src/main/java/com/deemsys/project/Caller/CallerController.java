@@ -58,22 +58,33 @@ public class CallerController {
 	}
 
 	@RequestMapping(value = "/CAdmin/deleteCaller", method = RequestMethod.POST)
-	public String deleteCaller(@RequestParam("id") Integer id, ModelMap model) {
-		int i = 0;
+	public String deleteCaller(@RequestParam("callerId") Integer callerId, ModelMap model) {
+		int status = 0;
 		try {
-			i = callerService.deleteCaller(id);
+			status = callerService.deleteCaller(callerId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		if (i > 0) {
+		if (status > 0) {
+			model.addAttribute("isDeleteable", false);
 			model.addAttribute("requestSuccess", true);
 			return "/returnPage";
 		} else {
-			model.addAttribute("requestSuccess", false);
+			model.addAttribute("isDeleteable", true);
+			model.addAttribute("requestSuccess", true);
 			return "/returnPage";
 
 		}
+	}
+	
+	@RequestMapping(value = "/CAdmin/deleteCallerWithMap", method = RequestMethod.POST)
+	public String deleteCallerWithMap(@RequestParam("callerId") Integer callerId, ModelMap model) {
+		
+			callerService.hideEntryForDelete(callerId, 1);
+			model.addAttribute("requestSuccess", true);
+			return "/returnPage";
+		
 	}
 
 	@RequestMapping(value = "/CAdmin/getAllCallers", method = RequestMethod.GET)

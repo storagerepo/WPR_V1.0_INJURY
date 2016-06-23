@@ -467,10 +467,12 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	
 	
 	//Common Constrain Patient Name
-	Criterion patientNameCriterion=Restrictions.like("t1.name", callerPatientSearchForm.getPatientName(),MatchMode.ANYWHERE);
-	criteria.add(patientNameCriterion);
+	if(!callerPatientSearchForm.getPatientName().equals("")){
+		Criterion patientNameCriterion=Restrictions.like("t1.name", callerPatientSearchForm.getPatientName(),MatchMode.ANYWHERE);
+		criteria.add(patientNameCriterion);
+	}
 	
-	//Common Constrain Patient Name
+	//Common Constrain Phone Number
 	if(!callerPatientSearchForm.getPhoneNumber().equals("")){
 		Criterion patientPhoneCriterion=Restrictions.like("t1.phoneNumber", callerPatientSearchForm.getPhoneNumber(),MatchMode.START);
 		criteria.add(patientPhoneCriterion);
@@ -496,8 +498,13 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		criteria.createAlias("patientCallerAdminMaps", "t2", Criteria.LEFT_JOIN,Restrictions.eq("t2.id.callerAdminId",callerPatientSearchForm.getCallerAdminId()));
 		
 		//Check for caller id
-		if(callerPatientSearchForm.getCallerId()!=0){
+		if(callerPatientSearchForm.getCallerId()!=0&&callerPatientSearchForm.getCallerId()!=-1){
 			Criterion criterion=Restrictions.eq("t2.caller.callerId", callerPatientSearchForm.getCallerId());
+			criteria.add(criterion);
+		}
+		// Check Caller With N/A
+		if(callerPatientSearchForm.getCallerId()==-1){
+			Criterion criterion=Restrictions.isNull("t2.caller.callerId");
 			criteria.add(criterion);
 		}
 		
@@ -542,11 +549,15 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 				
 		
 		//Check for lawyer id
-		if(callerPatientSearchForm.getLawyerId()!=0){
+		if(callerPatientSearchForm.getLawyerId()!=0&&callerPatientSearchForm.getLawyerId()!=-1){
 			Criterion criterion=Restrictions.eq("t2.lawyer.lawyerId", callerPatientSearchForm.getLawyerId());
 			criteria.add(criterion);			
 		}
-		
+		//Check for lawyer N/A
+		if(callerPatientSearchForm.getLawyerId()==-1){
+			Criterion criterion=Restrictions.isNull("t2.lawyer.lawyerId");
+			criteria.add(criterion);			
+		}
 		
 		if(callerPatientSearchForm.getIsArchived()==1){
 			Criterion isArchivecriterion=Restrictions.eq("t2.isArchived", callerPatientSearchForm.getIsArchived());

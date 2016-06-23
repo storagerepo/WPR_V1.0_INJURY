@@ -11,13 +11,13 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
     
     $scope.sortKey = 'username';
     
-    $scope.getCallerAdminList=function(){
+    $scope.getCallersList=function(){
     	requestHandler.getRequest("CAdmin/getCallersByCallerAdmin.json","").then(function(response){
     		$scope.callers=response.data.callerForms;
     	});
     };
     
-    $scope.getCallerAdminList();
+    $scope.getCallersList();
     
     $scope.enableOrDisbaleCaller=function(callerId){
  
@@ -25,7 +25,10 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
     		 $scope.response=response.data.requestSuccess;
 			 if($scope.response==true){
 				 Flash.create('success', "You have Successfully Updated!");
-				 $scope.getCallerAdminList();
+				 $scope.getCallersList();
+				 $(function(){
+						$("html,body").scrollTop(0);
+				});
 			 }
     	});
     };
@@ -40,11 +43,47 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
 					$("#resetCallerPassword").modal("hide");
 					$('.modal-backdrop').hide();
 					Flash.create('success', "You have Successfully Reset the Password!");
-					$scope.getCallerAdminList();
+					$scope.getCallersList();
+					$(function(){
+						$("html,body").scrollTop(0);
+					});
 				}
   	  		});
   	  	};
 	};
+	
+	$scope.deleteCallerConfirmModal=function(callerId){
+		$("#deleteCallerConfirmOne").modal("show");
+  	  	$scope.deleteCaller=function(){
+  	  		requestHandler.postRequest("CAdmin/deleteCaller.json?callerId="+callerId,"").then(function(response) {
+				if(response.data.isDeleteable==true){
+					$("#deleteCallerConfirmOne").modal("hide");
+					$('.modal-backdrop').hide();
+					Flash.create('success', "You have Successfully Deleted the Caller!");
+					$scope.getCallersList();
+					$(function(){
+						$("html,body").scrollTop(0);
+					});
+				}else{
+					$("#deleteCallerConfirmOne").modal("hide");
+					$('.modal-backdrop').hide();
+					$("#deleteCallerConfirmTwo").modal("show");
+					$scope.deleteCallerWithMap=function(){
+						requestHandler.postRequest("CAdmin/deleteCallerWithMap.json?callerId="+callerId,"").then(function(response) {
+							$("#deleteCallerConfirmTwo").modal("hide");
+							$('.modal-backdrop').hide();
+							Flash.create('success', "You have Successfully Deleted the Caller!");
+							$scope.getCallersList();
+							$(function(){
+								$("html,body").scrollTop(0);
+							});
+						});
+					};
+				}
+  	  		});
+  	  	};
+	};
+	
 });
 
 adminApp.controller('SaveCallerController', function($http,$state,$scope,$location,requestHandler,Flash) {

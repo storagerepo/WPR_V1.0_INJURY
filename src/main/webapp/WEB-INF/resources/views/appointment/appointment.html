@@ -89,7 +89,7 @@
             </thead>
             
            	 <tbody>
-	<tr dir-paginate="appointment in appointments|itemsPerPage:searchAppointment.itemsPerPage" total-items="totalRecords" pagination-id="appointmentPageId">
+	<tr dir-paginate="appointment in appointments|itemsPerPage:searchAppointment.itemsPerPage" total-items="totalRecords" current-page="searchAppointment.pageNumber" pagination-id="appointmentPageId">
 		
 		<td ng-cloak>{{appointment.scheduledDateTime}}</td>
 		<td ng-cloak><a href=""  class="hint--top" data-hint="View Patient" ng-cloak ng-click="viewPatientDetailsModal(appointment.patientId)">{{appointment.patientName}}</a></td>

@@ -50,6 +50,7 @@
 	        	<label>Caller</label>
 	       		<select ng-cloak class="form-control input-sm" ng-model="patient.callerId">
 	          		<option value="0">All</option>
+	          		<option value="-1">N/A</option>
 	          		<option ng-repeat="caller in callerList" value="{{caller.callerId}}" ng-selected="{{caller.callerId == patient.callerId}}">{{caller.firstName}} {{caller.lastName}}</option>
 	     		</select>
 	        </div>

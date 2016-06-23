@@ -487,7 +487,7 @@ border-radius:4px !important;
 .bottomspace{
 	padding-bottom:20px!important
 }
-.wrap{
+.wrap-breakall{
 	word-break: break-all!important;
 }
 .white-color-bg{
@@ -648,4 +648,8 @@ fieldset[disabled] .btn-export.active {
 .btn-export .badge {
   color: #2773be;
   background-color: #fff;
+}
+
+.makeLink{
+	cursor: pointer;
 }
