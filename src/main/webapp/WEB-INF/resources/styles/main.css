@@ -487,7 +487,9 @@ border-radius:4px !important;
 .bottomspace{
 	padding-bottom:20px!important
 }
-
+.wrap{
+	word-break: break-all!important;
+}
 .white-color-bg{
 	background-color: white !important;
 }
@@ -501,12 +503,6 @@ input[type=text]::-ms-clear { display: none; }
 }
 .warningText{
 	color:#ffcc00;
-}
-.infoBackground{
-	background-color: lightblue !important;
-}
-.warningBackground{
-	background-color: #fbc35e !important;
 }
 .badge1 {
    position:relative;

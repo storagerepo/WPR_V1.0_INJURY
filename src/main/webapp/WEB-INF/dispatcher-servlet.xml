@@ -98,7 +98,7 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
 		p:url="${jdbc.databaseurl}" p:username="${jdbc.username}" p:password="${jdbc.password}"
-		p:testWhileIdle="true" p:validationQuery="SELECT count(*) FROM injuryreportsdb.users"
+		p:testWhileIdle="true" p:validationQuery="SELECT count(*) FROM injurytest.users"
 		p:testOnBorrow="true" p:removeAbandoned="true" p:minIdle="0" p:maxIdle="8" p:maxActive="-1" p:initialSize="5"
 		p:removeAbandonedTimeout="10" p:defaultAutoCommit="true"/>
 
@@ -128,33 +128,7 @@
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	</bean>
-	
-	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-        <property name="velocityProperties">
-            <value>
-                resource.loader=class
-                class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-            </value>
-        </property>
-    </bean>
-    
- 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	<property name="host" value="server.deemsysinc.com" />
-	<property name="port" value="587" />
-	<property name="username" value="injuryinfo@deemsysinc.com" />
-	<property name="password" value="injury@#123" />
- 
-	<property name="javaMailProperties">
-	   <props>
-       	      <prop key="mail.smtp.auth">true</prop>
-       	      <prop key="mail.smtp.starttls.enable">false</prop>
-       	   </props>
-	</property>
-	</bean>
- 	
- 	<bean id="mailSending" class="com.deemsys.project.mail.MailSender">
-	<property name="mailSender" ref="mailSender" />
-	</bean>
+
 	
 	 <bean id="loginDAO" class="com.deemsys.project.login.loginDAOImpl">    
      </bean>

@@ -1090,25 +1090,7 @@ sbAdminApp
 															$ocLazyLoad) {
 													}
 												}
-											}).state(
-													'dashboard.ContactUs',
-													{
-
-														resolve : {
-															loadMyFile : function(
-																	$ocLazyLoad) {
-
-																return $ocLazyLoad
-																		.load({
-																			name : 'sbAdminApp',
-																			files : [ 'scripts/controllers/contactUsController.js' ]
-																		});
-															}
-														},
-														controller : 'ContactUsController',
-														templateUrl : 'views/contactus/view-contact-us.html',
-														url : '/ContactUs',
-													});// End Change password
+											});// End Change password
 
 						} ]).run( [ '$rootScope', function ($rootScope,$state, $stateParams) {
 							$rootScope.$state = $state;
