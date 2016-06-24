@@ -1,6 +1,6 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash','ngAnimate','ngFileSaver']);
 
-adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$http','requestHandler','searchService','$state','Flash','FileSaver', function($q,$rootScope,$scope,$http,requestHandler,searchService,$state,Flash,FileSaver) {
+adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$http','$window','requestHandler','searchService','$state','Flash','FileSaver', function($q,$rootScope,$scope,$http,$window,requestHandler,searchService,$state,Flash,FileSaver) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.patientSearchData=$scope.patientSearchDataOrginal=[];
@@ -46,6 +46,9 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		if(searchService.getAddedOnFromDate()!=""){
 			$scope.isSelectedAddedFromDate=false;
 		}
+		
+		// Get Clinics List For Call Logs
+		$scope.getClinics();
 	};
 
 	requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
@@ -228,7 +231,8 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 					
 					var i=0;
 					for(i;i<value.numberOfPatients;i++){
-						value.patientSearchLists[i].selected=id.isCheckedAllGroupPatients;
+						if(value.patientSearchLists[i]!=undefined)
+							 value.patientSearchLists[i].selected=id.isCheckedAllGroupPatients;
 					}
 				}
 				});
@@ -395,35 +399,6 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	};
 	
 	
-	
-	$scope.resetSearchData = function(){
-	    // $scope.patientSearchForm.$setPristine();
-	     $scope.patientSearchData="";
-	     	searchService.setCounty("0");
-			searchService.setNumberOfDays("1");
-			searchService.setCrashFromDate("");
-			searchService.setCrashToDate("");
-			searchService.setCallerId("0");
-			searchService.setLawyerId("0");
-			searchService.setPhoneNumber("");
-			searchService.setPatientName("");
-			searchService.setLocalReportNumber("");
-			searchService.setTier("0");
-			searchService.setAddedOnFromDate("");
-			searchService.setAddedOnToDate("");
-			searchService.setPatientStatus("7");
-			searchService.setIsArchived("0");
-			searchService.setPageNumber(1);
-			searchService.setItemsPerPage("25");
-	     $scope.init();
-	};
-	
-	// Reset Search Data Based on State
-	if($rootScope.previousState!="dashboard.Calllogs/:id"){
-		
-		$scope.resetSearchData();
-	}
-	
 	$scope.isCleanCheckbox=function(){
 		return angular.equals($scope.patientSearchData,$scope.patientSearchDataOrginal);
 	};
@@ -440,6 +415,222 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		});
 	};
 	
+	// Call Logs
+	 // Clinic List For Call Logs
+   $scope.getClinics=function(){
+   	requestHandler.getRequest("Caller/getClinicId.json","").then( function(response) {
+			
+		     $scope.clinic= response.data.clinicsForms;
+		 
+		     });
+   };
+   // Doctor List For Call Logs
+   $scope.getDoctors=function(){
+   	if($scope.calllogs.appointmentsForm.clinicId==null){
+   		$scope.calllogs.appointmentsForm.clinicId="";
+   	}
+   	if($scope.calllogs.appointmentsForm.clinicId!=""){
+   		requestHandler.getRequest("getNameByClinicId.json?clinicId="+$scope.calllogs.appointmentsForm.clinicId,"").then( function(response) {
+				    $scope.doctor= response.data.doctorsForm;
+			 });
+   	}
+   	
+   };
+	
+	// Add Call Logs Button Enable and Disable
+	$scope.enableCallLogsButton=function(localReportNumber){
+		var isChecked=false;
+		 $.each($scope.patientSearchData, function(index,value) {
+				if(value.localReportNumber==localReportNumber){
+					$.each(value.patientSearchLists,function(index1,value1){
+						if(value1.selected==true){
+							isChecked=true;
+						}
+					});
+				}
+			});
+		 if(isChecked){
+			 $("#addCallLog"+localReportNumber).removeAttr("disabled",false);
+		 }else{
+			$("#addCallLog"+localReportNumber+"").attr("disabled",true);
+		 }
+	};
+	
+	// Call Logs Add Modal
+	  $scope.addModel=function(id)
+		{
+		  var patientIdArray=[];
+		  $.each($scope.patientSearchData, function(index,value) {
+				if(value.localReportNumber==id.resultData.localReportNumber){
+					$.each(value.patientSearchLists,function(index1,value1){
+						if(value1.selected==true){
+							patientIdArray.push(value1.patientId);
+						}
+						});
+				}
+			});
+		  if(patientIdArray.length==0){
+			  alert("Select Atleast one.");
+		  }else{
+		  
+		  	$scope.title="Add Call Log";
+			$scope.options=true;
+			$scope.callLogForm.$setPristine();
+			$scope.calllogs={};
+			$scope.calllogs.multiplePatientId=patientIdArray;
+			$scope.isAlert=false;
+			$scope.calllogs.appointmentsForm={};
+			$scope.calllogs.timeStamp=moment().format('MM/DD/YYYY h:mm A');
+			
+			$("#calllogsModel").modal("show");
+		  }
+		};
+		
+		// Single Patient Add Call log From View Call Log
+		  $scope.addModelFromViewCallLog=function(id)
+			{
+			  $("#viewCallLogsListModal").modal('hide');  
+			  var patientIdArray=[];
+			  
+			    patientIdArray.push(id);
+			  	$scope.title="Add Call Log";
+				$scope.options=true;
+				$scope.callLogForm.$setPristine();
+				$scope.calllogs={};
+				$scope.calllogs.multiplePatientId=patientIdArray;
+				$scope.isAlert=false;
+				$scope.calllogs.appointmentsForm={};
+				$scope.calllogs.timeStamp=moment().format('MM/DD/YYYY h:mm A');
+				$("#calllogsModel").modal("show");
+			  
+			};
+		
+		$scope.save=function()
+		{
+			
+			$("#calllogsModel").modal("hide");
+			$('.modal-backdrop').hide();
+			requestHandler.postRequest("Caller/saveUpdateCallLogs.json",$scope.calllogs)
+				.then(function(response)
+					{
+					Flash.create("success","You have Successfully Added!");
+					$scope.searchItems($scope.patient);
+					$(function(){
+						$("html,body").scrollTop(0);
+					});
+				});
+			
+		};
+		
+		// Appointment Alert
+		$scope.appointmentAlert=function(){
+			if($scope.isAlert){
+				if($scope.calllogs.appointmentsForm.appointmentId!=""){
+					if($scope.response!=""){
+						$scope.response="";
+						if(confirm("Are you sure want to remove appointment?")){
+							$scope.isCollapse=false;
+							$scope.calllogs.appointmentsForm.doctorId="";
+							$scope.calllogs.appointmentsForm.clinicId="";
+							$scope.calllogs.appointmentsForm.scheduledDate="";
+						}else{
+							$scope.calllogs.response="4";
+							$scope.response="4";
+							$scope.isCollapse=true;
+						}
+					}
+				}else if($scope.calllogs.response==4){
+					$scope.response=$scope.calllogs.response;
+				}
+			}
+		};
+		// View Call Log List
+		 $scope.viewCallLogsList=function(patientId,name,localReportNumber){
+			 $scope.callLogPatientId=patientId;
+			 $scope.callLogPatientName=name;
+			 $scope.callLogLocalReportNumber=localReportNumber;
+	    	  requestHandler.getRequest("Caller/getAllCallLogss.json?patientId="+patientId,"").then( function(response) {
+	  	    	$scope.callLogs= response.data.callLogsForms;
+	  	    	 $.each($scope.callLogs,function(index,value) {
+	  		    	 switch(value.response) {
+	  		    	    case 2:
+	  		    	        value.response="Not Interested/Injured";
+	  		    	        break;
+	  		    	    case 3:
+	  		    	    	value.response="Voice mail";
+	  		    	        break;
+	  		    	    case 4:
+	  		    	    	value.response="Appointment Scheduled";
+	  		    	    	break;
+	  		    	    case 5:
+	  		    	    	value.response="Do not call";
+	  		    	    	break;
+	  		    	    case 8:
+			    	    	value.response="Call Back";
+			    	    	break;
+	  		    	    case 9:
+			    	    	value.response="Unable To Reach";
+			    	    	break;
+	  		    	    default:
+	  		    	    	break;
+	  		    	} 
+	  		     });
+	  	    	 $("#viewCallLogsListModal").modal('show');
+	  	  });	
+	    };
+
+	    // View Appointments under call log
+	    $scope.viewAppointments=function(appointmentId)
+		{
+		if(appointmentId==null)
+			{
+			 $scope.appointments={};
+			 $scope.appointments.notavailable=true;
+			}
+		else{
+		requestHandler.getRequest("Caller/getAppointments.json?appointmentId="+appointmentId,"").then( function(response) {
+			
+			    $scope.appointments=response.data.appointmentsForm;
+			    $scope.appointments.notavailable=false;
+		  });
+		}	
+			 $("#viewAppointmentsModal").modal("show");
+			 
+		
+		};
+	
+		$scope.viewNearByClinic=function(patientId){
+			$window.open('#/dashboard/viewlocations/'+patientId,'Crash Reports Online','width=1200,height=600');
+		};
+		
+		$scope.resetSearchData = function(){
+		    // $scope.patientSearchForm.$setPristine();
+		     $scope.patientSearchData="";
+		     	searchService.setCounty("0");
+				searchService.setNumberOfDays("1");
+				searchService.setCrashFromDate("");
+				searchService.setCrashToDate("");
+				searchService.setCallerId("0");
+				searchService.setLawyerId("0");
+				searchService.setPhoneNumber("");
+				searchService.setPatientName("");
+				searchService.setLocalReportNumber("");
+				searchService.setTier("0");
+				searchService.setAddedOnFromDate("");
+				searchService.setAddedOnToDate("");
+				searchService.setPatientStatus("7");
+				searchService.setIsArchived("0");
+				searchService.setPageNumber(1);
+				searchService.setItemsPerPage("25");
+		     $scope.init();
+		};
+		
+		// Reset Search Data Based on State
+		if($rootScope.previousState!="dashboard.Calllogs/:id"){
+			
+			$scope.resetSearchData();
+		}
+		
 	$scope.init();
 	
 }]); 

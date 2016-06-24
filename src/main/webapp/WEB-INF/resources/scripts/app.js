@@ -1096,6 +1096,11 @@ sbAdminApp
 							$rootScope.$state = $state;
 				            $rootScope.$stateParams = $stateParams;
 					        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+					        	if(to.name=='dashboard.viewlocations/:id'){
+					        		$rootScope.hideMenu=true;
+					        	}else{
+					        		$rootScope.hideMenu=false;
+					        	}
 					            $rootScope.previousState = from.name;
 					         });
 					      }]).controller('authenticationController', function($rootScope, $scope, $http, $location, requestHandler) {

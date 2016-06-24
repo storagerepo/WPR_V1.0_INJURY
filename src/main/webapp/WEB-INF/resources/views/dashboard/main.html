@@ -2,12 +2,12 @@
 
         <!-- Navigation -->
             
-        <header></header>
+        <header ng-hide="{{$root.hideMenu}}"></header>
         <!-- /.navbar-top-links -->
         
                
         <!-- /.navbar-static-side -->
-            <div id="page-wrapper" style="min-height: 561px;">
+            <div ng-attr-id="{{$root.hideMenu==true ? 'page-wrapper-no-menu': 'page-wrapper'}}" style="min-height: 561px;">
 				
                 <div ui-view></div>
                 

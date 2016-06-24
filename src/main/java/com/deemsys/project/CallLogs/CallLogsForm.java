@@ -13,6 +13,7 @@ public class CallLogsForm {
 
 	private Long callLogId;
 	private String patientId;
+	private String[] multiplePatientId;
 	private Integer callerAdminId;
 	private Integer callerId;
 	private String timeStamp;
@@ -38,6 +39,12 @@ public class CallLogsForm {
 	}
 	public void setPatientId(String patientId) {
 		this.patientId = patientId;
+	}
+	public String[] getMultiplePatientId() {
+		return multiplePatientId;
+	}
+	public void setMultiplePatientId(String[] multiplePatientId) {
+		this.multiplePatientId = multiplePatientId;
 	}
 	public Integer getCallerAdminId() {
 		return callerAdminId;
