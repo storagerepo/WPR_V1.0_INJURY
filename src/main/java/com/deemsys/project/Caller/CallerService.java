@@ -298,7 +298,7 @@ public class CallerService {
 			for (PatientCallerAdminMap patientCallerAdminMap : patientCallerAdminMaps) {
 				patientCallerAdminMap.setCaller(null);
 				if(patientCallerAdminMap.getPatientStatus()==1){
-					patientCallerAdminMap.setPatientStatus(null);
+					patientCallerAdminMap.setPatientStatus(6);
 				}
 				patientCallerDAO.merge(patientCallerAdminMap);
 			}
