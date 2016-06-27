@@ -507,9 +507,15 @@ public class PDFCrashReportReader {
 											.setAge(motoristPage
 													.get(index + 7));
 								if (motoristPage.get(index + 8)
-										.equals("GENDER"))
-									motoristPageForm.setGender(motoristPage
+										.equals("GENDER")){
+									if(!motoristPage
+											.get(index + 9).equals("F - FEMALE")){
+										motoristPageForm.setGender(motoristPage
 											.get(index + 9));
+									}else{
+										motoristPageForm.setGender("");
+									}
+								}
 								if (motoristPage.get(index - 2).equals(
 										"ADDRESS, CITY, STATE, ZIP"))
 									motoristPageForm
@@ -633,9 +639,15 @@ public class PDFCrashReportReader {
 											.setAge(motoristPage
 													.get(index + 7));
 								if (motoristPage.get(index + 8)
-										.equals("GENDER"))
-									motoristPageForm.setGender(motoristPage
+										.equals("GENDER")){
+									if(!motoristPage
+											.get(index + 9).equals("F - FEMALE")){
+										motoristPageForm.setGender(motoristPage
 											.get(index + 9));
+									}else{
+										motoristPageForm.setGender("");
+									}
+								}
 								if (motoristPage.get(index - 2).equals(
 										"ADDRESS, CITY, STATE, ZIP"))
 									motoristPageForm

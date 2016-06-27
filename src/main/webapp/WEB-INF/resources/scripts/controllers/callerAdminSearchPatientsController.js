@@ -489,7 +489,8 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		// Single Patient Add Call log From View Call Log
 		  $scope.addModelFromViewCallLog=function(id)
 			{
-			  $("#viewCallLogsListModal").modal('hide');  
+			  $("#viewCallLogsListModal").modal("hide");  
+			  $('.modal-backdrop').hide();
 			  var patientIdArray=[];
 			  
 			    patientIdArray.push(id);

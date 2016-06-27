@@ -1,8 +1,13 @@
 /* Space out content a bit */
 body {
     padding-bottom: 20px;
+    padding-right: 0 !important;
 }
 
+body .modal-open {
+  overflow: inherit;
+  padding-right: 0 !important;
+}
 .col-xs-5ths,
 .col-sm-5ths,
 .col-md-5ths,
