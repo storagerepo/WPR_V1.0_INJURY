@@ -460,7 +460,6 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 		// Single Patient Add Call log From View Call Log
 		  $scope.addModelFromViewCallLog=function(id)
 			{
-			  $("#viewCallLogsListModal").modal('hide');  
 			  var patientIdArray=[];
 			  
 			    patientIdArray.push(id);
@@ -472,7 +471,14 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 				$scope.isAlert=false;
 				$scope.calllogs.appointmentsForm={};
 				$scope.calllogs.timeStamp=moment().format('MM/DD/YYYY h:mm A');
-				$("#calllogsModel").modal("show");
+				$('#viewCallLogsListModal')
+	            .modal('hide')
+	            .on('hidden.bs.modal', function (e) {
+	               
+					$("#calllogsModel").modal("show");
+	              $(this).off('hidden.bs.modal'); // Remove the 'on' event binding
+	                
+	            });
 			  
 			};
 			
