@@ -48,6 +48,7 @@ public class PatientSearchList extends InjuryProperties{
 	private String medicalFacility;
 	private String atFaultPolicyNumber;
 	private String victimPolicyNumber;	
+	private String seatingPosition;
 	private String lastCallLogTimeStamp;
 	
 	
@@ -301,6 +302,12 @@ public class PatientSearchList extends InjuryProperties{
 	public void setVictimPolicyNumber(String victimPolicyNumber) {
 		this.victimPolicyNumber = victimPolicyNumber;
 	}	
+	public String getSeatingPosition() {
+		return seatingPosition;
+	}
+	public void setSeatingPosition(String seatingPosition) {
+		this.seatingPosition = seatingPosition;
+	}
 	public String getLastCallLogTimeStamp() {
 		return lastCallLogTimeStamp;
 	}
@@ -321,7 +328,7 @@ public class PatientSearchList extends InjuryProperties{
 			String unitInError, String cityVillageTownship, String timeOfCrash,
 			String unitNumber, String gender, String injuries,
 			String emsAgency, String medicalFacility,
-			String atFaultPolicyNumber, String victimPolicyNumber,String lastCallLogTimeStamp) {
+			String atFaultPolicyNumber, String victimPolicyNumber, String seatingPosition,String lastCallLogTimeStamp) {
 		super();
 		this.patientId = patientId;
 		this.localReportNumber = localReportNumber;
@@ -364,6 +371,7 @@ public class PatientSearchList extends InjuryProperties{
 		this.medicalFacility = medicalFacility;
 		this.atFaultPolicyNumber = atFaultPolicyNumber;
 		this.victimPolicyNumber = victimPolicyNumber;
+		this.seatingPosition = seatingPosition;
 		this.lastCallLogTimeStamp=lastCallLogTimeStamp;
 	}
 	

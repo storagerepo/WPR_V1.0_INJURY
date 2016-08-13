@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" href="resources/components/datetime/datetimepicker.css"></link>
 <script src="resources/components/datetime/datetimepicker.js"></script>
 <script src="resources/components/datetime/moment.js"></script>
@@ -143,12 +144,12 @@
 					<th width="13%">Phone Number</th>
 					<th width="4%">Age</th>
 					<th width="7%">Unit No.</th>
-					<th width="9%">County</th>
+					<th width="10%">County</th>
 					<th width="5%">Tier</th>
 					<th width="10%">Caller</th>
 					<th width="10%">Status</th>
 					<th width="9%">Status On</th>
-					<th width="11%">Actions</th>
+					<th width="10%">Actions</th>
 				</tr>
 				<tr>
 					<th></th>
@@ -218,22 +219,38 @@
 							data-hint="View Patient">{{patient.name}}</a><span
 							class="redText margin-left-10 hint--top"
 							data-hint="Injuries : {{patient.injuries}}"><i
-								class="fa fa-arrow-up"></i></span></span> <span
+								class="fa fa-arrow-up"></i></span>
+								<span ng-show="patient.seatingPosition=='1'"
+							class="margin-left-10 hint--top driver-icon"
+							data-hint="Driver">&nbsp;</span></span> <span
 						ng-if="(patient.injuries==2 || patient.injuries==3 || patient.injuries==4) && patient.age<18"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(patient.patientId)"
 							data-hint="View Patient">{{patient.name}}</a><span
 							class="redText margin-left-10 hint--top"
 							data-hint="Injuries : {{patient.injuries}}"><i
-								class="fa fa-arrow-up"></i></span></span> <span
+								class="fa fa-arrow-up"></i></span>
+								<span ng-show="patient.seatingPosition=='1'"
+							class="margin-left-10 hint--top driver-icon"
+							data-hint="Driver">&nbsp;</span>
+								</span> <span
 						ng-if="(patient.injuries!=2 && patient.injuries!=3 && patient.injuries!=4) && patient.age>=18"><a
 							href="" class="hint--top"
 							ng-click="viewPatientModal(patient.patientId)"
-							data-hint="View Patient">{{patient.name}}</a></span> <span
+							data-hint="View Patient">{{patient.name}}</a>
+							<span ng-show="patient.seatingPosition=='1'"
+							class="margin-left-10 hint--top driver-icon"
+							data-hint="Driver">&nbsp;</span>
+							</span> <span
 						ng-if="(patient.injuries!=2 && patient.injuries!=3 && patient.injuries!=4) && patient.age<18"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(patient.patientId)"
-							data-hint="View Patient">{{patient.name}}</a></span></td>
+							data-hint="View Patient">{{patient.name}}</a>
+							<span ng-show="patient.seatingPosition=='1'"
+							class="margin-left-10 hint--top driver-icon"
+							data-hint="Driver">&nbsp;</span>
+							</span>
+							</td>
 
 					<td title="Phone Number">{{patient.phoneNumber}}</td>
 					<td title="Age">{{patient.age}}</td>
@@ -247,7 +264,7 @@
 					<td title="Status">{{patient.patientStatusName}}</td>
 					<td><span
 						ng-show="patient.lastCallLogTimeStamp==null && patient.lastCallLogTimeStamp==null">-</span><b>{{patient.lastCallLogTimeStamp}}</b></td>
-					<td width="7%"><a href="{{patient.crashReportFileName}}"
+					<td><a href="{{patient.crashReportFileName}}"
 						ng-cloak target="_blank" class="btn btn-xs btn-info hint--top"
 						data-hint="View Crash Report"><i class="fa fa-file-pdf-o"></i></a>
 						<span ng-show={{patient.isArchived==0||patient.isArchived==null}}>

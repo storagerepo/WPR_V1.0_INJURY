@@ -176,7 +176,6 @@ public class LawyerAdminService {
 		users.setPassword(lawyerAdminForm.getUsername());
 		users.setIsEnable(1);
 		users.setStatus(1);
-		
 		role = roleDAO.get(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID);
 		users.setRoles(role);
 		usersDAO.save(users);

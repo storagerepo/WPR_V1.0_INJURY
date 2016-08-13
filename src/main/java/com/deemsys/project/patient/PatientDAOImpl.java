@@ -621,7 +621,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	projectionList.add(Projections.property("t1.medicalFacility"),"medicalFacility");
 	projectionList.add(Projections.property("t1.atFaultPolicyNumber"),"atFaultPolicyNumber");
 	projectionList.add(Projections.property("t1.victimPolicyNumber"),"victimPolicyNumber");
-	
+	projectionList.add(Projections.property("t1.seatingPosition"),"seatingPosition");
 	
 	if(role.equals("ROLE_CALLER_ADMIN")||role.equals("ROLE_CALLER")){
 	

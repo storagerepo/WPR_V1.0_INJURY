@@ -411,7 +411,8 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 	// Add Call Logs Button Enable and Disable
 	$scope.enableCallLogsButton=function(localReportNumber){
 		var isChecked=false;
-		 $.each($scope.callerPatientSearchData, function(index,value) {
+		var changedLocalReportNumber=localReportNumber.replace( /(\.|\(|\)|\ )/g, "\\$1" );
+		 $.each($scope.patientSearchData, function(index,value) {
 				if(value.localReportNumber==localReportNumber){
 					$.each(value.patientSearchLists,function(index1,value1){
 						if(value1.selected==true){
@@ -421,9 +422,9 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 				}
 			});
 		 if(isChecked){
-			 $("#addCallLog"+localReportNumber).removeAttr("disabled",false);
+			 $("#addCallLog"+changedLocalReportNumber+"").removeAttr("disabled",false);
 		 }else{
-			$("#addCallLog"+localReportNumber+"").attr("disabled",true);
+			$("#addCallLog"+changedLocalReportNumber+"").attr("disabled",true);
 		 }
 	};
 

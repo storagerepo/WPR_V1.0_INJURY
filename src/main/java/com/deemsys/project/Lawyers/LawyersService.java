@@ -197,7 +197,6 @@ public class LawyersService {
 		users.setUsername(lawyersForm.getUsername());
 		users.setPassword(lawyersForm.getUsername());
 		users.setIsEnable(1);
-
 		Integer currentUserId = callerService.getCurrentUserId();
 
 		LawyerAdmin lawyerAdmin = lawyerAdminDAO.getByUserId(currentUserId);

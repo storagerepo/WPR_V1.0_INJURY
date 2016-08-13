@@ -11,6 +11,7 @@ public class ReportMotoristPageForm {
 	private String injuries;
 	private String emsAgency;
 	private String medicalFacility;
+	private String seatingPosition;
 	public String getUnitNumber() {
 		return unitNumber;
 	}
@@ -71,10 +72,16 @@ public class ReportMotoristPageForm {
 	public void setMedicalFacility(String medicalFacility) {
 		this.medicalFacility = medicalFacility;
 	}
+	public String getSeatingPosition() {
+		return seatingPosition;
+	}
+	public void setSeatingPosition(String seatingPosition) {
+		this.seatingPosition = seatingPosition;
+	}
 	public ReportMotoristPageForm(String unitNumber, String name,
 			String dateOfBirth,String age,String gender, String adddressCityStateZip,
 			String contactPhone, String injuries, String emsAgency,
-			String medicalFacility) {
+			String medicalFacility,String seatingPosition) {
 		super();
 		this.unitNumber = unitNumber;
 		this.name = name;
@@ -86,6 +93,7 @@ public class ReportMotoristPageForm {
 		this.injuries = injuries;
 		this.emsAgency = emsAgency;
 		this.medicalFacility = medicalFacility;
+		this.seatingPosition = seatingPosition;
 	}
 	public ReportMotoristPageForm() {
 		super();

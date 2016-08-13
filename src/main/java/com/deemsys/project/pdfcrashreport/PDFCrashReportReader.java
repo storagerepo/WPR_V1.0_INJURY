@@ -526,6 +526,12 @@ public class PDFCrashReportReader {
 									motoristPageForm
 											.setAdddressCityStateZip(motoristPage
 													.get(index - 1));
+								// Seating Position
+								if(motoristPage.get(index - 12).equals("SEATING  POSITION")){
+									motoristPageForm.setSeatingPosition(motoristPage.get(index - 11));
+								}else if(motoristPage.get(index - 11).equals("SEATING  POSITION")){
+									motoristPageForm.setSeatingPosition(motoristPage.get(index - 10));
+								}
 								
 								if (motoristPage
 										.get(index - 4)
@@ -658,6 +664,12 @@ public class PDFCrashReportReader {
 									motoristPageForm
 											.setAdddressCityStateZip(motoristPage
 													.get(index - 1));
+								// Seating Position
+								if(motoristPage.get(index - 12).equals("SEATING  POSITION")){
+									motoristPageForm.setSeatingPosition(motoristPage.get(index - 11));
+								}else if(motoristPage.get(index - 11).equals("SEATING  POSITION")){
+									motoristPageForm.setSeatingPosition(motoristPage.get(index - 10));
+								}
 								
 								if (motoristPage
 										.get(index - 4)
@@ -976,6 +988,7 @@ public class PDFCrashReportReader {
 			patientsForm.setVictimPolicyNumber(reportUnitPageForms.get(Integer.parseInt(motoristPageForm.getUnitNumber().trim())-1).getPolicyNumber());
 			patientsForm.setAtFaultInsuranceCompany(reportUnitPageForms.get(Integer.parseInt(firstPageForm.getUnitInError().trim())-1).getInsuranceCompany());
 			patientsForm.setAtFaultPolicyNumber(reportUnitPageForms.get(Integer.parseInt(firstPageForm.getUnitInError().trim())-1).getPolicyNumber());
+			patientsForm.setSeatingPosition(motoristPageForm.getSeatingPosition());
 			patientsForm.setPatientStatus(1);
 			return patientsForm;
 		
@@ -988,8 +1001,8 @@ public class PDFCrashReportReader {
 	
 				UUID uuid=UUID.randomUUID();
 		
-				String fileName=uuid+"_"+ crashId + ".pdf";
-				//String fileName=crashId + ".pdf";
+				//String fileName=uuid+"_"+ crashId + ".pdf";
+				String fileName=crashId + ".pdf";
 				//String uuid=crashId.toString();
 				//Convert PDF data to Parsed JSON
 				PDFCrashReportJson pdfCrashReportJson=null;
@@ -1094,14 +1107,14 @@ public class PDFCrashReportReader {
 				}
 				if(Integer.parseInt(injuryProperties.getProperty("awsUpload"))==1)				
 					awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);
-				file.delete();
+				//file.delete();
  	}
 	
 	
 	public void savePatientList(List<PatientForm> patientsForms,String uuid,String crashId) throws Exception{
 		for (PatientForm patientsForm : patientsForms) {
-			patientsForm.setCrashReportFileName(uuid+"_"+crashId+".pdf");
-			//patientsForm.setCrashReportFileName(crashId+".pdf");
+			//patientsForm.setCrashReportFileName(uuid+"_"+crashId+".pdf");
+			patientsForm.setCrashReportFileName(crashId+".pdf");
 			patientsForm.setCrashId(crashId);
 			try {
 				patientsService.savePatient(patientsForm);

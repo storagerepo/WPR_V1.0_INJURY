@@ -440,6 +440,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	// Add Call Logs Button Enable and Disable
 	$scope.enableCallLogsButton=function(localReportNumber){
 		var isChecked=false;
+		var changedLocalReportNumber=localReportNumber.replace( /(\.|\(|\)|\ )/g, "\\$1" );
 		 $.each($scope.patientSearchData, function(index,value) {
 				if(value.localReportNumber==localReportNumber){
 					$.each(value.patientSearchLists,function(index1,value1){
@@ -450,9 +451,9 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 				}
 			});
 		 if(isChecked){
-			 $("#addCallLog"+localReportNumber).removeAttr("disabled",false);
+			 $("#addCallLog"+changedLocalReportNumber+"").removeAttr("disabled",false);
 		 }else{
-			$("#addCallLog"+localReportNumber+"").attr("disabled",true);
+			$("#addCallLog"+changedLocalReportNumber+"").attr("disabled",true);
 		 }
 	};
 	
@@ -605,7 +606,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		};
 	
 		$scope.viewNearByClinic=function(patientId){
-			$window.open('#/dashboard/viewlocations/'+patientId,'Crash Reports Online','width=1200,height=600');
+			$window.open('#/dashboard/viewlocations/'+patientId,'Crash Reports Online','width=1200,height=600,scrollbars=1');
 		};
 		
 		$scope.resetSearchData = function(){
