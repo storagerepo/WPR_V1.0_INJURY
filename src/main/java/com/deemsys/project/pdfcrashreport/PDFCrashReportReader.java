@@ -891,7 +891,7 @@ public class PDFCrashReportReader {
 				if(patientsForm!=null){
 					if(patientsForm.getUnitNumber().equals(firstPageForm.getUnitInError())){
 						if(patientsForm.getInjuries()!=null){
-						if(!patientsForm.getInjuries().equals("1")&&!patientsForm.getInjuries().equals("5")){
+						if(!patientsForm.getInjuries().equals("5")){
 							patientsForm.setTier(4);
 							patientsForms.add(patientsForm);
 							}
@@ -900,8 +900,17 @@ public class PDFCrashReportReader {
 							patientsForms.add(patientsForm);
 						}
 					}else{
-						patientsForm.setTier(1);
-						patientsForms.add(patientsForm);
+						if(patientsForm.getInjuries()!=null){
+							if(!patientsForm.getInjuries().equals("5")){
+									patientsForm.setTier(1);
+									patientsForms.add(patientsForm);
+							}
+						}
+						else{
+									patientsForm.setTier(1);
+									patientsForms.add(patientsForm);
+						}
+							
 					}
 					
 				}
@@ -913,12 +922,16 @@ public class PDFCrashReportReader {
 					if(!reportUnitPageForm.getInsuranceCompany().equals("")&&!invalidInsurance.contains(reportUnitPageForm.getInsuranceCompany().toLowerCase())){
 						for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
 								.getReportMotoristPageForms()) {
-							if(motoristPageForm.getUnitNumber().equals(reportUnitPageForm.getUnitNumber())){
-							
+							if(motoristPageForm.getUnitNumber().equals(reportUnitPageForm.getUnitNumber())){							
 								PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
-								if(patientsForm!=null){
-									patientsForm.setTier(2);
-									patientsForms.add(patientsForm);
+								if(patientsForm.getInjuries()!=null){
+									if(!patientsForm.getInjuries().equals("5")){
+										patientsForm.setTier(2);
+										patientsForms.add(patientsForm);
+									}
+								}else{
+										patientsForm.setTier(2);
+										patientsForms.add(patientsForm);
 								}
 							}							
 						}
@@ -934,7 +947,7 @@ public class PDFCrashReportReader {
 			for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
 					.getReportMotoristPageForms()) {
 				if(motoristPageForm.getInjuries()!=null){
-					if(!motoristPageForm.getInjuries().equals("1")&&!motoristPageForm.getInjuries().equals("5")){
+					if(!motoristPageForm.getInjuries().equals("5")){
 						PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 						if(patientsForm!=null){
 							patientsForm.setTier(3);
@@ -946,8 +959,15 @@ public class PDFCrashReportReader {
 				}else{
 					PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 					if(patientsForm!=null){
-						patientsForm.setTier(3);
-						patientsForms.add(patientsForm);
+						if(patientsForm.getInjuries()!=null){
+							if(!patientsForm.getInjuries().equals("5")){							
+							patientsForm.setTier(3);
+							patientsForms.add(patientsForm);
+							}
+						}else{
+							patientsForm.setTier(3);
+							patientsForms.add(patientsForm);
+						}
 					}
 				}
 				

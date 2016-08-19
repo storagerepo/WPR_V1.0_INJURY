@@ -308,6 +308,7 @@ public class CallerService {
 		caller.setStatus(0);
 		caller.setIsDelete(1);
 		Users users = usersDAO.get(caller.getUsers().getUserId());
+		users.setUsername(users.getUsername()+"-Deleted");
 		users.setIsEnable(0);
 		status = 0;
 		
