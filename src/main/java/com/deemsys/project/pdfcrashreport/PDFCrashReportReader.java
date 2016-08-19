@@ -1018,12 +1018,19 @@ public class PDFCrashReportReader {
 	//Main function for PDF Parsing
 	public void parsePDFDocument(File file,Integer crashId) throws Exception{
 		
-	
-				UUID uuid=UUID.randomUUID();
+				UUID randomUUID=UUID.randomUUID();
 		
+				String fileName="";
+				String uuid="";
+				
+				if(Integer.parseInt(injuryProperties.getProperty("env"))==0){
+					fileName=crashId + ".pdf";
+					uuid=crashId.toString();
+				}else{
+					fileName=randomUUID+"_"+ crashId + ".pdf";
+					uuid=randomUUID.toString();
+				}
 				//String fileName=uuid+"_"+ crashId + ".pdf";
-				String fileName=crashId + ".pdf";
-				//String uuid=crashId.toString();
 				//Convert PDF data to Parsed JSON
 				PDFCrashReportJson pdfCrashReportJson=null;
 				try {
