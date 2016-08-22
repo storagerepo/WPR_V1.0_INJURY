@@ -187,6 +187,16 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
+				<div class="form-group passenger-type pull-right">
+				 <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-default unit-toggle-label" ng-class="{active:patientDetails.seatingPosition!='1' || patientDetails.seatingPosition==null}" ng-disabled="patientDetails.seatingPosition=='1'">
+                                            <input type="radio" name="unit" ng-model="patientDetails.seatingPosition"  id="option1" autocomplete="off"> Passenger
+                                        </label>
+                                        <label class="btn btn-default unit-toggle-label" ng-class="{active:patientDetails.seatingPosition=='1'}" ng-disabled="patientDetails.seatingPosition!='1' || patientDetails.seatingPosition==null">
+                                            <input type="radio" name="unit" ng-model="patientDetails.seatingPosition" ng-selected="patientDetails.seatingPosition=='1'" id="option2" autocomplete="off"> &nbsp;&nbsp;Driver&nbsp;&nbsp;
+                                        </label>
+                                    </div>
+				</div>
 				<h4 class="modal-title" id="myModalLabel">Patient Details</h4>
 			</div>
 			<div class="modal-body">
