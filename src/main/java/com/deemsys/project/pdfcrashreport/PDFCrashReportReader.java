@@ -1138,7 +1138,8 @@ public class PDFCrashReportReader {
 				}
 				if(Integer.parseInt(injuryProperties.getProperty("awsUpload"))==1)				
 					awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);
-				//file.delete();
+				if(Integer.parseInt(injuryProperties.getProperty("env"))==1)
+					file.delete();
  	}
 	
 	
