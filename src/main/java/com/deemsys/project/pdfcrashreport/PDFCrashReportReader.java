@@ -145,7 +145,7 @@ public class PDFCrashReportReader {
 	public boolean downloadPDFFile(String crashId) throws IOException {
 			
 			try{
-					File file=getPDFFile(crashId);
+				File file=getPDFFile(crashId);
 					Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportTryTimes"));
 					for (int tryCrash = 1; tryCrash < tryCount; tryCrash++) {						
 						if(file!=null){
@@ -174,7 +174,6 @@ public class PDFCrashReportReader {
 					}else{
 						System.out.println("Waiting.....");
 					}
-					
 				} catch (Exception e) {
 					// TODO: handle exception
 					this.crashLogUpdate(crashId, e);
@@ -850,7 +849,7 @@ public class PDFCrashReportReader {
 				if(unitInError!=98&&unitInError!=99){
 					//Check for unit has insurance
 					//NOTE POLICY NUMBER IS NOT CHECKING
-					if(!pdfCrashReportJson.getReportUnitPageForms().get(unitInError-1).getInsuranceCompany().equals("")&&!invalidInsurance.contains(pdfCrashReportJson.getReportUnitPageForms().get(0).getInsuranceCompany().toLowerCase())){
+					if(!pdfCrashReportJson.getReportUnitPageForms().get(unitInError-1).getInsuranceCompany().equals("")&&!invalidInsurance.contains(pdfCrashReportJson.getReportUnitPageForms().get(unitInError-1).getInsuranceCompany().toLowerCase())){
 						//#1 Tier 1 patients
 						return 1;
 					}else{
