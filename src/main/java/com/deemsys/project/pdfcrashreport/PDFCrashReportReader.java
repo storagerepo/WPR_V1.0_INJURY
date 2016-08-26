@@ -528,11 +528,11 @@ public class PDFCrashReportReader {
 													.get(index - 1));
 								// Seating Position
 								if(motoristPage.get(index - 12).equals("SEATING  POSITION")){
-									motoristPageForm.setSeatingPosition(motoristPage.get(index - 11));
+									motoristPageForm.setSeatingPosition(motoristPage.get(index - 11).trim());
 								}else if(motoristPage.get(index - 11).equals("SEATING  POSITION")){
 									motoristPageForm.setSeatingPosition(motoristPage.get(index - 10));
 								}else if(motoristPage.get(index - 10).equals("SEATING  POSITION")){
-									motoristPageForm.setSeatingPosition(motoristPage.get(index - 9));
+									motoristPageForm.setSeatingPosition(motoristPage.get(index - 9).trim());
 								}
 								
 								if (motoristPage
@@ -668,11 +668,11 @@ public class PDFCrashReportReader {
 													.get(index - 1));
 								// Seating Position
 								if(motoristPage.get(index - 12).equals("SEATING  POSITION")){
-									motoristPageForm.setSeatingPosition(motoristPage.get(index - 11));
+									motoristPageForm.setSeatingPosition(motoristPage.get(index - 11).trim());
 								}else if(motoristPage.get(index - 11).equals("SEATING  POSITION")){
 									motoristPageForm.setSeatingPosition(motoristPage.get(index - 10));
 								}else if(motoristPage.get(index - 10).equals("SEATING  POSITION")){
-									motoristPageForm.setSeatingPosition(motoristPage.get(index - 9));
+									motoristPageForm.setSeatingPosition(motoristPage.get(index - 9).trim());
 								}
 								
 								if (motoristPage
