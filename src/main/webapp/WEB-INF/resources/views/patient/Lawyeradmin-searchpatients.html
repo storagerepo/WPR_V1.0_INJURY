@@ -7,7 +7,7 @@
 <div class="col-lg-12">
 		
 	 <div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
-	 <h2 class="page-header">Search Patients</h2>
+	 <h2 class="page-header">Search Clients</h2>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -77,7 +77,7 @@
      		</select>
        	</div>
        	<div class="col-md-5ths">
-       		<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details" data-trigger="focus"><i class="fa fa-info-circle"></i></a>
+       		<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details (Deceased victims not listed)" data-trigger="focus"><i class="fa fa-info-circle"></i></a>
          	<select class="form-control"  ng-model="patient.tier" name="tier">
          		<option value="0" ng-selected="true">All</option>
                 <option value="1">Tier1</option>
@@ -136,7 +136,7 @@
                         <thead  class="persist-header">
                             <tr>
                            	 	<th width="2%"><input ng-change="isChecked()" ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
-                                <th width="20%">Patient Name</th>
+                                <th width="20%">Client Name</th>
                                 <th width="6%">Age</th>
                                  <th width="7%">Unit No.</th>
                                 <th width="10%">County</th>
@@ -175,15 +175,15 @@
                         </thead>
                         <tbody>
                          <tr class="group-header-back" ng-show="lAdminPatientSearchData.length>0"  ng-repeat-start="resultData in lAdminPatientSearchData">
-                       <td colspan="1"><input ng-change="selectGroup(this)" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}"></td><td colspan="10" ><span><b>Local Report No:</b> 	{{resultData.localReportNumber}}  </span><span class="pull-right"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients Count:</b></span>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span>&nbsp;&nbsp;&nbsp;</span></td>
+                       <td colspan="1"><input ng-change="selectGroup(this)" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}"></td><td colspan="10" ><span><b>Local Report No:</b> 	{{resultData.localReportNumber}}  </span><span class="pull-right"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Clients Count:</b></span>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span>&nbsp;&nbsp;&nbsp;</span></td>
                           </tr>
                           <tr dir-paginate="lAdminData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords" pagination-id="lawyerAdminPatientPageId">
                             
                                 <td><input type="checkbox" ng-change="isCheckedIndividual()" ng-model="lAdminData.selected"/></td>
-                                <td><span ng-if="(lAdminData.injuries==2 || lAdminData.injuries==3 || lAdminData.injuries==4) && lAdminData.age>=18"><a href="" class="hint--top redText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{lAdminData.injuries}}"><i class="fa fa-arrow-up" ></i></span><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
-                                	<span ng-if="(lAdminData.injuries==2 || lAdminData.injuries==3 || lAdminData.injuries==4) && lAdminData.crashSeverity==2 && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{lAdminData.injuries}}"><i class="fa fa-arrow-up" ></i></span><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
-                                    <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && lAdminData.age>=18"><a href="" class="hint--top" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
-                                    <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Patient">{{lAdminData.name}}</a><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+                                <td><span ng-if="(lAdminData.injuries==2 || lAdminData.injuries==3 || lAdminData.injuries==4) && lAdminData.age>=18"><a href="" class="hint--top redText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{lAdminData.injuriesName}}"><i class="fa fa-arrow-up" ></i></span><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+                                	<span ng-if="(lAdminData.injuries==2 || lAdminData.injuries==3 || lAdminData.injuries==4) && lAdminData.crashSeverity==2 && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{lAdminData.injuriesName}}"><i class="fa fa-arrow-up" ></i></span><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+                                    <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && lAdminData.age>=18"><a href="" class="hint--top" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+                                    <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
                                     </td>
                               <td title="Age">{{lAdminData.age}}</td>
                               <td title="Unit Number">{{lAdminData.unitNumber}}</td>
@@ -277,7 +277,7 @@
                                         </label>
                                     </div>
 				</div>
-				<h4 class="modal-title" id="myModalLabel">Patient Details</h4>
+				<h4 class="modal-title" id="myModalLabel">Clients Details</h4>
 			</div>
 			<div class="modal-body">
 				<table class="table table-striped table-bordered">
@@ -318,9 +318,9 @@
 					</tr>
 					<tr>
 						<td class="col-md-3"><b>Injuries</b></td>
-						<td class="col-md-3">{{patientDetails.injuries}}</td>
+						<td class="col-md-3">{{patientDetails.injuriesName}}</td>
 						<td class="col-md-3"><b>Crash Severity</b></td>
-						<td class="col-md-3">{{patientDetails.crashSeverity}}</td>
+						<td class="col-md-3">{{patientDetails.crashSeverityName}}</td>
 					</tr>
 					<tr>
 					
@@ -406,7 +406,7 @@ $('#AddedToDate').datetimepicker({
 
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover({
-    	content: "<p><b>Tier 1:</b> Set of Victim Unit Patients where Number of Units > 1 and Unit in Error has Insurance.</p><p><b>Tier 2:</b> Set of Victim Unit Patients where Number of Units > 1, Unit in Error not having Insurance and Victim Unit has Insurance.</p><p><b>Tier 3:</b> Set of Patients where Number of Units = 1 and Injury scale is in between 2 to 4.</p><p><b>Tier 4:</b> Set of At fault Unit Patients where Number of Units > 1, Unit in Error has Insurance and Injury scale is in between 2 to 4.</p>",
+    	content: "<p><b>Tier 1:</b> List of accident victims where there are multiple vehicles and at fault is insured.</p><p><b>Tier 2:</b> List of accident victims where there are multiple vehicles but no at fault insurance and the victim is insured. (Medpay or uninsured motorist)</p><p><b>Tier 3:</b> List of accident victims involved in a single car accident. (includes hit and runs)</p><p><b>Tier 4:</b> List of injured passengers in at fault vehicle (not including driver) and the driver in insured.</p>",
     	html: true, 
     	placement: "bottom"
     });   

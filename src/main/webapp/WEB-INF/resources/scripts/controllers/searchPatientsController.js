@@ -77,7 +77,42 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		requestHandler.postRequest("/Patient/searchPatients.json",searchObj).then(function(response){
 			$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
 			$scope.patientSearchData=response.data.patientSearchResult.searchResult;
-			defer.resolve(response);
+			$.each($scope.patientSearchData, function(index,value) {
+				$.each(value.patientSearchLists,function(index1,value1){
+				switch(value1.injuries) {
+			    case "1":
+			    	value1.injuriesName="No Injury/None Reported";
+			        break;
+			    case "2":
+			    	value1.injuriesName="Possible";
+			        break;
+			    case "3":
+			    	value1.injuriesName="Non-Incapacitating";
+			        break;
+			    case "4":
+			    	value1.injuriesName="Incapacitating";
+			        break;
+			    default:
+			        break;
+				};
+				switch(value1.crashSeverity) {
+			    case "1":
+			    	value1.crashSeverityName="Fatal";
+			        break;
+			    case "2":
+			    	value1.crashSeverityName="Injury";
+			        break;
+			    case "3":
+			    	value1.crashSeverityName="PDO";
+			        break;
+			  
+			    default:
+			        break;
+				};
+				});
+				defer.resolve(response);
+			});
+			
 		});
 		return defer.promise;
 	};

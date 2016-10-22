@@ -111,6 +111,36 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 					    default:
 					        null;
 					};
+					switch(value1.injuries) {
+				    case "1":
+				    	value1.injuriesName="No Injury/None Reported";
+				        break;
+				    case "2":
+				    	value1.injuriesName="Possible";
+				        break;
+				    case "3":
+				    	value1.injuriesName="Non-Incapacitating";
+				        break;
+				    case "4":
+				    	value1.injuriesName="Incapacitating";
+				        break;
+				    default:
+				        break;
+					};
+					switch(value1.crashSeverity) {
+				    case "1":
+				    	value1.crashSeverityName="Fatal";
+				        break;
+				    case "2":
+				    	value1.crashSeverityName="Injury";
+				        break;
+				    case "3":
+				    	value1.crashSeverityName="PDO";
+				        break;
+				  
+				    default:
+				        break;
+					};
 					});
 					
 					defer.resolve(response);
@@ -412,7 +442,7 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 	$scope.enableCallLogsButton=function(localReportNumber){
 		var isChecked=false;
 		var changedLocalReportNumber=localReportNumber.replace( /(\.|\(|\)|\ )/g, "\\$1" );
-		 $.each($scope.patientSearchData, function(index,value) {
+		 $.each($scope.callerPatientSearchData, function(index,value) {
 				if(value.localReportNumber==localReportNumber){
 					$.each(value.patientSearchLists,function(index1,value1){
 						if(value1.selected==true){

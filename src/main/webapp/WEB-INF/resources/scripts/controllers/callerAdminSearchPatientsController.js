@@ -280,7 +280,37 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 				    default:
 				        break;
 				};
-				});
+				switch(value1.injuries) {
+			    case "1":
+			    	value1.injuriesName="No Injury/None Reported";
+			        break;
+			    case "2":
+			    	value1.injuriesName="Possible";
+			        break;
+			    case "3":
+			    	value1.injuriesName="Non-Incapacitating";
+			        break;
+			    case "4":
+			    	value1.injuriesName="Incapacitating";
+			        break;
+			    default:
+			        break;
+				};
+				switch(value1.crashSeverity) {
+			    case "1":
+			    	value1.crashSeverityName="Fatal";
+			        break;
+			    case "2":
+			    	value1.crashSeverityName="Injury";
+			        break;
+			    case "3":
+			    	value1.crashSeverityName="PDO";
+			        break;
+			  
+			    default:
+			        break;
+				};
+			});
 				console.log("service .....");
 				defer.resolve(response);
 			});

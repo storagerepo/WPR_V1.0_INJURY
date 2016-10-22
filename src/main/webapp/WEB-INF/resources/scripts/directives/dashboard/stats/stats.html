@@ -1,18 +1,20 @@
 <div class="col-lg-3 col-md-6">
-    <div ng-cloak class="panel panel-{{colour}}">
-        <div class="panel-heading">
+    <div ng-cloak class="panel panel-{{colour}}" style="min-height:300px;">
+     <a ng-cloak ui-sref="{{goto}}">
+        <div class="panel-heading" style="min-height:300px;">
             <div class="row">
-                <div class="col-xs-3">
-                    <i ng-cloak class="fa fa-{{type}} fa-5x"></i>
+                <div class="col-xs-12 text-center {{type}}" style="min-height:180px;">
+                    <i ng-cloak class="fa fa-{{type}}" style="font-size: 13em;"></i>
                 </div>
-                <div class="col-xs-9 text-right">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-center">
                     <div ng-cloak class="huge">{{number}}</div>
                     <div ng-cloak>{{comments}}</div>
                 </div>
             </div>
         </div>
-        <a ng-cloak ui-sref="{{goto}}">
-            <div class="panel-footer">
+       	<div class="panel-footer">
                 <span class="pull-left">View Details</span>
                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                 <div class="clearfix"></div>
