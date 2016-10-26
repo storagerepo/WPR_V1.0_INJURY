@@ -7,7 +7,7 @@
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
-    <div class="row" ng-cloak>
+    <div ng-cloak>
     	 <!-- SuperAdmin Dashboard Starts-->
     	<stats ng-cloak number="{{numberCallerAdmin}}" comments="Call Center Admin" colour="primary" type="user" goto="dashboard.CallerAdmin" ng-show="{{isAdmin==1}}"></stats>
         <stats ng-cloak number="{{numberLawyerAdmin}}" comments="Lawyer Admin" colour="primary" type="lawyer-icon" goto="dashboard.LawyerAdmin" ng-show="{{isAdmin==1}}"></stats>
@@ -16,9 +16,60 @@
     
     <!-- SuperAdmin Dashboard Ends-->
     
-    <!-- Lawyer Admin Dashboard Starts-->  
-        <stats ng-cloak number="{{numberLawyer}}" comments="Lawyers" colour="primary" type="lawyer-icon" goto="dashboard.Lawyer" ng-show="{{isAdmin==3}}"></stats>
-        <stats ng-cloak number="{{numberPatients}}" comments="Clients" colour="primary" type="patient-icon" goto="dashboard.LawyerAdminSearchPatients" ng-show="{{isAdmin==3}}"></stats>
+    <!-- Lawyer Admin Dashboard Starts-->
+    <div class="col-lg-12" style="height:470px;" ng-show="{{isAdmin==3}}">
+    <div class="col-lg-12" style="margin-top:60px;">
+    <div class="col-lg-3 col-md-6"></div>
+    <div class="col-lg-3 col-md-6">
+    <div ng-cloak class="panel panel-primary" style="min-height:300px;">
+     <a ng-cloak ui-sref="dashboard.Lawyer">
+        <div class="panel-heading" style="min-height:300px;">
+            <div class="row">
+                <div class="col-xs-12 text-center lawyer-icon" style="min-height:180px;">
+                    <i ng-cloak class="fa fa-lawyer-icon" style="font-size: 13em;"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <div ng-cloak class="huge">{{numberLawyer}}</div>
+                    <div ng-cloak>Lawyers</div>
+                </div>
+            </div>
+        </div>
+       	<div class="panel-footer">
+                <span class="pull-left">View Details</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+            </div>
+        </a>
+    </div>
+</div> 
+ <div class="col-lg-3 col-md-6">
+    <div ng-cloak class="panel panel-primary" style="min-height:300px;">
+     <a ng-cloak ui-sref="dashboard.LawyerAdminSearchPatients">
+        <div class="panel-heading" style="min-height:300px;">
+            <div class="row">
+                <div class="col-xs-12 text-center patient-icon" style="min-height:180px;">
+                    <i ng-cloak class="fa fa-patient-icon" style="font-size: 13em;"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <div ng-cloak class="huge">{{numberPatients}}</div>
+                    <div ng-cloak>Clients</div>
+                </div>
+            </div>
+        </div>
+       	<div class="panel-footer">
+                <span class="pull-left">View Details</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+            </div>
+        </a>
+    </div>
+</div> 
+</div>
+ </div>     
     <!-- Lawyer Admin Dashboard Ends-->
     
     

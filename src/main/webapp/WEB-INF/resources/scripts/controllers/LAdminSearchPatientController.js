@@ -93,7 +93,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 					        break;
 					   
 					    case 6:
-					    	value1.patientStatusName="Need Re-assign";
+					    	value1.patientStatusName="To be Re-Assigned";
 					        break;
 					    default:
 					        null;

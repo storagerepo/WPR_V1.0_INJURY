@@ -269,7 +269,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 				    	value1.patientStatusName="Do Not Call";
 				        break;
 				    case 6:
-				    	value1.patientStatusName="Need Re-Assign";
+				    	value1.patientStatusName="To be Re-Assigned";
 				        break;
 				    case 8:
 				    	value1.patientStatusName="Call Back";
