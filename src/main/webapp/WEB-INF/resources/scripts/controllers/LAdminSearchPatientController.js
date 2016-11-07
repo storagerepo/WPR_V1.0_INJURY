@@ -357,6 +357,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 		$scope.patient.crashToDate="";
 		$scope.patient.localReportNumber="";
 		$scope.patient.patientName="";
+		$scope.patient.age="1",
 		$scope.patient.callerId=0;
 		$scope.patient.phoneNumber= "";
 		$scope.patient.lawyerId="0";

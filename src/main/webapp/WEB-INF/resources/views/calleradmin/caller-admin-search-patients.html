@@ -142,14 +142,14 @@
 						ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
 					<th width="20%">Client Name</th>
 					<th width="13%">Phone Number</th>
-					<th width="4%">Age</th>
+					<th width="11%">Age</th>
 					<th width="7%">Unit No.</th>
-					<th width="10%">County</th>
+					<th width="9%">County</th>
 					<th width="5%">Tier</th>
-					<th width="10%">Caller</th>
-					<th width="10%">Status</th>
+					<th width="9%">Caller</th>
+					<th width="6%">Status</th>
 					<th width="9%">Status On</th>
-					<th width="10%">Actions</th>
+					<th width="9%">Actions</th>
 				</tr>
 				<tr>
 					<th></th>
@@ -171,10 +171,11 @@
 						</div>
 					</th>
 					<th>
-						<!-- <div class="input-group">
-  								<span class="input-group-addon search" id="basic-addon4"><i class="fa fa-search"></i></span>
-								<input class="form-control" type="text"
-									ng-model="search.crashDate" placeholder="Crash Date"></div> -->
+						<select class="form-control" ng-model="patient.age" ng-change="secoundarySearchPatient()">
+								 <option value="1">Adults</option>
+								 <option value="2">Minors</option>
+								 <option value="3">All</option>
+								 </select>
 					</th>
 					<th>
 						<!-- <div class="input-group">
@@ -213,7 +214,7 @@
 						ng-model="patient.selected" ng-checked="patient.selected"
 						type="checkbox"></td>
 					<td><span
-						ng-if="(patient.injuries==2 || patient.injuries==3 || patient.injuries==4) && patient.age>=18"><a
+						ng-if="(patient.injuries==2 || patient.injuries==3 || patient.injuries==4) && patient.age>=18 || patient.age==null "><a
 							href="" class="hint--top redText"
 							ng-click="viewPatientModal(patient.patientId)"
 							data-hint="View Client">{{patient.name}}</a><span
@@ -223,7 +224,7 @@
 								<span ng-show="patient.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon"
 							data-hint="Driver">&nbsp;</span></span> <span
-						ng-if="(patient.injuries==2 || patient.injuries==3 || patient.injuries==4) && patient.age<18"><a
+						ng-if="(patient.injuries==2 || patient.injuries==3 || patient.injuries==4) && patient.age<18 && patient.age!=null"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(patient.patientId)"
 							data-hint="View Client">{{patient.name}}</a><span
@@ -234,7 +235,7 @@
 							class="margin-left-10 hint--top driver-icon"
 							data-hint="Driver">&nbsp;</span>
 								</span> <span
-						ng-if="(patient.injuries!=2 && patient.injuries!=3 && patient.injuries!=4) && patient.age>=18"><a
+						ng-if="(patient.injuries!=2 && patient.injuries!=3 && patient.injuries!=4) && patient.age>=18 || patient.age==null"><a
 							href="" class="hint--top"
 							ng-click="viewPatientModal(patient.patientId)"
 							data-hint="View Client">{{patient.name}}</a>
@@ -242,7 +243,7 @@
 							class="margin-left-10 hint--top driver-icon"
 							data-hint="Driver">&nbsp;</span>
 							</span> <span
-						ng-if="(patient.injuries!=2 && patient.injuries!=3 && patient.injuries!=4) && patient.age<18"><a
+						ng-if="(patient.injuries!=2 && patient.injuries!=3 && patient.injuries!=4) && patient.age<18 && patient.age!=null"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(patient.patientId)"
 							data-hint="View Client">{{patient.name}}</a>

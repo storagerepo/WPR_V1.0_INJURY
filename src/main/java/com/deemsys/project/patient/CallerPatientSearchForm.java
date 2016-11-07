@@ -11,6 +11,7 @@ public class CallerPatientSearchForm {
 	private String crashToDate;
 	private String localReportNumber;
 	private String patientName;
+	private Integer age;
 	private Integer callerId;
 	private Integer lawyerAdminId;
 	private Integer lawyerId;
@@ -68,6 +69,13 @@ public class CallerPatientSearchForm {
 	}
 	public void setPatientName(String patientName) {
 		this.patientName = patientName;
+	}
+	
+	public Integer getAge() {
+		return age;
+	}
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 	public Integer getCallerId() {
 		return callerId;
@@ -135,7 +143,7 @@ public class CallerPatientSearchForm {
 	}
 	public CallerPatientSearchForm(Integer callerAdminId, Integer countyId,
 			Integer tier, Integer patientStatus, String crashFromDate,Integer numberOfDays,
-			String crashToDate, String localReportNumber, String patientName,
+			String crashToDate, String localReportNumber, String patientName,Integer age,
 			Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived) {
 		super();
 		this.callerAdminId = callerAdminId;
@@ -147,6 +155,7 @@ public class CallerPatientSearchForm {
 		this.crashToDate = crashToDate;
 		this.localReportNumber = localReportNumber;
 		this.patientName = patientName;
+		this.age=age;
 		this.callerId = callerId;
 		this.lawyerAdminId=lawyerAdminId;
 		this.lawyerId=lawyerId;

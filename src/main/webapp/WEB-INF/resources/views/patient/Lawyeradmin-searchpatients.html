@@ -137,12 +137,12 @@
                             <tr>
                            	 	<th width="2%"><input ng-change="isChecked()" ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
                                 <th width="20%">Client Name</th>
-                                <th width="6%">Age</th>
-                                 <th width="7%">Unit No.</th>
+                                <th width="12%">Age</th>
+                                 <th width="6%">Unit No.</th>
                                 <th width="10%">County</th>
                                 <th width="11%">Lawyer</th>
                                
-                                <th width="20%">Address</th>
+                                <th width="15%">Address</th>
                                 
                                 <th width="5%">Tier</th>
                                 <th width="12%">Status</th>
@@ -156,13 +156,13 @@
 								<input class="form-control" type="text"
 									ng-model="patient.patientName" ng-change="secoundarySearchPatient()" placeholder="Name"></div>
 								</th>
-								
-								<!-- <th>
-								<div class="input-group">
-  								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
-  								<input class="form-control" type="text"
-									ng-model="patient.localReportNumber" ng-change="secoundarySearchPatient()" placeholder="Report No"></div></th>
-								 --><th></th>
+								<th>
+								 <select class="form-control" ng-model="patient.age" ng-change="secoundarySearchPatient()">
+								 <option value="1">Adults</option>
+								 <option value="2">Minors</option>
+								 <option value="3">All</option>
+								 </select>
+								 </th>
 								<th></th>
 								<th></th>									
 								<th></th>
@@ -180,10 +180,10 @@
                           <tr dir-paginate="lAdminData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords" pagination-id="lawyerAdminPatientPageId">
                             
                                 <td><input type="checkbox" ng-change="isCheckedIndividual()" ng-model="lAdminData.selected"/></td>
-                                <td><span ng-if="(lAdminData.injuries==2 || lAdminData.injuries==3 || lAdminData.injuries==4) && lAdminData.age>=18"><a href="" class="hint--top redText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{lAdminData.injuriesName}}"><i class="fa fa-arrow-up" ></i></span><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
-                                	<span ng-if="(lAdminData.injuries==2 || lAdminData.injuries==3 || lAdminData.injuries==4) && lAdminData.crashSeverity==2 && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{lAdminData.injuriesName}}"><i class="fa fa-arrow-up" ></i></span><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
-                                    <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && lAdminData.age>=18"><a href="" class="hint--top" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
-                                    <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && lAdminData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+                                <td><span ng-if="(lAdminData.injuries==2 || lAdminData.injuries==3 || lAdminData.injuries==4) && lAdminData.age>=18||lAdminData.age==null"><a href="" class="hint--top redText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{lAdminData.injuriesName}}"><i class="fa fa-arrow-up" ></i></span><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+                                	<span ng-if="(lAdminData.injuries==2 || lAdminData.injuries==3 || lAdminData.injuries==4) && lAdminData.crashSeverity==2 && lAdminData.age<18 && lAdminData.age!=null"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{lAdminData.injuriesName}}"><i class="fa fa-arrow-up" ></i></span><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+                                    <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && lAdminData.age>=18||lAdminData.age==null"><a href="" class="hint--top" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+                                    <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && lAdminData.age<18 && lAdminData.age!=null"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
                                     </td>
                               <td title="Age">{{lAdminData.age}}</td>
                               <td title="Unit Number">{{lAdminData.unitNumber}}</td>

@@ -83,6 +83,14 @@ public class ExportExcelView extends AbstractExcelView {
 		int sno=1;
 		//Create data cell
 		for(PatientSearchList patient:patientSearchLists){
+			
+			String age="";
+			if(patient.getAge()==null){
+				age="";
+			}else{
+				age=patient.getAge().toString();
+			}
+			
 			row = sheet.createRow(r++);
 			c = 0;
 			row.createCell(c++).setCellValue(sno++);
@@ -98,7 +106,7 @@ public class ExportExcelView extends AbstractExcelView {
 			row.createCell(c++).setCellValue(patient.getUnitNumber());
 			row.createCell(c++).setCellValue(patient.getName());
 			row.createCell(c++).setCellValue(patient.getDateOfBirth());
-			row.createCell(c++).setCellValue(patient.getAge());
+			row.createCell(c++).setCellValue(age);
 			row.createCell(c++).setCellValue(patient.getGender());
 			row.createCell(c++).setCellValue(patient.getAddress());
 			row.createCell(c++).setCellValue(patient.getPhoneNumber());

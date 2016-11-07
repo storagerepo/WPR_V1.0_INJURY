@@ -17,6 +17,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.patient.crashToDate=searchService.getCrashToDate();
 		$scope.patient.localReportNumber=searchService.getLocalReportNumber();
 		$scope.patient.patientName=searchService.getPatientName();
+		$scope.patient.age=searchService.getAge();
 		$scope.patient.callerId=searchService.getCallerId();
 		$scope.patient.phoneNumber=searchService.getPhoneNumber();
 		$scope.patient.lawyerId=searchService.getLawyerId();
@@ -351,6 +352,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		searchService.setLawyerId($scope.patient.lawyerId);
 		searchService.setPhoneNumber($scope.patient.phoneNumber);
 		searchService.setPatientName($scope.patient.patientName);
+		searchService.setAge($scope.patient.age);
 		searchService.setLocalReportNumber($scope.patient.localReportNumber);
 		searchService.setTier($scope.patient.tier);
 		searchService.setAddedOnFromDate($scope.patient.addedOnFromDate);
@@ -366,6 +368,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			searchService.setPhoneNumber($scope.patient.phoneNumber);
 			searchService.setPatientName($scope.patient.patientName);
 			searchService.setIsArchived($scope.patient.isArchived);
+			searchService.setAge($scope.patient.age);
 			searchService.setTier($scope.patient.tier);
 			searchService.setPatientStatus($scope.patient.patientStatus);
 			$scope.oldPageNumber=$scope.patient.pageNumber;
@@ -650,6 +653,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 				searchService.setLawyerId("0");
 				searchService.setPhoneNumber("");
 				searchService.setPatientName("");
+				searchService.setAge("3");
 				searchService.setLocalReportNumber("");
 				searchService.setTier("0");
 				searchService.setAddedOnFromDate("");

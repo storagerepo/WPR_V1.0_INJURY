@@ -986,7 +986,12 @@ public class PDFCrashReportReader {
 			patientsForm.setUnitNumber(motoristPageForm.getUnitNumber()
 					.trim());
 			patientsForm.setDateOfBirth(motoristPageForm.getDateOfBirth());
-			patientsForm.setAge(motoristPageForm.getAge());
+			
+			if(motoristPageForm.getAge()!=null)
+				patientsForm.setAge(Integer.parseInt(motoristPageForm.getAge()));
+			else
+				patientsForm.setAge(null);
+			
 			patientsForm.setGender(motoristPageForm.getGender());
 			patientsForm.setAddress(motoristPageForm
 					.getAdddressCityStateZip());

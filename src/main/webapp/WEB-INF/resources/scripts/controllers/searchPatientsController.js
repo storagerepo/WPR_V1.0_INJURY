@@ -17,6 +17,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$scope.patient.crashToDate="";
 		$scope.patient.localReportNumber="";
 		$scope.patient.patientName="";
+		$scope.patient.age="3";
 		$scope.patient.callerId=0;
 		$scope.patient.phoneNumber= "";
 		$scope.patient.lawyerId=0;
@@ -131,6 +132,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 			$scope.addedToRequired=false;
 			$scope.crashToRequired=false;
 			$scope.patient.patientName="";
+			$scope.patient.age="3";
 			$scope.patient.phoneNumber= "";
 			if($scope.patient.countyId=="")
 			$scope.patient.countyId=0;

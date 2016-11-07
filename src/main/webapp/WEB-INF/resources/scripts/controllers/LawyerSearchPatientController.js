@@ -283,10 +283,11 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		$scope.patient.crashToDate="";
 		$scope.patient.localReportNumber="";
 		$scope.patient.patientName="";
+		$scope.patient.age="1",
 		$scope.patient.callerId=0;
 		$scope.patient.phoneNumber= "";
 		$scope.patient.lawyerId="0";
-		$scope.patient.numberOfDays="1";
+		$scope.patient.numberOfDays="3";
 		$scope.patient.itemsPerPage="25";
 		$scope.totalRecords=0;
 		$scope.lawyerPatientSearchData="";

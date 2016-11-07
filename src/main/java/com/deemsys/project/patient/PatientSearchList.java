@@ -19,7 +19,7 @@ public class PatientSearchList extends InjuryProperties{
 	private String phoneNumber;
 	private String address;
 	private String dateOfBirth;
-	private String age;
+	private Integer age;
 	private String crashReportFileName;
 	private Integer callerAdminId;
 	private Integer callerId;
@@ -224,10 +224,10 @@ public class PatientSearchList extends InjuryProperties{
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	public String getAge() {
+	public Integer getAge() {
 		return age;
 	}
-	public void setAge(String age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 	public String getReportingAgencyName() {
@@ -317,7 +317,7 @@ public class PatientSearchList extends InjuryProperties{
 	public PatientSearchList(String patientId, String localReportNumber,
 			Integer numberOfPatients, String crashDate, String addedDate,
 			Integer countyId, String county, String crashSeverity, String name,
-			String phoneNumber, String address, String dateOfBirth, String age,
+			String phoneNumber, String address, String dateOfBirth, Integer age,
 			String crashReportFileName, Integer callerAdminId,
 			Integer callerId, String callerFirstName, String callerLastName,
 			Integer lawyerAdminId, Integer lawyerId, String lawyerFirstName,

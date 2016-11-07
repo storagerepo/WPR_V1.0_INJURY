@@ -9,6 +9,7 @@ adminApp.service('searchService',function(){
 	var crashToDate="";
 	var localReportNumber="";
 	var patientName="";
+	var age="3";
 	var phoneNumber= "";
 	var lawyerId=0;
 	var pageNumber= 1;
@@ -90,6 +91,15 @@ adminApp.service('searchService',function(){
 		return patientName;
 	};
 	
+	//Age
+	this.setAge=function(ageInput){
+		age=ageInput;
+	};
+	
+	this.getAge=function(){
+		return age;
+	};
+	
 	//Phone Number
 	this.setPhoneNumber=function(phoneNumberInput){
 		phoneNumber=phoneNumberInput;
@@ -160,4 +170,5 @@ adminApp.service('searchService',function(){
 	this.getItemsPerPage=function(){
 		return itemsPerPage;
 	};
+	
 });

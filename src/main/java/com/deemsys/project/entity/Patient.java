@@ -1,3 +1,4 @@
+
 package com.deemsys.project.entity;
 
 // Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
@@ -42,7 +43,7 @@ public class Patient implements java.io.Serializable {
 	private String unitNumber;
 	private String name;
 	private String dateOfBirth;
-	private String age;
+	private Integer age;
 	private String gender;
 	private String address;
 	private Double latitude;
@@ -75,7 +76,7 @@ public class Patient implements java.io.Serializable {
 			String crashSeverity, String reportingAgencyName,
 			String numberOfUnits, String unitInError, County county,
 			String cityVillageTownship, Date crashDate,Date addedDate, String timeOfCrash,
-			String unitNumber, String name, String dateOfBirth,String age,String gender,
+			String unitNumber, String name, String dateOfBirth,Integer age,String gender,
 			String address, Double latitude, Double longitude,
 			String phoneNumber, String injuries, String emsAgency,
 			String medicalFacility, String atFaultInsuranceCompany,
@@ -252,12 +253,12 @@ public class Patient implements java.io.Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	@Column(name = "age", length = 45)
-	public String getAge() {
+	@Column(name = "age")
+	public Integer getAge() {
 		return this.age;
 	}
 
-	public void setAge(String age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 	

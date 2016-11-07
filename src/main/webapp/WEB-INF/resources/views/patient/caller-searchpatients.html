@@ -130,14 +130,14 @@
                             <tr>
                             	<th width="2%"><input ng-change="isChecked()" ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
                                 <th width="20%">Client Name</th>
-                                <th width="14%">Phone Number</th> 
-                                <th width="6%">Age</th>   
+                                <th width="13%">Phone Number</th> 
+                                <th width="12%">Age</th>   
                                 <th width="7%">Unit No.</th>        
                                 <th width="9%">County</th>
                                 <th width="7%">Tier</th>
-                                <th width="13%">Status</th>
+                                <th width="10%">Status</th>
                                 <th width="10%">Status On</th>
-                                <th width="12%">Actions</th>
+                                <th width="10%">Actions</th>
                             </tr>
                             <tr>
                             	<th></th>
@@ -158,7 +158,13 @@
   								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
 									ng-model="patient.phoneNumber" ng-change="secoundarySearchPatient()" placeholder="Phone No"></div></th>
-								<th></th>
+								<th>
+								<select class="form-control" ng-model="patient.age" ng-change="secoundarySearchPatient()">
+								 <option value="1">Adults</option>
+								 <option value="2">Minors</option>
+								 <option value="3">All</option>
+								 </select>
+								</th>
 								<th></th>
 								<!-- <th></th> -->	
 								<th></th>
@@ -175,10 +181,10 @@
                             <tr dir-paginate="callerData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords" pagination-id="callerPatientPageId">
                           
                                 <td><input ng-change="isCheckedIndividual();enableCallLogsButton('{{resultData.localReportNumber}}');" ng-model="callerData.selected" ng-checked="callerData.selected" type="checkbox"></td>
-                                <td><span ng-if="(callerData.injuries==2 || callerData.injuries==3 || callerData.injuries==4) && callerData.age>=18"><a href="" class="hint--top redText" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Client">{{callerData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{callerData.injuriesName}}"><i class="fa fa-arrow-up" ></i></span><span ng-show="callerData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
-                                    <span ng-if="(callerData.injuries==2 || callerData.injuries==3 || callerData.injuries==4) && callerData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Client">{{callerData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{callerData.injuriesName}}"><i class="fa fa-arrow-up" ></i></span><span ng-show="callerData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
-                                    <span ng-if="(callerData.injuries!=2 && callerData.injuries!=3 && callerData.injuries!=4) && callerData.age>=18"><a href="" class="hint--top" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Client">{{callerData.name}}</a><span ng-show="callerData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
-                                    <span ng-if="(callerData.injuries!=2 && callerData.injuries!=3 && callerData.injuries!=4) && callerData.age<18"><a href="" class="hint--top warningText" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Client">{{callerData.name}}</a><span ng-show="callerData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+                                <td><span ng-if="(callerData.injuries==2 || callerData.injuries==3 || callerData.injuries==4) && callerData.age>=18 || callerData.age==null"><a href="" class="hint--top redText" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Client">{{callerData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{callerData.injuriesName}}"><i class="fa fa-arrow-up" ></i></span><span ng-show="callerData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+                                    <span ng-if="(callerData.injuries==2 || callerData.injuries==3 || callerData.injuries==4) && callerData.age<18 && callerData.age!=null"><a href="" class="hint--top warningText" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Client">{{callerData.name}}</a><span class="redText margin-left-10 hint--top" data-hint="Injuries : {{callerData.injuriesName}}"><i class="fa fa-arrow-up" ></i></span><span ng-show="callerData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+                                    <span ng-if="(callerData.injuries!=2 && callerData.injuries!=3 && callerData.injuries!=4) && callerData.age>=18 || callerData.age==null"><a href="" class="hint--top" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Client">{{callerData.name}}</a><span ng-show="callerData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+                                    <span ng-if="(callerData.injuries!=2 && callerData.injuries!=3 && callerData.injuries!=4) && callerData.age<18 && callerData.age!=null"><a href="" class="hint--top warningText" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Client">{{callerData.name}}</a><span ng-show="callerData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
                                 </td>
                              
                                 <td title="Phone Number">{{callerData.phoneNumber}}</td>     

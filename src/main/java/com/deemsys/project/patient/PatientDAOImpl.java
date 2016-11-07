@@ -439,6 +439,15 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		criteria.add(tierCriterion);
 	}
 	
+	//Common Constrain Age - Major, Minor and All
+	if(callerPatientSearchForm.getAge()==1){
+		Criterion ageCriterion=Restrictions.or(Restrictions.ge("t1.age",18), Restrictions.isNull("t1.age"));
+		criteria.add(ageCriterion);
+	}else if(callerPatientSearchForm.getAge()==2){
+		Criterion ageCriterion=Restrictions.lt("t1.age",18);
+		criteria.add(ageCriterion);
+	}
+	
 	
 	
 	//Common Constrains - Crash Date
