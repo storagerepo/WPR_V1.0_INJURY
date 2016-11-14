@@ -65,4 +65,14 @@ public class LoginService {
 		}
 		// End
 	}
+	
+	// Check Password Changed Status
+	public Integer checkPasswordChangedStatus(){
+		Integer status=0;
+		Users users=usersDAO.get(this.getCurrentUserID());
+		if(users.getIsPasswordChanged()==1){
+			status=1;
+		}
+		return status;
+	}
 }

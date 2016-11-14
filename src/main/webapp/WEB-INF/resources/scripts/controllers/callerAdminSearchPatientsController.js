@@ -311,6 +311,9 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			    default:
 			        break;
 				};
+				
+				// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
+				value1.name=searchService.spiltAndSwapName(value1.name);
 			});
 				console.log("service .....");
 				defer.resolve(response);

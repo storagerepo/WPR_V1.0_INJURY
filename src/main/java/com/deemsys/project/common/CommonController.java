@@ -71,5 +71,17 @@ public class CommonController {
 		return "/returnPage";
 	}
 
+    @RequestMapping(value = {"/checkPasswordChangedStatus"}, method = RequestMethod.GET)
+   	public String checkPasswordChangedStatus(ModelMap model) {
+   		model.addAttribute("status",loginService.checkPasswordChangedStatus());
+   		model.addAttribute("requestSuccess", true);
+   		return "/returnPage";
+   	}
     
+    @RequestMapping(value = {"api/checkPasswordChangedStatus"}, method = RequestMethod.GET)
+   	public String testIPRestriction(ModelMap model) {
+   		//model.addAttribute("status",loginService.checkPasswordChangedStatus());
+   		model.addAttribute("requestSuccess", true);
+   		return "/returnPage";
+   	}
 }

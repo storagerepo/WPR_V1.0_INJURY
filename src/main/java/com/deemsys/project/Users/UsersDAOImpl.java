@@ -145,7 +145,7 @@ public class UsersDAOImpl implements UsersDAO{
 	@Override
 	public Integer changePassword(String newPassword, String userName) {
 		// TODO Auto-generated method stub
-			Query query=sessionFactory.getCurrentSession().createQuery("update Users set password='"+newPassword+"' where username='"+userName+"'");
+			Query query=sessionFactory.getCurrentSession().createQuery("update Users set password='"+newPassword+"',isPasswordChanged=1  where username='"+userName+"'");
 			query.executeUpdate();
 				return 1;
 	}

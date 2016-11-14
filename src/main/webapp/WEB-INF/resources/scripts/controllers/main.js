@@ -6,15 +6,22 @@
  * # MainCtrl
  * Controller of the sbAdminApp
  */
-var adminApp=angular.module('sbAdminApp',['requestModule']);
-adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$rootScope) {
+var adminApp=angular.module('sbAdminApp',['requestModule','flash']);
+adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHandler,$rootScope,Flash) {
 	
 	setTimeout(function(){
 		
 	
-	
-		if($rootScope.isAdmin==1){
+		// For Password Change Modal
+		requestHandler.getRequest("checkPasswordChangedStatus.json","").then( function(response) {
+		      var status=response.data.status;
+		      if(status!=1){
+		    	$("#changePasswordModal").modal('show',{backdrop: 'static', keyboard: true});
+		      }
+		   });
 		
+		if($rootScope.isAdmin==1){
+			
 			requestHandler.getRequest("Admin/getNumberOfCallerAdmin.json","").then( function(response) {
 			      $scope.numberCallerAdmin=response.data.numberOfCallerAdmin;
 			   });
@@ -77,5 +84,27 @@ adminApp.controller('MainCtrl', function($scope,$position,$http,requestHandler,$
 		   }
 		   
 	}, 500);
+	$scope.isShowCloseError=false;
+	$scope.showAlert=function(){
+		$scope.isShowCloseError=true;
+		$scope.isModalCloseError="Please change the password to continue.";
+	};
+	
+	$scope.changePassword=function()
+	{
+		
+		requestHandler.postRequest("changePassword.json?newPassword="+$scope.user.confirmpassword,"").then(function(response){
+			 $scope.value=response.data.requestSuccess;
+			  
+			  if($scope.value==true)
+				  {
+				  	$("#changePasswordModal").modal('hide');
+				  	Flash.create('success', "You have Successfully Changed!");
+				  }
+		
+		});
+	};
+	
+	
   });
 

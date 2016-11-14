@@ -1,6 +1,6 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash']);
 
-adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$state,Flash,requestHandler) {
+adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$state,Flash,requestHandler,searchService) {
 	
 	$scope.init=function(){
 		$scope.searchAppointment={};
@@ -27,6 +27,8 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
 	    	 $scope.appointments = response.data.appointmentsSearchRessult.appointmentsForms;
 	       $.each($scope.appointments,function(index,value){
 	        	 value.status=(value.status).toString();
+	        	 // Swapping Name Format
+	        	 value.patientName=searchService.spiltAndSwapName(value.patientName);
 	        });
 		  });
 	};
@@ -41,6 +43,8 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
 		    	 $scope.appointments = response.data.appointmentsSearchRessult.appointmentsForms;
 		       $.each($scope.appointments,function(index,value){
 		        	 value.status=(value.status).toString();
+		        	// Swapping Name Format
+		        	 value.patientName=searchService.spiltAndSwapName(value.patientName);
 		        });
 		});
 	};
@@ -66,6 +70,8 @@ $scope.viewPatientDetailsModal=function(patientId)
 {
 	requestHandler.getRequest("Patient/getPatient.json?patientId="+patientId,"").then( function(response) {
 		$scope.patient=response.data.patientForm;
+		// Swapping Name Format
+		$scope.patient.name=searchService.spiltAndSwapName(response.data.patientForm.name);
 	      $("#viewPatientDetailsModal").modal("show");
      });
 };

@@ -141,6 +141,10 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 				    default:
 				        break;
 					};
+					
+					// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
+					value1.name=searchService.spiltAndSwapName(value1.name);
+					
 					});
 					
 					defer.resolve(response);
@@ -277,7 +281,7 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 	
 	$scope.releasePatientRequest=function(assignCallerObj){
 		requestHandler.postRequest("/Caller/releaseCaller.json",assignCallerObj).then(function(response){
-			Flash.create('success', "You have Successfully Released Patient!");
+			Flash.create('success', "You successfully released patients that were checked.!");
 			$scope.searchItems($scope.patient);
 			$(function(){
 				$("html,body").scrollTop(0);

@@ -1,11 +1,13 @@
 
-<div>
+<div class="row">
     <div class="row">
         <div class="col-lg-12">
+         <div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
             <h2 class="page-header">Home</h2>
+           
         </div>
         <!-- /.col-lg-12 -->
-    </div>
+     </div>
     <!-- /.row -->
     <div ng-cloak>
     	 <!-- SuperAdmin Dashboard Starts-->
@@ -19,7 +21,7 @@
     <!-- Lawyer Admin Dashboard Starts-->
     <div class="col-lg-12" style="height:470px;" ng-show="{{isAdmin==3}}">
     <div class="col-lg-12" style="margin-top:60px;">
-    <div class="col-lg-3 col-md-6"></div>
+    <div class="col-lg-2 col-md-6"></div>
     <div class="col-lg-3 col-md-6">
     <div ng-cloak class="panel panel-primary" style="min-height:300px;">
      <a ng-cloak ui-sref="dashboard.Lawyer">
@@ -44,6 +46,7 @@
         </a>
     </div>
 </div> 
+<div class="col-lg-2 col-md-6"></div>
  <div class="col-lg-3 col-md-6">
     <div ng-cloak class="panel panel-primary" style="min-height:300px;">
      <a ng-cloak ui-sref="dashboard.LawyerAdminSearchPatients">
@@ -77,12 +80,12 @@
      <stats  ng-cloak number="{{numberOfCallers}}" comments="Callers" colour="primary" type="user" goto="dashboard.callers" ng-show="{{isAdmin==2}}"></stats>
    <stats ng-cloak number="{{numberOfClinics}}" comments="Clinics" colour="primary" type="clinic-icon" goto="dashboard.clinic" ng-show="{{isAdmin==2}}"></stats>
         <stats  ng-cloak number="{{numberOfAppointments}}" comments="Appointments" colour="primary" type="calendar" goto="dashboard.appointment" ng-show="{{isAdmin==2}}"></stats>
-        <stats ng-cloak number="{{numberOfPatients}}" comments="Clients" colour="primary" type="patient-icon" goto="dashboard.callerAdminSearchPatients" ng-show="{{isAdmin==2}}"></stats>
+        <stats ng-cloak number="{{numberOfPatients}}" comments="Patients" colour="primary" type="patient-icon" goto="dashboard.callerAdminSearchPatients" ng-show="{{isAdmin==2}}"></stats>
       <!-- Caller Admin Dashboard Ends-->   
       
       
       <!-- Caller Dashboard Starts -->
-       <stats ng-cloak number="{{numberPatients}}" comments="Clients" colour="primary" type="patient-icon" goto="dashboard.CallerSearchPatients" ng-show="{{isAdmin==4}}"></stats>
+       <stats ng-cloak number="{{numberPatients}}" comments="Patients" colour="primary" type="patient-icon" goto="dashboard.CallerSearchPatients" ng-show="{{isAdmin==4}}"></stats>
         <stats ng-cloak number="{{numberOfClinics}}" comments="Clinics" colour="primary" type="clinic-icon" goto="dashboard.clinics" ng-show="{{isAdmin==4}}"></stats>
       <!-- Caller Dashboard Ends -->
       
@@ -126,3 +129,51 @@
     <!-- /.row -->
 </div>
 
+<!-- Chnage Password Modal -->
+<div class="modal fade" id="changePasswordModal" role="dialog" data-backdrop="static" 
+   data-keyboard="false" >
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+      <form name="changePasswordModalForm" novalidate>
+        <div class="modal-header">
+          <button type="button" class="close" ng-click="showAlert();">&times;</button>
+          <h4 class="modal-title">Change Password </h4>
+        </div>
+        <div class="modal-body">
+        	 <label >Current Password</label>
+                                   <input type="password" id="password" name="password" class="form-control" ng-model="user.password"  placeholder="Enter Current Password" password required>
+                                
+                                 <span class="error-container" ng-show="changePasswordModalForm.password.$dirty && changePasswordModalForm.password.$invalid">
+                                <span ng-cloak style="color:red" ng-show="changePasswordModalForm.password.$error.required">Please Enter the Current Password</span>
+                               <span ng-cloak style="color:red" ng-show="changePasswordModalForm.password.$error.password">Invalid Current Password
+    							</span>
+                              	</span>
+                                    <br/>
+        	 <label>New Password</label>
+                                   <input type="password" id="newpassword" name="newpassword" class="form-control" ng-model="user.newpassword" placeholder="Enter New Password" required>
+                                     <span class="error-container" ng-show="changePasswordModalForm.newpassword.$dirty && changePasswordModalForm.newpassword.$invalid">
+                                <span ng-cloak style="color:red" ng-show="changePasswordModalForm.newpassword.$error.required">Please Enter the New Password</span>
+                              </span>
+                                    <br/>
+        	
+                                    <label>Confirm Password</label>
+                                   <input type="password"   ng-pattern="user.newpassword" id="confirmpassword" name="confirmpassword" class="form-control" ng-model="user.confirmpassword" placeholder="Enter Confirm Password" required>
+
+                                   
+                                    <span class="error-container" ng-show="changePasswordModalForm.confirmpassword.$dirty && changePasswordModalForm.confirmpassword.$invalid">
+                               <span ng-cloak style="color:red" ng-show="changePasswordModalForm.confirmpassword.$error.required">Please Enter the Confirm Password</span>
+                               <span ng-cloak style="color:red" ng-show="changePasswordModalForm.confirmpassword.$error.pattern">Password and Confirm Password Should be Same</span>
+                              </span>
+                                   <br/>
+        </div>
+        <div class="modal-footer" >
+         	<!--  <button type="close" class="btn btn-danger" ng-click="showAlert();">Cancel</button> -->
+         	<span class="error-container pull-left" style="color:red" ng-show="isShowCloseError">{{isModalCloseError}}</span>
+             <a href="" type="submit" class="btn btn-success"  data-dismiss="modal" ng-disabled='changePasswordModalForm.$invalid' ng-click="changePassword()">Change</a>
+        </div>
+        </form>
+      </div>
+      
+    </div>
+ </div>

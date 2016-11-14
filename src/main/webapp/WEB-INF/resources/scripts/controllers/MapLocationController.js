@@ -1,6 +1,6 @@
-var adminApp=angular.module('sbAdminApp',['requestModule','uiGmapgoogle-maps']);
+var adminApp=angular.module('sbAdminApp',['requestModule','searchModule','uiGmapgoogle-maps']);
 
-adminApp.controller('showNearByClinicController',function($scope,$log,$stateParams,requestHandler,$compile,$q){
+adminApp.controller('showNearByClinicController',function($scope,$log,$stateParams,requestHandler,searchService,$compile,$q){
 	
 	$scope.init=function(){
 		$scope.searchRange=50;
@@ -14,6 +14,8 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 		requestHandler.getRequest("Patient/getPatient.json?patientId="+$stateParams.id,"").then( function(response) {
 			console.log(response.data.patientForm);
 			$scope.patient= response.data.patientForm;
+			// Swapping Name Format
+			$scope.patient.name=searchService.spiltAndSwapName(response.data.patientForm.name);
 			$scope.map = {center: {latitude: $scope.patient.latitude, longitude: $scope.patient.longitude }, zoom: 8, markers:[] };
 		    $scope.options = {scrollwheel: true};
 		    $scope.clinicMarkers = [];

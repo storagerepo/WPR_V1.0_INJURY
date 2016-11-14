@@ -1,6 +1,6 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule','flash','ngFileSaver']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash','ngFileSaver']);
 
-adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler','$state','Flash','FileSaver','$q', function($scope,requestHandler,$state,Flash,FileSaver,$q) {
+adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler','searchService','$state','Flash','FileSaver','$q', function($scope,requestHandler,searchService,$state,Flash,FileSaver,$q) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.lawyerPatientSearchData=$scope.patientSearchDataOrginal=[];
@@ -110,6 +110,10 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 				    default:
 				        break;
 					};
+					
+					// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
+					value1.name=searchService.spiltAndSwapName(value1.name);
+					
 				});
 					defer.resolve(response);
 				});
@@ -205,7 +209,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		assignLawyerObj.patientId=patientIdArray;
 		
 		requestHandler.postRequest("/Lawyer/releaseLawyer.json",assignLawyerObj).then(function(response){
-			Flash.create('success', "You have Successfully Released Lawyer!");
+			Flash.create('success', "You successfully released clients that were checked.");
 			$scope.searchItems($scope.patient);
 			$(function(){
 				$("html,body").scrollTop(0);

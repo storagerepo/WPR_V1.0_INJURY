@@ -1,6 +1,6 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule','flash','ngFileSaver']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash','ngFileSaver']);
 
-adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler','$state','Flash','FileSaver','$q', function($scope,requestHandler,$state,Flash,FileSaver,$q) {
+adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler','searchService','$state','Flash','FileSaver','$q', function($scope,requestHandler,searchService,$state,Flash,FileSaver,$q) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.lAdminPatientSearchData=$scope.patientSearchDataOrginal=[];
@@ -128,6 +128,10 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 				    default:
 				        break;
 					};
+					
+					// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
+					value1.name=searchService.spiltAndSwapName(value1.name);
+					
 					});
 					defer.resolve(response);
 				});

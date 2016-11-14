@@ -171,4 +171,19 @@ adminApp.service('searchService',function(){
 		return itemsPerPage;
 	};
 	
+	// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
+	this.spiltAndSwapName=function(patientName){
+		var swapName="";
+		if(patientName!=null){
+			var splitname=patientName.split(",");
+			if(splitname[2]==undefined){
+				swapName=splitname[1]+", "+splitname[0];
+			}else if(splitname[2].replace(/\s/g,'')==''){
+				swapName=splitname[1]+", "+splitname[0];
+			}else{
+				swapName=splitname[1]+", "+splitname[2]+", "+splitname[0];
+			}
+		}
+		return swapName;
+	};
 });
