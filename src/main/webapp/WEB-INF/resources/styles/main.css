@@ -740,3 +740,8 @@ span .dashboard-icon{
 	background-position: center;
 	
 }
+
+.client-name{
+	font-size:12px;
+	font-weight:normal;
+}
