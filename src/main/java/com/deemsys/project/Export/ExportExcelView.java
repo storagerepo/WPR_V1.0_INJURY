@@ -153,7 +153,7 @@ public class ExportExcelView extends AbstractExcelView {
 					// Middle Name
 					String checkMiddleName=splitName[2].replaceAll("\\s", "");
 					if(!checkMiddleName.equals("")){
-						changedPatientName=splitName[2].trim().replaceAll("\\s", ",");
+						changedPatientName=splitName[2].trim().replaceAll("\\s", ", ");
 					}else{
 						changedPatientName=splitName[2];
 					}
