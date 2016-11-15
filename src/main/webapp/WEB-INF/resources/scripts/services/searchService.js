@@ -176,8 +176,10 @@ adminApp.service('searchService',function(){
 		var swapName="";
 		if(patientName!=null){
 			var splitname=patientName.split(",");
-			if(splitname[2]==undefined){
+			if(splitname.length==2){
 				swapName=splitname[1]+", "+splitname[0];
+			}else if(splitname.length==1){
+				swapName=splitname[0];
 			}else if(splitname[2].replace(/\s/g,'')==''){
 				swapName=splitname[1]+", "+splitname[0];
 			}else{

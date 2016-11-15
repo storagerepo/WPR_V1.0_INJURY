@@ -145,6 +145,11 @@ public class ExportExcelView extends AbstractExcelView {
 					// Last Name
 					changedPatientName=splitName[0].trim();
 				}
+			}else if(splitName.length==1){
+				if(nameType==1){
+					// First Name
+					changedPatientName=splitName[0].trim();
+				}
 			}else{
 				if(nameType==1){
 					// First Name
