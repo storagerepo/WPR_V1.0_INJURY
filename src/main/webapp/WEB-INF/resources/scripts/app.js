@@ -1109,7 +1109,6 @@ sbAdminApp
 								.postRequest("getCurrentRole.json", "")
 								.then(
 										function(response) {
-												
 											if (response.data.role == "ROLE_SUPER_ADMIN") {
 												$rootScope.authenticated = true;
 												$rootScope.isAdmin = 1;
@@ -1316,3 +1315,42 @@ sbAdminApp.directive('usernameexists',['$q','$timeout','requestHandler',function
 								}
 							};
 } ]);
+
+// Checking Current Password
+sbAdminApp.directive("password", function ($q, $timeout,requestHandler) {
+    var CheckPasswordExists = function (isNew) {
+        if(isNew!=true)
+            return true;
+        else
+            return false;
+    };
+    return {
+        restrict: "A",
+        require: "ngModel",
+        link: function (scope, element, attributes, ngModel) {
+            ngModel.$asyncValidators.password = function (modelValue) {
+                var defer = $q.defer();
+                $timeout(function () {
+                    var isNew;
+                    var sendRequest=requestHandler.postRequest("checkPassword.json?oldPassword="+modelValue,0).then(function(results){
+                        isNew=results.data.requestSuccess;
+                    });
+
+                    sendRequest.then(function(){
+
+                        if (CheckPasswordExists(!isNew)){
+                            defer.resolve();
+                        }
+                        else{
+                            defer.reject();
+                        } 
+                    });
+                    isNew = false;
+                }, 10);
+
+                return defer.promise;
+            }
+        }
+    };
+
+});

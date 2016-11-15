@@ -38,7 +38,9 @@ public class ExportExcelView extends AbstractExcelView {
 		headers.add("CRASH DATE");
 		headers.add("TIME OF CRASH");
 		headers.add("UNIT NUMBER");
-		headers.add("NAME: LAST FIRST MIDDLE");
+		headers.add("FIRST NAME");
+		headers.add("MIDDLE NAME");
+		headers.add("LAST NAME");
 		headers.add("DATE OF BIRTH");
 		headers.add("AGE");
 		headers.add("GENDER");
@@ -104,7 +106,9 @@ public class ExportExcelView extends AbstractExcelView {
 			row.createCell(c++).setCellValue(patient.getCrashDate());
 			row.createCell(c++).setCellValue(patient.getTimeOfCrash());
 			row.createCell(c++).setCellValue(patient.getUnitNumber());
-			row.createCell(c++).setCellValue(patient.getName());
+			row.createCell(c++).setCellValue(this.changeNameFormat(patient.getName(),1));
+			row.createCell(c++).setCellValue(this.changeNameFormat(patient.getName(),2));
+			row.createCell(c++).setCellValue(this.changeNameFormat(patient.getName(),3));
 			row.createCell(c++).setCellValue(patient.getDateOfBirth());
 			row.createCell(c++).setCellValue(age);
 			row.createCell(c++).setCellValue(patient.getGender());
@@ -123,6 +127,45 @@ public class ExportExcelView extends AbstractExcelView {
 			sheet.autoSizeColumn(i, true);
 		
 		
+	}
+	
+	// Swap the Name Format
+	public String changeNameFormat(String patientName,Integer nameType){
+		String changedPatientName="";
+		if(patientName!=null){
+			String[] splitName=patientName.split(",");
+			if(splitName.length==2){
+				if(nameType==1){
+					// First Name
+					changedPatientName=splitName[1].trim();
+				}else if(nameType==2){
+					// Middle Name
+					changedPatientName="";
+				}else if(nameType==3){
+					// Last Name
+					changedPatientName=splitName[0].trim();
+				}
+			}else{
+				if(nameType==1){
+					// First Name
+					changedPatientName=splitName[1].trim();
+				}else if(nameType==2){
+					// Middle Name
+					String checkMiddleName=splitName[2].replaceAll("\\s", "");
+					if(!checkMiddleName.equals("")){
+						changedPatientName=splitName[2].trim().replaceAll("\\s", ",");
+					}else{
+						changedPatientName=splitName[2];
+					}
+					
+				}else if(nameType==3){
+					// Last Name
+					changedPatientName=splitName[0].trim();
+				}
+			}
+		}
+		
+		return changedPatientName;
 	}
 
 }
