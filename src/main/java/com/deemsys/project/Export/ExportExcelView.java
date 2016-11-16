@@ -32,7 +32,7 @@ public class ExportExcelView extends AbstractExcelView {
 		//Header List
 		List<String> headers=new ArrayList<String>();
 		if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
-			headers.add("FIRST NAME, LAST NAME");
+			headers.add("FIRST NAME LAST NAME");
 			headers.add("STREET ADDRESS");
 			headers.add("CITY");
 			headers.add("STATE");
@@ -170,13 +170,13 @@ public class ExportExcelView extends AbstractExcelView {
 			String[] splitName=patientName.split(",");
 			if(splitName.length==2){
 					// First Name Last Name
-					changedPatientName=splitName[1].trim()+", "+splitName[0].trim();
+					changedPatientName=splitName[1].trim()+" "+splitName[0].trim();
 			}else if(splitName.length==1){
 				// First Name
 				changedPatientName=splitName[0].trim();
 			}else{
 				// First Name Last Name
-				changedPatientName=splitName[1].trim()+", "+splitName[0].trim();
+				changedPatientName=splitName[1].trim()+" "+splitName[0].trim();
 			}
 		}
 		
