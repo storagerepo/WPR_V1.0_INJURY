@@ -332,6 +332,7 @@ public class PatientController {
 	public String getExportExcel(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
 		
 		model.addAttribute("requestSuccess", true);
+		model.addAttribute("role",loginService.getCurrentRole());
 		model.addAttribute("patientSearchResultSet",patientService.getExportPatient(callerPatientSearchForm));
 		return "ok";
 		
