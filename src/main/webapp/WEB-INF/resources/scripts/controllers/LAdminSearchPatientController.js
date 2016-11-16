@@ -129,8 +129,6 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 				        break;
 					};
 					
-					// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
-					value1.name=searchService.spiltAndSwapName(value1.name);
 					
 					});
 					defer.resolve(response);

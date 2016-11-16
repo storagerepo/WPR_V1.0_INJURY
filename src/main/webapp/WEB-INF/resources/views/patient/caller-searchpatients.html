@@ -129,7 +129,7 @@
                         <thead  class="persist-header">
                             <tr>
                             	<th width="2%"><input ng-change="isChecked()" ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
-                                <th width="20%">Patient Name <span class="client-name">(First, Middle, Last)</span></th>
+                                <th width="20%">Patient Name <span class="client-name">(Last, First, Middle)</span></th>
                                 <th width="13%">Phone Number</th> 
                                 <th width="12%">Age</th>   
                                 <th width="7%">Unit No.</th>        
@@ -663,7 +663,7 @@ $('#AddedToDate').datetimepicker({
 
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover({
-    	content: "<p><b>Tier 1:</b> List of accident victims where there are multiple vehicles and at fault is insured.</p><p><b>Tier 2:</b> List of accident victims where there are multiple vehicles but no at fault insurance and the victim is insured. (Medpay or uninsured motorist)</p><p><b>Tier 3:</b> List of accident victims involved in a single car accident. (includes hit and runs)</p><p><b>Tier 4:</b> List of injured passengers in at fault vehicle (not including driver) and the driver in insured.</p>",
+    	content: "<p><b>Tier 1:</b> List of accident victims where there are multiple vehicles and at fault is insured.</p><p><b>Tier 2:</b> List of accident victims where there are multiple vehicles but no at fault insurance and the victim is insured. (Medpay or uninsured motorist)</p><p><b>Tier 3:</b> List of accident victims involved in a single car accident. (includes hit and runs)</p><p><b>Tier 4:</b> List of passengers in at-fault vehicle and driver also, if insured.</p>",
     	html: true, 
     	placement: "left"
     	

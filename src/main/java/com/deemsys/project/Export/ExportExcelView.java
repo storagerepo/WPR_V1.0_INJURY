@@ -27,7 +27,12 @@ public class ExportExcelView extends AbstractExcelView {
 		
 		//Header List
 		List<String> headers=new ArrayList<String>();
-		headers.add("S.NO");
+		headers.add("FIRST NAME, LAST NAME");
+		headers.add("STREET ADDRESS");
+		headers.add("CITY");
+		headers.add("STATE");
+		headers.add("ZIP");
+		headers.add("FULL ADDRESS");
 		headers.add("LOCAL REPORT NUMBER");
 		headers.add("CRASH SEVERITY");
 		headers.add("REPORTING AGENCY NAME");
@@ -38,13 +43,9 @@ public class ExportExcelView extends AbstractExcelView {
 		headers.add("CRASH DATE");
 		headers.add("TIME OF CRASH");
 		headers.add("UNIT NUMBER");
-		headers.add("FIRST NAME");
-		headers.add("MIDDLE NAME");
-		headers.add("LAST NAME");
 		headers.add("DATE OF BIRTH");
 		headers.add("AGE");
 		headers.add("GENDER");
-		headers.add("ADDRESS CITY STATE ZIP");
 		headers.add("CONTACT PHONE - INCLUDE AREA CODE");
 		headers.add("INJURIES");
 		headers.add("EMS AGENCY");
@@ -95,7 +96,13 @@ public class ExportExcelView extends AbstractExcelView {
 			
 			row = sheet.createRow(r++);
 			c = 0;
-			row.createCell(c++).setCellValue(sno++);
+
+			row.createCell(c++).setCellValue(this.changeNameFormat(patient.getName()));
+			row.createCell(c++).setCellValue(this.splitAddress(patient.getAddress(),1));
+			row.createCell(c++).setCellValue(this.splitAddress(patient.getAddress(),2));
+			row.createCell(c++).setCellValue(this.splitAddress(patient.getAddress(),3));
+			row.createCell(c++).setCellValue(this.splitAddress(patient.getAddress(),4));
+			row.createCell(c++).setCellValue(patient.getAddress());
 			row.createCell(c++).setCellValue(patient.getLocalReportNumber());
 			row.createCell(c++).setCellValue(patient.getCrashSeverity());
 			row.createCell(c++).setCellValue(patient.getReportingAgencyName());
@@ -106,13 +113,9 @@ public class ExportExcelView extends AbstractExcelView {
 			row.createCell(c++).setCellValue(patient.getCrashDate());
 			row.createCell(c++).setCellValue(patient.getTimeOfCrash());
 			row.createCell(c++).setCellValue(patient.getUnitNumber());
-			row.createCell(c++).setCellValue(this.changeNameFormat(patient.getName(),1));
-			row.createCell(c++).setCellValue(this.changeNameFormat(patient.getName(),2));
-			row.createCell(c++).setCellValue(this.changeNameFormat(patient.getName(),3));
 			row.createCell(c++).setCellValue(patient.getDateOfBirth());
 			row.createCell(c++).setCellValue(age);
 			row.createCell(c++).setCellValue(patient.getGender());
-			row.createCell(c++).setCellValue(patient.getAddress());
 			row.createCell(c++).setCellValue(patient.getPhoneNumber());
 			row.createCell(c++).setCellValue(patient.getInjuries());
 			row.createCell(c++).setCellValue(patient.getEmsAgency());
@@ -130,47 +133,65 @@ public class ExportExcelView extends AbstractExcelView {
 	}
 	
 	// Swap the Name Format
-	public String changeNameFormat(String patientName,Integer nameType){
+	public String changeNameFormat(String patientName){
 		String changedPatientName="";
 		if(patientName!=null){
 			String[] splitName=patientName.split(",");
 			if(splitName.length==2){
-				if(nameType==1){
-					// First Name
-					changedPatientName=splitName[1].trim();
-				}else if(nameType==2){
-					// Middle Name
-					changedPatientName="";
-				}else if(nameType==3){
-					// Last Name
-					changedPatientName=splitName[0].trim();
-				}
+					// First Name Last Name
+					changedPatientName=splitName[1].trim()+" "+splitName[0].trim();
 			}else if(splitName.length==1){
-				if(nameType==1){
-					// First Name
-					changedPatientName=splitName[0].trim();
-				}
+				// First Name
+				changedPatientName=splitName[0].trim();
 			}else{
-				if(nameType==1){
-					// First Name
-					changedPatientName=splitName[1].trim();
-				}else if(nameType==2){
-					// Middle Name
-					String checkMiddleName=splitName[2].replaceAll("\\s", "");
-					if(!checkMiddleName.equals("")){
-						changedPatientName=splitName[2].trim().replaceAll("\\s", ", ");
-					}else{
-						changedPatientName=splitName[2];
-					}
-					
-				}else if(nameType==3){
-					// Last Name
-					changedPatientName=splitName[0].trim();
-				}
+				// First Name Last Name
+				changedPatientName=splitName[1].trim()+" "+splitName[0].trim();
 			}
 		}
 		
 		return changedPatientName;
+	}
+	
+	// Split Address
+	public String splitAddress(String address, Integer addressType){
+		String separateaddress="";
+		if(address!=null){
+			System.out.println("address--->"+address);
+			String[] splittedAddress=address.split(",");
+			if(splittedAddress.length==1){
+				if(addressType==1){
+					separateaddress=splittedAddress[0].trim();
+				}
+			}
+			else if(splittedAddress.length==2){
+				if(addressType==1){
+					separateaddress=splittedAddress[0].trim();
+				}else if(addressType==2){
+					separateaddress=splittedAddress[1].trim();
+				}
+			}else if(splittedAddress.length==3){
+				if(addressType==1){
+					separateaddress=splittedAddress[0].trim();
+				}else if(addressType==2){
+					separateaddress=splittedAddress[1].trim();
+				}else if(addressType==3){
+					separateaddress=splittedAddress[2].trim();
+				}
+			}else{
+				if(addressType==1){
+					separateaddress=splittedAddress[0].trim();
+				}else if(addressType==2){
+					separateaddress=splittedAddress[1].trim();
+				}else if(addressType==3){
+					separateaddress=splittedAddress[2].trim();
+				}else if(addressType==4){
+					separateaddress=splittedAddress[3].trim();
+				}
+			}
+			
+		}
+		
+		return separateaddress;
 	}
 
 }
