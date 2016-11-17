@@ -1,6 +1,10 @@
 <!doctype html>
 <html class="no-js">
   <head>
+  
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
     <meta charset="utf-8">
     <title>Crash Reports | crashreportsonline.com</title>
     <link rel="icon" href="resources/images/favicon.ico" type="image/gif" sizes="16x16">
@@ -49,7 +53,7 @@
 	<link rel="stylesheet" href="resources/components/angular-flash/angular-flash.css">
      <!-- <script  src="resources/components/prettify/prettify.js"></script> -->
 	<!-- endbower  error-->
-    <!-- endbuild -->
+   
     
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
@@ -63,6 +67,14 @@
 	<!-- File Saver -->
 	<script src="resources/components/angular-file-saver/angular-file-saver.min.js"></script>
 	<script src="resources/components/angular-file-saver/angular-file-saver.bundle.min.js"></script>
+
+	<!-- For Multi Select Dropdowns -->
+	<link rel="stylesheet" href="resources/components/bootstrap-multi-select/bootstrap-select.min.css"></link>
+	<script src="resources/components/bootstrap-multi-select/bootstrap-select.min.js"></script>
+	
+	 <!-- Drag Drop -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script src="resources/components/angular-sortable/angular-sortable.js"></script>
 
 	<!-- Load For Menu -->
 	<script src="resources/scripts/services/searchService.js"></script>

@@ -51,16 +51,16 @@ sbAdminApp
 															break;
 														}
 														case 401: {
-															window.location.href = "/Injury/logout?sessionout";
+															window.location.href = "/logout?sessionout";
 
 														}
 														case 403: {
-															window.location.href = "/Injury/logout?sessionout";
+															window.location.href = "/logout?sessionout";
 															break;
 														}
 														case 500: {
 															alert("Please try again!");
-															window.location.href = "/Injury/logout";
+															window.location.href = "/logout";
 															break;
 														}
 														default: {
@@ -839,6 +839,25 @@ sbAdminApp
 												url : '/PatientResponse'
 
 											})
+											.state(
+													'dashboard.userPreferrence',
+													{
+														resolve : {
+															loadMyFile : function(
+																	$ocLazyLoad) {
+																return $ocLazyLoad
+																		.load({
+																			name : 'sbAdminApp',
+																			files : [
+																					'scripts/controllers/userPreferrenceController.js', ]
+																		});
+															}
+														},
+														controller : 'sortableController',
+														templateUrl : 'views/settings/user-preferrence.html',
+														url : '/UserPreferrence'
+
+													})
 									.state(
 											'dashboard.add-caller-admin',
 											{
