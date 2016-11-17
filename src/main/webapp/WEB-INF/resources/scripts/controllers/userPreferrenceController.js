@@ -2,40 +2,8 @@ var myapp = angular.module('sbAdminApp', ['ui.sortable','requestModule','flash']
 
 
 myapp.controller('sortableController', function ($scope,$location,requestHandler,Flash) {
-  var tmpList = [];
-  
-  $scope.rawScreens = [
-    [{
-      icon: './img/icons/facebook.jpg',
-      title: 'Facebook (a)',
-      link: 'http://www.facebook.com'
-    }, {
-      icon: './img/icons/youtube.jpg',
-      title: 'Youtube (a)',
-      link: 'http://www.youtube.com'
-    }, {
-      icon: './img/icons/gmail.jpg',
-      title: 'Gmail (a)',
-      link: 'http://www.gmail.com'
-    }, {
-      icon: './img/icons/google+.jpg',
-      title: 'Google+ (a)',
-      link: 'http://plus.google.com'
-    }, {
-      icon: './img/icons/twitter.jpg',
-      title: 'Twitter (a)',
-      link: 'http://www.twitter.com'
-    }, {
-      icon: './img/icons/yahoomail.jpg',
-      title: 'Yahoo Mail (a)',
-      link: 'http://mail.yahoo.com'
-    }, {
-      icon: './img/icons/pinterest.jpg',
-      title: 'Pinterest (a)',
-      link: 'http://www.pinterest.com'
-    }],
-    []
-  ];
+ 
+	$scope.rawScreens = [[],[]];
   
   
   $scope.sortingLog = [];
@@ -90,16 +58,6 @@ myapp.controller('sortableController', function ($scope,$location,requestHandler
 
   $scope.sortableOptionsList = [createOptions('A'), createOptions('B')];
   
-  $scope.logModels = function () {
-    $scope.sortingLog = [];
-    for (var i = 0; i < $scope.rawScreens.length; i++) {
-      var logEntry = $scope.rawScreens[i].map(function (x) {
-        return x.title;
-      }).join(', ');
-      logEntry = 'container ' + (i+1) + ': ' + logEntry;
-      $scope.sortingLog.push(logEntry);
-    }
-  };
   
   	// Save Preferences
   	var userLookupPreferencesOriginal={};
@@ -171,6 +129,13 @@ myapp.controller('sortableController', function ($scope,$location,requestHandler
 				
 			}
 		};
+		
+	//Get Export Fields List
+	 requestHandler.getRequest("Patient/getAllExportFieldss.json","").then(function(response){
+			$scope.exportFieldsFormsOriginal=response.data.exportFieldsForms;
+			angular.copy($scope.exportFieldsFormsOriginal,$scope.rawScreens[0]);
+	});
+		
 	
 	// Get County List
 	 requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){

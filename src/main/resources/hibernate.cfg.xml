@@ -32,5 +32,10 @@
         <mapping class="com.deemsys.project.entity.PatientLawyerAdminMap" />
         <mapping class="com.deemsys.project.entity.Users" />
         <mapping class="com.deemsys.project.entity.Roles" />
+        <mapping class="com.deemsys.project.entity.ExportFields" />
+        <mapping class="com.deemsys.project.entity.UserExportPreferences" />
+        <mapping class="com.deemsys.project.entity.UserExportPreferencesId" />
+        <mapping class="com.deemsys.project.entity.UserLookupPreferences" />
+        <mapping class="com.deemsys.project.entity.UserLookupPreferencesId" />
     </session-factory>
 </hibernate-configuration>

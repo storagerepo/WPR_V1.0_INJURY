@@ -120,29 +120,30 @@
 				<div id="collapse2" class="panel-collapse collapse">
 					<div class="panel-body">
 						<div class="col-md-12">
-						<div class="col-md-3"></div>
-							<div class="col-md-3">
+							<div class="col-md-6">
 							<p>List of Fields</p>
 								<div ui-sortable="sortableOptionsList[0]"
 									class="apps-container screen floatleft"
 									ng-model="rawScreens[0]">
-									<div class="app" ng-repeat="app in rawScreens[0]">{{$index}}
-										{{app.title}}</div>
+									<div class="app" ng-repeat="app in rawScreens[0]">
+									{{app.fieldName}} <span style="float:right;"><i class="fa fa-arrows" aria-hidden="true"></i></span></div>
 									<p style="text-align:center;line-height:250px;" ng-show="rawScreens[0].length==0">All Fields are Added</p>
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-6">
 							<p>Excel Fields</p>
 								<div ui-sortable="sortableOptionsList[1]"
 									class="apps-container screen floatleft"
 									ng-model="rawScreens[1]">
-									<div class="app" ng-repeat="app in rawScreens[1]">{{$index}}
-										{{app.title}}</div>
+									<div class="app" ng-repeat="app in rawScreens[1]">	
+									 {{$index+1}}. {{app.fieldName}} <span style="float:right;"><i class="fa fa-arrows" aria-hidden="true"></i></span>
+									</div>
 										<p style="text-align:center;line-height:250px;" ng-show="rawScreens[1].length==0">Drag & Drop the Fields</p>
 								</div>
-								<div style="clear: both;"></div>
+								<div style="clear: both;"></div><br/><br/>
+								<button ng-click="moveAll()" class="btn btn-primary">Move All</button><br/><br/><button ng-click="resetAll()" class="btn btn-primary">Reset All</button>
 							</div>
-						<div class="col-md-3"></div>
+						{{rawScreens}}
 	</div>
 				</div>
 			</div>

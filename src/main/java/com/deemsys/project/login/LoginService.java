@@ -6,8 +6,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.CallerAdmin.CallerAdminService;
+import com.deemsys.project.LawyerAdmin.LawyerAdminService;
+import com.deemsys.project.Lawyers.LawyersService;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.LawyerAdmin;
 import com.deemsys.project.entity.Users;
 
 @Service
@@ -16,6 +21,18 @@ public class LoginService {
 	
 	@Autowired
 	UsersDAO usersDAO;
+	
+	@Autowired
+	CallerAdminService callerAdminService;
+	
+	@Autowired
+	LawyerAdminService lawyerAdminService;
+	
+	@Autowired
+	LawyersService lawyersService;
+	
+	@Autowired
+	CallerService callerService;
 	
 	// Get Current User Role
 	public String getCurrentRole() {
@@ -75,4 +92,31 @@ public class LoginService {
 		}
 		return status;
 	}
+	
+	//Get User Preference User ID
+	public Integer getPreferenceUserId(){
+		
+		String currentRole=this.getCurrentRole();
+		
+		if(currentRole.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+			return this.getCurrentUserID();
+		}
+		else if(currentRole.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+			return this.getCurrentUserID();
+		}
+		else if(currentRole.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+			return this.getCurrentUserID();
+		}
+		else if(currentRole.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			return callerService.getCallerByUserId(this.getCurrentUserID()).getCallerAdmin().getUsers().getUserId();
+		}
+		else if(currentRole.equals(InjuryConstants.INJURY_LAWYER_ROLE)){			
+			return lawyersService.getLawyerIdByUserId(this.getCurrentUserID()).getLawyerAdmin().getUsers().getUserId();
+		}else{
+			return 1;
+		}
+						
+		
+	}
+	
 }
