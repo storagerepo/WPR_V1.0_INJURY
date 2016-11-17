@@ -1,7 +1,7 @@
-var myapp = angular.module('sbAdminApp', ['ui.sortable']);
+var myapp = angular.module('sbAdminApp', ['ui.sortable','requestModule','flash']);
 
 
-myapp.controller('sortableController', function ($scope) {
+myapp.controller('sortableController', function ($scope,$location,requestHandler,Flash) {
   var tmpList = [];
   
   $scope.rawScreens = [
@@ -100,4 +100,101 @@ myapp.controller('sortableController', function ($scope) {
       $scope.sortingLog.push(logEntry);
     }
   };
+  
+  	// Save Preferences
+  	var userLookupPreferencesOriginal={};
+  	$scope.userLookupPreferences={};
+	$scope.userLookupPreferences.county=[];
+	$scope.countyform=[];
+	$scope.userLookupPreferences.userLookupPreferenceMappedForms=[{"type":1,"preferredId":[]},
+	                                                              {"type":2,"preferredId":[1]},
+	                                                             {"type":3,"preferredId":[2]}];
+	// Selected County
+	$scope.selectedCounties=function(countyId){
+		var idx=$scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId.indexOf(countyId);
+		// Already Selected Items
+		if(idx>-1){
+			$scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId.splice(idx,1);
+		}
+		// Add New Items
+		else{
+			$scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId.push(countyId);
+		}
+		
+	};
+	// Selected Tier
+	$scope.selectedTier=function(tier){
+		var idx=$scope.userLookupPreferences.userLookupPreferenceMappedForms[1].preferredId.indexOf(tier);
+		// Already Selected Items
+		if(idx>-1){
+			$scope.userLookupPreferences.userLookupPreferenceMappedForms[1].preferredId.splice(idx,1);
+		}
+		// Add New Items
+		else{
+			$scope.userLookupPreferences.userLookupPreferenceMappedForms[1].preferredId.push(tier);
+		}
+		
+	};
+	// Selected Age
+	$scope.selectedAge=function(ageId){
+		var idx=$scope.userLookupPreferences.userLookupPreferenceMappedForms[2].preferredId.indexOf(ageId);
+		// Already Selected Items
+		if(idx>-1){
+			$scope.userLookupPreferences.userLookupPreferenceMappedForms[2].preferredId.splice(idx,1);
+		}
+		// Add New Items
+		else{
+			$scope.userLookupPreferences.userLookupPreferenceMappedForms[2].preferredId.push(ageId);
+		}
+		
+	};
+	
+	 $scope.isChecked=function(){
+			if($scope.countyform.length>0){
+				$.each($scope.countyform, function(index,value) {
+					if(document.getElementById('checkAll').checked==true){
+						var idx=$scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId.indexOf(value.countyId);
+						// Already Selected Items
+						if(idx==-1){
+							$scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId.push(value.countyId);
+						}
+						
+						$("#"+value.countyId).checked==true;
+						//$("#"+value.id).prop('checked',$(this).prop("checked"));
+					}
+					else if(document.getElementById('checkAll').checked==false){
+						$scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId=[];
+						//$("#"+value.id).prop('checked', $(this).prop("checked"));
+						$("#"+value.countyId).checked==false;
+					}
+				});
+				
+			}
+		};
+	
+	// Get County List
+	 requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
+			$scope.countyform=response.data.countyList;
+	});
+	 
+	// Get User Lookup Preference
+	 requestHandler.getRequest("Patient/getUserLookupPreferences.json","").then(function(response){
+			$scope.userLookupPreferences=response.data.userLookupPreferencesForm;
+			userLookupPreferencesOriginal=response.data.userLookupPreferencesForm;
+	});
+	
+	 $scope.saveUserLookupPreferences=function(){
+			
+		 requestHandler.postRequest("/Patient/mergeUserLookupPreferences.json",$scope.userLookupPreferences).then(function(response){
+			  Flash.create('success', "You have Successfully Updated!");
+			  $location.path('dashboard/UserPreferrence');
+		 });
+		
+	 };
+	 
+	 // Compare Objects
+	 $scope.isClean = function() {
+	        return angular.equals (userLookupPreferencesOriginal,$scope.userLookupPreferences);
+	    };
+	 
 });

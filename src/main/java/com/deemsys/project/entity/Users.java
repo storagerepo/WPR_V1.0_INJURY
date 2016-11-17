@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
+// Generated Nov 17, 2016 6:08:16 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,28 +29,26 @@ public class Users implements java.io.Serializable {
 	private Integer isEnable;
 	private Integer isPasswordChanged;
 	private Integer status;
-	private Set<LawyerAdmin> lawyerAdmins = new HashSet<LawyerAdmin>(0);
-	private Set<CallerAdmin> callerAdmins = new HashSet<CallerAdmin>(0);
-	private Set<Lawyer> lawyers = new HashSet<Lawyer>(0);
-	private Set<Caller> callers = new HashSet<Caller>(0);
+	private Set<UserExportPreferences> userExportPreferenceses = new HashSet<UserExportPreferences>(
+			0);
+	private Set<UserLookupPreferences> userLookupPreferenceses = new HashSet<UserLookupPreferences>(
+			0);
 
 	public Users() {
 	}
 
 	public Users(Roles roles, String username, String password,
-			Integer isEnable, Integer isPasswordChanged, Integer status, Set<LawyerAdmin> lawyerAdmins,
-			Set<CallerAdmin> callerAdmins, Set<Lawyer> lawyers,
-			Set<Caller> callers) {
+			Integer isEnable, Integer isPasswordChanged, Integer status,
+			Set<UserExportPreferences> userExportPreferenceses,
+			Set<UserLookupPreferences> userLookupPreferenceses) {
 		this.roles = roles;
 		this.username = username;
 		this.password = password;
 		this.isEnable = isEnable;
 		this.isPasswordChanged = isPasswordChanged;
 		this.status = status;
-		this.lawyerAdmins = lawyerAdmins;
-		this.callerAdmins = callerAdmins;
-		this.lawyers = lawyers;
-		this.callers = callers;
+		this.userExportPreferenceses = userExportPreferenceses;
+		this.userLookupPreferenceses = userLookupPreferenceses;
 	}
 
 	@Id
@@ -100,10 +98,10 @@ public class Users implements java.io.Serializable {
 	public void setIsEnable(Integer isEnable) {
 		this.isEnable = isEnable;
 	}
-	
+
 	@Column(name = "is_password_changed")
 	public Integer getIsPasswordChanged() {
-		return isPasswordChanged;
+		return this.isPasswordChanged;
 	}
 
 	public void setIsPasswordChanged(Integer isPasswordChanged) {
@@ -120,39 +118,23 @@ public class Users implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	public Set<LawyerAdmin> getLawyerAdmins() {
-		return this.lawyerAdmins;
+	public Set<UserExportPreferences> getUserExportPreferenceses() {
+		return this.userExportPreferenceses;
 	}
 
-	public void setLawyerAdmins(Set<LawyerAdmin> lawyerAdmins) {
-		this.lawyerAdmins = lawyerAdmins;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	public Set<CallerAdmin> getCallerAdmins() {
-		return this.callerAdmins;
-	}
-
-	public void setCallerAdmins(Set<CallerAdmin> callerAdmins) {
-		this.callerAdmins = callerAdmins;
+	public void setUserExportPreferenceses(
+			Set<UserExportPreferences> userExportPreferenceses) {
+		this.userExportPreferenceses = userExportPreferenceses;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	public Set<Lawyer> getLawyers() {
-		return this.lawyers;
+	public Set<UserLookupPreferences> getUserLookupPreferenceses() {
+		return this.userLookupPreferenceses;
 	}
 
-	public void setLawyers(Set<Lawyer> lawyers) {
-		this.lawyers = lawyers;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	public Set<Caller> getCallers() {
-		return this.callers;
-	}
-
-	public void setCallers(Set<Caller> callers) {
-		this.callers = callers;
+	public void setUserLookupPreferenceses(
+			Set<UserLookupPreferences> userLookupPreferenceses) {
+		this.userLookupPreferenceses = userLookupPreferenceses;
 	}
 
 }
