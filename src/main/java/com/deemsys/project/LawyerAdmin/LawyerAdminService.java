@@ -133,6 +133,7 @@ public class LawyerAdminService {
 		users.setUsername(lawyerAdminForm.getUsername());
 		users.setPassword(lawyerAdminForm.getUsername());
 		users.setIsEnable(1);
+		users.setIsPasswordChanged(0);
 		LawyerAdmin lawyerAdmin = new LawyerAdmin(users,
 				lawyerAdminForm.getFirstName(), lawyerAdminForm.getLastName(), 
 				lawyerAdminForm.getStreet(),
@@ -176,6 +177,7 @@ public class LawyerAdminService {
 		users.setPassword(lawyerAdminForm.getUsername());
 		users.setIsEnable(1);
 		users.setStatus(1);
+		users.setIsPasswordChanged(0);
 		role = roleDAO.get(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID);
 		users.setRoles(role);
 		usersDAO.save(users);

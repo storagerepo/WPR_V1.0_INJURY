@@ -30,6 +30,13 @@ public class ExportFieldsController {
 		return "/returnPage";
 	}
 	
+    @RequestMapping(value="/getStandardExportFields",method=RequestMethod.GET)
+   	public String getStandardExportFields(ModelMap model)
+   	{
+       	model.addAttribute("exportFieldsForm",exportFieldsService.getStandardExportFieldsList());
+       	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
     
     @RequestMapping(value="/mergeExportFields",method=RequestMethod.POST)
    	public String mergeExportFields(@ModelAttribute("exportFieldsForm") ExportFieldsForm exportFieldsForm,ModelMap model)

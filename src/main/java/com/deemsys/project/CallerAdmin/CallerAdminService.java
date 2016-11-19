@@ -141,6 +141,7 @@ public class CallerAdminService {
 		users.setPassword(callerAdminForm.getUsername());
 		users.setIsEnable(1);
 		users.setStatus(1);
+		users.setIsPasswordChanged(0);
 		users.setRoles(roles);
 		usersDAO.save(users);
 		

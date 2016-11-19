@@ -370,7 +370,33 @@
 		</div>
 	</div>
 </div>
-   					
+  <!-- Export Options Modal -->
+<div class="modal fade" id="exportOptionModal" role="dialog" data-backdrop="static" 
+   data-keyboard="false" >
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+      <form name="changePasswordModalForm" novalidate>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Export Preference</h4>
+        </div>
+        <div class="modal-body">
+        	<span class="text-center">
+        	<label class="radio-inline"><input type="radio" value="1" name="exportFormat" ng-model="formatType" ng-click="resetUserPreferenceError()"/>Standard</label> &nbsp;&nbsp;&nbsp;&nbsp;
+        	<label class="radio-inline"><input type="radio" value="2" name="exportFormat" ng-model="formatType" ng-click="checkPreferenceStatus()"/>Custom</label>
+        	</span><br/>
+        	<span style="color:red" ng-show="userPrefenceError">You are not done with custom preference setup.To set please <a href="" ng-click="goToSettings()">click here</a></span>
+        </div>
+        <div class="modal-footer" >
+         	<button type="close" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+             <a href="" type="submit" class="btn btn-success"  data-dismiss="modal" ng-disabled="userPrefenceExportButton" ng-click="exportExcelByType()">Export</a>
+        </div>
+        </form>
+      </div>
+      
+    </div>
+ </div> 					
 <script>
 $(function(){
 	$("html,body").scrollTop(0);

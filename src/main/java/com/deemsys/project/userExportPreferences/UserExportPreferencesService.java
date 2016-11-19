@@ -40,9 +40,9 @@ public class UserExportPreferencesService {
 	UsersDAO usersDAO;
 	
 	//Get All Entries
-	public List<UserExportPreferencesForm> getUserExportPreferencesList()
+	public List<ExportFieldsForm> getUserExportPreferencesList()
 	{
-		List<UserExportPreferencesForm> userExportPreferencesForms=new ArrayList<UserExportPreferencesForm>();
+		List<ExportFieldsForm> exportFieldsForms =new ArrayList<ExportFieldsForm>();
 		
 		List<UserExportPreferences> userExportPreferencess=new ArrayList<UserExportPreferences>();
 		
@@ -50,10 +50,10 @@ public class UserExportPreferencesService {
 		
 		for (UserExportPreferences userExportPreferences : userExportPreferencess) {
 			//TODO: Fill the List
-			userExportPreferencesForms.add(new UserExportPreferencesForm(userExportPreferences.getId().getUserId(), userExportPreferences.getId().getFieldId(), userExportPreferences.getId().getSequenceNo(),userExportPreferences.getId().getStatus()));
+			exportFieldsForms.add(new ExportFieldsForm(userExportPreferences.getId().getFieldId(), userExportPreferences.getExportFields().getFieldName(), userExportPreferences.getExportFields().getIsCustom(), userExportPreferences.getExportFields().getStatus()));
 		}
 		
-		return userExportPreferencesForms;
+		return exportFieldsForms;
 	}
 	
 	
@@ -88,6 +88,15 @@ public class UserExportPreferencesService {
 		return 1;
 	}
 	
-	
+	// Check Custom User Export Preference available or not
+	public Integer checkUserExportPreferenceStatus(){
+		Integer status=0;
+		// User Id
+		List<UserExportPreferences> userExportPreferencess=userExportPreferencesDAO.getAll(loginService.getPreferenceUserId());
+		if(userExportPreferencess.size()>0){
+			status=1;
+		}
+		return status;
+	}
 	
 }

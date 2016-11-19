@@ -1,5 +1,6 @@
 <div class="row" id="topdiv">
 	<div class="col-lg-12">
+		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
 		<h2 class="page-header">Settings</h2>
 	</div>
 	<!-- /.col-lg-12 -->
@@ -9,7 +10,7 @@
 	<!-- /.panel-heading -->
 	<div class="col-md-12">
 		<div class="panel-group" id="accordion">
-			<div class="panel panel-default">
+			<!-- <div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
 						<a data-toggle="collapse" data-parent="#accordion"
@@ -43,25 +44,25 @@
 								<legend>Tiers</legend>
 								<div class="col-md-12">
 									<div class="col-md-2 col-sm-4">
-										<!-- ng-repeat="county in callerAdmin.countyForms" -->
+										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											name="tier1" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[1].preferredId.indexOf(1)>-1" ng-click="selectedTier(1)" />Tier 1
 										</label>
 									</div>
 									<div class="col-md-2 col-sm-4">
-										<!-- ng-repeat="county in callerAdmin.countyForms" -->
+										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											name="tier2" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[1].preferredId.indexOf(2)>-1" ng-click="selectedTier(2)" />Tier 2
 										</label>
 									</div>
 									<div class="col-md-2 col-sm-4">
-										<!-- ng-repeat="county in callerAdmin.countyForms" -->
+										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											name="tier3" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[1].preferredId.indexOf(3)>-1" ng-click="selectedTier(3)"/>Tier 3
 										</label>
 									</div>
 									<div class="col-md-2 col-sm-4">
-										<!-- ng-repeat="county in callerAdmin.countyForms" -->
+										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											name="tier4" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[1].preferredId.indexOf(4)>-1" ng-click="selectedTier(4)"/>Tier 4
 										</label>
@@ -76,19 +77,19 @@
 								<legend>Age</legend>
 								<div class="col-md-12">
 									<div class="col-md-2">
-										<!-- ng-repeat="county in callerAdmin.countyForms" -->
+										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											name="adults" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[2].preferredId.indexOf(1)>-1" ng-click="selectedAge(1)"/>Adults
 										</label>
 									</div>
 									<div class="col-md-2">
-										<!-- ng-repeat="county in callerAdmin.countyForms" -->
+										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											name="minors" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[2].preferredId.indexOf(2)>-1" ng-click="selectedAge(2)"/>Minors
 										</label>
 									</div>
 									<div class="col-md-2">
-										<!-- ng-repeat="county in callerAdmin.countyForms" -->
+										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											 name="notknown" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[2].preferredId.indexOf(3)>-1" ng-click="selectedAge(3)"/>Not Known
 										</label>
@@ -99,29 +100,86 @@
 						<div class="col-md-12 margin-top-20">
 							<hr/>
 							<div class="col-md-12">
-								<div class="col-md-5"></div>
+								<div class="col-md-6"></div>
 								<div flash-message="2000" class="col-md-4 text-right"></div>
 								<div class="col-md-2 text-right">
-                					<a class="btn btn-success" ng-click="saveUserLookupPreferences()">Save</a>
+                					<a class="btn btn-success" ng-disabled='isClean()' ng-click="saveUserLookupPreferences()">Save</a>
               						<a ui-sref="dashboard.home"  class="btn btn-danger" >Cancel</a><br/><br/>
               					</div>
            					</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
+			</div> -->
+			<div class="panel panel-warning">
+				<div class="panel-heading" role="tab" id="heading2">
 					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion"
-							href="/#collapse2">Export Preferences</a>
+						<a role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapse2"
+							href="/#collapse2"> <i class="more-less glyphicon glyphicon-minus"></i><b>Export Preferences</b></a>
 					</h4>
 				</div>
-				<div id="collapse2" class="panel-collapse collapse">
+				<div id="collapse2" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2">
+				
 					<div class="panel-body">
-						<div class="col-md-12">
+					<p>You can select your preference for exporting the Crash Reports into Excel, in any 1 of the formats: Standard or Custom, using the tabs below.
+				</p>
+  <ul class="nav nav-tabs">
+    <li ng-class="{'active':prefenceTabActive===1}"><a data-toggle="tab" href="/#standardPreference">Standard</a></li>
+    <li ng-class="{'active':prefenceTabActive===2}"><a data-toggle="tab" href="/#customPreference">Custom</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="standardPreference" class="tab-pane fade" ng-class="{'in':prefenceTabActive===1,'active':prefenceTabActive===1}">
+      <div class="col-md-12" style="margin-top:20px;">
+      <p>This format, exports the Crash Reports into Excel, in the exact same format as the original one. The exported report will contain all the fields, in the order, as present in the original Crash Report.
+      </p>
+      <legend><p class="font-for-subheading">Fields in order of appearance in Excel</p></legend>
+							<div class="col-md-4">
+								<div class="margin-top-10">1. LOCAL REPORT NUMBER</div>
+								<div class="margin-top-10">2. CRASH SEVERITY</div>
+								<div class="margin-top-10">3. REPORTING AGENCY NAME</div>
+								<div class="margin-top-10">4. NUMBER OF UNITS</div>
+								<div class="margin-top-10">5. UNIT IN ERROR</div>
+								<div class="margin-top-10">6. COUNTY</div>
+								<div class="margin-top-10">7. CITY VILLAGE TOWNSHIP</div>
+								<div class="margin-top-10">8. CRASH DATE</div>
+								<div class="margin-top-10">9. TIME OF CRASH</div>
+							</div>
+							<div class="col-md-4">
+								<div class="margin-top-10">10. UNIT NUMBER</div>
+								<div class="margin-top-10">11. DRIVER?</div>
+								<div class="margin-top-10">12. NAME: LAST FIRST MIDDLE</div>
+								<div class="margin-top-10">13. DATE OF BIRTH</div>
+								<div class="margin-top-10">14. AGE</div>
+								<div class="margin-top-10">15. GENDER</div>
+								<div class="margin-top-10">16. ADDRESS CITY STATE ZIP</div>
+								<div class="margin-top-10">17. CONTACT PHONE - INCLUDE AREA CODE</div>
+								<div class="margin-top-10">18. INJURIES</div>
+							</div>
+							<div class="col-md-4">
+								<div class="margin-top-10">19. EMS AGENCY</div>
+								<div class="margin-top-10">20. MEDICAL FACILITY</div>
+								<div class="margin-top-10">21. ATFAULT INSURANCE COMPANY</div>
+								<div class="margin-top-10">22. ATFAULT POLICY NUMBER</div>
+								<div class="margin-top-10">23. VICTIM INSURANCE COMPANY</div>
+								<div class="margin-top-10">24. VICTIM POLICY NUMBER</div>
+								<div class="margin-top-10">25. TIER</div>
+							</div>
+	</div>
+    </div>
+    <div id="customPreference" class="tab-pane fade" ng-class="{'in':prefenceTabActive===2,'active':prefenceTabActive===2}">
+     
+						<div class="col-md-12" style="margin-top:20px;">
+						<div class="col-md-12 no-padding">
+						<p>This format lets you customize the report exported into Excel. You will be able to select only those fields that you require from the original Crash Report, while ordering them according to your preference.
+						</p>
+						<h4>To customize your report:</h4>
+						&nbsp;&nbsp;&nbsp;&nbsp;1. Select required fields from the box on the left to the box on the right - Simply click on a field, and drag it to the box on the right.<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;2. Sort the order in which you want the fields to appear on your report - Click on a field from the box on the right, and drag it up or down to position.<br/>
+						<hr/>
+						</div>
 							<div class="col-md-6">
-							<p>List of Fields</p>
+							<p class="font-for-subheading">Select Fields &nbsp; <span class="pull-right button-padding-right"><button ng-click="moveAll()" class="btn btn-success btn-xs">Select All</button></span></p>
 								<div ui-sortable="sortableOptionsList[0]"
 									class="apps-container screen floatleft"
 									ng-model="rawScreens[0]">
@@ -131,7 +189,7 @@
 								</div>
 							</div>
 							<div class="col-md-6">
-							<p>Excel Fields</p>
+							<p class="font-for-subheading">Fields in order of appearance in Excel &nbsp; <span class="pull-right button-padding-right"><button ng-click="removeAll()" class="btn btn-danger btn-xs">Deselect All</button> &nbsp;<button ng-click="resetAll()" ng-disabled='isCleanForExport()' class="btn btn-warning btn-xs">Reset</button></span></p>
 								<div ui-sortable="sortableOptionsList[1]"
 									class="apps-container screen floatleft"
 									ng-model="rawScreens[1]">
@@ -141,10 +199,21 @@
 										<p style="text-align:center;line-height:250px;" ng-show="rawScreens[1].length==0">Drag & Drop the Fields</p>
 								</div>
 								<div style="clear: both;"></div><br/><br/>
-								<button ng-click="moveAll()" class="btn btn-primary">Move All</button><br/><br/><button ng-click="resetAll()" class="btn btn-primary">Reset All</button>
+								
 							</div>
-						{{rawScreens}}
+							<div class="col-md-12 margin-top-20">
+							<hr/>
+							<div class="col-md-12">
+								<div class="col-md-9"></div>
+								<div class="col-md-3 text-right">
+                					<a class="btn btn-success" ng-disabled='isCleanForExport()' ng-click="saveUserExportPreferences(1)">Save</a>
+              						<a ui-sref="dashboard.home"  class="btn btn-danger" >Cancel</a><br/><br/>
+              					</div>
+           					</div>
+						</div>
 	</div>
+    </div>
+   </div>
 				</div>
 			</div>
 		</div>
@@ -175,10 +244,26 @@ legend {
   margin: 5px 0;
   border: 1px solid #cccccc;
   border-radius: 1px;
-  background-color: #f2f2f2;
+  background-color: rgba(0, 109, 204,0.05);
   font-size: 1.1em;
   cursor: move;
 }
 
+.font-for-subheading{
+	font-size:14pt;
+}
 
+.button-padding-right{
+	padding-right:10px;
+}
 </style>
+<script type="text/javascript">
+function toggleIcon(e) {
+    $(e.target)
+        .prev('.panel-heading')
+        .find(".more-less")
+        .toggleClass('glyphicon-plus glyphicon-minus');
+}
+$('.panel-group').on('hidden.bs.collapse', toggleIcon);
+$('.panel-group').on('shown.bs.collapse', toggleIcon);
+</script>

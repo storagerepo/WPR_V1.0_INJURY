@@ -60,7 +60,7 @@ sbAdminApp
 														}
 														case 500: {
 															alert("Please try again!");
-															window.location.href = "/logout";
+															window.location.href = "Injury/logout";
 															break;
 														}
 														default: {
@@ -1112,6 +1112,7 @@ sbAdminApp
 											});// End Change password
 
 						} ]).run( [ '$rootScope', function ($rootScope,$state, $stateParams) {
+							$rootScope.userPrefenceTabStatus=1;
 							$rootScope.$state = $state;
 				            $rootScope.$stateParams = $stateParams;
 					        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
@@ -1120,10 +1121,23 @@ sbAdminApp
 					        	}else{
 					        		$rootScope.hideMenu=false;
 					        	}
+					        	$rootScope.nextState = to.name;
 					            $rootScope.previousState = from.name;
+					            if(($rootScope.previousState!='dashboard.callerAdminSearchPatients' && $rootScope.previousState!='dashboard.LawyerAdminSearchPatients') && $rootScope.nextState=='dashboard.userPreferrence'){
+					            	$rootScope.userPrefenceTabStatus=1;
+					            }
+					            if($rootScope.previousState=='dashboard.userPreferrence' && $rootScope.nextState!='dashboard.userPreferrence'){
+					            	if(!$rootScope.exportPreferenceChanged){
+					            		if(confirm("Do you want to save the preference?")){
+					            			$rootScope.rootSaveUserExportPreference();
+					            		}else{
+					            			// nothing
+					            		}
+					            	}
+					            }
 					         });
 					      }]).controller('authenticationController', function($rootScope, $scope, $http, $location, requestHandler) {
-					    	  	var authenticate = function() {
+					    	  var authenticate = function() {
 						requestHandler
 								.postRequest("getCurrentRole.json", "")
 								.then(

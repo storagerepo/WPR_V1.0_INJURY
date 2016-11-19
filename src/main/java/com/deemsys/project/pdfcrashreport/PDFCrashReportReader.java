@@ -145,7 +145,8 @@ public class PDFCrashReportReader {
 	public boolean downloadPDFFile(String crashId) throws IOException {
 			
 			try{
-				File file=getPDFFile(crashId);
+				if(Integer.parseInt(crashId)<=6139380){
+					File file=getPDFFile(crashId);
 					Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportTryTimes"));
 					for (int tryCrash = 1; tryCrash < tryCount; tryCrash++) {						
 						if(file!=null){
@@ -173,6 +174,7 @@ public class PDFCrashReportReader {
 						this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
 					}else{
 						System.out.println("Waiting.....");
+					}
 					}
 				} catch (Exception e) {
 					// TODO: handle exception

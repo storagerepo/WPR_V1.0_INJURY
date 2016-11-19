@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.deemsys.project.common.InjuryProperties;
+import com.deemsys.project.exportFields.ExportFieldsService;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
+import com.deemsys.project.userExportPreferences.UserExportPreferencesService;
 import com.deemsys.project.LawyerAdmin.LawyerAdminForm;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersService;
@@ -65,6 +67,12 @@ public class PatientController {
 	
 	@Autowired
 	LawyerAdminService lawyerAdminService;
+	
+	@Autowired
+	UserExportPreferencesService userExportPreferencesService;
+	
+	@Autowired
+	ExportFieldsService exportFieldsService;
 
 	@RequestMapping(value = { "/Patient/getAllPatients",
 			"/Caller/getAllPatients" }, method = RequestMethod.GET)
@@ -333,6 +341,12 @@ public class PatientController {
 		
 		model.addAttribute("requestSuccess", true);
 		model.addAttribute("role",loginService.getCurrentRole());
+		if(callerPatientSearchForm.getFormatType()==2){
+			model.addAttribute("userExportPrefenceHeaders",userExportPreferencesService.getUserExportPreferencesList());
+		}else{
+			model.addAttribute("userExportPrefenceHeaders",exportFieldsService.getStandardExportFieldsList());
+		}
+	
 		model.addAttribute("patientSearchResultSet",patientService.getExportPatient(callerPatientSearchForm));
 		return "ok";
 		

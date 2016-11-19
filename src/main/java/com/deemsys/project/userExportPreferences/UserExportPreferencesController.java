@@ -36,5 +36,15 @@ public class UserExportPreferencesController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+    // Check Custom Fields available are not
+    @RequestMapping(value="/checkCustomExportPreferencess",method=RequestMethod.GET)
+   	public String checkCustomUserExportPreferencess(ModelMap model)
+   	{
+    	model.addAttribute("status",userExportPreferencesService.checkUserExportPreferenceStatus());
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+    
 	
 }

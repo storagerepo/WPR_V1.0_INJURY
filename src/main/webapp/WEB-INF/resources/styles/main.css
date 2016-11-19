@@ -745,3 +745,35 @@ span .dashboard-icon{
 	font-size:12px;
 	font-weight:normal;
 }
+
+ .col-md-4-override{
+    width: 30.33333333%;
+  }
+  
+ .panel-warning {
+  border-color: #eea236 !important;
+}
+.panel-warning > .panel-heading {
+  color: #fff !important;
+  background-color: #f0ad4e !important;
+  border-color: #eea236 !important;
+}
+.panel-warning > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #eea236 !important;
+}
+.panel-warning > .panel-heading .badge {
+  color: #fcf8e3 !important;
+  background-color: #fff !important;
+}
+.panel-warning > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #eea236 !important;
+}
+.panel-title > a {
+   display: block !important;
+   text-decoration: none !important;
+   font-size:14pt !important;
+}
+.more-less {
+    float: right;
+    color: #fff;
+ }

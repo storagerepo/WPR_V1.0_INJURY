@@ -1,6 +1,6 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash','ngAnimate','ngFileSaver']);
 
-adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$http','$window','requestHandler','searchService','$state','Flash','FileSaver', function($q,$rootScope,$scope,$http,$window,requestHandler,searchService,$state,Flash,FileSaver) {
+adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$http','$window','requestHandler','searchService','$state','$location','Flash','FileSaver', function($q,$rootScope,$scope,$http,$window,requestHandler,searchService,$state,$location,Flash,FileSaver) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.patientSearchData=$scope.patientSearchDataOrginal=[];
@@ -8,6 +8,8 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	$scope.exportButtonText="Export to Excel";
 	$scope.exportButton=false;
 	$scope.setScrollDown=false;
+	// User Preference Status
+	$rootScope.userPrefenceTabStatus=1;
 	
 	$scope.init=function(){
 		$scope.patient={};
@@ -437,18 +439,59 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		return angular.equals($scope.patientSearchData,$scope.patientSearchDataOrginal);
 	};
 	
+
+	// Reset user prefernce Error Msg
+	$scope.userPrefenceExportButton=false;
+	$scope.userPrefenceError=false;
+	$scope.resetUserPreferenceError=function(){
+		$scope.userPrefenceExportButton=false;
+		$scope.userPrefenceError=false;
+	};
 	//Export Excel
 	$scope.exportToExcel=function(){
-		$scope.exportButtonText="Exporting...";
-		$scope.exportButton=true;
-		requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.patient).success(function(responseData){
-			 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-			 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
-			 $scope.exportButtonText="Export to Excel";
-			 $scope.exportButton=false;
-		});
+		$scope.formatType=1;
+		$scope.resetUserPreferenceError();
+		$("#exportOptionModal").modal('show');
+		$scope.exportExcelByType=function(){
+			$scope.exportButtonText="Exporting...";
+			$scope.exportButton=true;
+			$scope.patient.formatType=$scope.formatType;
+			requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.patient).success(function(responseData){
+				 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+				 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
+				 $scope.exportButtonText="Export to Excel";
+				 $scope.exportButton=false;
+			});
+		};
 	};
 	
+	// Check User Preference Status
+	$scope.checkPreferenceStatus=function(){
+		requestHandler.getRequest("Patient/checkCustomExportPreferencess.json","").then( function(response) {
+		    $scope.userPrefenceStatus= response.data.status;
+		    if($scope.userPrefenceStatus==0){
+		    	$scope.userPrefenceError=true;
+		    	$scope.userPrefenceExportButton=true;
+		    
+		    }
+	 });
+	};
+	
+	// Goto Settings Function
+	$scope.goToSettings=function(){
+		 $('#exportOptionModal')
+         .modal('hide')
+         .on('hidden.bs.modal', function (e) {
+          $(this).off('hidden.bs.modal'); // Remove the 'on' event binding
+             
+         });
+	  $('body').removeClass('modal-open');
+	  $('.modal-backdrop').hide();
+ 	  $rootScope.userPrefenceTabStatus=2;
+ 	  $location.path("dashboard/UserPreferrence");
+	};
+	
+
 	// Call Logs
 	 // Clinic List For Call Logs
    $scope.getClinics=function(){

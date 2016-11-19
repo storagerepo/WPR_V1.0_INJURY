@@ -38,7 +38,7 @@ public class ExportFieldsService {
 		
 		for (ExportFields exportFields : exportFieldss) {
 			//TODO: Fill the List
-			exportFieldsForms.add(new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getStatus()));
+			exportFieldsForms.add(new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getStatus()));
 		}
 		
 		return exportFieldsForms;
@@ -54,11 +54,28 @@ public class ExportFieldsService {
 		//TODO: Convert Entity to Form
 		//Start
 		
-		ExportFieldsForm exportFieldsForm=new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getStatus());
+		ExportFieldsForm exportFieldsForm=new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getStatus());
 		
 		//End
 		
 		return exportFieldsForm;
+	}
+	
+	// Get Standard Fields Only
+	public List<ExportFieldsForm> getStandardExportFieldsList()
+	{
+		List<ExportFieldsForm> exportFieldsForms=new ArrayList<ExportFieldsForm>();
+		
+		List<ExportFields> exportFieldss=new ArrayList<ExportFields>();
+		
+		exportFieldss=exportFieldsDAO.getStandardExportFields();
+		
+		for (ExportFields exportFields : exportFieldss) {
+			//TODO: Fill the List
+			exportFieldsForms.add(new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getStatus()));
+		}
+		
+		return exportFieldsForms;
 	}
 	
 	//Merge an Entry (Save or Update)

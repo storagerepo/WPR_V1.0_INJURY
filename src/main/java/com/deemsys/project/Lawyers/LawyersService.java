@@ -197,6 +197,7 @@ public class LawyersService {
 		users.setUsername(lawyersForm.getUsername());
 		users.setPassword(lawyersForm.getUsername());
 		users.setIsEnable(1);
+		users.setIsPasswordChanged(0);
 		Integer currentUserId = callerService.getCurrentUserId();
 
 		LawyerAdmin lawyerAdmin = lawyerAdminDAO.getByUserId(currentUserId);
@@ -230,6 +231,7 @@ public class LawyersService {
 		users.setUsername(lawyersForm.getUsername());
 		users.setPassword(lawyersForm.getUsername());
 		users.setIsEnable(1);
+		users.setIsPasswordChanged(0);
 		users.setStatus(1);
 		roles = roleDAO.get(InjuryConstants.INJURY_LAWYER_ROLE_ID);
 		users.setRoles(roles);

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.*;
 
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.exportFields.ExportFieldsForm;
 import com.deemsys.project.patient.PatientSearchList;
 import com.deemsys.project.patient.PatientSearchResultSet;
 
@@ -26,10 +27,11 @@ public class ExportExcelView extends AbstractExcelView {
 		PatientSearchResultSet patientSearchResultSet=(PatientSearchResultSet)model.get("patientSearchResultSet");
 		String role=(String) model.get("role");
 		List<PatientSearchList> patientSearchLists=patientSearchResultSet.getPatientSearchLists();
-		
+		@SuppressWarnings("unchecked")
+		List<ExportFieldsForm> exportFieldsForms = (List<ExportFieldsForm>) model.get("userExportPrefenceHeaders");
 		Sheet sheet = workbook.createSheet("Patients List");
 		
-		//Header List
+		/*//Header List
 		List<String> headers=new ArrayList<String>();
 		if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
 			headers.add("FIRST NAME LAST NAME");
@@ -70,7 +72,7 @@ public class ExportExcelView extends AbstractExcelView {
 		headers.add("ATFAULT POLICY NUMBER");
 		headers.add("VICTIM INSURANCE COMPANY");
 		headers.add("VICTIM POLICY NUMBER");
-		headers.add("TIER");
+		headers.add("TIER");*/
 		
 		Row row = null;
 		Cell cell = null;
@@ -91,29 +93,24 @@ public class ExportExcelView extends AbstractExcelView {
 		//Create header cells
 		row = sheet.createRow(r++);
 		
-		for (String header : headers) {
+		for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
 			cell = row.createCell(c++);
 			cell.setCellStyle(style);
-			cell.setCellValue(header);
+			cell.setCellValue(exportFieldsForm.getFieldName());
 		}
 		
 		
 		
-		int sno=1;
 		//Create data cell
 		for(PatientSearchList patient:patientSearchLists){
 			
-			String age="";
-			if(patient.getAge()==null){
-				age="";
-			}else{
-				age=patient.getAge().toString();
-			}
-			
 			row = sheet.createRow(r++);
 			c = 0;
-
-			if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+			for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
+				row.createCell(c++).setCellValue(this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId()));
+			}
+			
+		/*	if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
 
 			String[] address=this.splitAddress(patient.getAddress());
 			
@@ -123,7 +120,6 @@ public class ExportExcelView extends AbstractExcelView {
 			row.createCell(c++).setCellValue(address[2]);
 			row.createCell(c++).setCellValue(address[3]);
 			}
-			
 			row.createCell(c++).setCellValue(patient.getLocalReportNumber());
 			row.createCell(c++).setCellValue(patient.getCrashSeverity());
 			row.createCell(c++).setCellValue(patient.getReportingAgencyName());
@@ -134,19 +130,11 @@ public class ExportExcelView extends AbstractExcelView {
 			row.createCell(c++).setCellValue(patient.getCrashDate());
 			row.createCell(c++).setCellValue(patient.getTimeOfCrash());
 			row.createCell(c++).setCellValue(patient.getUnitNumber());
-			
-			if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
-				row.createCell(c++).setCellValue(patient.getName());
-			}
-			
+			row.createCell(c++).setCellValue(patient.getName());
 			row.createCell(c++).setCellValue(patient.getDateOfBirth());
 			row.createCell(c++).setCellValue(age);
 			row.createCell(c++).setCellValue(patient.getGender());
-			
-			if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
-				row.createCell(c++).setCellValue(patient.getAddress());
-			}
-			
+			row.createCell(c++).setCellValue(patient.getAddress());
 			row.createCell(c++).setCellValue(patient.getPhoneNumber());
 			row.createCell(c++).setCellValue(patient.getInjuries());
 			row.createCell(c++).setCellValue(patient.getEmsAgency());
@@ -156,8 +144,11 @@ public class ExportExcelView extends AbstractExcelView {
 			row.createCell(c++).setCellValue(patient.getVictimInsuranceCompany());
 			row.createCell(c++).setCellValue(patient.getVictimPolicyNumber());
 			row.createCell(c++).setCellValue("Tier "+patient.getTier());
+			*/
+			
+		
 		}
-		for(int i = 0 ; i < headers.size(); i++)
+		for(int i = 0 ; i < exportFieldsForms.size(); i++)
 			sheet.autoSizeColumn(i, true);
 		
 		
@@ -257,4 +248,103 @@ public class ExportExcelView extends AbstractExcelView {
 		}
 	}
 
+	// Get DRIVER Details
+	public String getDriverDetails(String seatingPosition){
+		String isDriver="";
+		if(seatingPosition!=null && seatingPosition.equals("1")){
+			isDriver="Driver";
+		}
+		return isDriver;
+	}
+	
+	// Get Cell Value
+	public String getCellValueFromPatient(PatientSearchList patientSearchList,Integer fieldValue){
+		String value="";
+		switch (fieldValue) {
+		case 1:
+			value=patientSearchList.getLocalReportNumber();
+			break;
+		case 2:
+			value=patientSearchList.getCrashSeverity();
+			break;
+		case 3:
+			value=patientSearchList.getReportingAgencyName();
+			break;
+		case 4:
+			value=patientSearchList.getNumberOfUnits();
+			break;
+		case 5:
+			value=patientSearchList.getUnitInError();
+			break;
+		case 6:
+			value=patientSearchList.getCounty();
+			break;
+		case 7:
+			value=patientSearchList.getCityVillageTownship();
+			break;
+		case 8:
+			value=patientSearchList.getCrashDate();
+			break;
+		case 9:
+			value=patientSearchList.getTimeOfCrash();
+			break;
+		case 10:
+			value=patientSearchList.getUnitNumber();
+			break;
+		case 11:
+			value=this.getDriverDetails(patientSearchList.getSeatingPosition());
+			break;
+		case 12:
+			value=patientSearchList.getName();
+			break;
+		case 13:
+			value=patientSearchList.getDateOfBirth();
+			break;
+		case 14:
+			if(patientSearchList.getAge()!=null){
+				value=patientSearchList.getAge().toString();
+			}
+			break;
+		case 15:
+			value=patientSearchList.getGender();
+			break;
+		case 16:
+			value=patientSearchList.getAddress();
+			break;
+		case 17:
+			value=patientSearchList.getPhoneNumber();
+			break;
+		case 18:
+			value=patientSearchList.getInjuries();
+			break;
+		case 19:
+			value=patientSearchList.getEmsAgency();
+			break;
+		case 20:
+			value=patientSearchList.getMedicalFacility();
+			break;
+		case 21:
+			value=patientSearchList.getAtFaultInsuranceCompany();
+			break;
+		case 22:
+			value=patientSearchList.getAtFaultPolicyNumber();
+			break;
+		case 23:
+			value=patientSearchList.getVictimInsuranceCompany();
+			break;
+		case 24:
+			value=patientSearchList.getVictimPolicyNumber();
+			break;
+		case 25:
+			value="Tier "+patientSearchList.getTier();
+			break;
+		case 26:
+			// First Name Last Name
+			value=this.changeNameFormat(patientSearchList.getName());
+			break;
+		default:
+			break;
+		}
+		return value;
+	}
 }

@@ -21,6 +21,7 @@ public class CallerPatientSearchForm {
 	private String addedOnFromDate;
 	private String addedOnToDate;
 	private Integer isArchived;
+	private Integer formatType;
 	
 	public Integer getCallerAdminId() {
 		return callerAdminId;
@@ -140,6 +141,12 @@ public class CallerPatientSearchForm {
 	}
 	public void setIsArchived(Integer isArchived) {
 		this.isArchived = isArchived;
+	}
+	public Integer getFormatType() {
+		return formatType;
+	}
+	public void setFormatType(Integer formatType) {
+		this.formatType = formatType;
 	}
 	public CallerPatientSearchForm(Integer callerAdminId, Integer countyId,
 			Integer tier, Integer patientStatus, String crashFromDate,Integer numberOfDays,

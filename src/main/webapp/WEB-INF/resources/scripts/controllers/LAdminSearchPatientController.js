@@ -1,6 +1,6 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash','ngFileSaver']);
 
-adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler','searchService','$state','Flash','FileSaver','$q', function($scope,requestHandler,searchService,$state,Flash,FileSaver,$q) {
+adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','requestHandler','searchService','$state','$location','Flash','FileSaver','$q', function($rootScope,$scope,requestHandler,searchService,$state,$location,Flash,FileSaver,$q) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.lAdminPatientSearchData=$scope.patientSearchDataOrginal=[];
@@ -409,14 +409,58 @@ adminApp.controller('LAdminSearchPatientsController', ['$scope','requestHandler'
 	
 	//Export Excel
 	$scope.exportToExcel=function(){
-		$scope.exportButtonText="Exporting...";
-		$scope.exportButton=true;
-		requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.patient).success(function(responseData){
-			 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-			 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
-			 $scope.exportButtonText="Export to Excel";
-			 $scope.exportButton=false;
-		});
+		
+	};
+	
+	// Reset user prefernce Error Msg
+	$scope.userPrefenceExportButton=false;
+	$scope.userPrefenceError=false;
+	$scope.resetUserPreferenceError=function(){
+		$scope.userPrefenceExportButton=false;
+		$scope.userPrefenceError=false;
+	};
+	//Export Excel
+	$scope.exportToExcel=function(){
+		$scope.formatType=1;
+		$scope.resetUserPreferenceError();
+		$("#exportOptionModal").modal('show');
+		$scope.exportExcelByType=function(){
+			$scope.exportButtonText="Exporting...";
+			$scope.exportButton=true;
+			$scope.patient.formatType=$scope.formatType;
+			requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.patient).success(function(responseData){
+				 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+				 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
+				 $scope.exportButtonText="Export to Excel";
+				 $scope.exportButton=false;
+			});
+		};
+	};
+	
+	// Check User Preference Status
+	$scope.checkPreferenceStatus=function(){
+		requestHandler.getRequest("Patient/checkCustomExportPreferencess.json","").then( function(response) {
+		    $scope.userPrefenceStatus= response.data.status;
+		    if($scope.userPrefenceStatus==0){
+		    	$scope.userPrefenceError=true;
+		    	$scope.userPrefenceExportButton=true;
+		    
+		    }
+	 });
+	};
+	
+	// Goto Settings Function
+	$scope.goToSettings=function(){
+		 $('#exportOptionModal')
+         .modal('hide')
+         .on('hidden.bs.modal', function (e) {
+          $(this).off('hidden.bs.modal'); // Remove the 'on' event binding
+             
+         });
+	  $('body').removeClass('modal-open');
+	  $('.modal-backdrop').hide();
+ 	  $rootScope.userPrefenceTabStatus=2;
+ 	  $location.path("dashboard/UserPreferrence");
 	};
 	
 }]); 

@@ -22,6 +22,7 @@ public class ExportFields implements java.io.Serializable {
 
 	private Integer fieldId;
 	private String fieldName;
+	private Integer isCustom;
 	private Integer status;
 	private Set<UserExportPreferences> userExportPreferenceses = new HashSet<UserExportPreferences>(
 			0);
@@ -29,9 +30,10 @@ public class ExportFields implements java.io.Serializable {
 	public ExportFields() {
 	}
 
-	public ExportFields(String fieldName, Integer status,
+	public ExportFields(String fieldName, Integer isCustom, Integer status,
 			Set<UserExportPreferences> userExportPreferenceses) {
 		this.fieldName = fieldName;
+		this.isCustom = isCustom;
 		this.status = status;
 		this.userExportPreferenceses = userExportPreferenceses;
 	}
@@ -56,6 +58,15 @@ public class ExportFields implements java.io.Serializable {
 		this.fieldName = fieldName;
 	}
 
+	@Column(name = "is_custom")
+	public Integer getIsCustom() {
+		return this.isCustom;
+	}
+
+	public void setIsCustom(Integer isCustom) {
+		this.isCustom = isCustom;
+	}
+	
 	@Column(name = "status")
 	public Integer getStatus() {
 		return this.status;

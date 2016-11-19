@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -132,6 +133,14 @@ public class ExportFieldsDAOImpl implements ExportFieldsDAO{
 	public List<ExportFields> getActiveList() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ExportFields> getStandardExportFields() {
+		// TODO Auto-generated method stub
+		List<ExportFields> exportFields=this.sessionFactory.getCurrentSession().createCriteria(ExportFields.class).add(Restrictions.eq("isCustom", 0)).list();
+		return exportFields;
 	}
 
 	

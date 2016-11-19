@@ -214,6 +214,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	$scope.exportToExcel=function(){
 		$scope.exportButtonText="Exporting...";
 		$scope.exportButton=true;
+		$scope.patient.formatType=1;
 		requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.patient).success(function(responseData){
 			 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
 			 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
