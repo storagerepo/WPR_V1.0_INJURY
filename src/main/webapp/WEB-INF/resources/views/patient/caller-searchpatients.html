@@ -16,11 +16,8 @@
  <form name="patientSearchForm" novalidate ng-cloak> 
  	<div class="col-md-12 no-padding">
 		<div class="col-md-5ths">
-			<label>County</label>
-			<select class="form-control input-sm" ng-model="patient.countyId">
-          		<option value="0">All</option>
-          		<option ng-repeat="county in mycounties" value="{{county.countyId}}" ng-selected="{{county.countyId == patient.countyId}}">{{county.countyName}}</option>
-     		</select>
+			<label>County</label><span class="error-class" ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least one county</span>
+     		<div ng-dropdown-multiselect="" options="mycounties" selected-model="patient.countyId" extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties'}"></div>
         </div>
         <div class="col-md-5ths">
        		<label>Crash From Date</label>
@@ -48,14 +45,8 @@
          	<span style="color:red" ng-if="crashToRequired==true">Please Enter Crash To Date</span>
         </div>
         <div class="col-md-5ths">
-			<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details (Deceased victims not listed)" data-trigger="focus"><i class="fa fa-info-circle"></i></a>
-			<select class="form-control input-sm"  ng-model="patient.tier" name="tier">
-            	<option value="0">All</option>
-            	<option value="1">Tier 1</option>
-            	<option value="2">Tier 2</option>
-            	<option value="3">Tier 3</option>
-            	<option value="4">Tier 4</option>
-            </select>
+			<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details (Deceased victims not listed)" data-trigger="focus"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
+         		<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier"></div>
        	</div>
     </div>
 
@@ -84,7 +75,7 @@
 	        </div>
        	<div class="col-md-5ths">
        		<label>&nbsp;</label><br/>
-        	<a class="btn btn-success btn-sm" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='patientSearchForm.$invalid' ng-click="searchPatients()">Search</a>
+        	<a class="btn btn-success btn-sm" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='patientSearchForm.$invalid||disableSearch' ng-click="searchPatients()">Search</a>
         	<a class="btn btn-danger btn-sm" ng-click="resetSearchData()">Reset</a>
        	</div>
      </div>
@@ -159,12 +150,7 @@
 								<input class="form-control" type="text"
 									ng-model="patient.phoneNumber" ng-change="secoundarySearchPatient()" placeholder="Phone No"></div></th>
 								<th>
-								<select class="form-control" ng-model="patient.age" ng-change="secoundarySearchPatient()">
-								 <option value="1">Adults</option>
-								 <option value="2">Minors</option>
-								 <option value="4">Not Known</option>
-								 <option value="3">All</option>
-								 </select>
+								<div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false}"></div>
 								</th>
 								<th></th>
 								<!-- <th></th> -->	

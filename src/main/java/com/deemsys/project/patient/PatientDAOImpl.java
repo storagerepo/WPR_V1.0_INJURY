@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
@@ -12,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
@@ -428,27 +430,33 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	
 	
 	//Common Constrains - County
-	if(callerPatientSearchForm.getCountyId()!=0){
-		Criterion countyCriterion=Restrictions.eq("t1.county.countyId", callerPatientSearchForm.getCountyId());
+	if(callerPatientSearchForm.getCountyId().length>0){
+		Criterion countyCriterion=Restrictions.in("t1.county.countyId", callerPatientSearchForm.getCountyId());
 		criteria.add(countyCriterion);
 	}
 	
 	//Common Constrains - Tier
-	if(callerPatientSearchForm.getTier()!=0){
-		Criterion tierCriterion=Restrictions.eq("t1.tier", callerPatientSearchForm.getTier());
+	if(callerPatientSearchForm.getTier().length>0){
+		Criterion tierCriterion=Restrictions.in("t1.tier", callerPatientSearchForm.getTier());
 		criteria.add(tierCriterion);
 	}
 	
+	
+	
+	
 	//Common Constrain Age - Major, Minor and All
-	if(callerPatientSearchForm.getAge()==1){
-		Criterion ageCriterion=Restrictions.ge("t1.age",18);
-		criteria.add(ageCriterion);
-	}else if(callerPatientSearchForm.getAge()==2){
-		Criterion ageCriterion=Restrictions.lt("t1.age",18);
-		criteria.add(ageCriterion);
-	}else if(callerPatientSearchForm.getAge()==4){
-		Criterion ageCriterion=Restrictions.isNull("t1.age");
-		criteria.add(ageCriterion);
+	if(callerPatientSearchForm.getAge().length>0){
+		Disjunction result = Restrictions.disjunction();
+		if(ArrayUtils.contains(callerPatientSearchForm.getAge(), 1)){
+			result.add(Restrictions.ge("t1.age",18));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getAge(), 2)){
+			result.add(Restrictions.lt("t1.age",18));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getAge(), 4)){
+			result.add(Restrictions.isNull("t1.age"));
+		}
+		criteria.add(result);
 	}
 	
 	

@@ -777,3 +777,7 @@ span .dashboard-icon{
     float: right;
     color: #fff;
  }
+.error-class{
+	color:red;
+	font-size:12px;
+}

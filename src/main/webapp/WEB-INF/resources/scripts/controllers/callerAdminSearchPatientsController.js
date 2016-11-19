@@ -1,4 +1,4 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule','searchModule','flash','ngAnimate','ngFileSaver']);
+var adminApp=angular.module('sbAdminApp', ['requestModule','angularjs-dropdown-multiselect','searchModule','flash','ngAnimate','ngFileSaver']);
 
 adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$http','$window','requestHandler','searchService','$state','$location','Flash','FileSaver', function($q,$rootScope,$scope,$http,$window,requestHandler,searchService,$state,$location,Flash,FileSaver) {
 	$scope.disableCustom=true;
@@ -8,27 +8,34 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	$scope.exportButtonText="Export to Excel";
 	$scope.exportButton=false;
 	$scope.setScrollDown=false;
+	$scope.ageFilterCurrentSelection=[];
 	// User Preference Status
 	$rootScope.userPrefenceTabStatus=1;
 	
 	$scope.init=function(){
+		
+		//Initialize DropDown
+		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"}];	
+		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
+		
+		
 		$scope.patient={};
-		$scope.patient.countyId=searchService.getCounty();
-		$scope.patient.tier=searchService.getTier();
-		$scope.patient.crashFromDate=searchService.getCrashFromDate();
-		$scope.patient.crashToDate=searchService.getCrashToDate();
-		$scope.patient.localReportNumber=searchService.getLocalReportNumber();
-		$scope.patient.patientName=searchService.getPatientName();
-		$scope.patient.age=searchService.getAge();
-		$scope.patient.callerId=searchService.getCallerId();
+		$scope.patient.countyId=[{id:1}];
+		$scope.patient.tier=[{id:1},{id:2},{id:3},{id:4}];
+		$scope.patient.crashFromDate="";
+		$scope.patient.crashToDate="";
+		$scope.patient.localReportNumber="";
+		$scope.patient.patientName="";
+		$scope.patient.age=[{id:1},{id:2},{id:4}];
+		$scope.patient.callerId="0";
 		$scope.patient.phoneNumber=searchService.getPhoneNumber();
-		$scope.patient.lawyerId=searchService.getLawyerId();
-		$scope.patient.numberOfDays=searchService.getNumberOfDays();
-		$scope.patient.itemsPerPage=searchService.getItemsPerPage();
-		$scope.patient.addedOnFromDate=searchService.getAddedOnFromDate();
-		$scope.patient.addedOnToDate=searchService.getAddedOnToDate();
-		$scope.patient.isArchived=searchService.getIsArchived();
-		$scope.patient.patientStatus=searchService.getPatientStatus();
+		$scope.patient.lawyerId="0";
+		$scope.patient.numberOfDays="1";
+		$scope.patient.itemsPerPage="25";
+		$scope.patient.addedOnFromDate="";
+		$scope.patient.addedOnToDate="";
+		$scope.patient.isArchived="0";
+		$scope.patient.patientStatus="7";
 		$scope.totalRecords=0;
 		
 		//Patient Search 
@@ -243,8 +250,29 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		};
 	
 	$scope.searchItems=function(searchObj){
+		
+		//To avoid overwriting actual $scope.patient object.
+		$scope.searchParam={};
+		angular.copy(searchObj,$scope.searchParam);
+		
+		//Manipulate Tier Array
+		$.each($scope.searchParam.tier, function(index,value) {
+			$scope.searchParam.tier[index]=value.id;
+		});
+		
+		//Manipulate County Array
+		$.each($scope.searchParam.countyId, function(index,value) {
+			$scope.searchParam.countyId[index]=value.id;
+		});
+		
+		//Manipulate Age Array
+		$.each($scope.searchParam.age, function(index,value) {
+			$scope.searchParam.age[index]=value.id;
+		});
+		
+		
 		var defer=$q.defer();
-		requestHandler.postRequest("/Patient/searchPatients.json",searchObj).then(function(response){
+		requestHandler.postRequest("/Patient/searchPatients.json",$scope.searchParam).then(function(response){
 			$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
 			$scope.patientSearchData=response.data.patientSearchResult.searchResult;
 			
@@ -378,6 +406,9 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			$scope.patient.pageNumber= 1;//This will call search function thru patient.pageNumber object $watch function 
 			searchService.setPageNumber($scope.patient.pageNumber);
 			searchService.setItemsPerPage($scope.patient.itemsPerPage);
+			
+			
+			
 			if($scope.oldPageNumber==$scope.patient.pageNumber){
 				return $scope.searchItems($scope.patient);
 			}
@@ -716,6 +747,41 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		}
 		
 	$scope.init();
+	
+	//Watch Age Filter
+	$scope.$watch('patient.age' , function() {	
+		if($scope.patient.age.length!=0){
+			angular.copy($scope.patient.age,$scope.ageFilterCurrentSelection);
+			$scope.secoundarySearchPatient();
+		}else{
+			angular.copy($scope.ageFilterCurrentSelection,$scope.patient.age);
+		}
+	    
+	}, true );
+	
+	//Watch County Filter
+	$scope.$watch('patient.countyId' , function() {		
+	   if($scope.patient.countyId.length==0){
+		   $scope.disableSearch=true;
+		   $scope.searchCountyMinError=true;
+	   }else{
+		   $scope.searchCountyMinError=false;
+		   if(!$scope.searchTierMinError)
+			   $scope.disableSearch=false;			   
+	   }
+	}, true );
+	
+	//Watch Tier Filter
+	$scope.$watch('patient.tier' , function() {		
+		   if($scope.patient.tier.length==0){
+			   $scope.disableSearch=true;
+			   $scope.searchTierMinError=true;
+		   }else{
+			   $scope.searchTierMinError=false;
+			   if(!$scope.searchCountyMinError)
+				   $scope.disableSearch=false;	
+		   }
+		}, true );
 	
 }]); 
 

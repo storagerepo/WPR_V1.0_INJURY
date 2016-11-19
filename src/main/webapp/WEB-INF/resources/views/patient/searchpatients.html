@@ -15,12 +15,9 @@
 	<form name="patientSearchForm" novalidate ng-cloak>
     	<div class="col-md-12 no-padding">
         	<div class="col-md-3 no-padding">
-       			<div class="col-md-12"><label>County</label></div>
-       			<div class="col-md-12"> 
-       				<select class="form-control" ng-model="patient.countyId">
-       				<option value="0" selected="selected">All</option>	
-       				<option ng-repeat="county in countylist" value="{{county.id}}" ng-selected="{{county.name === patient.county}}">{{county.name}}</option>
-     				</select>
+       			<div class="col-md-12"><label>County</label><span class="error-class" ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least one county</span></div>
+       			<div class="col-md-12">
+     				<div ng-dropdown-multiselect="" options="countylist" selected-model="patient.countyId" extra-settings="{idProp:'id',displayProp:'name',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties'}"></div>
        			</div>
         	</div>
           	<div class="col-md-3 no-padding">
@@ -92,7 +89,7 @@
         <div class="col-md-3 no-padding">
         <div class="col-md-12"><label>&nbsp;</label></div>
 			<div class="col-md-12">
-        		<a class="btn btn-success" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='isClean() || patientSearchForm.$invalid' ng-click="searchPatients()">Search</a>
+        		<a class="btn btn-success" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='isClean() || patientSearchForm.$invalid || disableSearch' ng-click="searchPatients()">Search</a>
         		<a class="btn btn-danger" ng-click="resetSearchData()">Reset</a>
        		</div>
      	</div>
@@ -127,12 +124,7 @@
   								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text" ng-model="patient.phoneNumber" ng-change="secoundarySearchPatient()" placeholder="Phone No"></div></th>									
 								<th>
-								<select class="form-control" ng-model="patient.age" ng-change="secoundarySearchPatient()">
-								 <option value="1">Adults</option>
-								 <option value="2">Minors</option>
-								 <option value="4">Not Known</option>
-								 <option value="3">All</option>
-								 </select>
+								<div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false}"></div>
 								</th>
 								<th></th>	
 								<th></th>

@@ -16,10 +16,8 @@
         <div class="col-md-12 no-padding">
         	<div class="col-md-3">
        			<label>County</label>
-       			<select class="form-control" ng-model="patient.countyId" >
-          			<option value="0" ng-selected="true">All</option>
-          			<option ng-repeat="county in mycounties" value="{{county.countyId}}" ng-selected="{{county.countyName === patient.county}}">{{county.countyName}}</option>
-     			</select>
+       			<span class="error-class" ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least one county</span>
+     		<div ng-dropdown-multiselect="" options="mycounties" selected-model="patient.countyId" extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties'}"></div>
        		</div>
          	<div class="col-md-3">
          		<label>Crash From Date</label>
@@ -68,14 +66,8 @@
        		<span style="color:red" ng-if="addedToRequired==true">Please Enter Added On To Date</span>
        	</div>
        	<div class="col-md-3">
-			<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details (Deceased victims not listed)" data-trigger="focus"><i class="fa fa-info-circle"></i></a>
-         	<select class="form-control"  ng-model="patient.tier" name="tier">
-            	<option value="0" ng-selected="true">All</option>
-            	<option value="1">Tier1</option>
-            	<option value="2">Tier2</option>
-            	<option value="3">Tier3</option>
-            	<option value="4">Tier4</option>
-			</select>
+			<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details (Deceased victims not listed)" data-trigger="focus"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
+         		<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier"></div>
        	</div>
        	
        	<div class="col-md-3">
@@ -92,7 +84,7 @@
      <div class="col-md-3">
        		<label>&nbsp;</label>
        		<div>
-        		<a class="btn btn-success" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='patientSearchForm.$invalid' ng-click="searchPatients()">Search</a>
+        		<a class="btn btn-success" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='patientSearchForm.$invalid||disableSearch' ng-click="searchPatients()">Search</a>
         		<a class="btn btn-danger" ng-click="resetSearchData()">Reset</a>
        		</div>
      	</div>
@@ -150,12 +142,7 @@
 									ng-model="patient.localReportNumber" ng-change="secoundarySearchPatient()" placeholder="Local Report No"></div></th>
 								 -->
 								<th>
-								 <select class="form-control" ng-model="patient.age" ng-change="secoundarySearchPatient()">
-								 <option value="1">Adults</option>
-								 <option value="2">Minors</option>
-								 <option value="4">Not Known</option>
-								 <option value="3">All</option>
-								 </select>
+								 <div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false}"></div>
 								 </th>
 								<th></th>
 								<th></th>

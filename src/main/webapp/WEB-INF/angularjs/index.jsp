@@ -68,10 +68,6 @@
 	<script src="resources/components/angular-file-saver/angular-file-saver.min.js"></script>
 	<script src="resources/components/angular-file-saver/angular-file-saver.bundle.min.js"></script>
 
-	<!-- For Multi Select Dropdowns -->
-	<link rel="stylesheet" href="resources/components/bootstrap-multi-select/bootstrap-select.min.css"></link>
-	<script src="resources/components/bootstrap-multi-select/bootstrap-select.min.js"></script>
-	
 	 <!-- Drag Drop -->
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<script src="resources/components/angular-sortable/angular-sortable.js"></script>
@@ -87,6 +83,13 @@
     <script src="resources/scripts/directives/errorDisplay/errordisplay.js"></script>
     <script src="resources/js/analytics.js"></script>
     
+    
+    <!-- For Multi Select Dropdowns -->
+	<link rel="stylesheet" href="resources/components/bootstrap-multi-select/bootstrap-select.min.css"></link>
+	<script src="resources/components/angular-multi-select/angularjs-dropdown-multiselect.js"></script>
+	
+	
+	
     <!-- Controllers -->
 
    <!--  <script>

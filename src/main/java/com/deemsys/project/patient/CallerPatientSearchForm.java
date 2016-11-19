@@ -3,15 +3,15 @@ package com.deemsys.project.patient;
 public class CallerPatientSearchForm {
 
 	private Integer callerAdminId;	
-	private Integer countyId;
-	private Integer tier;
+	private Integer[] countyId;
+	private Integer[] tier;
 	private Integer patientStatus;
 	private String crashFromDate;
 	private Integer numberOfDays;
 	private String crashToDate;
 	private String localReportNumber;
 	private String patientName;
-	private Integer age;
+	private Integer[] age;
 	private Integer callerId;
 	private Integer lawyerAdminId;
 	private Integer lawyerId;
@@ -29,16 +29,16 @@ public class CallerPatientSearchForm {
 	public void setCallerAdminId(Integer callerAdminId) {
 		this.callerAdminId = callerAdminId;
 	}
-	public Integer getCountyId() {
+	public Integer[] getCountyId() {
 		return countyId;
 	}
-	public void setCountyId(Integer countyId) {
+	public void setCountyId(Integer[] countyId) {
 		this.countyId = countyId;
 	}
-	public Integer getTier() {
+	public Integer[] getTier() {
 		return tier;
 	}
-	public void setTier(Integer tier) {
+	public void setTier(Integer[] tier) {
 		this.tier = tier;
 	}
 	public Integer getPatientStatus() {
@@ -72,10 +72,10 @@ public class CallerPatientSearchForm {
 		this.patientName = patientName;
 	}
 	
-	public Integer getAge() {
+	public Integer[] getAge() {
 		return age;
 	}
-	public void setAge(Integer age) {
+	public void setAge(Integer[] age) {
 		this.age = age;
 	}
 	public Integer getCallerId() {
@@ -142,16 +142,16 @@ public class CallerPatientSearchForm {
 	public void setIsArchived(Integer isArchived) {
 		this.isArchived = isArchived;
 	}
+	
 	public Integer getFormatType() {
 		return formatType;
 	}
 	public void setFormatType(Integer formatType) {
 		this.formatType = formatType;
 	}
-	public CallerPatientSearchForm(Integer callerAdminId, Integer countyId,
-			Integer tier, Integer patientStatus, String crashFromDate,Integer numberOfDays,
-			String crashToDate, String localReportNumber, String patientName,Integer age,
-			Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived) {
+public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
+			Integer tier[], Integer patientStatus, String crashFromDate,Integer numberOfDays,
+			String crashToDate, String localReportNumber, String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.countyId = countyId;
