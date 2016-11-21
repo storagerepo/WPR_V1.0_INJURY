@@ -176,6 +176,8 @@
 						<h4>To customize your report:</h4>
 						&nbsp;&nbsp;&nbsp;&nbsp;1. Select required fields from the box on the left to the box on the right - Simply click on a field, and drag it to the box on the right.<br/>
 						&nbsp;&nbsp;&nbsp;&nbsp;2. Sort the order in which you want the fields to appear on your report - Click on a field from the box on the right, and drag it up or down to position.<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;3. Click save to set your preference.<br/>
+						
 						<hr/>
 						</div>
 							<div class="col-md-6">
@@ -198,19 +200,16 @@
 									</div>
 										<p style="text-align:center;line-height:250px;" ng-show="rawScreens[1].length==0">Drag & Drop the Fields</p>
 								</div>
-								<div style="clear: both;"></div><br/><br/>
+								<div style="clear: both;"></div>
 								
 							</div>
-							<div class="col-md-12">
-							<hr/>
-							<div class="col-md-12">
+							<div class="col-md-12  margin-top-20">
 								<div class="col-md-9"></div>
 								<div class="col-md-3 text-right">
-                					<a class="btn btn-success" ng-disabled='isCleanForExport()' ng-click="saveUserExportPreferences(1)">Submit</a>
+                					<a class="btn btn-success" ng-disabled='isCleanForExport()' ng-click="saveUserExportPreferences(1)">Save</a>
               						<a ui-sref="dashboard.home"  class="btn btn-danger" >Cancel</a><br/><br/>
               					</div>
            					</div>
-						</div>
 	</div>
     </div>
    </div>
@@ -235,7 +234,9 @@ legend {
   border: 1px solid grey;
   margin: 10px 10px 0 0;
   padding: 5px;
-  min-height:300px;
+  min-height:500px;
+  max-height:500px;
+  overflow-y:auto;
 }
 
 .app {

@@ -11,7 +11,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	$scope.ageFilterCurrentSelection=[];
 	// User Preference Status
 	$rootScope.userPrefenceTabStatus=1;
-	
+	$scope.loadingCounties=true;
 	$scope.init=function(){
 		
 		//Initialize DropDown
@@ -20,7 +20,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		
 		
 		$scope.patient={};
-		$scope.patient.countyId=[{id:1}];
+		$scope.patient.countyId=[];
 		$scope.patient.tier=[{id:1},{id:2},{id:3},{id:4}];
 		$scope.patient.crashFromDate="";
 		$scope.patient.crashToDate="";
@@ -63,6 +63,10 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 
 	requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
 		$scope.countylist=response.data.countyList;
+		$scope.loadingCounties=false;
+		$.each($scope.mycounties, function(index,value) {
+			$scope.patient.countyId.push({"id":value.countyId});
+		});
 	});
 	
 	requestHandler.getRequest("CAdmin/getCallersByCallerAdmin.json","").then(function(response){
@@ -761,14 +765,17 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	
 	//Watch County Filter
 	$scope.$watch('patient.countyId' , function() {		
-	   if($scope.patient.countyId.length==0){
-		   $scope.disableSearch=true;
-		   $scope.searchCountyMinError=true;
-	   }else{
-		   $scope.searchCountyMinError=false;
-		   if(!$scope.searchTierMinError)
-			   $scope.disableSearch=false;			   
+	   if(!$scope.loadingCounties){
+		   if($scope.patient.countyId.length==0){
+			   $scope.disableSearch=true;
+			   $scope.searchCountyMinError=true;
+		   }else{
+			   $scope.searchCountyMinError=false;
+			   if(!$scope.searchTierMinError)
+				   $scope.disableSearch=false;			   
+		   }
 	   }
+		
 	}, true );
 	
 	//Watch Tier Filter
