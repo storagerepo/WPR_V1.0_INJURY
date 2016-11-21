@@ -64,7 +64,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
 		$scope.countylist=response.data.countyList;
 		$scope.loadingCounties=false;
-		$.each($scope.mycounties, function(index,value) {
+		$.each($scope.countylist, function(index,value) {
 			$scope.patient.countyId.push({"id":value.countyId});
 		});
 	});
