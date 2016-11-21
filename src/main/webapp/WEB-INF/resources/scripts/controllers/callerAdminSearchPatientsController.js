@@ -486,8 +486,8 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.exportExcelByType=function(){
 			$scope.exportButtonText="Exporting...";
 			$scope.exportButton=true;
-			$scope.patient.formatType=$scope.formatType;
-			requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.patient).success(function(responseData){
+			$scope.searchParam.formatType=$scope.formatType;
+			requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.searchParam).success(function(responseData){
 				 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
 				 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
 				 $scope.exportButtonText="Export to Excel";

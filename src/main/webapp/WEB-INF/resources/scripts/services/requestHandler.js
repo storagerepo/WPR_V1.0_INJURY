@@ -3,7 +3,8 @@ var myApp=angular.module("requestModule",[]);
 myApp.factory("requestHandler",['$http',function($http){
     
     var requestObj={};
-    var appURL="http://192.168.1.236:8089";
+    //var appURL=window.location.origin+"/";
+    var appURL="http://192.168.1.236:8080/Injury/";
     
     
     requestObj.getURL=function(){
@@ -12,7 +13,7 @@ myApp.factory("requestHandler",['$http',function($http){
 
     requestObj.getRequest=function(requestURL,params){
 
-         requestURL=appURL+"/Injury/"+requestURL;
+         requestURL=appURL+requestURL;
          return $http.get(requestURL,params).then(function (results) {  
             return results;   
          });
@@ -22,7 +23,7 @@ myApp.factory("requestHandler",['$http',function($http){
     
 requestObj.postFileUpload=function(requestURL,data,params){      
         
-        requestURL=appURL+"/Injury/"+requestURL;
+        requestURL=appURL+requestURL;
         transformRequest: angular.identity,
         headers={'Content-Type': undefined},
         data= data;
@@ -35,7 +36,7 @@ requestObj.postFileUpload=function(requestURL,data,params){
     
     requestObj.postRequest=function(requestURL,params){      
        
-        requestURL=appURL+"/Injury/"+requestURL;
+        requestURL=appURL+requestURL;
         return $http.post(requestURL,params).then(function (results) {
                 return results;
          });
@@ -43,7 +44,7 @@ requestObj.postFileUpload=function(requestURL,data,params){
     
     
     requestObj.postExportRequest=function(requestURL,params){
-        requestURL=appURL+"/Injury/"+requestURL;
+        requestURL=appURL+requestURL;
         return $http({
 		    	    url: requestURL,
 		    	    method: "POST",
@@ -59,7 +60,7 @@ requestObj.postFileUpload=function(requestURL,data,params){
     
     
     requestObj.deletePostRequest=function(requestURL,params){
-    	 requestURL=appURL+"/Injury/"+requestURL+params;
+    	 requestURL=appURL+requestURL+params;
     	 return $http({
 			  method : "POST",
 			  url : requestURL,
