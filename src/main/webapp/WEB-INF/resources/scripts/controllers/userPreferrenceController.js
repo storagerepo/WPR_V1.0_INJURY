@@ -159,10 +159,12 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$locat
 	 $scope.exportFieldsFormsOriginal="";
 	 $scope.exportFieldsFormsSelected="";
 	//Get Export Fields List
-	requestHandler.getRequest("Patient/getAllExportFieldss.json","").then(function(response){
-			$scope.exportFieldsFormsOriginal=response.data.exportFieldsForms;
-			$scope.getUserExportPreference();
-	});
+	 $scope.getExportFieldsList=function(){
+		requestHandler.getRequest("Patient/getAllExportFieldss.json","").then(function(response){
+				$scope.exportFieldsFormsOriginal=response.data.exportFieldsForms;
+				$scope.getUserExportPreference();
+		});
+	 };
 	
 	// Get User Export Preferences
 	$scope.getUserExportPreference=function(){
@@ -191,6 +193,9 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$locat
 		rawScreensOriginal=angular.copy($scope.rawScreens);
 	};
 	
+	// Get Exports Fields List
+	$scope.getExportFieldsList();
+	
 	// Save User Export Preferences
 	$scope.saveUserExportPreferences=function(fromLocation){
 		$scope.userPreferenceSaveForm={};
@@ -198,7 +203,10 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$locat
 		 requestHandler.postRequest("/Patient/saveUpdateUserExportPreferences.json",$scope.userPreferenceSaveForm).then(function(response){
 			  if(fromLocation==1){
 				  Flash.create('success', "You have Successfully Updated!");
-				  $state.reload('dashboard.userPreferrence');
+				  $scope.getExportFieldsList();
+				  $(function(){
+						$("html,body").scrollTop(0);
+				  });
 			  }
 		 });
 		

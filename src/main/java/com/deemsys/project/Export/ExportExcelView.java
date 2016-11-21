@@ -155,23 +155,33 @@ public class ExportExcelView extends AbstractExcelView {
 	}
 	
 	// Swap the Name Format
-	public String changeNameFormat(String patientName){
-		String changedPatientName="";
+	public String[] changeNameFormat(String patientName){
+		String resultName[]= new String[5];
+		// Initialize as Empty
+		resultName[0]="";
+		resultName[1]="";
+		resultName[2]="";
 		if(patientName!=null){
 			String[] splitName=patientName.split(",");
 			if(splitName.length==2){
-					// First Name Last Name
-					changedPatientName=splitName[1].trim()+" "+splitName[0].trim();
+				//Last Name
+				resultName[0]=splitName[0].trim();
+				// First Name
+				resultName[1]=splitName[1].trim();
 			}else if(splitName.length==1){
 				// First Name
-				changedPatientName=splitName[0].trim();
+				resultName[0]=splitName[0].trim();
 			}else{
-				// First Name Last Name
-				changedPatientName=splitName[1].trim()+" "+splitName[0].trim();
+				//Last Name
+				resultName[0]=splitName[0].trim();
+				// First Name
+				resultName[1]=splitName[1].trim();
+				// Middle Name
+				resultName[2]=splitName[2].trim();
 			}
 		}
 		
-		return changedPatientName;
+		return resultName;
 	}
 	
 	// Split Address
@@ -259,6 +269,7 @@ public class ExportExcelView extends AbstractExcelView {
 	
 	// Get Cell Value
 	public String getCellValueFromPatient(PatientSearchList patientSearchList,Integer fieldValue){
+		
 		String value="";
 		switch (fieldValue) {
 		case 1:
@@ -340,7 +351,53 @@ public class ExportExcelView extends AbstractExcelView {
 			break;
 		case 26:
 			// First Name Last Name
-			value=this.changeNameFormat(patientSearchList.getName());
+			String[] firstNameLastName=this.changeNameFormat(patientSearchList.getName());
+			value=firstNameLastName[1]+" "+firstNameLastName[0];
+			break;
+		case 27:
+			// Street Address
+			String[] address=this.splitAddress(patientSearchList.getAddress());
+			value=address[0];
+			break;
+		case 28:
+			// City
+			String[] city=this.splitAddress(patientSearchList.getAddress());
+			value=city[1];
+			break;
+		case 29:
+			// State
+			String[] state=this.splitAddress(patientSearchList.getAddress());
+			value=state[2];
+			break;
+		case 30:
+			// ZIP
+			String[] zip=this.splitAddress(patientSearchList.getAddress());
+			value=zip[3];
+			break;
+		case 31:
+			// First Middle Last Name
+			String[] firstMiddleLastName=this.changeNameFormat(patientSearchList.getName());
+			value=firstMiddleLastName[1]+" "+firstMiddleLastName[2]+" "+firstMiddleLastName[0];
+			break;
+		case 32:
+			// Last Name First Name
+			String[] lastFirstName=this.changeNameFormat(patientSearchList.getName());
+			value=lastFirstName[0]+" "+lastFirstName[1];
+			break;
+		case 33:
+			//First Name
+			String[] firstName=this.changeNameFormat(patientSearchList.getName());
+			value=firstName[1];
+			break;
+		case 34:
+			// Middle Name
+			String[] middleName=this.changeNameFormat(patientSearchList.getName());
+			value=middleName[2];
+			break;
+		case 35:
+			// Last Name
+			String[] lastName=this.changeNameFormat(patientSearchList.getName());
+			value=lastName[0];
 			break;
 		default:
 			break;
