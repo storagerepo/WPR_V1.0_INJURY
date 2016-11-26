@@ -16,8 +16,8 @@
  <form name="patientSearchForm" novalidate ng-cloak> 
  	<div class="col-md-12 no-padding">
 		<div class="col-md-5ths">
-			<label>County</label><span class="error-class" ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least one county</span>
-     		<div ng-dropdown-multiselect="" options="mycounties" selected-model="patient.countyId" extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties'}"></div>
+			<label>County</label>&nbsp;<a href="" data-toggle="popover" title="Info on County Selection:" data-content="<p><b>Subscribed - </b>All counties you have subscribed to.</p><p><b>Preferred - </b> Only counties you usually prefer to access.</p>" data-trigger="focus"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchCountyMinError"> Select at least one county</span>
+     		<div ng-dropdown-multiselect="" preference-list="countyListType" options="mycounties" selected-model="patient.countyId" extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true}" events="countyEvents"></div>
         </div>
         <div class="col-md-5ths">
        		<label>Crash From Date</label>
@@ -150,7 +150,7 @@
 								<input class="form-control" type="text"
 									ng-model="patient.phoneNumber" ng-change="secoundarySearchPatient()" placeholder="Phone No"></div></th>
 								<th>
-								<div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false}"></div>
+								<div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false}" events="ageEvents"></div>
 								</th>
 								<th></th>
 								<!-- <th></th> -->	

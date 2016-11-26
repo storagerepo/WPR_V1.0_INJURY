@@ -1,7 +1,7 @@
-var adminApp=angular.module("searchModule",[]);
+var adminApp=angular.module("searchModule",['requestModule']);
 
-adminApp.service('searchService',function(){
-	var countyId=[{"id":1},{"id":2},{"id":3},{"id":4},{"id":5},{"id":6},{"id":7},{"id":8},{"id":9},{"id":10},{"id":11},{"id":12},{"id":13},{"id":14},{"id":15},{"id":16},{"id":17},{"id":18},{"id":19},{"id":20},{"id":21},{"id":22},{"id":23},{"id":24},{"id":25},{"id":26},{"id":27},{"id":28},{"id":29},{"id":30},{"id":31},{"id":32},{"id":33},{"id":34},{"id":35},{"id":36},{"id":37},{"id":38},{"id":39},{"id":40},{"id":41},{"id":42},{"id":43},{"id":44},{"id":45},{"id":46},{"id":47},{"id":48},{"id":49},{"id":50},{"id":51},{"id":52},{"id":53},{"id":54},{"id":55},{"id":56},{"id":57},{"id":58},{"id":59},{"id":60},{"id":61},{"id":62},{"id":63},{"id":64},{"id":65},{"id":66},{"id":67},{"id":68},{"id":69},{"id":70},{"id":71},{"id":72},{"id":73},{"id":74},{"id":75},{"id":76},{"id":77},{"id":78},{"id":79},{"id":80},{"id":81},{"id":82},{"id":83},{"id":84},{"id":85},{"id":86},{"id":87},{"id":88}];
+adminApp.service('searchService',function($rootScope,requestHandler){
+	var countySession=[];
 	var numberOfDays="1";
 	var crashFromDate="";
 	var callerId="0";
@@ -10,22 +10,23 @@ adminApp.service('searchService',function(){
 	var localReportNumber="";
 	var patientName="";
 	var age=[{id:1},{id:2},{id:4}];
+	var lAdminAge=[{id:1}];
 	var phoneNumber= "";
-	var lawyerId=0;
+	var lawyerId="0";
 	var pageNumber= 1;
 	var itemsPerPage="25";
 	var addedOnFromDate="";
 	var addedOnToDate="";
 	var isArchived="0";
 	var patientStatus="7";
-	
+	var countyListType="1";
 	// County
-	this.setCounty=function(county){
-		countyId=county;
+	this.setCounty=function(countyInput){
+		countySession=countyInput;
 	};
 	
 	this.getCounty=function(){
-		return countyId;
+		return countySession;
 	};
 	
 	//Number Of Days
@@ -100,6 +101,15 @@ adminApp.service('searchService',function(){
 		return age;
 	};
 	
+	//Age
+	this.setLAdminAge=function(ladminAgeInput){
+		lAdminAge=ladminAgeInput;
+	};
+	
+	this.getLAdminAge=function(){
+		return lAdminAge;
+	};
+	
 	//Phone Number
 	this.setPhoneNumber=function(phoneNumberInput){
 		phoneNumber=phoneNumberInput;
@@ -170,7 +180,14 @@ adminApp.service('searchService',function(){
 	this.getItemsPerPage=function(){
 		return itemsPerPage;
 	};
+	// County List Type
+	this.setCountyListType=function(countyListTypeInput){
+		countyListType=countyListTypeInput;
+	};
 	
+	this.getCountyListType=function(){
+		return countyListType;
+	};
 	// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
 	this.spiltAndSwapName=function(patientName){
 		var swapName="";
@@ -188,4 +205,55 @@ adminApp.service('searchService',function(){
 		}
 		return swapName;
 	};
+	
+	// Check County List Type
+	this.checkCoutyListType=function(){
+		return requestHandler.getRequest("Patient/checkCountyListType.json","").then(function(response){
+			 return response.data.countyListType;
+		});
+	};
+	
+	// Get Preference List
+	this.getPreferenceCoutyList=function(countyListType){
+		return requestHandler.getRequest("Patient/getPreferenceCounties.json?countyListType="+countyListType,"").then(function(response){
+			 return response.data.countyList;
+		});
+	};
+	
+	// Get Initial County Preference List For Select
+	this.getInitPreferenceCoutyList=function(countyListType){
+		var countySelection=[];
+		return requestHandler.getRequest("Patient/getPreferenceCounties.json?countyListType="+countyListType,"").then(function(response){
+			$.each(response.data.countyList, function(index,value) {
+				countySelection.push({"id":value.countyId});
+			});
+			return countySelection;
+		});
+	};
+	
+	
+	// Reset Search Data
+	this.resetSearchData=function(){
+		countySession=[];
+		numberOfDays="1";
+		crashFromDate="";
+		callerId="0";
+		tier=[{id:1},{id:2},{id:3},{id:4}];
+		crashToDate="";
+		localReportNumber="";
+		patientName="";
+		age=[{id:1},{id:2},{id:4}];
+		lAdminAge=[{id:1}];
+		phoneNumber= "";
+		lawyerId="0";
+		pageNumber= 1;
+		itemsPerPage="25";
+		addedOnFromDate="";
+		addedOnToDate="";
+		isArchived="0";
+		patientStatus="7";
+		countyListType="1";
+		return true;
+	};
+
 });

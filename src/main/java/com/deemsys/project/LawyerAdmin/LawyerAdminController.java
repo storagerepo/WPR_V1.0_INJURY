@@ -29,7 +29,7 @@ public class LawyerAdminController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Admin/mergeLawyerAdmin", method = RequestMethod.POST)
+	@RequestMapping(value = {"/Admin/mergeLawyerAdmin","/mergeLawyerAdmin"}, method = RequestMethod.POST)
 	public String mergeLawyerAdmin(
 			@RequestBody LawyerAdminForm lawyerAdminForm, ModelMap model) {
 		lawyerAdminService.mergeLawyerAdmin(lawyerAdminForm);
@@ -37,7 +37,7 @@ public class LawyerAdminController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/Admin/saveUpdateLawyerAdmin", method = RequestMethod.POST)
+	@RequestMapping(value = {"/Admin/saveUpdateLawyerAdmin","/saveUpdateLawyerAdmin"}, method = RequestMethod.POST)
 	public String saveLawyerAdmin(@RequestBody LawyerAdminForm lawyerAdminForm,
 			ModelMap model) {
 		if (lawyerAdminForm.getLawyerAdminId() == null)

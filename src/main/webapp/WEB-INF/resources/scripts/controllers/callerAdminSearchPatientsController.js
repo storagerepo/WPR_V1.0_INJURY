@@ -12,45 +12,70 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	// User Preference Status
 	$rootScope.userPrefenceTabStatus=1;
 	$scope.loadingCounties=true;
+	// Main Search Param
+	$scope.mainSearchParam={};
 	$scope.init=function(){
 		
 		//Initialize DropDown
 		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"}];	
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
 		
-		
 		$scope.patient={};
 		$scope.patient.countyId=[];
-		$scope.patient.tier=[{id:1},{id:2},{id:3},{id:4}];
-		$scope.patient.crashFromDate="";
-		$scope.patient.crashToDate="";
-		$scope.patient.localReportNumber="";
-		$scope.patient.patientName="";
-		$scope.patient.age=[{id:1},{id:2},{id:4}];
-		$scope.patient.callerId="0";
+		$scope.patient.tier=[];
+		angular.copy(searchService.getCounty(),$scope.patient.countyId);
+		angular.copy(searchService.getTier(),$scope.patient.tier);
+		$scope.patient.crashFromDate=searchService.getCrashFromDate();
+		$scope.patient.crashToDate=searchService.getCrashToDate();
+		$scope.patient.localReportNumber=searchService.getLocalReportNumber();
+		$scope.patient.patientName=searchService.getPatientName();
+		$scope.patient.age=searchService.getAge();
+		$scope.patient.callerId=searchService.getCallerId();
 		$scope.patient.phoneNumber=searchService.getPhoneNumber();
-		$scope.patient.lawyerId="0";
-		$scope.patient.numberOfDays="1";
-		$scope.patient.itemsPerPage="25";
-		$scope.patient.addedOnFromDate="";
-		$scope.patient.addedOnToDate="";
-		$scope.patient.isArchived="0";
-		$scope.patient.patientStatus="7";
+		$scope.patient.lawyerId=searchService.getLawyerId();
+		$scope.patient.numberOfDays=searchService.getNumberOfDays();
+		$scope.patient.itemsPerPage=searchService.getItemsPerPage();
+		$scope.patient.addedOnFromDate=searchService.getAddedOnFromDate();
+		$scope.patient.addedOnToDate=searchService.getAddedOnToDate();
+		$scope.patient.isArchived=searchService.getIsArchived();
+		$scope.patient.patientStatus=searchService.getPatientStatus();
 		$scope.totalRecords=0;
-		
+		$scope.countyListType=searchService.getCountyListType();
 		//Patient Search 
 		$scope.patient.pageNumber= searchService.getPageNumber(); //This will call search function thru patient.pageNumber object $watch function 
 		$scope.oldPageNumber= $scope.patient.pageNumber;
-		
 		if($scope.oldPageNumber==$scope.patient.pageNumber){
-			$scope.searchItems($scope.patient);
+			// To Avoid Main Search Parameter Override
+			angular.copy($scope.patient,$scope.mainSearchParam);
+			if($scope.patient.countyId!=''){
+				searchService.getPreferenceCoutyList($scope.countyListType).then(function(response){
+					$scope.countylist=response;
+					$scope.loadingCounties=false;
+				});
+				$scope.searchItems($scope.patient);
+			}else{
+				searchService.checkCoutyListType().then(function(response){
+					searchService.setCountyListType(response);
+					$scope.countyListType=response;
+					searchService.getPreferenceCoutyList($scope.countyListType).then(function(response){
+						$scope.countylist=response;
+						$scope.loadingCounties=false;
+					});
+					searchService.getInitPreferenceCoutyList($scope.countyListType).then(function(response){
+						angular.copy(response,$scope.patient.countyId);
+						$scope.mainSearchParam.countyId=angular.copy($scope.patient.countyId);
+						$scope.searchItems($scope.patient);
+					});
+				});
+			}
+
 		}
 		
 		
 		//Initial Search
 		$scope.disableCustom=true;
 		$scope.isSelectedAddedFromDate=true;
-		if(searchService.getCrashFromDate()!=""){
+		if(searchService.getCrashToDate()!=""){
 			$scope.disableCustom=false;
 		}
 		if(searchService.getAddedOnFromDate()!=""){
@@ -61,14 +86,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.getClinics();
 	};
 
-	requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
-		$scope.countylist=response.data.countyList;
-		$scope.loadingCounties=false;
-		$.each($scope.countylist, function(index,value) {
-			$scope.patient.countyId.push({"id":value.countyId});
-		});
-	});
-	
+	// Get Callers
 	requestHandler.getRequest("CAdmin/getCallersByCallerAdmin.json","").then(function(response){
 		$scope.callerList=response.data.callerForms;
 	});
@@ -369,17 +387,20 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		else{
 			$scope.addedToRequired=false;
 			$scope.crashToRequired=false;
-			$scope.patient.patientName="";
-			$scope.patient.phoneNumber= "";
+		/*	$scope.patient.patientName="";
+			$scope.patient.phoneNumber= "";*/
 			$scope.oldPageNumber=$scope.patient.pageNumber;
 			$scope.patient.pageNumber=1;
 			if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
 				$scope.searchItems($scope.patient);
 			}
+
+			// To Avoid Main Search Parameter Override
+			angular.copy($scope.patient,$scope.mainSearchParam);
 		}
 		
 		// Set To Service
-		searchService.setCounty($scope.patient.countyId);
+		searchService.setCounty(angular.copy($scope.patient.countyId));
 		searchService.setNumberOfDays($scope.patient.numberOfDays);
 		searchService.setCrashFromDate($scope.patient.crashFromDate);
 		searchService.setCrashToDate($scope.patient.crashToDate);
@@ -387,15 +408,16 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		searchService.setLawyerId($scope.patient.lawyerId);
 		searchService.setPhoneNumber($scope.patient.phoneNumber);
 		searchService.setPatientName($scope.patient.patientName);
-		searchService.setAge($scope.patient.age);
+		searchService.setAge(angular.copy($scope.patient.age));
 		searchService.setLocalReportNumber($scope.patient.localReportNumber);
-		searchService.setTier($scope.patient.tier);
+		searchService.setTier(angular.copy($scope.patient.tier));
 		searchService.setAddedOnFromDate($scope.patient.addedOnFromDate);
 		searchService.setAddedOnToDate($scope.patient.addedOnToDate);
 		searchService.setPatientStatus($scope.patient.patientStatus);
 		searchService.setIsArchived($scope.patient.isArchived);
 		searchService.setPageNumber($scope.patient.pageNumber);
 		searchService.setItemsPerPage($scope.patient.itemsPerPage);
+		searchService.setCountyListType($scope.countyListType);
 	};
 	
 	
@@ -404,20 +426,33 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			searchService.setPatientName($scope.patient.patientName);
 			searchService.setIsArchived($scope.patient.isArchived);
 			searchService.setAge($scope.patient.age);
-			searchService.setTier($scope.patient.tier);
 			searchService.setPatientStatus($scope.patient.patientStatus);
 			$scope.oldPageNumber=$scope.patient.pageNumber;
 			$scope.patient.pageNumber= 1;//This will call search function thru patient.pageNumber object $watch function 
 			searchService.setPageNumber($scope.patient.pageNumber);
 			searchService.setItemsPerPage($scope.patient.itemsPerPage);
 			
-			
-			
+			// Use mainsearchparam to Search 
+			$scope.mainSearchParam.pageNumber=$scope.patient.pageNumber;
+			$scope.mainSearchParam.phoneNumber=$scope.patient.phoneNumber;
+			$scope.mainSearchParam.patientName=$scope.patient.patientName;
+			$scope.mainSearchParam.isArchived=$scope.patient.isArchived;
+			$scope.mainSearchParam.age=$scope.patient.age;
+			$scope.mainSearchParam.patientStatus=$scope.patient.patientStatus;
+			$scope.mainSearchParam.itemsPerPage=$scope.patient.itemsPerPage;
 			if($scope.oldPageNumber==$scope.patient.pageNumber){
-				return $scope.searchItems($scope.patient);
+				// Copy Mainsearchparam to Patient
+				angular.copy($scope.mainSearchParam,$scope.patient);
+				// County List
+				$scope.countyListType=searchService.getCountyListType();
+				searchService.getPreferenceCoutyList($scope.countyListType).then(function(response){
+					$scope.countylist=response;
+					$scope.loadingCounties=false;
+				});
+				return $scope.searchItems($scope.mainSearchParam);
 			}
-			return null;
-					
+			
+			return null;	
 		};
 	
 		$scope.itemsPerFilter=function(){
@@ -435,9 +470,13 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		};
 	
 	$scope.$watch("patient.pageNumber",function(){
-		 var promise=$scope.searchItems($scope.patient);
+		$scope.mainSearchParam.pageNumber=$scope.patient.pageNumber;
+
 		 searchService.setPageNumber($scope.patient.pageNumber);
 		 searchService.setItemsPerPage($scope.patient.itemsPerPage); 
+		// Copy Mainsearchparam to Patient
+		angular.copy($scope.mainSearchParam,$scope.patient);
+		 var promise=$scope.searchItems($scope.mainSearchParam);
 		 if($scope.setScrollDown){
 			  promise.then(function(reponse){
 				  console.log("scroll down complex");
@@ -523,7 +562,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	  $('body').removeClass('modal-open');
 	  $('.modal-backdrop').hide();
  	  $rootScope.userPrefenceTabStatus=2;
- 	  $location.path("dashboard/UserPreferrence");
+ 	  $location.path("dashboard/UserPreferrence/2");
 	};
 	
 
@@ -724,44 +763,27 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.resetSearchData = function(){
 		    // $scope.patientSearchForm.$setPristine();
 		     $scope.patientSearchData="";
-		     	searchService.setCounty("0");
-				searchService.setNumberOfDays("1");
-				searchService.setCrashFromDate("");
-				searchService.setCrashToDate("");
-				searchService.setCallerId("0");
-				searchService.setLawyerId("0");
-				searchService.setPhoneNumber("");
-				searchService.setPatientName("");
-				searchService.setAge("3");
-				searchService.setLocalReportNumber("");
-				searchService.setTier("0");
-				searchService.setAddedOnFromDate("");
-				searchService.setAddedOnToDate("");
-				searchService.setPatientStatus("7");
-				searchService.setIsArchived("0");
-				searchService.setPageNumber(1);
-				searchService.setItemsPerPage("25");
+		     searchService.resetSearchData();
 		     $scope.init();
 		};
 		
-		// Reset Search Data Based on State
-		if($rootScope.previousState!="dashboard.Calllogs/:id"){
-			
-			$scope.resetSearchData();
-		}
-		
+	
 	$scope.init();
 	
 	//Watch Age Filter
 	$scope.$watch('patient.age' , function() {	
 		if($scope.patient.age.length!=0){
 			angular.copy($scope.patient.age,$scope.ageFilterCurrentSelection);
-			$scope.secoundarySearchPatient();
 		}else{
 			angular.copy($scope.ageFilterCurrentSelection,$scope.patient.age);
 		}
 	    
 	}, true );
+	
+	// Age Drop down Events
+	$scope.ageEvents = {onInitDone: function(item) {console.log("initi",item);},
+			onItemDeselect: function(item) {console.log("deselected",item);if($scope.patient.age!=''){$scope.secoundarySearchPatient();}},
+			onItemSelect: function(item) {console.log("selected",item);$scope.secoundarySearchPatient();}};
 	
 	//Watch County Filter
 	$scope.$watch('patient.countyId' , function() {		
@@ -790,6 +812,26 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		   }
 		}, true );
 	
+
+	// County Drop down Events
+	$scope.countyEvents = {onInitDone: function(item) {console.log("initi ciuny",$scope.countyListType);},
+			onItemDeselect: function(item) {console.log("deselected couny",item);},
+			onItemSelect: function(item) {console.log("selected couny",item);},
+			onPreferenceChange: function(item) {
+				$scope.countyListType=item;
+				searchService.getPreferenceCoutyList(item).then(function(response){
+					$scope.countylist=response;
+					$scope.patient.countyId=[];
+					if($scope.countylist.length>0){
+						$.each(response, function(index,value) {
+							$scope.patient.countyId.push({"id":value.countyId});
+						});
+					}else{
+						$location.path("dashboard/UserPreferrence/1");
+					}
+				
+				});
+			}};
 }]); 
 
  

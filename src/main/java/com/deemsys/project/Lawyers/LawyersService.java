@@ -232,6 +232,7 @@ public class LawyersService {
 		users.setPassword(lawyersForm.getUsername());
 		users.setIsEnable(1);
 		users.setIsPasswordChanged(0);
+		users.setIsDisclaimerAccepted(1);
 		users.setStatus(1);
 		roles = roleDAO.get(InjuryConstants.INJURY_LAWYER_ROLE_ID);
 		users.setRoles(roles);

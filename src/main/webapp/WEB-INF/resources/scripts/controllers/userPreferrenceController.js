@@ -1,7 +1,7 @@
-var myapp = angular.module('sbAdminApp', ['ui.sortable','requestModule','flash']);
+var myapp = angular.module('sbAdminApp', ['ui.sortable','requestModule','flash','searchModule']);
 
 
-myapp.controller('sortableController', function ($rootScope,$scope,$state,$location,requestHandler,Flash) {
+myapp.controller('sortableController', function ($rootScope,$scope,$state,$stateParams,$location,requestHandler,Flash,searchService) {
  
 	$scope.rawScreens = [[],[]];
   
@@ -60,14 +60,16 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$locat
   
   
   	// Save Preferences
-  	$scope.prefenceTabActive=$rootScope.userPrefenceTabStatus;
+  	$scope.prefenceTabActive=$stateParams.fid;
   	var userLookupPreferencesOriginal={};
-  	$scope.userLookupPreferences={};
-	$scope.userLookupPreferences.county=[];
-	$scope.countyform=[];
-	$scope.userLookupPreferences.userLookupPreferenceMappedForms=[{"type":1,"preferredId":[]},
-	                                                              {"type":2,"preferredId":[1]},
-	                                                             {"type":3,"preferredId":[2]}];
+  	$scope.initUserLookupPreference=function(){
+  	  	$scope.userLookupPreferences={};
+  		$scope.userLookupPreferences.county=[];
+  		$scope.countyform=[];
+  		$scope.userLookupPreferences.userLookupPreferenceMappedForms=[];
+  		$scope.getCountiesList();
+  		$scope.getUserLookupPreference();
+  	};
 	// Selected County
 	$scope.selectedCounties=function(countyId){
 		var idx=$scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId.indexOf(countyId);
@@ -132,21 +134,57 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$locat
 		};
 	
 	// Get County List
-	 requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
+	$scope.getCountiesList=function(){
+		requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
 			$scope.countyform=response.data.countyList;
-	});
+		});
+	};
+	
 	 
 	// Get User Lookup Preference
-	 requestHandler.getRequest("Patient/getUserLookupPreferences.json","").then(function(response){
+	$scope.getUserLookupPreference=function(){
+		requestHandler.getRequest("Patient/getUserLookupPreferences.json","").then(function(response){
 			$scope.userLookupPreferences=response.data.userLookupPreferencesForm;
 			userLookupPreferencesOriginal=angular.copy(response.data.userLookupPreferencesForm);
-	});
+		});
+	};
+	
+	// Init Function
+	$scope.initUserLookupPreference();
+	
+	$scope.resetuserLookupPreferencesOriginal=function(){
+		angular.copy(userLookupPreferencesOriginal,$scope.userLookupPreferences);
+	};
 	
 	 $scope.saveUserLookupPreferences=function(){
 			
 		 requestHandler.postRequest("/Patient/mergeUserLookupPreferences.json",$scope.userLookupPreferences).then(function(response){
 			  Flash.create('success', "You have Successfully Updated!");
-			  $location.path('dashboard/UserPreferrence');
+			  $scope.getUserLookupPreference();
+			 var countySelected=searchService.getCounty();
+			 var countyListType=searchService.getCountyListType();
+			 if(countySelected!='' && countyListType==2){
+				  angular.forEach($scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId,function(item,index){
+					  if(userLookupPreferencesOriginal.userLookupPreferenceMappedForms[0].preferredId.indexOf(item)>-1){
+						  // Do Nothing
+					  }else{
+						  countySelected.push({"id":item});
+					  }
+				  });
+				  var finalCountySelection=[];
+				  angular.forEach(countySelected,function(item1,index1){
+					  if($scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId.indexOf(item1.id)>-1){
+						  // Do Nothing
+						  finalCountySelection.push(item1);
+					  }else{
+						  // Do Nothing
+					  }
+				  });
+				  searchService.setCounty(finalCountySelection);
+			 }
+			 $(function(){
+					$("html,body").scrollTop(0);
+			  });
 		 });
 		
 	 };

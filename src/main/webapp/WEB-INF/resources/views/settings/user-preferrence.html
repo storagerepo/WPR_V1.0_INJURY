@@ -10,22 +10,26 @@
 	<!-- /.panel-heading -->
 	<div class="col-md-12">
 		<div class="panel-group" id="accordion">
-			<!-- <div class="panel panel-default">
+			<div class="panel panel-success">
 				<div class="panel-heading">
 					<h4 class="panel-title">
 						<a data-toggle="collapse" data-parent="#accordion"
-							href="/#collapse1">Look up preferences</a>
+							href="/#collapse1" ng-click="resetuserLookupPreferencesOriginal();"><i class="more-less glyphicon glyphicon-minus"></i>Lookup Preferences</a>
 					</h4>
 				</div>
-				<div id="collapse1" class="panel-collapse collapse in">
-					<div class="panel-body">						
+				<div id="collapse1" class="panel-collapse collapse" ng-class="{'in':prefenceTabActive==1}">
+					<div class="panel-body">
+					<p>There are 2 settings available for county look up preference:<br/> 
+					     <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Subscribed Counties (default) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Preferred Counties.</b><br/> </p>
+					    <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Subscribed Counties will list all the counties you have been subscribed to in CrashReportsOnline.<br/>
+					    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Preferred Counties will need to be set up here.This will list only those counties you usually prefer to access. </p>					
 							<div class="col-md-12">
 							<fieldset>
 							<legend>Counties</legend>
 								<div class="col-md-12">
 									<div class="col-md-2">
 										<label class="checkbox"> <input type="checkbox"
-											id="checkAll" ng-click="isChecked()">Select All
+											id="checkAll" ng-click="isChecked()" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId.length==countyform.length">Select All
 										</label>
 									</div>
 								</div>
@@ -39,30 +43,26 @@
 								</div>
 								</fieldset>
 							</div>
-						<div class="col-md-12 margin-top-20">
+						<!-- <div class="col-md-12 margin-top-20">
 							<fieldset>
 								<legend>Tiers</legend>
 								<div class="col-md-12">
 									<div class="col-md-2 col-sm-4">
-										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											name="tier1" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[1].preferredId.indexOf(1)>-1" ng-click="selectedTier(1)" />Tier 1
 										</label>
 									</div>
 									<div class="col-md-2 col-sm-4">
-										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											name="tier2" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[1].preferredId.indexOf(2)>-1" ng-click="selectedTier(2)" />Tier 2
 										</label>
 									</div>
 									<div class="col-md-2 col-sm-4">
-										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											name="tier3" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[1].preferredId.indexOf(3)>-1" ng-click="selectedTier(3)"/>Tier 3
 										</label>
 									</div>
 									<div class="col-md-2 col-sm-4">
-										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											name="tier4" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[1].preferredId.indexOf(4)>-1" ng-click="selectedTier(4)"/>Tier 4
 										</label>
@@ -77,59 +77,53 @@
 								<legend>Age</legend>
 								<div class="col-md-12">
 									<div class="col-md-2">
-										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											name="adults" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[2].preferredId.indexOf(1)>-1" ng-click="selectedAge(1)"/>Adults
 										</label>
 									</div>
 									<div class="col-md-2">
-										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											name="minors" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[2].preferredId.indexOf(2)>-1" ng-click="selectedAge(2)"/>Minors
 										</label>
 									</div>
 									<div class="col-md-2">
-										ng-repeat="county in callerAdmin.countyForms"
 										<label class="checkbox"> <input type="checkbox"
 											 name="notknown" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[2].preferredId.indexOf(3)>-1" ng-click="selectedAge(3)"/>Not Known
 										</label>
 									</div>
 								</div>
 							</fieldset>
-						</div>
-						<div class="col-md-12 margin-top-20">
-							<hr/>
+						</div> -->
 							<div class="col-md-12">
-								<div class="col-md-6"></div>
-								<div flash-message="2000" class="col-md-4 text-right"></div>
+							<hr/>
+								<div class="col-md-10"></div>
 								<div class="col-md-2 text-right">
                 					<a class="btn btn-success" ng-disabled='isClean()' ng-click="saveUserLookupPreferences()">Save</a>
               						<a ui-sref="dashboard.home"  class="btn btn-danger" >Cancel</a><br/><br/>
               					</div>
            					</div>
-						</div>
 					</div>
 				</div>
-			</div> -->
+			</div>
 			<div class="panel panel-warning">
 				<div class="panel-heading" role="tab" id="heading2">
 					<h4 class="panel-title">
 						<a role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapse2"
-							href="/#collapse2"> <i class="more-less glyphicon glyphicon-minus"></i><b>Export Preferences</b></a>
+							href="/#collapse2"> <i class="more-less glyphicon glyphicon-plus"></i>Export Preferences</a>
 					</h4>
 				</div>
-				<div id="collapse2" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2">
+				<div id="collapse2" class="panel-collapse collapse" ng-class="{'in':prefenceTabActive==2}" role="tabpanel" aria-labelledby="heading2">
 				
 					<div class="panel-body">
 					<p>You can select your preference for exporting the Crash Reports into Excel, in any 1 of the formats: Standard or Custom, using the tabs below.
 				</p>
   <ul class="nav nav-tabs">
-    <li ng-class="{'active':prefenceTabActive===1}"><a data-toggle="tab" href="/#standardPreference">Standard</a></li>
-    <li ng-class="{'active':prefenceTabActive===2}"><a data-toggle="tab" href="/#customPreference">Custom</a></li>
+    <li ng-class="{'active':prefenceTabActive==1}"><a data-toggle="tab" href="/#standardPreference">Standard</a></li>
+    <li ng-class="{'active':prefenceTabActive==2}"><a data-toggle="tab" href="/#customPreference">Custom</a></li>
   </ul>
 
   <div class="tab-content">
-    <div id="standardPreference" class="tab-pane fade" ng-class="{'in':prefenceTabActive===1,'active':prefenceTabActive===1}">
+    <div id="standardPreference" class="tab-pane fade" ng-class="{'in':prefenceTabActive==1,'active':prefenceTabActive==1}">
       <div class="col-md-12" style="margin-top:20px;">
       <p>This format, exports the Crash Reports into Excel, in the exact same format as the original one. The exported report will contain all the fields, in the order, as present in the original Crash Report.
       </p>
@@ -167,7 +161,7 @@
 							</div>
 	</div>
     </div>
-    <div id="customPreference" class="tab-pane fade" ng-class="{'in':prefenceTabActive===2,'active':prefenceTabActive===2}">
+    <div id="customPreference" class="tab-pane fade" ng-class="{'in':prefenceTabActive==2,'active':prefenceTabActive==2}">
      
 						<div class="col-md-12" style="margin-top:20px;">
 						<div class="col-md-12 no-padding">
@@ -176,7 +170,8 @@
 						<h4>To customize your report:</h4>
 						&nbsp;&nbsp;&nbsp;&nbsp;1. Select required fields from the box on the left to the box on the right - Simply click on a field, and drag it to the box on the right.<br/>
 						&nbsp;&nbsp;&nbsp;&nbsp;2. Sort the order in which you want the fields to appear on your report - Click on a field from the box on the right, and drag it up or down to position.<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;3. Click save to set your preference.<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;3. You can also de-select fields from the list you already selected - Click on the field in the box on the right, and drag it back to the box on the left.
+						&nbsp;&nbsp;&nbsp;&nbsp;4. Click submit to set your preference.<br/>
 						
 						<hr/>
 						</div>

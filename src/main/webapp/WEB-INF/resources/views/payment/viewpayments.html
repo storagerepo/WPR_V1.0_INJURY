@@ -1,0 +1,90 @@
+<div class="row">
+	<div class="col-lg-12">
+		<a ui-sref="dashboard.payment" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back</a>
+		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>	
+		<h2 class="page-header">Payment Deatils</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+	 		<!-- /.panel-heading -->
+			<div class="col-md-12">
+			 
+					<table class="table table-hover table-striped table-bordered">
+
+						<thead>
+							<tr>
+								<th ng-mousedown="sort('date')">Date &nbsp;&nbsp;<span
+									class="glyphicon sort-icon" ng-show="sortKey=='date'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+								<th ng-mousedown="sort('billAmount')">Bill Amount&nbsp;&nbsp;<span
+									class="glyphicon sort-icon" ng-show="sortKey=='billAmount'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+								<th>Paid Amount</th>
+								<th>Status</th>
+								<th>Actions</th>
+						
+							</tr>
+
+							<tr>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon1"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text" ng-model="search.date" placeholder="Date"></div></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon2"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text" ng-model="search.billAmount" placeholder="Bill Amount"></div></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text" ng-model="search.paidAmount" placeholder="Paid Amount"></div></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon4"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text" ng-model="search.status" placeholder="Status"></div></th>
+								<th></th>	
+								
+							</tr>
+						</thead>
+						<tbody>
+
+							<tr  ng-show="paymentDetails.length>0"  dir-paginate="payment in paymentDetailsFilter=(paymentDetails|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows)">
+								<td class="wrap" ng-cloak>{{payment.date}}</td>
+								<td class="wrap" ng-cloak>{{payment.billAmount}}</td>
+								<td class="wrap" ng-cloak>{{payment.paidAmount}}</td>
+
+								<td class="wrap" ng-cloak>{{payment.status}}</td>
+								
+								<td>
+								<a href="#/dashboard/EditCaller/{{caller.callerId}}" ng-cloak class="btn btn-xs btn-primary hint--top" data-hint="View"><i
+								class="glyphicon glyphicon-eye-open"></i>
+						</a>
+						
+							 </td>
+							</tr>
+							<tr ng-show="!paymentDetails.length || !paymentDetailsFilter.length">
+				<td colspan="6" align="center">No Records Found</td>
+				</tr>
+						</tbody>
+						
+					</table>
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+    					</dir-pagination-controls>
+				<div class="col-md-3 pull-right no-padding margin-bottom-10">
+				<label>Number of Records</label>
+					<select
+						class="form-control" ng-model="noOfRows" name="noOfRows"
+						id="noOfRows">
+						<option value="10">Show 10 Per Page</option>
+						<option value="25">Show 25 Per Page</option>
+						<option value="50">Show 50 Per Page</option>
+						<option value="100">Show 100 Per Page</option>
+						<option value="{{paymentDetails.length}}">Show All</option>
+					</select> 
+				</div>
+			</div>
+		<!-- /.panel -->
+	<!-- /.col-lg-12 -->
+</div>

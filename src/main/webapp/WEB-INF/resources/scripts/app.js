@@ -51,16 +51,16 @@ sbAdminApp
 															break;
 														}
 														case 401: {
-															window.location.href = "/logout?sessionout";
+															window.location.href = window.location.origin+"/Injury/logout?sessionout";
 
 														}
 														case 403: {
-															window.location.href = "/logout?sessionout";
+															window.location.href = window.location.origin+"/Injury/logout?sessionout";
 															break;
 														}
 														case 500: {
 															alert("Please try again!");
-															window.location.href = "Injury/logout";
+															window.location.href = window.location.origin+"/Injury/logout";
 															break;
 														}
 														default: {
@@ -840,7 +840,7 @@ sbAdminApp
 
 											})
 											.state(
-													'dashboard.userPreferrence',
+													'dashboard.userPreferrence/:fid',
 													{
 														resolve : {
 															loadMyFile : function(
@@ -855,7 +855,7 @@ sbAdminApp
 														},
 														controller : 'sortableController',
 														templateUrl : 'views/settings/user-preferrence.html',
-														url : '/UserPreferrence'
+														url : '/UserPreferrence/:fid'
 
 													})
 									.state(
@@ -1072,38 +1072,43 @@ sbAdminApp
 
 											})
 									.state(
-											'dashboard.CountyList',
+											'dashboard.payment',
 											{
-												url : '/CountyList',
-												templateUrl : 'views/patient/CountyList.html',
+												url : '/payment',
+												templateUrl : 'views/payment/paymenthome.html',
 												resolve : {
 													loadMyFiles : function(
 															$ocLazyLoad) {
 														return $ocLazyLoad
 														.load({
 															name : 'sbAdminApp',
-															files : [ 'scripts/controllers/countyController.js' ]
+															files : [ ]
 														});
 													}
 												},
-												controller:'CountyController'
 											})
 									.state(
-											'dashboard.TierType',
+											'dashboard.viewpayments',
 											{
-												url : '/TierType',
-												templateUrl : 'views/patient/TierType.html',
+												url : '/viewpayments',
+												templateUrl : 'views/payment/viewpayments.html',
 												resolve : {
 													loadMyFiles : function(
 															$ocLazyLoad) {
+														return $ocLazyLoad.load({
+															name:'sbAdminApp',
+															files:['scripts/controllers/paymentController.js']
+														});
+														
 													}
-												}
+												},
+												controller : 'PaymentController',
 											})
 									.state(
-											'dashboard.PatientList',
+											'dashboard.carddetails',
 											{
-												url : '/PatientList',
-												templateUrl : 'views/patient/PatientList.html',
+												url : '/carddetails',
+												templateUrl : 'views/payment/carddetails.html',
 												resolve : {
 													loadMyFiles : function(
 															$ocLazyLoad) {
@@ -1112,7 +1117,6 @@ sbAdminApp
 											});// End Change password
 
 						} ]).run( [ '$rootScope', function ($rootScope,$state, $stateParams) {
-							$rootScope.userPrefenceTabStatus=1;
 							$rootScope.$state = $state;
 				            $rootScope.$stateParams = $stateParams;
 					        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
@@ -1123,10 +1127,7 @@ sbAdminApp
 					        	}
 					        	$rootScope.nextState = to.name;
 					            $rootScope.previousState = from.name;
-					            if(($rootScope.previousState!='dashboard.callerAdminSearchPatients' && $rootScope.previousState!='dashboard.LawyerAdminSearchPatients') && $rootScope.nextState=='dashboard.userPreferrence'){
-					            	$rootScope.userPrefenceTabStatus=1;
-					            }
-					            if($rootScope.previousState=='dashboard.userPreferrence' && $rootScope.nextState!='dashboard.userPreferrence'){
+					            if($rootScope.previousState=='dashboard.userPreferrence/:fid' && $rootScope.nextState!='dashboard.userPreferrence/:fid'){
 					            	if(!$rootScope.exportPreferenceChanged){
 					            		if(confirm("Do you want to save the preference?")){
 					            			$rootScope.rootSaveUserExportPreference();
@@ -1137,6 +1138,11 @@ sbAdminApp
 					            }
 					         });
 					      }]).controller('authenticationController', function($rootScope, $scope, $http, $location, requestHandler) {
+					    	  var getCountyPreferenceList=function(){
+					    		  requestHandler.getRequest("Patient/checkCountyListType.json","").then(function(response){
+					    				 $rootScope.countyListType=response.data.countyListType;
+					    			});
+					    	  };
 					    	  var authenticate = function() {
 						requestHandler
 								.postRequest("getCurrentRole.json", "")
@@ -1167,6 +1173,7 @@ sbAdminApp
 					};
 
 					authenticate();
+					//getCountyPreferenceList();
 				});
 sbAdminApp
 		.directive(

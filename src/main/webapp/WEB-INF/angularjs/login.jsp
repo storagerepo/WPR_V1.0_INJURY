@@ -39,7 +39,7 @@
 	}
 	#body {
 		padding:10px;
-		padding-bottom:60px;	/* Height of the footer */
+		/* padding-bottom:60px; */	/* Height of the footer */
 	}
 	#footer {
 		position:absolute;
@@ -98,13 +98,14 @@
 </head>
 
 <div id="container">
-	<div id="header">
+	<div id="header" style="width:100%!important;">
 		<h2>Lightning fast reports upon request!</h2>
+		
 	</div>
 	<div id="body">
-		<div class="col-md-1"></div>
-        <div class="col-md-4">
-	        <div class="login-panel">
+		<div class="col-md-2"><img src="resources/images/logo_crashreportsonline.png" width="180px;" height="150px" style="border-radius: 70px;"/></div>
+        <div class="col-md-4" style="margin-top:50px;">
+	        <div>
 		            <div class="panel panel-default panel-override">
 		                <div class="panel-heading">
 		                    <h3 class="panel-title">Please Sign In</h3>

@@ -768,10 +768,33 @@ span .dashboard-icon{
 .panel-warning > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #eea236 !important;
 }
+
+/*  Success */
+.panel-success {
+  border-color: #4cae4c !important;
+}
+.panel-success > .panel-heading {
+  color: #fff !important;
+  background-color: #5cb85c !important;
+  border-color: #4cae4c !important;
+}
+.panel-success > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #4cae4c !important;
+}
+.panel-success > .panel-heading .badge {
+  color: #fcf8e3 !important;
+  background-color: #fff !important;
+}
+.panel-success > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #4cae4c !important;
+}
+
 .panel-title > a {
    display: block !important;
+   font-weight: bold !important;
    text-decoration: none !important;
    font-size:14pt !important;
+   
 }
 .more-less {
     float: right;
@@ -779,5 +802,5 @@ span .dashboard-icon{
  }
 .error-class{
 	color:red;
-	font-size:12px;
+	font-size:11px;
 }

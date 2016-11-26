@@ -17,13 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
-@RequestMapping("/Admin")
 public class CallerAdminController {
 	
 	@Autowired
 	CallerAdminService callerAdminService;
 
-    @RequestMapping(value="/getCallerAdmin",method=RequestMethod.GET)
+    @RequestMapping(value="/Admin/getCallerAdmin",method=RequestMethod.GET)
 	public String getCallerAdmin(@RequestParam("callerAdminId") Integer callerAdminId,ModelMap model)
 	{
     	model.addAttribute("callerAdminForm",callerAdminService.getCallerAdmin(callerAdminId));
@@ -32,7 +31,7 @@ public class CallerAdminController {
 	}
 	
     
-    @RequestMapping(value="/mergeCallerAdmin",method=RequestMethod.POST)
+    @RequestMapping(value={"/mergeCallerAdmin","/Admin/mergeCallerAdmin"},method=RequestMethod.POST)
    	public String mergeCallerAdmin(@ModelAttribute("callerAdminForm") CallerAdminForm callerAdminForm,ModelMap model)
    	{
     	callerAdminService.mergeCallerAdmin(callerAdminForm);
@@ -40,7 +39,7 @@ public class CallerAdminController {
    		return "/returnPage";
    	}
     
-    @RequestMapping(value="/saveUpdateCallerAdmin",method=RequestMethod.POST)
+    @RequestMapping(value={"/saveUpdateCallerAdmin","/Admin/saveUpdateCallerAdmin"},method=RequestMethod.POST)
    	public String saveCallerAdmin(@RequestBody CallerAdminForm callerAdminForm,ModelMap model)
    	{
     	if(callerAdminForm.getCallerAdminId()==null)
@@ -52,7 +51,7 @@ public class CallerAdminController {
    	}
    
     
-    @RequestMapping(value="/deleteCallerAdmin",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/deleteCallerAdmin",method=RequestMethod.POST)
    	public String deleteCallerAdmin(@RequestParam("id") Integer id,ModelMap model)
    	{
     	
@@ -61,7 +60,7 @@ public class CallerAdminController {
    		return "/returnPage";
    	}
     
-    @RequestMapping(value="/getAllCallerAdmins",method=RequestMethod.GET)
+    @RequestMapping(value="/Admin/getAllCallerAdmins",method=RequestMethod.GET)
    	public String getAllCallerAdmins(ModelMap model)
    	{
     	model.addAttribute("callerAdminForms",callerAdminService.getCallerAdminList());
@@ -69,7 +68,7 @@ public class CallerAdminController {
    		return "/returnPage";
    	}
     
-    @RequestMapping(value="/enableOrDisableCallerAdmin",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/enableOrDisableCallerAdmin",method=RequestMethod.POST)
    	public String enableOrDisableCallerAdmin(@RequestParam("callerAdminId") Integer callerAdminId,ModelMap model)
    	{
     	
@@ -78,7 +77,7 @@ public class CallerAdminController {
    		return "/returnPage";
    	}
     
-    @RequestMapping(value="/resetCallerAdminPassword",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/resetCallerAdminPassword",method=RequestMethod.POST)
    	public String resetCallerAdminPassowrd(@RequestParam("callerAdminId") Integer callerAdminId,ModelMap model)
    	{
     	
@@ -87,7 +86,7 @@ public class CallerAdminController {
    		return "/returnPage";
    	}
 	
-    @RequestMapping(value = "/getNumberOfCallerAdmin", method = RequestMethod.GET)
+    @RequestMapping(value = "/Admin/getNumberOfCallerAdmin", method = RequestMethod.GET)
 	public String getNoOfCallerAdmin(ModelMap model) {
 		model.addAttribute("numberOfCallerAdmin", callerAdminService.getNumberOfCallerAdmins());
 		model.addAttribute("requestSuccess", true);

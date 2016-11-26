@@ -1,9 +1,9 @@
 'use strict';
 
-var directiveModule = angular.module('angularjs-dropdown-multiselect', []);
+var directiveModule = angular.module('angularjs-dropdown-multiselect', ['searchModule']);
 
-directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$compile', '$parse',
-    function ($filter, $document, $compile, $parse) {
+directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$compile', '$parse','searchService',
+    function ($filter, $document, $compile, $parse,searchService) {
 
         return {
             restrict: 'AE',
@@ -14,16 +14,19 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                 events: '=',
                 searchFilter: '=?',
                 translationTexts: '=',
-                groupBy: '@'
+                groupBy: '@',
+                preferenceList:'='
             },
             template: function (element, attrs) {
                 var checkboxes = attrs.checkboxes ? true : false;
                 var groups = attrs.groupBy ? true : false;
-
                 var template = '<div class="multiselect-parent btn-group dropdown-multiselect col-md-12 no-padding">';
                 template += '<button type="button" style="width:100%" class="dropdown-toggle"  ng-class="settings.buttonClasses" ng-click="toggleDropdown()">{{getButtonText()}}&nbsp;<span class="caret"></span></button>';
                 template += '<ul class="dropdown-menu dropdown-menu-form col-md-12" ng-style="{display: open ? \'block\' : \'none\', height : settings.scrollable ? settings.scrollableHeight : \'auto\'}" style="overflow-y:auto;">';
-                template += '<li ng-hide="!settings.showCheckAll || settings.selectionLimit > 0" style="padding:0px 5px 0px 5px;"><button class="btn btn-sm btn-default" data-ng-click="selectAll()">{{texts.checkAll}}</button>&nbsp;&nbsp;<button class="btn btn-sm btn-default" data-ng-click="deselectAll();">{{texts.uncheckAll}}</button></li>';
+               // template += '<li ng-hide="!settings.showPreferenceOption" style="padding:5px 5px 5px 5px;"><select class="form-control" ng-model="countyPreference" ng-value="settings.preferenceList" data-ng-change="countyPreferenceList()"><option value="1">Standard</option><option value="2">Custom</option></select></li>';
+                template += '<li ng-hide="!settings.showPreferenceOption" style="padding:5px 5px 5px 5px;"><label class="radio-inline"><input type="radio" value="1" name="countyPrefence" ng-model="countyPreference" data-ng-change="countyPreferenceList()"/><small>Subscribed</small></label><label class="radio-inline"><input type="radio" value="2" name="countyPrefence" ng-model="countyPreference" data-ng-change="countyPreferenceList()"/><small>Preferred</small></label></li>';
+                template += '<li class="divider" ng-hide="!settings.showPreferenceOption"></li><li ng-hide="!settings.showCheckAll || settings.selectionLimit > 0" style="padding:0px 5px 0px 5px;"><button class="btn btn-sm btn-default" data-ng-click="selectAll()">{{texts.checkAll}}</button>&nbsp;&nbsp;<button class="btn btn-sm btn-default" data-ng-click="deselectAll();">{{texts.uncheckAll}}</button></li>';
+                
                 template += '<li ng-hide="(!settings.showCheckAll || settings.selectionLimit > 0) && !settings.showUncheckAll" class="divider"></li>';
                 template += '<li ng-show="settings.enableSearch"><div class="dropdown-header"><input type="text" class="form-control" style="width: 100%;" ng-model="searchFilter" placeholder="{{texts.searchPlaceholder}}" /></li>';
                 template += '<li ng-show="settings.enableSearch" class="divider"></li>';
@@ -53,7 +56,19 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
 
                 element.html(template);
             },
-            link: function ($scope, $element, $attrs) {
+            link: function ($scope, $element, $attrs, ctrl) {
+            	if($scope.preferenceList!=undefined){
+            		$scope.countyPreference=($scope.preferenceList).toString();
+            	}
+
+                // Get County Preference Type
+            	// detect outside changes and update our input
+                $scope.$watch('preferenceList', function (val) {
+                	if($scope.preferenceList!=undefined){
+                		$scope.countyPreference=($scope.preferenceList).toString();
+                	}
+                });
+              
                 var $dropdownTrigger = $element.children()[0];
                 
                 $scope.toggleDropdown = function () {
@@ -71,7 +86,8 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                     onSelectAll: angular.noop,
                     onDeselectAll: angular.noop,
                     onInitDone: angular.noop,
-                    onMaxSelectionReached: angular.noop
+                    onMaxSelectionReached: angular.noop,
+                    onPreferenceChange:angular.noop
                 };
 
                 $scope.settings = {
@@ -93,7 +109,8 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                     groupByTextProvider: null,
                     smartButtonMaxItems: 4,
                     smartButtonTextConverter: angular.noop,
-                    buttonDefaultText:"Select"
+                    buttonDefaultText:"Select",
+                    showPreferenceOption:false
                 };
 
                 $scope.texts = {
@@ -209,7 +226,13 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                             if (totalSelected === 0) {
                                 return $scope.settings.buttonDefaultText;
                             } else {
-                                return totalSelected + ' ' + $scope.texts.dynamicButtonTextSuffix;
+                            	if($scope.countyPreference==1){
+                            		return totalSelected+ ' ' + $scope.texts.dynamicButtonTextSuffix+' - Subscribed';
+                            	}else if($scope.countyPreference==2){
+                            		return totalSelected+ ' ' + $scope.texts.dynamicButtonTextSuffix+' - Preferred';
+                            	}else{
+                            		return totalSelected+ ' ' + $scope.texts.dynamicButtonTextSuffix;
+                            	}
                             }
                         }
                     } else {
@@ -248,6 +271,10 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                     }
                 };
 
+                $scope.countyPreferenceList=function(){
+                	$scope.externalEvents.onPreferenceChange($scope.countyPreference);
+                };
+                
                 $scope.setSelectedItem = function (id, dontRemove) {
                     var findObj = getFindObj(id);
                     var finalObj = null;
@@ -290,6 +317,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                 };
 
                 $scope.externalEvents.onInitDone();
+                
             }
         };
 }]);

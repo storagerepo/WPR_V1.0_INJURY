@@ -45,8 +45,13 @@ public class CommonController {
     @RequestMapping(value="/dashboard",method=RequestMethod.GET)
 	public String getDashboard(ModelMap model)
 	{
+    	Integer disclaimerStatus=loginService.checkDisclaimerAcceptedStatus();
     	model.addAttribute("Success",true);
-		return "/index";
+    	if(disclaimerStatus==0){
+    		return "/disclaimer";
+    	}else{
+    		return "/index";
+    	}
 	}
 	
     @RequestMapping(value="/login-failed",method=RequestMethod.GET)
@@ -84,4 +89,12 @@ public class CommonController {
    		model.addAttribute("requestSuccess", true);
    		return "/returnPage";
    	}
+    // Update Disclaimer Status
+    @RequestMapping(value="/updateDisclaimerStatus",method=RequestMethod.POST)
+	public String updateDisclaimerStatus(ModelMap model)
+	{
+    	loginService.updateDisclaimerAcceptedStatus();
+    	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
 }

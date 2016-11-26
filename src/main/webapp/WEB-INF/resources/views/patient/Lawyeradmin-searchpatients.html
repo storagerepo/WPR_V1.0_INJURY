@@ -16,9 +16,9 @@
  <form name="patientSearchForm" novalidate ng-cloak>
  	<div class="col-md-12 no-padding">
         <div class="col-md-5ths">
-        	<label>County</label><span class="error-class" ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least one county</span>
-     		<div ng-dropdown-multiselect="" options="mycounties" selected-model="patient.countyId" extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties'}"></div>
-     		
+        	<label>County</label>&nbsp;<a href="" data-toggle="popover" title="Info on County Selection:" data-content="<p><b>Subscribed - </b>All counties you have subscribed to.</p><p><b>Preferred - </b> Only counties you usually prefer to access.</p>" data-trigger="focus"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchCountyMinError"> Select at least one county</span>
+     		<div ng-dropdown-multiselect="" preference-list="countyListType" options="mycounties" selected-model="patient.countyId" extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true}" events="countyEvents"></div>
+     		<a href="#/dashboard/UserPreferrence/1" style="text-decoration: underline;" ng-show="countyListType==2">Change Lookup Preference</a>
        	</div>
        	<div class="col-md-5ths">
          	<label>Crash From Date</label>
@@ -31,7 +31,7 @@
        	<div class="col-md-5ths">
 			<label>Number of Days</label>
          	<select class="form-control"  ng-model="patient.numberOfDays" name="numberOfDays" ng-change="checkCustomDate(patient.numberOfDays)">
-            	<option value="1" ng-selected="true">1</option>
+            	<option value="1">1</option>
             	<option value="7">7</option>
             	<option value="15">15</option>
             	<option value="30">30</option>
@@ -69,9 +69,9 @@
        	<div class="col-md-5ths">
        		<label>Lawyers</label>
        		<select class="form-control" ng-model="patient.lawyerId">
-       			<option value="0" ng-selected="true">All</option>
+       			<option value="0">All</option>
        			<option value="-1">N/A</option>
-          		<option ng-repeat="lawyer in lawyers" value="{{lawyer.lawyerId}}" ng-selected="{{lawyer.firstName === patient.lawyer}}">{{lawyer.firstName}}&nbsp;{{lawyer.lastName}}</option>
+          		<option ng-repeat="lawyer in lawyers" value="{{lawyer.lawyerId}}" ng-selected="{{lawyer.lawyerId == patient.lawyerId}}">{{lawyer.firstName}}&nbsp;{{lawyer.lastName}}</option>
      		</select>
        	</div>
        	<div class="col-md-5ths">
@@ -105,14 +105,14 @@
 					<div class="col-md-3 margin-top-5 text-right no-padding">Records Type&nbsp;&nbsp;</div>
 					<div class="col-md-3 no-padding">
 						<select class="form-control input-sm" ng-change="secoundarySearchPatient()" name="isArchived" ng-model="patient.isArchived">
-				          	<option value="0" ng-selected="true">Open</option>
+				          	<option value="0">Open</option>
 				          	<option value="1">Archived</option>
 				     	</select>
 					</div>
 					<div class="col-md-3 margin-top-5 text-right no-padding">Filter Status by&nbsp;&nbsp; </div>
 					<div class="col-md-3 no-padding">
 						<select class="form-control input-sm" ng-change="secoundarySearchPatient()" ng-model="patient.patientStatus">
-							<option value="7" ng-selected="true">All</option>
+							<option value="7">All</option>
 				          	<option value="0">New</option>
 				          	<option value="1">Active</option>
 				          	<option value="6">To be Re-Assigned</option>
@@ -148,7 +148,7 @@
 									ng-model="patient.patientName" ng-change="secoundarySearchPatient()" placeholder="Name"></div>
 								</th>
 								<th>
-								 <div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false}"></div>
+								 <div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false}" events="ageEvents"></div>
 								 </th>
 								<th></th>
 								<th></th>									

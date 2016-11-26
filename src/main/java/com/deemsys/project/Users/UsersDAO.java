@@ -12,4 +12,5 @@ public interface UsersDAO extends IGenericDAO<Users> {
 	public Integer changePassword(String newPassword,String userName);
 	public Users getByUserName(String userName);
 	public Integer resetUserPassword(Integer id);
+	public Integer disclaimerAcceptedStatus(Integer userId);
 }

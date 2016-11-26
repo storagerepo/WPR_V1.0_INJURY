@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.County.CountyList;
+import com.deemsys.project.County.CountyService;
 import com.deemsys.project.Users.UsersDAO;
+import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.UserLookupPreferences;
 import com.deemsys.project.entity.UserLookupPreferencesId;
 import com.deemsys.project.entity.Users;
@@ -37,6 +40,9 @@ public class UserLookupPreferencesService {
 	@Autowired
 	UsersDAO usersDAO;
 	
+	@Autowired
+	CountyService countyService;
+	
 	//Get All Entries
 	public List<UserLookupPreferencesForm> getUserLookupPreferencesList()
 	{
@@ -58,7 +64,7 @@ public class UserLookupPreferencesService {
 	public UserLookupPreferencesForm getUserLookupPreferences()
 	{
 		
-		Integer userId=loginService.getCurrentUserID();
+		Integer userId=loginService.getPreferenceUserId();
 		
 		List<UserLookupPreferences> userLookupPreferencess=userLookupPreferencesDAO.getUserLookupPreferencesByUserId(userId);
 		UserLookupPreferencesForm userLookupPreferencesForm=new UserLookupPreferencesForm();
@@ -168,6 +174,50 @@ public class UserLookupPreferencesService {
 		return 1;
 	}
 	
+	// get Mapped preference County List
+	public List<CountyList> getPreferenceCountyList(Integer countyListType) {
+		List<CountyList> countyLists = countyService.getMyCountyList();
+		List<CountyList> resultCountyList=new ArrayList<CountyList>();
+		List<Integer> preferenceCounty= new ArrayList<Integer>();
+		UserLookupPreferencesForm userLookupPreferencesForm = this.getUserLookupPreferences();
+		for (UserLookupPreferenceMappedForm userLookupPreferenceMappedForm : userLookupPreferencesForm.getUserLookupPreferenceMappedForms()) {
+			if(userLookupPreferenceMappedForm.getType()==1){
+				preferenceCounty=userLookupPreferenceMappedForm.getpreferredId();
+			}
+		}
+		// Get Final County List
+		if(countyListType==2){
+			// Preferred County List
+			if(preferenceCounty.size()>0){
+				for (CountyList county : countyLists) {
+					if(preferenceCounty.contains(county.getCountyId())){
+						resultCountyList.add(county);
+					}
+				}
+			}
+			return resultCountyList;
+		}else{
+			// Subscribed County List
+			return countyLists;
+		}
+	}
 	
+	// Check County List Type
+	public Integer checkCountyListType() {
+		Integer countyListType=1;
+		List<Integer> preferenceCounty= new ArrayList<Integer>();
+		UserLookupPreferencesForm userLookupPreferencesForm = this.getUserLookupPreferences();
+		for (UserLookupPreferenceMappedForm userLookupPreferenceMappedForm : userLookupPreferencesForm.getUserLookupPreferenceMappedForms()) {
+			if(userLookupPreferenceMappedForm.getType()==1){
+				preferenceCounty=userLookupPreferenceMappedForm.getpreferredId();
+			}
+		}
+		// Get Final County List
+		if(preferenceCounty.size()>0){
+			countyListType=2;
+		}
+		
+		return countyListType;
+	}
 	
 }

@@ -219,6 +219,7 @@ public class CallerService {
 		users.setIsEnable(1);
 		users.setStatus(1);
 		users.setIsPasswordChanged(0);
+		users.setIsDisclaimerAccepted(1);
 		role = roleDAO.get(InjuryConstants.INJURY_CALLER_ROLE_ID);
 		users.setRoles(role);
 		usersDAO.save(users);
@@ -312,6 +313,7 @@ public class CallerService {
 		users.setUsername(users.getUsername()+"-Deleted");
 		users.setIsEnable(0);
 		users.setIsPasswordChanged(users.getIsPasswordChanged());
+		users.setIsDisclaimerAccepted(users.getIsDisclaimerAccepted());
 		status = 0;
 		
 		callerDAO.update(caller);

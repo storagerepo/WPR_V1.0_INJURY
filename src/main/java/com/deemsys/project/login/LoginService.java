@@ -115,8 +115,20 @@ public class LoginService {
 		}else{
 			return 1;
 		}
-						
-		
+	}
+	
+	// Check Disclaimer Accepted Status
+	public Integer checkDisclaimerAcceptedStatus(){
+		Integer status=usersDAO.disclaimerAcceptedStatus(this.getCurrentUserID());
+		return status;
+	}
+	
+	// Update Disclaimer Status
+	public Integer updateDisclaimerAcceptedStatus(){
+		Users users=usersDAO.get(this.getCurrentUserID());
+		users.setIsDisclaimerAccepted(1);
+		usersDAO.update(users);
+		return 1;
 	}
 	
 }

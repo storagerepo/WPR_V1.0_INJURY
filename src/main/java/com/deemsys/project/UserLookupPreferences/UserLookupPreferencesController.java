@@ -68,4 +68,19 @@ public class UserLookupPreferencesController {
    		return "/returnPage";
    	}
 	
+    @RequestMapping(value={"Patient/getPreferenceCounties"},method=RequestMethod.GET)
+	public String getPreferenceCounties(@RequestParam("countyListType") Integer countyListType,ModelMap model)
+	{
+    	model.addAttribute("countyList",userLookupPreferencesService.getPreferenceCountyList(countyListType));
+    	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
+    
+    @RequestMapping(value={"Patient/checkCountyListType"},method=RequestMethod.GET)
+	public String checkCountyListType(ModelMap model)
+	{
+    	model.addAttribute("countyListType",userLookupPreferencesService.checkCountyListType());
+    	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
 }

@@ -163,5 +163,12 @@ public class UsersDAOImpl implements UsersDAO{
 		query.executeUpdate();
 		return 0;
 	}
+
+	@Override
+	public Integer disclaimerAcceptedStatus(Integer userId) {
+		// TODO Auto-generated method stub
+		Users users = (Users) this.sessionFactory.getCurrentSession().createCriteria(Users.class).add(Restrictions.eq("userId", userId)).uniqueResult();
+		return users.getIsDisclaimerAccepted();
+	}
 	
 }

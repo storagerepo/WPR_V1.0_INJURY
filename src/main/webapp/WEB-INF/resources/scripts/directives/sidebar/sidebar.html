@@ -18,6 +18,9 @@
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.SearchPatients"><span ng-cloak class="patient-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Search Clients<span></span></a>
             </li>
+           <!--   <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
+                <a ui-sref="dashboard.payment"><i ng-cloak class="fa fa-money fa-fw"></i> Payment<span></span></a>
+            </li> -->
             
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
                 <a ui-sref="dashboard.callers"><i ng-cloak class="fa fa-user fa-fw"></i> Callers<span></span></a>
@@ -31,8 +34,11 @@
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
                 <a ui-sref="dashboard.appointment"><i ng-cloak class="fa fa-calendar fa-fw"></i> Appointments<span></span></a>
             </li>
+          <!--    <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
+                <a ui-sref="dashboard.payment"><i ng-cloak class="fa fa-money fa-fw"></i> Payment<span></span></a>
+            </li> -->
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
-                <a ui-sref="dashboard.userPreferrence"><i ng-cloak class="fa fa-wrench fa-fw"></i> Settings<span></span></a>
+                <a href="#/dashboard/UserPreferrence/1"><i ng-cloak class="fa fa-wrench fa-fw"></i> Settings<span></span></a>
             </li>
             
             
@@ -43,8 +49,11 @@
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
                 <a ui-sref="dashboard.LawyerAdminSearchPatients"><span ng-cloak class="patient-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Clients<span></span></a>
             </li>
+            <!--  <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
+                <a ui-sref="dashboard.payment"><i ng-cloak class="fa fa-money fa-fw"></i> Payment<span></span></a>
+            </li> -->
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
-                <a ui-sref="dashboard.userPreferrence"><i ng-cloak class="fa fa-wrench fa-fw"></i> Settings<span></span></a>
+                <a href="#/dashboard/UserPreferrence/1"><i ng-cloak class="fa fa-wrench fa-fw"></i> Settings<span></span></a>
             </li>
             
             
