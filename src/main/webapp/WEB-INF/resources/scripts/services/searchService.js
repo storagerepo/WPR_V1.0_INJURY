@@ -20,6 +20,8 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var isArchived="0";
 	var patientStatus="7";
 	var countyListType="1";
+	var archivedFromDate="";
+	var archivedToDate="";
 	// County
 	this.setCounty=function(countyInput){
 		countySession=countyInput;
@@ -187,6 +189,20 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	
 	this.getCountyListType=function(){
 		return countyListType;
+	};
+	// Archived From Date
+	this.setArchivedFromDate=function(archivedFromDateInput){
+		archivedFromDate=archivedFromDateInput;
+	};
+	this.getArchivedFromDate=function(){
+		return archivedFromDate;
+	};
+	// Archived To Date
+	this.setArchivedToDate=function(archivedToDateInput){
+		archivedToDate=archivedToDateInput;
+	};
+	this.getArchivedToDate=function(){
+		return archivedToDate;
 	};
 	// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
 	this.spiltAndSwapName=function(patientName){

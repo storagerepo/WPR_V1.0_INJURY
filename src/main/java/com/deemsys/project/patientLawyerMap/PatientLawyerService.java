@@ -1,5 +1,7 @@
 package com.deemsys.project.patientLawyerMap;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +51,7 @@ public class PatientLawyerService {
 			//Generate Patient
 			Patient patient=new Patient(patientId);
 			
-			patientLawyerAdminMap=new PatientLawyerAdminMap(new PatientLawyerAdminMapId(patientId,lawyerAdmin.getLawyerAdminId()),lawyer,lawyerAdmin, patient, "", 1, 0,1);
+			patientLawyerAdminMap=new PatientLawyerAdminMap(new PatientLawyerAdminMapId(patientId,lawyerAdmin.getLawyerAdminId()),lawyer,lawyerAdmin, patient, "", 1, 0, null, "",1);
 			patientLawyerDAO.merge(patientLawyerAdminMap);
 			
 		}else{
@@ -115,6 +117,13 @@ public boolean moveToArchive(AssignLawyerForm assignLawyerForm,Integer archiveSt
 			patientLawyerAdminMap=new PatientLawyerAdminMap(new PatientLawyerAdminMapId(patientId, lawyerAdmin.getLawyerAdminId()), lawyerAdmin, new Patient(patientId));
 		}
 		patientLawyerAdminMap.setIsArchived(archiveStatus);
+		if(archiveStatus==1){
+			patientLawyerAdminMap.setArchivedDate(new Date());
+			patientLawyerAdminMap.setArchivedDateTime(InjuryConstants.convertUSAFormatWithTime(new Date()));
+		}else{
+			patientLawyerAdminMap.setArchivedDate(null);
+			patientLawyerAdminMap.setArchivedDateTime(null);
+		}
 		patientLawyerDAO.merge(patientLawyerAdminMap);			
 		
 	}

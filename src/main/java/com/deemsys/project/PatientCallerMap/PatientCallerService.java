@@ -1,5 +1,8 @@
 package com.deemsys.project.PatientCallerMap;
 
+import java.util.Date;
+
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +52,7 @@ public class PatientCallerService {
 			//Generate Patient
 			Patient patient=new Patient(patientId);
 			
-			patientCallerAdminMap=new PatientCallerAdminMap(new PatientCallerAdminMapId(patientId,callerAdmin.getCallerAdminId()),callerAdmin,caller, patient, "", 0, 1, null, null);
+			patientCallerAdminMap=new PatientCallerAdminMap(new PatientCallerAdminMapId(patientId,callerAdmin.getCallerAdminId()),callerAdmin,caller, patient, "", 0, null, "", 1, null, null);
 			patientCallerDAO.merge(patientCallerAdminMap);
 			
 		}else{
@@ -114,6 +117,13 @@ public boolean moveToArchive(AssignCallerForm assignCallerForm,Integer archiveSt
 			patientCallerAdminMap=new PatientCallerAdminMap(new PatientCallerAdminMapId(patientId, callerAdmin.getCallerAdminId()), callerAdmin, new Patient(patientId));
 		}
 		patientCallerAdminMap.setIsArchived(archiveStatus);
+		if(archiveStatus==1){
+			patientCallerAdminMap.setArchivedDate(new Date());
+			patientCallerAdminMap.setArchivedDateTime(InjuryConstants.convertUSAFormatWithTime(new Date()));
+		}else{
+			patientCallerAdminMap.setArchivedDate(null);
+			patientCallerAdminMap.setArchivedDateTime(null);
+		}
 		patientCallerDAO.merge(patientCallerAdminMap);			
 		
 	}

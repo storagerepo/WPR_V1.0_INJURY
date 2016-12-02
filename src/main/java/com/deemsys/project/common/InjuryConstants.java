@@ -1,5 +1,6 @@
 package com.deemsys.project.common;
 
+import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -133,17 +135,22 @@ public class InjuryConstants {
 				
 	 // Convert To Month Format
 	public static String convertMonthFormat(Date date)
-	{   SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");
+	{   
+		String convertedDate="";
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");
 		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateformat=new Date();
 		try {
-			dateformat =yearFormat.parse(yearFormat.format(date));
+			if(date!=null){
+				dateformat =yearFormat.parse(yearFormat.format(date));
+				convertedDate=monthFormat.format(dateformat);
+			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return monthFormat.format(dateformat);
+		return convertedDate;
 	}
 
 	// Convert To USA Month Format With Time
@@ -177,6 +184,26 @@ public class InjuryConstants {
 		}
 
 		return dateformat;
+	}
+	
+	// Convert To USA Month Format With Time
+	public static String convertUSAFormatWithTimeAMPM(String date)
+	{
+		String convertedDateTime="";
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat frontMonthFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
+		Date dateformat=new Date();
+		try {
+			if(date!=null && !date.equals("")){
+				dateformat=monthFormat.parse(date);
+				convertedDateTime=frontMonthFormat.format(dateformat);
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return convertedDateTime;
 	}
 	
 	// Convert String Time To  Date Format Time
@@ -274,4 +301,10 @@ public class InjuryConstants {
 			return invalidInsurance;			
 		}
 		
+		// Generate Random String with Alpha For Password
+		public String genereateRandomPassword(){
+			String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
+			String pwd = RandomStringUtils.random( 15, 0, 0, false, false, characters.toCharArray(), new SecureRandom());
+			return pwd;
+		}
 }

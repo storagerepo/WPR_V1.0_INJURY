@@ -12,6 +12,9 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	// User Preference Status
 	$rootScope.userPrefenceTabStatus=1;
 	$scope.loadingCounties=true;
+
+	$scope.archivedToDateRequired=false;
+	$scope.archivedFromDateRequired=false;
 	// Main Search Param
 	$scope.mainSearchParam={};
 	$scope.init=function(){
@@ -39,6 +42,8 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.patient.addedOnToDate=searchService.getAddedOnToDate();
 		$scope.patient.isArchived=searchService.getIsArchived();
 		$scope.patient.patientStatus=searchService.getPatientStatus();
+		$scope.patient.archivedFromDate=searchService.getArchivedFromDate();
+		$scope.patient.archivedToDate=searchService.getArchivedToDate();
 		$scope.totalRecords=0;
 		$scope.countyListType=searchService.getCountyListType();
 		//Patient Search 
@@ -75,13 +80,15 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		//Initial Search
 		$scope.disableCustom=true;
 		$scope.isSelectedAddedFromDate=true;
+
 		if(searchService.getCrashToDate()!=""){
 			$scope.disableCustom=false;
 		}
 		if(searchService.getAddedOnFromDate()!=""){
 			$scope.isSelectedAddedFromDate=false;
 		}
-		
+
+
 		// Get Clinics List For Call Logs
 		$scope.getClinics();
 	};
@@ -122,14 +129,18 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		//End Reset to date if less than from date
 	};
 	
+	
 	$scope.isChecked=function(){
 		if($scope.patientSearchData.length>0){
 			$.each($scope.patientSearchData, function(index,value) {
-				var i=0;
-				for(i;i<value.patientSearchLists.length;i++){
-					
-					value.patientSearchLists[i].selected=$scope.isCheckedAllPatients;
-				}
+				$.each(value.searchResult, function(index1,value1) {
+					var i=0;
+					for(i;i<value1.patientSearchLists.length;i++){
+						
+						value1.patientSearchLists[i].selected=$scope.isCheckedAllPatients;
+					}
+				});
+				
 			});
 			$("input:checkbox").prop('checked', $(this).prop("checked"));
 		}
@@ -162,11 +173,14 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		var assignCallerObj ={};
 		var patientIdArray=[];
 		$.each($scope.patientSearchData, function(index,value) {
-			$.each(value.patientSearchLists,function(index1,value1){
-			if(value1.selected==true){
-				patientIdArray.push(value1.patientId);
-			}
+			$.each(value.searchResult, function(index1,value1) {
+				$.each(value1.patientSearchLists,function(index2,value2){
+					if(value2.selected==true){
+						patientIdArray.push(value2.patientId);
+					}
+					});
 			});
+			
 		});
 		assignCallerObj.patientId=patientIdArray;
 		
@@ -194,11 +208,14 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		assignCallerObj.callerId=$scope.myForm.callerId;
 		var patientIdArray=[];
 		$.each($scope.patientSearchData, function(index,value) {
-			$.each(value.patientSearchLists,function(index1,value1){
-				if(value1.selected==true){
-					patientIdArray.push(value1.patientId);
-				}
+			$.each(value.searchResult, function(index1,value1) {
+				$.each(value1.patientSearchLists,function(index2,value2){
+					if(value2.selected==true){
+						patientIdArray.push(value2.patientId);
+					}
+				});
 			});
+			
 			
 		});
 		assignCallerObj.patientId=patientIdArray;
@@ -218,11 +235,14 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		var assignCallerObj ={};
 		var patientIdArray=[];
 		$.each($scope.patientSearchData, function(index,value) {
-			$.each(value.patientSearchLists,function(index1,value1){
-			if(value1.selected==true){
-				patientIdArray.push(value1.patientId);
-			}
+			$.each(value.searchResult, function(index1,value1) {
+				$.each(value1.patientSearchLists,function(index2,value2){
+					if(value2.selected==true){
+						patientIdArray.push(value2.patientId);
+					}
+					});
 			});
+			
 		});
 		assignCallerObj.patientId=patientIdArray;
 		
@@ -235,15 +255,35 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		});
 	};
 	
+	// Move Single File To Archive
+	$scope.moveSingleFileToArchive=function(patientId){
+		var assignCallerObj ={};
+		var patientIdArray=[patientId];
+		if(confirm("Are you sure want to move to archive?")){
+			assignCallerObj.patientId=patientIdArray;
+			requestHandler.postRequest("/Caller/moveToArchive.json",assignCallerObj).then(function(response){
+				Flash.create('success', "You have Successfully Moved to Archive!");
+				$scope.searchItems($scope.patient);
+				$(function(){
+					$("html,body").scrollTop(0);
+				});
+			});
+		}
+		
+	};
+	
 	$scope.releaseArchive=function(){
 		var assignCallerObj ={};
 		var patientIdArray=[];
 		$.each($scope.patientSearchData, function(index,value) {
-			$.each(value.patientSearchLists,function(index1,value1){
-			if(value1.selected==true){
-				patientIdArray.push(value1.patientId);
-			}
+			$.each(value.searchResult, function(index1,value1) {
+				$.each(value1.patientSearchLists,function(index2,value2){
+					if(value2.selected==true){
+						patientIdArray.push(value2.patientId);
+					}
+					});
 			});
+			
 		});
 		assignCallerObj.patientId=patientIdArray;
 		
@@ -256,20 +296,73 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		});
 	};
 	
-	
-	 $scope.selectGroup=function(id){
-				$.each($scope.patientSearchData, function(index,value) {
-				if(value.localReportNumber==id.resultData.localReportNumber){
-					
-					var i=0;
-					for(i;i<value.numberOfPatients;i++){
-						if(value.patientSearchLists[i]!=undefined)
-							 value.patientSearchLists[i].selected=id.isCheckedAllGroupPatients;
-					}
-				}
+	// Release Single File From Archive
+	$scope.releaseSingleFileFromArchive=function(patientId){
+		var assignCallerObj ={};
+		var patientIdArray=[patientId];
+		if(confirm("Are you sure want to release from archive?")){
+			assignCallerObj.patientId=patientIdArray;
+			requestHandler.postRequest("/Caller/releaseFromArchive.json",assignCallerObj).then(function(response){
+				Flash.create('success', "You have Successfully Released from Archive!");
+				$scope.searchItems($scope.patient);
+				$(function(){
+					$("html,body").scrollTop(0);
 				});
-				
-		};
+			});
+		}
+	};
+	
+	 $scope.selectGroup=function(id,archiveDate){
+			$.each($scope.patientSearchData, function(index,value) {
+				$.each(value.searchResult, function(index1,value1) {
+					if(archiveDate!=''){
+						if(value.archivedDate==archiveDate){
+							if(value1.localReportNumber==id.resultData.localReportNumber){
+									var i=0;
+									for(i;i<value1.numberOfPatients;i++){
+										if(value1.patientSearchLists[i]!=undefined)
+											 value1.patientSearchLists[i].selected=id.isCheckedAllGroupPatients;
+									}
+							}
+						}
+					}else{
+						if(value1.localReportNumber==id.resultData.localReportNumber){
+							var i=0;
+							for(i;i<value1.numberOfPatients;i++){
+								if(value1.patientSearchLists[i]!=undefined)
+									 value1.patientSearchLists[i].selected=id.isCheckedAllGroupPatients;
+							}
+					}
+					}
+					
+				});
+			
+			});
+			
+	};
+	
+	// Select Archive Group
+	 $scope.selectArchiveGroup=function(id,archiveDate){
+			$.each($scope.patientSearchData, function(index,value) {
+				$.each(value.searchResult, function(index1,value1) {
+					if(archiveDate!=''){
+						if(value.archivedDate==archiveDate){
+							var i=0;
+							for(i;i<value1.numberOfPatients;i++){
+								if(value1.patientSearchLists[i]!=undefined){
+									/*var changedLocalReportNumber=value1.patientSearchLists[i].localReportNumber.replace( /(\.|\(|\)|\ )/g, "\\$1" );
+									var changeDate=archiveDate.replace(/(\/)/g,"\\$1");*/
+									 value1.patientSearchLists[i].selected=id.isCheckedAllGroupArchivePatients;/*
+									 $("#"+changedLocalReportNumber+changeDate).prop("checked",id.isCheckedAllGroupArchivePatients);*/
+								}
+								 
+							}
+						 }
+					}
+				});
+			});
+			
+	};
 	
 	$scope.searchItems=function(searchObj){
 		
@@ -295,79 +388,81 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		
 		var defer=$q.defer();
 		requestHandler.postRequest("/Patient/searchPatients.json",$scope.searchParam).then(function(response){
-			$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
-			$scope.patientSearchData=response.data.patientSearchResult.searchResult;
-			
-			
+			$scope.totalRecords=response.data.patientGroupedSearchResult.totalNoOfRecord;
+			$scope.patientSearchData=response.data.patientGroupedSearchResult.patientSearchResults;
 			
 			$.each($scope.patientSearchData, function(index,value) {
-				$.each(value.patientSearchLists,function(index1,value1){
-				switch(value1.patientStatus) {
-				    case null:
-				        value1.patientStatusName="New";
-				        break;
-				    case 1:
-				    	value1.patientStatusName="Active";
-				        break;
-				    case 2:
-				    	value1.patientStatusName="Not Interested/Injured";
-				        break;
-				    case 3:
-				    	value1.patientStatusName="Voice Mail";
-				        break;
-				    case 4:
-				    	value1.patientStatusName="Appointment Scheduled";
-				        break;
-				    case 5:
-				    	value1.patientStatusName="Do Not Call";
-				        break;
-				    case 6:
-				    	value1.patientStatusName="To be Re-Assigned";
-				        break;
-				    case 8:
-				    	value1.patientStatusName="Call Back";
-				        break;
-				    case 9:
-				    	value1.patientStatusName="Unable To Reach";
-				        break;
-				    default:
-				        break;
-				};
-				switch(value1.injuries) {
-			    case "1":
-			    	value1.injuriesName="No Injury/None Reported";
-			        break;
-			    case "2":
-			    	value1.injuriesName="Possible";
-			        break;
-			    case "3":
-			    	value1.injuriesName="Non-Incapacitating";
-			        break;
-			    case "4":
-			    	value1.injuriesName="Incapacitating";
-			        break;
-			    default:
-			        break;
-				};
-				switch(value1.crashSeverity) {
-			    case "1":
-			    	value1.crashSeverityName="Fatal";
-			        break;
-			    case "2":
-			    	value1.crashSeverityName="Injury";
-			        break;
-			    case "3":
-			    	value1.crashSeverityName="PDO";
-			        break;
-			  
-			    default:
-			        break;
-				};
+				$.each(value.searchResult, function(index1,value1) {
+					$.each(value1.patientSearchLists,function(index2,value2){
+						switch(value2.patientStatus) {
+						    case null:
+						        value2.patientStatusName="New";
+						        break;
+						    case 1:
+						    	value2.patientStatusName="Active";
+						        break;
+						    case 2:
+						    	value2.patientStatusName="Not Interested/Injured";
+						        break;
+						    case 3:
+						    	value2.patientStatusName="Voice Mail";
+						        break;
+						    case 4:
+						    	value2.patientStatusName="Appointment Scheduled";
+						        break;
+						    case 5:
+						    	value2.patientStatusName="Do Not Call";
+						        break;
+						    case 6:
+						    	value2.patientStatusName="To be Re-Assigned";
+						        break;
+						    case 8:
+						    	value2.patientStatusName="Call Back";
+						        break;
+						    case 9:
+						    	value2.patientStatusName="Unable To Reach";
+						        break;
+						    default:
+						        break;
+						};
+						switch(value2.injuries) {
+					    case "1":
+					    	value2.injuriesName="No Injury/None Reported";
+					        break;
+					    case "2":
+					    	value2.injuriesName="Possible";
+					        break;
+					    case "3":
+					    	value2.injuriesName="Non-Incapacitating";
+					        break;
+					    case "4":
+					    	value2.injuriesName="Incapacitating";
+					        break;
+					    default:
+					        break;
+						};
+						switch(value2.crashSeverity) {
+					    case "1":
+					    	value2.crashSeverityName="Fatal";
+					        break;
+					    case "2":
+					    	value2.crashSeverityName="Injury";
+					        break;
+					    case "3":
+					    	value2.crashSeverityName="PDO";
+					        break;
+					  
+					    default:
+					        break;
+						};
+						
+					});
+				});
 				
-			});
 				console.log("service .....");
 				defer.resolve(response);
 			});
+
 			$scope.patientSearchDataOrginal=angular.copy($scope.patientSearchData);
 			$scope.isCheckedIndividual();
 			console.log("service call end");
@@ -427,6 +522,14 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			searchService.setIsArchived($scope.patient.isArchived);
 			searchService.setAge($scope.patient.age);
 			searchService.setPatientStatus($scope.patient.patientStatus);
+			if($scope.patient.isArchived==0){
+				$scope.archivedToDateRequired=false;
+				$scope.archivedFromDateRequired=false;
+				$scope.patient.archivedFromDate="";
+				$scope.patient.archivedToDate="";
+				searchService.setArchivedFromDate($scope.patient.archivedFromDate);
+				searchService.setArchivedToDate($scope.patient.archivedToDate);
+			}
 			$scope.oldPageNumber=$scope.patient.pageNumber;
 			$scope.patient.pageNumber= 1;//This will call search function thru patient.pageNumber object $watch function 
 			searchService.setPageNumber($scope.patient.pageNumber);
@@ -437,6 +540,8 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			$scope.mainSearchParam.phoneNumber=$scope.patient.phoneNumber;
 			$scope.mainSearchParam.patientName=$scope.patient.patientName;
 			$scope.mainSearchParam.isArchived=$scope.patient.isArchived;
+			$scope.mainSearchParam.archivedFromDate=searchService.getArchivedFromDate();
+			$scope.mainSearchParam.archivedToDate=searchService.getArchivedToDate();
 			$scope.mainSearchParam.age=$scope.patient.age;
 			$scope.mainSearchParam.patientStatus=$scope.patient.patientStatus;
 			$scope.mainSearchParam.itemsPerPage=$scope.patient.itemsPerPage;
@@ -476,30 +581,72 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		 searchService.setItemsPerPage($scope.patient.itemsPerPage); 
 		// Copy Mainsearchparam to Patient
 		angular.copy($scope.mainSearchParam,$scope.patient);
-		 var promise=$scope.searchItems($scope.mainSearchParam);
-		 if($scope.setScrollDown){
-			  promise.then(function(reponse){
-				  console.log("scroll down complex");
-			 $scope.setScrollDown=false;
-			 setTimeout(function(){
-       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
-       		 },100);
-			 });
-		 }
+		if($scope.mainSearchParam.countyId!=''){
+			var promise=$scope.searchItems($scope.mainSearchParam);
+			 if($scope.setScrollDown){
+				  promise.then(function(reponse){
+					  console.log("scroll down complex");
+				 $scope.setScrollDown=false;
+				 setTimeout(function(){
+	       			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
+	       		 },100);
+				 });
+			 }
+		}
+		 
 		
 	});
 		
+	// Check Archived To Date
+	$scope.checkArchivedToDate=function(){
+		$scope.archivedFromDateRequired=false;
+		//Reset to date if less than from date
+		var fromDate=new Date($scope.patient.archivedFromDate);
+		var toDate=new Date($scope.patient.archivedToDate);
+		if(toDate<fromDate)
+			$scope.patient.archivedToDate="";
+		//End Reset to date if less than from date
+	};
+	
+	// Reset Archive Filter Date
+	$scope.resetArchiveFilterDate=function(){
+		$scope.archivedToDateRequired=false;
+		$scope.archivedFromDateRequired=false;
+		$scope.patient.archivedFromDate="";
+		$scope.patient.archivedToDate="";
+		searchService.setArchivedFromDate($scope.patient.archivedFromDate);
+		searchService.setArchivedToDate($scope.patient.archivedToDate);
+		$scope.secoundarySearchPatient();
+	};
+	
+	// Search With Archive Filter
+	$scope.searchWithArchiveDateFilter=function(){
+		if($scope.patient.archivedFromDate==""){
+			$scope.archivedFromDateRequired=true;
+		}
+		else if($scope.patient.archivedToDate==""){
+			$scope.archivedToDateRequired=true;
+		}else{
+			$scope.archivedFromDateRequired=false;
+			$scope.archivedToDateRequired=false;
+			searchService.setArchivedFromDate($scope.patient.archivedFromDate);
+			searchService.setArchivedToDate($scope.patient.archivedToDate);
+			$scope.secoundarySearchPatient();
+		}
+	};
+	
 	
 	$scope.viewPatientModal=function(patientId){
 		$("#myModal").modal("show");
 		
 		$.each($scope.patientSearchData, function(index,value) {
-			$.each(value.patientSearchLists,function(index1,value1){
-				if(value1.patientId ==patientId){
-					$scope.patientDetails=value1;
-				}
+			$.each(value.searchResult, function(index1,value1) {
+				$.each(value1.patientSearchLists,function(index2,value2){
+					if(value2.patientId ==patientId){
+						$scope.patientDetails=value2;
+					}
+				});
 			});
-			
 		});
 		
 	/*	requestHandler.getRequest("/Patient/getPatient.json?patientId="+patientId,"").then(function(response){
@@ -588,38 +735,71 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
    	
    };
 	
-	// Add Call Logs Button Enable and Disable
-	$scope.enableCallLogsButton=function(localReportNumber){
+// Add Call Logs Button Enable and Disable
+	$scope.enableCallLogsButton=function(localReportNumber,archiveDate){
 		var isChecked=false;
 		var changedLocalReportNumber=localReportNumber.replace( /(\.|\(|\)|\ )/g, "\\$1" );
+		var changeDate=archiveDate.replace(/(\/)/g,"\\$1");
 		 $.each($scope.patientSearchData, function(index,value) {
-				if(value.localReportNumber==localReportNumber){
-					$.each(value.patientSearchLists,function(index1,value1){
-						if(value1.selected==true){
-							isChecked=true;
+			 $.each(value.searchResult,function(index1,value1){
+				 if(archiveDate!=''){
+					 if(value.archivedDate==archiveDate){
+						 if(value1.localReportNumber==localReportNumber){
+								$.each(value1.patientSearchLists,function(index2,value2){
+									if(value2.selected==true){
+										isChecked=true;
+									}
+								});
+							}
+					 }
+				 }else{
+					 if(value1.localReportNumber==localReportNumber){
+							$.each(value1.patientSearchLists,function(index2,value2){
+								if(value2.selected==true){
+									isChecked=true;
+								}
+							});
 						}
-					});
-				}
+				 }
+				 
+				
+			 });
+				
 			});
 		 if(isChecked){
-			 $("#addCallLog"+changedLocalReportNumber+"").removeAttr("disabled",false);
+			 $("#addCallLog"+changedLocalReportNumber+changeDate+"").removeAttr("disabled",false);
 		 }else{
-			$("#addCallLog"+changedLocalReportNumber+"").attr("disabled",true);
+			$("#addCallLog"+changedLocalReportNumber+changeDate+"").attr("disabled",true);
 		 }
 	};
 	
 	// Call Logs Add Modal
-	  $scope.addModel=function(id)
+	  $scope.addModel=function(id,archiveDate)
 		{
 		  var patientIdArray=[];
 		  $.each($scope.patientSearchData, function(index,value) {
-				if(value.localReportNumber==id.resultData.localReportNumber){
-					$.each(value.patientSearchLists,function(index1,value1){
-						if(value1.selected==true){
-							patientIdArray.push(value1.patientId);
+			  $.each(value.searchResult,function(index1,value1){
+				  if(archiveDate!=''){
+					  if(value.archivedDate==archiveDate){
+						  if(value1.localReportNumber==id.resultData.localReportNumber){
+								$.each(value1.patientSearchLists,function(index2,value2){
+									if(value2.selected==true){
+										patientIdArray.push(value2.patientId);
+									}
+									});
+							}
+					  }
+				  }else{
+					  if(value1.localReportNumber==id.resultData.localReportNumber){
+							$.each(value1.patientSearchLists,function(index2,value2){
+								if(value2.selected==true){
+									patientIdArray.push(value2.patientId);
+								}
+								});
 						}
-						});
-				}
+				  }
+			  });
+				
 			});
 		  if(patientIdArray.length==0){
 			  alert("Select Atleast one.");
@@ -832,6 +1012,12 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 				
 				});
 			}};
+	
+	// While Change to Open to Archive vice versa
+	$scope.resetResultData=function(){
+		$scope.patientSearchData="";
+		$scope.totalRecords="";
+	};
 }]); 
 
  

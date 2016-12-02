@@ -804,3 +804,13 @@ span .dashboard-icon{
 	color:red;
 	font-size:11px;
 }
+.archive-group-header{
+	background-color: lightgreen;
+}
+.archive-filter{
+	border-color:solid 1px #ddd;
+	background-color: #f2f2f2;
+}
+.padding-7px{
+	padding:7px !important;
+}

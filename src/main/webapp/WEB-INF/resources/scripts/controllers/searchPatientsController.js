@@ -34,6 +34,8 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$scope.patient.addedOnToDate="";
 		$scope.patient.patientStatus="7";
 		$scope.patient.isArchived="0";
+		$scope.patient.archivedFromDate="";
+		$scope.patient.archivedToDate="";
 		$scope.isSelectedAddedFromDate=true;
 		
 		$scope.patient.pageNumber= 1;
@@ -105,47 +107,78 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		
 		var defer=$q.defer();
 		requestHandler.postRequest("/Patient/searchPatients.json",$scope.searchParam).then(function(response){
-			$scope.totalRecords=response.data.patientSearchResult.totalNoOfRecord;
-			$scope.patientSearchData=response.data.patientSearchResult.searchResult;
+			$scope.totalRecords=response.data.patientGroupedSearchResult.totalNoOfRecord;
+			$scope.patientSearchData=response.data.patientGroupedSearchResult.patientSearchResults;
 			$.each($scope.patientSearchData, function(index,value) {
-				$.each(value.patientSearchLists,function(index1,value1){
-				switch(value1.injuries) {
-			    case "1":
-			    	value1.injuriesName="No Injury/None Reported";
-			        break;
-			    case "2":
-			    	value1.injuriesName="Possible";
-			        break;
-			    case "3":
-			    	value1.injuriesName="Non-Incapacitating";
-			        break;
-			    case "4":
-			    	value1.injuriesName="Incapacitating";
-			        break;
-			    default:
-			        break;
-				};
-				switch(value1.crashSeverity) {
-			    case "1":
-			    	value1.crashSeverityName="Fatal";
-			        break;
-			    case "2":
-			    	value1.crashSeverityName="Injury";
-			        break;
-			    case "3":
-			    	value1.crashSeverityName="PDO";
-			        break;
-			  
-			    default:
-			        break;
-				};
-				
-				
-				});
+				$.each(value.searchResult, function(index1,value1) {
+					$.each(value1.patientSearchLists,function(index2,value2){
+						switch(value2.patientStatus) {
+						    case null:
+						        value2.patientStatusName="New";
+						        break;
+						    case 1:
+						    	value2.patientStatusName="Active";
+						        break;
+						    case 2:
+						    	value2.patientStatusName="Not Interested/Injured";
+						        break;
+						    case 3:
+						    	value2.patientStatusName="Voice Mail";
+						        break;
+						    case 4:
+						    	value2.patientStatusName="Appointment Scheduled";
+						        break;
+						    case 5:
+						    	value2.patientStatusName="Do Not Call";
+						        break;
+						    case 6:
+						    	value2.patientStatusName="To be Re-Assigned";
+						        break;
+						    case 8:
+						    	value2.patientStatusName="Call Back";
+						        break;
+						    case 9:
+						    	value2.patientStatusName="Unable To Reach";
+						        break;
+						    default:
+						        break;
+						};
+						switch(value2.injuries) {
+					    case "1":
+					    	value2.injuriesName="No Injury/None Reported";
+					        break;
+					    case "2":
+					    	value2.injuriesName="Possible";
+					        break;
+					    case "3":
+					    	value2.injuriesName="Non-Incapacitating";
+					        break;
+					    case "4":
+					    	value2.injuriesName="Incapacitating";
+					        break;
+					    default:
+					        break;
+						};
+						switch(value2.crashSeverity) {
+					    case "1":
+					    	value2.crashSeverityName="Fatal";
+					        break;
+					    case "2":
+					    	value2.crashSeverityName="Injury";
+					        break;
+					    case "3":
+					    	value2.crashSeverityName="PDO";
+					        break;
+					  
+					    default:
+					        break;
+						};
+						
+					});
 				
 				defer.resolve(response);
 			});
-			
+		});
 		});
 		return defer.promise;
 	};
@@ -213,12 +246,13 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$("#myModal").modal("show");
 		
 		$.each($scope.patientSearchData, function(index,value) {
-			$.each(value.patientSearchLists,function(index1,value1){
-				if(value1.patientId ==patientId){
-					$scope.patientDetails=value1;
-				}
+			$.each(value.searchResult, function(index1,value1) {
+				$.each(value1.patientSearchLists,function(index2,value2){
+					if(value2.patientId ==patientId){
+						$scope.patientDetails=value2;
+					}
+				});
 			});
-			
 		});
 		
 		/*requestHandler.getRequest("/Patient/getPatient.json?patientId="+patientId,"").then(function(response){

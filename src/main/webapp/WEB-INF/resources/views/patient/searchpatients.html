@@ -133,7 +133,11 @@
 							</tr>
                         </thead>
                         <tbody>
-                        	<tr class="group-header-back" ng-show="patientSearchData.length>0"  ng-repeat-start="resultData in patientSearchData">
+                        <tr style="background-color: lightgreen;" ng-show="patientSearchData[0].archivedDate!=''"
+						ng-repeat-start="resultMainData in patientSearchData">
+						<td colspan="7"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
+						</tr>
+                        	<tr class="group-header-back" ng-show="patientSearchData.length>0"  ng-repeat-start="resultData in resultMainData.searchResult">
                        			<td colspan="10" ><span><b>Local Report No:</b> {{resultData.localReportNumber}}</span><span class="pull-right no-padding"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Clients Count:</b>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></span>&nbsp;</span></td>
                           	</tr>           	
                         
@@ -154,7 +158,8 @@
 								class="fa fa-file-pdf-o"></i></a>
                                 </td>
                             </tr>
-                            <tr ng-repeat-end=""></tr>                            
+                            <tr ng-repeat-end=""></tr>         
+                            <tr ng-repeat-end=""></tr>                     
                             <tr ng-show="patientSearchData.length==0">
                             <td colspan="7"><center><strong>No Records Found!!!</strong></center></td>
                             </tr>

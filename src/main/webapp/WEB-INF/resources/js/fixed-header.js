@@ -1,12 +1,14 @@
 setTimeout(function(){ 
-		var tablewidth = $('.persist-area').width()+2;
+		var tablewidth = $('.persist-area').width()-16;
+		if(tablewidth<1087){
+			tablewidth=1087;
+		}
 		$('.floatingHeader').width(tablewidth);
 	}, 1000);
 
 
     function UpdateTableHeaders() {
        $(".persist-area").each(function() {
-       
            var el             = $(this),
                offset         = el.offset(),
                scrollTop      = $(window).scrollTop(),
@@ -27,7 +29,6 @@ setTimeout(function(){
     $(function() {
     
        var clonedHeaderRow;
-    
        $(".persist-area").each(function() {
            clonedHeaderRow = $(".persist-header", this);
            clonedHeaderRow

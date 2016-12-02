@@ -528,12 +528,19 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 			criteria.add(criterion);
 		}
 		
+		// Is Archived
 		if(callerPatientSearchForm.getIsArchived()==1){
 			Criterion isArchivecriterion=Restrictions.eq("t2.isArchived", callerPatientSearchForm.getIsArchived());
 			criteria.add(isArchivecriterion);
 		}else{
 			Criterion isArchivecriterion=Restrictions.or(Restrictions.eq("t2.isArchived", callerPatientSearchForm.getIsArchived()), Restrictions.isNull("t2.isArchived"));
 			criteria.add(isArchivecriterion);
+		}
+		
+		// Archived Date Criterion
+		if(!callerPatientSearchForm.getArchivedFromDate().equals("")){
+			Criterion archivedDatecCriterion=Restrictions.between("t2.archivedDate", InjuryConstants.convertYearFormat(callerPatientSearchForm.getArchivedFromDate()), InjuryConstants.convertYearFormat(callerPatientSearchForm.getArchivedToDate()));
+			criteria.add(archivedDatecCriterion);
 		}
 		
 		//Common Constrains - Patient Status
@@ -579,6 +586,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 			criteria.add(criterion);			
 		}
 		
+		// is Archived Criterion
 		if(callerPatientSearchForm.getIsArchived()==1){
 			Criterion isArchivecriterion=Restrictions.eq("t2.isArchived", callerPatientSearchForm.getIsArchived());
 			criteria.add(isArchivecriterion);
@@ -586,6 +594,13 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 			Criterion isArchivecriterion=Restrictions.or(Restrictions.eq("t2.isArchived", callerPatientSearchForm.getIsArchived()), Restrictions.isNull("t2.isArchived"));
 			criteria.add(isArchivecriterion);
 		}
+		
+		// Archived Date Criterion
+		if(!callerPatientSearchForm.getArchivedFromDate().equals("")){
+			Criterion archivedDatecCriterion=Restrictions.between("t2.archivedDate", InjuryConstants.convertYearFormat(callerPatientSearchForm.getArchivedFromDate()), InjuryConstants.convertYearFormat(callerPatientSearchForm.getArchivedToDate()));
+			criteria.add(archivedDatecCriterion);
+		}
+				
 		
 		//Common Constrains - Patient Status
 		if(callerPatientSearchForm.getPatientStatus()!=7){
@@ -663,6 +678,8 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		
 		projectionList.add(Projections.property("t2.notes"),"notes");
 		projectionList.add(Projections.property("t2.isArchived"),"isArchived");
+		projectionList.add(Projections.property("t2.archivedDate"),"archivedDate");
+		projectionList.add(Projections.property("t2.archivedDateTime"),"archivedDateTime");
 		projectionList.add(Projections.property("t2.patientStatus"),"patientStatus");
 		
 	}
@@ -673,7 +690,11 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	criteria.setProjection(projectionList);
 	
 	// Add Order
-	criteria.addOrder(Order.desc("t1.addedDate"));
+	if(callerPatientSearchForm.getIsArchived()==1){
+		criteria.addOrder(Order.desc("t2.archivedDateTime"));
+	}else{
+		criteria.addOrder(Order.desc("t1.addedDate"));
+	}
 	criteria.addOrder(Order.desc("cr.localReportNumber"));
 	criteria.addOrder(Order.desc("t1.patientId"));
 	

@@ -4,13 +4,14 @@ import java.util.List;
 
 public class PatientSearchResult {
 
-	private Long totalNoOfRecord;
+	private String archivedDate;
 	private List<PatientSearchResultGroupBy> searchResult;
-	public Long getTotalNoOfRecord() {
-		return totalNoOfRecord;
+	
+	public String getArchivedDate() {
+		return archivedDate;
 	}
-	public void setTotalNoOfRecord(Long totalNoOfRecord) {
-		this.totalNoOfRecord = totalNoOfRecord;
+	public void setArchivedDate(String archivedDate) {
+		this.archivedDate = archivedDate;
 	}
 	public List<PatientSearchResultGroupBy> getSearchResult() {
 		return searchResult;
@@ -18,10 +19,10 @@ public class PatientSearchResult {
 	public void setSearchResult(List<PatientSearchResultGroupBy> searchResult) {
 		this.searchResult = searchResult;
 	}
-	public PatientSearchResult(Long totalNoOfRecord,
+	public PatientSearchResult(String archivedDate,
 			List<PatientSearchResultGroupBy> searchResult) {
 		super();
-		this.totalNoOfRecord = totalNoOfRecord;
+		this.archivedDate = archivedDate;
 		this.searchResult = searchResult;
 	}
 	public PatientSearchResult() {

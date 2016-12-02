@@ -50,7 +50,8 @@ public class PatientSearchList extends InjuryProperties{
 	private String victimPolicyNumber;	
 	private String seatingPosition;
 	private String lastCallLogTimeStamp;
-	
+	private String archivedDate;
+	private String archivedDateTime;
 	
 	public String getPatientId() {
 		return patientId;
@@ -313,6 +314,18 @@ public class PatientSearchList extends InjuryProperties{
 	}
 	public void setLastCallLogTimeStamp(String lastCallLogTimeStamp) {
 		this.lastCallLogTimeStamp = lastCallLogTimeStamp;
+	}
+	public String getArchivedDate() {
+		return archivedDate;
+	}
+	public void setArchivedDate(Date archivedDate) {
+		this.archivedDate = InjuryConstants.convertMonthFormat(archivedDate);
+	}
+	public String getArchivedDateTime() {
+		return archivedDateTime;
+	}
+	public void setArchivedDateTime(String archivedDateTime) {
+		this.archivedDateTime = InjuryConstants.convertUSAFormatWithTimeAMPM(archivedDateTime);
 	}
 	public PatientSearchList(String patientId, String localReportNumber,
 			Integer numberOfPatients, String crashDate, String addedDate,

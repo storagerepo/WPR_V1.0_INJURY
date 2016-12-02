@@ -348,9 +348,9 @@ public class PatientService {
 			return patientViewForms;
 		}
 	
-	public PatientSearchResult getCurrentPatientList(CallerPatientSearchForm callerPatientSearchForm){
+	public PatientGroupedSearchResult getCurrentPatientList(CallerPatientSearchForm callerPatientSearchForm){
 		
-		PatientSearchResult patientSearchResult=new PatientSearchResult();
+		PatientGroupedSearchResult patientGroupedSearchResult = new PatientGroupedSearchResult();
 		
 		String role=loginService.getCurrentRole();
 		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
@@ -364,9 +364,9 @@ public class PatientService {
 			callerPatientSearchForm.setLawyerAdminId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerAdmin().getLawyerAdminId());
 			callerPatientSearchForm.setLawyerId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId());
 		}
-		patientSearchResult=getFormattedSearchResult(patientDAO.searchPatientsByCAdmin(callerPatientSearchForm,false));
+		patientGroupedSearchResult=getFormattedSearchResult(patientDAO.searchPatientsByCAdmin(callerPatientSearchForm,false),callerPatientSearchForm.getIsArchived());
 			
-		return patientSearchResult;
+		return patientGroupedSearchResult;
 	}	
 		
 		
@@ -467,30 +467,69 @@ public class PatientService {
 		return patientViewForm;
 	}
 	
-	public PatientSearchResult getFormattedSearchResult(PatientSearchResultSet patientSearchResultSet){
+	public PatientGroupedSearchResult getFormattedSearchResult(PatientSearchResultSet patientSearchResultSet,Integer isArchived){
 		
-		String localReportNumber="";
-		List<PatientSearchResultGroupBy> patientSearchResultGroupByList=new ArrayList<PatientSearchResultGroupBy>();
-		PatientSearchResultGroupBy patientSearchResultGroupBy=new PatientSearchResultGroupBy();
-	
-		int rowCount=0;		
-		for (PatientSearchList resultSet : patientSearchResultSet.getPatientSearchLists()) {
-			if(!localReportNumber.equals(resultSet.getLocalReportNumber())){
-				localReportNumber=resultSet.getLocalReportNumber();
-				if(rowCount!=0){
-					patientSearchResultGroupByList.add(patientSearchResultGroupBy);
+		List<PatientSearchResult> patientSearchResults = new ArrayList<PatientSearchResult>();
+		PatientGroupedSearchResult patientGroupedSearchResult = new PatientGroupedSearchResult();
+		if(isArchived==1){
+			List<PatientSearchResultGroupByArchived> patientSearchResultGroupByArchivedList=this.getArciveDateFormattedSearchResult(patientSearchResultSet);
+			String localReportNumber="";
+			String archivedDate="";
+			for (PatientSearchResultGroupByArchived patientSearchResultGroupByArchived : patientSearchResultGroupByArchivedList) {
+				int rowCount=0;	
+				PatientSearchResultGroupBy patientSearchResultGroupBy=new PatientSearchResultGroupBy();
+				List<PatientSearchResultGroupBy> patientSearchResultGroupByList=new ArrayList<PatientSearchResultGroupBy>();
+				for (PatientSearchList resultSet : patientSearchResultGroupByArchived.getPatientSearchLists()) {
+					if(!localReportNumber.equals(resultSet.getLocalReportNumber()) || !archivedDate.equals(patientSearchResultGroupByArchived.getArchivedDate())){
+						localReportNumber=resultSet.getLocalReportNumber();
+						archivedDate=patientSearchResultGroupByArchived.getArchivedDate();
+						if(rowCount!=0){
+							patientSearchResultGroupByList.add(patientSearchResultGroupBy);
+						}				
+						patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getNumberOfPatients(),new ArrayList<PatientSearchList>());
+					}				
+					//Set patient
+					patientSearchResultGroupBy.getPatientSearchLists().add(resultSet);
+					rowCount++;
+				}
+				if(rowCount>0)
+				patientSearchResultGroupByList.add(patientSearchResultGroupBy);
+				
+				PatientSearchResult patientSearchResult=new PatientSearchResult(patientSearchResultGroupByArchived.getArchivedDate(), patientSearchResultGroupByList);
+				patientSearchResults.add(patientSearchResult);
+			}
+			
+			patientGroupedSearchResult = new PatientGroupedSearchResult(patientSearchResultSet.getTotalNoOfRecords(), patientSearchResults);
+		
+		}else{
+			String localReportNumber="";
+			List<PatientSearchResultGroupBy> patientSearchResultGroupByList=new ArrayList<PatientSearchResultGroupBy>();
+			PatientSearchResultGroupBy patientSearchResultGroupBy=new PatientSearchResultGroupBy();
+		
+			int rowCount=0;		
+			for (PatientSearchList resultSet : patientSearchResultSet.getPatientSearchLists()) {
+				if(!localReportNumber.equals(resultSet.getLocalReportNumber())){
+					localReportNumber=resultSet.getLocalReportNumber();
+					if(rowCount!=0){
+						patientSearchResultGroupByList.add(patientSearchResultGroupBy);
+					}				
+					patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getNumberOfPatients(),new ArrayList<PatientSearchList>());
 				}				
-				patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getNumberOfPatients(),new ArrayList<PatientSearchList>());
-			}				
-			//Set patient
-			patientSearchResultGroupBy.getPatientSearchLists().add(resultSet);
-			rowCount++;
+				//Set patient
+				patientSearchResultGroupBy.getPatientSearchLists().add(resultSet);
+				rowCount++;
+			}
+			if(rowCount>0)
+			patientSearchResultGroupByList.add(patientSearchResultGroupBy);
+			
+			PatientSearchResult patientSearchResult=new PatientSearchResult("", patientSearchResultGroupByList);
+			patientSearchResults.add(patientSearchResult);
+			// Final Grouped Result Set
+			patientGroupedSearchResult = new PatientGroupedSearchResult(patientSearchResultSet.getTotalNoOfRecords(), patientSearchResults);
 		}
-		if(rowCount>0)
-		patientSearchResultGroupByList.add(patientSearchResultGroupBy);
+	
 		
-		PatientSearchResult patientSearchResult=new PatientSearchResult(patientSearchResultSet.getTotalNoOfRecords(), patientSearchResultGroupByList);
-		return patientSearchResult;
+		return patientGroupedSearchResult;
 	}
 	
 	public PatientSearchResultSet getExportPatient(CallerPatientSearchForm callerPatientSearchForm){
@@ -511,5 +550,28 @@ public class PatientService {
 		
 	}
 	
-	
+	// Patient Search Result Group By Archived Date
+	public List<PatientSearchResultGroupByArchived> getArciveDateFormattedSearchResult(PatientSearchResultSet patientSearchResultSet){
+		
+		String archivedDate="";
+		List<PatientSearchResultGroupByArchived> patientSearchResultGroupByArchivedList = new ArrayList<PatientSearchResultGroupByArchived>();
+		PatientSearchResultGroupByArchived patientSearchResultGroupByArchived = new PatientSearchResultGroupByArchived();
+		int rowCount=0;		
+		for (PatientSearchList resultSet : patientSearchResultSet.getPatientSearchLists()) {
+			if(!archivedDate.equals(resultSet.getArchivedDate())){
+				archivedDate=resultSet.getArchivedDate();
+				if(rowCount!=0){
+					patientSearchResultGroupByArchivedList.add(patientSearchResultGroupByArchived);
+				}				
+				patientSearchResultGroupByArchived = new PatientSearchResultGroupByArchived(archivedDate, new ArrayList<PatientSearchList>());
+			}				
+			//Set patient
+			patientSearchResultGroupByArchived.getPatientSearchLists().add(resultSet);
+			rowCount++;
+		}
+		if(rowCount>0)
+		patientSearchResultGroupByArchivedList.add(patientSearchResultGroupByArchived);
+		
+		return patientSearchResultGroupByArchivedList;
+	}
 }

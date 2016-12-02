@@ -98,13 +98,13 @@
 				<div  class="col-md-6 no-padding">
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="assignlawyerPopup()" class="btn btn-sm btn-success">Assign Lawyer</a>
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="releaseLawyer()" class="btn btn-sm btn-danger">Release From Lawyer</a>
-					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="moveArchive()" class="btn btn-sm btn-warning">Move to Archive</a>
-					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==0" ng-click="releaseArchive()" class="btn btn-sm btn-primary">Release from Archive</a>
+					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="moveArchive()" class="btn btn-sm btn-warning">Archive all</a>
+					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==0" ng-click="releaseArchive()" class="btn btn-sm btn-primary">Restore all</a>
 			</div>
 				<div class="col-md-6 no-padding">
 					<div class="col-md-3 margin-top-5 text-right no-padding">Records Type&nbsp;&nbsp;</div>
 					<div class="col-md-3 no-padding">
-						<select class="form-control input-sm" ng-change="secoundarySearchPatient()" name="isArchived" ng-model="patient.isArchived">
+						<select class="form-control input-sm" ng-change="secoundarySearchPatient();resetResultData();" name="isArchived" ng-model="patient.isArchived">
 				          	<option value="0">Open</option>
 				          	<option value="1">Archived</option>
 				     	</select>
@@ -122,21 +122,49 @@
 				
 				<div class="col-md-12 no-padding hr-tag-alter"></div>
 		</div>
-    
+   <div class="col-md-12">
+		<div class="col-md-12 archive-filter" ng-show="patient.isArchived==1">
+		<div class="col-md-3"></div>
+		<div class="col-md-9 padding-7px">
+		<div class="col-md-4 margin-top-5 no-padding text-right no-padding"><b>Filter by Archive Date : </b></div>
+		<div class="col-md-8 no-padding">
+				<div class="col-md-1 margin-top-5 no-padding">&nbsp;From</div>
+				<div class="col-md-3 no-padding">
+       			<div class="input-group">
+					<input type="text" name="archivedFromDate" id="archivedFromDate" class="form-control input-sm" ng-change="checkArchivedToDate()" ng-model="patient.archivedFromDate" placeholder="Date"> 
+					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+				<span style="color:red;font-size:13px" ng-show="archivedFromDateRequired">Enter From Date</span>
+				</div>
+				<div class="col-md-1 margin-top-5 no-padding">&nbsp;&nbsp; To </div>
+				<div class="col-md-3 no-padding">
+	       		<div class="input-group">
+					<input type="text" name="archivedToDate" id="archivedToDate" class="form-control input-sm" ng-model="patient.archivedToDate" ng-change="archivedToDateRequired=false" placeholder="Date"> 
+					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+				<span style="color:red;font-size:13px" ng-show="archivedToDateRequired">Enter To Date</span>
+				</div>
+				<div class="col-md-3 margin-top-5"><a class="btn btn-success btn-xs" href="" ng-click="searchWithArchiveDateFilter()">Select</a> &nbsp; <a href="" ng-click="resetArchiveFilterDate()"><u>Reset</u></a></div>
+				
+	        </div>
+	       </div>
+		</div>
+		</div>
          </form>                    
                     <div class="col-md-12">
                   	<table class="table table-bordered persist-area"  ng-cloak>
                         <thead  class="persist-header">
                             <tr>
                            	 	<th width="2%"><input ng-change="isChecked()" ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
-                                <th width="20%">Client Name <span class="client-name">(Last, First, Middle)</span></th>
+                                <th width="16%">Client Name <br/><span class="client-name">(Last, First, Middle)</span></th>
                                 <th width="12%">Age</th>
                                  <th width="6%">Unit No.</th>
-                                <th width="10%">County</th>
+                                <th width="9%">County</th>
                                 <th width="11%">Lawyer</th>                               
                                 <th width="15%">Address</th>                                
                                 <th width="5%">Tier</th>
-                                <th width="12%">Status</th>
+                                <th width="11%">Status</th>
+                                <th width="8%" ng-show="patient.isArchived==1" ng-cloak>Archived On</th>
                                 <th width="7%">Actions</th>
                             </tr>
                             <tr>
@@ -156,13 +184,19 @@
 								<th></th>
 								<th></th>
 								<th></th>
-								<th><a href="" ng-click="exportToExcel()" class="btn btn-sm btn-export" ng-disabled="exportButton || lAdminPatientSearchData.length==0"><span ng-show="exportButton"><i class="glyphicon glyphicon-refresh spinning"></i>&nbsp;</span>{{exportButtonText}}</a></th>	
+								<th ng-show="patient.isArchived==1"></th>
+								<th><a href="" ng-click="exportToExcel()" class="btn btn-sm btn-export" ng-disabled="exportButton || totalRecords==0"><span ng-show="exportButton"><i class="glyphicon glyphicon-refresh spinning"></i>&nbsp;</span>{{exportButtonText}}</a></th>	
 								
 							</tr>
                         </thead>
                         <tbody>
-                         <tr class="group-header-back" ng-show="lAdminPatientSearchData.length>0"  ng-repeat-start="resultData in lAdminPatientSearchData">
-                       <td colspan="1"><input ng-change="selectGroup(this)" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}"></td><td colspan="10" ><span><b>Local Report No:</b> 	{{resultData.localReportNumber}}  </span><span class="pull-right"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Clients Count:</b></span>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span>&nbsp;&nbsp;&nbsp;</span></td>
+                        <tr class="archive-group-header" ng-show="lAdminPatientSearchData[0].archivedDate!=''"
+					ng-repeat-start="resultMainData in lAdminPatientSearchData">
+					<td colspan="1"><input ng-change="selectArchiveGroup(this,'{{resultMainData.archivedDate}}')" ng-model="isCheckedAllGroupArchivePatients" ng-true-value="true" ng-false-value="false" type="checkbox" id="{{resultMainData.archivedDate}}"></td>
+					<td colspan="10"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
+				</tr>
+                         <tr class="group-header-back" ng-repeat-start="resultData in resultMainData.searchResult">
+                       <td colspan="1"><input ng-change="selectGroup(this,'{{resultMainData.archivedDate}}')" ng-model="isCheckedAllGroupPatients" ng-true-value="true" ng-false-value="false" type="checkbox" id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td><td colspan="10" ><span><b>Local Report No:</b> 	{{resultData.localReportNumber}}  </span><span class="pull-right"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Clients Count:</b></span>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Clients">{{resultData.numberOfPatients}}</span>&nbsp;&nbsp;&nbsp;</span></td>
                           </tr>
                           <tr dir-paginate="lAdminData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords" pagination-id="lawyerAdminPatientPageId">
                             
@@ -181,22 +215,26 @@
                                 
                                 <td>Tier {{lAdminData.tier}}</td>
                                 <td title="Status">{{lAdminData.patientStatusName}}</td>
+                                <td title="Archived On" ng-show="patient.isArchived==1" ng-cloak>{{lAdminData.archivedDateTime}}</td>
                                 <td>
                                 <a href="{{lAdminData.crashReportFileName}}" ng-cloak target="_blank" class="btn btn-xs btn-info hint--top" data-hint="View Crash Report"><i
 								class="fa fa-file-pdf-o"></i></a>
 								<span ng-show={{lAdminData.isArchived==0||lAdminData.isArchived==null}}>
                                 <a href="" ng-cloak ng-hide={{lAdminData.lawyerId!=null}} class="btn btn-xs btn-danger hint--top" data-hint="Assign Lawyer" ng-click="assignSingleLawyerPopup(lAdminData.patientId,lAdminData.name,lAdminData.lawyerId)"><i class="fa fa-external-link-square"></i></a>
                                 <a href="" ng-cloak ng-show={{lAdminData.lawyerId!=null}} class="btn btn-xs btn-success hint--top" data-hint="Change Lawyer" ng-click="assignSingleLawyerPopup(lAdminData.patientId,lAdminData.name,lAdminData.lawyerId)"><i class="fa fa-external-link-square"></i></a>
+                                 <a href="" ng-cloak ng-click="moveSingleFileToArchive(lAdminData.patientId)" class="btn btn-xs btn-success hint--top" data-hint="Archive"><i class="fa fa-archive"></i></a>
                                 </span>
+                                <a href="" ng-cloak ng-show={{lAdminData.isArchived==1}} ng-click="releaseSingleFileFromArchive(lAdminData.patientId)" class="btn btn-xs btn-danger hint--top" data-hint="Restore"><i class="fa fa-share-square-o"></i></a>
                                 </td>
                             </tr>
                             <tr ng-repeat-end=""></tr>
-                            <tr ng-show="lAdminPatientSearchData.length==0">
-                            <td colspan="10"><center><strong>No Records Found!!!</strong></center></td>
+                            <tr ng-repeat-end=""></tr>
+                            <tr ng-show="totalRecords==0">
+                            <td colspan="11"><center><strong>No Records Found!!!</strong></center></td>
                             </tr>
                         </tbody>
                     </table>
-                    <dir-pagination-controls ng-show="lAdminPatientSearchData.length>0" max-size="5" direction-links="true" boundary-links="true" pagination-id="lawyerAdminPatientPageId">
+                    <dir-pagination-controls ng-show="totalRecords>0" max-size="5" direction-links="true" boundary-links="true" pagination-id="lawyerAdminPatientPageId">
     					</dir-pagination-controls> 
     					
 <div class="col-md-3 pull-right no-padding">
@@ -417,7 +455,20 @@ $('#AddedToDate').datetimepicker({
 	format:'MM/DD/YYYY',
 	maxDate : new Date()
 });
+$('#archivedFromDate').datetimepicker({
+	pickTime : false,
+	format:'MM/DD/YYYY',
+	maxDate : new Date()
+}).on('dp.change', function (selected) {
+    var minimumDate = new Date(selected.date.valueOf());
+    $('#archivedToDate').data("DateTimePicker").setMinDate(minimumDate);
+});
 
+$('#archivedToDate').datetimepicker({
+	pickTime : false,
+	format:'MM/DD/YYYY',
+	maxDate : new Date()
+});
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover({
     	content: "<p><b>Tier 1:</b> List of accident victims where there are multiple vehicles and at fault is insured.</p><p><b>Tier 2:</b> List of accident victims where there are multiple vehicles but no at fault insurance and the victim is insured. (Medpay or uninsured motorist)</p><p><b>Tier 3:</b> List of accident victims involved in a single car accident. (includes hit and runs)</p><p><b>Tier 4:</b> List of passengers in at-fault vehicle and driver also, if insured.</p>",

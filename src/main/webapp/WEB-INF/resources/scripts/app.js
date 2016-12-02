@@ -1112,8 +1112,13 @@ sbAdminApp
 												resolve : {
 													loadMyFiles : function(
 															$ocLazyLoad) {
+														return $ocLazyLoad.load({
+															name:'sbAdminApp',
+															files:['scripts/controllers/paymentController.js']
+														});
 													}
-												}
+												},
+												controller:'CardController',
 											});// End Change password
 
 						} ]).run( [ '$rootScope', function ($rootScope,$state, $stateParams) {

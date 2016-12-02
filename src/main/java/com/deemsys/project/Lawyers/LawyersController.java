@@ -12,6 +12,7 @@ import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersForm;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.CallerPatientSearchForm;
+import com.deemsys.project.patient.PatientGroupedSearchResult;
 import com.deemsys.project.patient.PatientSearchResult;
 import com.deemsys.project.patient.PatientService;
 import com.deemsys.project.patientLawyerMap.PatientLawyerService;
@@ -170,8 +171,8 @@ public class LawyersController {
 	
 	@RequestMapping(value = "/Lawyer/getNumberOfAssignedPatients", method = RequestMethod.GET)
 	public String getNumberOfAssignedPatientsForLawyer(ModelMap model) {
-		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "", "",new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0);
-		PatientSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "", "",new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","");
+		PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 		model.addAttribute("numberOfAssignedPatiets",patientSearchResult.getTotalNoOfRecord());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";

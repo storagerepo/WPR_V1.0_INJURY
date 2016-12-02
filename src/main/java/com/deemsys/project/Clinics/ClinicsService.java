@@ -162,11 +162,13 @@ public class ClinicsService {
 		Integer callerAdminId=0;
 		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
 			callerAdminId=callerAdminDAO.getCallerAdminByUserId(callerService.getCurrentUserId()).getCallerAdminId();
+			clinicses = clinicsDAO.getClinicsByCallerAdmin(callerAdminId);
 		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
 			callerAdminId=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId();
+			clinicses = clinicsDAO.getEnabledClinicsListsByCallerAdmin(callerAdminId);
 		}
 		
-		clinicses = clinicsDAO.getClinicsByCallerAdmin(callerAdminId);
+		
 
 		for (Clinic clinics : clinicses) {
 			ClinicsForm clinicsForm = new ClinicsForm(clinics.getClinicId(),
@@ -360,11 +362,13 @@ public class ClinicsService {
 		Integer callerAdminId=0;
 		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
 			callerAdminId=callerAdminDAO.getCallerAdminByUserId(callerService.getCurrentUserId()).getCallerAdminId();
+			noOfClinics = clinicsDAO.getClinicsByCallerAdmin(callerAdminId).size();
 		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
 			callerAdminId=callerService.getCallerByUserId(callerService.getCurrentUserId()).getCallerAdmin().getCallerAdminId();
+			noOfClinics = clinicsDAO.getEnabledClinicsListsByCallerAdmin(callerAdminId).size();
 		}
 		
-		noOfClinics = clinicsDAO.getClinicsByCallerAdmin(callerAdminId).size();
+		
 		return noOfClinics;
 	}
 

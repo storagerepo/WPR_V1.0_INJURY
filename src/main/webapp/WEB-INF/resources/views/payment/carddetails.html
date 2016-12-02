@@ -16,7 +16,7 @@
 
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						Card Details <span class="pull-right"><span class="redText">*</span>
+						Card Details <span class="pull-right"><a class="btn btn-xs btn-warning" ng-click="editCardDetails()" ng-show="!editable">Edit</a>&nbsp;&nbsp;<span class="redText">*</span>
 							Required Fields</span>
 					</div>
 					<!-- /.panel-heading -->
@@ -28,14 +28,17 @@
 									<span class="redText">*</span> <label>Card No</label>
 								</div>
 								<div class="col-md-8">
+									<span ng-show="editable">
 									<input type="text" class="form-control inputclass"
-										ng-model="card.cardNo" name="cardNo" placeholder="Card No"
-										maxlength="45" required> <span class="error-container"
+										ng-model="cardDetails.cardNo" name="cardNo" placeholder="Card No"
+										maxlength="45" required /> <span class="error-container"
 										ng-show="myForm.cardNo.$dirty && myForm.firstName.$invalid">
 										<span ng-cloak style="color: red"
 										ng-show="myForm.cardNo.$error.required">Please Enter
 											Card No</span>
 									</span><br />
+									</span>
+									<span ng-show="!editable" style="padding:6px 12px;height:34px;display: block;">{{cardDetails.cardNo}}</span>
 								</div>
 							</div>
 							<div class="col-md-12">
@@ -43,8 +46,9 @@
 									<span class="redText">*</span> <label>Card Holder Name</label>
 								</div>
 								<div class="col-md-8">
-									<input type="text" class="form-control"
-										ng-model="card.holderName" name="name"
+								<span ng-show="editable">
+								<input type="text" class="form-control"
+										ng-model="cardDetails.cardHolderName" name="name"
 										placeholder="Card Holder Name" validate-name required>
 									<span class="error-container"
 										ng-show="myForm.name.$dirty && myForm.name.$invalid"> <span
@@ -54,15 +58,18 @@
 										ng-show="!myForm.name.$error.required&&myForm.name.$error.validateName">Enter
 											Valid Name</span>
 									</span><br />
+								</span>
+								<span ng-show="!editable" style="padding:6px 12px;height:34px;display: block;">{{cardDetails.cardHolderName}}</span>
+									
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="text-center" style="margin-right: 30px;">
+					<div class="text-center" style="margin-right: 30px;" ng-show="editable">
 						<a class="btn btn-success"
 							ng-class="{'button-disable':myForm.$invalid}"
-							ng-disabled='myForm.$invalid' ng-click="saveCard()">Update</a> <a
-							ui-sref="dashboard.callers" class="btn btn-danger">Cancel</a><br />
+							ng-disabled='isClean() || myForm.$invalid' ng-click="saveCard()">Update</a> <a
+							class="btn btn-danger" ng-click="editable=false">Cancel</a><br />
 						<br />
 					</div>
 					<!-- /.panel-body -->
