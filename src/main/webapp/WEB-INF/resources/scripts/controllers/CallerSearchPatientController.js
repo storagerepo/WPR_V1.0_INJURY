@@ -198,6 +198,8 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 				$scope.oldPageNumber=$scope.patient.pageNumber;
 				$scope.patient.pageNumber= 1;//This will call search function thru patient.pageNumber object $watch function 
 				if($scope.oldPageNumber==$scope.patient.pageNumber){
+					$scope.patient.archivedFromDate=searchService.getArchivedFromDate();
+					$scope.patient.archivedToDate=searchService.getArchivedToDate();
 					$scope.searchItems($scope.patient);
 				}
 				// To Avoid Main Search Parameter Override

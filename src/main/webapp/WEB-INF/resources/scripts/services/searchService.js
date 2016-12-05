@@ -269,6 +269,8 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		isArchived="0";
 		patientStatus="7";
 		countyListType="1";
+		archivedFromDate="";
+		archivedToDate="";
 		return true;
 	};
 

@@ -211,7 +211,9 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 			$scope.oldPageNumber=$scope.patient.pageNumber;
 			$scope.patient.pageNumber=1;
 			if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
-				 $scope.searchItems($scope.patient);
+				$scope.patient.archivedFromDate=searchService.getArchivedFromDate();
+				$scope.patient.archivedToDate=searchService.getArchivedToDate(); 
+				$scope.searchItems($scope.patient);
 			}
 			// To Avoid Main Search Parameter Override
 			angular.copy($scope.patient,$scope.mainSearchParam);

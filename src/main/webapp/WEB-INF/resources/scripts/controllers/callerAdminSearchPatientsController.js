@@ -487,6 +487,8 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			$scope.oldPageNumber=$scope.patient.pageNumber;
 			$scope.patient.pageNumber=1;
 			if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
+				$scope.patient.archivedFromDate=searchService.getArchivedFromDate();
+				$scope.patient.archivedToDate=searchService.getArchivedToDate();
 				$scope.searchItems($scope.patient);
 			}
 
