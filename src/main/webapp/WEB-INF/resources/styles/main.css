@@ -814,3 +814,7 @@ span .dashboard-icon{
 .padding-7px{
 	padding:7px !important;
 }
+/* For Scroll */
+html {
+    overflow: -moz-scrollbars-vertical;
+}
