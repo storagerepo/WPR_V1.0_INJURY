@@ -11,6 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.amazonaws.services.identitymanagement.model.User;
+import com.deemsys.project.CallerAdmin.CallerAdminService;
+import com.deemsys.project.CallerAdminCountyMapping.CallerAdminCountyMapService;
+import com.deemsys.project.LawyerAdmin.LawyerAdminService;
+import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingService;
+import com.deemsys.project.entity.CallerAdmin;
+import com.deemsys.project.entity.LawyerAdmin;
+import com.deemsys.project.entity.Users;
 import com.deemsys.project.login.LoginService;
 
 
@@ -27,6 +35,18 @@ public class CommonController {
 	
 	@Autowired
 	LoginService loginService;
+	
+	@Autowired
+	CallerAdminCountyMapService callerAdminCountyMapService;
+	
+	@Autowired
+	LawyerAdminCountyMappingService lawyerAdminCountyMappingService;
+	
+	@Autowired
+	CallerAdminService callerAdminService;
+	
+	@Autowired
+	LawyerAdminService lawyerAdminService;
 	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String getInit(ModelMap model)
@@ -82,13 +102,7 @@ public class CommonController {
    		model.addAttribute("requestSuccess", true);
    		return "/returnPage";
    	}
-    
-    @RequestMapping(value = {"api/checkPasswordChangedStatus"}, method = RequestMethod.GET)
-   	public String testIPRestriction(ModelMap model) {
-   		//model.addAttribute("status",loginService.checkPasswordChangedStatus());
-   		model.addAttribute("requestSuccess", true);
-   		return "/returnPage";
-   	}
+   
     // Update Disclaimer Status
     @RequestMapping(value="/updateDisclaimerStatus",method=RequestMethod.POST)
 	public String updateDisclaimerStatus(ModelMap model)
@@ -97,4 +111,45 @@ public class CommonController {
     	model.addAttribute("requestSuccess",true);
 		return "/returnPage";
 	}
+    // Get Product Token
+    @RequestMapping(value = {"/getProductToken"}, method = RequestMethod.GET)
+   	public String getProductToken(ModelMap model) {
+   		model.addAttribute("productToken",loginService.getProductToken());
+   		model.addAttribute("requestSuccess", true);
+   		return "/returnPage";
+   	}
+    
+    // Delete County Map
+    @RequestMapping(value="/deleteCountyMap",method=RequestMethod.POST)
+   	public String deleteCountyMap(@RequestParam("customerProductToken") String customerProductToken,@RequestParam("countyId") Integer countyId,ModelMap model)
+   	{
+    	
+    	Users users=loginService.getUserByProductToken(customerProductToken);
+    	if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
+    		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(users.getUserId());
+    		callerAdminCountyMapService.deleteCallerAdminCountyMapByCountyAndCAdminId(countyId, callerAdmin.getCallerAdminId());
+    	}else if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
+    		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
+    		lawyerAdminCountyMappingService.deleteLawyerAdminCountyMapByCountyAndLAdminId(countyId, lawyerAdmin.getLawyerAdminId());
+    	}
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+    
+    // Save County Map
+    @RequestMapping(value="/saveCountyMap",method=RequestMethod.POST)
+   	public String saveCountyMap(@RequestParam("customerProductToken") String customerProductToken,@RequestParam("countyId") Integer countyId,ModelMap model)
+   	{
+    	
+    	Users users=loginService.getUserByProductToken(customerProductToken);
+    	if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
+    		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(users.getUserId());
+    		callerAdminCountyMapService.saveCallerAdminCountyMap(countyId, callerAdmin);
+    	}else if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
+    		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
+    		lawyerAdminCountyMappingService.saveLawyerAdminCountyMap(countyId, lawyerAdmin);
+    	}
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
 }

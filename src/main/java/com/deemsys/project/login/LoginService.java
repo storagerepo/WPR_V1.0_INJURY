@@ -131,4 +131,18 @@ public class LoginService {
 		return 1;
 	}
 	
+	// Get Product Token
+	public String getProductToken(){
+		Users users=usersDAO.get(this.getCurrentUserID());
+		String producToken="";
+		if(users!=null){
+			producToken = users.getProductToken();
+		}
+		return producToken;
+	}
+	
+	// Get User By Product Token
+	public Users getUserByProductToken(String productToken){
+		return usersDAO.getUserByProductToken(productToken);
+	}
 }

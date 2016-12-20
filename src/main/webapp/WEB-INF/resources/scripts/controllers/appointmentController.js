@@ -4,6 +4,7 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
 	
 	$scope.init=function(){
 		$scope.searchAppointment={};
+		$scope.appointments="";
 		var date=new Date();
 	    $scope.searchAppointment.month="13";
 	    $scope.searchAppointment.year=date.getFullYear();

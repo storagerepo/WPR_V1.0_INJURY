@@ -26,6 +26,7 @@ public class CallerAdminForm {
 	private Integer status;
 	List<Integer> county;
 	List<CountyForm> countyForms;
+	private String productToken;
 	
 	public Integer getCallerAdminId() {
 		return callerAdminId;
@@ -116,6 +117,12 @@ public class CallerAdminForm {
 	}
 	public void setCountyForms(List<CountyForm> countyForms) {
 		this.countyForms = countyForms;
+	}
+	public String getProductToken() {
+		return productToken;
+	}
+	public void setProductToken(String productToken) {
+		this.productToken = productToken;
 	}
 	public CallerAdminForm(Integer callerAdminId, Integer userId,
 			String firstName, String lastName, String street, String city,

@@ -78,6 +78,7 @@ public class CallerAdminService {
 			CallerAdminForm callerAdminForm=new CallerAdminForm(callerAdmin.getCallerAdminId(), callerAdmin.getUsers().getUserId(), callerAdmin.getUsers().getUsername(), callerAdmin.getFirstName(), callerAdmin.getLastName(),
 					callerAdmin.getStreet(), callerAdmin.getCity(), callerAdmin.getState(), callerAdmin.getZipcode(), callerAdmin.getEmailAddress(), callerAdmin.getPhoneNumber(), 
 					callerAdmin.getNotes(), callerAdmin.getStatus());
+			callerAdminForm.setProductToken(callerAdmin.getUsers().getProductToken());
 			callerAdminForms.add(callerAdminForm);
 		}
 		
@@ -98,6 +99,7 @@ public class CallerAdminService {
 				callerAdmin.getStreet(), callerAdmin.getCity(), callerAdmin.getState(), callerAdmin.getZipcode(), callerAdmin.getEmailAddress(), callerAdmin.getPhoneNumber(), 
 				callerAdmin.getNotes(), callerAdmin.getStatus());
 		
+		callerAdminForm.setProductToken(callerAdmin.getUsers().getProductToken());
 		// County List
 		callerAdminForm.setCountyForms(countyService.getCountyList());
 		
@@ -143,7 +145,9 @@ public class CallerAdminService {
 		users.setStatus(1);
 		users.setIsPasswordChanged(0);
 		users.setIsDisclaimerAccepted(0);
+		users.setProductToken(callerAdminForm.getProductToken());
 		users.setRoles(roles);
+		users.setProductToken(callerAdminForm.getProductToken());
 		usersDAO.save(users);
 		
 		CallerAdmin callerAdmin=new CallerAdmin(users, callerAdminForm.getFirstName(), callerAdminForm.getLastName(), 
@@ -174,6 +178,8 @@ public class CallerAdminService {
 		//Logic Starts
 		CallerAdmin callerAdmin=callerAdminDAO.get(callerAdminForm.getCallerAdminId());
 		Users users=usersDAO.get(callerAdmin.getUsers().getUserId());
+		users.setProductToken(callerAdminForm.getProductToken());
+		usersDAO.update(users);
 		callerAdmin=new CallerAdmin(users, callerAdminForm.getFirstName(), callerAdminForm.getLastName(), 
 				callerAdminForm.getStreet(), callerAdminForm.getCity(), callerAdminForm.getState(), callerAdminForm.getZipcode(), callerAdminForm.getEmailAddress(), 
 				callerAdminForm.getPhoneNumber(), callerAdminForm.getNotes(), 1, null, null, null, null);

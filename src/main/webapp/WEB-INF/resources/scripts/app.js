@@ -1082,7 +1082,7 @@ sbAdminApp
 														return $ocLazyLoad
 														.load({
 															name : 'sbAdminApp',
-															files : [ ]
+															files : []
 														});
 													}
 												},
@@ -1143,9 +1143,14 @@ sbAdminApp
 					            }
 					         });
 					      }]).controller('authenticationController', function($rootScope, $scope, $http, $location, requestHandler) {
-					    	  var getCountyPreferenceList=function(){
-					    		  requestHandler.getRequest("Patient/checkCountyListType.json","").then(function(response){
-					    				 $rootScope.countyListType=response.data.countyListType;
+					    	  var getProductToken=function(){
+					    		  requestHandler.getRequest("getProductToken.json","").then(function(response){
+					    			  if(response.data.productToken!=null && response.data.productToken!=''){
+					    				  $rootScope.productToken=response.data.productToken; 
+					    			  }else{
+					    				  $rootScope.productToken=""; 
+					    			  }
+					    				 
 					    			});
 					    	  };
 					    	  var authenticate = function() {
@@ -1178,7 +1183,7 @@ sbAdminApp
 					};
 
 					authenticate();
-					//getCountyPreferenceList();
+					getProductToken();
 				});
 sbAdminApp
 		.directive(
@@ -1398,4 +1403,25 @@ sbAdminApp.directive("password", function ($q, $timeout,requestHandler) {
         }
     };
 
+});
+
+sbAdminApp.directive('yearDrop',function(){
+   	function getYears(offset, range){
+        var currentYear = new Date().getFullYear();
+        var years = [];
+        for (var i = 0; i < range + 1; i++){
+            years.push(currentYear + offset + i);
+        }
+        return years;
+    }
+    return {
+        link: function(scope,element,attrs){
+            scope.years = getYears(+attrs.offset, +attrs.range);
+            if(scope.cardDetails.expiryYear!=''){
+            	scope.cardDetails.expiryYear = parseInt(scope.cardDetails.expiryYear);
+            }
+            	
+        },
+        template: '<select class="form-control col-sm-4" ng-model="cardDetails.expiryYear" ng-options="y for y in years"></select>'
+    };
 });

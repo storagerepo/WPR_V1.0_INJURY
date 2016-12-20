@@ -1,14 +1,17 @@
 package com.deemsys.project.CallerAdminCountyMapping;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingForm;
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.CallerAdmin;
 import com.deemsys.project.entity.CallerAdminCountyMap;
 import com.deemsys.project.entity.CallerAdminCountyMapId;
 import com.deemsys.project.entity.County;
@@ -20,6 +23,9 @@ public class CallerAdminCountyMapService {
 
 	@Autowired
 	CallerAdminCountyMapDAO callerAdminCountyMapDAO;
+	
+	@Autowired
+	CountyDAO countyDAO;
 	
 	//Get County Mapping By Caller Admin Id
 		public List<CallerAdminCountyMapForm> getCallerAdminCountyMapByCallerAdminId(Integer callerAdminId){
@@ -34,6 +40,14 @@ public class CallerAdminCountyMapService {
 			}
 			
 			return callerAdminCountyMapForms;
+		}
+		
+	// Save County Map
+		public void saveCallerAdminCountyMap(Integer countyId,CallerAdmin callerAdmin){
+			County county=countyDAO.get(countyId);
+			CallerAdminCountyMapId callerAdminCountyMapId=new CallerAdminCountyMapId(callerAdmin.getCallerAdminId(), countyId);
+			CallerAdminCountyMap callerAdminCountyMap=new CallerAdminCountyMap(callerAdminCountyMapId, callerAdmin, county,new Date(),1);
+			callerAdminCountyMapDAO.save(callerAdminCountyMap);
 		}
 		
 	// Delete Unmapped County Id
@@ -73,6 +87,10 @@ public class CallerAdminCountyMapService {
 				
 				return newCountyId;
 		}
-		
+	
+		// Delete County Map By County Id, Admin Id
+		public void deleteCallerAdminCountyMapByCountyAndCAdminId(Integer countyId,Integer callerAdminId){
+			callerAdminCountyMapDAO.deleteCallerAdminCountyMapByCallerAdminIdAndCountyId(callerAdminId, countyId);
+		}
 		
 }

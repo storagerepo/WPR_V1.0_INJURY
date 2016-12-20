@@ -170,5 +170,12 @@ public class UsersDAOImpl implements UsersDAO{
 		Users users = (Users) this.sessionFactory.getCurrentSession().createCriteria(Users.class).add(Restrictions.eq("userId", userId)).uniqueResult();
 		return users.getIsDisclaimerAccepted();
 	}
+
+	@Override
+	public Users getUserByProductToken(String productToken) {
+		// TODO Auto-generated method stub
+		Users users = (Users) this.sessionFactory.getCurrentSession().createCriteria(Users.class).add(Restrictions.eq("productToken",productToken)).uniqueResult();
+		return users;
+	}
 	
 }

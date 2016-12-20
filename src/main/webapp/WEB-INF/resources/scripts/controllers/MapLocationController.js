@@ -14,7 +14,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 		requestHandler.getRequest("Patient/getPatient.json?patientId="+$stateParams.id,"").then( function(response) {
 			console.log(response.data.patientForm);
 			$scope.patient= response.data.patientForm;
-			$scope.map = {center: {latitude: $scope.patient.latitude, longitude: $scope.patient.longitude }, zoom: 8, markers:[] };
+			/*$scope.map = {center: {latitude: $scope.patient.latitude, longitude: $scope.patient.longitude }, zoom: 8, markers:[] };
 		    $scope.options = {scrollwheel: true};
 		    $scope.clinicMarkers = [];
 		    var markers = [];
@@ -28,7 +28,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 			    };
 			marker[idKey]=0;
 			markers.push(marker);
-			$scope.clinicMarkers = markers;
+			$scope.clinicMarkers = markers;*/
 		});
 	};
 	
@@ -44,6 +44,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     		var clinicLocationForm= response.data.clinicLocationForm;
     		var clinicsForms =response.data.clinicLocationForm.clinicsForms;
     		$scope.map = {center: {latitude: clinicLocationForm.centerLatitude, longitude: clinicLocationForm.centerLongitude }, zoom: 8 };
+    		$scope.options = {scrollwheel: true};
     		$scope.clinicMarkers = [];
     		$scope.circles = [];
     		var markers = [];
@@ -61,7 +62,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     		for ( var int = 0; int < clinicsForms.length; int++) {
 				var clinicForm = clinicsForms[int];
 				var windowContent="<b>"+clinicForm.clinicName+",</b><br/>"+clinicForm.address+",</br>"+clinicForm.city+",</br><b>"+clinicForm.farAway+" miles</b> far away ";
-				marker = {
+				var marker = {
 			    	        latitude: clinicForm.latitude,
 			    	        longitude: clinicForm.longitude,
 			    	        title: windowContent,

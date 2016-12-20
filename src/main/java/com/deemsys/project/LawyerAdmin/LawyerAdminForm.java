@@ -20,6 +20,7 @@ public class LawyerAdminForm {
 	private String emailAddress;
 	private String phoneNumber;
 	private String notes;
+	private String productToken;
 	private Integer status;
 	List<Integer> county;
 	List<CountyForm> countyform;
@@ -128,9 +129,6 @@ public class LawyerAdminForm {
 		this.status = status;
 	}
 	
-
-	
-
 	public List<Integer> getCounty() {
 		return county;
 	}
@@ -139,14 +137,20 @@ public class LawyerAdminForm {
 		this.county = county;
 	}
 	
-	
-
 	public List<CountyForm> getCountyform() {
 		return countyform;
 	}
 
 	public void setCountyform(List<CountyForm> countyform) {
 		this.countyform = countyform;
+	}
+
+	public String getProductToken() {
+		return productToken;
+	}
+
+	public void setProductToken(String productToken) {
+		this.productToken = productToken;
 	}
 
 	public LawyerAdminForm(Integer lawyerAdminId, Integer userId,

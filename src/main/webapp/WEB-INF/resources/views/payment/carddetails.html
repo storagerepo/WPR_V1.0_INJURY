@@ -4,6 +4,7 @@
 			<a ui-sref="dashboard.payment"
 				class="btn-sm btn-primary pull-right margin-top-40"><i
 				class="fa fa-arrow-circle-left fa-lg"></i> Back</a>
+				<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
 			<h2 ng-cloak class="page-header">Card Details</h2>
 		</div>
 
@@ -16,40 +17,41 @@
 
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						Card Details <span class="pull-right"><a class="btn btn-xs btn-warning" ng-click="editCardDetails()" ng-show="!editable">Edit</a>&nbsp;&nbsp;<span class="redText">*</span>
-							Required Fields</span>
+						Card Details <span class="pull-right"><span class="redText">*</span>
+							Required Fields&nbsp;&nbsp;<a class="btn btn-xs btn-warning" ng-click="editCardDetails()" ng-show="!editable"><i class="fa fa-edit"></i>&nbsp; Edit</a></span>
 					</div>
 					<!-- /.panel-heading -->
 					<div class="panel-body">
 						<div class="dataTable_wrapper">
-
+						<div class="col-md-12 well" ng-show="isError">
+							<ul>
+								<li ng-repeat="errorMessage in errorMessages" style="color:red;">{{errorMessage.text}}</li>
+							</ul>
+						</div>
+							
 							<div class="col-md-12">
 								<div class="col-md-3">
-									<span class="redText">*</span> <label>Card No</label>
+									<span class="redText">*</span> <label>Account Type</label>
 								</div>
 								<div class="col-md-8">
 									<span ng-show="editable">
-									<input type="text" class="form-control inputclass"
-										ng-model="cardDetails.cardNo" name="cardNo" placeholder="Card No"
-										maxlength="45" required /> <span class="error-container"
-										ng-show="myForm.cardNo.$dirty && myForm.firstName.$invalid">
-										<span ng-cloak style="color: red"
-										ng-show="myForm.cardNo.$error.required">Please Enter
-											Card No</span>
-									</span><br />
+									<label class="radio-inline"><input type="radio" name="accountType" ng-model="cardDetails.accountType" value="Visa">Visa</label> &nbsp; <label class="radio-inline"><input type="radio" name="accountType" ng-model="cardDetails.accountType" value="Master Card">Master Card </label>&nbsp; 
+									<label class="radio-inline"><input type="radio" name="accountType" ng-model="cardDetails.accountType" value="AMEX">AMEX</label> &nbsp; <label class="radio-inline"><input type="radio" name="accountType" ng-model="cardDetails.accountType" value="Discover">Discover</label><br/><br/>
 									</span>
-									<span ng-show="!editable" style="padding:6px 12px;height:34px;display: block;">{{cardDetails.cardNo}}</span>
+									<span ng-show="!editable" style="padding:6px 12px;height:34px;display: block;">
+									{{cardDetails.accountType}}
+									</span>
 								</div>
 							</div>
-							<div class="col-md-12">
+							<!-- <div class="col-md-12">
 								<div class="col-md-3">
-									<span class="redText">*</span> <label>Card Holder Name</label>
+									<span class="redText">*</span> <label>Cardholder Name</label>
 								</div>
 								<div class="col-md-8">
 								<span ng-show="editable">
 								<input type="text" class="form-control"
 										ng-model="cardDetails.cardHolderName" name="name"
-										placeholder="Card Holder Name" validate-name required>
+										placeholder="Cardholder Name" validate-name required>
 									<span class="error-container"
 										ng-show="myForm.name.$dirty && myForm.name.$invalid"> <span
 										ng-cloak style="color: red"
@@ -62,14 +64,155 @@
 								<span ng-show="!editable" style="padding:6px 12px;height:34px;display: block;">{{cardDetails.cardHolderName}}</span>
 									
 								</div>
+							</div> -->
+							<div class="col-md-12">
+								<div class="col-md-3">
+									<span class="redText">*</span> <label>Account Number</label>
+								</div>
+								<div class="col-md-8">
+									<span ng-show="editable">
+									<input type="text" class="form-control inputclass"
+										ng-model="cardDetails.accountNumber" name="cardNo" placeholder="Credit Card Number" ng-focus="changeAccountNumber()" ng-blur="resetAccountNumber()"
+										maxlength="16" required /> <span class="error-container"
+										ng-show="myForm.cardNo.$dirty && myForm.firstName.$invalid">
+										<span ng-cloak style="color: red"
+										ng-show="myForm.cardNo.$error.required">Please Enter
+											Card Number</span>
+									</span><br />
+									</span>
+									<span ng-show="!editable" style="padding:6px 12px;height:34px;display: block;">{{cardDetails.accountNumber}}</span>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-3">
+									<span class="redText">*</span> <label>Expiration Date</label>
+								</div>
+								<div class="col-md-8">
+								<span ng-show="editable">
+									<div class="col-md-1 margin-top-5 no-padding"><label>Month:</label></div>
+								 		<div class="col-md-4">
+								 			<select class="form-control col-sm-4" name="expiry-month"
+													id="expiry-month" ng-model="cardDetails.expiryMonth">
+													<option value="01" ng-selected="true">Jan (01)</option>
+													<option value="02">Feb (02)</option>
+													<option value="03">Mar (03)</option>
+													<option value="04">Apr (04)</option>
+													<option value="05">May (05)</option>
+													<option value="06">June (06)</option>
+													<option value="07">July (07)</option>
+													<option value="08">Aug (08)</option>
+													<option value="09">Sep (09)</option>
+													<option value="10">Oct (10)</option>
+													<option value="11">Nov (11)</option>
+													<option value="12">Dec (12)</option>
+												</select>
+            						
+        								</div>
+        								<div class="col-md-2 margin-top-5 text-right no-padding"><label>Year:</label></div>
+								 		<div class="col-md-4">
+								 		<div year-drop offset="0" range="100"></div>
+        								</div>
+        								<br/><br/><br/>
+								</span>
+								<span ng-show="!editable" style="padding:6px 12px;height:34px;display: block;"><b>Month : </b>{{cardDetails.expiryMonth}} &nbsp;&nbsp;&nbsp;&nbsp;<b>Year : </b> {{cardDetails.expiryYear}}</span>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-3">
+									<span class="redText">*</span> <label>Billing Address</label>
+								</div>
+								<div class="col-md-8">
+								<span ng-show="editable">
+								<input type="text" class="form-control"
+										ng-model="cardDetails.billingAddress" name="address"
+										placeholder="Address" required>
+									<span class="error-container"
+										ng-show="myForm.address.$dirty && myForm.address.$invalid"> <span
+										ng-cloak style="color: red"
+										ng-show="myForm.address.$error.required">Please Enter Address</span>
+									
+									</span><br />
+								</span>
+								<span ng-show="!editable" style="padding:6px 12px;height:34px;display: block;">{{cardDetails.billingAddress}}</span>
+									
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-3">
+									<span class="redText">*</span> <label>City</label>
+								</div>
+								<div class="col-md-8">
+								<span ng-show="editable">
+								<input type="text" class="form-control"
+										ng-model="cardDetails.billingCity" name="city"
+										placeholder="City" validate-name required>
+									<span class="error-container"
+										ng-show="myForm.city.$dirty && myForm.city.$invalid"> <span
+										ng-cloak style="color: red"
+										ng-show="myForm.city.$error.required">Please Enter City</span>
+										<span ng-cloak style="color: red"
+										ng-show="!myForm.city.$error.required&&myForm.city.$error.validateName">Enter
+											Valid City</span>
+									</span><br />
+								</span>
+								<span ng-show="!editable" style="padding:6px 12px;height:34px;display: block;">{{cardDetails.billingCity}}</span>
+									
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-3">
+									<span class="redText">*</span> <label>State</label>
+								</div>
+								<div class="col-md-8">
+								<span ng-show="editable">
+								<input type="text" class="form-control"
+										ng-model="cardDetails.billingState" name="state"
+										placeholder="State" validate-name required>
+									<span class="error-container"
+										ng-show="myForm.state.$dirty && myForm.state.$invalid"> <span
+										ng-cloak style="color: red"
+										ng-show="myForm.state.$error.required">Please Enter State</span>
+										<span ng-cloak style="color: red"
+										ng-show="!myForm.state.$error.required&&myForm.state.$error.validateName">Enter
+											Valid State</span>
+									</span><br />
+								</span>
+								<span ng-show="!editable" style="padding:6px 12px;height:34px;display: block;">{{cardDetails.billingState}}</span>
+									
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-3">
+									<span class="redText">*</span> <label>Zip</label>
+								</div>
+								<div class="col-md-8">
+								<span ng-show="editable">
+								<input type="text" class="form-control"
+										ng-model="cardDetails.billingZipcode" name="zip"
+										placeholder="Zip" maxlength="5" validate-zipcode required>
+									<span class="error-container"
+										ng-show="myForm.zip.$dirty && myForm.zip.$invalid"> <span
+										ng-cloak style="color: red"
+										ng-show="myForm.zip.$error.required">Please Enter Zip</span>
+										<span ng-cloak style="color: red"
+										ng-show="!myForm.zip.$error.required&&myForm.zip.$error.validateZipcode">Enter
+											Valid Zip</span>
+									</span><br />
+								</span>
+								<span ng-show="!editable" style="padding:6px 12px;height:34px;display: block;">{{cardDetails.billingZipcode}}</span>
+									
+								</div>
 							</div>
 						</div>
 					</div>
 					<div class="text-center" style="margin-right: 30px;" ng-show="editable">
-						<a class="btn btn-success"
+						<a class="btn btn-success" ng-hide="submitted"
 							ng-class="{'button-disable':myForm.$invalid}"
-							ng-disabled='isClean() || myForm.$invalid' ng-click="saveCard()">Update</a> <a
-							class="btn btn-danger" ng-click="editable=false">Cancel</a><br />
+							ng-disabled='isClean() || myForm.$invalid' ng-click="updateCard()">Update</a>
+							<a class="btn btn-success" ng-show="submitted"
+							ng-class="{'button-disable':submitted}"
+							ng-disabled='submitted'>Updating....</a> 
+							 <a class="btn btn-danger" ng-click="cancelChanges();">Cancel</a><br />
 						<br />
 					</div>
 					<!-- /.panel-body -->

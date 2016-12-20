@@ -13,4 +13,5 @@ public interface UsersDAO extends IGenericDAO<Users> {
 	public Users getByUserName(String userName);
 	public Integer resetUserPassword(Integer id);
 	public Integer disclaimerAcceptedStatus(Integer userId);
+	public Users getUserByProductToken(String productToken);
 }

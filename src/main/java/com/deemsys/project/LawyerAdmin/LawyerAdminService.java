@@ -75,6 +75,7 @@ public class LawyerAdminService {
 					lawyerAdmin.getPhoneNumber(), lawyerAdmin.getNotes(),
 					lawyerAdmin.getStatus());
 			lawyerAdminForm.setUsername(lawyerAdmin.getUsers().getUsername());
+			lawyerAdminForm.setProductToken(lawyerAdmin.getUsers().getProductToken());
 			lawyerAdminForms.add(lawyerAdminForm);
 		}
 
@@ -100,7 +101,7 @@ public class LawyerAdminService {
 				lawyerAdmin.getPhoneNumber(), lawyerAdmin.getNotes(),
 				lawyerAdmin.getStatus());
 		lawyerAdminForm.setUsername(lawyerAdmin.getUsers().getUsername());
-		
+		lawyerAdminForm.setProductToken(lawyerAdmin.getUsers().getProductToken());
 		// Get County List
 				lawyerAdminForm.setCountyform(countyService.getCountyList());
 
@@ -148,19 +149,8 @@ public class LawyerAdminService {
 
 		role = roleDAO.get(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID);
 		users.setRoles(role);
+		users.setProductToken(lawyerAdminForm.getProductToken());
 		usersDAO.save(users);
-		
-		/*List<Integer> lawyeradmincounty = lawyerAdminForm.getCounty();
-
-		// Map the County
-		for (Integer countyId : lawyeradmincounty) {
-			County county = countyDAO.get(countyId);
-			LawyerAdminCountyMapId lawyerAdminCountyMapId=new LawyerAdminCountyMapId(lawyerAdmin.getLawyerAdminId(), countyId);
-			LawyerCountyMap lawyerCountyMapping = new LawyerCountyMap(lawyerCountyMapId,lawyers, county,1);
-			lawyerCountyMappingDAO.save(lawyerCountyMapping);
-		}*/
-
-
 		// Logic Ends
 
 		return 1;
@@ -179,8 +169,10 @@ public class LawyerAdminService {
 		users.setStatus(1);
 		users.setIsPasswordChanged(0);
 		users.setIsDisclaimerAccepted(0);
+		users.setProductToken(lawyerAdminForm.getProductToken());
 		role = roleDAO.get(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID);
 		users.setRoles(role);
+		users.setProductToken(lawyerAdminForm.getProductToken());
 		usersDAO.save(users);
 		
 		LawyerAdmin lawyerAdmin = new LawyerAdmin(users,
@@ -192,7 +184,6 @@ public class LawyerAdminService {
 				lawyerAdminForm.getEmailAddress(),
 				lawyerAdminForm.getPhoneNumber(), lawyerAdminForm.getNotes(),
 				1, null,null,null);
-		
 		lawyerAdminDAO.save(lawyerAdmin);
 
 		
@@ -220,7 +211,8 @@ public class LawyerAdminService {
 
 		LawyerAdmin lawyerAdmin = lawyerAdminDAO.get(lawyerAdminForm.getLawyerAdminId());
 		Users users = usersDAO.get(lawyerAdmin.getUsers().getUserId());
-		
+		users.setProductToken(lawyerAdminForm.getProductToken());
+		usersDAO.update(users);
 		
 		lawyerAdmin = new LawyerAdmin(users,
 				lawyerAdminForm.getFirstName(), lawyerAdminForm.getLastName(), 
