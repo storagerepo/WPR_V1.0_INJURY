@@ -152,4 +152,20 @@ public class CommonController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    // enable or Disable User
+    @RequestMapping(value="/enableOrDisableUser",method=RequestMethod.POST)
+   	public String enableOrDisableUser(@RequestParam("customerProductToken") String customerProductToken,ModelMap model)
+   	{
+    	
+    	Users users=loginService.getUserByProductToken(customerProductToken);
+    	if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
+    		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(users.getUserId());
+    		callerAdminService.enableOrDisableCallerAdmin(callerAdmin.getCallerAdminId());
+    	}else if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
+    		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
+    		lawyerAdminService.enableOrDisableLawyerAdmin(lawyerAdmin.getLawyerAdminId());
+    	}
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
 }

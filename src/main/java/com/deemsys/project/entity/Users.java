@@ -29,6 +29,7 @@ public class Users implements java.io.Serializable {
 	private Integer isEnable;
 	private Integer isPasswordChanged;
 	private Integer isDisclaimerAccepted;
+	private String productToken;
 	private Integer status;
 	private Set<UserExportPreferences> userExportPreferenceses = new HashSet<UserExportPreferences>(
 			0);
@@ -39,7 +40,7 @@ public class Users implements java.io.Serializable {
 	}
 
 	public Users(Roles roles, String username, String password,
-			Integer isEnable, Integer isPasswordChanged, Integer isDisclaimerAccepted, Integer status,
+			Integer isEnable, Integer isPasswordChanged, Integer isDisclaimerAccepted, String productToken, Integer status,
 			Set<UserExportPreferences> userExportPreferenceses,
 			Set<UserLookupPreferences> userLookupPreferenceses) {
 		this.roles = roles;
@@ -48,6 +49,7 @@ public class Users implements java.io.Serializable {
 		this.isEnable = isEnable;
 		this.isPasswordChanged = isPasswordChanged;
 		this.isDisclaimerAccepted = isDisclaimerAccepted;
+		this.productToken = productToken;
 		this.status = status;
 		this.userExportPreferenceses = userExportPreferenceses;
 		this.userLookupPreferenceses = userLookupPreferenceses;
@@ -117,6 +119,15 @@ public class Users implements java.io.Serializable {
 
 	public void setIsDisclaimerAccepted(Integer isDisclaimerAccepted) {
 		this.isDisclaimerAccepted = isDisclaimerAccepted;
+	}
+
+	@Column(name = "product_token", length = 45)
+	public String getProductToken() {
+		return productToken;
+	}
+
+	public void setProductToken(String productToken) {
+		this.productToken = productToken;
 	}
 
 	@Column(name = "status")
