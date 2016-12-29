@@ -123,7 +123,10 @@
 					</td>
 			</tr>
                 <tr dir-paginate="bill in subscriptions.billListSearchForms|itemsPerPage:billsSearchForm.itemsPerPage" current-page="billsSearchForm.pageNumber" total-items="totalRecords" pagination-id="billListPageId">
-                	<td><a href="" ng-click="viewBillDetails(bill.billId)">{{bill.billDisplayId}}</a></td>
+                	<td><a href="" ng-click="viewBillDetails(bill.billId)">{{bill.billDisplayId}}</a>
+                	<span class="pull-right"><span ng-show="subscriptions.isNotified==2 || subscriptions.isNotified==4 || subscriptions.isNotified==5" class="btn btn-success btn-xs" data-tooltip="Paid" data-placement="top"><i class="fa fa-check-circle"></i></span>
+                	<span ng-show="subscriptions.isNotified==3" class="btn btn-danger btn-xs" data-tooltip="Transaction&nbsp;Failed" data-placement="top"><i class="fa fa-times-circle"></i></span>
+                	</span></td>
                     <td>{{bill.billDate}}</td>
                     <td>{{bill.billAmount}}</td>
                     <td>{{bill.adjustAmount}}</td>

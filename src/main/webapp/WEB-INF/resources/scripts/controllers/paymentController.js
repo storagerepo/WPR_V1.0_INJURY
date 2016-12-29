@@ -153,17 +153,25 @@ adminApp.controller('CardController',function($rootScope,$http,$state,$scope,req
 		 $scope.cardDetails.accountType=1;
 		requestHandler.postRequest("updateCardDetails.json",$scope.cardDetails).then(function(response){
 			var result=response.data;
-			if(result.messages.resultCode=='OK'){
-				$scope.getCardDetails();
-				$scope.submitted=false;
-				$scope.isError=false;
-				Flash.create('success', "You have Successfully Updated!");
-				$scope.editable=false;
-			}else if(result.messages.resultCode=='ERROR'){
+			if(result!=""){
+				if(result.messages.resultCode=='OK'){
+					$scope.getCardDetails();
+					$scope.submitted=false;
+					$scope.isError=false;
+					Flash.create('success', "You have Successfully Updated!");
+					$scope.editable=false;
+				}else if(result.messages.resultCode=='ERROR'){
+					$scope.submitted=false;
+					$scope.isError=true;
+					$scope.errorMessages=result.messages.message;
+				}
+			}else{
 				$scope.submitted=false;
 				$scope.isError=true;
-				$scope.errorMessages=result.messages.message;
+				$scope.errorMessages="";
+				$scope.errorMessages=[{"text":"Please try again later"}];
 			}
+			
 			
 		});
 	};
