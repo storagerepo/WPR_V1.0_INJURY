@@ -76,7 +76,18 @@ adminApp.controller('PaymentController',function($rootScope,$http,$state,$scope,
 	$scope.viewBillDetails=function(billId){
 		 requestHandler.getRequest("getBillDetails.json?billId="+billId,"").then(function(response){
 			 $scope.billDetails = response.data.billsForm;
-			 $('#viewPaymentModal').modal('show');
+				if(parseFloat($scope.billDetails.billAmount)>=parseFloat($scope.billDetails.discountAmount)){
+					$scope.subscriptionTotalAmount=parseFloat(parseFloat($scope.billDetails.billAmount)-parseFloat($scope.billDetails.discountAmount)).toFixed(2);
+				}else{
+					$scope.subscriptionTotalAmount=parseFloat($scope.billDetails.billAmount).toFixed(2);
+				}
+				$scope.billAmount=parseFloat(parseFloat($scope.subscriptionTotalAmount)+parseFloat($scope.billDetails.miscellaneousAmount)).toFixed(2);
+				if($scope.billDetails.taxPercentage>0){
+					var billTotal=parseFloat((parseFloat($scope.billAmount)-parseFloat($scope.billDetails.adjustAmount))+parseFloat($scope.billDetails.dueAmount)).toFixed(2);
+					$scope.taxAmount=parseFloat((billTotal/100)*parseFloat($scope.billDetails.taxPercentage)).toFixed(2);
+				}
+				
+				$("#billDetailsModal").modal('show');
 		 });
 		
 	};
@@ -103,9 +114,15 @@ adminApp.controller('PaymentController',function($rootScope,$http,$state,$scope,
 	
 	$scope.getTransactionDetails=function(billId){
 		requestHandler.getRequest("getTransactionDetails.json?billId="+billId,"").then(function(response){
-			 $scope.transactionDetails = response.data.transactionDetails.transaction;
-			 $scope.settlementDateTime=response.data.settlementDateTime;
-			 $('#viewTransactionModal').modal('show');
+			if(response.data.requestSuccess){
+				$scope.transactionDetails = response.data.transactionDetails.transaction;
+				$scope.settlementDateTime=response.data.settlementDateTime;
+				$('#viewTransactionModal').modal('show');
+			}else{
+				$scope.transactionDetails = response.data.transactionDetails;
+				$scope.settlementDateTime=response.data.settlementDateTime;
+				$('#viewTransactionErrorModal').modal('show');
+			}
 		 });
 	};
 });
