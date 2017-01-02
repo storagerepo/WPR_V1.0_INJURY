@@ -21,6 +21,7 @@ public class LawyerAdminForm {
 	private String phoneNumber;
 	private String notes;
 	private String productToken;
+	private Integer isPrivilegedUser;
 	private Integer status;
 	List<Integer> county;
 	List<CountyForm> countyform;
@@ -153,10 +154,18 @@ public class LawyerAdminForm {
 		this.productToken = productToken;
 	}
 
+	public Integer getIsPrivilegedUser() {
+		return isPrivilegedUser;
+	}
+
+	public void setIsPrivilegedUser(Integer isPrivilegedUser) {
+		this.isPrivilegedUser = isPrivilegedUser;
+	}
+
 	public LawyerAdminForm(Integer lawyerAdminId, Integer userId,
 			String firstName, String lastName, String street, String city,
 			String state, String zipcode, String emailAddress,
-			String phoneNumber, String notes, Integer status) {
+			String phoneNumber, String notes, Integer isPrivilegedUser, Integer status) {
 		super();
 		this.lawyerAdminId = lawyerAdminId;
 		this.userId = userId;
@@ -169,13 +178,14 @@ public class LawyerAdminForm {
 		this.emailAddress = emailAddress;
 		this.phoneNumber = phoneNumber;
 		this.notes = notes;
+		this.isPrivilegedUser = isPrivilegedUser;
 		this.status = status;
 	}
 
 	public LawyerAdminForm(Integer lawyerAdminId, Integer userId,
 			String username, String firstName, String lastName, String street,
 			String city, String state, String zipcode, String emailAddress,
-			String phoneNumber, String notes, Integer status) {
+			String phoneNumber, String notes, Integer isPrivilegedUser, Integer status) {
 		super();
 		this.lawyerAdminId = lawyerAdminId;
 		this.userId = userId;
@@ -189,6 +199,7 @@ public class LawyerAdminForm {
 		this.emailAddress = emailAddress;
 		this.phoneNumber = phoneNumber;
 		this.notes = notes;
+		this.isPrivilegedUser = isPrivilegedUser;
 		this.status = status;
 	}
 

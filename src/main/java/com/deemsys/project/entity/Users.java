@@ -30,6 +30,7 @@ public class Users implements java.io.Serializable {
 	private Integer isPasswordChanged;
 	private Integer isDisclaimerAccepted;
 	private String productToken;
+	private Integer isPrivilegedUser;
 	private Integer status;
 	private Set<UserExportPreferences> userExportPreferenceses = new HashSet<UserExportPreferences>(
 			0);
@@ -40,7 +41,7 @@ public class Users implements java.io.Serializable {
 	}
 
 	public Users(Roles roles, String username, String password,
-			Integer isEnable, Integer isPasswordChanged, Integer isDisclaimerAccepted, String productToken, Integer status,
+			Integer isEnable, Integer isPasswordChanged, Integer isDisclaimerAccepted, String productToken, Integer isPrivilegedUser, Integer status,
 			Set<UserExportPreferences> userExportPreferenceses,
 			Set<UserLookupPreferences> userLookupPreferenceses) {
 		this.roles = roles;
@@ -50,6 +51,7 @@ public class Users implements java.io.Serializable {
 		this.isPasswordChanged = isPasswordChanged;
 		this.isDisclaimerAccepted = isDisclaimerAccepted;
 		this.productToken = productToken;
+		this.isPrivilegedUser = isPrivilegedUser;
 		this.status = status;
 		this.userExportPreferenceses = userExportPreferenceses;
 		this.userLookupPreferenceses = userLookupPreferenceses;
@@ -130,6 +132,15 @@ public class Users implements java.io.Serializable {
 		this.productToken = productToken;
 	}
 
+	@Column(name = "is_privileged_user")
+	public Integer getIsPrivilegedUser() {
+		return this.isPrivilegedUser;
+	}
+
+	public void setIsPrivilegedUser(Integer isPrivilegedUser) {
+		this.isPrivilegedUser = isPrivilegedUser;
+	}
+	
 	@Column(name = "status")
 	public Integer getStatus() {
 		return this.status;

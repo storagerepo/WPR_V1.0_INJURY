@@ -23,6 +23,7 @@ public class CallerAdminForm {
 	private String emailAddress;
 	private String phoneNumber;
 	private String notes;
+	private Integer isPrivilegedUser;
 	private Integer status;
 	List<Integer> county;
 	List<CountyForm> countyForms;
@@ -100,6 +101,12 @@ public class CallerAdminForm {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+	public Integer getIsPrivilegedUser() {
+		return isPrivilegedUser;
+	}
+	public void setIsPrivilegedUser(Integer isPrivilegedUser) {
+		this.isPrivilegedUser = isPrivilegedUser;
+	}
 	public Integer getStatus() {
 		return status;
 	}
@@ -127,7 +134,7 @@ public class CallerAdminForm {
 	public CallerAdminForm(Integer callerAdminId, Integer userId,
 			String firstName, String lastName, String street, String city,
 			String state, String zipcode, String emailAddress,
-			String phoneNumber, String notes, Integer status) {
+			String phoneNumber, String notes, Integer isPrivilegedUser, Integer status) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.userId = userId;
@@ -140,13 +147,14 @@ public class CallerAdminForm {
 		this.emailAddress = emailAddress;
 		this.phoneNumber = phoneNumber;
 		this.notes = notes;
+		this.isPrivilegedUser = isPrivilegedUser;
 		this.status = status;
 	}
 	
 	public CallerAdminForm(Integer callerAdminId, Integer userId,
 			String username, String firstName, String lastName, String street,
 			String city, String state, String zipcode, String emailAddress,
-			String phoneNumber, String notes, Integer status) {
+			String phoneNumber, String notes, Integer isPrivilegedUser, Integer status) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.userId = userId;
@@ -160,6 +168,7 @@ public class CallerAdminForm {
 		this.emailAddress = emailAddress;
 		this.phoneNumber = phoneNumber;
 		this.notes = notes;
+		this.isPrivilegedUser = isPrivilegedUser;
 		this.status = status;
 	}
 	public CallerAdminForm() {

@@ -73,7 +73,7 @@ public class LawyerAdminService {
 					lawyerAdmin.getZipcode(),
 					lawyerAdmin.getEmailAddress(),
 					lawyerAdmin.getPhoneNumber(), lawyerAdmin.getNotes(),
-					lawyerAdmin.getStatus());
+					lawyerAdmin.getUsers().getIsPrivilegedUser(),lawyerAdmin.getStatus());
 			lawyerAdminForm.setUsername(lawyerAdmin.getUsers().getUsername());
 			lawyerAdminForm.setProductToken(lawyerAdmin.getUsers().getProductToken());
 			lawyerAdminForms.add(lawyerAdminForm);
@@ -99,7 +99,7 @@ public class LawyerAdminService {
 				lawyerAdmin.getZipcode(),
 				lawyerAdmin.getEmailAddress(),
 				lawyerAdmin.getPhoneNumber(), lawyerAdmin.getNotes(),
-				lawyerAdmin.getStatus());
+				lawyerAdmin.getUsers().getIsPrivilegedUser(),lawyerAdmin.getStatus());
 		lawyerAdminForm.setUsername(lawyerAdmin.getUsers().getUsername());
 		lawyerAdminForm.setProductToken(lawyerAdmin.getUsers().getProductToken());
 		// Get County List
@@ -169,6 +169,7 @@ public class LawyerAdminService {
 		users.setStatus(1);
 		users.setIsPasswordChanged(0);
 		users.setIsDisclaimerAccepted(0);
+		users.setIsPrivilegedUser(lawyerAdminForm.getIsPrivilegedUser());
 		users.setProductToken(lawyerAdminForm.getProductToken());
 		role = roleDAO.get(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID);
 		users.setRoles(role);
@@ -212,6 +213,7 @@ public class LawyerAdminService {
 		LawyerAdmin lawyerAdmin = lawyerAdminDAO.get(lawyerAdminForm.getLawyerAdminId());
 		Users users = usersDAO.get(lawyerAdmin.getUsers().getUserId());
 		users.setProductToken(lawyerAdminForm.getProductToken());
+		users.setIsPrivilegedUser(lawyerAdminForm.getIsPrivilegedUser());
 		usersDAO.update(users);
 		
 		lawyerAdmin = new LawyerAdmin(users,
@@ -247,9 +249,6 @@ public class LawyerAdminService {
 	}
 	
 	//Enable/Disable
-	
-
-
 	public int enableOrDisableLawyerAdmin(Integer lawyerAdminId){
 		
 		LawyerAdmin lawyerAdmin = lawyerAdminDAO.get(lawyerAdminId);

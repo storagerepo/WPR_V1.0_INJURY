@@ -77,7 +77,7 @@ public class CallerAdminService {
 			//TODO: Fill the List
 			CallerAdminForm callerAdminForm=new CallerAdminForm(callerAdmin.getCallerAdminId(), callerAdmin.getUsers().getUserId(), callerAdmin.getUsers().getUsername(), callerAdmin.getFirstName(), callerAdmin.getLastName(),
 					callerAdmin.getStreet(), callerAdmin.getCity(), callerAdmin.getState(), callerAdmin.getZipcode(), callerAdmin.getEmailAddress(), callerAdmin.getPhoneNumber(), 
-					callerAdmin.getNotes(), callerAdmin.getStatus());
+					callerAdmin.getNotes(), callerAdmin.getUsers().getIsPrivilegedUser(), callerAdmin.getStatus());
 			callerAdminForm.setProductToken(callerAdmin.getUsers().getProductToken());
 			callerAdminForms.add(callerAdminForm);
 		}
@@ -97,7 +97,7 @@ public class CallerAdminService {
 		
 		CallerAdminForm callerAdminForm=new CallerAdminForm(callerAdmin.getCallerAdminId(), callerAdmin.getUsers().getUserId(), callerAdmin.getUsers().getUsername(), callerAdmin.getFirstName(), callerAdmin.getLastName(),
 				callerAdmin.getStreet(), callerAdmin.getCity(), callerAdmin.getState(), callerAdmin.getZipcode(), callerAdmin.getEmailAddress(), callerAdmin.getPhoneNumber(), 
-				callerAdmin.getNotes(), callerAdmin.getStatus());
+				callerAdmin.getNotes(), callerAdmin.getUsers().getIsPrivilegedUser(), callerAdmin.getStatus());
 		
 		callerAdminForm.setProductToken(callerAdmin.getUsers().getProductToken());
 		// County List
@@ -145,9 +145,9 @@ public class CallerAdminService {
 		users.setStatus(1);
 		users.setIsPasswordChanged(0);
 		users.setIsDisclaimerAccepted(0);
-		users.setProductToken(callerAdminForm.getProductToken());
 		users.setRoles(roles);
 		users.setProductToken(callerAdminForm.getProductToken());
+		users.setIsPrivilegedUser(callerAdminForm.getIsPrivilegedUser());
 		usersDAO.save(users);
 		
 		CallerAdmin callerAdmin=new CallerAdmin(users, callerAdminForm.getFirstName(), callerAdminForm.getLastName(), 
@@ -179,6 +179,7 @@ public class CallerAdminService {
 		CallerAdmin callerAdmin=callerAdminDAO.get(callerAdminForm.getCallerAdminId());
 		Users users=usersDAO.get(callerAdmin.getUsers().getUserId());
 		users.setProductToken(callerAdminForm.getProductToken());
+		users.setIsPrivilegedUser(callerAdminForm.getIsPrivilegedUser());
 		usersDAO.update(users);
 		callerAdmin=new CallerAdmin(users, callerAdminForm.getFirstName(), callerAdminForm.getLastName(), 
 				callerAdminForm.getStreet(), callerAdminForm.getCity(), callerAdminForm.getState(), callerAdminForm.getZipcode(), callerAdminForm.getEmailAddress(), 
