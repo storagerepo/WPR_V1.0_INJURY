@@ -272,83 +272,39 @@
                         </table>
                         </div>
                         <div class="col-lg-12">
+                        Bill Summary
                         <hr/>
-                         <div class="col-lg-5"></div>
-                        <div class="col-lg-3" align="right" style="width:28%">
-                        <label class="text-muted-no-top">Subscription Total $ :</label>
                         </div>
-                        <div class="col-lg-1" align="right">{{billDetails.billAmount}}
-                        </div>
-                        </div>
-                         <div class="col-lg-12 margin-top-10" ng-show="billDetails.discountAmount>0">
-                        <div class="col-lg-5"></div>
-                        <div class="col-lg-3" align="right" style="width:28%">
-                        <label class="text-muted-no-top">Discount Amount $ :</label>
-                        </div>
-                        <div class="col-lg-1" align="right">
-                        {{billDetails.discountAmount}}
-                        </div>
-                        </div>
-                       <!--   <div class="col-lg-12 margin-top-10" ng-show="billDetails.discountAmount>0">
-                        <div class="col-lg-5"></div>
-                        <div class="col-lg-3" align="right" style="width:28%">
-                        <label class="text-muted-no-top">Subsription Total Amount $ :</label>
-                        </div>
-                        <div class="col-lg-1" align="right">
-                        {{subscriptionTotalAmount}}
-                        </div>
-                        </div> -->
-                         <div class="col-lg-12 margin-top-10" ng-show="billDetails.miscellaneousAmount>0">
-                        <div class="col-lg-5"></div>
-                        <div class="col-lg-3" align="right" style="width:28%">
-                        <label class="text-muted-no-top">Miscellaneous Charge $ :</label>
-                        </div>
-                        <div class="col-lg-1" align="right">
-                        {{billDetails.miscellaneousAmount}}
-                        </div>
-                        </div>
-                         <div class="col-lg-12 margin-top-10" ng-show="billDetails.miscellaneousAmount>0">
-                        <div class="col-lg-5"></div>
-                        <div class="col-lg-3" align="right" style="width:28%">
-                        <label class="text-muted-no-top">Bill Amount $ :</label>
-                        </div>
-                        <div class="col-lg-1" align="right">
-                        {{billAmount}}
-                        </div>
-                        </div>
-                        <div class="col-lg-12 margin-top-10" ng-show="billDetails.adjustAmount>0">
-                        <div class="col-lg-5"></div>
-                        <div class="col-lg-3" align="right" style="width:28%">
-                        <label class="text-muted-no-top">Adjust Amount $ :</label>
-                        </div>
-                        <div class="col-lg-1" align="right">
-                        {{billDetails.adjustAmount}}
-                        </div>
-                        </div>
-                        <div class="col-lg-12 margin-top-10"  ng-show="billDetails.dueAmount>0">
-                        <div class="col-lg-5"></div>
-                        <div class="col-lg-3" align="right" style="width:28%">
-                        <label class="text-muted-no-top">Due Amount $ :</label>
-                        </div>
-                        <div class="col-lg-1" align="right">
-                        {{billDetails.dueAmount}}
-                        </div>
-                        </div>
-                        <div class="col-lg-12 margin-top-10"  ng-show="billDetails.taxPercentage>0">
-                        <div class="col-lg-5"></div>
-                        <div class="col-lg-3" align="right" style="width:28%">
-                        <label class="text-muted-no-top">Ohio Sales Tax @ 7.5% $ :</label>
-                        </div>
-                        <div class="col-lg-1" align="right">
-                        {{taxAmount}}
-                        </div>
-                        </div>
-                         <div class="col-lg-12 margin-top-10">
-                        <div class="col-lg-5"></div>
-                        <div class="col-lg-3" align="right" style="width:28%">
-                        <label class="text-muted-no-top">Pay Amount $ :</label>
-                        </div>
-                        <div class="col-lg-1" align="right">{{billDetails.payAmount}}
+                         <div class="col-lg-12">
+                        <div class="col-lg-6"></div>
+                        <div class="col-lg-6">
+                        <table class="bill-summary-table">
+                        <tr>
+                        <td><label>Subscription Total ($)</label></td><td><label>:</label></td>
+                        <td class="num-alignment">{{billDetails.billAmount}}</td>
+                        </tr>
+                        <tr ng-show="billDetails.discountAmount>0"><td><label>Discount Amount ($)</label></td><td><label>:</label></td>
+                        <td class="num-alignment">{{billDetails.discountAmount}}</td>
+                        </tr>
+                         <tr ng-show="billDetails.miscellaneousAmount>0"><td><label>Miscellaneous Charge ($)</label></td><td><label>:</label></td>
+                        <td class="num-alignment">{{billDetails.miscellaneousAmount}}</td>
+                        </tr>
+                        <tr ng-show="billDetails.miscellaneousAmount>0"><td><label>Bill Amount ($)</label></td><td><label>:</label></td>
+                        <td class="num-alignment">{{billAmount}}</td>
+                        </tr>
+                         <tr ng-show="billDetails.adjustAmount>0"><td><label>Adjust Amount ($)</label></td><td><label>:</label></td>
+                        <td class="num-alignment">{{billDetails.adjustAmount}}</td>
+                        </tr>
+                         <tr ng-show="billDetails.dueAmount>0"><td><label>Due Amount ($)</label></td><td><label>:</label></td>
+                        <td class="num-alignment">{{billDetails.dueAmount}}</td>
+                        </tr>
+                        <tr ng-show="billDetails.taxPercentage>0"><td><label>Ohio Sales Tax @ 7.5% ($)</label></td><td><label>:</label></td>
+                        <td class="num-alignment">{{taxAmount}}</td>
+                        </tr>
+                        <tr><td><label>Pay Amount ($)</label></td><td><label>:</label></td>
+                        <td class="num-alignment">{{billDetails.payAmount}}</td>
+                        </tr>
+                        </table>
                         </div>
                         </div>
                         <div class="col-lg-12">

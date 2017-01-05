@@ -132,17 +132,21 @@ public class LoginService {
 	}
 	
 	// Get Product Token
-	public String getProductToken(){
+	public Users getProductToken(){
 		Users users=usersDAO.get(this.getCurrentUserID());
-		String producToken="";
-		if(users!=null){
-			producToken = users.getProductToken();
-		}
-		return producToken;
+		
+		return users;
 	}
 	
 	// Get User By Product Token
 	public Users getUserByProductToken(String productToken){
 		return usersDAO.getUserByProductToken(productToken);
+	}
+
+	public void changePrivilegedUserStatus(String customerProductToken,Integer privilegedStatus) {
+		// TODO Auto-generated method stub
+		Users users=usersDAO.getUserByProductToken(customerProductToken);
+		users.setIsPrivilegedUser(privilegedStatus);
+		usersDAO.update(users);
 	}
 }

@@ -1146,7 +1146,11 @@ sbAdminApp
 					    	  var getProductToken=function(){
 					    		  requestHandler.getRequest("getProductToken.json","").then(function(response){
 					    			  if(response.data.productToken!=null && response.data.productToken!=''){
-					    				  $rootScope.productToken=response.data.productToken; 
+					    				  if(response.data.isPrivilegedUser!=null && response.data.isPrivilegedUser==2){
+					    					  $rootScope.productToken=response.data.productToken; 
+					    				  }else{
+					    					  $rootScope.productToken=""; 
+					    				  }
 					    			  }else{
 					    				  $rootScope.productToken=""; 
 					    			  }

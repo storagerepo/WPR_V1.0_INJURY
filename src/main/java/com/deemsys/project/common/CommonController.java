@@ -114,8 +114,15 @@ public class CommonController {
     // Get Product Token
     @RequestMapping(value = {"/getProductToken"}, method = RequestMethod.GET)
    	public String getProductToken(ModelMap model) {
-   		model.addAttribute("productToken",loginService.getProductToken());
-   		model.addAttribute("requestSuccess", true);
+    	Users users = loginService.getProductToken();
+    	if(users!=null){
+    		model.addAttribute("productToken",users.getProductToken());
+       		model.addAttribute("isPrivilegedUser",users.getIsPrivilegedUser());
+    	}else{
+    		model.addAttribute("productToken","");
+       		model.addAttribute("isPrivilegedUser","");
+    	}
+    	model.addAttribute("requestSuccess", true);
    		return "/returnPage";
    	}
     
@@ -165,6 +172,16 @@ public class CommonController {
     		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
     		lawyerAdminService.enableOrDisableLawyerAdmin(lawyerAdmin.getLawyerAdminId());
     	}
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+    
+    // enable or Disable User
+    @RequestMapping(value="/changePrivilegedUserStatus",method=RequestMethod.POST)
+   	public String changePrivilegedUserStatus(@RequestParam("customerProductToken") String customerProductToken,@RequestParam("privilegedStatus") Integer privilegedStatus,ModelMap model)
+   	{
+    	
+    	loginService.changePrivilegedUserStatus(customerProductToken,privilegedStatus);
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}

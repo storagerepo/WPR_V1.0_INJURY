@@ -20,7 +20,8 @@ adminApp.controller('PaymentController',function($rootScope,$http,$state,$scope,
 				"billToDate":"",
 				"billId":"",
 				"itemsPerPage":"10",
-				"pageNumber":1
+				"pageNumber":1,
+				"fromType":1
 				};
 		$scope.getBillList();
 	};

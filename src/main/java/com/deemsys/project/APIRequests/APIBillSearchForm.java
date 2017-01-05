@@ -10,6 +10,7 @@ public class APIBillSearchForm {
 	private String billId;
 	private Integer itemsPerPage;
 	private Integer pageNumber;
+	private Integer fromType;
 	public Long getCustomerId() {
 		return customerId;
 	}
@@ -64,6 +65,12 @@ public class APIBillSearchForm {
 	public void setPageNumber(Integer pageNumber) {
 		this.pageNumber = pageNumber;
 	}
+	public Integer getFromType() {
+		return fromType;
+	}
+	public void setFromType(Integer fromType) {
+		this.fromType = fromType;
+	}
 	public APIBillSearchForm() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -71,7 +78,7 @@ public class APIBillSearchForm {
 	public APIBillSearchForm(Long customerId, String customerProductToken,
 			String subcriptionFromDate, String subscriptionToDate,
 			String billFromDate, String billToDate, String billId,
-			Integer itemsPerPage, Integer pageNumber) {
+			Integer itemsPerPage, Integer pageNumber,Integer fromType) {
 		super();
 		this.customerId = customerId;
 		this.customerProductToken = customerProductToken;
@@ -82,6 +89,7 @@ public class APIBillSearchForm {
 		this.billId = billId;
 		this.itemsPerPage = itemsPerPage;
 		this.pageNumber = pageNumber;
+		this.fromType = fromType;
 	}
 	
 }

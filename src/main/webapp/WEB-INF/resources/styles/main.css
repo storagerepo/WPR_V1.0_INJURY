@@ -871,3 +871,14 @@ html {
 .text-danger{
 	color:red;
 }
+
+.bill-summary-table {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+
+.bill-summary-table td
+{
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
