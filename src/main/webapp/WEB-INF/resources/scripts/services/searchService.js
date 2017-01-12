@@ -273,5 +273,12 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		archivedToDate="";
 		return true;
 	};
+	
+	// Calculate Number of days between dates
+	this.calculateNumberOfDays=function(startDateTime,endDateTime){
+		var numberOfDays=0;
+		numberOfDays=moment(new Date(endDateTime)).diff(startDateTime,"days")+1;
+		return numberOfDays;
+	};
 
 });

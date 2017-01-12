@@ -1,0 +1,22 @@
+<div class="row">
+	<div class="col-lg-12">
+	 <a ui-sref="dashboard.home" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Home</a>
+		<h2 class="page-header">Help</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+	 		
+			<!-- /.panel-heading -->
+			<div class="col-md-12">
+				 <h1>Help Content</h1>
+			<span ng-repeat="rating in ratings">{{rating.current}} out of
+            {{rating.max}}
+        		<div star-rating rating-value="rating.current" max="rating.max" on-rating-selected="getSelectedRating(rating)" rating-readonly="isReadonly"></div>
+       	 	</span>
+			</div>
+		<!-- /.panel -->
+	<!-- /.col-lg-12 -->
+</div>
+

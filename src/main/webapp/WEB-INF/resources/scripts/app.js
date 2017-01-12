@@ -1119,7 +1119,47 @@ sbAdminApp
 													}
 												},
 												controller:'CardController',
-											});// End Change password
+											})// End Change password	
+											.state(
+													'dashboard.help',
+													{
+														resolve : {
+															loadMyFile : function(
+																	$ocLazyLoad) {
+																return $ocLazyLoad
+																		.load({
+																			name : 'sbAdminApp',
+																			files : ['scripts/controllers/helpController.js']
+																		});
+															}
+														},
+														controller : 'HelpController',
+														templateUrl : 'views/help.html',
+														url : '/help'
+
+													})// End of Help Page
+													.state(
+													'dashboard.report-issue',
+													{
+														resolve : {
+															loadMyFile : function(
+																	$ocLazyLoad) {
+																return $ocLazyLoad
+																		.load({
+																			name : 'sbAdminApp',
+																			files : [
+																			         'components/text-editor/summernote.js',
+																			         'components/text-editor/summernote.css',
+																			         'scripts/controllers/reportIssueController.js',
+																			         ]
+																		});
+															}
+														},
+														controller : 'ReportIssueController',
+														templateUrl : 'views/report-issue.html',
+														url : '/report-issue'
+
+													});
 
 						} ]).run( [ '$rootScope', function ($rootScope,$state, $stateParams) {
 							$rootScope.$state = $state;

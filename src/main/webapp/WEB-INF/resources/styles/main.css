@@ -872,6 +872,10 @@ html {
 	color:red;
 }
 
+.num-alignment{
+	display: inline-block !important; width: 100px !important;text-align: right !important;
+}
+
 .bill-summary-table {
   border-collapse: separate;
   border-spacing: 0 5px;
@@ -881,4 +885,24 @@ html {
 {
   padding-top: 3px;
   padding-bottom: 3px;
+}
+/* Rating*/
+.rating {
+    color: #a9a9a9;
+    margin: 0;
+    padding: 0;
+}
+ul.rating {
+    display: inline-block;
+}
+.rating li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 1px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+.rating .filled {
+    color: red;
 }

@@ -1,0 +1,68 @@
+<div class="row">
+	<div class="col-lg-12">
+	 <a ui-sref="dashboard.home" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Home</a>
+		<h2 class="page-header">Report Issue</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+	 		
+			<!-- /.panel-heading -->
+	<div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            Enter the Details
+            </div>
+             <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                <div class="col-lg-2">
+                            <label class="text-muted">Feature</label>
+						</div>
+                        <div class="col-lg-10">
+                            <input class="form-control" name="feature" placeholder="Feature" ng-model="technicalIssuesForm.feature" maxlength="80" required/>
+                            <div class="error-message">
+                               <div ng-show="technicalIssuesSubmitted">
+                                <span ng-show="technicalIssuesAddEditForm.feature.$error.required">Enter Feature</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="text-muted">Title</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input class="form-control" placeholder="Title" name="title" ng-model="technicalIssuesForm.issueTitle" maxlength="100" required />
+                            <div class="error-message">
+                                <div ng-show="technicalIssuesSubmitted">
+                                <span ng-show="technicalIssuesAddEditForm.title.$error.required">Enter Title</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="text-muted">Description</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <div summernote config="options" name="description"  ng-model="technicalIssuesForm.description" summernote-required></div>
+                            <div class="error-message">
+                                 <div ng-show="technicalIssuesSubmitted">
+                                <span ng-show="technicalIssuesAddEditForm.description.$error.summernoteRequired">Enter Description</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            </div>
+                            <div class="col-lg-12 text-center">
+                                <input type="submit" ng-click="technicalIssuesSubmitted=true" value="Post a Issue" class="btn btn-success"/>
+                                <a ui-sref="dashboard.technical-issues" class="btn btn-danger">Cancel</a>
+                            </div>
+                </div>
+            </div>
+         </div>
+						
+	 </div>
+		<!-- /.panel -->
+	<!-- /.col-lg-12 -->
+</div>
+

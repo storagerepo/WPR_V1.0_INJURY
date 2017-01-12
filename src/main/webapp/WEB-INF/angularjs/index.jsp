@@ -33,6 +33,8 @@
     <!-- bower:js -->
     <script src="resources/components/jquery/dist/jquery.min.js"></script>
     <script src="resources/components/angular/angular.min.js"></script>
+     <!-- Drag Drop -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	  <script src="resources/components/bootstrap/dist/js/bootstrap.min.js"></script>
 	  
 
@@ -69,7 +71,6 @@
 	<script src="resources/components/angular-file-saver/angular-file-saver.bundle.min.js"></script>
 
 	 <!-- Drag Drop -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<script src="resources/components/angular-sortable/angular-sortable.js"></script>
 
 	<!-- Load For Menu -->
@@ -88,7 +89,8 @@
 	<link rel="stylesheet" href="resources/components/bootstrap-multi-select/bootstrap-select.min.css"></link>
 	<script src="resources/components/angular-multi-select/angularjs-dropdown-multiselect.js"></script>
 	
-	
+	<!-- Summer Note -->
+	<script src="resources/components/angular-summer/angular-summer.js"></script>
 	
     <!-- Controllers -->
 

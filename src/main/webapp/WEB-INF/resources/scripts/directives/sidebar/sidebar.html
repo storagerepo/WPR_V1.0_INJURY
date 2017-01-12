@@ -40,7 +40,9 @@
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
                 <a href="#/dashboard/UserPreferrence/1"><i ng-cloak class="fa fa-wrench fa-fw"></i> Settings<span></span></a>
             </li>
-            
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
+                <a ui-sref="dashboard.report-issue"><span ng-cloak class="fa fa-bug fa-fw">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Report Issue<span></span></a>
+            </li>
             
               
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
@@ -55,7 +57,9 @@
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
                 <a href="#/dashboard/UserPreferrence/1"><i ng-cloak class="fa fa-wrench fa-fw"></i> Settings<span></span></a>
             </li>
-            
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
+                <a ui-sref="dashboard.report-issue"><span ng-cloak class="fa fa-bug fa-fw">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Report Issue<span></span></a>
+            </li>
             
              <li ui-sref-active="active" ng-show="{{$root.isAdmin==4}}">
                 <a ui-sref="dashboard.CallerSearchPatients"><span ng-cloak class="patient-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Patients<span></span></a>
@@ -63,6 +67,7 @@
              <li ui-sref-active="active" ng-show="{{$root.isAdmin==4}}">
                 <a ui-sref="dashboard.clinics"><span ng-cloak class="clinic-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Clinics<span></span></a>
             </li>
+             
             
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==5}}">
                 <a ui-sref="dashboard.LawyerSearchPatients"><span ng-cloak class="patient-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Clients<span></span></a>
