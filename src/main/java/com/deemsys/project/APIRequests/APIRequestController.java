@@ -82,4 +82,19 @@ public class APIRequestController {
 		String result=restTemplate.getForObject(injuryProperties.getProperty("marketingAppDomain")+injuryProperties.getProperty("getTransactionDetailsAPI")+billId, String.class);
 		return result;
 	}
+	
+	// Post a Issue
+	@RequestMapping(value="/postIssue",method=RequestMethod.POST)
+	public @ResponseBody String postIssue(@RequestBody APITechnicalIssueForm apiTechnicalIssueForm){
+		
+		RestTemplate restTemplate = new RestTemplate();
+		Gson gson=new Gson();
+		String requestJson = gson.toJson(apiTechnicalIssueForm);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
+		String result=restTemplate.postForObject(injuryProperties.getProperty("marketingAppDomain")+injuryProperties.getProperty("saveUpdateTechnicalIssues"), entity, String.class);
+		return result;
+	}
 }

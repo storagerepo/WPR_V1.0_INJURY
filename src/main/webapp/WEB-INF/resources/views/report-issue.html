@@ -1,6 +1,7 @@
 <div class="row">
 	<div class="col-lg-12">
-	 <a ui-sref="dashboard.home" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Home</a>
+	<a ui-sref="dashboard.home" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Home</a>
+	<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>	
 		<h2 class="page-header">Report Issue</h2>
 	</div>
 	<!-- /.col-lg-12 -->
@@ -17,46 +18,91 @@
              <!-- /.panel-heading -->
             <div class="panel-body">
                 <div class="dataTable_wrapper">
+                <form name="technicalIssuesAddEditForm" novalidate ng-submit="technicalIssuesAddEditForm.$valid && postReportIssue()">
+                <div class="col-md-12 no-padding">
+                                <div class="col-md-6">
+                                   <label>Firstname</label>
+                                    <input type="text" class="form-control inputclass"  ng-model="technicalIssuesForm.firstName" name="firstName" placeholder="First Name" maxlength="45" validate-name required>
+                                    <span class="error-container" ng-show="technicalIssuesSubmitted">
+                                    <span ng-cloak style="color:red" ng-show="technicalIssuesAddEditForm.firstName.$error.required">Please Enter Firstname</span>
+                                    <span ng-cloak style="color:red" ng-show="!technicalIssuesAddEditForm.firstName.$error.required&&technicalIssuesAddEditForm.firstName.$error.validateName">Enter Valid Firstname</span>
+                                     </span><br/>
+                                  </div>
+                                  <div class="col-md-6">
+                                  <label>Lastname</label>
+                                    <input type="text" class="form-control"  ng-model="technicalIssuesForm.lastName" name="lastName" placeholder="Last Name" maxlength="45" validate-name  required>
+                                    <span class="error-container" ng-show="technicalIssuesSubmitted">
+                                      <span ng-cloak style="color:red" ng-show="technicalIssuesAddEditForm.lastName.$error.required">Please Enter Lastname</span>
+                                      <span ng-cloak style="color:red" ng-show="!technicalIssuesAddEditForm.lastName.$error.required&&technicalIssuesAddEditForm.lastName.$error.validateName">Enter Valid Lastname</span>
+                                     </span><br/>
+                                   </div>
+                              </div>
+                     <div class="col-md-12 no-padding">
+                      <div class="col-md-6">
+                              <label>Phone Number</label>
+                                    <input type="text" class="form-control inputclass"  ng-model="technicalIssuesForm.contactNumber" name="phoneNumber" placeholder="Phone Number eg: (123)456-7890 or 123-456-7890" maxlength="20" validate-mobile required>
+                                   <span class="error-container" ng-show="technicalIssuesSubmitted">
+                                     <span ng-cloak style="color:red" ng-show="technicalIssuesAddEditForm.phoneNumber.$error.required">Please Enter Phone Number</span>
+                                     <span ng-cloak style="color:red" ng-show="!technicalIssuesAddEditForm.phoneNumber.$error.required&&technicalIssuesAddEditForm.phoneNumber.$error.validateMobile">Enter Valid Phone Number</span>
+                                   </span> 
+                                     <br/>
+                                   </div> 
+                                    <div class="col-md-6">
+                                 <label>Email ID</label>
+                                    <input type="email" class="form-control"  ng-model="technicalIssuesForm.emailId" name="emailAddress" placeholder="Email ID" maxlength="60" required validate-email>
+                                    <span class="error-container" ng-show="technicalIssuesSubmitted">
+                                   			 <span ng-cloak style="color:red" ng-show="technicalIssuesAddEditForm.emailAddress.$error.required">Please Enter Email ID</span>
+                                            <span ng-cloak style="color:red" ng-show="technicalIssuesAddEditForm.emailAddress.$error.email">Enter a valid Email ID</span>
+                                    </span>                                    
+                                    <br/>
+                                    </div>
+                     </div>
+                     <div class="col-md-12">
+                     <h3>Issue Details</h3>
+                     <hr/>
+                     </div>
+                     
                 <div class="col-lg-2">
-                            <label class="text-muted">Feature</label>
+                            <label>Feature</label>
+                            <br/>
 						</div>
                         <div class="col-lg-10">
                             <input class="form-control" name="feature" placeholder="Feature" ng-model="technicalIssuesForm.feature" maxlength="80" required/>
-                            <div class="error-message">
-                               <div ng-show="technicalIssuesSubmitted">
-                                <span ng-show="technicalIssuesAddEditForm.feature.$error.required">Enter Feature</span>
-                                </div>
-                            </div>
+                             <span class="error-container" ng-show="technicalIssuesSubmitted">
+                                <span ng-cloak style="color:red" ng-show="technicalIssuesAddEditForm.feature.$error.required">Please Enter Feature</span>
+                            </span>
+                            <br/>
                         </div>
                         <div class="col-lg-2">
-                            <label class="text-muted">Title</label>
+                            <label>Title</label>
+                            <br/>
                         </div>
                         <div class="col-lg-10">
                             <input class="form-control" placeholder="Title" name="title" ng-model="technicalIssuesForm.issueTitle" maxlength="100" required />
-                            <div class="error-message">
-                                <div ng-show="technicalIssuesSubmitted">
-                                <span ng-show="technicalIssuesAddEditForm.title.$error.required">Enter Title</span>
-                                </div>
-                            </div>
+                            <span class="error-container" ng-show="technicalIssuesSubmitted">
+                                <span ng-cloak style="color:red" ng-show="technicalIssuesAddEditForm.title.$error.required">Please Enter Title</span>
+                             </span>
+                             <br/>
                         </div>
                         <div class="col-lg-2">
-                            <label class="text-muted">Description</label>
+                            <label>Description</label>
+                            <br/>
                         </div>
                         <div class="col-lg-10">
                             <div summernote config="options" name="description"  ng-model="technicalIssuesForm.description" summernote-required></div>
-                            <div class="error-message">
-                                 <div ng-show="technicalIssuesSubmitted">
-                                <span ng-show="technicalIssuesAddEditForm.description.$error.summernoteRequired">Enter Description</span>
-                                </div>
-                            </div>
+                          <span class="error-container" ng-show="technicalIssuesSubmitted">
+                                <span ng-cloak style="color:red" ng-show="technicalIssuesAddEditForm.description.$error.summernoteRequired">Please Enter Description</span>
+                           </span>
+                           <br/>
                         </div>
                         
                         <div class="row">
                             </div>
                             <div class="col-lg-12 text-center">
                                 <input type="submit" ng-click="technicalIssuesSubmitted=true" value="Post a Issue" class="btn btn-success"/>
-                                <a ui-sref="dashboard.technical-issues" class="btn btn-danger">Cancel</a>
+                                <a ui-sref="dashboard.home" class="btn btn-danger">Cancel</a>
                             </div>
+                     </form>
                 </div>
             </div>
          </div>

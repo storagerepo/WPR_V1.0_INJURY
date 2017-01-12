@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.amazonaws.services.identitymanagement.model.User;
+import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.CallerAdminCountyMapping.CallerAdminCountyMapService;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingService;
+import com.deemsys.project.Lawyers.LawyersService;
+import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.CallerAdmin;
+import com.deemsys.project.entity.Lawyer;
 import com.deemsys.project.entity.LawyerAdmin;
 import com.deemsys.project.entity.Users;
 import com.deemsys.project.login.LoginService;
@@ -47,6 +51,15 @@ public class CommonController {
 	
 	@Autowired
 	LawyerAdminService lawyerAdminService;
+	
+	@Autowired
+	LawyersService lawyersService;
+	
+	@Autowired
+	CallerService callerService;
+	
+	@Autowired
+	InjuryProperties injuryProperties;
 	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String getInit(ModelMap model)
@@ -183,6 +196,30 @@ public class CommonController {
     	
     	loginService.changePrivilegedUserStatus(customerProductToken,privilegedStatus);
     	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+    
+    // Get Current User Details
+    @RequestMapping(value = {"/getCurrentUserDetails"}, method = RequestMethod.GET)
+   	public String getCurrentUserDetails(ModelMap model) {
+    	String currentRole=loginService.getCurrentRole();
+    	CurrentUserDetailsForm currentUserDetailsForm = new CurrentUserDetailsForm();
+    	if(currentRole.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+    		CallerAdmin callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
+    		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"),currentRole, callerAdmin.getFirstName(), callerAdmin.getLastName(), callerAdmin.getPhoneNumber(), callerAdmin.getEmailAddress());
+    	}else if(currentRole.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+    		LawyerAdmin lawyerAdmin = lawyerAdminService.getLawyerAdminIdByUserId(loginService.getCurrentUserID());
+    		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"),currentRole, lawyerAdmin.getFirstName(), lawyerAdmin.getLastName(), lawyerAdmin.getPhoneNumber(), lawyerAdmin.getEmailAddress());
+    	}else if(currentRole.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+    		Caller caller = callerService.getCallerByUserId(loginService.getCurrentUserID());
+    		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"),currentRole, caller.getFirstName(), caller.getLastName(), caller.getPhoneNumber(), caller.getEmailAddress());
+    	}else if(currentRole.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
+    		Lawyer lawyer = lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID());
+    		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"),currentRole, lawyer.getFirstName(), lawyer.getLastName(), lawyer.getPhoneNumber(), lawyer.getEmailAddress());
+    	}
+    		
+    	model.addAttribute("currentUserDetailsForm",currentUserDetailsForm);
+       	model.addAttribute("requestSuccess", true);
    		return "/returnPage";
    	}
 }

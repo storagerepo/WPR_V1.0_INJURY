@@ -1469,3 +1469,22 @@ sbAdminApp.directive('yearDrop',function(){
         template: '<select class="form-control col-sm-4" ng-model="cardDetails.expiryYear" ng-options="y for y in years"></select>'
     };
 });
+
+sbAdminApp.directive('summernoteRequired', function () {
+    return {
+        require: 'ngModel',
+        restrict: '',
+        link: function (scope, elm, attrs, ngModel) {
+            // only apply the validator if ngModel is present and Angular has added the email validator
+            ngModel.$validators.summernoteRequired = function (modelValue) {
+                if(modelValue==undefined || modelValue==""|| modelValue=="<p><br></p>" || modelValue=="<br>"){
+                    return false;
+                }
+                else{
+                    return true;
+                }
+               // return URL_REGEXP.test(modelValue);
+            };
+        }
+    };
+});
