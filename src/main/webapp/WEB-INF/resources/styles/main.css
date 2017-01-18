@@ -902,7 +902,26 @@ ul.rating {
     text-align: center;
     font-weight: bold;
     cursor: pointer;
+    font-size: 2em;
 }
 .rating .filled {
-    color: red;
+    color: gold;
 }
+
+/* View Star Rating in Modal*/
+.star-ratings-sprite {
+  background: url("../resources/images/stars.png") repeat-x;
+  font-size: 0;
+  height: 21px;
+  line-height: 0;
+  overflow: hidden;
+  text-indent: -999em;
+  width: 110px;
+}
+.star-ratings-sprite .rating {
+    background: url("../resources/images/stars.png") repeat-x;
+    background-position: 0 100%;
+    float: left;
+    height: 21px;
+    display:block;
+  }

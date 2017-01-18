@@ -37,5 +37,6 @@
         <mapping class="com.deemsys.project.entity.UserExportPreferencesId" />
         <mapping class="com.deemsys.project.entity.UserLookupPreferences" />
         <mapping class="com.deemsys.project.entity.UserLookupPreferencesId" />
+        <mapping class="com.deemsys.project.entity.RatingReviews" />
     </session-factory>
 </hibernate-configuration>

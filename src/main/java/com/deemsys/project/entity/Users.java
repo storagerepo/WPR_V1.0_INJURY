@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated Nov 17, 2016 6:08:16 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 Jan, 2017 1:10:25 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,18 +32,16 @@ public class Users implements java.io.Serializable {
 	private String productToken;
 	private Integer isPrivilegedUser;
 	private Integer status;
-	private Set<UserExportPreferences> userExportPreferenceses = new HashSet<UserExportPreferences>(
-			0);
-	private Set<UserLookupPreferences> userLookupPreferenceses = new HashSet<UserLookupPreferences>(
-			0);
+	private Set<RatingReviews> ratingReviewses = new HashSet<RatingReviews>(0);
 
 	public Users() {
 	}
 
 	public Users(Roles roles, String username, String password,
-			Integer isEnable, Integer isPasswordChanged, Integer isDisclaimerAccepted, String productToken, Integer isPrivilegedUser, Integer status,
-			Set<UserExportPreferences> userExportPreferenceses,
-			Set<UserLookupPreferences> userLookupPreferenceses) {
+			Integer isEnable, Integer isPasswordChanged,
+			Integer isDisclaimerAccepted, String productToken,
+			Integer isPrivilegedUser, Integer status,
+			Set<RatingReviews> ratingReviewses) {
 		this.roles = roles;
 		this.username = username;
 		this.password = password;
@@ -53,8 +51,7 @@ public class Users implements java.io.Serializable {
 		this.productToken = productToken;
 		this.isPrivilegedUser = isPrivilegedUser;
 		this.status = status;
-		this.userExportPreferenceses = userExportPreferenceses;
-		this.userLookupPreferenceses = userLookupPreferenceses;
+		this.ratingReviewses = ratingReviewses;
 	}
 
 	@Id
@@ -116,7 +113,7 @@ public class Users implements java.io.Serializable {
 
 	@Column(name = "is_disclaimer_accepted")
 	public Integer getIsDisclaimerAccepted() {
-		return isDisclaimerAccepted;
+		return this.isDisclaimerAccepted;
 	}
 
 	public void setIsDisclaimerAccepted(Integer isDisclaimerAccepted) {
@@ -125,7 +122,7 @@ public class Users implements java.io.Serializable {
 
 	@Column(name = "product_token", length = 45)
 	public String getProductToken() {
-		return productToken;
+		return this.productToken;
 	}
 
 	public void setProductToken(String productToken) {
@@ -140,7 +137,7 @@ public class Users implements java.io.Serializable {
 	public void setIsPrivilegedUser(Integer isPrivilegedUser) {
 		this.isPrivilegedUser = isPrivilegedUser;
 	}
-	
+
 	@Column(name = "status")
 	public Integer getStatus() {
 		return this.status;
@@ -151,23 +148,12 @@ public class Users implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	public Set<UserExportPreferences> getUserExportPreferenceses() {
-		return this.userExportPreferenceses;
+	public Set<RatingReviews> getRatingReviewses() {
+		return this.ratingReviewses;
 	}
 
-	public void setUserExportPreferenceses(
-			Set<UserExportPreferences> userExportPreferenceses) {
-		this.userExportPreferenceses = userExportPreferenceses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	public Set<UserLookupPreferences> getUserLookupPreferenceses() {
-		return this.userLookupPreferenceses;
-	}
-
-	public void setUserLookupPreferenceses(
-			Set<UserLookupPreferences> userLookupPreferenceses) {
-		this.userLookupPreferenceses = userLookupPreferenceses;
+	public void setRatingReviewses(Set<RatingReviews> ratingReviewses) {
+		this.ratingReviewses = ratingReviewses;
 	}
 
 }

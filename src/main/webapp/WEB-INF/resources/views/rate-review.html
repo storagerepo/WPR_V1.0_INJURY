@@ -1,0 +1,75 @@
+<div class="row">
+	<div class="col-lg-12">
+	 <a ui-sref="dashboard.home" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Home</a>
+		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>	
+		<h2 class="page-header">Rate & Review</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+	 		
+			<!-- /.panel-heading -->
+			<div class="col-md-12">
+			<form name="ratingForm" no-validate>
+			<div ng-repeat="rating in ratings" class="col-md-12">
+			<div class="col-md-5">
+			<label>{{rating.question}}</label>
+			</div>
+			<div class="col-md-5">
+        		<span star-rating rating-value="rating.current" max="rating.max" on-rating-selected="getSelectedRating(rating,$index)" rating-readonly="isDisable"></span>
+       	 	&nbsp;&nbsp;{{rating.current}} out of {{rating.max}}
+       	 	</div>
+       	 	</div>
+       	 	<div class="col-md-12"><div class="col-md-6"></div><div class="col-md-5"><span style="color:red" ng-show="isError" class="pull-right">Please Rate All</span></div></div>
+       	 	<div class="col-md-12">
+       	 	<hr/>
+       	 	<div class="col-md-5"><label>Average Rating</label></div>
+       	 	<div class="col-md-5">
+       	 	<span star-percentage-rating stars="5" outer-star-selection="stars" outer-percent="rating" rating-define="percent" rating-percent="{{overallPercentage}}" star-radius="12" sel-color="gold" back-color="white"></span>
+       		&nbsp;&nbsp;<span ng-bind="stars"></span> out of 5
+       		</div>
+       	 	</div>
+       	 	<div class="col-md-12">
+       	 	<hr/>
+       	 	</div>
+       	 	<div class="col-md-12" style="padding-top:20px;">
+       	 	<div class="col-md-5">
+       	 	<label>Aesthetics</label>
+       	 	</div>
+       	 	<div class="col-md-5"><textarea ng-model="reviewQ1" name="reviewQ1" class="form-control" rows="5" ng-disabled="isDisable" maxlength="250"></textarea>
+       	 	<br/>
+       	 	</div>
+       	 	</div>
+       	 	<div class="col-md-12">
+       	 	<div class="col-md-5">
+       	 	<label>Ease of Use</label>
+       	 	</div>
+       	 	<div class="col-md-5"><textarea ng-model="reviewQ2" name="reviewQ2" class="form-control" rows="5" ng-disabled="isDisable" maxlength="250"></textarea>
+       	 	<br/>
+       	 	</div>
+       	 	</div>
+       	 	<div class="col-md-12">
+       	 	<div class="col-md-5">
+       	 	<label>User Satisfaction</label>
+       	 	</div>
+       	 	<div class="col-md-5"><textarea ng-model="reviewQ3" name="reviewQ3" class="form-control" rows="5" ng-disabled="isDisable" maxlength="250"></textarea>
+       	 	<br/></div>
+       	 	</div>
+       	 	<div class="col-md-12">
+       	 	<div class="col-md-5">
+       	 	<label>Overall Review</label>
+       	 	</div>
+       	 	<div class="col-md-5"><textarea ng-model="reviewQ4" name="reviewQ4" class="form-control" rows="5" ng-disabled="isDisable" maxlength="250"></textarea>
+       	 	<br/></div>
+       	 	</div>
+       	 	 <div class="text-center" style="margin-right:30px;" ng-hide="isDisable">
+                <a class="btn btn-success" ng-click="submitRating()" ng-class="{'button-disable':myForm.$invalid}" ng-disabled='ratingForm.$invalid'>Submit</a>
+              <a ui-sref="dashboard.home"  class="btn btn-danger" >Cancel</a><br/><br/>
+           </div>
+           </form>
+		</div>
+		<!-- /.panel -->
+	<!-- /.col-lg-12 -->
+</div>
+

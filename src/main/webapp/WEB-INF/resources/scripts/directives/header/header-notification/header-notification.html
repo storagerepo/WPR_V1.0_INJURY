@@ -9,6 +9,8 @@
            <!--  <li><a href="#"><i class="fa fa-user fa-fw"></i> Profile</a></li> -->
            <li><a href="dashboard#/dashboard/Changepassword"><i class="fa fa-key fa-fw"></i> Change Password</a></li>
            <li><a href="dashboard#/dashboard/help"><i class="fa fa-question-circle fa-fw"></i> Help</a></li>
+           <li ng-show="{{$root.isAdmin!=1}}"><a href="dashboard#/dashboard/rate-review"><i class="fa fa-star-o fa-fw"></i> Rate & Review</a></li>
+           <li ng-show="{{$root.isAdmin==1}}"><a href="dashboard#/dashboard/ratings-reviews"><i class="fa fa-star-o fa-fw"></i> Ratings & Reviews</a></li>
            <li class="divider"></li>
             <li><a href="j_spring_security_logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
             </li>

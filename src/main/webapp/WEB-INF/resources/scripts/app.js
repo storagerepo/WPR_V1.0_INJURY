@@ -1158,8 +1158,47 @@ sbAdminApp
 														controller : 'ReportIssueController',
 														templateUrl : 'views/report-issue.html',
 														url : '/report-issue'
-
-													});
+													})// End of Report issue
+													.state(
+															'dashboard.rate-review',
+															{
+																resolve : {
+																	loadMyFile : function(
+																			$ocLazyLoad) {
+																		return $ocLazyLoad
+																				.load({
+																					name : 'sbAdminApp',
+																					files : [
+																					         'styles/rating.css',
+																					         'js/rating.js',
+																					         'scripts/controllers/rateReviewController.js',
+																					         ]
+																				});
+																	}
+																},
+																controller : 'RateReviewController',
+																templateUrl : 'views/rate-review.html',
+																url : '/rate-review'
+															}) // Start of Ratings & Reviews superadmin side
+															.state(
+																	'dashboard.ratings-reviews',
+																	{
+																		resolve : {
+																			loadMyFile : function(
+																					$ocLazyLoad) {
+																				return $ocLazyLoad
+																						.load({
+																							name : 'sbAdminApp',
+																							files : [
+																							         'scripts/controllers/ratingsReviewsController.js',
+																							         ]
+																						});
+																			}
+																		},
+																		controller : 'RatingsReviewsController',
+																		templateUrl : 'views/ratings-reviews.html',
+																		url : '/ratings-reviews'
+																	});
 
 						} ]).run( [ '$rootScope', function ($rootScope,$state, $stateParams) {
 							$rootScope.$state = $state;

@@ -1,0 +1,73 @@
+<div class="row">
+	<div class="col-lg-12">
+	 <a ui-sref="dashboard.home" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Home</a>
+		<h2 class="page-header">Ratings & Reviews</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+	 		
+			<!-- /.panel-heading -->
+			<div class="col-md-12">
+			<div class="col-lg-12" style="margin-top:20px;">
+    			<div class="col-lg-2 col-md-6"></div>
+				<div class="col-lg-3 col-md-6">
+				    <div ng-cloak class="panel panel-primary" style="min-height:300px;">
+				     <a ng-cloak ui-sref="dashboard.CallerAdmin">
+				        <div class="panel-heading" style="min-height:300px;">
+				            <div class="row">
+				                <div class="col-xs-12 text-center" style="min-height:180px;">
+				                	<div ng-cloak>Call Centers Rating</div>
+				                    <i ng-cloak class="fa fa-star-o" style="font-size: 13em;"></i>
+				                </div>
+				            </div>
+				            <div class="row">
+				                <div class="col-xs-12 text-center">
+				                    <div ng-cloak class="huge">{{ratingViewForm.callCentersAverageRating}}</div>
+				                    <div ng-cloak>Out of 5</div>
+				                    <div ng-cloak style="color:#ffa31a !important;padding-top:10px;">Number of Rating : {{ratingViewForm.numberOfCallCentersRating}}</div>
+				                </div>
+				            </div>
+				        </div>
+				       	<div class="panel-footer">
+				                <span class="pull-left">View Details</span>
+				                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+				                <div class="clearfix"></div>
+				            </div>
+				        </a>
+				    </div>
+				</div>
+				<div class="col-lg-2 col-md-6"></div> 
+				<div class="col-lg-3 col-md-6">
+				    <div ng-cloak class="panel panel-primary" style="min-height:300px;">
+				     <a ng-cloak ui-sref="dashboard.LawyerAdmin">
+				        <div class="panel-heading" style="min-height:300px;">
+				            <div class="row">
+				                <div class="col-xs-12 text-center" style="min-height:180px;">
+				                	<div ng-cloak>Lawyers Rating</div>
+				                    <i ng-cloak class="fa fa-star-o" style="font-size: 13em;"></i>
+				                </div>
+				            </div>
+				            <div class="row">
+				                <div class="col-xs-12 text-center">
+				                    <div ng-cloak class="huge">{{ratingViewForm.lawyersAverageRating}}</div>
+				                    <div ng-cloak>Out of 5</div>
+				                    <div ng-cloak style="color:#ffa31a !important;padding-top:10px;">Number of Rating : {{ratingViewForm.numberOfLawyersRating}}</div>
+				                </div>
+				            </div>
+				        </div>
+				       	<div class="panel-footer">
+				                <span class="pull-left">View Details</span>
+				                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+				                <div class="clearfix"></div>
+				            </div>
+				        </a>
+				    </div>
+				</div> 
+				</div>
+			</div>
+		<!-- /.panel -->
+	<!-- /.col-lg-12 -->
+</div>
+

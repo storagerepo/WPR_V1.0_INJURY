@@ -51,6 +51,31 @@ adminApp.controller('ShowLawyerAdminController',function($http,$state,$scope,req
 		
 	};
 	
+	$scope.viewRating=function(userId){
+		  requestHandler.getRequest("/getRatingReviewsByPassingUserId.json?userId="+userId,"").then(function(response){
+		  			if(response.data.ratingReviewsForm.ratingReviewId!=null){
+		  				$scope.isAvailable=true;
+		  				$scope.ratingQ1Style={'width':response.data.ratingReviewsForm.ratingQ1*20+'%'};
+		  				$scope.ratingQ2Style={'width':response.data.ratingReviewsForm.ratingQ2*20+'%'};
+		  				$scope.ratingQ3Style={'width':response.data.ratingReviewsForm.ratingQ3*20+'%'};
+		  				$scope.ratingQ4Style={'width':response.data.ratingReviewsForm.ratingQ4*20+'%'};
+		  				$scope.ratingQ5Style={'width':response.data.ratingReviewsForm.ratingQ5*20+'%'};
+		  				$scope.ratingQ1=response.data.ratingReviewsForm.ratingQ1;
+		  				$scope.ratingQ2=response.data.ratingReviewsForm.ratingQ2;
+		  				$scope.ratingQ3=response.data.ratingReviewsForm.ratingQ3;
+		  				$scope.ratingQ4=response.data.ratingReviewsForm.ratingQ4;
+		  				$scope.ratingQ5=response.data.ratingReviewsForm.ratingQ5;
+		  				$scope.reviewQ1=response.data.ratingReviewsForm.reviewQ1;
+		  				$scope.reviewQ2=response.data.ratingReviewsForm.reviewQ2;
+		  				$scope.reviewQ3=response.data.ratingReviewsForm.reviewQ3;
+		  				$scope.reviewQ4=response.data.ratingReviewsForm.reviewQ4;
+		  			}else{
+		  				$scope.isAvailable=false;
+		  			}
+
+		  			$("#viewRatingModal").modal('show');
+		  		});
+	};
 });
 
 adminApp.controller('SaveLawyerAdminController', function($http,$state,$scope,$location,requestHandler,Flash) {
