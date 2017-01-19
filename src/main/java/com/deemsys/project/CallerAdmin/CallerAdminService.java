@@ -221,22 +221,26 @@ public class CallerAdminService {
 	}
 	
 	//Enable or Disbale Caller Admin
-	public int enableOrDisableCallerAdmin(Integer callerAdminId)
+	public int enableOrDisableCallerAdmin(Integer callerAdminId,Integer fromId)
 	{
 		CallerAdmin callerAdmin=callerAdminDAO.get(callerAdminId);
 		Users users=usersDAO.get(callerAdmin.getUsers().getUserId());
 		if(users.getIsEnable()==0){
-			users.setIsEnable(1);
-			callerAdminDAO.enable(callerAdminId);
-			
-			//Disable Callers
-			List<Caller> callers=callerDAO.getCallerByCallerAdminId(callerAdminId);			
-			for (Caller caller : callers) {
-				Users callerUser=caller.getUsers();
-				if(caller.getStatus()==1){
-					callerUser.setIsEnable(1);
-					usersDAO.update(caller.getUsers());
-				}			
+			if(fromId==1){
+				users.setIsEnable(1);
+				callerAdminDAO.enable(callerAdminId);
+				
+				//Disable Callers
+				List<Caller> callers=callerDAO.getCallerByCallerAdminId(callerAdminId);			
+				for (Caller caller : callers) {
+					Users callerUser=caller.getUsers();
+					if(caller.getStatus()==1){
+						callerUser.setIsEnable(1);
+						usersDAO.update(caller.getUsers());
+					}			
+				}
+			}else{
+				// Do not Enable
 			}
 			
 		}else if(users.getIsEnable()==1){

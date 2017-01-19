@@ -50,7 +50,9 @@ public class RatingReviewsService {
 		
 		for (RatingReviews ratingReviews : ratingReviewss) {
 			//TODO: Fill the List
-			
+			RatingReviewsForm ratingReviewsForm = new RatingReviewsForm(ratingReviews.getRatingReviewId(), ratingReviews.getUsers().getUserId(), ratingReviews.getUsers().getRoles().getRole(), ratingReviews.getRatingQ1(), ratingReviews.getRatingQ2(), ratingReviews.getRatingQ3(), 
+					ratingReviews.getRatingQ4(), ratingReviews.getRatingQ5(), ratingReviews.getReviewQ1(), ratingReviews.getReviewQ2(), ratingReviews.getReviewQ3(), ratingReviews.getReviewQ4(), ratingReviews.getOverallRating(), InjuryConstants.convertUSAFormatWithTime(ratingReviews.getReviewDateTime()), ratingReviews.getStatus());
+			ratingReviewsForms.add(ratingReviewsForm);
 		}
 		
 		return ratingReviewsForms;
@@ -67,7 +69,7 @@ public class RatingReviewsService {
 		//Start
 		RatingReviewsForm ratingReviewsForm=new RatingReviewsForm();
 		if(ratingReviews!=null){
-			ratingReviewsForm=new RatingReviewsForm(ratingReviews.getRatingReviewId(), ratingReviews.getUsers().getUserId(), 
+			ratingReviewsForm=new RatingReviewsForm(ratingReviews.getRatingReviewId(), ratingReviews.getUsers().getUserId(), ratingReviews.getUsers().getRoles().getRole(),
 					ratingReviews.getRatingQ1(), ratingReviews.getRatingQ2(), ratingReviews.getRatingQ3(), ratingReviews.getRatingQ4(), ratingReviews.getRatingQ5(), 
 					ratingReviews.getReviewQ1(), ratingReviews.getReviewQ2(), ratingReviews.getReviewQ3(), ratingReviews.getReviewQ4(), ratingReviews.getOverallRating(), InjuryConstants.convertUSAFormatWithTime(ratingReviews.getReviewDateTime()), ratingReviews.getStatus());
 		}
@@ -151,7 +153,13 @@ public class RatingReviewsService {
 			if(ratingReviews.getUsers().getRoles().getRoleId().equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
 				callerAdminRating=callerAdminRating.add(ratingReviews.getOverallRating());
 				callerAdminReviewCount++;
+			}else if(ratingReviews.getUsers().getRoles().getRoleId().equals(InjuryConstants.INJURY_CALLER_ROLE_ID)){
+				callerAdminRating=callerAdminRating.add(ratingReviews.getOverallRating());
+				callerAdminReviewCount++;
 			}else if(ratingReviews.getUsers().getRoles().getRoleId().equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
+				lawyerAdminRating=lawyerAdminRating.add(ratingReviews.getOverallRating());
+				lawyerAdminReviewCount++;
+			}else if(ratingReviews.getUsers().getRoles().getRoleId().equals(InjuryConstants.INJURY_LAWYER_ROLE_ID)){
 				lawyerAdminRating=lawyerAdminRating.add(ratingReviews.getOverallRating());
 				lawyerAdminReviewCount++;
 			}
@@ -178,7 +186,7 @@ public class RatingReviewsService {
 		//Start
 		RatingReviewsForm ratingReviewsForm=new RatingReviewsForm();
 		if(ratingReviews!=null){
-			ratingReviewsForm=new RatingReviewsForm(ratingReviews.getRatingReviewId(), ratingReviews.getUsers().getUserId(), 
+			ratingReviewsForm=new RatingReviewsForm(ratingReviews.getRatingReviewId(), ratingReviews.getUsers().getUserId(), ratingReviews.getUsers().getRoles().getRole(),
 					ratingReviews.getRatingQ1(), ratingReviews.getRatingQ2(), ratingReviews.getRatingQ3(), ratingReviews.getRatingQ4(), ratingReviews.getRatingQ5(), 
 					ratingReviews.getReviewQ1(), ratingReviews.getReviewQ2(), ratingReviews.getReviewQ3(), ratingReviews.getReviewQ4(), ratingReviews.getOverallRating(), InjuryConstants.convertUSAFormatWithTime(ratingReviews.getReviewDateTime()), ratingReviews.getStatus());
 		}

@@ -17,6 +17,7 @@ public class RatingReviewsForm {
 
 	private Integer ratingReviewId;
 	private Integer userId;
+	private String role;
 	private Integer ratingQ1;
 	private Integer ratingQ2;
 	private Integer ratingQ3;
@@ -45,6 +46,14 @@ public class RatingReviewsForm {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public Integer getRatingQ1() {
@@ -145,7 +154,7 @@ public class RatingReviewsForm {
 		this.status = status;
 	}
 
-	public RatingReviewsForm(Integer ratingReviewId, Integer userId,
+	public RatingReviewsForm(Integer ratingReviewId, Integer userId, String role,
 			Integer ratingQ1, Integer ratingQ2, Integer ratingQ3,
 			Integer ratingQ4, Integer ratingQ5, String reviewQ1,
 			String reviewQ2, String reviewQ3, String reviewQ4,
@@ -153,6 +162,7 @@ public class RatingReviewsForm {
 		super();
 		this.ratingReviewId = ratingReviewId;
 		this.userId = userId;
+		this.role = role;
 		this.ratingQ1 = ratingQ1;
 		this.ratingQ2 = ratingQ2;
 		this.ratingQ3 = ratingQ3;

@@ -180,10 +180,10 @@ public class CommonController {
     	Users users=loginService.getUserByProductToken(customerProductToken);
     	if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
     		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(users.getUserId());
-    		callerAdminService.enableOrDisableCallerAdmin(callerAdmin.getCallerAdminId());
+    		callerAdminService.enableOrDisableCallerAdmin(callerAdmin.getCallerAdminId(),2);
     	}else if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
     		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
-    		lawyerAdminService.enableOrDisableLawyerAdmin(lawyerAdmin.getLawyerAdminId());
+    		lawyerAdminService.enableOrDisableLawyerAdmin(lawyerAdmin.getLawyerAdminId(),2);
     	}
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";

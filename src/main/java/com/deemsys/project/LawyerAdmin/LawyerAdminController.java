@@ -52,7 +52,7 @@ public class LawyerAdminController {
 	public String enableOrDisableLawyerAdmin(@RequestParam("lawyerAdminId") Integer lawyerAdminId,
 			ModelMap model) {
 
-		lawyerAdminService.enableOrDisableLawyerAdmin(lawyerAdminId);
+		lawyerAdminService.enableOrDisableLawyerAdmin(lawyerAdminId,1);
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

@@ -249,24 +249,27 @@ public class LawyerAdminService {
 	}
 	
 	//Enable/Disable
-	public int enableOrDisableLawyerAdmin(Integer lawyerAdminId){
+	public int enableOrDisableLawyerAdmin(Integer lawyerAdminId,Integer fromId){
 		
 		LawyerAdmin lawyerAdmin = lawyerAdminDAO.get(lawyerAdminId);
 		Users users = usersDAO.get(lawyerAdmin.getUsers().getUserId());
 		if(users.getIsEnable()==0){
-			users.setIsEnable(1);
-			lawyerAdminDAO.enable(lawyerAdminId);
-			
-			//Disable Lawyer
-			List<Lawyer> lawyers=lawyersDAO.getLawyersByLawyerAdmin(lawyerAdminId);
-			for (Lawyer lawyer : lawyers) {
-				Users lawyerUser=lawyer.getUsers();
-				if(lawyer.getStatus()==1){
-					lawyerUser.setIsEnable(1);
-					usersDAO.update(lawyerUser);
+			if(fromId==1){
+				users.setIsEnable(1);
+				lawyerAdminDAO.enable(lawyerAdminId);
+				
+				//Disable Lawyer
+				List<Lawyer> lawyers=lawyersDAO.getLawyersByLawyerAdmin(lawyerAdminId);
+				for (Lawyer lawyer : lawyers) {
+					Users lawyerUser=lawyer.getUsers();
+					if(lawyer.getStatus()==1){
+						lawyerUser.setIsEnable(1);
+						usersDAO.update(lawyerUser);
+					}
 				}
+			}else{
+				// Do not enable
 			}
-			
 		}
 		else if(users.getIsEnable()==1){
 			users.setIsEnable(0);

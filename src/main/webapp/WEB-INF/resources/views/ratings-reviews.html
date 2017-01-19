@@ -1,6 +1,8 @@
 <div class="row">
 	<div class="col-lg-12">
-	 <a ui-sref="dashboard.home" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Home</a>
+	<a ui-sref="dashboard.home" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Home </a>
+	<a href="" ng-hide="enableViewAll" ng-click="getAllRatingsAndReviews()" class="btn-sm btn-success pull-right margin-top-40" style="margin-right:10px !important;"><i class="fa fa-star-o fa-lg"></i> View All Ratings & Reviews</a>
+	<a href="" ng-show="enableViewAll" ng-click="getOverallRatings()" class="btn-sm btn-warning pull-right margin-top-40" style="margin-right:10px !important;"><i class="fa fa-star-o fa-lg"></i> View Over All Ratings</a>
 		<h2 class="page-header">Ratings & Reviews</h2>
 	</div>
 	<!-- /.col-lg-12 -->
@@ -9,7 +11,7 @@
 <div class="row">
 	 		
 			<!-- /.panel-heading -->
-			<div class="col-md-12">
+			<div class="col-md-12" ng-hide="enableViewAll">
 			<div class="col-lg-12" style="margin-top:20px;">
     			<div class="col-lg-2 col-md-6"></div>
 				<div class="col-lg-3 col-md-6">
@@ -67,7 +69,145 @@
 				</div> 
 				</div>
 			</div>
+			<!-- View All Ratings -->
+			<div class="col-md-12" ng-show="enableViewAll">
+				<table class="table table-hover table-striped table-bordered">
+
+						<thead>
+							<tr>
+								<th  width="20%" ng-mousedown="sort('reviewDateTime')">Date & Time&nbsp;&nbsp;<span
+									class="glyphicon sort-icon" ng-show="sortKey=='reviewDateTime'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+								<th  width="20%" ng-mousedown="sort('role')">Role&nbsp;&nbsp;<span
+									class="glyphicon sort-icon" ng-show="sortKey=='role'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+								<th  width="20%">Average Rating</th>
+								<th width="13%">Actions</th>
+						
+							</tr>
+
+							<tr>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon1"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.reviewDateTime" placeholder="Date & Time"></div></th>
+								<th>
+								<select class="form-control" ng-model="search.roleId">
+								<option value="">All</option>
+								<option value="1">Caller Admin</option>
+								<option value="2">Caller</option>
+								<option value="3">Lawyer-Admin</option>
+								<option value="4">Lawyer</option>
+								</select>	
+								</th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.overallRating" placeholder="Average Rating"></div></th>
+								<th></th>	
+								
+							</tr>
+						</thead>
+						<tbody>
+
+							<tr  ng-show="ratingReviewsForm.length>0"  dir-paginate="ratingReviews in ratingFilter=(ratingReviewsForm|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows)">
+								<td class="wrap" ng-cloak>{{ratingReviews.reviewDateTime}}</td>
+								<td class="wrap" ng-cloak>{{ratingReviews.role}}</td>
+								<td class="wrap" ng-cloak>{{ratingReviews.overallRating}}</td>
+								<td>
+								
+						<a href="" ng-cloak class="btn btn-xs btn-info hint--top" ng-click="viewRating(ratingReviews.userId)" data-hint="View Rating & Review"><i
+								class="fa fa-star-o"></i>
+						</a>
+								
+							 </td>
+							</tr>
+							<tr ng-show="!ratingReviewsForm.length || !ratingFilter.length">
+				<td colspan="6" align="center">No Records Found</td>
+				</tr>
+						</tbody>
+						
+					</table>
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
+    					</dir-pagination-controls>   
+    					<div class="col-md-3 no-padding pull-right">
+<label>Number of Records</label>
+	<select
+		class="form-control" ng-model="noOfRows" name="noOfRows"
+		id="noOfRows">
+		<option value="10">Show 10 Per Page</option>
+		<option value="25">Show 25 Per Page</option>
+		<option value="50">Show 50 Per Page</option>
+		<option value="100">Show 100 Per Page</option>
+		<option value="{{callerAdmins.length}}">Show All</option>
+	</select> 
+</div>
+			</div>
 		<!-- /.panel -->
 	<!-- /.col-lg-12 -->
 </div>
 
+<!-- View Rating Modal -->
+ <div class="modal fade" id="viewRatingModal" role="dialog">
+    <div class="modal-dialog modal-lg">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Rating & Review </h4>
+        </div>
+        <div class="modal-body">
+              <table class="table table-stripped" ng-show="isAvailable">
+              <tr>
+              <td width="50%">1. Speed/Performance</td>
+              <td width="20%"><div class="star-ratings-sprite"><span ng-style="ratingQ1Style" class="rating"></span></div></td>
+              <td width="20%"><span>{{ratingQ1}} Out of 5</span></td>
+              </tr>
+              <tr>
+              <td width="50%">2. Organising and Accuracy of Data</td>
+              <td width="20%"><div class="star-ratings-sprite"><span ng-style="ratingQ2Style" class="rating"></span></div></td>
+              <td width="20%"><span>{{ratingQ2}} Out of 5</span></td>
+              </tr>
+              <tr>
+              <td width="50%">3. Effectiveness and Efficiency of Information Search</td>
+              <td width="20%"><div class="star-ratings-sprite"><span ng-style="ratingQ3Style" class="rating"></span></div></td>
+              <td width="20%"><span>{{ratingQ3}} Out of 5</span></td>
+              </tr>
+              <tr>
+              <td width="50%">4. User Friendliness</td>
+              <td width="20%"><div class="star-ratings-sprite"><span ng-style="ratingQ4Style" class="rating"></span></div></td>
+              <td width="20%"><span>{{ratingQ4}} Out of 5</span></td>
+              </tr>
+              <tr>
+              <td width="50%">5. Features & Functionality</td>
+              <td width="20%"><div class="star-ratings-sprite"><span ng-style="ratingQ5Style" class="rating"></span></div></td>
+              <td width="20%"><span>{{ratingQ5}} Out of 5</span></td>
+              </tr>
+               <tr>
+              <td width="50%">Aesthetics</td>
+              <td colspan="2">{{reviewQ1}}</td>
+              </tr>
+               <tr>
+              <td width="50%">Ease of Use</td>
+              <td colspan="2">{{reviewQ2}}</td>
+              </tr>
+               <tr>
+              <td width="50%">User Satisfaction</td>
+              <td colspan="2">{{reviewQ3}}</td>
+              </tr>
+               <tr>
+              <td width="50%">Overall Review</td>
+              <td colspan="2">{{reviewQ4}}</td>
+              </tr>
+              </table>
+              <div ng-show="!isAvailable" style="text-align:center !important;"><b>No Rating & Review Found</b></div>
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+ </div>

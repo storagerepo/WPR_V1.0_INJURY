@@ -1,6 +1,7 @@
 var adminApp=angular.module('sbAdminApp',['requestModule','flash']);
 
 adminApp.controller('RateReviewController',function($scope,$http,requestHandler,Flash){
+	
 	 $scope.rating = 0;
 	 $scope.overallPercentage=50;
 	 $scope.isReadonly=true;
