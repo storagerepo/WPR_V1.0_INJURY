@@ -11,6 +11,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.LocalizedResourceHelper;
@@ -48,7 +49,7 @@ public abstract class AbstractExcelView extends AbstractView{
 			workbook = getTemplateSource(this.url, request);
 		}
 		else {*/
-			workbook = new XSSFWorkbook();
+			workbook = new SXSSFWorkbook(1000);
 			logger.debug("Created Excel Workbook from scratch");
 		//}
 

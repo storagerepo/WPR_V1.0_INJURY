@@ -99,7 +99,8 @@ public class ExportExcelView extends AbstractExcelView {
 			cell.setCellValue(exportFieldsForm.getFieldName());
 		}
 		
-		
+		for(int i = 0 ; i < exportFieldsForms.size(); i++)
+		  sheet.autoSizeColumn(i, true);
 		
 		//Create data cell
 		for(PatientSearchList patient:patientSearchLists){
@@ -107,7 +108,8 @@ public class ExportExcelView extends AbstractExcelView {
 			row = sheet.createRow(r++);
 			c = 0;
 			for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
-				row.createCell(c++).setCellValue(this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId()));
+				String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId());
+				row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
 			}
 			
 		/*	if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
@@ -148,8 +150,7 @@ public class ExportExcelView extends AbstractExcelView {
 			
 		
 		}
-		for(int i = 0 ; i < exportFieldsForms.size(); i++)
-			sheet.autoSizeColumn(i, true);
+		
 		
 		
 	}
@@ -314,6 +315,8 @@ public class ExportExcelView extends AbstractExcelView {
 		case 14:
 			if(patientSearchList.getAge()!=null){
 				value=patientSearchList.getAge().toString();
+			}else{
+				value="";
 			}
 			break;
 		case 15:
