@@ -30,13 +30,13 @@ adminApp.controller('RatingsReviewsController',function($scope,$http,requestHand
 		requestHandler.getRequest("getAllRatingReviewss.json","").then(function(response){
 			$scope.ratingReviewsForm=response.data.ratingReviewsForms;
 			$.each($scope.ratingReviewsForm,function(key,value){
-				if(value.role=='ROLE_CALLER_ADMIN'){
+				if(value.role=='Caller Admin'){
 					value.roleId=1;
-				}else if(value.role=='ROLE_CALLER'){
+				}else if(value.role=='Caller'){
 					value.roleId=2;
-				}else if(value.role=='ROLE_LAWYER_ADMIN'){
+				}else if(value.role=='Lawyer Admin'){
 					value.roleId=3;
-				}else if(value.role=='ROLE_LAWYER'){
+				}else if(value.role=='Lawyer'){
 					value.roleId=4;
 				}
 			});

@@ -307,4 +307,21 @@ public class InjuryConstants {
 			String pwd = RandomStringUtils.random( 15, 0, 0, false, false, characters.toCharArray(), new SecureRandom());
 			return pwd;
 		}
+
+		public static String getRoleAsText(String currentRole) {
+			// TODO Auto-generated method stub
+			String roleText="";
+			if(currentRole.equals(INJURY_SUPER_ADMIN_ROLE)){
+				roleText="CRO Super Admin";
+			}else if(currentRole.equals(INJURY_CALLER_ADMIN_ROLE)){
+				roleText="Caller Admin";
+			}else if(currentRole.equals(INJURY_CALLER_ROLE)){
+				roleText="Caller";
+			}else if(currentRole.equals(INJURY_LAWYER_ADMIN_ROLE)){
+				roleText="Lawyer Admin";
+			}else if(currentRole.equals(INJURY_LAWYER_ROLE)){
+				roleText="Lawyer";
+			}
+			return roleText;
+		}
 }

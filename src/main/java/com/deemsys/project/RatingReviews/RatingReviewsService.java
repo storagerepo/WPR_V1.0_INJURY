@@ -50,7 +50,7 @@ public class RatingReviewsService {
 		
 		for (RatingReviews ratingReviews : ratingReviewss) {
 			//TODO: Fill the List
-			RatingReviewsForm ratingReviewsForm = new RatingReviewsForm(ratingReviews.getRatingReviewId(), ratingReviews.getUsers().getUserId(), ratingReviews.getUsers().getRoles().getRole(), ratingReviews.getRatingQ1(), ratingReviews.getRatingQ2(), ratingReviews.getRatingQ3(), 
+			RatingReviewsForm ratingReviewsForm = new RatingReviewsForm(ratingReviews.getRatingReviewId(), ratingReviews.getUsers().getUserId(), InjuryConstants.getRoleAsText(ratingReviews.getUsers().getRoles().getRole()), ratingReviews.getRatingQ1(), ratingReviews.getRatingQ2(), ratingReviews.getRatingQ3(), 
 					ratingReviews.getRatingQ4(), ratingReviews.getRatingQ5(), ratingReviews.getReviewQ1(), ratingReviews.getReviewQ2(), ratingReviews.getReviewQ3(), ratingReviews.getReviewQ4(), ratingReviews.getOverallRating(), InjuryConstants.convertUSAFormatWithTime(ratingReviews.getReviewDateTime()), ratingReviews.getStatus());
 			ratingReviewsForms.add(ratingReviewsForm);
 		}
@@ -69,7 +69,7 @@ public class RatingReviewsService {
 		//Start
 		RatingReviewsForm ratingReviewsForm=new RatingReviewsForm();
 		if(ratingReviews!=null){
-			ratingReviewsForm=new RatingReviewsForm(ratingReviews.getRatingReviewId(), ratingReviews.getUsers().getUserId(), ratingReviews.getUsers().getRoles().getRole(),
+			ratingReviewsForm=new RatingReviewsForm(ratingReviews.getRatingReviewId(), ratingReviews.getUsers().getUserId(), InjuryConstants.getRoleAsText(ratingReviews.getUsers().getRoles().getRole()),
 					ratingReviews.getRatingQ1(), ratingReviews.getRatingQ2(), ratingReviews.getRatingQ3(), ratingReviews.getRatingQ4(), ratingReviews.getRatingQ5(), 
 					ratingReviews.getReviewQ1(), ratingReviews.getReviewQ2(), ratingReviews.getReviewQ3(), ratingReviews.getReviewQ4(), ratingReviews.getOverallRating(), InjuryConstants.convertUSAFormatWithTime(ratingReviews.getReviewDateTime()), ratingReviews.getStatus());
 		}
@@ -186,7 +186,7 @@ public class RatingReviewsService {
 		//Start
 		RatingReviewsForm ratingReviewsForm=new RatingReviewsForm();
 		if(ratingReviews!=null){
-			ratingReviewsForm=new RatingReviewsForm(ratingReviews.getRatingReviewId(), ratingReviews.getUsers().getUserId(), ratingReviews.getUsers().getRoles().getRole(),
+			ratingReviewsForm=new RatingReviewsForm(ratingReviews.getRatingReviewId(), ratingReviews.getUsers().getUserId(), InjuryConstants.getRoleAsText(ratingReviews.getUsers().getRoles().getRole()),
 					ratingReviews.getRatingQ1(), ratingReviews.getRatingQ2(), ratingReviews.getRatingQ3(), ratingReviews.getRatingQ4(), ratingReviews.getRatingQ5(), 
 					ratingReviews.getReviewQ1(), ratingReviews.getReviewQ2(), ratingReviews.getReviewQ3(), ratingReviews.getReviewQ4(), ratingReviews.getOverallRating(), InjuryConstants.convertUSAFormatWithTime(ratingReviews.getReviewDateTime()), ratingReviews.getStatus());
 		}

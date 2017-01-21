@@ -206,16 +206,16 @@ public class CommonController {
     	CurrentUserDetailsForm currentUserDetailsForm = new CurrentUserDetailsForm();
     	if(currentRole.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
     		CallerAdmin callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
-    		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"),currentRole, callerAdmin.getFirstName(), callerAdmin.getLastName(), callerAdmin.getPhoneNumber(), callerAdmin.getEmailAddress());
+    		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"), InjuryConstants.getRoleAsText(currentRole), callerAdmin.getFirstName(), callerAdmin.getLastName(), callerAdmin.getPhoneNumber(), callerAdmin.getEmailAddress());
     	}else if(currentRole.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
     		LawyerAdmin lawyerAdmin = lawyerAdminService.getLawyerAdminIdByUserId(loginService.getCurrentUserID());
-    		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"),currentRole, lawyerAdmin.getFirstName(), lawyerAdmin.getLastName(), lawyerAdmin.getPhoneNumber(), lawyerAdmin.getEmailAddress());
+    		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"), InjuryConstants.getRoleAsText(currentRole), lawyerAdmin.getFirstName(), lawyerAdmin.getLastName(), lawyerAdmin.getPhoneNumber(), lawyerAdmin.getEmailAddress());
     	}else if(currentRole.equals(InjuryConstants.INJURY_CALLER_ROLE)){
     		Caller caller = callerService.getCallerByUserId(loginService.getCurrentUserID());
-    		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"),currentRole, caller.getFirstName(), caller.getLastName(), caller.getPhoneNumber(), caller.getEmailAddress());
+    		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"), InjuryConstants.getRoleAsText(currentRole), caller.getFirstName(), caller.getLastName(), caller.getPhoneNumber(), caller.getEmailAddress());
     	}else if(currentRole.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
     		Lawyer lawyer = lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID());
-    		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"),currentRole, lawyer.getFirstName(), lawyer.getLastName(), lawyer.getPhoneNumber(), lawyer.getEmailAddress());
+    		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"), InjuryConstants.getRoleAsText(currentRole), lawyer.getFirstName(), lawyer.getLastName(), lawyer.getPhoneNumber(), lawyer.getEmailAddress());
     	}
     		
     	model.addAttribute("currentUserDetailsForm",currentUserDetailsForm);

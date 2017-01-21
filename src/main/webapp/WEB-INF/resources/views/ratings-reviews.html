@@ -16,7 +16,7 @@
     			<div class="col-lg-2 col-md-6"></div>
 				<div class="col-lg-3 col-md-6">
 				    <div ng-cloak class="panel panel-primary" style="min-height:300px;">
-				     <a ng-cloak ui-sref="dashboard.CallerAdmin">
+				     <a ng-cloak href="" style="cursor: default;">
 				        <div class="panel-heading" style="min-height:300px;">
 				            <div class="row">
 				                <div class="col-xs-12 text-center" style="min-height:180px;">
@@ -43,7 +43,7 @@
 				<div class="col-lg-2 col-md-6"></div> 
 				<div class="col-lg-3 col-md-6">
 				    <div ng-cloak class="panel panel-primary" style="min-height:300px;">
-				     <a ng-cloak ui-sref="dashboard.LawyerAdmin">
+				     <a ng-cloak href="" style="cursor: default;">
 				        <div class="panel-heading" style="min-height:300px;">
 				            <div class="row">
 				                <div class="col-xs-12 text-center" style="min-height:180px;">
@@ -187,19 +187,19 @@
               </tr>
                <tr>
               <td width="50%">Aesthetics</td>
-              <td colspan="2">{{reviewQ1}}</td>
+              <td colspan="2" class="wrap-breakall"><span ng-show="reviewQ1!=null">{{reviewQ1}}</span><span ng-show="reviewQ1==null">-</span></td>
               </tr>
                <tr>
               <td width="50%">Ease of Use</td>
-              <td colspan="2">{{reviewQ2}}</td>
+              <td colspan="2" class="wrap-breakall"><span ng-show="reviewQ2!=null">{{reviewQ2}}</span><span ng-show="reviewQ2==null">-</span></td>
               </tr>
                <tr>
               <td width="50%">User Satisfaction</td>
-              <td colspan="2">{{reviewQ3}}</td>
+              <td colspan="2" class="wrap-breakall"><span ng-show="reviewQ3!=null">{{reviewQ3}}</span><span ng-show="reviewQ3==null">-</span></td>
               </tr>
                <tr>
               <td width="50%">Overall Review</td>
-              <td colspan="2">{{reviewQ4}}</td>
+              <td colspan="2" class="wrap-breakall"><span ng-show="reviewQ4!=null">{{reviewQ4}}</span><span ng-show="reviewQ4==null">-</span></td>
               </tr>
               </table>
               <div ng-show="!isAvailable" style="text-align:center !important;"><b>No Rating & Review Found</b></div>
