@@ -18,6 +18,7 @@
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.SearchPatients"><span ng-cloak class="patient-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Search Clients<span></span></a>
             </li>
+           <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}"><a ui-sref="dashboard.ratings-reviews"><i ng-cloak class="fa fa-star-o fa-fw"></i> Ratings & Reviews</a></li>
            <!--   <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.payment"><i ng-cloak class="fa fa-money fa-fw"></i> Payment<span></span></a>
             </li> -->
@@ -77,6 +78,10 @@
              <li ui-sref-active="active" ng-show="{{$root.isAdmin==5}}">
                 <a ui-sref="dashboard.report-issue"><span ng-cloak class="fa fa-bug fa-fw">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Report Issue<span></span></a>
             </li>
+            
+            <!-- Common To all -->
+              <li ui-sref-active="active" ng-show="{{$root.isAdmin!=1}}"><a ui-sref="dashboard.rate-review"><i ng-cloak class="fa fa-star-o fa-fw"></i> Rate & Review</a></li>
+           
         </ul>
     </div>
     <!-- /.sidebar-collapse -->

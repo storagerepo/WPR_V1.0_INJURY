@@ -700,20 +700,24 @@ $scope.archivedToDateRequired=false;
 	};
 	//Export Excel
 	$scope.exportToExcel=function(){
-		$scope.formatType=1;
-		$scope.resetUserPreferenceError();
-		$("#exportOptionModal").modal('show');
-		$scope.exportExcelByType=function(){
-			$scope.exportButtonText="Exporting...";
-			$scope.exportButton=true;
-			$scope.searchParam.formatType=$scope.formatType;
-			requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.searchParam).success(function(responseData){
-				 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-				 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
-				 $scope.exportButtonText="Export to Excel";
-				 $scope.exportButton=false;
-			});
-		};
+		if($scope.totalRecords>searchService.getMaxRecordsDownload()){
+			$("#exportAlertModal").modal('show');
+		}else{
+			$scope.formatType=1;
+			$scope.resetUserPreferenceError();
+			$("#exportOptionModal").modal('show');
+			$scope.exportExcelByType=function(){
+				$scope.exportButtonText="Exporting...";
+				$scope.exportButton=true;
+				$scope.searchParam.formatType=$scope.formatType;
+				requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.searchParam).success(function(responseData){
+					 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+					 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
+					 $scope.exportButtonText="Export to Excel";
+					 $scope.exportButton=false;
+				});
+			};
+		}
 	};
 	
 	// Check User Preference Status

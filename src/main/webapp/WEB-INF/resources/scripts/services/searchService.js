@@ -22,6 +22,13 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var countyListType="1";
 	var archivedFromDate="";
 	var archivedToDate="";
+	
+	// Constant
+	var maxRecordsDownload=100000;
+	this.getMaxRecordsDownload=function(){
+		return maxRecordsDownload;
+	};
+	
 	// County
 	this.setCounty=function(countyInput){
 		countySession=countyInput;
