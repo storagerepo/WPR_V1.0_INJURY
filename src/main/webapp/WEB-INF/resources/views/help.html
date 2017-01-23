@@ -17,7 +17,7 @@
 			<!-- /.panel-heading -->
 			<div class="col-md-12">
 			    <div class="panel-group" id="faqAccordion">
-			        <div class="panel panel-default" ng-repeat="helpContent in helpContents | filter:search">
+			    	<div class="panel panel-default" ng-repeat="helpContent in helpContents | filter:search">
 			            <div class="panel-heading accordion-toggle question-toggle collapsed" data-toggle="collapse" data-parent="#faqAccordion" data-target="#question{{$index}}">
 			                 <h4 class="panel-title">
 			                    <a href="" class="ing">{{helpContent.question}}<i style="color:grey !important" class="more-less glyphicon glyphicon-plus"></i></a>
@@ -27,8 +27,7 @@
 			            <div id="question{{$index}}" class="panel-collapse collapse" style="height: 0px;">
 			                <div class="panel-body">
 			                    <!--  <h5><span class="label label-primary">Answer</span></h5> -->
-			
-			                    <p><span ng-bind-html="helpContent.answer | html" class="break-word"></span></p>
+								<p><span ng-bind-html="helpContent.answer | html" class="break-word"></span></p>
 			                </div>
 			            </div>
 			        </div>

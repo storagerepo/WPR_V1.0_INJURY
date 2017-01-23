@@ -1,17 +1,42 @@
 var adminApp=angular.module('sbAdminApp',[]);
 
-adminApp.controller('HelpController',function($scope,$http){
+adminApp.controller('HelpController',function($rootScope,$scope,$http){
 	
-	 $scope.helpContents=[{
-		 			"question":"Q1: What is Lorem Ipsum?",
-		 			"answer":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five <a href='http://jquery2dotnet.com/' class='label label-success'>http://jquery2dotnet.com/</a> centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-	 			},{
-		 			"question":"Q2: Why do we use it?",
-		 			"answer":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-	 			},{
-		 			"question":"Q3: Where does it come from?",
-		 			"answer":"Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of 'de Finibus Bonorum et Malorum' (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, 'Lorem ipsum dolor sit amet..', comes from a line in section 1.10.32.",
-	 			}];
+	$scope.helpContents=[{
+			"question":"Q1: How about changing my password?",
+			"answer":"To change your CRO account password, sign in and then click the arrow next to your username (in the top corner) Next choose change password.<br/><br/> While changing the password need to provide a current password of account, new password and reenter the new password. Finally Click save, to change the password.<br/><br/> From next time onwards you have to provide a new password to login.",
+		},{
+			"question":"Q2: How I can report issues?",
+			"answer":"Reports from customers on CRO help us identify and fix problems when something's not working. To report a problem: <br/><br/>1. Click report issue on left side menu. <br/><br/>Giving more detail Feature,Title and Description <b>(ex: adding a screenshot and description)</b> helps us find the problem.<br/><br/> Reporting issues when they happen helps make CRO better, and we appreciate the time it takes to give us this information.",
+		},{
+			"question":"Q3: How can I change my subscription settings?",
+			"answer":"Your settings let you control, ease of records search and export. <br/><br/>You can view or change your account settings in the Settings page. To change a settings:<br/><br/> 1. Click settings on left side menu Under settings, <br/><br/>we have two types. 1. Lookup preference 2. Export Preference <br/><br/><b>1. Lookup preference</b> <br/><br/>It's used for records search <br/>- Default is subscribed counties <br/>- For preferred counties select counties and save. <br/><br/> <b>2. Export Preference</b> <br/><br/>It's used for export excel <br/>- Default is standard fields <br/>- For custom fields drag and drop fields and save.",
+		}];
+
+	if($rootScope.isAdmin==2||$rootScope.isAdmin==3){
+		$scope.helpContents=[{
+			"question":"Q1: How about changing my password?",
+			"answer":"To change your CRO account password, sign in and then click the arrow next to your username (in the top corner) Next choose change password.<br/><br/> While changing the password need to provide a current password of account, new password and reenter the new password. Finally Click save, to change the password.<br/><br/> From next time onwards you have to provide a new password to login.",
+		},{
+			"question":"Q2: How I can report issues?",
+			"answer":"Reports from customers on CRO help us identify and fix problems when something's not working. To report a problem: <br/><br/>1. Click report issue on left side menu. <br/><br/>Giving more detail Feature,Title and Description <b>(ex: adding a screenshot and description)</b> helps us find the problem.<br/><br/> Reporting issues when they happen helps make CRO better, and we appreciate the time it takes to give us this information.",
+		},{
+			"question":"Q3: How can I change my subscription settings?",
+			"answer":"Your settings let you control, ease of records search and export. <br/><br/>You can view or change your account settings in the Settings page. To change a settings:<br/><br/> 1. Click settings on left side menu Under settings, <br/><br/>we have two types. 1. Lookup preference 2. Export Preference <br/><br/><b>1. Lookup preference</b> <br/><br/>It's used for records search <br/>- Default is subscribed counties <br/>- For preferred counties select counties and save. <br/><br/> <b>2. Export Preference</b> <br/><br/>It's used for export excel <br/>- Default is standard fields <br/>- For custom fields drag and drop fields and save.",
+		}];
+	}else if($rootScope.isAdmin==4||$rootScope.isAdmin==5){
+		$scope.helpContents=[{
+			"question":"Q1: How about changing my password?",
+			"answer":"To change your CRO account password, sign in and then click the arrow next to your username (in the top corner) Next choose change password.<br/><br/> While changing the password need to provide a current password of account, new password and reenter the new password. Finally Click save, to change the password.<br/><br/> From next time onwards you have to provide a new password to login.",
+		},{
+			"question":"Q2: How I can report issues?",
+			"answer":"Reports from customers on CRO help us identify and fix problems when something's not working. To report a problem: <br/><br/>1. Click report issue on left side menu. <br/><br/>Giving more detail Feature,Title and Description <b>(ex: adding a screenshot and description)</b> helps us find the problem.<br/><br/> Reporting issues when they happen helps make CRO better, and we appreciate the time it takes to give us this information.",
+		},{
+			"question":"Q3: How can I change my subscription settings?",
+			"answer":"Your settings let you control, ease of records search and export. <br/><br/>You can view or change your account settings by <b>contact admin</b>.",
+		}];
+	}
+	 
 });
 
 //html filter (render text as html)
