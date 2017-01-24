@@ -1187,10 +1187,10 @@
                                     w: a(window).width(),
                                     h: a(window).height() - r.outerHeight()
                                 })
-                            }).trigger("resize"), C.css("overflow", "hidden")) : (a(window).off("resize"), D({
+                            }).trigger("resize"), C.css("overflow", "auto")) : (a(window).off("resize"), D({
                                 w: x.width || "",
                                 h: v.data("orgHeight")
-                            }), C.css("overflow", "hidden")), e.updateFullscreen(r, E)
+                            }), C.css("overflow", "auto")), e.updateFullscreen(r, E)
                         } else if ("codeview" === n) {
                             q.toggleClass("codeview");
                             var F = q.hasClass("codeview");
