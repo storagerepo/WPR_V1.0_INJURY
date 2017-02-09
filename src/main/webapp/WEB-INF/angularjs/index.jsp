@@ -74,6 +74,7 @@
 	<script src="resources/components/angular-sortable/angular-sortable.js"></script>
 
 	<!-- Load For Menu -->
+	<script src="resources/scripts/services/googleService.js"></script>
 	<script src="resources/scripts/services/searchService.js"></script>
 	<script src="resources/scripts/services/requestHandler.js"></script>
 	<script src='resources/scripts/directives/sidebar/sidebar.js'></script>
@@ -91,6 +92,9 @@
 	
 	<!-- Summer Note -->
 	<script src="resources/components/angular-summer/angular-summer.js"></script>
+	
+	<!-- Google Authentication  -->
+	<script src="https://apis.google.com/js/client.js"></script>
 	
     <!-- Controllers -->
 

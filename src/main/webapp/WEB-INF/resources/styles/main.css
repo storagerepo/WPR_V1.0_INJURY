@@ -504,14 +504,17 @@ border-radius:4px !important;
 }
 input[type=text]::-ms-clear { display: none; }
 
+.primaryText{
+	color:#428bca !important;
+}
 .errorText{
-	color:#e60000;
+	color:#e60000 !important;
 }
 .successText{
-	color:green;
+	color:green !important;
 }
 .warningText{
-	color:#ffcc00;
+	color:#ffcc00 !important;
 }
 .badge1 {
    position:relative;

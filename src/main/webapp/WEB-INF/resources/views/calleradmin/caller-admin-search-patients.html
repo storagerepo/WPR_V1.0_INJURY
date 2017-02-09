@@ -98,6 +98,7 @@
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="releaseCaller()" class="btn btn-sm btn-danger">Release From Caller</a>
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="moveArchive()" class="btn btn-sm btn-warning">Archive all</a>
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==0" ng-click="releaseArchive()" class="btn btn-sm btn-primary">Restore all</a>
+					<a href="" ng-disabled="isCleanCheckbox()" ng-click="printReports()" class="btn btn-sm btn-info">Print Reports</a>
 				</div>
 				<div class="col-md-6 no-padding">
 					<div class="col-md-3 margin-top-5 text-right no-padding">Records Type&nbsp;&nbsp;</div>
@@ -789,6 +790,37 @@
         <div class="modal-footer" >
          	<button type="close" class="btn btn-danger" data-dismiss="modal">OK</button>
         </div>
+      </div>
+      
+    </div>
+ </div>
+ 
+ <!-- Select Printer -->
+  <div class="modal fade" id="selectPrinterModal" role="dialog" data-backdrop="static" 
+   data-keyboard="false" >
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+      <form name="printerselectform" no-validate>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Printer</h4>
+        </div>
+        <div class="modal-body">
+        	<label>Note :</label> Printers are listed here is based on gmail logged in account. If you want to change the printers list, Please logout from this gmail account and again login with corresponding gmail account.<br/><br/>
+        	<label>Logged in User account :</label> {{user}} &nbsp;&nbsp; - <a href="" ng-click="switchAccount()">Switch Account</a><br/><br/>
+        	<select ng-cloak class="form-control" name="printer" ng-model="printerId" required onchange="this.style.color = this.options[this.selectedIndex].style.color;">
+        	<option value="">-- Please Select --</option>
+        	<option ng-repeat="printer in printersList" ng-if="printer.id!='__google__docs'" ng-style="{color:{ONLINE:'green',OFFLINE:'red'}[printer.connectionStatus]}" value="{{printer.id}}">{{printer.defaultDisplayName}} ({{printer.connectionStatus}})</option>
+        	</select>
+        	<span class="error-container" ng-show="printerselectform.printer.$dirty && printerselectform.printer.$invalid">
+        		<span style="color:red;" ng-show="printerselectform.printer.$error.required">Please select printer</span>
+        	</span>
+        </div>
+        <div class="modal-footer" >
+         	<a class="btn btn-danger" ng-disabled="printerselectform.$invalid" data-dismiss="modal" ng-click="postFilesToPrint()">Print</a>
+        </div>
+       </form>
       </div>
       
     </div>

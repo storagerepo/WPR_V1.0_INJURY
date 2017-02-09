@@ -1198,13 +1198,32 @@ sbAdminApp
 																		controller : 'RatingsReviewsController',
 																		templateUrl : 'views/ratings-reviews.html',
 																		url : '/ratings-reviews'
-																	});
+																	})// End of Ratings Reviews superadmin side
+																	.state(
+																			'dashboard.printreports/',
+																			{
+																				templateUrl : 'views/print-reports.html',
+																				url : '/printreports/',
+																				controller : "PrintReportsController",
+																				resolve : {
+																					loadMyFile : function(
+																							$ocLazyLoad) {
+
+																						return $ocLazyLoad
+																								.load({
+																									name : 'sbAdminApp',
+																									files : [ 'scripts/controllers/printReportsController.js' ]
+																								});
+																					}
+																				}
+
+																		});
 
 						} ]).run( [ '$rootScope', function ($rootScope,$state, $stateParams) {
 							$rootScope.$state = $state;
 				            $rootScope.$stateParams = $stateParams;
 					        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
-					        	if(to.name=='dashboard.viewlocations/:id'){
+					        	if(to.name=='dashboard.viewlocations/:id' || to.name=='dashboard.printreports/'){
 					        		$rootScope.hideMenu=true;
 					        	}else{
 					        		$rootScope.hideMenu=false;

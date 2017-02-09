@@ -1,0 +1,42 @@
+<div class="row">
+	<div class="col-lg-12">
+	 <!-- <a ui-sref="dashboard.home" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Home</a>
+      --><h2 class="page-header">Print Reports List</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+	 		<div class="col-md-12 margin-bottom-10"><a class="pull-right btn btn-danger" ng-click="isPrintStopped=true"><i class="fa fa-stop-circle"></i> Stop</a></div>
+			<!-- /.panel-heading -->
+			<div class="col-md-12">
+			    <table class="table table-stripped">
+			    <thead>
+			    <tr>
+			    <th>Local Report Number</th>
+			    <th>Status</th>
+			    <th>Actions</th>
+			    </tr>
+			    </thead>
+			    <tbody>
+			    <tr ng-repeat="printReports in printReportsList">
+			    <td>{{printReports.localReportNumber}}</td>
+			    <td><span class="warningText" ng-show="printReports.printStatus==0">Waiting</span><span class="primaryText" ng-show="printReports.printStatus==1">Sending...</span><span class="warningText" ng-show="printReports.printStatus==2">Queued</span><span class="primaryText" ng-show="printReports.printStatus==3">In Progress</span><span class="successText" ng-show="printReports.printStatus==4">Completed</span><span class="errorText" ng-show="printReports.printStatus==5">Failed</span><span class="errorText" ng-show="printReports.printStatus==6">Stopped</span></td>
+			    <td><span ng-show="printReports.printStatus==0"><a class="btn btn-sm btn-danger" ng-click="removeReports($index)"><i class="fa fa-trash"></i></a></span></td>
+			    </tr>
+			    </tbody>
+			    </table>
+			</div>
+		<!-- /.panel -->
+	<!-- /.col-lg-12 -->
+</div>
+<script type="text/javascript">
+   window.onbeforeunload = function() {
+        return "Are you sure you want to leave? Print will stop!";
+    } 
+    window.onload = function () {
+        document.onkeydown = function (e) {
+            return (e.which || e.keyCode) != 116;
+        };
+    }
+</script>

@@ -1,6 +1,6 @@
-var adminApp=angular.module('sbAdminApp', ['requestModule', 'angularjs-dropdown-multiselect','searchModule','flash','ngFileSaver']);
+var adminApp=angular.module('sbAdminApp', ['requestModule', 'angularjs-dropdown-multiselect','searchModule','flash','ngFileSaver','googleModule']);
 
-adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler','searchService','$state','Flash','FileSaver','$q', function($scope,requestHandler,searchService,$state,Flash,FileSaver,$q) {
+adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler','searchService','$state','Flash','FileSaver','$q','googleService','$timeout','$window', function($scope,requestHandler,searchService,$state,Flash,FileSaver,$q,googleService,$timeout,$window) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.lawyerPatientSearchData=$scope.patientSearchDataOrginal=[];
@@ -678,6 +678,62 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	$scope.resetResultData=function(){
 		$scope.lawyerPatientSearchData="";
 		$scope.totalRecords="";
+	};
+	
+	// Print Reports
+	$scope.printReports=function(){
+		$scope.user="";
+		googleService.login().then(function(data){
+			console.log(data);
+			$scope.xsrf=gapi.auth.getToken().access_token;
+			requestHandler.postRequest("/getPrinterList.json?xsrf="+$scope.xsrf+"&accessToken="+$scope.xsrf,"").then(function(response){
+				if(response.data.success){
+					$scope.user=response.data.request.user;
+					$scope.printersList=response.data.printers;
+					$.each($scope.printersList,function(key,value){
+						if(value.defaultDisplayName==""){
+							value.defaultDisplayName=value.name;
+						}
+					});
+					$("#selectPrinterModal").modal("show");
+				}else{
+					alert("Something went wrong!!!");
+				}
+				
+			});
+		});
+	};
+
+	// post files to Print
+	$scope.postFilesToPrint=function(){
+		var reportsList=[];
+		reportsList.printerId=$scope.printerId;
+		reportsList.xsrf=$scope.xsrf;
+		var localReportNumber="";
+		$.each($scope.lawyerPatientSearchData, function(index,value) {
+			$.each(value.searchResult, function(index1,value1) {
+				$.each(value1.patientSearchLists,function(index2,value2){
+					if(value2.selected==true){
+						if(localReportNumber!=value2.localReportNumber){
+							reportsList.push({"localReportNumber":value2.localReportNumber,"fileName":value2.crashReportFileName,"printStatus":0});
+							localReportNumber=value1.localReportNumber;
+						}
+						else
+							console.log("available");
+					}
+					});
+			});
+			
+		});
+		var $popup=$window.open('#/dashboard/printreports/','Crash Reports Online','width=1200,height=600,scrollbars=1');
+		 $popup.reportsList=reportsList;
+	};
+	
+	// Logout Account And Login with another account
+	$scope.switchAccount=function(){
+		var $popup=$window.open('https://mail.google.com/mail/u/0/?logout&hl=en','Gmail','width=900,height=500,scrollbars=1');
+		$("#selectPrinterModal").modal("hide");
+		$timeout(function(){$popup.close();$scope.printReports();},3000);
 	};
 }]); 
 

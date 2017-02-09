@@ -1,9 +1,6 @@
 
 package com.deemsys.project.common;
 
-
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.amazonaws.services.identitymanagement.model.User;
 import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.CallerAdminCountyMapping.CallerAdminCountyMapService;
+import com.deemsys.project.Export.PrintPDFFiles;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingService;
 import com.deemsys.project.Lawyers.LawyersService;
@@ -60,6 +57,9 @@ public class CommonController {
 	
 	@Autowired
 	InjuryProperties injuryProperties;
+	
+	@Autowired
+	PrintPDFFiles printPDFFiles;
 	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String getInit(ModelMap model)
