@@ -16,7 +16,7 @@
         <div class="col-md-12 no-padding">
         	<div class="col-md-3">
        			<label>County</label>
-       			&nbsp;<a href="" data-toggle="popover" title="Info on County Selection:" data-content="<p><b>Subscribed - </b>All counties you have subscribed to.</p><p><b>Preferred - </b> Only counties you usually prefer to access.</p>" data-trigger="focus"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchCountyMinError"> Select at least one county</span>
+       			&nbsp;<a href="" data-toggle="popover" title="Info on County Selection:" data-content="<p><b>Subscribed - </b>All counties you have subscribed to.</p><p><b>Preferred - </b> Only counties you usually prefer to access.</p>" data-placement="top"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchCountyMinError"> Select at least one county</span>
      		<div ng-dropdown-multiselect="" preference-list="countyListType" options="mycounties" selected-model="patient.countyId" extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true}" events="countyEvents"></div>
        		</div>
          	<div class="col-md-3">
@@ -66,7 +66,7 @@
        		<span style="color:red" ng-if="addedToRequired==true">Please Enter Added On To Date</span>
        	</div>
        	<div class="col-md-3">
-			<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details (Deceased victims not listed)" data-trigger="focus"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
+			<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details (Deceased victims not listed)" data-placement="top"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
          		<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier"></div>
        	</div>
        	
@@ -95,7 +95,7 @@
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="releaseLawyer()" class="btn btn-sm btn-danger">Release Patients</a>
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="moveArchive()" class="btn btn-sm btn-warning">Archive all</a>
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==0" ng-click="releaseArchive()" class="btn btn-sm btn-primary">Restore all</a>
-					<a href="" ng-disabled="isCleanCheckbox()" ng-click="printReports()" class="btn btn-sm btn-info">Print Reports</a>
+					<a href="" ng-disabled="isCleanCheckbox()" ng-click="printReports()" class="btn btn-sm btn-info">Print Reports</a>&nbsp;<a href="" data-toggle="modal" data-target="#printReportsHelpModal"><i class="fa fa-info-circle"></i></a>
 			</div>
 				<div class="col-md-6 no-padding">
 					<div class="col-md-3 margin-top-5 text-right no-padding">Records Type&nbsp;&nbsp;</div>
@@ -364,15 +364,16 @@
           <h4 class="modal-title">Printer</h4>
         </div>
         <div class="modal-body">
-        	<label>Note :</label> Printers are listed here is based on gmail logged in account. If you want to change the printers list, Please logout from this gmail account and again login with corresponding gmail account.<br/><br/>
         	<label>Logged in User account :</label> {{user}} &nbsp;&nbsp; - <a href="" ng-click="switchAccount()">Switch Account</a><br/><br/>
         	<select ng-cloak class="form-control" name="printer" ng-model="printerId" required onchange="this.style.color = this.options[this.selectedIndex].style.color;">
         	<option value="">-- Please Select --</option>
-        	<option ng-repeat="printer in printersList" ng-if="printer.id!='__google__docs'" ng-style="{color:{ONLINE:'green',OFFLINE:'red'}[printer.connectionStatus]}" value="{{printer.id}}">{{printer.defaultDisplayName}} ({{printer.connectionStatus}})</option>
+        	<option ng-repeat="printer in printersList" ng-if="printer.id!='__google__docs'" ng-style="{color:{ONLINE:'green',OFFLINE:'red'}[printer.connectionStatus]}" value="{{printer.id}}">{{printer.defaultDisplayName}} {{printer.displayConnectionStatus}}</option>
         	</select>
         	<span class="error-container" ng-show="printerselectform.printer.$dirty && printerselectform.printer.$invalid">
         		<span style="color:red;" ng-show="printerselectform.printer.$error.required">Please select printer</span>
         	</span>
+        	<br/>
+        	<div><label>Note :</label> <ul><li>Printers listed here are based on the associated google account. If you want a different printer, Please Click <b>Switch Account</b> link and login with the corresponding google account.</li><li>To add printers in google account, please <a href="" data-dismiss="modal" ng-click="moveToHelpPage();">click here</a> and follow the instructions.</li></ul></div>
         </div>
         <div class="modal-footer" >
          	<a class="btn btn-danger" ng-disabled="printerselectform.$invalid" data-dismiss="modal" ng-click="postFilesToPrint()">Print</a>
@@ -381,7 +382,47 @@
       </div>
       
     </div>
- </div>					
+ </div>	
+ 
+ <!-- Print Rports Help Info -->
+  <div class="modal fade" id="printReportsHelpModal" role="dialog" data-backdrop="static" 
+   data-keyboard="false" >
+    <div class="modal-dialog modal-lg">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">How to Print Reports?</h4>
+        </div>
+        <div class="modal-body">
+        	<p><b>For printing reports from CRO, you require the following:</b></p>
+        	<p><ul><li><b>Google Account</b></li><li><b>Google Chrome (For adding Printers)</b></li></ul></p>
+        	<p>If you do not already have a Google account, please create one using the following link: <a href='https://accounts.google.com/SignUp?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ltmpl=default' target='_blank'>https://accounts.google.com/SignUp?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ltmpl=default.</a></p>
+        	<p>Now add printers under your Google account.Printers can be added only by using Google Chrome. If it is not available in your system, please download and install the same using the following link: <a href='https://www.google.com/chrome/browser/features.html?brand=CHBD&gclid=CLzFoaqnhdICFc0TaAodGa4DGg' target='_blank'>https://www.google.com/chrome/browser/features.html?brand=CHBD&gclid=CLzFoaqnhdICFc0TaAodGa4DGg</a></p>
+        	<p>Once you have Google Chrome in your system, simply follow the steps outlined below:</p>
+        	<p><ol>
+        	<li>Type (or copy & paste) <b>chrome://devices</b> in the Chrome browser</li>
+        	<li>Under <b>Classic Printers,</b> click the <b>Add printers</b> button</li>
+        	<li>If you are not already logged into your Google account, you will be asked to log into it. Once you are logged in, the list of printers connected under the local network will be displayed.If the printer is not in the list, Please add the printer by installing corresponding drivers in your local system</li>
+        	<li>You may now select the desired printer from this list and click the <b>Add Printers</b> button to add it to your Google account</li>
+        	<li>Once the required printers are added,you can click the <b>Manage Printers Link</b> to view all the printers under this Google account</li>
+        	<li>Rename the printers if required. <b>(This is for you to identify the printers)</b></li>
+        	<li>Now login into the CRO application and go to <b>Clients</b></li>
+        	<li>Select all the reports you want printed</li>
+        	<li>Click the <b>Print Reports</b> Button</li>
+        	<li>A popup window will appear for authentication of your Google account</li>
+        	<li>Enter the Username and Password of your Google account. Once the account is authenticated, the list of printers associated with that account will be displayed</li>
+        	<li>Now select the desired printer from the list and click the <b>Print</b> button</li>
+        	<li>A popup window will now appear with the list of reports you selected for printing, along with the status of the print job for each report</li>
+        	<li>Once the print jobs are completed, the pop up window can be closed</li></ol></p>
+        </div>
+        <div class="modal-footer" >
+         	<button type="close" class="btn btn-danger" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+      
+    </div>
+ </div>			
 <script>
 $(function(){
 	$("html,body").scrollTop(0);
@@ -434,9 +475,16 @@ $('#archivedToDate').datetimepicker({
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover({
     	content: "<p><b>Tier 1:</b> List of accident victims where there are multiple vehicles and at fault is insured.</p><p><b>Tier 2:</b> List of accident victims where there are multiple vehicles but no at fault insurance and the victim is insured. (Medpay or uninsured motorist)</p><p><b>Tier 3:</b> List of accident victims involved in a single car accident. (includes hit and runs)</p><p><b>Tier 4:</b> List of passengers in at-fault vehicle and driver also, if insured.</p>",
-    	html: true, 
-    	placement: "auto"
+    	html: true
     });   
+});
+$(document).click(function (e) {
+    $('[data-toggle="popover"]').each(function () {
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+        	//$(this).popover('hide');
+        	 $(this).popover('hide').data('bs.popover').inState.click = false 
+        }
+    });
 });
 </script>
 

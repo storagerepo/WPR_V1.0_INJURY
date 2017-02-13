@@ -1,8 +1,9 @@
 var adminApp=angular.module('sbAdminApp',['requestModule']);
 
 adminApp.controller('PrintReportsController',function($rootScope,$scope,$stateParams,$window,$timeout,$interval,requestHandler){
-	console.log($window.reportsList);
-	$scope.printReportsList=$window.reportsList;
+	console.log(window.opener.$windowScope.sendingReportsList);
+	$scope.parentWindow=window.opener.$windowScope;
+	$scope.printReportsList=$scope.parentWindow.sendingReportsList;
 	$scope.listSize=$scope.printReportsList.length;
 	$scope.isPrintStopped=false;
 	
@@ -15,35 +16,43 @@ adminApp.controller('PrintReportsController',function($rootScope,$scope,$statePa
 		$.each($scope.printReportsList,function(index,value){
 			promise=promise.then(function(){
 				if(value.printStatus==0 && $scope.isPrintStopped==false){
-					value.printStatus=1;
-					var printJob={};
-					printJob.xsrf=$scope.printReportsList.xsrf;
-					printJob.printerId=$scope.printReportsList.printerId;
-					printJob.jobId='';
-					printJob.title=value.localReportNumber;
-					printJob.contentType='url';
-					printJob.content=value.fileName;
-					printJob.accessToken=$scope.printReportsList.xsrf;
-					requestHandler.postRequest("/submitPrintJob.json",printJob).then(function(response){
-						console.log(response);
-						if(response.data.success){
-							value.jobId=response.data.job.id;
-							value.printStatus=2;
-							$scope.printReportsSubmitted.push(value);
+					$.each($scope.printReportsList,function(index1,value1){
+						if(value.localReportNumber==value1.localReportNumber){
+							value.printStatus=1;
+							var printJob={};
+							printJob.xsrf=$scope.printReportsList.xsrf;
+							printJob.printerId=$scope.printReportsList.printerId;
+							printJob.jobId='';
+							printJob.title=value.localReportNumber;
+							printJob.contentType='url';
+							printJob.content=value.fileName;
+							printJob.accessToken=$scope.printReportsList.xsrf;
+							requestHandler.postRequest("/submitPrintJob.json",printJob).then(function(response){
+								if(response.data.success){
+									value.jobId=response.data.job.id;
+									value.printStatus=2;
+									$scope.printReportsSubmitted.push(value);
+								}else{
+									value.printStatus=0;
+									$scope.printReportsNotSubmitted.push(value);
+									alert(response.data.message);
+								}
+							},function(error){
+								value.printStatus=0;
+								$scope.printReportsNotSubmitted.push(value);
+							});
 						}else{
-							value.printStatus=0;
-							$scope.printReportsNotSubmitted.push(value);
-							alert(response.data.message);
+							console.log("Removed",value.localReportNumber);
 						}
-					},function(error){
-						value.printStatus=0;
-						$scope.printReportsNotSubmitted.push(value);
 					});
-				}else{
+					
+				}else if(value.printStatus==7){
+					// Do Nothing
+				}else if($scope.isPrintStopped){
 					value.printStatus=6;
 					$scope.printReportsNotSubmitted.push(value);
 				}
-				return $timeout(5000);
+				return $timeout(4000);
 			});
 			
 		});
@@ -73,7 +82,6 @@ $scope.submitNotSubmittedJobs=function(){
 				printJob.content=value.fileName;
 				printJob.accessToken=$scope.printReportsList.xsrf;
 				requestHandler.postRequest("/submitPrintJob.json",printJob).then(function(response){
-					console.log(response);
 					if(response.data.success){
 						$.each($scope.printReportsList,function(index1,value1){
 							if(value.localReportNumber==value1.localReportNumber){
@@ -93,6 +101,8 @@ $scope.submitNotSubmittedJobs=function(){
 					value.printStatus=0;
 					$scope.printReportsNotSubmitted.push(value);
 				});
+			}else if(value.printStatus==7){
+				// Do Nothing
 			}else{
 				$.each($scope.printReportsList,function(index1,value1){
 					if(value.localReportNumber==value1.localReportNumber){
@@ -109,13 +119,12 @@ $scope.submitNotSubmittedJobs=function(){
 	// Get Job Status
 	$scope.getJobStatus=function(){
 		$.each($scope.printReportsSubmitted,function(index,value){
-			if(value.printStatus!=4&&value.printStatus!=5&&value.printStatus!=6){
+			if(value.printStatus!=4&&value.printStatus!=5&&value.printStatus!=6&&value.printStatus!=7){
 				var printJob={};
 				printJob.xsrf=$scope.printReportsList.xsrf;
 				printJob.accessToken=$scope.printReportsList.xsrf;
 				printJob.jobId=value.jobId;
 				requestHandler.postRequest("/getPrintJobStatus.json",printJob).then(function(response){
-					console.log(response);
 					var job=response.data.job;
 					if(response.data.success){
 						$.each($scope.printReportsList,function(index1,value1){
@@ -156,7 +165,7 @@ $scope.submitNotSubmittedJobs=function(){
 		console.log($scope.printReportsList);
 	};
 	
-	$scope.$watch('printReportsList',function(){
-		
+	$scope.$watchCollection('printReportsList',function(){
+		$scope.isChanged=true;
 	});
 });

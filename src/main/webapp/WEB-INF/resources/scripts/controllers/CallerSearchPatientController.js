@@ -1,6 +1,6 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule', 'angularjs-dropdown-multiselect','searchModule','flash','ngFileSaver','googleModule']);
 
-adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope','$window','requestHandler','searchService','Flash','$state','FileSaver','googleService','$timeout', function($q,$rootScope,$scope,$window,requestHandler,searchService,Flash,$state,FileSaver,googleService,$timeout) {
+adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope','$window','requestHandler','searchService','Flash','$state','FileSaver','googleService','$timeout','$location', function($q,$rootScope,$scope,$window,requestHandler,searchService,Flash,$state,FileSaver,googleService,$timeout,$location) {
 	
 	console.log("root Scope",$rootScope.previousState);
 	$scope.disableCustom=true;
@@ -955,6 +955,12 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 							if(value.defaultDisplayName==""){
 								value.defaultDisplayName=value.name;
 							}
+							
+							if(value.connectionStatus=='UNKNOWN'){
+								value.connectionStatus="";
+							}else{
+								value.displayConnectionStatus="("+value.connectionStatus+")";
+							}
 						});
 						$("#selectPrinterModal").modal("show");
 					}else{
@@ -965,18 +971,19 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			});
 		};
 
+		$scope.reportsListAlreadySelected=[];
 		// post files to Print
 		$scope.postFilesToPrint=function(){
-			var reportsList=[];
-			reportsList.printerId=$scope.printerId;
-			reportsList.xsrf=$scope.xsrf;
+			$scope.sendingReportsList=[];
+			$scope.sendingReportsList.printerId=$scope.printerId;
+			$scope.sendingReportsList.xsrf=$scope.xsrf;
 			var localReportNumber="";
 			$.each($scope.callerPatientSearchData, function(index,value) {
 				$.each(value.searchResult, function(index1,value1) {
 					$.each(value1.patientSearchLists,function(index2,value2){
 						if(value2.selected==true){
 							if(localReportNumber!=value2.localReportNumber){
-								reportsList.push({"localReportNumber":value2.localReportNumber,"fileName":value2.crashReportFileName,"printStatus":0});
+								$scope.sendingReportsList.push({"localReportNumber":value2.localReportNumber,"fileName":value2.crashReportFileName,"printStatus":0});
 								localReportNumber=value1.localReportNumber;
 							}
 							else
@@ -986,8 +993,46 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 				});
 				
 			});
-			var $popup=$window.open('#/dashboard/printreports/','Crash Reports Online','width=1200,height=600,scrollbars=1');
-			 $popup.reportsList=reportsList;
+			
+			var randomnumber = Math.floor((Math.random()*100)+1);
+			window.$windowScope = $scope;
+			var $popup=$window.open('#/dashboard/printreports/','_blank','Crash Reports Online',randomnumber,'width=1200,height=600,scrollbars=1');
+			
+			// Send Only Newly Selected Reports
+			/*$scope.sendingReportsList=[];
+			$scope.sendingReportsList.printerId=$scope.printerId;
+			$scope.sendingReportsList.xsrf=$scope.xsrf;
+			if($scope.reportsListAlreadySelected.length==0){
+				angular.copy(reportsList,$scope.reportsListAlreadySelected);
+				angular.copy(reportsList,$scope.sendingReportsList);
+				console.log("selected",$scope.reportsListAlreadySelected);
+			}else{
+				$.each(reportsList,function(selectedKey,selectedValue){
+					var found = false;
+					for(var i = 0; i < $scope.reportsListAlreadySelected.length; i++) {
+					    if ($scope.reportsListAlreadySelected[i].localReportNumber == selectedValue.localReportNumber) {
+					        found = true;
+					        break;
+					    }
+					}
+					
+					if(found==false){
+						$scope.sendingReportsList.push({"localReportNumber":selectedValue.localReportNumber,"fileName":selectedValue.fileName,"printStatus":0});
+						$scope.reportsListAlreadySelected.push({"localReportNumber":selectedValue.localReportNumber,"fileName":selectedValue.fileName,"printStatus":0});
+					}else{
+						$scope.sendingReportsList.push({"localReportNumber":selectedValue.localReportNumber,"fileName":selectedValue.fileName,"printStatus":7});
+					}
+				});	
+			}
+			
+			if($scope.sendingReportsList.length!=0){
+				var randomnumber = Math.floor((Math.random()*100)+1);
+				window.$windowScope = $scope;
+				var $popup=$window.open('#/dashboard/printreports/','_blank','Crash Reports Online',randomnumber,'width=1200,height=600,scrollbars=1');
+				// $popup.reportsList=sendingReportsList;
+			}else{
+				alert("Selected Reports are already in printing list (or) Printed. Please Select some other reports.");
+			}*/
 		};
 		
 		// Logout Account And Login with another account
@@ -995,6 +1040,14 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			var $popup=$window.open('https://mail.google.com/mail/u/0/?logout&hl=en','Gmail','width=900,height=500,scrollbars=1');
 			$("#selectPrinterModal").modal("hide");
 			$timeout(function(){$popup.close();$scope.printReports();},3000);
+		};
+		
+		// Move to Help Page
+		$scope.moveToHelpPage=function(){
+			$("#selectPrinterModal").modal("hide");
+			$('.modal-backdrop').hide();
+			$('body').removeClass("modal-open");
+			$location.path("dashboard/help");
 		};
 }]); 
 

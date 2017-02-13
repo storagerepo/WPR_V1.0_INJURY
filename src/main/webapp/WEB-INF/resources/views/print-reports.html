@@ -1,3 +1,5 @@
+<html>
+<body>
 <div class="row">
 	<div class="col-lg-12">
 	 <!-- <a ui-sref="dashboard.home" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Home</a>
@@ -7,7 +9,7 @@
 </div>
 <!-- /.row -->
 <div class="row">
-	 		<div class="col-md-12 margin-bottom-10"><a class="pull-right btn btn-danger" ng-click="isPrintStopped=true"><i class="fa fa-stop-circle"></i> Stop</a></div>
+	 		<div class="col-md-12 margin-bottom-10"><span style="color:red;">Note: If you close this window, Print Jobs which are still in the waiting status will not get printed.</span><a class="pull-right btn btn-danger" ng-click="isPrintStopped=true"><i class="fa fa-stop-circle"></i> Stop</a></div>
 			<!-- /.panel-heading -->
 			<div class="col-md-12">
 			    <table class="table table-stripped">
@@ -21,22 +23,51 @@
 			    <tbody>
 			    <tr ng-repeat="printReports in printReportsList">
 			    <td>{{printReports.localReportNumber}}</td>
-			    <td><span class="warningText" ng-show="printReports.printStatus==0">Waiting</span><span class="primaryText" ng-show="printReports.printStatus==1">Sending...</span><span class="warningText" ng-show="printReports.printStatus==2">Queued</span><span class="primaryText" ng-show="printReports.printStatus==3">In Progress</span><span class="successText" ng-show="printReports.printStatus==4">Completed</span><span class="errorText" ng-show="printReports.printStatus==5">Failed</span><span class="errorText" ng-show="printReports.printStatus==6">Stopped</span></td>
+			    <td><span class="warningText" ng-show="printReports.printStatus==0">Waiting</span><span class="primaryText" ng-show="printReports.printStatus==1">Sending...</span><span class="warningText" ng-show="printReports.printStatus==2">Queued</span><span class="primaryText" ng-show="printReports.printStatus==3">In Progress</span><span class="successText" ng-show="printReports.printStatus==4">Completed</span><span class="errorText" ng-show="printReports.printStatus==5">Failed</span><span class="errorText" ng-show="printReports.printStatus==6">Stopped</span><span class="successText" ng-show="printReports.printStatus==7">Already in Printing List (or) Printed</span></td>
 			    <td><span ng-show="printReports.printStatus==0"><a class="btn btn-sm btn-danger" ng-click="removeReports($index)"><i class="fa fa-trash"></i></a></span></td>
 			    </tr>
 			    </tbody>
 			    </table>
 			</div>
-		<!-- /.panel -->
+			<div class="col-md-12 margin-top-30"><div class="col-md-4">To Check Print Job Status <a href="https://www.google.com/cloudprint#jobs" target="_blank">Click Here</a></div><div class="col-md-1"><b>Notes :</b></div><div class="col-md-7"><ol><li>You can delete the report which is having waiting print status.</li><li>And also you can stop the reports which are having waiting print status.</li></ol></div></div>
+			<!-- /.panel -->
 	<!-- /.col-lg-12 -->
 </div>
+
+ <div class="modal fade" id="closeAlertModal" role="dialog" data-backdrop="static" 
+   data-keyboard="false" >
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Alert</h4>
+        </div>
+        <div class="modal-body">
+        	<span style="color:red;">Please do filter by Added on From & To date. <br/>System recommends to download 3 months of data.</span>
+        </div>
+        <div class="modal-footer" >
+        	<button type="close" class="btn btn-danger" data-dismiss="modal">Leave</button>
+         	<button type="close" class="btn btn-success" data-dismiss="modal">Stay</button>
+        </div>
+      </div>
+      
+    </div>
+ </div>
 <script type="text/javascript">
-   window.onbeforeunload = function() {
-        return "Are you sure you want to leave? Print will stop!";
-    } 
-    window.onload = function () {
+   window.onbeforeunload = function(event) {
+	  return "Print Jobs which are still in the waiting status will not get printed? Do you still want to leave this page?"; 
+   }
+  
+   function callFunction(){
+	   $("#closeAlertModal").modal('show');
+   }
+   window.onload = function () {
         document.onkeydown = function (e) {
             return (e.which || e.keyCode) != 116;
         };
     }
+   
 </script>
+</body>
+</html>
