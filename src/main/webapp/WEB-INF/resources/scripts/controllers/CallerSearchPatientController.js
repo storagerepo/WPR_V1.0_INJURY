@@ -1044,10 +1044,14 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 		
 		// Move to Help Page
 		$scope.moveToHelpPage=function(){
-			$("#selectPrinterModal").modal("hide");
-			$('.modal-backdrop').hide();
-			$('body').removeClass("modal-open");
-			$location.path("dashboard/help");
+			$('#selectPrinterModal')
+            .modal('hide')
+            .on('hidden.bs.modal', function (e) {
+               
+				$("#printReportsHelpModal").modal("show");
+              $(this).off('hidden.bs.modal'); // Remove the 'on' event binding
+                
+            });
 		};
 }]); 
 
