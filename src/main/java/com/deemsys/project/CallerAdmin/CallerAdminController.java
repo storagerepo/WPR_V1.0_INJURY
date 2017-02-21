@@ -72,7 +72,7 @@ public class CallerAdminController {
    	public String enableOrDisableCallerAdmin(@RequestParam("callerAdminId") Integer callerAdminId,ModelMap model)
    	{
     	
-    	callerAdminService.enableOrDisableCallerAdmin(callerAdminId,1);
+    	callerAdminService.enableOrDisableCallerAdmin(callerAdminId);
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}

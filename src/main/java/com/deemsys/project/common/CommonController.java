@@ -174,16 +174,16 @@ public class CommonController {
    	}
     // enable or Disable User
     @RequestMapping(value="/enableOrDisableUser",method=RequestMethod.POST)
-   	public String enableOrDisableUser(@RequestParam("customerProductToken") String customerProductToken,ModelMap model)
+   	public String enableOrDisableUser(@RequestParam("customerProductToken") String customerProductToken,@RequestParam("status") Integer status,ModelMap model)
    	{
     	
     	Users users=loginService.getUserByProductToken(customerProductToken);
     	if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
     		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(users.getUserId());
-    		callerAdminService.enableOrDisableCallerAdmin(callerAdmin.getCallerAdminId(),2);
+    		callerAdminService.enableOrDisableCallerAdminAndCallers(callerAdmin.getCallerAdminId(),status);
     	}else if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
     		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
-    		lawyerAdminService.enableOrDisableLawyerAdmin(lawyerAdmin.getLawyerAdminId(),2);
+    		lawyerAdminService.enableOrDisableLawyerAdminAndLawyers(lawyerAdmin.getLawyerAdminId(),status);
     	}
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";

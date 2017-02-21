@@ -221,29 +221,61 @@ public class CallerAdminService {
 	}
 	
 	//Enable or Disbale Caller Admin
-	public int enableOrDisableCallerAdmin(Integer callerAdminId,Integer fromId)
+	public int enableOrDisableCallerAdmin(Integer callerAdminId)
 	{
 		CallerAdmin callerAdmin=callerAdminDAO.get(callerAdminId);
 		Users users=usersDAO.get(callerAdmin.getUsers().getUserId());
 		if(users.getIsEnable()==0){
-			if(fromId==1){
-				users.setIsEnable(1);
-				callerAdminDAO.enable(callerAdminId);
+			users.setIsEnable(1);
+			callerAdminDAO.enable(callerAdminId);
 				
-				//Disable Callers
-				List<Caller> callers=callerDAO.getCallerByCallerAdminId(callerAdminId);			
-				for (Caller caller : callers) {
-					Users callerUser=caller.getUsers();
-					if(caller.getStatus()==1){
-						callerUser.setIsEnable(1);
-						usersDAO.update(caller.getUsers());
-					}			
-				}
-			}else{
-				// Do not Enable
+			//Enable Callers
+			List<Caller> callers=callerDAO.getCallerByCallerAdminId(callerAdminId);			
+			for (Caller caller : callers) {
+				Users callerUser=caller.getUsers();
+				if(caller.getStatus()==1){
+					callerUser.setIsEnable(1);
+					usersDAO.update(caller.getUsers());
+				}			
 			}
 			
 		}else if(users.getIsEnable()==1){
+			users.setIsEnable(0);
+			callerAdminDAO.disable(callerAdminId);
+			
+			//Disable Callers
+			List<Caller> callers=callerDAO.getCallerByCallerAdminId(callerAdminId);			
+			for (Caller caller : callers) {
+				Users callerUser=caller.getUsers();
+				callerUser.setIsEnable(0);
+				usersDAO.update(caller.getUsers());
+			}
+		}
+		
+		usersDAO.update(users);
+		return 1;
+	}
+	
+	// Calling from Marketing App
+	public int enableOrDisableCallerAdminAndCallers(Integer callerAdminId,Integer status)
+	{
+		CallerAdmin callerAdmin=callerAdminDAO.get(callerAdminId);
+		Users users=usersDAO.get(callerAdmin.getUsers().getUserId());
+		if(status==1){
+			users.setIsEnable(1);
+			callerAdminDAO.enable(callerAdminId);
+				
+			//Enable Callers
+			List<Caller> callers=callerDAO.getCallerByCallerAdminId(callerAdminId);			
+			for (Caller caller : callers) {
+				Users callerUser=caller.getUsers();
+				if(caller.getStatus()==1){
+					callerUser.setIsEnable(1);
+					usersDAO.update(caller.getUsers());
+				}			
+			}
+			
+		}else if(status==0){
 			users.setIsEnable(0);
 			callerAdminDAO.disable(callerAdminId);
 			
