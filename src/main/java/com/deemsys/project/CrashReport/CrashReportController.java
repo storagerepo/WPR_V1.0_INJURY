@@ -13,13 +13,12 @@ import com.deemsys.project.CrashReport.CrashReportForm;
 import com.deemsys.project.CrashReport.CrashReportService;
 
 @Controller
-@RequestMapping("/Admin")
 public class CrashReportController {
 
 	@Autowired
 	CrashReportService crashReportService;
 
-    @RequestMapping(value="/getCrashReport",method=RequestMethod.GET)
+    @RequestMapping(value="/Admin/getCrashReport",method=RequestMethod.GET)
 	public String getCrashReport(@RequestParam("id") Integer id,ModelMap model)
 	{
     	model.addAttribute("crashReportForm",crashReportService.getCrashReport(id));
@@ -28,7 +27,7 @@ public class CrashReportController {
 	}
 	
     
-    @RequestMapping(value="/mergeCrashReport",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/mergeCrashReport",method=RequestMethod.POST)
    	public String mergeCrashReport(@ModelAttribute("crashReportForm") CrashReportForm crashReportForm,ModelMap model)
    	{
     	crashReportService.mergeCrashReport(crashReportForm);
@@ -36,7 +35,7 @@ public class CrashReportController {
    		return "/returnPage";
    	}
     
-    @RequestMapping(value="/saveUpdateCrashReport",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/saveUpdateCrashReport",method=RequestMethod.POST)
    	public String saveCrashReport(@ModelAttribute("crashReportForm") CrashReportForm crashReportForm,ModelMap model)
    	{
     	if(crashReportForm.getCrashReportId().equals(""))
@@ -48,7 +47,7 @@ public class CrashReportController {
    	}
    
     
-    @RequestMapping(value="/deleteCrashReport",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/deleteCrashReport",method=RequestMethod.POST)
    	public String deleteCrashReport(@RequestParam("id") Integer id,ModelMap model)
    	{
     	
@@ -57,7 +56,7 @@ public class CrashReportController {
    		return "/returnPage";
    	}
     
-    @RequestMapping(value="/getAllCrashReports",method=RequestMethod.GET)
+    @RequestMapping(value="/Admin/getAllCrashReports",method=RequestMethod.GET)
    	public String getAllCrashReports(ModelMap model)
    	{
     	model.addAttribute("crashReportForms",crashReportService.getCrashReportList());
@@ -65,7 +64,7 @@ public class CrashReportController {
    		return "/returnPage";
    	}
     
-    @RequestMapping(value="/searchCrashReport",method=RequestMethod.POST)
+    @RequestMapping(value="/Admin/searchCrashReport",method=RequestMethod.POST)
 	public String getCrashReportSearch(@RequestBody CrashReportSearchForm crashReportSearchForm,ModelMap model)
 	{
     	model.addAttribute("searchResults",crashReportService.searchCrashReports(crashReportSearchForm));
@@ -73,7 +72,7 @@ public class CrashReportController {
 		return "/returnPage";
 	}
     
-    @RequestMapping(value="/getNumberOfCrashReport",method=RequestMethod.GET)
+    @RequestMapping(value="/Admin/getNumberOfCrashReport",method=RequestMethod.GET)
 	public String getNumberOFCrashReport(ModelMap model)
 	{
     	CrashReportSearchForm crashReportSearchForm=new CrashReportSearchForm("", "", "", "", "", "", "", "", 1, 10);
@@ -82,4 +81,12 @@ public class CrashReportController {
 		return "/returnPage";
 	}
 	
+    // Save Runnner Report
+    @RequestMapping(value="/saveUpdateRunnerCrashReport",method=RequestMethod.POST)
+   	public String saveRunnerCrashReport(@RequestBody RunnerCrashReportForm runnerCrashReportForm,ModelMap model)
+   	{
+    	crashReportService.saveRunnerCrashReport(runnerCrashReportForm);
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
 }

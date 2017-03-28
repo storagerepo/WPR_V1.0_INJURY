@@ -8,6 +8,8 @@ public class PatientSearchResultGroupBy {
 	private String unitInError;
 	private String crashDate;
 	private String addedDate;
+	private Integer isRunnerReport;
+	private String runnerReportAddedDate;
 	private Integer numberOfPatients;
 	private List<PatientSearchList> patientSearchLists;
 
@@ -43,7 +45,22 @@ public class PatientSearchResultGroupBy {
 		this.patientSearchLists = patientSearchLists;
 	}
 
-		
+	public Integer getIsRunnerReport() {
+		return isRunnerReport;
+	}
+
+	public void setIsRunnerReport(Integer isRunnerReport) {
+		this.isRunnerReport = isRunnerReport;
+	}
+
+	public String getRunnerReportAddedDate() {
+		return runnerReportAddedDate;
+	}
+
+	public void setRunnerReportAddedDate(String runnerReportAddedDate) {
+		this.runnerReportAddedDate = runnerReportAddedDate;
+	}
+
 	public Integer getNumberOfPatients() {
 		return numberOfPatients;
 	}
@@ -61,12 +78,14 @@ public class PatientSearchResultGroupBy {
 	}
 
 	public PatientSearchResultGroupBy(String localReportNumber,String unitInError,String crashDate,
-			String addedDate,Integer numberOfPatients,List<PatientSearchList> patientSearchLists) {
+			String addedDate, Integer isRunnerReport, String runnerReportAddedDate, Integer numberOfPatients,List<PatientSearchList> patientSearchLists) {
 		super();
 		this.localReportNumber = localReportNumber;
 		this.unitInError=unitInError;
 		this.crashDate = crashDate;
 		this.addedDate = addedDate;
+		this.isRunnerReport = isRunnerReport;
+		this.runnerReportAddedDate = runnerReportAddedDate;
 		this.numberOfPatients=numberOfPatients;
 		this.patientSearchLists=patientSearchLists;
 	}

@@ -388,7 +388,7 @@ public class PatientService {
 				patient.getAtFaultPolicyNumber(),
 				patient.getVictimInsuranceCompany(),
 				patient.getVictimPolicyNumber(),patient.getTier(),patient.getPatientStatus(),
-				patient.getCrashReport().getFilePath(), patient.getStatus(),patient.getSeatingPosition());
+				patient.getCrashReport().getFilePath(), patient.getStatus(),patient.getSeatingPosition(),patient.getIsRunnerReport());
 
 		// Null Exception Check
 		if (patient.getCounty() != null) {
@@ -443,7 +443,7 @@ public class PatientService {
 			patientForm.getVictimInsuranceCompany(),
 			patientForm.getVictimPolicyNumber(), patientForm.getSeatingPosition(),patientForm.getTier(),
 			patientForm.getPatientStatus(),
-			patientForm.getCrashReportFileName(), patientForm.getStatus(),
+			patientForm.getCrashReportFileName(), patientForm.getIsRunnerReport(), patientForm.getStatus(),
 			null, null);
 		
 		return patient;
@@ -486,7 +486,7 @@ public class PatientService {
 						if(rowCount!=0){
 							patientSearchResultGroupByList.add(patientSearchResultGroupBy);
 						}				
-						patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getNumberOfPatients(),new ArrayList<PatientSearchList>());
+						patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getIsRunnerReport(),resultSet.getRunnerReportAddedDate(),resultSet.getNumberOfPatients(),new ArrayList<PatientSearchList>());
 					}				
 					//Set patient
 					patientSearchResultGroupBy.getPatientSearchLists().add(resultSet);
@@ -513,7 +513,7 @@ public class PatientService {
 					if(rowCount!=0){
 						patientSearchResultGroupByList.add(patientSearchResultGroupBy);
 					}				
-					patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getNumberOfPatients(),new ArrayList<PatientSearchList>());
+					patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getIsRunnerReport(),resultSet.getRunnerReportAddedDate(),resultSet.getNumberOfPatients(),new ArrayList<PatientSearchList>());
 				}				
 				//Set patient
 				patientSearchResultGroupBy.getPatientSearchLists().add(resultSet);

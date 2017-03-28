@@ -4,9 +4,21 @@
 <script src="resources/components/datetime/moment.js"></script>
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-lg-12">	
+	<div class="form-group passenger-type pull-right margin-top35">
+	<label>Report Type:</label>
+			<div class="btn-group">
+				<label class="btn btn-default" btn-radio="0"
+					ng-model="patient.isRunnerReport"> ODPS <span
+					class="glyphicon glyphicon-file"></span>
+				</label> <label class="btn btn-default" btn-radio="1"
+					ng-model="patient.isRunnerReport"> Runner <span
+					class="glyphicon glyphicon-file"></span>
+				</label>
+			</div>
+		</div>
 		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
-	 	<h2 class="page-header">Search Patients</h2>
+		<h2 class="page-header">Search Patients</h2>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -60,7 +72,7 @@
 		<div class="col-md-12 no-padding">
 			<div class="col-md-5ths">
 	       		<label>Tier</label>&nbsp;&nbsp;<a href="" class="some-popover-link" data-original-title="" data-toggle="popover" title="Tier Details (Deceased victims not listed)"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
-         		<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier"></div>
+         		<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier" extra-settings="{disable:patient.isRunnerReport==1}"></div>
 	        </div>
           	<div class="col-md-5ths">
        			<label>Added On From Date</label>
@@ -194,7 +206,7 @@
 						</div>
 					</th>
 					<th>
-						<div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false}" events="ageEvents"></div>
+						<div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false,disable:patient.isRunnerReport==1}" events="ageEvents"></div>
 					</th>
 					<th>
 						<!-- <div class="input-group">
@@ -226,7 +238,7 @@
 						id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td>
 					<td colspan="11"><span><b>Local Report No: </b>{{resultData.localReportNumber}}</span><span
 						class="col-md-9 no-padding pull-right text-right"><span><b><a href="" id="addCallLog{{resultData.localReportNumber}}{{resultMainData.archivedDate}}" disabled="disabled" ng-click="addModel(this,resultMainData.archivedDate)" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Add Call Log</a> | Unit
-									In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash
+									In Error: </b><span ng-show="resultData.unitInError!=''&&resultData.unitInError!=null">{{resultData.unitInError}}</span><span ng-show="resultData.unitInError==''||resultData.unitInError==null">-</span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash
 									Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added
 									Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients
 									Count:</b>&nbsp;&nbsp;<span class="hint--top patient-count-circle"
@@ -279,12 +291,12 @@
 							</span>
 							</td>
 
-					<td title="Phone Number">{{patient.phoneNumber}}</td>
-					<td title="Age">{{patient.age}}</td>
-					<td title="Unit Number">{{patient.unitNumber}}</td>
+					<td title="Phone Number"><span ng-show="patient.phoneNumber!=''&&patient.phoneNumber!=null">{{patient.phoneNumber}}</span><span ng-show="patient.phoneNumber==''||patient.phoneNumber==null">-</span></td>
+					<td title="Age"><span ng-show="patient.age!=''&&patient.age!=null">{{patient.age}}</span><span ng-show="patient.age==''||patient.age==null">-</span></td>
+					<td title="Unit Number"><span ng-show="patient.unitNumber!=''&&patient.unitNumber!=null">{{patient.unitNumber}}</span><span ng-show="patient.unitNumber==''||patient.unitNumber==null">-</span></td>
 					<td title="County">{{patient.county}}</td>
 
-					<td>Tier {{patient.tier}}</td>
+					<td><span ng-show="patient.tier!=''&&patient.tier!=null">Tier {{patient.tier}}</span><span ng-show="patient.tier==''||patient.tier==null">-</span></td>
 					<td title="Caller Name"><span
 						ng-show="patient.callerFirstName==null && patient.callerLastName==null">N/A</span>{{patient.callerFirstName}}
 						{{patient.callerLastName}}</td>

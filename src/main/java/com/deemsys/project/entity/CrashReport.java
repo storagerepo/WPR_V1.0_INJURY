@@ -35,9 +35,11 @@ public class CrashReport implements java.io.Serializable {
 	private Date crashDate;
 	private County county;
 	private Date addedDate;
-	private String filePath;
-	private Integer status;
 	private Integer numberOfPatients;
+	private String filePath;
+	private Integer isRunnerReport;
+	private Date runnerReportAddedDate;
+	private Integer status;
 	private Set<Patient> patients=new HashSet<Patient>(0);
 	
 	public CrashReport() {
@@ -45,15 +47,17 @@ public class CrashReport implements java.io.Serializable {
 
 	public CrashReport(CrashReportError crashReportError,
 			String localReportNumber, String crashId, Date crashDate,
-			County county, Date addedDate, String filePath,Integer numberOfPatients,Integer status) {
+			County county, Date addedDate, String filePath,Integer numberOfPatients,Integer isRunnerReport, Date runnerReportAddedDate,Integer status) {
 		this.crashReportError = crashReportError;
 		this.localReportNumber = localReportNumber;
 		this.crashId = crashId;
 		this.crashDate = crashDate;
 		this.county = county;
 		this.addedDate = addedDate;
-		this.filePath = filePath;
 		this.numberOfPatients=numberOfPatients;
+		this.filePath = filePath;
+		this.isRunnerReport = isRunnerReport;
+		this.runnerReportAddedDate = runnerReportAddedDate;
 		this.status = status;
 	}
 
@@ -133,6 +137,25 @@ public class CrashReport implements java.io.Serializable {
 
 	public void setNumberOfPatients(Integer numberOfPatients) {
 		this.numberOfPatients = numberOfPatients;
+	}
+	
+	@Column(name = "is_runner_report")
+	public Integer getIsRunnerReport() {
+		return this.isRunnerReport;
+	}
+
+	public void setIsRunnerReport(Integer isRunnerReport) {
+		this.isRunnerReport = isRunnerReport;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "runner_report_added_date", length = 45)
+	public Date getRunnerReportAddedDate() {
+		return this.runnerReportAddedDate;
+	}
+
+	public void setRunnerReportAddedDate(Date runnerReportAddedDate) {
+		this.runnerReportAddedDate = runnerReportAddedDate;
 	}
 	
 	@Column(name = "status")

@@ -24,6 +24,7 @@ public class CallerPatientSearchForm {
 	private String archivedFromDate;
 	private String archivedToDate;
 	private Integer formatType;
+	private Integer isRunnerReport;
 	
 	public Integer getCallerAdminId() {
 		return callerAdminId;
@@ -163,9 +164,16 @@ public class CallerPatientSearchForm {
 	public void setFormatType(Integer formatType) {
 		this.formatType = formatType;
 	}
+	public Integer getIsRunnerReport() {
+		return isRunnerReport;
+	}
+	public void setIsRunnerReport(Integer isRunnerReport) {
+		this.isRunnerReport = isRunnerReport;
+	}
 public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 			Integer tier[], Integer patientStatus, String crashFromDate,Integer numberOfDays,
-			String crashToDate, String localReportNumber, String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived,String archivedFromDate, String archivedToDate) {
+			String crashToDate, String localReportNumber, String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived,String archivedFromDate, String archivedToDate,
+			Integer isRunnerReport) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.countyId = countyId;
@@ -188,6 +196,7 @@ public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 		this.isArchived=isArchived;
 		this.archivedFromDate=archivedFromDate;
 		this.archivedToDate=archivedToDate;
+		this.isRunnerReport=isRunnerReport;
 	}
 	public CallerPatientSearchForm() {
 		super();

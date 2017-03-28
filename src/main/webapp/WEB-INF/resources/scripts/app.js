@@ -1212,7 +1212,8 @@ sbAdminApp
 																						return $ocLazyLoad
 																								.load({
 																									name : 'sbAdminApp',
-																									files : [ 'scripts/controllers/printReportsController.js' ]
+																									files : [ 'scripts/controllers/printReportsController.js',
+																									          'resources/components/angular-utils-pagination/dirPagination.js']
 																								});
 																					}
 																				}

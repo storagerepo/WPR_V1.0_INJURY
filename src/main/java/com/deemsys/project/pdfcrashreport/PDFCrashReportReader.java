@@ -145,7 +145,6 @@ public class PDFCrashReportReader {
 	public boolean downloadPDFFile(String crashId) throws IOException {
 			
 			try{
-				if(Integer.parseInt(crashId)<=6139380){
 					File file=getPDFFile(crashId);
 					Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportTryTimes"));
 					for (int tryCrash = 1; tryCrash < tryCount; tryCrash++) {						
@@ -175,13 +174,12 @@ public class PDFCrashReportReader {
 					}else{
 						System.out.println("Waiting.....");
 					}
-					}
 				} catch (Exception e) {
 					// TODO: handle exception
 					this.crashLogUpdate(crashId, e);
 					this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
 					CrashReportError crashReportError=crashReportErrorDAO.get(12);
-					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, null, null, new Date() , "", 0,null));
+					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, null, null, new Date() , "", 0, 0, null, null));
 					System.out.println("Failed"+e.toString());
 				}
 		
@@ -1020,6 +1018,7 @@ public class PDFCrashReportReader {
 			patientsForm.setAtFaultPolicyNumber(reportUnitPageForms.get(Integer.parseInt(firstPageForm.getUnitInError().trim())-1).getPolicyNumber());
 			patientsForm.setSeatingPosition(motoristPageForm.getSeatingPosition());
 			patientsForm.setPatientStatus(1);
+			patientsForm.setIsRunnerReport(0);
 			return patientsForm;
 		
 	}

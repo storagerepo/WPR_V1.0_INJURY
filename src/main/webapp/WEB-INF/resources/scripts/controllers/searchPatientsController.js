@@ -37,6 +37,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$scope.patient.archivedFromDate="";
 		$scope.patient.archivedToDate="";
 		$scope.isSelectedAddedFromDate=true;
+		$scope.patient.isRunnerReport=0;
 		
 		$scope.patient.pageNumber= 1;
 		$scope.oldPageNumber= $scope.patient.pageNumber;
@@ -214,6 +215,18 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		}
 		return null;
 	};
+	
+	// Watch Report Type
+	$scope.$watch('patient.isRunnerReport',function(){
+		if($scope.patient.countyId!=''){
+			$scope.patient.pageNumber=1;
+			var promise=$scope.searchItems($scope.patient);
+			if(promise!=null)
+			promise.then(function(reponse){
+				console.log(reponse);
+			});	
+		}
+	});
 	
 	$scope.itemsPerFilter=function(){
 		$scope.setScrollDown=true;

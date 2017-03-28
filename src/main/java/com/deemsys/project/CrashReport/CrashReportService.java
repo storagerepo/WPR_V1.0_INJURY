@@ -15,10 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.CrashReportError.CrashReportErrorDAO;
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.CrashReportError;
 import com.deemsys.project.patient.PatientForm;
+import com.deemsys.project.patient.PatientService;
 import com.deemsys.project.pdfcrashreport.ReportFirstPageForm;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 /**
@@ -45,6 +47,12 @@ public class CrashReportService {
 	
 	@Autowired
 	CountyDAO countyDAO;
+	
+	@Autowired
+	InjuryProperties injuryProperties;
+	
+	@Autowired
+	PatientService patientService;
 	
 	//Get All Entries
 	public List<CrashReportForm> getCrashReportList()
@@ -111,7 +119,7 @@ public class CrashReportService {
 			
 		}
 		CrashReport crashReport=new CrashReport(crashReportError, localReportNumber, crashReportForm.getCrashId(), InjuryConstants.convertYearFormat(crashReportForm.getCrashDate()), 
-					county, InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getFilePath(),crashReportForm.getNumberOfPatients(),1);
+					county, InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getFilePath(),crashReportForm.getNumberOfPatients(),crashReportForm.getIsRunnerReport(), null,1);
 		
 	
 		
@@ -146,14 +154,15 @@ public class CrashReportService {
 	// Get Crash Report Form Details from Patient Form
 	public CrashReportForm getCrashReportFormDetails(PatientForm patientForm,Integer crashId,String filePath,Integer crashReportErrorId){
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), patientForm.getLocalReportNumber(), crashId.toString(), patientForm.getCrashDate(), patientForm.getCounty(),
-				InjuryConstants.convertMonthFormat(new Date()), filePath,0, 1);
+				InjuryConstants.convertMonthFormat(new Date()), filePath, 0, 0, InjuryConstants.convertMonthFormat(new Date()),1);
 		return crashReportForm;
 	}
 	
 	// Get Crash Report Form Details from PdfJson Form
 	public CrashReportForm getCrashReportFormDetails(ReportFirstPageForm reportFirstPageForm,Integer crashId,String filePath,Integer crashReportErrorId,Integer numberOfPatients){
+		Integer isRunnerReport=0;
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), reportFirstPageForm.getLocalReportNumber(), crashId.toString(), reportFirstPageForm.getCrashDate(), reportFirstPageForm.getCounty(),
-				InjuryConstants.convertMonthFormat(new Date()), filePath,numberOfPatients, 1);
+				InjuryConstants.convertMonthFormat(new Date()), filePath,numberOfPatients, isRunnerReport, null, 1);
 		return crashReportForm;
 	}
 	
@@ -182,4 +191,50 @@ public class CrashReportService {
 		return splittedcountyName;
 	}
 	
+	// Save Runner Crash Report 
+	public int saveRunnerCrashReport(RunnerCrashReportForm runnerCrashReportForm)
+	{
+		//TODO: Convert Form to Entity Here	
+		
+		//Logic Starts
+		// 15 - Runner Crash Reports
+		Integer crashReportErrorId=15;
+		Integer isRunnerReport=1;
+		Integer numberOfPatients=runnerCrashReportForm.getPatientForms().size();
+		County county= countyDAO.get(Integer.parseInt(runnerCrashReportForm.getCounty()));
+		CrashReportError crashReportError=crashReportErrorDAO.get(crashReportErrorId);
+		String localReportNumber=runnerCrashReportForm.getLocalReportNumber();
+		if(crashReportDAO.getCrashReportCountByLocalReportNumber(localReportNumber)>0){
+			Long localReportNumberCount=crashReportDAO.getLocalReportNumberCount(localReportNumber+"(");
+			localReportNumber=localReportNumber+"("+(localReportNumberCount+1)+")";
+		}
+		
+		String crashId=injuryProperties.getProperty("crashIdPrefix")+localReportNumber;
+		
+		CrashReport crashReport=new CrashReport(crashReportError, localReportNumber, crashId, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
+					county, new Date(), runnerCrashReportForm.getFilePath(), numberOfPatients, isRunnerReport, new Date(),1);
+		
+
+		crashReportDAO.save(crashReport);
+		
+		for (PatientForm patientForm : runnerCrashReportForm.getPatientForms()) {
+			try {
+				patientForm.setCrashId(crashId);
+				patientForm.setAge(null);
+				patientForm.setTier(null);
+				patientForm.setCallerId(null);
+				patientForm.setLatitude(null);
+				patientForm.setLongitude(null);
+				patientForm.setCountyId(Integer.parseInt(runnerCrashReportForm.getCounty()));
+				patientService.savePatient(patientForm);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		//Logic Ends
+		
+		return 1;
+	}
 }

@@ -436,7 +436,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	}
 	
 	//Common Constrains - Tier
-	if(callerPatientSearchForm.getTier().length>0){
+	if(callerPatientSearchForm.getTier().length>0&&callerPatientSearchForm.getIsRunnerReport()!=-1&&callerPatientSearchForm.getIsRunnerReport()==0){
 		Criterion tierCriterion=Restrictions.in("t1.tier", callerPatientSearchForm.getTier());
 		criteria.add(tierCriterion);
 	}
@@ -445,7 +445,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	
 	
 	//Common Constrain Age - Major, Minor and All
-	if(callerPatientSearchForm.getAge().length>0){
+	if(callerPatientSearchForm.getAge().length>0&&callerPatientSearchForm.getIsRunnerReport()==0){
 		Disjunction result = Restrictions.disjunction();
 		if(ArrayUtils.contains(callerPatientSearchForm.getAge(), 1)){
 			result.add(Restrictions.ge("t1.age",18));
@@ -505,6 +505,10 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	criteria.add(localReportNumberCriterion);
 	}
 	
+	// Common Constrain is Runner Reports 
+	if(callerPatientSearchForm.getIsRunnerReport()!=-1){
+		criteria.add(Restrictions.eq("cr.isRunnerReport", callerPatientSearchForm.getIsRunnerReport()));
+	}
 		
 	String role=loginService.getCurrentRole();
 	
@@ -657,6 +661,11 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	projectionList.add(Projections.property("t1.atFaultPolicyNumber"),"atFaultPolicyNumber");
 	projectionList.add(Projections.property("t1.victimPolicyNumber"),"victimPolicyNumber");
 	projectionList.add(Projections.property("t1.seatingPosition"),"seatingPosition");
+	// From Crash Report Table
+	projectionList.add(Projections.property("cr.isRunnerReport"),"isRunnerReport");
+	// From Patient Table
+	projectionList.add(Projections.property("t1.isRunnerReport"),"isRunnerReportPatient");
+	projectionList.add(Projections.property("cr.runnerReportAddedDate"),"runnerReportAddedDate");
 	
 	if(role.equals("ROLE_CALLER_ADMIN")||role.equals("ROLE_CALLER")){
 	

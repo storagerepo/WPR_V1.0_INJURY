@@ -297,6 +297,29 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 		});	
 	};
 	
+	// Watch Report Type
+	$scope.$watch("patient.isRunnerReport",function(){
+		$scope.mainSearchParam.pageNumber=1;
+		$scope.mainSearchParam.isRunnerReport=$scope.patient.isRunnerReport;
+		searchService.setIsRunnerReport($scope.patient.isRunnerReport);
+		searchService.setPageNumber($scope.patient.pageNumber);
+		searchService.setItemsPerPage($scope.patient.itemsPerPage);
+		// Copy Mainsearchparam to Patient
+		angular.copy($scope.mainSearchParam,$scope.patient);
+		if($scope.mainSearchParam.countyId!=''){
+			// County List
+			$scope.countyListType=searchService.getCountyListType();
+			searchService.getPreferenceCoutyList($scope.countyListType).then(function(response){
+				$scope.mycounties=response;
+				$scope.loadingCounties=false;
+			});
+			var promise=$scope.searchItems($scope.mainSearchParam);
+			promise.then(function(reponse){
+				// After Search
+			});
+			
+		}
+	});
 	
 	$scope.$watch("patient.pageNumber",function(){
 		$scope.mainSearchParam.pageNumber=$scope.patient.pageNumber;
@@ -588,6 +611,9 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 		$scope.countyListType=searchService.getCountyListType();
 		$scope.isSelectedAddedFromDate=true;
 
+		// Report Type
+		$scope.patient.isRunnerReport=searchService.getIsRunnerReport();
+		
 		$scope.patient.pageNumber= searchService.getPageNumber();
 		$scope.oldPageNumber= $scope.patient.pageNumber;
 		if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 

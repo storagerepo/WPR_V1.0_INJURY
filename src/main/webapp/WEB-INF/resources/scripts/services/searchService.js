@@ -22,6 +22,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var countyListType="1";
 	var archivedFromDate="";
 	var archivedToDate="";
+	var isRunnerReport=0;
 	
 	// Constant
 	var maxRecordsDownload=100000;
@@ -211,6 +212,14 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	this.getArchivedToDate=function(){
 		return archivedToDate;
 	};
+	
+	// Is Runner Report
+	this.getIsRunnerReport=function(){
+		return isRunnerReport;
+	};
+	this.setIsRunnerReport=function(isRunnerReportInput){
+		isRunnerReport=isRunnerReportInput;
+	};
 	// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
 	this.spiltAndSwapName=function(patientName){
 		var swapName="";
@@ -278,6 +287,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		countyListType="1";
 		archivedFromDate="";
 		archivedToDate="";
+		isRunnerReport=0;
 		return true;
 	};
 	

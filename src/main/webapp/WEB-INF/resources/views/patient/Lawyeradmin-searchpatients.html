@@ -5,7 +5,18 @@
 <div ng-cloak>
 <div class="row">
 <div class="col-lg-12">
-		
+	 <div class="form-group passenger-type pull-right margin-top35">
+	<label>Report Type:</label>
+			<div class="btn-group">
+				<label class="btn btn-default" btn-radio="0"
+					ng-model="patient.isRunnerReport"> ODPS <span
+					class="glyphicon glyphicon-file"></span>
+				</label> <label class="btn btn-default" btn-radio="1"
+					ng-model="patient.isRunnerReport"> Runner <span
+					class="glyphicon glyphicon-file"></span>
+				</label>
+			</div>
+		</div>
 	 <div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
 	 <h2 class="page-header">Search Clients</h2>
 	</div>
@@ -76,7 +87,7 @@
        	</div>
        	<div class="col-md-5ths">
        		<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details (Deceased victims not listed)"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
-         	<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier" extra-settings="example13settings"></div>
+         	<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier" extra-settings="{disable:patient.isRunnerReport==1}"></div>
             
        	</div>
        	  <div class="col-md-5ths">
@@ -177,7 +188,7 @@
 									ng-model="patient.patientName" ng-change="secoundarySearchPatient()" placeholder="Name"></div>
 								</th>
 								<th>
-								 <div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false}" events="ageEvents"></div>
+								 <div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false,disable:patient.isRunnerReport==1}" events="ageEvents"></div>
 								 </th>
 								<th></th>
 								<th></th>									
@@ -197,7 +208,7 @@
 					<td colspan="10"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
 				</tr>
                          <tr class="group-header-back" ng-repeat-start="resultData in resultMainData.searchResult">
-                       <td colspan="1"><input ng-change="selectGroup(this,'{{resultMainData.archivedDate}}')" ng-model="isCheckedAllGroupPatients" ng-true-value="true" ng-false-value="false" type="checkbox" id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td><td colspan="10" ><span><b>Local Report No:</b> 	{{resultData.localReportNumber}}  </span><span class="pull-right"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Clients Count:</b></span>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Clients">{{resultData.numberOfPatients}}</span>&nbsp;&nbsp;&nbsp;</span></td>
+                       <td colspan="1"><input ng-change="selectGroup(this,'{{resultMainData.archivedDate}}')" ng-model="isCheckedAllGroupPatients" ng-true-value="true" ng-false-value="false" type="checkbox" id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td><td colspan="10" ><span><b>Local Report No:</b> 	{{resultData.localReportNumber}}  </span><span class="pull-right"><span><b>Unit In Error: </b><span ng-show="resultData.unitInError!='' && resultData.unitInError!=null">{{resultData.unitInError}}</span><span ng-show="resultData.unitInError=='' || resultData.unitInError==null">-</span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Clients Count:</b></span>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Clients">{{resultData.numberOfPatients}}</span>&nbsp;&nbsp;&nbsp;</span></td>
                           </tr>
                           <tr dir-paginate="lAdminData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords" pagination-id="lawyerAdminPatientPageId">
                             
@@ -207,14 +218,14 @@
                                     <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && (lAdminData.age>=18||lAdminData.age==null)"><a href="" class="hint--top" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
                                     <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && (lAdminData.age<18 && lAdminData.age!=null)"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
                                     </td>
-                              <td title="Age">{{lAdminData.age}}</td>
-                              <td title="Unit Number">{{lAdminData.unitNumber}}</td>
+                              <td title="Age"><span ng-show="lAdminData.age!='' && lAdminData.age!=null">{{lAdminData.age}}</span><span ng-show="lAdminData.age=='' || lAdminData.age==null">-</span></td>
+                              <td title="Unit Number"><span ng-show="lAdminData.unitNumber!='' && lAdminData.unitNumber!=null">{{lAdminData.unitNumber}}</span><span ng-show="lAdminData.unitNumber=='' || lAdminData.unitNumber==null">-</span></td>
                                 <td title="County">{{lAdminData.county}}</td>
                                 <td title="Lawyer Name"><span ng-if="lAdminData.lawyerFirstName==null && lAdminData.lawyerLastName==null">N/A</span>{{lAdminData.lawyerFirstName}}&nbsp;{{lAdminData.lawyerLastName}}</td>
                                 
-                                <td title="Address">{{lAdminData.address}}</td>
+                                <td title="Address"><span ng-show="lAdminData.address!='' && lAdminData.address!=null">{{lAdminData.address}}</span><span ng-show="lAdminData.address=='' || lAdminData.address==null">-</span></td>
                                 
-                                <td>Tier {{lAdminData.tier}}</td>
+                                <td><span ng-show="lAdminData.tier!='' && lAdminData.tier!=null">Tier {{lAdminData.tier}}</span><span ng-show="lAdminData.tier=='' || lAdminData.tier==null">-</span></td>
                                 <td title="Status">{{lAdminData.patientStatusName}}</td>
                                 <td title="Archived On" ng-show="patient.isArchived==1" ng-cloak>{{lAdminData.archivedDateTime}}</td>
                                 <td>

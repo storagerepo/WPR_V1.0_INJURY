@@ -5,7 +5,18 @@
 <div  ng-cloak>
 <div class="row">
 <div class="col-lg-12">
-		
+	<div class="form-group passenger-type pull-right margin-top35">
+	<label>Report Type:</label>
+			<div class="btn-group">
+				<label class="btn btn-default" btn-radio="0"
+					ng-model="patient.isRunnerReport"> ODPS <span
+					class="glyphicon glyphicon-file"></span>
+				</label> <label class="btn btn-default" btn-radio="1"
+					ng-model="patient.isRunnerReport"> Runner <span
+					class="glyphicon glyphicon-file"></span>
+				</label>
+			</div>
+		</div>
 	 <div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
 	 <h2 class="page-header">Search Patients</h2>
 	</div>
@@ -46,7 +57,7 @@
         </div>
         <div class="col-md-5ths">
 			<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details (Deceased victims not listed)" data-placement="bottom"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
-         		<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier"></div>
+         		<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier" extra-settings="{disable:patient.isRunnerReport==1}"></div>
        	</div>
     </div>
 
@@ -180,7 +191,7 @@
 								<input class="form-control" type="text"
 									ng-model="patient.phoneNumber" ng-change="secoundarySearchPatient()" placeholder="Phone No"></div></th>
 								<th>
-								<div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false}" events="ageEvents"></div>
+								<div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false,disable:patient.isRunnerReport==1}" events="ageEvents"></div>
 								</th>
 								<th></th>
 								<!-- <th></th> -->	
@@ -199,7 +210,7 @@
 								<td colspan="11"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
 						</tr>
                          <tr class="group-header-back" ng-repeat-start="resultData in resultMainData.searchResult">
-                       <td colspan="1"><input ng-change="selectGroup(this,'{{resultMainData.archivedDate}}');enableCallLogsButton('{{resultData.localReportNumber}}','{{resultMainData.archivedDate}}');" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td><td colspan="11" ><span><b>Local Report No: </b>{{resultData.localReportNumber}}</span><span class="col-md-9 no-padding pull-right text-right"><span ng-show="patient.isArchived!=1"><a href="" id="addCallLog{{resultData.localReportNumber}}{{resultMainData.archivedDate}}" disabled="disabled" ng-click="addModel(this,resultMainData.archivedDate)" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Add Call Log</a>&nbsp; | &nbsp;</span><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients Count:</b>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></span></span></td>
+                       <td colspan="1"><input ng-change="selectGroup(this,'{{resultMainData.archivedDate}}');enableCallLogsButton('{{resultData.localReportNumber}}','{{resultMainData.archivedDate}}');" ng-model="isCheckedAllGroupPatients" type="checkbox" id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td><td colspan="11" ><span><b>Local Report No: </b>{{resultData.localReportNumber}}</span><span class="col-md-9 no-padding pull-right text-right"><span ng-show="patient.isArchived!=1"><a href="" id="addCallLog{{resultData.localReportNumber}}{{resultMainData.archivedDate}}" disabled="disabled" ng-click="addModel(this,resultMainData.archivedDate)" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Add Call Log</a>&nbsp; | &nbsp;</span><span><b>Unit In Error: </b><span ng-show="resultData.unitInError!=''&&resultData.unitInError!=null">{{resultData.unitInError}}</span><span ng-show="resultData.unitInError==''||resultData.unitInError==null">-</span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients Count:</b>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></span></span></td>
                           </tr>
                             <tr dir-paginate="callerData in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords" pagination-id="callerPatientPageId">
                           
@@ -210,12 +221,12 @@
                                     <span ng-if="(callerData.injuries!=2 && callerData.injuries!=3 && callerData.injuries!=4) && (callerData.age<18 && callerData.age!=null)"><a href="" class="hint--top warningText" ng-click="viewPatientModal(callerData.patientId)"  data-hint="View Patient">{{callerData.name}}</a><span ng-show="callerData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
                                 </td>
                              
-                                <td title="Phone Number">{{callerData.phoneNumber}}</td>     
-                                <td title="Age">{{callerData.age}}</td>     
-                                 <td title="Unit Number">{{callerData.unitNumber}}</td>  
+                                <td title="Phone Number"><span ng-show="callerData.phoneNumber!=''&&callerData.phoneNumber!=null">{{callerData.phoneNumber}}</span><span ng-show="callerData.phoneNumber==''||callerData.phoneNumber==null">-</span></td>     
+                                <td title="Age"><span ng-show="callerData.age!=''&&callerData.age!=null">{{callerData.age}}</span><span ng-show="callerData.age==''||callerData.age==null">-</span></td>     
+                                 <td title="Unit Number"><span ng-show="callerData.unitNumber!=''&&callerData.unitNumber!=null">{{callerData.unitNumber}}</span><span ng-show="callerData.unitNumber==''||callerData.unitNumber==null">-</span></td>  
                                 <td title="County">{{callerData.county}}</td>
                                 
-                                <td>Tier {{callerData.tier}}</td>
+                                <td><span ng-show="callerData.tier!=''&&callerData.tier!=null">Tier {{callerData.tier}}</span><span ng-show="callerData.tier==''||callerData.tier==null">-</span></td>
                                 <td title="Status">{{callerData.patientStatusName}}</td>
                                 <td><span
 						ng-show="callerData.lastCallLogTimeStamp==null && callerData.lastCallLogTimeStamp==null">-</span><b>{{callerData.lastCallLogTimeStamp}}</b></td>

@@ -4,6 +4,18 @@
 <div ng-cloak>
 <div class="row">
 	<div class="col-lg-12">
+	<div class="form-group passenger-type pull-right margin-top35">
+	<label>Report Type:</label>
+			<div class="btn-group">
+				<label class="btn btn-default" btn-radio="0"
+					ng-model="patient.isRunnerReport"> ODPS <span
+					class="glyphicon glyphicon-file"></span>
+				</label> <label class="btn btn-default" btn-radio="1"
+					ng-model="patient.isRunnerReport"> Runner <span
+					class="glyphicon glyphicon-file"></span>
+				</label>
+			</div>
+		</div>
 		<div flash-message="2000" class="col-md-5 pull-right"></div>
 	 	<h2 class="page-header">Search Clients</h2>
 	</div>
@@ -124,7 +136,7 @@
   								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text" ng-model="patient.phoneNumber" ng-change="secoundarySearchPatient()" placeholder="Phone No"></div></th>									
 								<th>
-								<div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false}"></div>
+								<div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false,disable:patient.isRunnerReport==1}"></div>
 								</th>
 								<th></th>	
 								<th></th>
@@ -138,7 +150,7 @@
 						<td colspan="7"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
 						</tr>
                         	<tr class="group-header-back" ng-show="patientSearchData.length>0"  ng-repeat-start="resultData in resultMainData.searchResult">
-                       			<td colspan="10" ><span><b>Local Report No:</b> {{resultData.localReportNumber}}</span><span class="pull-right no-padding"><span><b>Unit In Error: </b>{{resultData.unitInError}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Clients Count:</b>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></span>&nbsp;</span></td>
+                       			<td colspan="10" ><span><b>Local Report No:</b> {{resultData.localReportNumber}}</span><span class="pull-right no-padding"><span><b>Unit In Error: </b><span ng-show="resultData.unitInError!=''&&resultData.unitInError!=null">{{resultData.unitInError}}</span><span ng-show="resultData.unitInError==''||resultData.unitInError==null">-</span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Clients Count:</b>&nbsp;&nbsp;<span class="hint--top patient-count-circle" data-hint="{{resultData.numberOfPatients}} Patients">{{resultData.numberOfPatients}}</span></span>&nbsp;</span></td>
                           	</tr>           	
                         
                             <tr dir-paginate="patient in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords" pagination-id="superAdminPatientPageId">
@@ -148,11 +160,11 @@
                                	 	<span ng-if="(patient.injuries!=2 && patient.injuries!=3 && patient.injuries!=4) && (patient.age>=18 || patient.age==null)"><a href="" class="hint--top" ng-click="viewPatientModal(patient.patientId)"  data-hint="View Client">{{patient.name}}</a><span ng-show="patient.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
                                	 	<span ng-if="(patient.injuries!=2 && patient.injuries!=3 && patient.injuries!=4) && (patient.age<18 && patient.age!=null)"><a href="" class="hint--top warningText" ng-click="viewPatientModal(patient.patientId)"  data-hint="View Client">{{patient.name}}</a><span ng-show="patient.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
                                 </td>
-                                <td title="Phone Number">{{patient.phoneNumber}}</td>
-                                <td title="Age">{{patient.age}}</td>
-                                <td title="Unit Number">{{patient.unitNumber}}</td>
+                                <td title="Phone Number"><span ng-show="patient.phoneNumber!=''&&patient.phoneNumber!=null">{{patient.phoneNumber}}</span><span ng-show="patient.phoneNumber==''||patient.phoneNumber==null">-</span></td>
+                                <td title="Age"><span ng-show="patient.age!=''&&patient.age!=null">{{patient.age}}</span><span ng-show="patient.age==''||patient.age==null">-</span></td>
+                                <td title="Unit Number"><span ng-show="patient.unitNumber!=''&&patient.unitNumber!=null">{{patient.unitNumber}}</span><span ng-show="patient.unitNumber==''||patient.unitNumber==null">-</span></td>
                                 <td title="County">{{patient.county}}</td>
-                                <td title="Address">{{patient.address}}</td>
+                                <td title="Address"><span ng-show="patient.address!=''&&patient.address!=null">{{patient.address}}</span><span ng-show="patient.address==''||patient.address==null">-</span></td>
                                 <td>
                                 	<a href="{{patient.crashReportFileName}}" ng-cloak target="_blank" class="btn btn-xs btn-danger hint--top" data-hint="View Crash Report"><i
 								class="fa fa-file-pdf-o"></i></a>
@@ -160,12 +172,12 @@
                             </tr>
                             <tr ng-repeat-end=""></tr>         
                             <tr ng-repeat-end=""></tr>                     
-                            <tr ng-show="patientSearchData.length==0">
+                            <tr ng-show="totalRecords==0">
                             <td colspan="7"><center><strong>No Records Found!!!</strong></center></td>
                             </tr>
                         </tbody>
                     </table>
-                    <dir-pagination-controls  ng-show="patientSearchData.length>0"  max-size="5"  direction-links="true" boundary-links="true" pagination-id="superAdminPatientPageId">
+                    <dir-pagination-controls  ng-show="totalRecords>0"  max-size="5"  direction-links="true" boundary-links="true" pagination-id="superAdminPatientPageId">
     					</dir-pagination-controls> 
     					<div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>

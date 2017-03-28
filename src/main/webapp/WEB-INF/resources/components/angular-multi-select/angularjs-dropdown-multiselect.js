@@ -21,7 +21,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                 var checkboxes = attrs.checkboxes ? true : false;
                 var groups = attrs.groupBy ? true : false;
                 var template = '<div class="multiselect-parent btn-group dropdown-multiselect col-md-12 no-padding">';
-                template += '<button type="button" style="width:100%" class="dropdown-toggle"  ng-class="settings.buttonClasses" ng-click="toggleDropdown()">{{getButtonText()}}&nbsp;<span class="caret"></span></button>';
+                template += '<button type="button" style="width:100%" class="dropdown-toggle"  ng-class="settings.buttonClasses" ng-click="toggleDropdown()" ng-disabled="settings.disable">{{getButtonText()}}&nbsp;<span class="caret"></span></button>';
                 template += '<ul class="dropdown-menu dropdown-menu-form col-md-12" ng-style="{display: open ? \'block\' : \'none\', height : settings.scrollable ? settings.scrollableHeight : \'auto\'}" style="overflow-y:auto;">';
                // template += '<li ng-hide="!settings.showPreferenceOption" style="padding:5px 5px 5px 5px;"><select class="form-control" ng-model="countyPreference" ng-value="settings.preferenceList" data-ng-change="countyPreferenceList()"><option value="1">Standard</option><option value="2">Custom</option></select></li>';
                 template += '<li ng-hide="!settings.showPreferenceOption" style="padding:5px 5px 5px 5px;"><label class="radio-inline"><input type="radio" value="1" name="countyPrefence" ng-model="countyPreference" data-ng-change="countyPreferenceList()"/><small>Subscribed</small></label><label class="radio-inline"><input type="radio" value="2" name="countyPrefence" ng-model="countyPreference" data-ng-change="countyPreferenceList()"/><small>Preferred</small></label></li>';
@@ -60,13 +60,17 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
             	if($scope.preferenceList!=undefined){
             		$scope.countyPreference=($scope.preferenceList).toString();
             	}
-
+            	
                 // Get County Preference Type
             	// detect outside changes and update our input
                 $scope.$watch('preferenceList', function (val) {
                 	if($scope.preferenceList!=undefined){
                 		$scope.countyPreference=($scope.preferenceList).toString();
                 	}
+                });
+                
+                $scope.$watch('extraSettings',function(val){
+                	angular.extend($scope.settings, $scope.extraSettings || []);
                 });
               
                 var $dropdownTrigger = $element.children()[0];
@@ -110,7 +114,8 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                     smartButtonMaxItems: 4,
                     smartButtonTextConverter: angular.noop,
                     buttonDefaultText:"Select",
-                    showPreferenceOption:false
+                    showPreferenceOption:false,
+                    disable:false
                 };
 
                 $scope.texts = {

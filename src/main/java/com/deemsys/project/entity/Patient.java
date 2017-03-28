@@ -59,6 +59,7 @@ public class Patient implements java.io.Serializable {
 	private String seatingPosition;
 	private Integer tier;
 	private Integer patientStatus;
+	private Integer isRunnerReport;
 	private Integer status;
 	private Set<PatientCallerAdminMap> patientCallerAdminMaps = new HashSet<PatientCallerAdminMap>(
 			0);
@@ -82,7 +83,7 @@ public class Patient implements java.io.Serializable {
 			String medicalFacility, String atFaultInsuranceCompany,
 			String atFaultPolicyNumber, String victimInsuranceCompany,
 			String victimPolicyNumber, String seatingPosition, Integer tier, Integer patientStatus,
-			String crashReportFileName, Integer status,
+			String crashReportFileName, Integer isRunnerReport, Integer status,
 			Set<PatientCallerAdminMap> patientCallerAdminMaps,
 			Set<PatientLawyerAdminMap> patientLawyerAdminMaps) {
 		this.patientId = patientId;
@@ -115,6 +116,7 @@ public class Patient implements java.io.Serializable {
 		this.seatingPosition = seatingPosition;
 		this.tier=tier;
 		this.patientStatus = patientStatus;
+		this.isRunnerReport = isRunnerReport;
 		this.status = status;
 		this.patientCallerAdminMaps = patientCallerAdminMaps;
 		this.patientLawyerAdminMaps = patientLawyerAdminMaps;
@@ -396,7 +398,16 @@ public class Patient implements java.io.Serializable {
 	public void setPatientStatus(Integer patientStatus) {
 		this.patientStatus = patientStatus;
 	}
+	
+	@Column(name = "is_runner_report")
+	public Integer getIsRunnerReport() {
+		return this.isRunnerReport;
+	}
 
+	public void setIsRunnerReport(Integer isRunnerReport) {
+		this.isRunnerReport = isRunnerReport;
+	}
+	
 	@Column(name = "status")
 	public Integer getStatus() {
 		return this.status;

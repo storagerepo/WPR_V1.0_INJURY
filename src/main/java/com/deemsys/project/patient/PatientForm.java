@@ -42,6 +42,7 @@ public class PatientForm {
 	private String seatingPosition;
 	private Integer patientStatus;
 	private String crashReportFileName;
+	private Integer isRunnerReport;
 	private Integer status;
 	
 	public String getPatientId() {
@@ -250,6 +251,12 @@ public class PatientForm {
 	public void setCrashReportFileName(String crashReportFileName) {
 		this.crashReportFileName = crashReportFileName;
 	}
+	public Integer getIsRunnerReport() {
+		return isRunnerReport;
+	}
+	public void setIsRunnerReport(Integer isRunnerReport) {
+		this.isRunnerReport = isRunnerReport;
+	}
 	public Integer getStatus() {
 		return status;
 	}
@@ -272,7 +279,7 @@ public class PatientForm {
 			String medicalFacility, String atFaultInsuranceCompany,
 			String atFaultPolicyNumber, String victimInsuranceCompany,
 			String victimPolicyNumber,Integer tier, Integer patientStatus,
-			String crashReportFileName, Integer status,String seatingPosition) {
+			String crashReportFileName, Integer status,String seatingPosition,Integer isRunnerReport) {
 		super();
 		this.patientId = patientId;
 		this.crashId=crashId;
@@ -306,6 +313,7 @@ public class PatientForm {
 		this.crashReportFileName = crashReportFileName;
 		this.status = status;
 		this.seatingPosition = seatingPosition;
+		this.isRunnerReport = isRunnerReport;
 	}
 	public PatientForm() {
 		super();

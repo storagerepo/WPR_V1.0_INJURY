@@ -52,6 +52,9 @@ public class PatientSearchList extends InjuryProperties{
 	private String lastCallLogTimeStamp;
 	private String archivedDate;
 	private String archivedDateTime;
+	private Integer isRunnerReport;
+	private Integer isRunnerReportPatient;
+	private String runnerReportAddedDate;
 	
 	public String getPatientId() {
 		return patientId;
@@ -327,6 +330,24 @@ public class PatientSearchList extends InjuryProperties{
 	public void setArchivedDateTime(String archivedDateTime) {
 		this.archivedDateTime = InjuryConstants.convertUSAFormatWithTimeAMPM(archivedDateTime);
 	}
+	public Integer getIsRunnerReport() {
+		return isRunnerReport;
+	}
+	public void setIsRunnerReport(Integer isRunnerReport) {
+		this.isRunnerReport = isRunnerReport;
+	}
+	public Integer getIsRunnerReportPatient() {
+		return isRunnerReportPatient;
+	}
+	public void setIsRunnerReportPatient(Integer isRunnerReportPatient) {
+		this.isRunnerReportPatient = isRunnerReportPatient;
+	}
+	public String getRunnerReportAddedDate() {
+		return runnerReportAddedDate;
+	}
+	public void setRunnerReportAddedDate(Date runnerReportAddedDate) {
+		this.runnerReportAddedDate = InjuryConstants.convertMonthFormat(runnerReportAddedDate);
+	}
 	public PatientSearchList(String patientId, String localReportNumber,
 			Integer numberOfPatients, String crashDate, String addedDate,
 			Integer countyId, String county, String crashSeverity, String name,
@@ -341,7 +362,8 @@ public class PatientSearchList extends InjuryProperties{
 			String unitInError, String cityVillageTownship, String timeOfCrash,
 			String unitNumber, String gender, String injuries,
 			String emsAgency, String medicalFacility,
-			String atFaultPolicyNumber, String victimPolicyNumber, String seatingPosition,String lastCallLogTimeStamp) {
+			String atFaultPolicyNumber, String victimPolicyNumber, String seatingPosition,String lastCallLogTimeStamp, Integer isRunnerReport,
+			Integer isRunnerReportPatient) {
 		super();
 		this.patientId = patientId;
 		this.localReportNumber = localReportNumber;
@@ -386,6 +408,8 @@ public class PatientSearchList extends InjuryProperties{
 		this.victimPolicyNumber = victimPolicyNumber;
 		this.seatingPosition = seatingPosition;
 		this.lastCallLogTimeStamp=lastCallLogTimeStamp;
+		this.isRunnerReport = isRunnerReport;
+		this.isRunnerReportPatient = isRunnerReportPatient;
 	}
 	
 	

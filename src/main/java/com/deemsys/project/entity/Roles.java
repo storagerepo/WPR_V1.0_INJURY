@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated Nov 17, 2016 6:08:16 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 Jan, 2017 1:10:25 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;

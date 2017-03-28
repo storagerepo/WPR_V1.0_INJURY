@@ -46,6 +46,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.patient.patientStatus=searchService.getPatientStatus();
 		$scope.patient.archivedFromDate=searchService.getArchivedFromDate();
 		$scope.patient.archivedToDate=searchService.getArchivedToDate();
+		$scope.patient.isRunnerReport=searchService.getIsRunnerReport();
 		$scope.totalRecords=0;
 		$scope.countyListType=searchService.getCountyListType();
 		//Patient Search 
@@ -93,6 +94,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 
 		// Get Clinics List For Call Logs
 		$scope.getClinics();
+		
 	};
 
 	// Get Callers
@@ -564,6 +566,29 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			return null;	
 		};
 	
+		// Watch Report Type
+		$scope.$watch("patient.isRunnerReport",function(){
+			$scope.mainSearchParam.pageNumber=1;
+			$scope.mainSearchParam.isRunnerReport=$scope.patient.isRunnerReport;
+			searchService.setIsRunnerReport($scope.patient.isRunnerReport);
+			searchService.setPageNumber($scope.patient.pageNumber);
+			searchService.setItemsPerPage($scope.patient.itemsPerPage);
+			// Copy Mainsearchparam to Patient
+			angular.copy($scope.mainSearchParam,$scope.patient);
+			if($scope.mainSearchParam.countyId!=''){
+				// County List
+				$scope.countyListType=searchService.getCountyListType();
+				searchService.getPreferenceCoutyList($scope.countyListType).then(function(response){
+					$scope.countylist=response;
+					$scope.loadingCounties=false;
+				});
+				var promise=$scope.searchItems($scope.mainSearchParam);
+				promise.then(function(reponse){
+					// After Search
+				});
+			}
+		});
+		
 		$scope.itemsPerFilter=function(){
 			$scope.setScrollDown=true;
 			var promise=$scope.secoundarySearchPatient();

@@ -328,7 +328,8 @@ public class PatientController {
 	@RequestMapping(value = { "/Patient/getNumberOfPatients" }, method = RequestMethod.GET)
 	public String getNumberPatients(ModelMap model) {
 		
-		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "", "",new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","");
+		// -1 is Runner Report Condition
+		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "", "",new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1);
 		PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 		model.addAttribute("numberOfPatients",patientSearchResult.getTotalNoOfRecord());
 		model.addAttribute("requestSuccess", true);
