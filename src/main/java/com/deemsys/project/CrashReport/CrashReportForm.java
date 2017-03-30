@@ -72,7 +72,11 @@ public class CrashReportForm extends InjuryProperties{
 		return filePath;
 	}
 	public void setFilePath(String filePath) {
-		this.filePath = getProperty("bucketURL")+filePath;
+		if(this.isRunnerReport==1){
+			this.filePath = getProperty("runnerBucketURL")+filePath;
+		}else{
+			this.filePath = getProperty("bucketURL")+filePath;
+		}
 	}
 	
 	public Integer getNumberOfPatients() {

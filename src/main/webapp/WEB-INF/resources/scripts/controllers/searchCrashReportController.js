@@ -16,6 +16,7 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler','$
 		$scope.crashreport.addedFromDate="";
 		$scope.crashreport.addedToDate="";
 		$scope.crashreport.recordsPerPage="25";
+		$scope.crashreport.isRunnerReport=0;
 		$scope.totalRecords=0;
 		
 		$scope.crashreport.pageNumber= 1;
@@ -98,6 +99,13 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler','$
 		});
 	};
 	
+	$scope.$watch("crashreport.isRunnerReport",function(){
+		$scope.crashreport.pageNumber=1;
+		var promise=$scope.searchItems($scope.crashreport); 
+		promise.then(function(reponse){
+			
+			});
+	});
 	
 	$scope.$watch("crashreport.pageNumber",function(){
 		var promise=$scope.searchItems($scope.crashreport); 

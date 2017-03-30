@@ -69,4 +69,6 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 	public void deletePatientByPatientId(String patientId);
 	
 	public List<Patient> getSixMonthPatientsList();
+	
+	public Patient checkPatientForRunnerReport(Integer countyId,String crashDate,String patientName);
 }

@@ -15,6 +15,7 @@ public class CrashReportSearchForm {
 	private Integer pageNumber;
 	private List<CrashReportForm> crashReportForms;
 	private Integer totalRecords;
+	private Integer isRunnerReport;
 	
 	public String getLocalReportNumber() {
 		return localReportNumber;
@@ -88,10 +89,16 @@ public class CrashReportSearchForm {
 	public void setCrashReportForms(List<CrashReportForm> crashReportForms) {
 		this.crashReportForms = crashReportForms;
 	}
+	public Integer getIsRunnerReport() {
+		return isRunnerReport;
+	}
+	public void setIsRunnerReport(Integer isRunnerReport) {
+		this.isRunnerReport = isRunnerReport;
+	}
 	public CrashReportSearchForm(String localReportNumber, String crashId,
 			String crashFromDate, String crashToDate, String county,
 			String addedFromDate, String addedToDate, String numberOfDays,
-			Integer recordsPerPage, Integer pageNumber) {
+			Integer recordsPerPage, Integer pageNumber,Integer isRunnerReport) {
 		super();
 		this.localReportNumber = localReportNumber;
 		this.crashId = crashId;
@@ -103,6 +110,7 @@ public class CrashReportSearchForm {
 		this.numberOfDays = numberOfDays;
 		this.recordsPerPage = recordsPerPage;
 		this.pageNumber = pageNumber;
+		this.isRunnerReport = isRunnerReport;
 	}
 	
 	public CrashReportSearchForm(List<CrashReportForm> crashReportForms,

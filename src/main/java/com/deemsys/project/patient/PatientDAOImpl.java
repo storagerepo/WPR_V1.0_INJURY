@@ -437,11 +437,25 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	
 	//Common Constrains - Tier
 	if(callerPatientSearchForm.getTier().length>0&&callerPatientSearchForm.getIsRunnerReport()!=-1&&callerPatientSearchForm.getIsRunnerReport()==0){
-		Criterion tierCriterion=Restrictions.in("t1.tier", callerPatientSearchForm.getTier());
-		criteria.add(tierCriterion);
+		Disjunction tierCondition=Restrictions.disjunction();
+		if(ArrayUtils.contains(callerPatientSearchForm.getTier(), 1)){
+			tierCondition.add(Restrictions.eq("t1.tier", 1));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getTier(), 2)){
+			tierCondition.add(Restrictions.eq("t1.tier", 2));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getTier(), 3)){
+			tierCondition.add(Restrictions.eq("t1.tier", 3));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getTier(), 4)){
+			tierCondition.add(Restrictions.eq("t1.tier", 4));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getTier(), 5)){
+			tierCondition.add(Restrictions.isNull("t1.tier"));
+		}
+	//	Criterion tierCriterion=Restrictions.in("t1.tier", callerPatientSearchForm.getTier());
+		criteria.add(tierCondition);
 	}
-	
-	
 	
 	
 	//Common Constrain Age - Major, Minor and All
@@ -507,7 +521,11 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	
 	// Common Constrain is Runner Reports 
 	if(callerPatientSearchForm.getIsRunnerReport()!=-1){
-		criteria.add(Restrictions.eq("cr.isRunnerReport", callerPatientSearchForm.getIsRunnerReport()));
+		if(callerPatientSearchForm.getIsRunnerReport()==0){
+			criteria.add(Restrictions.or(Restrictions.eq("cr.isRunnerReport", 2),Restrictions.eq("cr.isRunnerReport", callerPatientSearchForm.getIsRunnerReport())));
+		}else{
+			criteria.add(Restrictions.eq("cr.isRunnerReport", callerPatientSearchForm.getIsRunnerReport()));
+		}
 	}
 		
 	String role=loginService.getCurrentRole();
@@ -630,6 +648,9 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	//Add Projections
 	ProjectionList projectionList = Projections.projectionList();
 	
+	// From Crash Report Table
+	projectionList.add(Projections.property("cr.isRunnerReport"),"isRunnerReport");
+	
 	projectionList.add(Projections.property("t1.patientId"),"patientId");
 	projectionList.add(Projections.property("cr.localReportNumber"),"localReportNumber");
 	projectionList.add(Projections.property("cr.numberOfPatients"),"numberOfPatients");
@@ -661,8 +682,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	projectionList.add(Projections.property("t1.atFaultPolicyNumber"),"atFaultPolicyNumber");
 	projectionList.add(Projections.property("t1.victimPolicyNumber"),"victimPolicyNumber");
 	projectionList.add(Projections.property("t1.seatingPosition"),"seatingPosition");
-	// From Crash Report Table
-	projectionList.add(Projections.property("cr.isRunnerReport"),"isRunnerReport");
+
 	// From Patient Table
 	projectionList.add(Projections.property("t1.isRunnerReport"),"isRunnerReportPatient");
 	projectionList.add(Projections.property("cr.runnerReportAddedDate"),"runnerReportAddedDate");
@@ -761,6 +781,14 @@ public List<Patient> getSixMonthPatientsList() {
 	System.out.println("Previous 6 Month Date 1......"+date);
 	List<Patient> patients=this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.le("addedDate", date)).addOrder(Order.desc("addedDate")).addOrder(Order.desc("patientId")).list();
 	return patients;
+}
+
+@Override
+public Patient checkPatientForRunnerReport(Integer countyId, String crashDate,
+		String patientName) {
+	// TODO Auto-generated method stub
+	Criterion countyAndCrashDateCriterion=Restrictions.and(Restrictions.eq("county.countyId", countyId), Restrictions.eq("crashDate", InjuryConstants.convertYearFormat(crashDate)));
+	return (Patient) this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.and(countyAndCrashDateCriterion, Restrictions.eq("name", patientName))).uniqueResult();
 }
 
 }

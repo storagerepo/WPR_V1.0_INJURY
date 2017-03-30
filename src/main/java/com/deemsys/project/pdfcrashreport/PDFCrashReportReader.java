@@ -24,6 +24,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.hibernate.mapping.Array;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.CrashReport.CrashReportDAO;
 import com.deemsys.project.CrashReport.CrashReportService;
 import com.deemsys.project.CrashReportError.CrashReportErrorDAO;
@@ -38,6 +40,8 @@ import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.CrashReportError;
+import com.deemsys.project.entity.Patient;
+import com.deemsys.project.patient.PatientDAO;
 import com.deemsys.project.patient.PatientForm;
 import com.deemsys.project.patient.PatientService;
 import com.itextpdf.text.pdf.PdfReader;
@@ -45,6 +49,8 @@ import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 import java.io.*;
+
+import javax.ejb.Local;
 
 @Service
 @Transactional
@@ -68,6 +74,12 @@ public class PDFCrashReportReader {
 	
 	@Autowired
 	CrashReportErrorDAO crashReportErrorDAO;
+	
+	@Autowired
+	CountyDAO countyDAO;
+	
+	@Autowired
+	PatientDAO patientDAO;
 
 	protected static Logger logger = LoggerFactory.getLogger("service");
 
@@ -143,7 +155,6 @@ public class PDFCrashReportReader {
 	 * @throws IOException
 	 */
 	public boolean downloadPDFFile(String crashId) throws IOException {
-			
 			try{
 					File file=getPDFFile(crashId);
 					Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportTryTimes"));
@@ -182,8 +193,7 @@ public class PDFCrashReportReader {
 					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, null, null, new Date() , "", 0, 0, null, null));
 					System.out.println("Failed"+e.toString());
 				}
-		
-			return true;
+		return true;
 				
 	}  
 	
@@ -1053,27 +1063,47 @@ public class PDFCrashReportReader {
 				List<PatientForm> patientsForms = new ArrayList<PatientForm>();
 				//Check for report status
 				Integer tierType = this.getReportType(pdfCrashReportJson);
-						
+				patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
+				// Check Crash Report is Runner Report
+				String runnerReportCrashId =this.checkODPSReportWithRunnerReport(pdfCrashReportJson.getFirstPageForm());
 				switch (tierType) {
 				case 1:
-					patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
 					patientsForms=filterPatientForms(patientsForms);
 					if(patientsForms.size()==0){
 						//#9 Tier 1 Error None of the Patient are not having address and the phone number
-						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 9,patientsForms.size()));
+						if(runnerReportCrashId==null){
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 9,patientsForms.size()));
+						}else{
+							crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 9);
+						}
 					}else{
 						//Insert patients
 						Integer patientAvailableTier=checkTierFourPatientsAvailable(patientsForms);
 						if(patientAvailableTier==3){
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 13,patientsForms.size()));
+							if(runnerReportCrashId==null){
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 13,patientsForms.size()));
+							}else{
+								System.out.println("Matched------>> Update Report");
+								crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 13);
+							}
 						}else if(patientAvailableTier==1){
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 1,patientsForms.size()));
+							if(runnerReportCrashId==null){
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 1,patientsForms.size()));
+							}else{
+								System.out.println("Matched------>> Update Report");
+								crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 1);
+							}
 						}else if(patientAvailableTier==2){
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 14,patientsForms.size()));
+							if(runnerReportCrashId==null){
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 14,patientsForms.size()));
+							}else{
+								System.out.println("Matched------>> Update Report");
+								crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 14);
+							}
 						}
 						
 						try {
-							this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
+							this.savePatientList(patientsForms, crashId.toString(),runnerReportCrashId);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							throw e;
@@ -1081,20 +1111,35 @@ public class PDFCrashReportReader {
 					}
 					break;
 				case 2:
-					patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
 					if(patientsForms.size()==0){
 						//#7 Victim units not having insurance
-						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 7,patientsForms.size()));
+						if(runnerReportCrashId==null){
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 7,patientsForms.size()));
+						}else{
+							System.out.println("Matched------>> Update Report");
+							crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 7);
+						}
 					}else{
 						patientsForms=filterPatientForms(patientsForms);
 						if(patientsForms.size()==0){
 							//#10 Tier2 No patient have address and phone number
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 10,patientsForms.size()));
+							if(runnerReportCrashId==null){
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 10,patientsForms.size()));
+							}else{
+								System.out.println("Matched------>> Update Report");
+								crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 10);
+							}
 						}else{
 							//Insert patients
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 2,patientsForms.size()));
+							if(runnerReportCrashId==null){
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 2,patientsForms.size()));
+							}else{
+								System.out.println("Matched------>> Update Report");
+								crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 2);
+							}
 							try {
-								this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
+								this.savePatientList(patientsForms, crashId.toString(),runnerReportCrashId);
+								
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								throw e;
@@ -1104,20 +1149,34 @@ public class PDFCrashReportReader {
 					
 					break;
 				case 3:
-					patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
 					if(patientsForms.size()==0){
 						//#8 Error None of the Patient satisfy injuries scale 2 to 4
-						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 8,patientsForms.size()));
+						if(runnerReportCrashId==null){
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 8,patientsForms.size()));
+						}else{
+							System.out.println("Matched------>> Update Report");
+							crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 8);
+						}
 					}else{
 						patientsForms=filterPatientForms(patientsForms);
 						if(patientsForms.size()==0){
 							//#11 Tier3 Patient Not having address and phone numbers
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 11,patientsForms.size()));
+							if(runnerReportCrashId==null){
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 11,patientsForms.size()));
+							}else{
+								System.out.println("Matched------>> Update Report");
+								crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 11);
+							}
 						}else{
 							//Insert patients
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 3,patientsForms.size()));
+							if(runnerReportCrashId==null){
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 3,patientsForms.size()));
+							}else{
+								System.out.println("Matched------>> Update Report");
+								crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 3);
+							}
 							try {
-								this.savePatientList(patientsForms, uuid.toString(), crashId.toString());
+								this.savePatientList(patientsForms, crashId.toString(),runnerReportCrashId);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								throw e;
@@ -1128,15 +1187,30 @@ public class PDFCrashReportReader {
 					break;
 				case 4:
 					//Insert into crash report table number of units > 1 and unit in error is an animal
-					crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 4,patientsForms.size()));
+					if(runnerReportCrashId==null){
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 4,patientsForms.size()));
+					}else{
+						System.out.println("Matched------>> Update Report");
+						crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 4);
+					}
 					break;
 				case 5:
 					//Insert into crash report table number of units == 1 and unit in error is an animal
-					crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 5,patientsForms.size()));
+					if(runnerReportCrashId==null){
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 5,patientsForms.size()));
+					}else{
+						System.out.println("Matched------>> Update Report");
+						crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 5);
+					}
 					break;
 				case 6:
 					//Insert into crash report table number of units == 1 and unit in error not having insurance details
-					crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 6,patientsForms.size()));
+					if(runnerReportCrashId==null){
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 6,patientsForms.size()));
+					}else{
+						System.out.println("Matched------>> Update Report");
+						crashReportService.updateCrashReport(runnerReportCrashId, crashId, fileName, 6);
+					}
 					break;
 				default:
 					break;
@@ -1148,18 +1222,46 @@ public class PDFCrashReportReader {
  	}
 	
 	
-	public void savePatientList(List<PatientForm> patientsForms,String uuid,String crashId) throws Exception{
+	public void savePatientList(List<PatientForm> patientsForms,String crashId,String runnerReportCrashId) throws Exception{
+		Integer patientCount=0;
 		for (PatientForm patientsForm : patientsForms) {
 			//patientsForm.setCrashReportFileName(uuid+"_"+crashId+".pdf");
 			patientsForm.setCrashReportFileName(crashId+".pdf");
 			patientsForm.setCrashId(crashId);
 			try {
-				patientsService.savePatient(patientsForm);
+				if(runnerReportCrashId!=null){
+					Patient patient = this.checkODPSPatientsWithRunnerReportPatients(patientsForm);
+					if(patient!=null){
+						// Update Patient Details
+						System.out.println("Matched----->>>Update Patient Details");
+						patientsForm.setPatientId(patient.getPatientId());
+						patientsForm.setIsRunnerReport(2);
+						patientsForm.setStatus(1);
+						patientsService.updatePatient(patientsForm);
+					}else{
+						patientsService.savePatient(patientsForm);
+						patientCount++;
+						System.out.println("Not Matched----->>>Save Patient Details");
+					}
+				}else{
+					patientsService.savePatient(patientsForm);
+					System.out.println("No Need To Check----->>>Save Patient Details");
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				throw e;
 			}
-		}		
+		}
+		
+		// Update Patients Count
+		if(runnerReportCrashId!=null){
+			CrashReport crashReport = crashReportDAO.getCrashReport(crashId);
+			Integer oldPatientsCount=crashReport.getNumberOfPatients();
+			crashReport.setNumberOfPatients(oldPatientsCount+patientCount);
+			LocalDate addedDate = new LocalDate();
+			crashReport.setAddedDate(addedDate.toDate());
+			crashReportDAO.update(crashReport);
+		}
 	}
 	
 	public List<PatientForm> filterPatientForms(List<PatientForm> patientsForms){
@@ -1206,4 +1308,31 @@ public class PDFCrashReportReader {
 		
 	}
 	
+	// Check ODPS Report With Runner Report
+	public String checkODPSReportWithRunnerReport(ReportFirstPageForm reportFirstPageForm){
+		Long oldReportCount=crashReportDAO.getLocalReportNumberCount(reportFirstPageForm.getLocalReportNumber());
+		Integer countyId=countyDAO.getCountyByName(crashReportService.splitCountyName(reportFirstPageForm.getCounty())).getCountyId();
+		String crashId=null;
+		for (int i = 0; i <=oldReportCount; i++) {
+			String localReportNumber=reportFirstPageForm.getLocalReportNumber();
+			if(i!=0){
+				localReportNumber=localReportNumber+"("+i+")";
+			}
+			crashId=crashReportDAO.getCrashReportForChecking(localReportNumber,reportFirstPageForm.getCrashDate(), countyId);
+			if(crashId!=null&&!crashId.equals("")){
+				break;
+			}
+		}
+		
+		return crashId;
+	}
+	
+	// Check ODPS Patients With Runner Report Patients
+	public Patient checkODPSPatientsWithRunnerReportPatients(PatientForm patientForm){
+		Patient patient = null;
+		String patientName=patientForm.getName().substring(0,patientForm.getName().lastIndexOf(','));
+		Integer countyId=countyDAO.getCountyByName(crashReportService.splitCountyName(patientForm.getCounty())).getCountyId();
+		patient=patientDAO.checkPatientForRunnerReport(countyId, patientForm.getCrashDate(), patientName);
+		return patient;
+	}
 }

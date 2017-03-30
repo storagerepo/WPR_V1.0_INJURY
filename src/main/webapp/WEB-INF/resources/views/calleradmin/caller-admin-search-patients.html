@@ -246,93 +246,97 @@
 				</tr>
 
 				<tr
-					dir-paginate="patient in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage"
+					dir-paginate="cAdminPatient in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage"
 					current-page="patient.pageNumber" total-items="totalRecords" pagination-id="callerAdminPatientPageId">
 					<td><input ng-change="isCheckedIndividual();enableCallLogsButton('{{resultData.localReportNumber}}','{{resultMainData.archivedDate}}')"
-						ng-model="patient.selected" ng-checked="patient.selected"
+						ng-model="cAdminPatient.selected" ng-checked="cAdminPatient.selected"
 						type="checkbox"></td>
 					<td><span
-						ng-if="(patient.injuries==2 || patient.injuries==3 || patient.injuries==4) && (patient.age>=18 || patient.age==null) "><a
+						ng-if="(cAdminPatient.injuries==2 || cAdminPatient.injuries==3 || cAdminPatient.injuries==4) && (cAdminPatient.age>=18 || cAdminPatient.age==null) "><a
 							href="" class="hint--top redText"
-							ng-click="viewPatientModal(patient.patientId)"
-							data-hint="View Patient">{{patient.name}}</a><span
+							ng-click="viewPatientModal(cAdminPatient.patientId)"
+							data-hint="View Patient">{{cAdminPatient.name}}</a><span
 							class="redText margin-left-10 hint--top"
-							data-hint="Injuries : {{patient.injuriesName}}"><i
+							data-hint="Injuries : {{cAdminPatient.injuriesName}}"><i
 								class="fa fa-arrow-up"></i></span>
-								<span ng-show="patient.seatingPosition=='1'"
-							class="margin-left-10 hint--top driver-icon"
-							data-hint="Driver">&nbsp;</span></span> <span
-						ng-if="(patient.injuries==2 || patient.injuries==3 || patient.injuries==4) && (patient.age<18 && patient.age!=null)"><a
-							href="" class="hint--top warningText"
-							ng-click="viewPatientModal(patient.patientId)"
-							data-hint="View Patient">{{patient.name}}</a><span
-							class="redText margin-left-10 hint--top"
-							data-hint="Injuries : {{patient.injuriesName}}"><i
-								class="fa fa-arrow-up"></i></span>
-								<span ng-show="patient.seatingPosition=='1'"
+								<span ng-show="cAdminPatient.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon"
 							data-hint="Driver">&nbsp;</span>
+							&nbsp;<span class="badge badge-warning hint--top" ng-show="cAdminPatient.isRunnerReport==2&&(cAdminPatient.isRunnerReportPatient==1 || cAdminPatient.isRunnerReportPatient==2)" data-hint="Runner Report">R</span></span> <span
+						ng-if="(cAdminPatient.injuries==2 || cAdminPatient.injuries==3 || cAdminPatient.injuries==4) && (cAdminPatient.age<18 && cAdminPatient.age!=null)"><a
+							href="" class="hint--top warningText"
+							ng-click="viewPatientModal(cAdminPatient.patientId)"
+							data-hint="View Patient">{{cAdminPatient.name}}</a><span
+							class="redText margin-left-10 hint--top"
+							data-hint="Injuries : {{cAdminPatient.injuriesName}}"><i
+								class="fa fa-arrow-up"></i></span>
+								<span ng-show="cAdminPatient.seatingPosition=='1'"
+							class="margin-left-10 hint--top driver-icon"
+							data-hint="Driver">&nbsp;</span>
+							&nbsp;<span class="badge badge-warning hint--top" ng-show="cAdminPatient.isRunnerReport==2&&(cAdminPatient.isRunnerReportPatient==1 || cAdminPatient.isRunnerReportPatient==2)" data-hint="Runner Report">R</span>
 								</span> <span
-						ng-if="(patient.injuries!=2 && patient.injuries!=3 && patient.injuries!=4) && (patient.age>=18 || patient.age==null)"><a
+						ng-if="(cAdminPatient.injuries!=2 && cAdminPatient.injuries!=3 && cAdminPatient.injuries!=4) && (cAdminPatient.age>=18 || cAdminPatient.age==null)"><a
 							href="" class="hint--top"
-							ng-click="viewPatientModal(patient.patientId)"
-							data-hint="View Patient">{{patient.name}}</a>
-							<span ng-show="patient.seatingPosition=='1'"
+							ng-click="viewPatientModal(cAdminPatient.patientId)"
+							data-hint="View Patient">{{cAdminPatient.name}}</a>
+							<span ng-show="cAdminPatient.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon"
 							data-hint="Driver">&nbsp;</span>
+							&nbsp;<span class="badge badge-warning hint--top" ng-show="cAdminPatient.isRunnerReport==2&&(cAdminPatient.isRunnerReportPatient==1 || cAdminPatient.isRunnerReportPatient==2)" data-hint="Runner Report">R</span>
 							</span> <span
-						ng-if="(patient.injuries!=2 && patient.injuries!=3 && patient.injuries!=4) && (patient.age<18 && patient.age!=null)"><a
+						ng-if="(cAdminPatient.injuries!=2 && cAdminPatient.injuries!=3 && cAdminPatient.injuries!=4) && (cAdminPatient.age<18 && cAdminPatient.age!=null)"><a
 							href="" class="hint--top warningText"
-							ng-click="viewPatientModal(patient.patientId)"
-							data-hint="View Patient">{{patient.name}}</a>
-							<span ng-show="patient.seatingPosition=='1'"
+							ng-click="viewPatientModal(cAdminPatient.patientId)"
+							data-hint="View Patient">{{cAdminPatient.name}}</a>
+							<span ng-show="cAdminPatient.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon"
 							data-hint="Driver">&nbsp;</span>
+							&nbsp;<span class="badge badge-warning hint--top" ng-show="cAdminPatient.isRunnerReport==2&&(cAdminPatient.isRunnerReportPatient==1 || cAdminPatient.isRunnerReportPatient==2)" data-hint="Runner Report">R</span>
 							</span>
 							</td>
 
-					<td title="Phone Number"><span ng-show="patient.phoneNumber!=''&&patient.phoneNumber!=null">{{patient.phoneNumber}}</span><span ng-show="patient.phoneNumber==''||patient.phoneNumber==null">-</span></td>
-					<td title="Age"><span ng-show="patient.age!=''&&patient.age!=null">{{patient.age}}</span><span ng-show="patient.age==''||patient.age==null">-</span></td>
-					<td title="Unit Number"><span ng-show="patient.unitNumber!=''&&patient.unitNumber!=null">{{patient.unitNumber}}</span><span ng-show="patient.unitNumber==''||patient.unitNumber==null">-</span></td>
-					<td title="County">{{patient.county}}</td>
+					<td title="Phone Number"><span ng-show="cAdminPatient.phoneNumber!=''&&cAdminPatient.phoneNumber!=null">{{cAdminPatient.phoneNumber}}</span><span ng-show="cAdminPatient.phoneNumber==''||cAdminPatient.phoneNumber==null">-</span></td>
+					<td title="Age"><span ng-show="cAdminPatient.age!=''&&cAdminPatient.age!=null">{{cAdminPatient.age}}</span><span ng-show="cAdminPatient.age==''||cAdminPatient.age==null">-</span></td>
+					<td title="Unit Number"><span ng-show="cAdminPatient.unitNumber!=''&&cAdminPatient.unitNumber!=null">{{cAdminPatient.unitNumber}}</span><span ng-show="cAdminPatient.unitNumber==''||cAdminPatient.unitNumber==null">-</span></td>
+					<td title="County">{{cAdminPatient.county}}</td>
 
-					<td><span ng-show="patient.tier!=''&&patient.tier!=null">Tier {{patient.tier}}</span><span ng-show="patient.tier==''||patient.tier==null">-</span></td>
+					<td><span ng-show="cAdminPatient.tier!=''&&cAdminPatient.tier!=null">Tier {{cAdminPatient.tier}}</span><span ng-show="cAdminPatient.tier==''||cAdminPatient.tier==null">-</span></td>
 					<td title="Caller Name"><span
-						ng-show="patient.callerFirstName==null && patient.callerLastName==null">N/A</span>{{patient.callerFirstName}}
-						{{patient.callerLastName}}</td>
-					<td title="Status">{{patient.patientStatusName}}</td>
+						ng-show="cAdminPatient.callerFirstName==null && cAdminPatient.callerLastName==null">N/A</span>{{cAdminPatient.callerFirstName}}
+						{{cAdminPatient.callerLastName}}</td>
+					<td title="Status">{{cAdminPatient.patientStatusName}}</td>
 					<td><span
-						ng-show="patient.lastCallLogTimeStamp==null && patient.lastCallLogTimeStamp==null">-</span><b>{{patient.lastCallLogTimeStamp}}</b></td>
-					<td title="Archived On" ng-show="patient.isArchived==1" ng-cloak>{{patient.archivedDateTime}}</td>
-					<td><a href="{{patient.crashReportFileName}}"
+						ng-show="cAdminPatient.lastCallLogTimeStamp==null && cAdminPatient.lastCallLogTimeStamp==null">-</span><b>{{cAdminPatient.lastCallLogTimeStamp}}</b></td>
+					<td title="Archived On" ng-show="cAdminPatient.isArchived==1" ng-cloak>{{cAdminPatient.archivedDateTime}}</td>
+					<td><a href="{{cAdminPatient.crashReportFileName}}"
 						ng-cloak target="_blank" class="btn btn-xs btn-info hint--top"
 						data-hint="View Crash Report"><i class="fa fa-file-pdf-o"></i></a>
-						<span ng-show={{patient.isArchived==0||patient.isArchived==null}}>
+						<span ng-show={{patient.isArchived==0||cAdminPatient.isArchived==null}}>
 							<a href="" ng-cloak
-							ng-show={{patient.callerId!=null}}
-							ng-click="assignIndividualCallerPopup(patient.patientId,patient.name,patient.callerId)"
+							ng-show={{cAdminPatient.callcAdminPatientull}}
+							ng-click="assignIndividualCallerPopup(cAdminPatient.patientId,cAdminPatient.name,cAdminPatient.callerId)"
 							class="btn btn-xs btn-success hint--top"
 							data-hint="Change Caller"><i
 								class="fa fa-external-link-square"></i></a> <a href="" ng-cloak
-							ng-hide={{patient.callerId!=null}}
-							ng-click="assignIndividualCallerPopup(patient.patientId,patient.name,patient.callerId)"
+							ng-hide={{cAdminPatient.callerId!=null}}
+							ng-click="assignIndividualCallerPopup(cAdminPatient.patientId,cAdminPatient.name,cAdminPatient.callerId)"
 							class="btn btn-xs btn-danger hint--top" data-hint="Assign Caller"><i
 								class="fa fa-external-link-square"></i></a>
 					</span>
-						<a href="" ng-cloak ng-click="viewCallLogsList(patient.patientId,patient.name,resultData.localReportNumber)"
+						<a href="" ng-cloak ng-click="viewCallLogsList(cAdminPatient.patientId,cAdminPatient.name,resultData.localReportNumber)"
 						class="btn btn-xs btn-primary hint--top"
 						data-hint="View Call Logs"><i class="fa fa-eye"></i></a>
-						<a href="" ng-cloak ng-click="viewNearByClinic(patient.patientId)"
+						<a href="" ng-cloak ng-click="viewNearByClinic(cAdminPatient.patientId)"
 						class="btn btn-xs btn-warning hint--top"
 						data-hint="View Near By Clinics"><i class="fa fa-map-marker"></i></a>
 						<a href="" ng-cloak
-							ng-show={{patient.isArchived==0||patient.isArchived==null}}
-							ng-click="moveSingleFileToArchive(patient.patientId)"
+							ng-show={{cAdminPatient.isArchived==0||cAdminPatient.isArchived==null}}
+							ng-click="moveSingleFileToArchive(cAdminPatient.patientId)"
 							class="btn btn-xs btn-success hint--top"
 							data-hint="Archive"><i
 								class="fa fa-archive"></i></a> <a href="" ng-cloak
-							ng-show={{patient.isArchived==1}}
-							ng-click="releaseSingleFileFromArchive(patient.patientId)"
+							ng-show={{cAdminPatient.isArchived==1}}
+							ng-click="releaseSingleFileFromArchive(cAdminPatient.patientId)"
 							class="btn btn-xs btn-danger hint--top" data-hint="Restore"><i
 								class="fa fa-share-square-o"></i></a>
 						</td>

@@ -5,7 +5,18 @@
 <div ng-cloak>
 <div class="row">
 <div class="col-lg-12">
-		
+	 <div class="form-group passenger-type pull-right margin-top35">
+	<label>Report Type:</label>
+			<div class="btn-group">
+				<label class="btn btn-default" btn-radio="0"
+					ng-model="crashreport.isRunnerReport"> ODPS <span
+					class="glyphicon glyphicon-file"></span>
+				</label> <label class="btn btn-default" btn-radio="1"
+					ng-model="crashreport.isRunnerReport"> Runner <span
+					class="glyphicon glyphicon-file"></span>
+				</label>
+			</div>
+		</div>
 	 <div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
 	 <h2 class="page-header">Search Crash Report</h2>
 	</div>

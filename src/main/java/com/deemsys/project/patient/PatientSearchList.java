@@ -102,7 +102,11 @@ public class PatientSearchList extends InjuryProperties{
 		return crashReportFileName;
 	}
 	public void setCrashReportFileName(String crashReportFileName) {
-		this.crashReportFileName = getProperty("bucketURL")+crashReportFileName;
+		if(this.isRunnerReport==1){
+			this.crashReportFileName = getProperty("runnerBucketURL")+crashReportFileName;
+		}else{
+			this.crashReportFileName = getProperty("bucketURL")+crashReportFileName;
+		}
 	}
 	public Integer getCallerAdminId() {
 		return callerAdminId;

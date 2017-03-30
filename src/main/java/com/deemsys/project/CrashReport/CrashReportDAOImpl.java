@@ -154,7 +154,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 	public CrashReportList searchCrashReports(String localReportNumber,
 			String crashId, String crashFromDate, String crashToDate,
 			String county, String addedFromDate, String addedToDate,
-			Integer recordsPerPage, Integer pageNumber) {
+			Integer recordsPerPage, Integer pageNumber,Integer isRunnerReport) {
 		// TODO Auto-generated method stub
 		List<CrashReportForm> crashReportForms=new ArrayList<CrashReportForm>();
 		
@@ -182,10 +182,20 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 			criteria.add(Restrictions.eq("crashId", crashId));
 		}
 		
+		if(isRunnerReport!=null&&isRunnerReport!=-1){
+			if(isRunnerReport==0){
+				criteria.add(Restrictions.or(Restrictions.eq("isRunnerReport", 2),Restrictions.eq("isRunnerReport", isRunnerReport)));
+			}else{
+				criteria.add(Restrictions.eq("isRunnerReport", isRunnerReport));
+			}
+		}
+		
 		//Projections
 		ProjectionList projectionList=Projections.projectionList();
 		
 		//projectionList.add(Projections.alias(Projections.property("crashReportId"), "crashReportId"));
+
+		projectionList.add(Projections.alias(Projections.property("isRunnerReport"), "isRunnerReport"));
 		projectionList.add(Projections.alias(Projections.property("e1.description"), "crashReportError"));
 		projectionList.add(Projections.alias(Projections.property("localReportNumber"), "localReportNumber"));
 		projectionList.add(Projections.alias(Projections.property("crashId"), "crashId"));
@@ -293,6 +303,28 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		System.out.println("Previous 6 Month Date 1......"+date);
 		List<CrashReport> crashReports=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).add(Restrictions.le("addedDate", date)).list();
 		return crashReports;
+	}
+
+	@Override
+	public String getCrashReportForChecking(String localReportNumber,
+			String crashDate, Integer countyId) {
+		// TODO Auto-generated method stub
+		// 1 is Runner Report
+		Criterion reportNumberAndCrashDate=Restrictions.and(Restrictions.eq("localReportNumber", localReportNumber), Restrictions.eq("crashDate", InjuryConstants.convertYearFormat(crashDate)));
+		Criterion countyAndReportCrashDate=Restrictions.and(reportNumberAndCrashDate, Restrictions.eq("county.countyId", countyId));
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class);
+		criteria.add(Restrictions.and(countyAndReportCrashDate,Restrictions.eq("isRunnerReport", 1)));
+		criteria.setProjection(Projections.property("crashId"));
+		return (String) criteria.uniqueResult();
+		
+	}
+
+	@Override
+	public void updateCrashReportByQuery(String oldCrashId,
+			String newCrashId, Integer crashReportErrorId, String filePath,
+			Integer isRunnerReport) {
+		// TODO Auto-generated method stub
+		this.sessionFactory.getCurrentSession().createQuery("update CrashReport set crashId='"+newCrashId+"', filePath='"+filePath+"',crashReportError.crashReportErrorId='"+crashReportErrorId+"', isRunnerReport='"+isRunnerReport+"' where crash_id='"+oldCrashId+"' ").executeUpdate();
 	}
 
 }

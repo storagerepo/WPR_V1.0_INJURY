@@ -5,7 +5,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var numberOfDays="1";
 	var crashFromDate="";
 	var callerId="0";
-	var tier=[{id:1},{id:2},{id:3},{id:4}];
+	var tier=[{id:1},{id:2},{id:3},{id:4},{id:5}];
 	var crashToDate="";
 	var localReportNumber="";
 	var patientName="";
@@ -270,7 +270,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		numberOfDays="1";
 		crashFromDate="";
 		callerId="0";
-		tier=[{id:1},{id:2},{id:3},{id:4}];
+		tier=[{id:1},{id:2},{id:3},{id:4},{id:5}];
 		crashToDate="";
 		localReportNumber="";
 		patientName="";
