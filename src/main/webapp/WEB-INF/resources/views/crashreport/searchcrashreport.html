@@ -114,7 +114,7 @@
                         <tbody>
                             <tr ng-show="crashSearchData.length>0"  dir-paginate="crashReport in crashSearchData|itemsPerPage:crashreport.recordsPerPage" current-page="crashreport.pageNumber" total-items="totalRecords" pagination-id="crashReportPageId">
                                 <td title="County">{{crashReport.county}}</td>
-                                <td title="Local Report Number">{{crashReport.localReportNumber}}</td>
+                                <td title="Local Report Number">{{crashReport.localReportNumber}} <span class="badge badge-warning hint--top" data-hint="Runner Report" ng-show="crashReport.isRunnerReport==2">R</span></td>
                                 <td title="Crash Id">{{crashReport.crashId}}</td>
                                 <td title="Crash Date">{{crashReport.crashDate}}</td>
                                 <td title="Added Date">{{crashReport.addedDate}}</td>
