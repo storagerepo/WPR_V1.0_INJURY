@@ -442,6 +442,12 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 					    case "4":
 					    	value2.injuriesName="Incapacitating";
 					        break;
+					    case "5":
+					    	value2.injuriesName="Fatal";
+					        break;
+					    case "6":
+					    	value2.injuriesName="Not Available";
+					        break;
 					    default:
 					        break;
 						};
@@ -455,7 +461,9 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 					    case "3":
 					    	value2.crashSeverityName="PDO";
 					        break;
-					  
+					    case "4":
+					    	value2.crashSeverityName="Not Available";
+					        break;
 					    default:
 					        break;
 						};

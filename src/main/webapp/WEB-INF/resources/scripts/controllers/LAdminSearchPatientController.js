@@ -169,6 +169,12 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 						    case "4":
 						    	value2.injuriesName="Incapacitating";
 						        break;
+						    case "5":
+						    	value2.injuriesName="Fatal";
+						        break;
+						    case "6":
+						    	value2.injuriesName="Not Available";
+						        break;
 						    default:
 						        break;
 							};
@@ -182,7 +188,9 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 						    case "3":
 						    	value2.crashSeverityName="PDO";
 						        break;
-						  
+						    case "4":
+						    	value2.crashSeverityName="Not Available";
+						        break;
 						    default:
 						        break;
 							};

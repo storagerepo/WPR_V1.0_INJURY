@@ -928,3 +928,25 @@ ul.rating {
     height: 21px;
     display:block;
   }
+ 
+ /* Notification Badge Colors */ 
+  .badge-primary{
+	background-color:#428bca !important;
+	font-size: 11px !important;
+	color:#ffffff;
+	border-radius:15px !important;
+}
+
+.badge-success{
+	background-color:#4cae4c !important;
+	font-size: 11px !important;
+	color:#ffffff;
+	border-radius:15px !important;
+}
+
+.badge-warning{
+	background-color:#FF8C00 !important;
+	font-size: 11px !important;
+	color:#ffffff;
+	border-radius:15px !important;
+}

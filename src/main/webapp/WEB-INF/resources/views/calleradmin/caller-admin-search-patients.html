@@ -236,8 +236,9 @@
 					<td colspan="1"><input ng-change="selectGroup(this,'{{resultMainData.archivedDate}}');enableCallLogsButton('{{resultData.localReportNumber}}','{{resultMainData.archivedDate}}');"
 						ng-model="isCheckedAllGroupPatients" type="checkbox"
 						id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td>
-					<td colspan="11"><span><b>Local Report No: </b>{{resultData.localReportNumber}}</span><span
-						class="col-md-9 no-padding pull-right text-right"><span><b><a href="" id="addCallLog{{resultData.localReportNumber}}{{resultMainData.archivedDate}}" disabled="disabled" ng-click="addModel(this,resultMainData.archivedDate)" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Add Call Log</a> | Unit
+					<td colspan="11"><span><b>Local Report No: </b>{{resultData.localReportNumber}}</span>
+					<span class="badge badge-warning hint--top" ng-show="resultData.isRunnerReport==2" data-hint="Runner Report">R</span>
+					<span class="col-md-9 no-padding pull-right text-right"><span><b><a href="" id="addCallLog{{resultData.localReportNumber}}{{resultMainData.archivedDate}}" disabled="disabled" ng-click="addModel(this,resultMainData.archivedDate)" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Add Call Log</a> | Unit
 									In Error: </b><span ng-show="resultData.unitInError!=''&&resultData.unitInError!=null">{{resultData.unitInError}}</span><span ng-show="resultData.unitInError==''||resultData.unitInError==null">-</span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash
 									Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added
 									Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients
@@ -262,7 +263,9 @@
 								<span ng-show="cAdminPatient.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon"
 							data-hint="Driver">&nbsp;</span>
-							&nbsp;<span class="badge badge-warning hint--top" ng-show="cAdminPatient.isRunnerReport==2&&(cAdminPatient.isRunnerReportPatient==1 || cAdminPatient.isRunnerReportPatient==2)" data-hint="Runner Report">R</span></span> <span
+							<span class="badge hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
+							<span class="badge badge-success hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span> 
+							<span
 						ng-if="(cAdminPatient.injuries==2 || cAdminPatient.injuries==3 || cAdminPatient.injuries==4) && (cAdminPatient.age<18 && cAdminPatient.age!=null)"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(cAdminPatient.patientId)"
@@ -273,7 +276,8 @@
 								<span ng-show="cAdminPatient.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon"
 							data-hint="Driver">&nbsp;</span>
-							&nbsp;<span class="badge badge-warning hint--top" ng-show="cAdminPatient.isRunnerReport==2&&(cAdminPatient.isRunnerReportPatient==1 || cAdminPatient.isRunnerReportPatient==2)" data-hint="Runner Report">R</span>
+							<span class="badge hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
+							<span class="badge badge-success hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span>
 								</span> <span
 						ng-if="(cAdminPatient.injuries!=2 && cAdminPatient.injuries!=3 && cAdminPatient.injuries!=4) && (cAdminPatient.age>=18 || cAdminPatient.age==null)"><a
 							href="" class="hint--top"
@@ -282,8 +286,9 @@
 							<span ng-show="cAdminPatient.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon"
 							data-hint="Driver">&nbsp;</span>
-							&nbsp;<span class="badge badge-warning hint--top" ng-show="cAdminPatient.isRunnerReport==2&&(cAdminPatient.isRunnerReportPatient==1 || cAdminPatient.isRunnerReportPatient==2)" data-hint="Runner Report">R</span>
-							</span> <span
+							<span class="badge hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
+							<span class="badge badge-success hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span> 
+							<span
 						ng-if="(cAdminPatient.injuries!=2 && cAdminPatient.injuries!=3 && cAdminPatient.injuries!=4) && (cAdminPatient.age<18 && cAdminPatient.age!=null)"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(cAdminPatient.patientId)"
@@ -291,7 +296,8 @@
 							<span ng-show="cAdminPatient.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon"
 							data-hint="Driver">&nbsp;</span>
-							&nbsp;<span class="badge badge-warning hint--top" ng-show="cAdminPatient.isRunnerReport==2&&(cAdminPatient.isRunnerReportPatient==1 || cAdminPatient.isRunnerReportPatient==2)" data-hint="Runner Report">R</span>
+							<span class="badge hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
+							<span class="badge badge-success hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span>
 							</span>
 							</td>
 

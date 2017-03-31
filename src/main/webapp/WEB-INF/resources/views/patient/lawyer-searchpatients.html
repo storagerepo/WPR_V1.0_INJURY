@@ -282,7 +282,7 @@
 						ng-model="isCheckedAllGroupPatients" type="checkbox"
 						id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td>
 					<td colspan="8"><span><b>Local Report No:</b>
-							{{resultData.localReportNumber}} </span><span class="pull-right"><span><b>Unit
+							{{resultData.localReportNumber}} </span><span class="badge badge-warning hint--top" ng-show="resultData.isRunnerReport==2" data-hint="Runner Report">R</span><span class="pull-right"><span><b>Unit
 									In Error: </b><span
 								ng-show="resultData.unitInError!='' && resultData.unitInError!=null">{{resultData.unitInError}}</span><span
 								ng-show="resultData.unitInError=='' || resultData.unitInError==null">-</span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash
@@ -309,7 +309,8 @@
 								class="fa fa-arrow-up"></i></span><span
 							ng-show="lawyerData.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
-							&nbsp;<span class="badge badge-warning hint--top" ng-show="lawyerData.isRunnerReport==2&&(lawyerData.isRunnerReportPatient==1 || lawyerData.isRunnerReportPatient==2)" data-hint="Runner Report">R</span></span>
+							<span class="badge hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
+							<span class="badge badge-success hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span>
 						<span
 						ng-if="(lawyerData.injuries==2 || lawyerData.injuries==3 || lawyerData.injuries==4) && (lawyerData.age<18 && lawyerData.age!=null)"><a
 							href="" class="hint--top warningText"
@@ -320,7 +321,8 @@
 								class="fa fa-arrow-up"></i></span><span
 							ng-show="lawyerData.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
-							&nbsp;<span class="badge badge-warning hint--top" ng-show="lawyerData.isRunnerReport==2&&(lawyerData.isRunnerReportPatient==1 || lawyerData.isRunnerReportPatient==2)" data-hint="Runner Report">R</span></span>
+							<span class="badge hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
+							<span class="badge badge-success hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span>
 						<span
 						ng-if="(lawyerData.injuries!=2 && lawyerData.injuries!=3 && lawyerData.injuries!=4) && (lawyerData.age>=18 || lawyerData.age==null)"><a
 							href="" class="hint--top"
@@ -328,7 +330,8 @@
 							data-hint="View Client">{{lawyerData.name}}</a><span
 							ng-show="lawyerData.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
-							&nbsp;<span class="badge badge-warning hint--top" ng-show="lawyerData.isRunnerReport==2&&(lawyerData.isRunnerReportPatient==1 || lawyerData.isRunnerReportPatient==2)" data-hint="Runner Report">R</span></span>
+							<span class="badge hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
+							<span class="badge badge-success hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span>
 						<span
 						ng-if="(lawyerData.injuries!=2 && lawyerData.injuries!=3 && lawyerData.injuries!=4) && (lawyerData.age<18 && lawyerData.age!=null)"><a
 							href="" class="hint--top warningText"
@@ -336,7 +339,8 @@
 							data-hint="View Client">{{lawyerData.name}}</a><span
 							ng-show="lawyerData.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
-							&nbsp;<span class="badge badge-warning hint--top" ng-show="lawyerData.isRunnerReport==2&&(lawyerData.isRunnerReportPatient==1 || lawyerData.isRunnerReportPatient==2)" data-hint="Runner Report">R</span></span>
+							<span class="badge hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
+							<span class="badge badge-success hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span>
 					</td>
 					<td title="Age"><span
 						ng-show="lawyerData.age!='' && lawyerData.age!=null">{{lawyerData.age}}</span><span
