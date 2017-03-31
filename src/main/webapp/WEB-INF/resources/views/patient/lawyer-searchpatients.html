@@ -110,7 +110,7 @@
 					at least one tier</span>
 				<div ng-dropdown-multiselect="" options="defaultTiers"
 					selected-model="patient.tier"
-					extra-settings="{disable:patient.isRunnerReport==1}"></div>
+					extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
 			</div>
 
 			<div class="col-md-3">
@@ -308,7 +308,8 @@
 							data-hint="Injuries : {{lawyerData.injuriesName}}"><i
 								class="fa fa-arrow-up"></i></span><span
 							ng-show="lawyerData.seatingPosition=='1'"
-							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
+							&nbsp;<span class="badge badge-warning hint--top" ng-show="lawyerData.isRunnerReport==2&&(lawyerData.isRunnerReportPatient==1 || lawyerData.isRunnerReportPatient==2)" data-hint="Runner Report">R</span></span>
 						<span
 						ng-if="(lawyerData.injuries==2 || lawyerData.injuries==3 || lawyerData.injuries==4) && (lawyerData.age<18 && lawyerData.age!=null)"><a
 							href="" class="hint--top warningText"
@@ -318,21 +319,24 @@
 							data-hint="Injuries : {{lawyerData.injuriesName}}"><i
 								class="fa fa-arrow-up"></i></span><span
 							ng-show="lawyerData.seatingPosition=='1'"
-							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
+							&nbsp;<span class="badge badge-warning hint--top" ng-show="lawyerData.isRunnerReport==2&&(lawyerData.isRunnerReportPatient==1 || lawyerData.isRunnerReportPatient==2)" data-hint="Runner Report">R</span></span>
 						<span
 						ng-if="(lawyerData.injuries!=2 && lawyerData.injuries!=3 && lawyerData.injuries!=4) && (lawyerData.age>=18 || lawyerData.age==null)"><a
 							href="" class="hint--top"
 							ng-click="viewPatientModal(lawyerData.patientId)"
 							data-hint="View Client">{{lawyerData.name}}</a><span
 							ng-show="lawyerData.seatingPosition=='1'"
-							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
+							&nbsp;<span class="badge badge-warning hint--top" ng-show="lawyerData.isRunnerReport==2&&(lawyerData.isRunnerReportPatient==1 || lawyerData.isRunnerReportPatient==2)" data-hint="Runner Report">R</span></span>
 						<span
 						ng-if="(lawyerData.injuries!=2 && lawyerData.injuries!=3 && lawyerData.injuries!=4) && (lawyerData.age<18 && lawyerData.age!=null)"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(lawyerData.patientId)"
 							data-hint="View Client">{{lawyerData.name}}</a><span
 							ng-show="lawyerData.seatingPosition=='1'"
-							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span></span>
+							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
+							&nbsp;<span class="badge badge-warning hint--top" ng-show="lawyerData.isRunnerReport==2&&(lawyerData.isRunnerReportPatient==1 || lawyerData.isRunnerReportPatient==2)" data-hint="Runner Report">R</span></span>
 					</td>
 					<td title="Age"><span
 						ng-show="lawyerData.age!='' && lawyerData.age!=null">{{lawyerData.age}}</span><span

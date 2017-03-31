@@ -72,7 +72,7 @@
 		<div class="col-md-12 no-padding">
 			<div class="col-md-5ths">
 	       		<label>Tier</label>&nbsp;&nbsp;<a href="" class="some-popover-link" data-original-title="" data-toggle="popover" title="Tier Details (Deceased victims not listed)"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
-         		<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier" extra-settings="{disable:patient.isRunnerReport==1}"></div>
+         		<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier" extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
 	        </div>
           	<div class="col-md-5ths">
        			<label>Added On From Date</label>
