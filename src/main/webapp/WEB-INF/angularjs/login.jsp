@@ -138,7 +138,7 @@
 	</div>
 	<div id="footer">
 		<!-- Footer start -->
-		<p>Copyright &copy; 2016 &middot; All Rights Reserved &middot; <a class="tag-color-white" target="#blank" href="http://www.deemsysinc.com/" >Deemsys Inc</a></p>
+		<p>Copyright &copy; 2017 &middot; All Rights Reserved &middot; <a class="tag-color-white" target="#blank" href="http://www.deemsysinc.com/" >Deemsys Inc</a></p>
 		<!-- Footer end -->
 	</div>
 </div>
