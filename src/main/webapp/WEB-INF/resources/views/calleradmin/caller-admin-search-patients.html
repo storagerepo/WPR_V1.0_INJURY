@@ -317,9 +317,9 @@
 					<td><a href="{{cAdminPatient.crashReportFileName}}"
 						ng-cloak target="_blank" class="btn btn-xs btn-info hint--top"
 						data-hint="View Crash Report"><i class="fa fa-file-pdf-o"></i></a>
-						<span ng-show={{patient.isArchived==0||cAdminPatient.isArchived==null}}>
+						<span ng-show={{cAdminPatient.isArchived==0||cAdminPatient.isArchived==null}}>
 							<a href="" ng-cloak
-							ng-show={{cAdminPatient.callcAdminPatientull}}
+							ng-show={{cAdminPatient.callerId!=null}}
 							ng-click="assignIndividualCallerPopup(cAdminPatient.patientId,cAdminPatient.name,cAdminPatient.callerId)"
 							class="btn btn-xs btn-success hint--top"
 							data-hint="Change Caller"><i

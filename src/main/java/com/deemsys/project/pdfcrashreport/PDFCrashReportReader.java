@@ -1330,9 +1330,30 @@ public class PDFCrashReportReader {
 	// Check ODPS Patients With Runner Report Patients
 	public Patient checkODPSPatientsWithRunnerReportPatients(PatientForm patientForm){
 		Patient patient = null;
-		String patientName=patientForm.getName().substring(0,patientForm.getName().lastIndexOf(','));
+		String patientName=this.splitPatientName(patientForm.getName());
 		Integer countyId=countyDAO.getCountyByName(crashReportService.splitCountyName(patientForm.getCounty())).getCountyId();
 		patient=patientDAO.checkPatientForRunnerReport(countyId, patientForm.getCrashDate(), patientName);
 		return patient;
+	}
+	
+	// Split Name
+	public String splitPatientName(String patientName){
+		String resultName=null;
+		// Initialize as Empty
+		if(patientName!=null){
+			String[] splitName=patientName.split(",");
+			if(splitName.length==2){
+				//Last Name // First Name
+				resultName=splitName[0].trim()+", "+splitName[1].trim();
+			}else if(splitName.length==1){
+				//Last Name
+				resultName=splitName[0].trim();
+			}else{
+				//Last Name // First Name
+				resultName=splitName[0].trim()+", "+splitName[1].trim();
+			}
+		}
+		
+		return resultName;
 	}
 }
