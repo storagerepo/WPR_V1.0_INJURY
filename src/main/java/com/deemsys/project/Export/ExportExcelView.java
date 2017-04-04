@@ -350,7 +350,7 @@ public class ExportExcelView extends AbstractExcelView {
 			value=patientSearchList.getVictimPolicyNumber();
 			break;
 		case 25:
-			value="Tier "+patientSearchList.getTier();
+			value="Tier "+patientSearchList.getTier()==null?"Undetermined":patientSearchList.getTier().toString();
 			break;
 		case 26:
 			// First Name Last Name

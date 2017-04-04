@@ -1237,7 +1237,7 @@ public class PDFCrashReportReader {
 						patientsForm.setPatientId(patient.getPatientId());
 						patientsForm.setIsRunnerReport(2);
 						patientsForm.setStatus(1);
-						patientsService.updatePatient(patientsForm);
+						patientsService.updatePatientCurrentAddedDate(patientsForm);
 					}else{
 						patientsService.savePatient(patientsForm);
 						patientCount++;
@@ -1261,6 +1261,14 @@ public class PDFCrashReportReader {
 			LocalDate addedDate = new LocalDate();
 			crashReport.setAddedDate(addedDate.toDate());
 			crashReportDAO.update(crashReport);
+		}
+		
+		// Update patient Added on Date To Not Matched Runner Patients. 1---> Is Runner Report Status
+		List<Patient> patients = patientDAO.getRunnerReportPatients(crashId, 1);
+		for (Patient patient : patients) {
+			LocalDate currentDate=new LocalDate();
+			patient.setAddedDate(currentDate.toDate());
+			patientDAO.update(patient);
 		}
 	}
 	

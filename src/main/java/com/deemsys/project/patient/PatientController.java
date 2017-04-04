@@ -101,7 +101,7 @@ public class PatientController {
 			}
 		}
 		else
-			patientService.updatePatient(patientForm);
+			patientService.updatePatientCurrentAddedDate(patientForm);
 
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";

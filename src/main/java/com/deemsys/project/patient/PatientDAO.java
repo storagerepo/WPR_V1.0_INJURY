@@ -3,6 +3,7 @@ package com.deemsys.project.patient;
 import java.util.Date;
 import java.util.List;
 
+import com.deemsys.project.Patients;
 import com.deemsys.project.Appointments.AppointmentsForm;
 import com.deemsys.project.common.IGenericDAO;
 import com.deemsys.project.entity.Appointments;
@@ -71,4 +72,6 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 	public List<Patient> getSixMonthPatientsList();
 	
 	public Patient checkPatientForRunnerReport(Integer countyId,String crashDate,String patientName);
+	
+	public List<Patient> getRunnerReportPatients(String crashId,Integer isRunnerReport);
 }

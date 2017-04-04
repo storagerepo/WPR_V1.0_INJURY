@@ -148,7 +148,7 @@ public class PatientService {
 	}
 
 	// Update an Entry
-	public int updatePatient(PatientForm patientForm) {
+	public int updatePatientCurrentAddedDate(PatientForm patientForm) {
 		// TODO: Convert Form to Entity Here
 
 		// Logic Starts

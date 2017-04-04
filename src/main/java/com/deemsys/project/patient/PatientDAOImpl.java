@@ -791,4 +791,13 @@ public Patient checkPatientForRunnerReport(Integer countyId, String crashDate,
 	return (Patient) this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.and(countyAndCrashDateCriterion, Restrictions.eq("name", patientName))).uniqueResult();
 }
 
+@SuppressWarnings("unchecked")
+@Override
+public List<Patient> getRunnerReportPatients(String crashId,
+		Integer isRunnerReport) {
+	// TODO Auto-generated method stub
+	List<Patient> patients = this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.and(Restrictions.eq("crashReport.crashId", crashId),Restrictions.eq("isRunnerReport", isRunnerReport))).list();
+	return patients;
+}
+
 }
