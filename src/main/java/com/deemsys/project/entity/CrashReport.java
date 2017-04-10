@@ -39,6 +39,7 @@ public class CrashReport implements java.io.Serializable {
 	private String filePath;
 	private Integer isRunnerReport;
 	private Date runnerReportAddedDate;
+	private Integer reportFrom;
 	private Integer status;
 	private Set<Patient> patients=new HashSet<Patient>(0);
 	
@@ -47,7 +48,8 @@ public class CrashReport implements java.io.Serializable {
 
 	public CrashReport(CrashReportError crashReportError,
 			String localReportNumber, String crashId, Date crashDate,
-			County county, Date addedDate, String filePath,Integer numberOfPatients,Integer isRunnerReport, Date runnerReportAddedDate,Integer status) {
+			County county, Date addedDate, String filePath,Integer numberOfPatients,Integer isRunnerReport, Date runnerReportAddedDate,
+			Integer reportFrom, Integer status) {
 		this.crashReportError = crashReportError;
 		this.localReportNumber = localReportNumber;
 		this.crashId = crashId;
@@ -58,6 +60,7 @@ public class CrashReport implements java.io.Serializable {
 		this.filePath = filePath;
 		this.isRunnerReport = isRunnerReport;
 		this.runnerReportAddedDate = runnerReportAddedDate;
+		this.reportFrom = reportFrom;
 		this.status = status;
 	}
 
@@ -158,6 +161,15 @@ public class CrashReport implements java.io.Serializable {
 		this.runnerReportAddedDate = runnerReportAddedDate;
 	}
 	
+	@Column(name = "report_from")
+	public Integer getReportFrom() {
+		return reportFrom;
+	}
+
+	public void setReportFrom(Integer reportFrom) {
+		this.reportFrom = reportFrom;
+	}
+
 	@Column(name = "status")
 	public Integer getStatus() {
 		return this.status;

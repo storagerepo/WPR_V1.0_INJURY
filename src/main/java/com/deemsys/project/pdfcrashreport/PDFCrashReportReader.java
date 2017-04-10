@@ -190,7 +190,7 @@ public class PDFCrashReportReader {
 					this.crashLogUpdate(crashId, e);
 					this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
 					CrashReportError crashReportError=crashReportErrorDAO.get(12);
-					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, null, null, new Date() , "", 0, 0, null, null));
+					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, null, null, new Date() , "", 0, 0, null, 0, null));
 					System.out.println("Failed"+e.toString());
 				}
 		return true;

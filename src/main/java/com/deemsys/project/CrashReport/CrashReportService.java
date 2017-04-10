@@ -119,7 +119,7 @@ public class CrashReportService {
 			
 		}
 		CrashReport crashReport=new CrashReport(crashReportError, localReportNumber, crashReportForm.getCrashId(), InjuryConstants.convertYearFormat(crashReportForm.getCrashDate()), 
-					county, InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getFilePath(),crashReportForm.getNumberOfPatients(),crashReportForm.getIsRunnerReport(), null,1);
+					county, InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getFilePath(),crashReportForm.getNumberOfPatients(),crashReportForm.getIsRunnerReport(),  null, crashReportForm.getReportFrom(), 1);
 		
 	
 		
@@ -209,12 +209,21 @@ public class CrashReportService {
 			localReportNumber=localReportNumber+"("+(localReportNumberCount+1)+")";
 		}
 		
-		String crashId=injuryProperties.getProperty("crashIdPrefix")+localReportNumber;
+		String crashId=localReportNumber;
+		if(runnerCrashReportForm.getReportFrom()==Integer.parseInt(injuryProperties.getProperty("reportFromDeemsys"))){
+			crashId=injuryProperties.getProperty("deemsysCrashIdPrefix")+localReportNumber;
+		}else if(runnerCrashReportForm.getReportFrom()==Integer.parseInt(injuryProperties.getProperty("reportFromBoardman"))){
+			crashId=injuryProperties.getProperty("boardmanCrashIdPrefix")+localReportNumber;
+		}
 		
 		CrashReport crashReport=new CrashReport(crashReportError, localReportNumber, crashId, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-					county, new Date(), runnerCrashReportForm.getFilePath(), numberOfPatients, isRunnerReport, new Date(),1);
+					county, new Date(), runnerCrashReportForm.getFilePath(), numberOfPatients, isRunnerReport, new Date(), runnerCrashReportForm.getReportFrom(),1);
 		
-
+		
+		/*String odpsCrashId=this.checkRunnerReportWithODPSReport(runnerCrashReportForm);
+		 * if(odpsCrashId==null){
+			crashReportDAO.save(crashReport);
+		}*/
 		crashReportDAO.save(crashReport);
 		
 		for (PatientForm patientForm : runnerCrashReportForm.getPatientForms()) {
@@ -238,8 +247,26 @@ public class CrashReportService {
 		return 1;
 	}
 	
-
 	public void updateCrashReport(String runnerReportCrashId, Integer crashId, String fileName, Integer crashReportErrorId){
 		crashReportDAO.updateCrashReportByQuery(runnerReportCrashId, crashId.toString(), crashReportErrorId, fileName, 2);
+	}
+	
+	//Check Runner Report With ODPS
+	public String checkRunnerReportWithODPSReport(RunnerCrashReportForm runnerCrashReportForm){
+		Long oldReportCount=crashReportDAO.getLocalReportNumberCount(runnerCrashReportForm.getLocalReportNumber());
+		Integer countyId=Integer.parseInt(runnerCrashReportForm.getCounty());
+		String crashId=null;
+		for (int i = 0; i <=oldReportCount; i++) {
+			String localReportNumber=runnerCrashReportForm.getLocalReportNumber();
+			if(i!=0){
+				localReportNumber=localReportNumber+"("+i+")";
+			}
+			crashId=crashReportDAO.getCrashReportForChecking(localReportNumber,runnerCrashReportForm.getCrashDate(), countyId);
+			if(crashId!=null&&!crashId.equals("")){
+				break;
+			}
+		}
+		
+		return crashId;
 	}
 }

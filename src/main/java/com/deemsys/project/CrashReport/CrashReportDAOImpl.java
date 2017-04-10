@@ -196,6 +196,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		//projectionList.add(Projections.alias(Projections.property("crashReportId"), "crashReportId"));
 
 		projectionList.add(Projections.alias(Projections.property("isRunnerReport"), "isRunnerReport"));
+		projectionList.add(Projections.alias(Projections.property("reportFrom"), "reportFrom"));
 		projectionList.add(Projections.alias(Projections.property("e1.description"), "crashReportError"));
 		projectionList.add(Projections.alias(Projections.property("localReportNumber"), "localReportNumber"));
 		projectionList.add(Projections.alias(Projections.property("crashId"), "crashId"));

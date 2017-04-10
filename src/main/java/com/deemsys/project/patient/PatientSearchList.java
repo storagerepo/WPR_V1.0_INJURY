@@ -54,6 +54,7 @@ public class PatientSearchList extends InjuryProperties{
 	private String archivedDateTime;
 	private Integer isRunnerReport;
 	private Integer isRunnerReportPatient;
+	private Integer reportFrom;
 	private String runnerReportAddedDate;
 	
 	public String getPatientId() {
@@ -103,7 +104,11 @@ public class PatientSearchList extends InjuryProperties{
 	}
 	public void setCrashReportFileName(String crashReportFileName) {
 		if(this.isRunnerReport==1){
-			this.crashReportFileName = getProperty("runnerBucketURL")+crashReportFileName;
+			if(this.reportFrom==Integer.parseInt(getProperty("reportFromDeemsys"))){
+				this.crashReportFileName = getProperty("runnerBucketURL")+crashReportFileName;
+			}else if(this.reportFrom==Integer.parseInt(getProperty("reportFromBoardman"))){
+				this.crashReportFileName = getProperty("boardmanBucketURL")+crashReportFileName;
+			}
 		}else{
 			this.crashReportFileName = getProperty("bucketURL")+crashReportFileName;
 		}
@@ -351,6 +356,12 @@ public class PatientSearchList extends InjuryProperties{
 	}
 	public void setRunnerReportAddedDate(Date runnerReportAddedDate) {
 		this.runnerReportAddedDate = InjuryConstants.convertMonthFormat(runnerReportAddedDate);
+	}
+	public Integer getReportFrom() {
+		return reportFrom;
+	}
+	public void setReportFrom(Integer reportFrom) {
+		this.reportFrom = reportFrom;
 	}
 	public PatientSearchList(String patientId, String localReportNumber,
 			Integer numberOfPatients, String crashDate, String addedDate,

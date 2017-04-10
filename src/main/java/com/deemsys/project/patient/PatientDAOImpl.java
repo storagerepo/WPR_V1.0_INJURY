@@ -650,6 +650,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	
 	// From Crash Report Table
 	projectionList.add(Projections.property("cr.isRunnerReport"),"isRunnerReport");
+	projectionList.add(Projections.property("cr.reportFrom"),"reportFrom");
 	
 	projectionList.add(Projections.property("t1.patientId"),"patientId");
 	projectionList.add(Projections.property("cr.localReportNumber"),"localReportNumber");

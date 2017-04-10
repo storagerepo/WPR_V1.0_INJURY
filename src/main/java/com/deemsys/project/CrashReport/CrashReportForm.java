@@ -25,6 +25,7 @@ public class CrashReportForm extends InjuryProperties{
 	private Integer numberOfPatients;
 	private Integer isRunnerReport;
 	private String runnerReportAddedDate;
+	private Integer reportFrom;
 	private Integer status;
 	public Long getCrashReportId() {
 		return crashReportId;
@@ -73,7 +74,11 @@ public class CrashReportForm extends InjuryProperties{
 	}
 	public void setFilePath(String filePath) {
 		if(this.isRunnerReport==1){
-			this.filePath = getProperty("runnerBucketURL")+filePath;
+			if(this.reportFrom==Integer.parseInt(getProperty("reportFromDeemsys"))){
+				this.filePath = getProperty("runnerBucketURL")+filePath;
+			}else if(this.reportFrom==Integer.parseInt(getProperty("reportFromBoardman"))){
+				this.filePath = getProperty("boardmanBucketURL")+filePath;
+			}
 		}else{
 			this.filePath = getProperty("bucketURL")+filePath;
 		}
@@ -96,6 +101,12 @@ public class CrashReportForm extends InjuryProperties{
 	}
 	public void setRunnerReportAddedDate(Date runnerReportAddedDate) {
 		this.runnerReportAddedDate = InjuryConstants.convertMonthFormat(runnerReportAddedDate);;
+	}
+	public Integer getReportFrom() {
+		return reportFrom;
+	}
+	public void setReportFrom(Integer reportFrom) {
+		this.reportFrom = reportFrom;
 	}
 	public Integer getStatus() {
 		return status;
