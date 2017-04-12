@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
@@ -210,6 +211,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		Long totalNoOfRecords= (Long) criteria.setProjection(Projections.count("crashId")).uniqueResult();
 		
 		criteria.setProjection(projectionList);
+		criteria.addOrder(Order.desc("addedDate"));
 				//criteria.setResultTransformer(new AliasToBeanResultTransformer(CrashReportForm.class)).list().size();
 		//new AliasToBeanConstructorResultTransformer(CrashReportForm.class.getConstructors()[1])
 		

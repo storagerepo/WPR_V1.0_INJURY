@@ -103,7 +103,7 @@
                             <tr>
                                 <th class="col-md-1">County</th>
                                 <th class="col-md-2">Local Report Number</th>
-                                <th class="col-md-1">Crash ID</th>
+                                <th class="col-md-1">Crash ID <a href="" class="some-popover-link" data-original-title="" data-toggle="popover" title="Report Prefix Details" ng-show="crashreport.isRunnerReport==1"><i class="fa fa-info-circle"></i></a></th>
                                 <th class="col-md-1">Crash Date</th>
                                 <th class="col-md-1">Added Date</th>
                                 <th class="col-md-2">Crash Report Status</th>
@@ -181,6 +181,24 @@ $('#AddedToDate').datetimepicker({
 });  
 
 
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover({
+    	container: 'body',
+    	content: "<p><table class='table table-bordered'><tr><td width='20%'>RR</td><td width='40%'>Deemsys</td></tr><tr><td>RR_BM</td><td>Boardman</td></tr></table></p>",
+    	html: true, 
+    	placement: "right"
+    	
+    });  
+});
+
+$(document).click(function (e) {
+    $('[data-toggle="popover"]').each(function () {
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+        	//$(this).popover('hide');
+        	 $(this).popover('hide').data('bs.popover').inState.click = false 
+        }
+    });
+});
 
    
 </script>
