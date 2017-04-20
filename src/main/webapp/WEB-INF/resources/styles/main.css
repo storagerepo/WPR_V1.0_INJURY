@@ -11,6 +11,8 @@ body .modal-open {
 .col-xs-5ths,
 .col-sm-5ths,
 .col-md-5ths,
+.col-md-3ths,
+.col-md-2ths,
 .col-lg-5ths {
     position: relative;
     min-height: 1px;
@@ -21,6 +23,20 @@ body .modal-open {
 .col-xs-5ths {
     width: 20%;
     float: left;
+}
+
+@media (min-width: 992px) {
+    .col-md-3ths {
+        width: 18%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-2ths {
+        width: 10%;
+        float: left;
+    }
 }
 
 @media (min-width: 768px) {
@@ -946,6 +962,20 @@ ul.rating {
 
 .badge-warning{
 	background-color:#FF8C00 !important;
+	font-size: 11px !important;
+	color:#ffffff;
+	border-radius:15px !important;
+}
+
+.badge-danger{
+	background-color:#d9534f !important;
+	font-size: 11px !important;
+	color:#ffffff;
+	border-radius:15px !important;
+}
+
+.badge-yellow{
+	background-color:#ffcc00 !important;
 	font-size: 11px !important;
 	color:#ffffff;
 	border-radius:15px !important;
