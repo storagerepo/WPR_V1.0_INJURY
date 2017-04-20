@@ -56,6 +56,7 @@ public class PatientSearchList extends InjuryProperties{
 	private Integer isRunnerReportPatient;
 	private Integer reportFrom;
 	private String runnerReportAddedDate;
+	private Integer damageScale;
 	
 	public String getPatientId() {
 		return patientId;
@@ -356,6 +357,12 @@ public class PatientSearchList extends InjuryProperties{
 	}
 	public void setRunnerReportAddedDate(Date runnerReportAddedDate) {
 		this.runnerReportAddedDate = InjuryConstants.convertMonthFormat(runnerReportAddedDate);
+	}
+	public Integer getDamageScale() {
+		return damageScale;
+	}
+	public void setDamageScale(Integer damageScale) {
+		this.damageScale = damageScale;
 	}
 	public Integer getReportFrom() {
 		return reportFrom;

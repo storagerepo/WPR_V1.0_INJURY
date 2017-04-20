@@ -57,6 +57,7 @@ public class Patient implements java.io.Serializable {
 	private String victimInsuranceCompany;
 	private String victimPolicyNumber;
 	private String seatingPosition;
+	private Integer damageScale;
 	private Integer tier;
 	private Integer patientStatus;
 	private Integer isRunnerReport;
@@ -82,7 +83,7 @@ public class Patient implements java.io.Serializable {
 			String phoneNumber, String injuries, String emsAgency,
 			String medicalFacility, String atFaultInsuranceCompany,
 			String atFaultPolicyNumber, String victimInsuranceCompany,
-			String victimPolicyNumber, String seatingPosition, Integer tier, Integer patientStatus,
+			String victimPolicyNumber, String seatingPosition, Integer damageScale, Integer tier, Integer patientStatus,
 			String crashReportFileName, Integer isRunnerReport, Integer status,
 			Set<PatientCallerAdminMap> patientCallerAdminMaps,
 			Set<PatientLawyerAdminMap> patientLawyerAdminMaps) {
@@ -114,6 +115,7 @@ public class Patient implements java.io.Serializable {
 		this.victimInsuranceCompany = victimInsuranceCompany;
 		this.victimPolicyNumber = victimPolicyNumber;
 		this.seatingPosition = seatingPosition;
+		this.damageScale = damageScale;
 		this.tier=tier;
 		this.patientStatus = patientStatus;
 		this.isRunnerReport = isRunnerReport;
@@ -372,10 +374,20 @@ public class Patient implements java.io.Serializable {
 		this.victimPolicyNumber = victimPolicyNumber;
 	}
 	
+	@Column(name = "damage_scale")
+	public Integer getDamageScale() {
+		return damageScale;
+	}
+
+	public void setDamageScale(Integer damageScale) {
+		this.damageScale = damageScale;
+	}
+
 	@Column(name = "seating_position", length = 10)
 	public String getSeatingPosition() {
 		return seatingPosition;
 	}
+
 
 	public void setSeatingPosition(String seatingPosition) {
 		this.seatingPosition = seatingPosition;

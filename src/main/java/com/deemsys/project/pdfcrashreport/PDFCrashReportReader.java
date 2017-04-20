@@ -1027,8 +1027,16 @@ public class PDFCrashReportReader {
 			patientsForm.setAtFaultInsuranceCompany(reportUnitPageForms.get(Integer.parseInt(firstPageForm.getUnitInError().trim())-1).getInsuranceCompany());
 			patientsForm.setAtFaultPolicyNumber(reportUnitPageForms.get(Integer.parseInt(firstPageForm.getUnitInError().trim())-1).getPolicyNumber());
 			patientsForm.setSeatingPosition(motoristPageForm.getSeatingPosition());
+			String damageScale=reportUnitPageForms.get(Integer.parseInt(motoristPageForm.getUnitNumber().trim())-1).getDamageScale();
+			if(damageScale!=null&&!damageScale.equals("")){
+				patientsForm.setDamageScale(Integer.parseInt(damageScale));
+			}else{
+				patientsForm.setDamageScale(null);
+			}
+			
 			patientsForm.setPatientStatus(1);
 			patientsForm.setIsRunnerReport(0);
+			
 			return patientsForm;
 		
 	}

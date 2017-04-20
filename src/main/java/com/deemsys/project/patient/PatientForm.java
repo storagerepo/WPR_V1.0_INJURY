@@ -40,6 +40,7 @@ public class PatientForm {
 	private String victimPolicyNumber;
 	private Integer tier;
 	private String seatingPosition;
+	private Integer damageScale;
 	private Integer patientStatus;
 	private String crashReportFileName;
 	private Integer isRunnerReport;
@@ -269,6 +270,12 @@ public class PatientForm {
 	public void setSeatingPosition(String seatingPosition) {
 		this.seatingPosition = seatingPosition;
 	}
+	public Integer getDamageScale() {
+		return damageScale;
+	}
+	public void setDamageScale(Integer damageScale) {
+		this.damageScale = damageScale;
+	}
 	public PatientForm(String patientId,String crashId, String localReportNumber, String crashSeverity,
 			String reportingAgencyName, String numberOfUnits,
 			String unitInError, String cityVillageTownship,
@@ -279,7 +286,7 @@ public class PatientForm {
 			String medicalFacility, String atFaultInsuranceCompany,
 			String atFaultPolicyNumber, String victimInsuranceCompany,
 			String victimPolicyNumber,Integer tier, Integer patientStatus,
-			String crashReportFileName, Integer status,String seatingPosition,Integer isRunnerReport) {
+			String crashReportFileName, Integer status,String seatingPosition, Integer damageScale,Integer isRunnerReport) {
 		super();
 		this.patientId = patientId;
 		this.crashId=crashId;
@@ -313,6 +320,7 @@ public class PatientForm {
 		this.crashReportFileName = crashReportFileName;
 		this.status = status;
 		this.seatingPosition = seatingPosition;
+		this.damageScale = damageScale;
 		this.isRunnerReport = isRunnerReport;
 	}
 	public PatientForm() {

@@ -457,6 +457,30 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		criteria.add(tierCondition);
 	}
 	
+	// Common Constrains - Damage Scale
+	if(callerPatientSearchForm.getDamageScale()!=null&&callerPatientSearchForm.getDamageScale().length>0&&callerPatientSearchForm.getIsRunnerReport()!=-1&&callerPatientSearchForm.getIsRunnerReport()==0){
+		Disjunction damageScaleDisJunDisjunction=Restrictions.disjunction();
+		if(ArrayUtils.contains(callerPatientSearchForm.getDamageScale(), 1)){
+			damageScaleDisJunDisjunction.add(Restrictions.eq("t1.damageScale", 1));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getDamageScale(), 2)){
+			damageScaleDisJunDisjunction.add(Restrictions.eq("t1.damageScale", 2));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getDamageScale(), 3)){
+			damageScaleDisJunDisjunction.add(Restrictions.eq("t1.damageScale", 3));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getDamageScale(), 4)){
+			damageScaleDisJunDisjunction.add(Restrictions.eq("t1.damageScale", 4));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getDamageScale(), 9)){
+			damageScaleDisJunDisjunction.add(Restrictions.eq("t1.damageScale", 9));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getDamageScale(), 5)){
+			damageScaleDisJunDisjunction.add(Restrictions.isNull("t1.damageScale"));
+		}
+		
+		criteria.add(damageScaleDisJunDisjunction);
+	}
 	
 	//Common Constrain Age - Major, Minor and All
 	if(callerPatientSearchForm.getAge().length>0&&callerPatientSearchForm.getIsRunnerReport()==0){
@@ -683,6 +707,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	projectionList.add(Projections.property("t1.atFaultPolicyNumber"),"atFaultPolicyNumber");
 	projectionList.add(Projections.property("t1.victimPolicyNumber"),"victimPolicyNumber");
 	projectionList.add(Projections.property("t1.seatingPosition"),"seatingPosition");
+	projectionList.add(Projections.property("t1.damageScale"),"damageScale");
 
 	// From Patient Table
 	projectionList.add(Projections.property("t1.isRunnerReport"),"isRunnerReportPatient");

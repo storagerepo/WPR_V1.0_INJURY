@@ -388,7 +388,7 @@ public class PatientService {
 				patient.getAtFaultPolicyNumber(),
 				patient.getVictimInsuranceCompany(),
 				patient.getVictimPolicyNumber(),patient.getTier(),patient.getPatientStatus(),
-				patient.getCrashReport().getFilePath(), patient.getStatus(),patient.getSeatingPosition(),patient.getIsRunnerReport());
+				patient.getCrashReport().getFilePath(), patient.getStatus(),patient.getSeatingPosition(),patient.getDamageScale(),patient.getIsRunnerReport());
 
 		// Null Exception Check
 		if (patient.getCounty() != null) {
@@ -441,7 +441,7 @@ public class PatientService {
 			patientForm.getAtFaultInsuranceCompany(),
 			patientForm.getAtFaultPolicyNumber(),
 			patientForm.getVictimInsuranceCompany(),
-			patientForm.getVictimPolicyNumber(), patientForm.getSeatingPosition(),patientForm.getTier(),
+			patientForm.getVictimPolicyNumber(), patientForm.getSeatingPosition(), patientForm.getDamageScale(),patientForm.getTier(),
 			patientForm.getPatientStatus(),
 			patientForm.getCrashReportFileName(), patientForm.getIsRunnerReport(), patientForm.getStatus(),
 			null, null);
