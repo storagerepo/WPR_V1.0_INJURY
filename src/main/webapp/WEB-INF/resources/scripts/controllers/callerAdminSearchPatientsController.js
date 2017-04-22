@@ -24,12 +24,15 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		//Initialize DropDown
 		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"},{id: 5, label: "Undetermined"}];	
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
+		$scope.defaultDamageScale=[{id: 1, label: "None"},{id: 2, label: "Minor"},{id: 3, label: "Functional"},{id: 4, label: "Disabling"},{id: 9, label: "Unknown"},{id: 5, label: "N/A"}];
 		
 		$scope.patient={};
 		$scope.patient.countyId=[];
 		$scope.patient.tier=[];
+		$scope.patient.damageScale=[];
 		angular.copy(searchService.getCounty(),$scope.patient.countyId);
 		angular.copy(searchService.getTier(),$scope.patient.tier);
+		angular.copy(searchService.getDamageScale,$scope.patient.damageScale);
 		$scope.patient.crashFromDate=searchService.getCrashFromDate();
 		$scope.patient.crashToDate=searchService.getCrashToDate();
 		$scope.patient.localReportNumber=searchService.getLocalReportNumber();
@@ -47,6 +50,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.patient.archivedFromDate=searchService.getArchivedFromDate();
 		$scope.patient.archivedToDate=searchService.getArchivedToDate();
 		$scope.patient.isRunnerReport=searchService.getIsRunnerReport();
+		$scope.patient.damageScale=searchService.getDamageScale();
 		$scope.totalRecords=0;
 		$scope.countyListType=searchService.getCountyListType();
 		//Patient Search 
@@ -389,6 +393,10 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			$scope.searchParam.age[index]=value.id;
 		});
 		
+		//Manipulate Damage Scale Array
+		$.each($scope.searchParam.damageScale, function(index,value) {
+			$scope.searchParam.damageScale[index]=value.id;
+		});
 		
 		var defer=$q.defer();
 		requestHandler.postRequest("/Patient/searchPatients.json",$scope.searchParam).then(function(response){
@@ -527,6 +535,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		searchService.setPageNumber($scope.patient.pageNumber);
 		searchService.setItemsPerPage($scope.patient.itemsPerPage);
 		searchService.setCountyListType($scope.countyListType);
+		searchService.setDamageScale(angular.copy($scope.patient.damageScale));
 	};
 	
 	
@@ -1033,7 +1042,18 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		   }
 		}, true );
 	
-
+	// Watch Damage Scale Filter
+	$scope.$watch('patient.damageScale' , function() {		
+		   if($scope.patient.damageScale.length==0){
+			   $scope.disableSearch=true;
+			   $scope.searchDamageScaleMinError=true;
+		   }else{
+			   $scope.searchDamageScaleMinError=false;
+			   if(!$scope.searchCountyMinError)
+				   $scope.disableSearch=false;	
+		   }
+		}, true );
+	
 	// County Drop down Events
 	$scope.countyEvents = {onInitDone: function(item) {console.log("initi ciuny",$scope.countyListType);},
 			onItemDeselect: function(item) {console.log("deselected couny",item);},

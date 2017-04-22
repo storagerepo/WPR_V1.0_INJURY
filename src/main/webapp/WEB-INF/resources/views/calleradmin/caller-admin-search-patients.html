@@ -70,18 +70,18 @@
 		<div class="col-md-12"><br/></div>
 	
 		<div class="col-md-12 no-padding">
-			<div class="col-md-5ths">
+			<div class="col-md-3ths">
 	       		<label>Tier</label>&nbsp;&nbsp;<a href="" class="some-popover-link" data-original-title="" data-toggle="popover" title="Tier Details (Deceased victims not listed)"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
          		<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier" extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
 	        </div>
-          	<div class="col-md-5ths">
+          	<div class="col-md-3ths">
        			<label>Added On From Date</label>
        			<div class="input-group">
 					<input type="text" name="addedOnFromDate" id="AddedOFromDate" ng-change="checkAddedOnToDate()" class="form-control input-sm" ng-model="patient.addedOnFromDate" placeholder="Added On From Date"> 
 					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
 				</div>
         	</div>
-        	<div class="col-md-5ths">
+        	<div class="col-md-3ths">
 	       		<label>Added On To Date</label>
 	       		<div class="input-group">
 					<input type="text" name="addedOnToDate" id="AddedOnToDate" ng-change="AddedOnToRequired=false" class="form-control input-sm" ng-model="patient.addedOnToDate" placeholder="Added On To Date"  ng-disabled="isSelectedAddedFromDate"> 
@@ -89,18 +89,22 @@
 				</div>
 				<span style="color:red;font-size:13px" ng-if="AddedOnToRequired==true">Please Enter Added On To Date</span>
 	        </div>
-	        <div class="col-md-5ths">
+	        <div class="col-md-3ths">
 	       		<label>Local Report Number</label>
 					<input type="text" name="localReportNumber" class="form-control input-sm" ng-model="patient.localReportNumber" placeholder="Local Report Number"> 
-				
+			 </div>
+	         <div class="col-md-3ths">
+	       		<label>Damage Scale</label>&nbsp;&nbsp;<a href="" class="some-popover-link" data-original-title="" data-toggle="popover" title="Damage Scale Details" data-placement="left" data-content="<p><ul><li>1 - None</li><li>2 - Minor</li><li>3 - Functional</li><li>4 - Disabling</li><li>9 - Unknown</li><li>N/A - Not Available</li></ul></p>"><i class="fa fa-info-circle"></i></a>
+         		<div ng-dropdown-multiselect="" options="defaultDamageScale" selected-model="patient.damageScale" extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
+         		<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select at least one Damage Scale</span>
 	        </div>
-	        <div class="col-md-5ths">
+	        <div class="col-md-2ths">
 	        	<label>&nbsp;</label>
-				<div class="col-md-12">
-	        		<a href="" id="srch" class="btn btn-sm btn-success" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='isClean() || patientSearchForm.$invalid ||disableSearch' ng-click="searchPatients()">Search</a>
-	        		<a href="" class="btn btn-sm btn-danger" ng-click="resetSearchData()">Reset</a>
-	       		</div>
-	     	</div>
+	        	<div>
+	        		<a href="" id="srch" class="btn btn-sm btn-success hint--top" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='isClean() || patientSearchForm.$invalid ||disableSearch' ng-click="searchPatients()" data-hint="Search"><i class="fa fa-search"></i></a>
+	        		<a href="" class="btn btn-sm btn-danger hint--top" ng-click="resetSearchData()" data-hint="Reset"><i class="fa fa-undo"></i></a>
+	        	</div>
+	       	</div>
 		</div>
 
 		<div class="col-md-12">
@@ -177,7 +181,7 @@
 					<th width="16%">Patient Name <br/><span class="client-name">(Last, First, Middle)</span></th>
 					<th width="12%">Phone Number</th>
 					<th width="7%">Age</th>
-					<th width="5%">Unit No.</th>
+					<th width="5%">Unit No./<br/>Damage Scale</th>
 					<th width="9%">County</th>
 					<th width="5%">Tier</th>
 					<th width="9%">Caller</th>
@@ -303,7 +307,15 @@
 
 					<td title="Phone Number"><span ng-show="cAdminPatient.phoneNumber!=''&&cAdminPatient.phoneNumber!=null">{{cAdminPatient.phoneNumber}}</span><span ng-show="cAdminPatient.phoneNumber==''||cAdminPatient.phoneNumber==null">-</span></td>
 					<td title="Age"><span ng-show="cAdminPatient.age!=''&&cAdminPatient.age!=null">{{cAdminPatient.age}}</span><span ng-show="cAdminPatient.age==''||cAdminPatient.age==null">-</span></td>
-					<td title="Unit Number"><span ng-show="cAdminPatient.unitNumber!=''&&cAdminPatient.unitNumber!=null">{{cAdminPatient.unitNumber}}</span><span ng-show="cAdminPatient.unitNumber==''||cAdminPatient.unitNumber==null">-</span></td>
+					<td title="Unit Number"><span ng-show="cAdminPatient.unitNumber!=''&&cAdminPatient.unitNumber!=null">{{cAdminPatient.unitNumber}}
+					<span class="badge badge-success hint--top" ng-show="cAdminPatient.damageScale==1" data-hint="None">{{cAdminPatient.damageScale}}</span>
+                          <span class="badge badge-yellow hint--top" ng-show="cAdminPatient.damageScale==2" data-hint="Minor">{{cAdminPatient.damageScale}}</span>
+                          <span class="badge badge-primary hint--top" ng-show="cAdminPatient.damageScale==3" data-hint="Functional">{{cAdminPatient.damageScale}}</span>
+                          <span class="badge badge-danger hint--top" ng-show="cAdminPatient.damageScale==4" data-hint="Disabling">{{cAdminPatient.damageScale}}</span>
+                          <span class="badge badge-default hint--top" ng-show="cAdminPatient.damageScale==9" data-hint="Unknown">{{cAdminPatient.damageScale}}</span>
+					</span>
+					<span ng-show="cAdminPatient.unitNumber==''||cAdminPatient.unitNumber==null">-</span>
+					</td>
 					<td title="County">{{cAdminPatient.county}}</td>
 
 					<td><span ng-show="cAdminPatient.tier!=''&&cAdminPatient.tier!=null">Tier {{cAdminPatient.tier}}</span><span ng-show="cAdminPatient.tier==''||cAdminPatient.tier==null">-</span></td>

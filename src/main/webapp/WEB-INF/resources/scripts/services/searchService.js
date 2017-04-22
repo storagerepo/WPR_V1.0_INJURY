@@ -23,6 +23,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var archivedFromDate="";
 	var archivedToDate="";
 	var isRunnerReport=0;
+	var damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
 	
 	// Constant
 	var maxRecordsDownload=100000;
@@ -220,6 +221,15 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	this.setIsRunnerReport=function(isRunnerReportInput){
 		isRunnerReport=isRunnerReportInput;
 	};
+	
+	// Damage Scale
+	this.getDamageScale=function(){
+		return damageScale;
+	};
+	this.setDamageScale=function(damageScaleInput){
+		damageScale=damageScaleInput;
+	};
+	
 	// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
 	this.spiltAndSwapName=function(patientName){
 		var swapName="";
@@ -288,6 +298,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		archivedFromDate="";
 		archivedToDate="";
 		isRunnerReport=0;
+		damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
 		return true;
 	};
 	

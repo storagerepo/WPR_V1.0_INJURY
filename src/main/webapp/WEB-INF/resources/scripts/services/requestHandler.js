@@ -4,7 +4,7 @@ myApp.factory("requestHandler",['$http',function($http){
     
     var requestObj={};
     //var appURL=window.location.origin+"/";
-    var appURL="http://192.168.1.236:8080/Injury/";
+     var appURL=window.location.origin+"/Injury/";
     
     
     requestObj.getURL=function(){
@@ -19,8 +19,7 @@ myApp.factory("requestHandler",['$http',function($http){
          });
     };
 
-    
-    
+   
 requestObj.postFileUpload=function(requestURL,data,params){      
         
         requestURL=appURL+requestURL;
