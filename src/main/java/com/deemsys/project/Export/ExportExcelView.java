@@ -350,7 +350,12 @@ public class ExportExcelView extends AbstractExcelView {
 			value=patientSearchList.getVictimPolicyNumber();
 			break;
 		case 25:
-			value="Tier "+patientSearchList.getTier()==null?"Undetermined":patientSearchList.getTier().toString();
+			if(patientSearchList.getTier()==null){
+				value="Undetermined";
+			}else{
+				value="Tier "+patientSearchList.getTier().toString();
+			}
+			
 			break;
 		case 26:
 			// First Name Last Name
@@ -401,6 +406,15 @@ public class ExportExcelView extends AbstractExcelView {
 			// Last Name
 			String[] lastName=this.changeNameFormat(patientSearchList.getName());
 			value=lastName[0];
+			break;
+		case 36:
+			// Damage Scale
+			if(patientSearchList.getDamageScale()!=null){
+				value=patientSearchList.getDamageScale().toString();
+			}else{
+				value="";
+			}
+			
 			break;
 		default:
 			break;

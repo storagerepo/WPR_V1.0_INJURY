@@ -27,7 +27,7 @@
  <form name="patientSearchForm" novalidate ng-cloak>
  	<div class="col-md-12 no-padding">
         <div class="col-md-5ths">
-        	<label>County</label>&nbsp;<a href="" data-toggle="popover" title="Info on County Selection:" data-content="<p><b>Subscribed - </b>All counties you have subscribed to.</p><p><b>Preferred - </b> Only counties you usually prefer to access.</p>"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchCountyMinError"> Select at least one county</span>
+        	<label>County</label>&nbsp;<a href="" data-placement="right" data-toggle="popover" title="Info on County Selection:" data-content="<p><b>Subscribed - </b>All counties you have subscribed to.</p><p><b>Preferred - </b> Only counties you usually prefer to access.</p>"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchCountyMinError"> Select at least one county</span>
      		<div ng-dropdown-multiselect="" preference-list="countyListType" options="mycounties" selected-model="patient.countyId" extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true}" events="countyEvents"></div>
      		<a href="#/dashboard/UserPreferrence/1" style="text-decoration: underline;" ng-show="countyListType==2">Change Lookup Preference</a>
        	</div>
@@ -86,7 +86,7 @@
      		</select>
        	</div>
        	<div class="col-md-3ths">
-       		<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details (Deceased victims not listed)"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
+       		<label>Tier</label>&nbsp;&nbsp;<a href="" data-placement="right" data-toggle="popover" title="Tier Details (Deceased victims not listed)"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
          	<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier" extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
             
        	</div>
@@ -96,7 +96,7 @@
 				
 	        </div>
 	    <div class="col-md-3ths">
-	       	<label>Damage Scale</label>&nbsp;&nbsp;<a href="" class="some-popover-link" data-original-title="" data-toggle="popover" title="Damage Scale Details" data-placement="left" data-content="<p><ul><li>1 - None</li><li>2 - Minor</li><li>3 - Functional</li><li>4 - Disabling</li><li>9 - Unknown</li><li>N/A - Not Available</li></ul></p>"><i class="fa fa-info-circle"></i></a>
+	       	<label>Damage Scale</label>&nbsp;<a href="" class="some-popover-link" data-placement="top" data-original-title="" data-toggle="popover" title="Damage Scale" data-content="<p>This combination of number & color denote <br/> the scale of damage to the related vehicle.<br/><br/><span class='badge badge-success'>1</span> - None<br/><span class='badge badge-yellow'>2</span> - Minor<br/><span class='badge badge-primary'>3</span> - Functional<br/><span class='badge badge-danger'>4</span> - Disabling<br/><span class='badge badge-default'>9</span> - Unknown</p>"><i class="fa fa-info-circle"></i></a>
          	<div ng-dropdown-multiselect="" options="defaultDamageScale" selected-model="patient.damageScale" extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
          	<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select at least one Damage Scale</span>
 	     </div>
@@ -590,7 +590,6 @@ $(document).ready(function(){
     $('[data-toggle="popover"]').popover({
     	content: "<p><b>Tier 1:</b> List of accident victims where there are multiple vehicles and at fault is insured.</p><p><b>Tier 2:</b> List of accident victims where there are multiple vehicles but no at fault insurance and the victim is insured. (Medpay or uninsured motorist)</p><p><b>Tier 3:</b> List of accident victims involved in a single car accident. (includes hit and runs)</p><p><b>Tier 4:</b> List of passengers in at-fault vehicle and driver also, if insured.</p>",
     	html: true, 
-    	placement: "right"
     });   
 });
 $(document).click(function (e) {
