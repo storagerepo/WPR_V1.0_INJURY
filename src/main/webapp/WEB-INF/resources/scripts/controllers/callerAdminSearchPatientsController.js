@@ -32,7 +32,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.patient.damageScale=[];
 		angular.copy(searchService.getCounty(),$scope.patient.countyId);
 		angular.copy(searchService.getTier(),$scope.patient.tier);
-		angular.copy(searchService.getDamageScale,$scope.patient.damageScale);
+		angular.copy(searchService.getDamageScale(),$scope.patient.damageScale);
 		$scope.patient.crashFromDate=searchService.getCrashFromDate();
 		$scope.patient.crashToDate=searchService.getCrashToDate();
 		$scope.patient.localReportNumber=searchService.getLocalReportNumber();
@@ -50,7 +50,6 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.patient.archivedFromDate=searchService.getArchivedFromDate();
 		$scope.patient.archivedToDate=searchService.getArchivedToDate();
 		$scope.patient.isRunnerReport=searchService.getIsRunnerReport();
-		$scope.patient.damageScale=searchService.getDamageScale();
 		$scope.totalRecords=0;
 		$scope.countyListType=searchService.getCountyListType();
 		//Patient Search 

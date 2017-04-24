@@ -34,14 +34,14 @@
        	<div class="col-md-5ths">
          	<label>Crash From Date</label>
        		<div class="input-group">
-				<input type="text" name="crashFromDate" id="CrashFromDate" class="form-control" ng-model="patient.crashFromDate" ng-change="checkCustomDate(patient.numberOfDays)" placeholder="Crash From Date" > 
+				<input type="text" name="crashFromDate" id="CrashFromDate" class="form-control input-sm" ng-model="patient.crashFromDate" ng-change="checkCustomDate(patient.numberOfDays)" placeholder="Crash From Date" > 
 				<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
 			</div>
        	</div>
        	
        	<div class="col-md-5ths">
 			<label>Number of Days</label>
-         	<select class="form-control"  ng-model="patient.numberOfDays" name="numberOfDays" ng-change="checkCustomDate(patient.numberOfDays)">
+         	<select class="form-control input-sm"  ng-model="patient.numberOfDays" name="numberOfDays" ng-change="checkCustomDate(patient.numberOfDays)">
             	<option value="1">1</option>
             	<option value="7">7</option>
             	<option value="15">15</option>
@@ -52,7 +52,7 @@
         <div class="col-md-5ths">
 			<label>Crash To Date</label>
         	<div class="input-group">
-				<input type="text" name="crashToDate" id="CrashToDate" class="form-control" ng-model="patient.crashToDate" placeholder="Crash To Date"  ng-disabled="disableCustom"> 
+				<input type="text" name="crashToDate" id="CrashToDate" class="form-control input-sm" ng-model="patient.crashToDate" placeholder="Crash To Date"  ng-disabled="disableCustom"> 
 				<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
 			</div>
 			<span style="color:red" ng-if="crashToRequired==true">Please Enter Crash To Date</span>
@@ -60,7 +60,7 @@
         <div class="col-md-5ths">
         	<label>Added On From Date</label>
        		<div class="input-group">
-				<input type="text" name="addedOnFromDate" id="AddedFromDate" class="form-control" ng-model="patient.addedOnFromDate" ng-change="checkAddedOnToDate()" placeholder="Added On From Date" > 
+				<input type="text" name="addedOnFromDate" id="AddedFromDate" class="form-control input-sm" ng-model="patient.addedOnFromDate" ng-change="checkAddedOnToDate()" placeholder="Added On From Date" > 
 				<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
 			</div>
         </div>
@@ -69,37 +69,42 @@
 	<div class="col-md-12"><br/></div>
 	
 	<div class="col-md-12 no-padding">
-		<div class="col-md-5ths">
+		<div class="col-md-3ths">
 			<label>Added On To Date</label>
        		<div class="input-group">
-				<input type="text" name="addedOnToDate" id="AddedToDate" class="form-control" ng-model="patient.addedOnToDate" ng-disabled="isSelectedAddedFromDate" placeholder="Added On To Date" > 
+				<input type="text" name="addedOnToDate" id="AddedToDate" class="form-control input-sm" ng-model="patient.addedOnToDate" ng-disabled="isSelectedAddedFromDate" placeholder="Added On To Date" > 
 				<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
 			</div>
        		<span style="color:red" ng-if="addedToRequired==true">Please Enter Added On To Date</span>
        	</div>
-       	<div class="col-md-5ths">
+       	<div class="col-md-3ths">
        		<label>Lawyers</label>
-       		<select class="form-control" ng-model="patient.lawyerId">
+       		<select class="form-control input-sm" ng-model="patient.lawyerId">
        			<option value="0">All</option>
        			<option value="-1">N/A</option>
           		<option ng-repeat="lawyer in lawyers" value="{{lawyer.lawyerId}}" ng-selected="{{lawyer.lawyerId == patient.lawyerId}}">{{lawyer.firstName}}&nbsp;{{lawyer.lastName}}</option>
      		</select>
        	</div>
-       	<div class="col-md-5ths">
+       	<div class="col-md-3ths">
        		<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover" title="Tier Details (Deceased victims not listed)"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
          	<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier" extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
             
        	</div>
-       	  <div class="col-md-5ths">
+       	  <div class="col-md-3ths">
 	       		<label>Local Report Number</label>
-					<input type="text" name="localReportNumber" class="form-control" ng-model="patient.localReportNumber" placeholder="Local Report Number"> 
+					<input type="text" name="localReportNumber" class="form-control input-sm" ng-model="patient.localReportNumber" placeholder="Local Report Number"> 
 				
 	        </div>
-       	<div class="col-md-5ths">
+	    <div class="col-md-3ths">
+	       	<label>Damage Scale</label>&nbsp;&nbsp;<a href="" class="some-popover-link" data-original-title="" data-toggle="popover" title="Damage Scale Details" data-placement="left" data-content="<p><ul><li>1 - None</li><li>2 - Minor</li><li>3 - Functional</li><li>4 - Disabling</li><li>9 - Unknown</li><li>N/A - Not Available</li></ul></p>"><i class="fa fa-info-circle"></i></a>
+         	<div ng-dropdown-multiselect="" options="defaultDamageScale" selected-model="patient.damageScale" extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
+         	<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select at least one Damage Scale</span>
+	     </div>
+       	<div class="col-md-2ths">
        		<label>&nbsp;</label>
        		<div>
-        		<a class="btn btn-success" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='patientSearchForm.$invalid||disableSearch' ng-click="searchPatients()">Search</a>
-        		<a class="btn btn-danger" ng-click="resetSearchData()">Reset</a>
+        		<a class="btn btn-success hint--top" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='patientSearchForm.$invalid||disableSearch' ng-click="searchPatients()" data-hint="search"><i class="fa fa-search"></i></a>
+        		<a class="btn btn-danger hint--top" ng-click="resetSearchData()" data-hint="Reset"><i class="fa fa-undo"></i></a>
        		</div>
         </div>
      </div>
@@ -170,7 +175,7 @@
                            	 	<th width="2%"><input ng-change="isChecked()" ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
                                 <th width="16%">Client Name <br/><span class="client-name">(Last, First, Middle)</span></th>
                                 <th width="12%">Age</th>
-                                 <th width="6%">Unit No.</th>
+                                 <th width="6%">Unit / Damage</th>
                                 <th width="9%">County</th>
                                 <th width="11%">Lawyer</th>                               
                                 <th width="15%">Address</th>                                
@@ -220,7 +225,14 @@
                                     <span ng-if="(lAdminData.injuries!=2 && lAdminData.injuries!=3 && lAdminData.injuries!=4) && (lAdminData.age<18 && lAdminData.age!=null)"><a href="" class="hint--top warningText" ng-click="viewPatientModal(lAdminData.patientId)"  data-hint="View Client">{{lAdminData.name}}</a><span ng-show="lAdminData.seatingPosition=='1'" class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span><span class="badge hint--top" ng-show="lAdminData.isRunnerReport==2&&lAdminData.isRunnerReportPatient==1" data-hint="Runner Report">R</span><span class="badge badge-success hint--top" ng-show="lAdminData.isRunnerReport==2&&lAdminData.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span>
                                     </td>
                               <td title="Age"><span ng-show="lAdminData.age!='' && lAdminData.age!=null">{{lAdminData.age}}</span><span ng-show="lAdminData.age=='' || lAdminData.age==null">-</span></td>
-                              <td title="Unit Number"><span ng-show="lAdminData.unitNumber!='' && lAdminData.unitNumber!=null">{{lAdminData.unitNumber}}</span><span ng-show="lAdminData.unitNumber=='' || lAdminData.unitNumber==null">-</span></td>
+                              <td title="Unit Number"><span ng-show="lAdminData.unitNumber!='' && lAdminData.unitNumber!=null">{{lAdminData.unitNumber}}
+                              	<span class="badge badge-success hint--top" ng-show="lAdminData.damageScale==1" data-hint="None">{{lAdminData.damageScale}}</span>
+                          <span class="badge badge-yellow hint--top" ng-show="lAdminData.damageScale==2" data-hint="Minor">{{lAdminData.damageScale}}</span>
+                          <span class="badge badge-primary hint--top" ng-show="lAdminData.damageScale==3" data-hint="Functional">{{lAdminData.damageScale}}</span>
+                          <span class="badge badge-danger hint--top" ng-show="lAdminData.damageScale==4" data-hint="Disabling">{{lAdminData.damageScale}}</span>
+                          <span class="badge badge-default hint--top" ng-show="lAdminData.damageScale==9" data-hint="Unknown">{{lAdminData.damageScale}}</span>
+                              </span>
+                              <span ng-show="lAdminData.unitNumber=='' || lAdminData.unitNumber==null">-</span></td>
                                 <td title="County">{{lAdminData.county}}</td>
                                 <td title="Lawyer Name"><span ng-if="lAdminData.lawyerFirstName==null && lAdminData.lawyerLastName==null">N/A</span>{{lAdminData.lawyerFirstName}}&nbsp;{{lAdminData.lawyerLastName}}</td>
                                 

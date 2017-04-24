@@ -25,7 +25,7 @@
 <div class="row">
 	<form name="patientSearchForm" novalidate ng-cloak>
 		<div class="col-md-12 no-padding">
-			<div class="col-md-3">
+			<div class="col-md-5ths">
 				<label>County</label> &nbsp;<a href="" data-toggle="popover"
 					title="Info on County Selection:"
 					data-content="<p><b>Subscribed - </b>All counties you have subscribed to.</p><p><b>Preferred - </b> Only counties you usually prefer to access.</p>"
@@ -37,7 +37,7 @@
 					extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true}"
 					events="countyEvents"></div>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-5ths">
 				<label>Crash From Date</label>
 				<div class="input-group">
 					<input type="text" name="crashFromDate" id="CrashFromDate"
@@ -48,7 +48,7 @@
 						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-5ths">
 				<label>Number of Days</label> <select class="form-control"
 					ng-model="patient.numberOfDays" name="numberOfDays"
 					ng-change="checkCustomDate(patient.numberOfDays)">
@@ -59,7 +59,7 @@
 					<option value="0">Custom</option>
 				</select>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-5ths">
 				<label>Crash To Date</label>
 				<div class="input-group">
 					<input type="text" name="crashToDate" id="CrashToDate"
@@ -71,6 +71,16 @@
 				<span style="color: red" ng-if="crashToRequired==true">Please
 					Enter Crash To Date</span>
 			</div>
+			<div class="col-md-5ths">
+				<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover"
+					title="Tier Details (Deceased victims not listed)"
+					data-placement="top"><i class="fa fa-info-circle"></i></a><span
+					class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select
+					at least one tier</span>
+				<div ng-dropdown-multiselect="" options="defaultTiers"
+					selected-model="patient.tier"
+					extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
+			</div>
 		</div>
 
 		<div class="col-md-12">
@@ -79,7 +89,7 @@
 
 		<div class="col-md-12 no-padding">
 
-			<div class="col-md-3">
+			<div class="col-md-5ths">
 				<label>Added On From Date</label>
 				<div class="input-group">
 					<input type="text" name="addedOnFromDate" id="AddedFromDate"
@@ -89,7 +99,7 @@
 						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-5ths">
 				<label>Added On To Date</label>
 				<div class="input-group">
 					<input type="text" name="addedOnToDate" id="AddedToDate"
@@ -102,40 +112,26 @@
 				<span style="color: red" ng-if="addedToRequired==true">Please
 					Enter Added On To Date</span>
 			</div>
-			<div class="col-md-3">
-				<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover"
-					title="Tier Details (Deceased victims not listed)"
-					data-placement="top"><i class="fa fa-info-circle"></i></a><span
-					class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select
-					at least one tier</span>
-				<div ng-dropdown-multiselect="" options="defaultTiers"
-					selected-model="patient.tier"
-					extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
-			</div>
-
-			<div class="col-md-3">
+			
+			<div class="col-md-5ths">
 				<label>Local Report Number</label> <input type="text"
 					name="localReportNumber" class="form-control"
 					ng-model="patient.localReportNumber"
 					placeholder="Local Report Number">
 			</div>
-
-
-		</div>
-		<div class="col-md-12 no-padding">
-			<div class="col-md-3"></div>
-			<div class="col-md-3"></div>
-			<div class="col-md-3"></div>
-			<div class="col-md-3">
-				<label>&nbsp;</label>
+		 <div class="col-md-5ths">
+	       	<label>Damage Scale</label>&nbsp;&nbsp;<a href="" class="some-popover-link" data-original-title="" data-toggle="popover" title="Damage Scale Details" data-placement="left" data-content="<p><ul><li>1 - None</li><li>2 - Minor</li><li>3 - Functional</li><li>4 - Disabling</li><li>9 - Unknown</li><li>N/A - Not Available</li></ul></p>"><i class="fa fa-info-circle"></i></a>
+         	<div ng-dropdown-multiselect="" options="defaultDamageScale" selected-model="patient.damageScale" extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
+         	<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select at least one Damage Scale</span>
+	     </div>
+ 		<div class="col-md-5ths"><label>&nbsp;</label>
 				<div>
 					<a class="btn btn-success"
 						ng-class="{'button-disable':patientSearchForm.$invalid}"
 						ng-disabled='patientSearchForm.$invalid||disableSearch'
 						ng-click="searchPatients()">Search</a> <a class="btn btn-danger"
 						ng-click="resetSearchData()">Reset</a>
-				</div>
-			</div>
+				</div></div>
 		</div>
 		<div class="col-md-12">
 			<div class="col-md-12 no-padding hr-tag-alter"></div>
@@ -225,7 +221,7 @@
 					<th width="18%">Client Name <br />
 					<span class="client-name">(Last, First, Middle)</span></th>
 					<th width="12%">Age</th>
-					<th width="6%">Unit No.</th>
+					<th width="6%">Unit / Damage</th>
 					<th width="8%">County</th>
 
 					<th width="20%">Address</th>
@@ -346,8 +342,14 @@
 						ng-show="lawyerData.age!='' && lawyerData.age!=null">{{lawyerData.age}}</span><span
 						ng-show="lawyerData.age=='' || lawyerData.age==null">-</span></td>
 					<td title="Unit Number"><span
-						ng-show="lawyerData.unitNumber!='' && lawyerData.unitNumber!=null">{{lawyerData.unitNumber}}</span><span
-						ng-show="lawyerData.unitNumber=='' || lawyerData.unitNumber==null">-</span></td>
+						ng-show="lawyerData.unitNumber!='' && lawyerData.unitNumber!=null">{{lawyerData.unitNumber}}
+						<span class="badge badge-success hint--top" ng-show="lawyerData.damageScale==1" data-hint="None">{{lawyerData.damageScale}}</span>
+                          <span class="badge badge-yellow hint--top" ng-show="lawyerData.damageScale==2" data-hint="Minor">{{lawyerData.damageScale}}</span>
+                          <span class="badge badge-primary hint--top" ng-show="lawyerData.damageScale==3" data-hint="Functional">{{lawyerData.damageScale}}</span>
+                          <span class="badge badge-danger hint--top" ng-show="lawyerData.damageScale==4" data-hint="Disabling">{{lawyerData.damageScale}}</span>
+                          <span class="badge badge-default hint--top" ng-show="lawyerData.damageScale==9" data-hint="Unknown">{{lawyerData.damageScale}}</span>
+						</span>
+						<span ng-show="lawyerData.unitNumber=='' || lawyerData.unitNumber==null">-</span></td>
 					<td title="County">{{lawyerData.county}}</td>
 
 					<td title="Address"><span
