@@ -410,7 +410,7 @@ public class ExportExcelView extends AbstractExcelView {
 		case 36:
 			// Damage Scale
 			if(patientSearchList.getDamageScale()!=null){
-				value=patientSearchList.getDamageScale().toString();
+				value=this.getDamageScaleValue(patientSearchList.getDamageScale());
 			}else{
 				value="";
 			}
@@ -421,4 +421,24 @@ public class ExportExcelView extends AbstractExcelView {
 		}
 		return value;
 	}
+	
+	// Get Modified Damage Scale Value
+	public String getDamageScaleValue(Integer damageScale){
+		String modifiedValue="";
+		if(damageScale==1){
+			modifiedValue=damageScale.toString()+" - None";
+		}else if(damageScale==2){
+			modifiedValue=damageScale.toString()+" - Minor";
+		}else if(damageScale==3){
+			modifiedValue=damageScale.toString()+" - Functional";
+		}else if(damageScale==4){
+			modifiedValue=damageScale.toString()+" - Disabling";
+		}else if(damageScale==9){
+			modifiedValue=damageScale.toString()+" - Unknown";
+		}
+		
+		return modifiedValue;
+	}
 }
+
+
