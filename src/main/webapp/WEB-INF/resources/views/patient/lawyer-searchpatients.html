@@ -112,26 +112,35 @@
 				<span style="color: red" ng-if="addedToRequired==true">Please
 					Enter Added On To Date</span>
 			</div>
-			
+
 			<div class="col-md-5ths">
 				<label>Local Report Number</label> <input type="text"
 					name="localReportNumber" class="form-control"
 					ng-model="patient.localReportNumber"
 					placeholder="Local Report Number">
 			</div>
-		 <div class="col-md-5ths">
-	       	<label>Damage Scale</label>&nbsp;<a href="" class="some-popover-link" data-placement="bottom" data-original-title="" data-toggle="popover" title="Damage Scale" data-content="<p>This combination of number & color denote <br/> the scale of damage to the related vehicle.<br/><br/><span class='badge badge-success'>1</span> - None<br/><span class='badge badge-yellow'>2</span> - Minor<br/><span class='badge badge-primary'>3</span> - Functional<br/><span class='badge badge-danger'>4</span> - Disabling<br/><span class='badge badge-default'>9</span> - Unknown</p>"><i class="fa fa-info-circle"></i></a>
-         	<div ng-dropdown-multiselect="" options="defaultDamageScale" selected-model="patient.damageScale" extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
-         	<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select at least one Damage Scale</span>
-	     </div>
- 		<div class="col-md-5ths"><label>&nbsp;</label>
+			<div class="col-md-5ths">
+				<label>Damage Scale</label>&nbsp;<a href=""
+					class="some-popover-link" data-placement="bottom"
+					data-original-title="" data-toggle="popover" title="Damage Scale"
+					data-content="<p>This combination of number & color denote <br/> the scale of damage to the related vehicle.<br/><br/><span class='badge badge-success'>1</span> - None<br/><span class='badge badge-yellow'>2</span> - Minor<br/><span class='badge badge-primary'>3</span> - Functional<br/><span class='badge badge-danger'>4</span> - Disabling<br/><span class='badge badge-default'>9</span> - Unknown</p>"><i
+					class="fa fa-info-circle"></i></a>
+				<div ng-dropdown-multiselect="" options="defaultDamageScale"
+					selected-model="patient.damageScale"
+					extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
+				<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select
+					at least one Damage Scale</span>
+			</div>
+			<div class="col-md-5ths">
+				<label>&nbsp;</label>
 				<div>
 					<a class="btn btn-success"
 						ng-class="{'button-disable':patientSearchForm.$invalid}"
 						ng-disabled='patientSearchForm.$invalid||disableSearch'
 						ng-click="searchPatients()">Search</a> <a class="btn btn-danger"
 						ng-click="resetSearchData()">Reset</a>
-				</div></div>
+				</div>
+			</div>
 		</div>
 		<div class="col-md-12">
 			<div class="col-md-12 no-padding hr-tag-alter"></div>
@@ -218,8 +227,8 @@
 				<tr>
 					<th width="2%"><input ng-change="isChecked()"
 						ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
-					<th width="18%">Client Name <br />
-					<span class="client-name">(Last, First, Middle)</span></th>
+					<th width="18%">Client Name <br /> <span class="client-name">(Last,
+							First, Middle)</span></th>
 					<th width="12%">Age</th>
 					<th width="6%">Unit / Damage</th>
 					<th width="8%">County</th>
@@ -278,8 +287,10 @@
 						ng-model="isCheckedAllGroupPatients" type="checkbox"
 						id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td>
 					<td colspan="8"><span><b>Local Report No:</b>
-							{{resultData.localReportNumber}} </span><span class="badge badge-warning hint--top" ng-show="resultData.isRunnerReport==2" data-hint="Runner Report">R</span><span class="pull-right"><span><b>Unit
-									In Error: </b><span
+							{{resultData.localReportNumber}} </span><span
+						class="badge badge-warning hint--top"
+						ng-show="resultData.isRunnerReport==2" data-hint="Runner Report">R</span><span
+						class="pull-right"><span><b>Unit In Error: </b><span
 								ng-show="resultData.unitInError!='' && resultData.unitInError!=null">{{resultData.unitInError}}</span><span
 								ng-show="resultData.unitInError=='' || resultData.unitInError==null">-</span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash
 									Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added
@@ -305,9 +316,12 @@
 								class="fa fa-arrow-up"></i></span><span
 							ng-show="lawyerData.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
-							<span class="badge hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
-							<span class="badge badge-success hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span>
-						<span
+							<span class="badge hint--top"
+							ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==1"
+							data-hint="Runner Report">R</span> <span
+							class="badge badge-success hint--top"
+							ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2"
+							data-hint="Updated Runner Report">R</span></span> <span
 						ng-if="(lawyerData.injuries==2 || lawyerData.injuries==3 || lawyerData.injuries==4) && (lawyerData.age<18 && lawyerData.age!=null)"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(lawyerData.patientId)"
@@ -317,39 +331,53 @@
 								class="fa fa-arrow-up"></i></span><span
 							ng-show="lawyerData.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
-							<span class="badge hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
-							<span class="badge badge-success hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span>
-						<span
+							<span class="badge hint--top"
+							ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==1"
+							data-hint="Runner Report">R</span> <span
+							class="badge badge-success hint--top"
+							ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2"
+							data-hint="Updated Runner Report">R</span></span> <span
 						ng-if="(lawyerData.injuries!=2 && lawyerData.injuries!=3 && lawyerData.injuries!=4) && (lawyerData.age>=18 || lawyerData.age==null)"><a
 							href="" class="hint--top"
 							ng-click="viewPatientModal(lawyerData.patientId)"
 							data-hint="View Client">{{lawyerData.name}}</a><span
 							ng-show="lawyerData.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
-							<span class="badge hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
-							<span class="badge badge-success hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span>
-						<span
+							<span class="badge hint--top"
+							ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==1"
+							data-hint="Runner Report">R</span> <span
+							class="badge badge-success hint--top"
+							ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2"
+							data-hint="Updated Runner Report">R</span></span> <span
 						ng-if="(lawyerData.injuries!=2 && lawyerData.injuries!=3 && lawyerData.injuries!=4) && (lawyerData.age<18 && lawyerData.age!=null)"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(lawyerData.patientId)"
 							data-hint="View Client">{{lawyerData.name}}</a><span
 							ng-show="lawyerData.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
-							<span class="badge hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
-							<span class="badge badge-success hint--top" ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span>
-					</td>
+							<span class="badge hint--top"
+							ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==1"
+							data-hint="Runner Report">R</span> <span
+							class="badge badge-success hint--top"
+							ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2"
+							data-hint="Updated Runner Report">R</span></span></td>
 					<td title="Age"><span
 						ng-show="lawyerData.age!='' && lawyerData.age!=null">{{lawyerData.age}}</span><span
 						ng-show="lawyerData.age=='' || lawyerData.age==null">-</span></td>
 					<td title="Unit Number"><span
 						ng-show="lawyerData.unitNumber!='' && lawyerData.unitNumber!=null">{{lawyerData.unitNumber}}
-						<span class="badge badge-success hint--top" ng-show="lawyerData.damageScale==1" data-hint="None">{{lawyerData.damageScale}}</span>
-                          <span class="badge badge-yellow hint--top" ng-show="lawyerData.damageScale==2" data-hint="Minor">{{lawyerData.damageScale}}</span>
-                          <span class="badge badge-primary hint--top" ng-show="lawyerData.damageScale==3" data-hint="Functional">{{lawyerData.damageScale}}</span>
-                          <span class="badge badge-danger hint--top" ng-show="lawyerData.damageScale==4" data-hint="Disabling">{{lawyerData.damageScale}}</span>
-                          <span class="badge badge-default hint--top" ng-show="lawyerData.damageScale==9" data-hint="Unknown">{{lawyerData.damageScale}}</span>
-						</span>
-						<span ng-show="lawyerData.unitNumber=='' || lawyerData.unitNumber==null">-</span></td>
+							<span class="badge badge-success hint--top"
+							ng-show="lawyerData.damageScale==1" data-hint="None">{{lawyerData.damageScale}}</span>
+							<span class="badge badge-yellow hint--top"
+							ng-show="lawyerData.damageScale==2" data-hint="Minor">{{lawyerData.damageScale}}</span>
+							<span class="badge badge-primary hint--top"
+							ng-show="lawyerData.damageScale==3" data-hint="Functional">{{lawyerData.damageScale}}</span>
+							<span class="badge badge-danger hint--top"
+							ng-show="lawyerData.damageScale==4" data-hint="Disabling">{{lawyerData.damageScale}}</span>
+							<span class="badge badge-default hint--top"
+							ng-show="lawyerData.damageScale==9" data-hint="Unknown">{{lawyerData.damageScale}}</span>
+					</span> <span
+						ng-show="lawyerData.unitNumber=='' || lawyerData.unitNumber==null">-</span></td>
 					<td title="County">{{lawyerData.county}}</td>
 
 					<td title="Address"><span
@@ -454,50 +482,60 @@
 						<tr>
 							<td class="col-md-3"><b>Unit Number</b></td>
 							<td class="col-md-3">{{patientDetails.unitNumber}}</td>
+							<td class="col-md-3"><b>Damage Scale</b></td>
+							<td class="col-md-3">{{patientDetails.damageScale==1?"1 -
+								None":patientDetails.damageScale==2?"2 -
+								Minor":patientDetails.damageScale==3?"3 -
+								Functional":patientDetails.damageScale==4?"4 -
+								Disabling":patientDetails.damageScale==9?"9 - Unknown":"Not
+								Available"}}</td>
+
+
+						</tr>
+						<tr>
+
 							<td class="col-md-3"><b>Number of Units</b></td>
 							<td class="col-md-3">{{patientDetails.numberOfUnits}}</td>
-
-						</tr>
-						<tr>
 							<td class="col-md-3"><b>Units in Error</b></td>
 							<td class="col-md-3">{{patientDetails.unitInError}}</td>
+
+
+						</tr>
+						<tr>
+
 							<td class="col-md-3"><b>Local Report Number</b></td>
 							<td class="col-md-3">{{patientDetails.localReportNumber}}</td>
-
-
-						</tr>
-						<tr>
 							<td class="col-md-3"><b>Injuries</b></td>
 							<td class="col-md-3">{{patientDetails.injuriesName}}</td>
+						</tr>
+						<tr>
+
 							<td class="col-md-3"><b>Crash Severity</b></td>
 							<td class="col-md-3">{{patientDetails.crashSeverityName}}</td>
-						</tr>
-						<tr>
-
 							<td class="col-md-3"><b>Crash Date</b></td>
 							<td class="col-md-3">{{patientDetails.crashDate}}</td>
+						</tr>
+						<tr>
+
 							<td class="col-md-3"><b>Time of Crash</b></td>
 							<td class="col-md-3">{{patientDetails.timeOfCrash}}</td>
-
-						</tr>
-						<tr>
 							<td class="col-md-3"><b>EMS Agency</b></td>
 							<td class="col-md-3">{{patientDetails.emsAgency}}</td>
-							<td class="col-md-3"><b>Report Agency Name</b></td>
-							<td class="col-md-3">{{patientDetails.reportingAgencyName}}</td>
 						</tr>
 
 						<tr>
+
+							<td class="col-md-3"><b>Report Agency Name</b></td>
+							<td class="col-md-3">{{patientDetails.reportingAgencyName}}</td>
 							<td class="col-md-3"><b>County</b></td>
 							<td class="col-md-3">{{patientDetails.county}}</td>
-							<td class="col-md-3"><b>City Village Township</b></td>
-							<td class="col-md-3">{{patientDetails.cityVillageTownship}}</td>
 						</tr>
 						<tr>
+
+							<td class="col-md-3"><b>City Village Township</b></td>
+							<td class="col-md-3">{{patientDetails.cityVillageTownship}}</td>
 							<td class="col-md-3"><b>Medical Facility</b></td>
 							<td class="col-md-3">{{patientDetails.medicalFacility}}</td>
-							<td class="col-md-3"><b>Damage Scale</b></td>
-							<td class="col-md-3">{{patientDetails.damageScale==1?"1 - None":patientDetails.damageScale==2?"2 - Minor":patientDetails.damageScale==3?"3 - Functional":patientDetails.damageScale==4?"4 - Disabling":patientDetails.damageScale==9?"9 - Unknown":"Not Available"}}</td>					
 						</tr>
 						<tr>
 							<td class="col-md-3"><b>At Fault INS. Company</b></td>
@@ -532,8 +570,8 @@
 					</div>
 					<div class="modal-body">
 						<label>Logged in User account :</label> {{user}} &nbsp;&nbsp; - <a
-							href="" ng-click="switchAccount()">Switch Account</a><br />
-						<br /> <select ng-cloak class="form-control" name="printer"
+							href="" ng-click="switchAccount()">Switch Account</a><br /> <br />
+						<select ng-cloak class="form-control" name="printer"
 							ng-model="printerId" required
 							onchange="this.style.color = this.options[this.selectedIndex].style.color;">
 							<option value="">-- Please Select --</option>

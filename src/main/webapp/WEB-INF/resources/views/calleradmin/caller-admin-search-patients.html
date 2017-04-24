@@ -1,12 +1,13 @@
 
-<link rel="stylesheet" href="resources/components/datetime/datetimepicker.css"></link>
+<link rel="stylesheet"
+	href="resources/components/datetime/datetimepicker.css"></link>
 <script src="resources/components/datetime/datetimepicker.js"></script>
 <script src="resources/components/datetime/moment.js"></script>
 
 <div class="row">
-	<div class="col-lg-12">	
-	<div class="form-group passenger-type pull-right margin-top35">
-	<label>Report Type:</label>
+	<div class="col-lg-12">
+		<div class="form-group passenger-type pull-right margin-top35">
+			<label>Report Type:</label>
 			<div class="btn-group">
 				<label class="btn btn-default" btn-radio="0"
 					ng-model="patient.isRunnerReport"> Normal <span
@@ -26,151 +27,241 @@
 
 <div class="row">
 	<form name="patientSearchForm" novalidate ng-cloak>
-    	<div class="col-md-12 no-padding">
-        	<div class="col-md-5ths">
-        		<label>County</label>&nbsp;<a href="" class="some-popover-link" data-original-title="" data-placement="right" data-toggle="popover" title="Info on County Selection:" data-content="<p><b>Subscribed - </b>All counties you have subscribed to.</p><p><b>Preferred - </b> Only counties you usually prefer to access.</p>"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchCountyMinError"> Select at least one county</span>
-     			<div ng-dropdown-multiselect="" preference-list="countyListType" options="countylist" selected-model="patient.countyId" extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true}" events="countyEvents"></div>
-     			<a href="#/dashboard/UserPreferrence/1" style="text-decoration: underline;" ng-show="countyListType==2">Change Lookup Preference</a>
-        	</div>
-          	<div class="col-md-5ths">
-       			<label>Crash From Date</label>
-       			<div class="input-group">
-					<input type="text" name="crashFromDate" id="CrashFromDate" ng-change="checkCustomDate(patient.numberOfDays)" class="form-control input-sm" ng-model="patient.crashFromDate" placeholder="Crash From Date"> 
-					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+		<div class="col-md-12 no-padding">
+			<div class="col-md-5ths">
+				<label>County</label>&nbsp;<a href="" class="some-popover-link"
+					data-original-title="" data-placement="right" data-toggle="popover"
+					title="Info on County Selection:"
+					data-content="<p><b>Subscribed - </b>All counties you have subscribed to.</p><p><b>Preferred - </b> Only counties you usually prefer to access.</p>"><i
+					class="fa fa-info-circle"></i></a><span class="error-class"
+					ng-show="searchCountyMinError"> Select at least one county</span>
+				<div ng-dropdown-multiselect="" preference-list="countyListType"
+					options="countylist" selected-model="patient.countyId"
+					extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true}"
+					events="countyEvents"></div>
+				<a href="#/dashboard/UserPreferrence/1"
+					style="text-decoration: underline;" ng-show="countyListType==2">Change
+					Lookup Preference</a>
+			</div>
+			<div class="col-md-5ths">
+				<label>Crash From Date</label>
+				<div class="input-group">
+					<input type="text" name="crashFromDate" id="CrashFromDate"
+						ng-change="checkCustomDate(patient.numberOfDays)"
+						class="form-control input-sm" ng-model="patient.crashFromDate"
+						placeholder="Crash From Date"> <span
+						class="input-group-addon white-color-bg"> <span
+						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
-        	</div>
-	        <div class="col-md-5ths">
-	       		<label>Number of Days</label>
-	       		<select class="form-control input-sm"  ng-model="patient.numberOfDays" name="numberOfDays" ng-change="checkCustomDate(patient.numberOfDays)">
-	            	<option value="1">1</option>
-	                <option value="7">7</option>
-	                <option value="15">15</option>	
-	                <option value="30">30</option>
-	                <option value="0">Custom</option>
-	            </select>
-	        </div>
-	        <div class="col-md-5ths">
-	       		<label>Crash To Date</label>
-	       		<div class="input-group">
-					<input type="text" name="crashToDate" id="CrashToDate" ng-change="crashToRequired=fasle" class="form-control input-sm" ng-model="patient.crashToDate" placeholder="Crash To Date"  ng-disabled="disableCustom"> 
-					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+			</div>
+			<div class="col-md-5ths">
+				<label>Number of Days</label> <select class="form-control input-sm"
+					ng-model="patient.numberOfDays" name="numberOfDays"
+					ng-change="checkCustomDate(patient.numberOfDays)">
+					<option value="1">1</option>
+					<option value="7">7</option>
+					<option value="15">15</option>
+					<option value="30">30</option>
+					<option value="0">Custom</option>
+				</select>
+			</div>
+			<div class="col-md-5ths">
+				<label>Crash To Date</label>
+				<div class="input-group">
+					<input type="text" name="crashToDate" id="CrashToDate"
+						ng-change="crashToRequired=fasle" class="form-control input-sm"
+						ng-model="patient.crashToDate" placeholder="Crash To Date"
+						ng-disabled="disableCustom"> <span
+						class="input-group-addon white-color-bg"> <span
+						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
-				<span style="color:red;font-size:13px" ng-if="crashToRequired==true">Please Enter Crash To Date</span>
-	        </div>
-	        <div class="col-md-5ths">
-	        	<label>Caller</label>
-	       		<select ng-cloak class="form-control input-sm" ng-model="patient.callerId">
-	          		<option value="0">All</option>
-	          		<option value="-1">N/A</option>
-	          		<option ng-repeat="caller in callerList" value="{{caller.callerId}}" ng-selected="{{caller.callerId == patient.callerId}}">{{caller.firstName}} {{caller.lastName}}</option>
-	     		</select>
-	        </div>
-		</div> 
-	
-		<div class="col-md-12"><br/></div>
-	
+				<span style="color: red; font-size: 13px"
+					ng-if="crashToRequired==true">Please Enter Crash To Date</span>
+			</div>
+			<div class="col-md-5ths">
+				<label>Caller</label> <select ng-cloak class="form-control input-sm"
+					ng-model="patient.callerId">
+					<option value="0">All</option>
+					<option value="-1">N/A</option>
+					<option ng-repeat="caller in callerList"
+						value="{{caller.callerId}}"
+						ng-selected="{{caller.callerId == patient.callerId}}">{{caller.firstName}}
+						{{caller.lastName}}</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<br />
+		</div>
+
 		<div class="col-md-12 no-padding">
 			<div class="col-md-3ths">
-	       		<label>Tier</label>&nbsp;&nbsp;<a href="" class="some-popover-link" data-placement="right" data-original-title="" data-toggle="popover" title="Tier Details (Deceased victims not listed)"><i class="fa fa-info-circle"></i></a><span class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one tier</span>
-         		<div ng-dropdown-multiselect="" options="defaultTiers" selected-model="patient.tier" extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
-	        </div>
-          	<div class="col-md-3ths">
-       			<label>Added On From Date</label>
-       			<div class="input-group">
-					<input type="text" name="addedOnFromDate" id="AddedOFromDate" ng-change="checkAddedOnToDate()" class="form-control input-sm" ng-model="patient.addedOnFromDate" placeholder="Added On From Date"> 
-					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+				<label>Tier</label>&nbsp;&nbsp;<a href="" class="some-popover-link"
+					data-placement="right" data-original-title="" data-toggle="popover"
+					title="Tier Details (Deceased victims not listed)"><i
+					class="fa fa-info-circle"></i></a><span class="error-class"
+					ng-show="searchTierMinError">&nbsp;&nbsp;Select at least one
+					tier</span>
+				<div ng-dropdown-multiselect="" options="defaultTiers"
+					selected-model="patient.tier"
+					extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
+			</div>
+			<div class="col-md-3ths">
+				<label>Added On From Date</label>
+				<div class="input-group">
+					<input type="text" name="addedOnFromDate" id="AddedOFromDate"
+						ng-change="checkAddedOnToDate()" class="form-control input-sm"
+						ng-model="patient.addedOnFromDate"
+						placeholder="Added On From Date"> <span
+						class="input-group-addon white-color-bg"> <span
+						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
-        	</div>
-        	<div class="col-md-3ths">
-	       		<label>Added On To Date</label>
-	       		<div class="input-group">
-					<input type="text" name="addedOnToDate" id="AddedOnToDate" ng-change="AddedOnToRequired=false" class="form-control input-sm" ng-model="patient.addedOnToDate" placeholder="Added On To Date"  ng-disabled="isSelectedAddedFromDate"> 
-					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+			</div>
+			<div class="col-md-3ths">
+				<label>Added On To Date</label>
+				<div class="input-group">
+					<input type="text" name="addedOnToDate" id="AddedOnToDate"
+						ng-change="AddedOnToRequired=false" class="form-control input-sm"
+						ng-model="patient.addedOnToDate" placeholder="Added On To Date"
+						ng-disabled="isSelectedAddedFromDate"> <span
+						class="input-group-addon white-color-bg"> <span
+						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
-				<span style="color:red;font-size:13px" ng-if="AddedOnToRequired==true">Please Enter Added On To Date</span>
-	        </div>
-	        <div class="col-md-3ths">
-	       		<label>Local Report Number</label>
-					<input type="text" name="localReportNumber" class="form-control input-sm" ng-model="patient.localReportNumber" placeholder="Local Report Number"> 
-			 </div>
-	         <div class="col-md-3ths">
-	       		<label>Damage Scale</label>&nbsp;<a href="" class="some-popover-link" data-placement="top" data-original-title="" data-toggle="popover" title="Damage Scale" data-content="<p>This combination of number & color denote <br/> the scale of damage to the related vehicle.<br/><br/><span class='badge badge-success'>1</span> - None<br/><span class='badge badge-yellow'>2</span> - Minor<br/><span class='badge badge-primary'>3</span> - Functional<br/><span class='badge badge-danger'>4</span> - Disabling<br/><span class='badge badge-default'>9</span> - Unknown</p>"><i class="fa fa-info-circle"></i></a>
-         		<div ng-dropdown-multiselect="" options="defaultDamageScale" selected-model="patient.damageScale" extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
-         		<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select at least one Damage Scale</span>
-	        </div>
-	        <div class="col-md-2ths">
-	        	<label>&nbsp;</label>
-	        	<div>
-	        		<a href="" id="srch" class="btn btn-sm btn-success hint--top" ng-class="{'button-disable':patientSearchForm.$invalid}"  ng-disabled='isClean() || patientSearchForm.$invalid ||disableSearch' ng-click="searchPatients()" data-hint="Search"><i class="fa fa-search"></i></a>
-	        		<a href="" class="btn btn-sm btn-danger hint--top" ng-click="resetSearchData()" data-hint="Reset"><i class="fa fa-undo"></i></a>
-	        	</div>
-	       	</div>
+				<span style="color: red; font-size: 13px"
+					ng-if="AddedOnToRequired==true">Please Enter Added On To
+					Date</span>
+			</div>
+			<div class="col-md-3ths">
+				<label>Local Report Number</label> <input type="text"
+					name="localReportNumber" class="form-control input-sm"
+					ng-model="patient.localReportNumber"
+					placeholder="Local Report Number">
+			</div>
+			<div class="col-md-3ths">
+				<label>Damage Scale</label>&nbsp;<a href=""
+					class="some-popover-link" data-placement="top"
+					data-original-title="" data-toggle="popover" title="Damage Scale"
+					data-content="<p>This combination of number & color denote <br/> the scale of damage to the related vehicle.<br/><br/><span class='badge badge-success'>1</span> - None<br/><span class='badge badge-yellow'>2</span> - Minor<br/><span class='badge badge-primary'>3</span> - Functional<br/><span class='badge badge-danger'>4</span> - Disabling<br/><span class='badge badge-default'>9</span> - Unknown</p>"><i
+					class="fa fa-info-circle"></i></a>
+				<div ng-dropdown-multiselect="" options="defaultDamageScale"
+					selected-model="patient.damageScale"
+					extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1}"></div>
+				<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select
+					at least one Damage Scale</span>
+			</div>
+			<div class="col-md-2ths">
+				<label>&nbsp;</label>
+				<div>
+					<a href="" id="srch" class="btn btn-sm btn-success hint--top"
+						ng-class="{'button-disable':patientSearchForm.$invalid}"
+						ng-disabled='isClean() || patientSearchForm.$invalid ||disableSearch'
+						ng-click="searchPatients()" data-hint="Search"><i
+						class="fa fa-search"></i></a> <a href=""
+						class="btn btn-sm btn-danger hint--top"
+						ng-click="resetSearchData()" data-hint="Reset"><i
+						class="fa fa-undo"></i></a>
+				</div>
+			</div>
 		</div>
 
 		<div class="col-md-12">
 			<div class="col-md-12 no-padding hr-tag-alter"></div>
-				<div  class="col-md-6 no-padding">
-					<a href="" id="assign" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="assignCallerPopup()" class="btn btn-sm btn-success">Assign Caller</a>
-					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="releaseCaller()" class="btn btn-sm btn-danger">Release From Caller</a>
-					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1" ng-click="moveArchive()" class="btn btn-sm btn-warning">Archive all</a>
-					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==0" ng-click="releaseArchive()" class="btn btn-sm btn-primary">Restore all</a>
-					<a href="" ng-disabled="isCleanCheckbox()" ng-click="printReports()" class="btn btn-sm btn-info">Print Reports</a>&nbsp;<a href="" data-toggle="modal" data-target="#printReportsHelpModal"><i class="fa fa-info-circle"></i></a>
+			<div class="col-md-6 no-padding">
+				<a href="" id="assign"
+					ng-disabled="isCleanCheckbox()||patient.isArchived==1"
+					ng-click="assignCallerPopup()" class="btn btn-sm btn-success">Assign
+					Caller</a> <a href=""
+					ng-disabled="isCleanCheckbox()||patient.isArchived==1"
+					ng-click="releaseCaller()" class="btn btn-sm btn-danger">Release
+					From Caller</a> <a href=""
+					ng-disabled="isCleanCheckbox()||patient.isArchived==1"
+					ng-click="moveArchive()" class="btn btn-sm btn-warning">Archive
+					all</a> <a href=""
+					ng-disabled="isCleanCheckbox()||patient.isArchived==0"
+					ng-click="releaseArchive()" class="btn btn-sm btn-primary">Restore
+					all</a> <a href="" ng-disabled="isCleanCheckbox()"
+					ng-click="printReports()" class="btn btn-sm btn-info">Print
+					Reports</a>&nbsp;<a href="" data-toggle="modal"
+					data-target="#printReportsHelpModal"><i
+					class="fa fa-info-circle"></i></a>
+			</div>
+			<div class="col-md-6 no-padding">
+				<div class="col-md-3 margin-top-5 text-right no-padding">Records
+					Type&nbsp;&nbsp;</div>
+				<div class="col-md-3 no-padding">
+					<select class="form-control input-sm"
+						ng-change="secoundarySearchPatient();resetResultData();"
+						name="isArchived" ng-model="patient.isArchived">
+						<option value="0">Open</option>
+						<option value="1">Archived</option>
+					</select>
 				</div>
-				<div class="col-md-6 no-padding">
-					<div class="col-md-3 margin-top-5 text-right no-padding">Records Type&nbsp;&nbsp;</div>
-					<div class="col-md-3 no-padding">
-						<select class="form-control input-sm" ng-change="secoundarySearchPatient();resetResultData();" name="isArchived" ng-model="patient.isArchived">
-				          	<option value="0">Open</option>
-				          	<option value="1">Archived</option>
-				     	</select>
-					</div>
-					<div class="col-md-3 margin-top-5 text-right no-padding">Filter Status by &nbsp;&nbsp; </div>
-					<div class="col-md-3 no-padding">
-						<select class="form-control input-sm" ng-change="secoundarySearchPatient()" name="isArchived" ng-model="patient.patientStatus">
-							<option value="7">All</option>
-				          	<option value="0">New</option>
-				          	<option value="1">Active</option>
-				          	<option value="2">Not Interested/Injured</option>
-				          	<option value="3">Voice Mail</option>
-				          	<option value="4">Appointment Scheduled</option>
-				          	<option value="5">Do Not Call</option>
-				          	<option value="6">To be Re-Assigned</option>
-				          	<option value="8">Call Back</option>
-				          	<option value="9">Unable To Reach</option>
-				     	</select>
-					</div>
+				<div class="col-md-3 margin-top-5 text-right no-padding">Filter
+					Status by &nbsp;&nbsp;</div>
+				<div class="col-md-3 no-padding">
+					<select class="form-control input-sm"
+						ng-change="secoundarySearchPatient()" name="isArchived"
+						ng-model="patient.patientStatus">
+						<option value="7">All</option>
+						<option value="0">New</option>
+						<option value="1">Active</option>
+						<option value="2">Not Interested/Injured</option>
+						<option value="3">Voice Mail</option>
+						<option value="4">Appointment Scheduled</option>
+						<option value="5">Do Not Call</option>
+						<option value="6">To be Re-Assigned</option>
+						<option value="8">Call Back</option>
+						<option value="9">Unable To Reach</option>
+					</select>
 				</div>
-				<div class="col-md-12 no-padding hr-tag-alter"></div>
+			</div>
+			<div class="col-md-12 no-padding hr-tag-alter"></div>
 		</div>
 		<div class="col-md-12">
-		<div class="col-md-12 archive-filter" ng-show="patient.isArchived==1">
-		<div class="col-md-3"></div>
-		<div class="col-md-9 padding-7px">
-		<div class="col-md-4 margin-top-5 no-padding text-right no-padding"><b>Filter by Archive Date : </b></div>
-		<div class="col-md-8 no-padding">
-				<div class="col-md-1 margin-top-5 no-padding">&nbsp;From</div>
-				<div class="col-md-3 no-padding">
-       			<div class="input-group">
-					<input type="text" name="archivedFromDate" id="archivedFromDate" class="form-control input-sm" ng-change="checkArchivedToDate()" ng-model="patient.archivedFromDate" placeholder="Date"> 
-					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+			<div class="col-md-12 archive-filter" ng-show="patient.isArchived==1">
+				<div class="col-md-3"></div>
+				<div class="col-md-9 padding-7px">
+					<div class="col-md-4 margin-top-5 no-padding text-right no-padding">
+						<b>Filter by Archive Date : </b>
+					</div>
+					<div class="col-md-8 no-padding">
+						<div class="col-md-1 margin-top-5 no-padding">&nbsp;From</div>
+						<div class="col-md-3 no-padding">
+							<div class="input-group">
+								<input type="text" name="archivedFromDate" id="archivedFromDate"
+									class="form-control input-sm" ng-change="checkArchivedToDate()"
+									ng-model="patient.archivedFromDate" placeholder="Date">
+								<span class="input-group-addon white-color-bg"> <span
+									class="glyphicon glyphicon-calendar"></span></span>
+							</div>
+							<span style="color: red; font-size: 13px"
+								ng-show="archivedFromDateRequired">Enter From Date</span>
+						</div>
+						<div class="col-md-1 margin-top-5 no-padding">&nbsp;&nbsp;
+							To</div>
+						<div class="col-md-3 no-padding">
+							<div class="input-group">
+								<input type="text" name="archivedToDate" id="archivedToDate"
+									class="form-control input-sm" ng-model="patient.archivedToDate"
+									ng-change="archivedToDateRequired=false" placeholder="Date">
+								<span class="input-group-addon white-color-bg"> <span
+									class="glyphicon glyphicon-calendar"></span></span>
+							</div>
+							<span style="color: red; font-size: 13px"
+								ng-show="archivedToDateRequired">Enter To Date</span>
+						</div>
+						<div class="col-md-3 margin-top-5">
+							<a class="btn btn-success btn-xs" href=""
+								ng-click="searchWithArchiveDateFilter()">Select</a> &nbsp; <a
+								href="" ng-click="resetArchiveFilterDate()"><u>Reset</u></a>
+						</div>
+
+					</div>
 				</div>
-				<span style="color:red;font-size:13px" ng-show="archivedFromDateRequired">Enter From Date</span>
-				</div>
-				<div class="col-md-1 margin-top-5 no-padding">&nbsp;&nbsp; To </div>
-				<div class="col-md-3 no-padding">
-	       		<div class="input-group">
-					<input type="text" name="archivedToDate" id="archivedToDate" class="form-control input-sm" ng-model="patient.archivedToDate" ng-change="archivedToDateRequired=false" placeholder="Date"> 
-					<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
-				</div>
-				<span style="color:red;font-size:13px" ng-show="archivedToDateRequired">Enter To Date</span>
-				</div>
-				<div class="col-md-3 margin-top-5"><a class="btn btn-success btn-xs" href="" ng-click="searchWithArchiveDateFilter()">Select</a> &nbsp; <a href="" ng-click="resetArchiveFilterDate()"><u>Reset</u></a></div>
-				
-	        </div>
-	       </div>
+			</div>
 		</div>
-		</div>
-		
+
 	</form>
 	<div class="col-md-12">
 		<table class="table table-bordered persist-area" ng-cloak>
@@ -178,7 +269,8 @@
 				<tr>
 					<th width="2%"><input ng-change="isChecked()"
 						ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
-					<th width="16%">Patient Name <br/><span class="client-name">(Last, First, Middle)</span></th>
+					<th width="16%">Patient Name <br />
+					<span class="client-name">(Last, First, Middle)</span></th>
 					<th width="12%">Phone Number</th>
 					<th width="7%">Age</th>
 					<th width="5%">Unit / Damage</th>
@@ -187,7 +279,8 @@
 					<th width="9%">Caller</th>
 					<th width="6%">Status</th>
 					<th width="9%">Status On</th>
-					<th width="6%" ng-show="patient.isArchived==1" ng-cloak>Archived On</th>
+					<th width="6%" ng-show="patient.isArchived==1" ng-cloak>Archived
+						On</th>
 					<th width="14%">Actions</th>
 				</tr>
 				<tr>
@@ -210,7 +303,10 @@
 						</div>
 					</th>
 					<th>
-						<div ng-dropdown-multiselect="" options="defaultAge" selected-model="patient.age" extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false,disable:patient.isRunnerReport==1}" events="ageEvents"></div>
+						<div ng-dropdown-multiselect="" options="defaultAge"
+							selected-model="patient.age"
+							extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false,disable:patient.isRunnerReport==1}"
+							events="ageEvents"></div>
 					</th>
 					<th>
 						<!-- <div class="input-group">
@@ -225,25 +321,42 @@
 					<th></th>
 					<th></th>
 					<th ng-show="patient.isArchived==1"></th>
-					<th><a href="" ng-click="exportToExcel()" class="btn btn-sm btn-export" ng-disabled="exportButton || totalRecords==0"><span ng-show="exportButton"><i class="glyphicon glyphicon-refresh spinning"></i>&nbsp;</span>{{exportButtonText}}</a></th>
+					<th><a href="" ng-click="exportToExcel()"
+						class="btn btn-sm btn-export"
+						ng-disabled="exportButton || totalRecords==0"><span
+							ng-show="exportButton"><i
+								class="glyphicon glyphicon-refresh spinning"></i>&nbsp;</span>{{exportButtonText}}</a></th>
 				</tr>
 			</thead>
-			
+
 			<tbody>
-				<tr class="archive-group-header" ng-show="patientSearchData[0].archivedDate!=''"
+				<tr class="archive-group-header"
+					ng-show="patientSearchData[0].archivedDate!=''"
 					ng-repeat-start="resultMainData in patientSearchData">
-					<td colspan="1"><input ng-change="selectArchiveGroup(this,'{{resultMainData.archivedDate}}')" ng-model="isCheckedAllGroupArchivePatients" type="checkbox" id="{{resultMainData.archivedDate}}"></td>
+					<td colspan="1"><input
+						ng-change="selectArchiveGroup(this,'{{resultMainData.archivedDate}}')"
+						ng-model="isCheckedAllGroupArchivePatients" type="checkbox"
+						id="{{resultMainData.archivedDate}}"></td>
 					<td colspan="11"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
 				</tr>
 				<tr class="group-header-back"
 					ng-repeat-start="resultData in resultMainData.searchResult">
-					<td colspan="1"><input ng-change="selectGroup(this,'{{resultMainData.archivedDate}}');enableCallLogsButton('{{resultData.localReportNumber}}','{{resultMainData.archivedDate}}');"
+					<td colspan="1"><input
+						ng-change="selectGroup(this,'{{resultMainData.archivedDate}}');enableCallLogsButton('{{resultData.localReportNumber}}','{{resultMainData.archivedDate}}');"
 						ng-model="isCheckedAllGroupPatients" type="checkbox"
 						id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td>
 					<td colspan="11"><span><b>Local Report No: </b>{{resultData.localReportNumber}}</span>
-					<span class="badge badge-warning hint--top" ng-show="resultData.isRunnerReport==2" data-hint="Runner Report">R</span>
-					<span class="col-md-9 no-padding pull-right text-right"><span><b><a href="" id="addCallLog{{resultData.localReportNumber}}{{resultMainData.archivedDate}}" disabled="disabled" ng-click="addModel(this,resultMainData.archivedDate)" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Add Call Log</a> | Unit
-									In Error: </b><span ng-show="resultData.unitInError!=''&&resultData.unitInError!=null">{{resultData.unitInError}}</span><span ng-show="resultData.unitInError==''||resultData.unitInError==null">-</span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash
+						<span class="badge badge-warning hint--top"
+						ng-show="resultData.isRunnerReport==2" data-hint="Runner Report">R</span>
+						<span class="col-md-9 no-padding pull-right text-right"><span><b><a
+									href=""
+									id="addCallLog{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"
+									disabled="disabled"
+									ng-click="addModel(this,resultMainData.archivedDate)"
+									class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i>
+										Add Call Log</a> | Unit In Error: </b><span
+								ng-show="resultData.unitInError!=''&&resultData.unitInError!=null">{{resultData.unitInError}}</span><span
+								ng-show="resultData.unitInError==''||resultData.unitInError==null">-</span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash
 									Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added
 									Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Patients
 									Count:</b>&nbsp;&nbsp;<span class="hint--top patient-count-circle"
@@ -252,10 +365,12 @@
 
 				<tr
 					dir-paginate="cAdminPatient in resultData.patientSearchLists|itemsPerPage:patient.itemsPerPage"
-					current-page="patient.pageNumber" total-items="totalRecords" pagination-id="callerAdminPatientPageId">
-					<td><input ng-change="isCheckedIndividual();enableCallLogsButton('{{resultData.localReportNumber}}','{{resultMainData.archivedDate}}')"
-						ng-model="cAdminPatient.selected" ng-checked="cAdminPatient.selected"
-						type="checkbox"></td>
+					current-page="patient.pageNumber" total-items="totalRecords"
+					pagination-id="callerAdminPatientPageId">
+					<td><input
+						ng-change="isCheckedIndividual();enableCallLogsButton('{{resultData.localReportNumber}}','{{resultMainData.archivedDate}}')"
+						ng-model="cAdminPatient.selected"
+						ng-checked="cAdminPatient.selected" type="checkbox"></td>
 					<td><span
 						ng-if="(cAdminPatient.injuries==2 || cAdminPatient.injuries==3 || cAdminPatient.injuries==4) && (cAdminPatient.age>=18 || cAdminPatient.age==null) "><a
 							href="" class="hint--top redText"
@@ -263,75 +378,96 @@
 							data-hint="View Patient">{{cAdminPatient.name}}</a><span
 							class="redText margin-left-10 hint--top"
 							data-hint="Injuries : {{cAdminPatient.injuriesName}}"><i
-								class="fa fa-arrow-up"></i></span>
-								<span ng-show="cAdminPatient.seatingPosition=='1'"
-							class="margin-left-10 hint--top driver-icon"
-							data-hint="Driver">&nbsp;</span>
-							<span class="badge hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
-							<span class="badge badge-success hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span> 
-							<span
+								class="fa fa-arrow-up"></i></span> <span
+							ng-show="cAdminPatient.seatingPosition=='1'"
+							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
+							<span class="badge hint--top"
+							ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==1"
+							data-hint="Runner Report">R</span> <span
+							class="badge badge-success hint--top"
+							ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2"
+							data-hint="Updated Runner Report">R</span></span> <span
 						ng-if="(cAdminPatient.injuries==2 || cAdminPatient.injuries==3 || cAdminPatient.injuries==4) && (cAdminPatient.age<18 && cAdminPatient.age!=null)"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(cAdminPatient.patientId)"
 							data-hint="View Patient">{{cAdminPatient.name}}</a><span
 							class="redText margin-left-10 hint--top"
 							data-hint="Injuries : {{cAdminPatient.injuriesName}}"><i
-								class="fa fa-arrow-up"></i></span>
-								<span ng-show="cAdminPatient.seatingPosition=='1'"
-							class="margin-left-10 hint--top driver-icon"
-							data-hint="Driver">&nbsp;</span>
-							<span class="badge hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
-							<span class="badge badge-success hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span>
-								</span> <span
+								class="fa fa-arrow-up"></i></span> <span
+							ng-show="cAdminPatient.seatingPosition=='1'"
+							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
+							<span class="badge hint--top"
+							ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==1"
+							data-hint="Runner Report">R</span> <span
+							class="badge badge-success hint--top"
+							ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2"
+							data-hint="Updated Runner Report">R</span> </span> <span
 						ng-if="(cAdminPatient.injuries!=2 && cAdminPatient.injuries!=3 && cAdminPatient.injuries!=4) && (cAdminPatient.age>=18 || cAdminPatient.age==null)"><a
 							href="" class="hint--top"
 							ng-click="viewPatientModal(cAdminPatient.patientId)"
-							data-hint="View Patient">{{cAdminPatient.name}}</a>
-							<span ng-show="cAdminPatient.seatingPosition=='1'"
-							class="margin-left-10 hint--top driver-icon"
-							data-hint="Driver">&nbsp;</span>
-							<span class="badge hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
-							<span class="badge badge-success hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span></span> 
-							<span
+							data-hint="View Patient">{{cAdminPatient.name}}</a> <span
+							ng-show="cAdminPatient.seatingPosition=='1'"
+							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
+							<span class="badge hint--top"
+							ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==1"
+							data-hint="Runner Report">R</span> <span
+							class="badge badge-success hint--top"
+							ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2"
+							data-hint="Updated Runner Report">R</span></span> <span
 						ng-if="(cAdminPatient.injuries!=2 && cAdminPatient.injuries!=3 && cAdminPatient.injuries!=4) && (cAdminPatient.age<18 && cAdminPatient.age!=null)"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(cAdminPatient.patientId)"
-							data-hint="View Patient">{{cAdminPatient.name}}</a>
-							<span ng-show="cAdminPatient.seatingPosition=='1'"
-							class="margin-left-10 hint--top driver-icon"
-							data-hint="Driver">&nbsp;</span>
-							<span class="badge hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==1" data-hint="Runner Report">R</span>
-							<span class="badge badge-success hint--top" ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2" data-hint="Updated Runner Report">R</span>
-							</span>
-							</td>
+							data-hint="View Patient">{{cAdminPatient.name}}</a> <span
+							ng-show="cAdminPatient.seatingPosition=='1'"
+							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
+							<span class="badge hint--top"
+							ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==1"
+							data-hint="Runner Report">R</span> <span
+							class="badge badge-success hint--top"
+							ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2"
+							data-hint="Updated Runner Report">R</span> </span></td>
 
-					<td title="Phone Number"><span ng-show="cAdminPatient.phoneNumber!=''&&cAdminPatient.phoneNumber!=null">{{cAdminPatient.phoneNumber}}</span><span ng-show="cAdminPatient.phoneNumber==''||cAdminPatient.phoneNumber==null">-</span></td>
-					<td title="Age"><span ng-show="cAdminPatient.age!=''&&cAdminPatient.age!=null">{{cAdminPatient.age}}</span><span ng-show="cAdminPatient.age==''||cAdminPatient.age==null">-</span></td>
-					<td title="Unit Number"><span ng-show="cAdminPatient.unitNumber!=''&&cAdminPatient.unitNumber!=null">{{cAdminPatient.unitNumber}}
-					<span class="badge badge-success hint--top" ng-show="cAdminPatient.damageScale==1" data-hint="None">{{cAdminPatient.damageScale}}</span>
-                          <span class="badge badge-yellow hint--top" ng-show="cAdminPatient.damageScale==2" data-hint="Minor">{{cAdminPatient.damageScale}}</span>
-                          <span class="badge badge-primary hint--top" ng-show="cAdminPatient.damageScale==3" data-hint="Functional">{{cAdminPatient.damageScale}}</span>
-                          <span class="badge badge-danger hint--top" ng-show="cAdminPatient.damageScale==4" data-hint="Disabling">{{cAdminPatient.damageScale}}</span>
-                          <span class="badge badge-default hint--top" ng-show="cAdminPatient.damageScale==9" data-hint="Unknown">{{cAdminPatient.damageScale}}</span>
-					</span>
-					<span ng-show="cAdminPatient.unitNumber==''||cAdminPatient.unitNumber==null">-</span>
+					<td title="Phone Number"><span
+						ng-show="cAdminPatient.phoneNumber!=''&&cAdminPatient.phoneNumber!=null">{{cAdminPatient.phoneNumber}}</span><span
+						ng-show="cAdminPatient.phoneNumber==''||cAdminPatient.phoneNumber==null">-</span></td>
+					<td title="Age"><span
+						ng-show="cAdminPatient.age!=''&&cAdminPatient.age!=null">{{cAdminPatient.age}}</span><span
+						ng-show="cAdminPatient.age==''||cAdminPatient.age==null">-</span></td>
+					<td title="Unit Number"><span
+						ng-show="cAdminPatient.unitNumber!=''&&cAdminPatient.unitNumber!=null">{{cAdminPatient.unitNumber}}
+							<span class="badge badge-success hint--top"
+							ng-show="cAdminPatient.damageScale==1" data-hint="None">{{cAdminPatient.damageScale}}</span>
+							<span class="badge badge-yellow hint--top"
+							ng-show="cAdminPatient.damageScale==2" data-hint="Minor">{{cAdminPatient.damageScale}}</span>
+							<span class="badge badge-primary hint--top"
+							ng-show="cAdminPatient.damageScale==3" data-hint="Functional">{{cAdminPatient.damageScale}}</span>
+							<span class="badge badge-danger hint--top"
+							ng-show="cAdminPatient.damageScale==4" data-hint="Disabling">{{cAdminPatient.damageScale}}</span>
+							<span class="badge badge-default hint--top"
+							ng-show="cAdminPatient.damageScale==9" data-hint="Unknown">{{cAdminPatient.damageScale}}</span>
+					</span> <span
+						ng-show="cAdminPatient.unitNumber==''||cAdminPatient.unitNumber==null">-</span>
 					</td>
 					<td title="County">{{cAdminPatient.county}}</td>
 
-					<td><span ng-show="cAdminPatient.tier!=''&&cAdminPatient.tier!=null">Tier {{cAdminPatient.tier}}</span><span ng-show="cAdminPatient.tier==''||cAdminPatient.tier==null">-</span></td>
+					<td><span
+						ng-show="cAdminPatient.tier!=''&&cAdminPatient.tier!=null">Tier
+							{{cAdminPatient.tier}}</span><span
+						ng-show="cAdminPatient.tier==''||cAdminPatient.tier==null">-</span></td>
 					<td title="Caller Name"><span
 						ng-show="cAdminPatient.callerFirstName==null && cAdminPatient.callerLastName==null">N/A</span>{{cAdminPatient.callerFirstName}}
 						{{cAdminPatient.callerLastName}}</td>
 					<td title="Status">{{cAdminPatient.patientStatusName}}</td>
 					<td><span
 						ng-show="cAdminPatient.lastCallLogTimeStamp==null && cAdminPatient.lastCallLogTimeStamp==null">-</span><b>{{cAdminPatient.lastCallLogTimeStamp}}</b></td>
-					<td title="Archived On" ng-show="cAdminPatient.isArchived==1" ng-cloak>{{cAdminPatient.archivedDateTime}}</td>
-					<td><a href="{{cAdminPatient.crashReportFileName}}"
-						ng-cloak target="_blank" class="btn btn-xs btn-info hint--top"
+					<td title="Archived On" ng-show="cAdminPatient.isArchived==1"
+						ng-cloak>{{cAdminPatient.archivedDateTime}}</td>
+					<td><a href="{{cAdminPatient.crashReportFileName}}" ng-cloak
+						target="_blank" class="btn btn-xs btn-info hint--top"
 						data-hint="View Crash Report"><i class="fa fa-file-pdf-o"></i></a>
-						<span ng-show={{cAdminPatient.isArchived==0||cAdminPatient.isArchived==null}}>
-							<a href="" ng-cloak
-							ng-show={{cAdminPatient.callerId!=null}}
+						<span
+						ng-show={{cAdminPatient.isArchived==0||cAdminPatient.isArchived==null}}>
+							<a href="" ng-cloak ng-show={{cAdminPatient.callerId!=null}}
 							ng-click="assignIndividualCallerPopup(cAdminPatient.patientId,cAdminPatient.name,cAdminPatient.callerId)"
 							class="btn btn-xs btn-success hint--top"
 							data-hint="Change Caller"><i
@@ -340,24 +476,23 @@
 							ng-click="assignIndividualCallerPopup(cAdminPatient.patientId,cAdminPatient.name,cAdminPatient.callerId)"
 							class="btn btn-xs btn-danger hint--top" data-hint="Assign Caller"><i
 								class="fa fa-external-link-square"></i></a>
-					</span>
-						<a href="" ng-cloak ng-click="viewCallLogsList(cAdminPatient.patientId,cAdminPatient.name,resultData.localReportNumber)"
+					</span> <a href="" ng-cloak
+						ng-click="viewCallLogsList(cAdminPatient.patientId,cAdminPatient.name,resultData.localReportNumber)"
 						class="btn btn-xs btn-primary hint--top"
-						data-hint="View Call Logs"><i class="fa fa-eye"></i></a>
-						<a href="" ng-cloak ng-click="viewNearByClinic(cAdminPatient.patientId)"
+						data-hint="View Call Logs"><i class="fa fa-eye"></i></a> <a
+						href="" ng-cloak
+						ng-click="viewNearByClinic(cAdminPatient.patientId)"
 						class="btn btn-xs btn-warning hint--top"
 						data-hint="View Near By Clinics"><i class="fa fa-map-marker"></i></a>
 						<a href="" ng-cloak
-							ng-show={{cAdminPatient.isArchived==0||cAdminPatient.isArchived==null}}
-							ng-click="moveSingleFileToArchive(cAdminPatient.patientId)"
-							class="btn btn-xs btn-success hint--top"
-							data-hint="Archive"><i
-								class="fa fa-archive"></i></a> <a href="" ng-cloak
-							ng-show={{cAdminPatient.isArchived==1}}
-							ng-click="releaseSingleFileFromArchive(cAdminPatient.patientId)"
-							class="btn btn-xs btn-danger hint--top" data-hint="Restore"><i
-								class="fa fa-share-square-o"></i></a>
-						</td>
+						ng-show={{cAdminPatient.isArchived==0||cAdminPatient.isArchived==null}}
+						ng-click="moveSingleFileToArchive(cAdminPatient.patientId)"
+						class="btn btn-xs btn-success hint--top" data-hint="Archive"><i
+							class="fa fa-archive"></i></a> <a href="" ng-cloak
+						ng-show={{cAdminPatient.isArchived==1}}
+						ng-click="releaseSingleFileFromArchive(cAdminPatient.patientId)"
+						class="btn btn-xs btn-danger hint--top" data-hint="Restore"><i
+							class="fa fa-share-square-o"></i></a></td>
 				</tr>
 				<tr ng-repeat-end=""></tr>
 				<tr ng-repeat-end=""></tr>
@@ -369,71 +504,89 @@
 			</tbody>
 		</table>
 
-	<dir-pagination-controls ng-show="totalRecords>0" max-size="5" direction-links="true" boundary-links="true" pagination-id="callerAdminPatientPageId" >
-    					</dir-pagination-controls>
-    				<!-- <div class="col-md-4 margin-top-30" ng-show="patientSearchData.length>0">Showing {{(patient.pageNumber-1)*patient.itemsPerPage+1}}-{{patient.pageNumber*patient.itemsPerPage}} of {{totalRecords}} Records</div> -->
-    				<div class="col-md-3 pull-right no-padding">
-<label>Number of Records</label>
-	<select class="form-control input-sm" ng-model="patient.itemsPerPage" ng-change=itemsPerFilter() name="noOfRows" id="noOfRows">
-		<option value="10">Show 10 Per Page</option>
-		<option value="25">Show 25 Per Page</option>
-		<option value="50">Show 50 Per Page</option>
-		<option value="100">Show 100 Per Page</option>
-		<option value="250">Show 250 Per Page</option>
-	</select> 
-</div>		
-</div>
+		<dir-pagination-controls ng-show="totalRecords>0" max-size="5"
+			direction-links="true" boundary-links="true"
+			pagination-id="callerAdminPatientPageId">
+		</dir-pagination-controls>
+		<!-- <div class="col-md-4 margin-top-30" ng-show="patientSearchData.length>0">Showing {{(patient.pageNumber-1)*patient.itemsPerPage+1}}-{{patient.pageNumber*patient.itemsPerPage}} of {{totalRecords}} Records</div> -->
+		<div class="col-md-3 pull-right no-padding">
+			<label>Number of Records</label> <select
+				class="form-control input-sm" ng-model="patient.itemsPerPage"
+				ng-change=itemsPerFilter() name="noOfRows" id="noOfRows">
+				<option value="10">Show 10 Per Page</option>
+				<option value="25">Show 25 Per Page</option>
+				<option value="50">Show 50 Per Page</option>
+				<option value="100">Show 100 Per Page</option>
+				<option value="250">Show 250 Per Page</option>
+			</select>
+		</div>
+	</div>
 </div>
 <div class="modal fade" id="assignCallerModal" role="dialog">
-    <div class="modal-dialog">    
-      <!-- Modal content-->
-      <div class="modal-content">
-      <form name="myForm" novalidate>
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Assign Caller </h4>
-        </div>
-        <div class="modal-body">
-        	<div class="margin-bottom-10" ng-show="isIndividual">
-        		<label>Patient Name : </label>
-        		{{assignPatientName}}
-        	</div>
-        	<label>Choose Caller</label>
-       			<select class="form-control" ng-model="myForm.callerId" required>
-       				<option value="">--Select Caller--</option>
-          			<option ng-repeat="caller in callerList"  ng-if="caller.status==1" value="{{caller.callerId}}" ng-selected="{{caller.callerId === patient.callerId}}">{{caller.firstName}} {{caller.lastName}}</option>
-     			</select>
-        </div>
-        <div class="modal-footer" >
-         <button type="close" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-             <a href="" type="submit" ng-show="isIndividual" class="btn btn-success"  data-dismiss="modal" ng-disabled='myForm.$invalid' ng-click="assignIndividualCaller(assignPatientId)">Assign</a>
-             <a href="" type="submit" ng-hide="isIndividual" class="btn btn-success"  data-dismiss="modal" ng-disabled='myForm.$invalid' ng-click="assignCaller()">Assign</a>
-        </div>
-        </form>
-      </div>
-      
-    </div>
- </div>
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<form name="myForm" novalidate>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Assign Caller</h4>
+				</div>
+				<div class="modal-body">
+					<div class="margin-bottom-10" ng-show="isIndividual">
+						<label>Patient Name : </label> {{assignPatientName}}
+					</div>
+					<label>Choose Caller</label> <select class="form-control"
+						ng-model="myForm.callerId" required>
+						<option value="">--Select Caller--</option>
+						<option ng-repeat="caller in callerList" ng-if="caller.status==1"
+							value="{{caller.callerId}}"
+							ng-selected="{{caller.callerId === patient.callerId}}">{{caller.firstName}}
+							{{caller.lastName}}</option>
+					</select>
+				</div>
+				<div class="modal-footer">
+					<button type="close" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+					<a href="" type="submit" ng-show="isIndividual"
+						class="btn btn-success" data-dismiss="modal"
+						ng-disabled='myForm.$invalid'
+						ng-click="assignIndividualCaller(assignPatientId)">Assign</a> <a
+						href="" type="submit" ng-hide="isIndividual"
+						class="btn btn-success" data-dismiss="modal"
+						ng-disabled='myForm.$invalid' ng-click="assignCaller()">Assign</a>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content ">
 			<div class="modal-header">
-			
+
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<div class="form-group passenger-type pull-right">
-				 <div class="btn-group" data-toggle="buttons">
-                                        <label class="btn btn-default unit-toggle-label" ng-class="{active:patientDetails.seatingPosition!='1' || patientDetails.seatingPosition==null}" ng-disabled="patientDetails.seatingPosition=='1'">
-                                            <input type="radio" name="unit" ng-model="patientDetails.seatingPosition"  id="option1" autocomplete="off"> Passenger
-                                        </label>
-                                        <label class="btn btn-default unit-toggle-label" ng-class="{active:patientDetails.seatingPosition=='1'}" ng-disabled="patientDetails.seatingPosition!='1' || patientDetails.seatingPosition==null">
-                                            <input type="radio" name="unit" ng-model="patientDetails.seatingPosition" ng-selected="patientDetails.seatingPosition=='1'" id="option2" autocomplete="off"> &nbsp;&nbsp;Driver&nbsp;&nbsp;
-                                        </label>
-                                    </div>
+					<div class="btn-group" data-toggle="buttons">
+						<label class="btn btn-default unit-toggle-label"
+							ng-class="{active:patientDetails.seatingPosition!='1' || patientDetails.seatingPosition==null}"
+							ng-disabled="patientDetails.seatingPosition=='1'"> <input
+							type="radio" name="unit"
+							ng-model="patientDetails.seatingPosition" id="option1"
+							autocomplete="off"> Passenger
+						</label> <label class="btn btn-default unit-toggle-label"
+							ng-class="{active:patientDetails.seatingPosition=='1'}"
+							ng-disabled="patientDetails.seatingPosition!='1' || patientDetails.seatingPosition==null">
+							<input type="radio" name="unit"
+							ng-model="patientDetails.seatingPosition"
+							ng-selected="patientDetails.seatingPosition=='1'" id="option2"
+							autocomplete="off"> &nbsp;&nbsp;Driver&nbsp;&nbsp;
+						</label>
+					</div>
 				</div>
 				<h4 class="modal-title" id="myModalLabel">Patient Details</h4>
 			</div>
@@ -444,7 +597,7 @@
 						<td class="col-md-3">{{patientDetails.name}}</td>
 						<td class="col-md-3"><b>Gender</b></td>
 						<td class="col-md-3">{{patientDetails.gender}}</td>
-						
+
 					</tr>
 					<tr>
 						<td class="col-md-3"><b>Date Of Birth</b></td>
@@ -457,55 +610,66 @@
 						<td class="col-md-3">{{patientDetails.phoneNumber}}</td>
 						<td class="col-md-3"><b>Address</b></td>
 						<td class="col-md-3">{{patientDetails.address}}</td>
-						
+
 					</tr>
 					<tr>
 						<td class="col-md-3"><b>Unit Number</b></td>
 						<td class="col-md-3">{{patientDetails.unitNumber}}</td>
+						<td class="col-md-3"><b>Damage Scale</b></td>
+						<td class="col-md-3">{{patientDetails.damageScale==1?"1 -
+							None":patientDetails.damageScale==2?"2 -
+							Minor":patientDetails.damageScale==3?"3 -
+							Functional":patientDetails.damageScale==4?"4 -
+							Disabling":patientDetails.damageScale==9?"9 - Unknown":"Not
+							Available"}}</td>
+
+
+					</tr>
+					<tr>
 						<td class="col-md-3"><b>Number of Units</b></td>
 						<td class="col-md-3">{{patientDetails.numberOfUnits}}</td>
-						
-					</tr>
-					<tr>
 						<td class="col-md-3"><b>Units in Error</b></td>
 						<td class="col-md-3">{{patientDetails.unitInError}}</td>
+
+
+
+					</tr>
+					<tr>
 						<td class="col-md-3"><b>Local Report Number</b></td>
 						<td class="col-md-3">{{patientDetails.localReportNumber}}</td>
-						
-						
-					</tr>
-					<tr>
 						<td class="col-md-3"><b>Injuries</b></td>
 						<td class="col-md-3">{{patientDetails.injuriesName}}</td>
+
+					</tr>
+					<tr>
 						<td class="col-md-3"><b>Crash Severity</b></td>
 						<td class="col-md-3">{{patientDetails.crashSeverityName}}</td>
-					</tr>
-					<tr>
-					
 						<td class="col-md-3"><b>Crash Date</b></td>
 						<td class="col-md-3">{{patientDetails.crashDate}}</td>
-							<td class="col-md-3"><b>Time of Crash</b></td>
-						<td class="col-md-3">{{patientDetails.timeOfCrash}}</td>
-						
+
 					</tr>
 					<tr>
+
+						<td class="col-md-3"><b>Time of Crash</b></td>
+						<td class="col-md-3">{{patientDetails.timeOfCrash}}</td>
 						<td class="col-md-3"><b>EMS Agency</b></td>
 						<td class="col-md-3">{{patientDetails.emsAgency}}</td>
+
+					</tr>
+
+					<tr>
 						<td class="col-md-3"><b>Report Agency Name</b></td>
 						<td class="col-md-3">{{patientDetails.reportingAgencyName}}</td>
-					</tr>
-					
-					<tr>
 						<td class="col-md-3"><b>County</b></td>
 						<td class="col-md-3">{{patientDetails.county}}</td>
-						<td class="col-md-3"><b>City Village Township</b></td>
-						<td class="col-md-3">{{patientDetails.cityVillageTownship}}</td>
+
 					</tr>
 					<tr>
-					<td class="col-md-3"><b>Medical Facility</b></td>
+					
+						<td class="col-md-3"><b>City Village Township</b></td>
+						<td class="col-md-3">{{patientDetails.cityVillageTownship}}</td>
+						<td class="col-md-3"><b>Medical Facility</b></td>
 						<td class="col-md-3">{{patientDetails.medicalFacility}}</td>
-						<td class="col-md-3"><b>Damage Scale</b></td>
-						<td class="col-md-3">{{patientDetails.damageScale==1?"1 - None":patientDetails.damageScale==2?"2 - Minor":patientDetails.damageScale==3?"3 - Functional":patientDetails.damageScale==4?"4 - Disabling":patientDetails.damageScale==9?"9 - Unknown":"Not Available"}}</td>
 					</tr>
 					<tr>
 						<td class="col-md-3"><b>At Fault INS. Company</b></td>
@@ -527,11 +691,11 @@
 		</div>
 	</div>
 </div>
- 
- <!-- Add Call Logs -->
- <!-- Modal -->
+
+<!-- Add Call Logs -->
+<!-- Modal -->
 <div class="modal fade" id="calllogsModel" role="dialog">
-		<div class="modal-dialog">
+	<div class="modal-dialog">
 		<form id="callLogForm" name="callLogForm" novalidate ng-cloak>
 			<div class="modal-content">
 				<div class="modal-header">
@@ -546,8 +710,8 @@
 					<div class="input-group">
 						<input type="text" name="timeStamp" id="timeStamp"
 							class="form-control" ng-model="calllogs.timeStamp"
-							placeholder="Date and Time" required>
-						<span class="input-group-addon white-color-bg"> <span
+							placeholder="Date and Time" required> <span
+							class="input-group-addon white-color-bg"> <span
 							class="glyphicon glyphicon-calendar"></span></span>
 					</div>
 					<span class="error-container"
@@ -560,7 +724,8 @@
 						id="appointmentId" class="form-control"
 						ng-model="calllogs.appointmentId"> <label>Response</label>
 					<select class="form-control" ng-model="calllogs.response"
-						name="response" id="response" ng-change="appointmentAlert()" required>
+						name="response" id="response" ng-change="appointmentAlert()"
+						required>
 						<option value="">-- Select Response --</option>
 						<option value="2">Not Interested/Injured</option>
 						<option value="3">Voice Mail</option>
@@ -570,54 +735,59 @@
 						<option value="5">Do Not Call</option>
 					</select> <span class="error-container"
 						ng-show="callLogForm.response.$dirty && callLogForm.response.$invalid && !callLogForm.notes.$prestine">
-						<span style="color: red" ng-show="callLogForm.response.$error.required">Please
+						<span style="color: red"
+						ng-show="callLogForm.response.$error.required">Please
 							Select Response</span>
 					</span><br>
 					<!-- Appointment Block -->
 					<div class="well" ng-show="calllogs.response==4">
-					<p>Please Provide Appointment Details</p>
-					<label>Select Clinic</label> <select class="form-control"
-						ng-change="getDoctors()" ng-model="calllogs.appointmentsForm.clinicId"
-						name="clinicId" id="clinicId"
-						ng-options="clinics.clinicId as clinics.clinicName for clinics in clinic"
-						ng-required="calllogs.response==4">
-						<option value="">-- Select Clinic --</option>
-					</select> <span class="error-container"
-						ng-show="callLogForm.clinicId.$dirty && callLogForm.clinicId.$invalid">
-						<span style="color: red"
-						ng-show="callLogForm.clinicId.$error.required">Please Select
-							Clinic</span>
-					</span> <br> <label>Select Doctor</label> <select
-						class="form-control" ng-model="calllogs.appointmentsForm.doctorId"
-						name="doctorId" id="doctorId"
-						ng-options="doctors.id as doctors.doctorName for doctors in doctor">
-						<option value="">-- Select Doctor --</option>
-					</select><br> <label>Date & Time</label>
-					<div class="input-group">
-						<input type="text" name="scheduledDate" id="scheduledDate"
-							class="form-control" ng-model="calllogs.appointmentsForm.scheduledDateTime"
-							placeholder="Enter Date" ng-required="calllogs.response==4">
-						<span class="input-group-addon white-color-bg"> <span
-							class="glyphicon glyphicon-calendar"></span></span>
-					</div>
-					<span class="error-container"
-						ng-show="callLogForm.scheduledDate.$dirty && callLogForm.scheduledDate.$invalid">
-						<span style="color: red"
-						ng-show="callLogForm.scheduledDate.$error.required">Please
-							Enter Date</span>
-					</span>
+						<p>Please Provide Appointment Details</p>
+						<label>Select Clinic</label> <select class="form-control"
+							ng-change="getDoctors()"
+							ng-model="calllogs.appointmentsForm.clinicId" name="clinicId"
+							id="clinicId"
+							ng-options="clinics.clinicId as clinics.clinicName for clinics in clinic"
+							ng-required="calllogs.response==4">
+							<option value="">-- Select Clinic --</option>
+						</select> <span class="error-container"
+							ng-show="callLogForm.clinicId.$dirty && callLogForm.clinicId.$invalid">
+							<span style="color: red"
+							ng-show="callLogForm.clinicId.$error.required">Please
+								Select Clinic</span>
+						</span> <br> <label>Select Doctor</label> <select
+							class="form-control"
+							ng-model="calllogs.appointmentsForm.doctorId" name="doctorId"
+							id="doctorId"
+							ng-options="doctors.id as doctors.doctorName for doctors in doctor">
+							<option value="">-- Select Doctor --</option>
+						</select><br> <label>Date & Time</label>
+						<div class="input-group">
+							<input type="text" name="scheduledDate" id="scheduledDate"
+								class="form-control"
+								ng-model="calllogs.appointmentsForm.scheduledDateTime"
+								placeholder="Enter Date" ng-required="calllogs.response==4">
+							<span class="input-group-addon white-color-bg"> <span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<span class="error-container"
+							ng-show="callLogForm.scheduledDate.$dirty && callLogForm.scheduledDate.$invalid">
+							<span style="color: red"
+							ng-show="callLogForm.scheduledDate.$error.required">Please
+								Enter Date</span>
+						</span>
 					</div>
 					<!-- End Appointment Block -->
-					
-					
-					
-					 <label>Notes</label>
+
+
+
+					<label>Notes</label>
 					<textarea name="notes" id="notes" class="form-control height-100"
 						ng-model="calllogs.notes" placeholder="Notes" required
 						maxlength="400"></textarea>
 					<span class="error-container"
 						ng-show="callLogForm.notes.$dirty && callLogForm.notes.$invalid && !callLogForm.notes.$prestine">
-						<span style="color: red" ng-show="callLogForm.notes.$error.required"
+						<span style="color: red"
+						ng-show="callLogForm.notes.$error.required"
 						id="calllogsNotesError">Please Enter Notes</span>
 					</span> <br />
 				</div>
@@ -625,7 +795,8 @@
 					<button class="btn btn-danger" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-success" data-dismiss="modal"
 						ng-class="{'button-disable':callLogForm.$invalid}"
-						ng-disabled='callLogForm.$invalid' ng-show="options" ng-click="save()">Add</button>
+						ng-disabled='callLogForm.$invalid' ng-show="options"
+						ng-click="save()">Add</button>
 					<button type="button" class="btn btn-success" data-dismiss="modal"
 						ng-class="{'button-disable':callLogForm.$invalid || isClean()}"
 						ng-disabled='isClean() || callLogForm.$invalid' ng-show='!options'
@@ -633,9 +804,9 @@
 
 				</div>
 			</div>
-			</form>
-		</div>
+		</form>
 	</div>
+</div>
 
 <!--  View Call Logs List Modal-->
 
@@ -646,60 +817,73 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Call Logs &nbsp; |&nbsp; Patient Name: <span ng-cloak>{{callLogPatientName}}</span>&nbsp; | &nbsp;Local Report Number: <span ng-cloak>{{callLogLocalReportNumber}}</span>
+				<h4 class="modal-title">
+					Call Logs &nbsp; |&nbsp; Patient Name: <span ng-cloak>{{callLogPatientName}}</span>&nbsp;
+					| &nbsp;Local Report Number: <span ng-cloak>{{callLogLocalReportNumber}}</span>
 				</h4>
 			</div>
 			<div class="modal-body">
-			<div class="pull-right" style="margin-bottom:10px;"><a ng-click="addModelFromViewCallLog(callLogPatientId)" href=""
-			class="btn-sm btn-primary margin-left-5 btn-margin-left"><i class="fa fa-plus-circle fa-lg"></i> Add
-				Call Logs</a><br/></div><br/>
-			<table class="table table-striped table-bordered">
-				<thead>
+				<div class="pull-right" style="margin-bottom: 10px;">
+					<a ng-click="addModelFromViewCallLog(callLogPatientId)" href=""
+						class="btn-sm btn-primary margin-left-5 btn-margin-left"><i
+						class="fa fa-plus-circle fa-lg"></i> Add Call Logs</a><br />
+				</div>
+				<br />
+				<table class="table table-striped table-bordered">
+					<thead>
 
-					<tr>
-						<th ng-mousedown="sort('timeStamp')" class="col-md-2">Date and Time&nbsp&nbsp<span
-							class="glyphicon sort-icon" ng-show="sortKey=='timeStamp'"
-							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-						<th class="col-md-2">Response</th>
-						<th class="col-md-3">Notes</th>
-						<th class="col-md-2">Caller Name</th>
-						<th class="col-md-2">Actions</th>
-					</tr>
-					<tr>
-					<th>
-						<div class="input-group">
-							<span class="input-group-addon search" id="basic-addon1"><i class="fa fa-search"></i></span>
-							<input class="form-control" type="text" ng-model="search.timeStamp" placeholder="Date Time">
-						</div>
-					</th>
-					<th>
-						<div class="input-group">
-							<span class="input-group-addon search" id="basic-addon1"><i class="fa fa-search"></i></span>
-							<input class="form-control" type="text" ng-model="search.response" placeholder="Response">
-						</div>
-					</th>
-					<th>
-						<div class="input-group">
-							<span class="input-group-addon search" id="basic-addon1"><i class="fa fa-search"></i></span>
-							<input class="form-control" type="text" ng-model="search.notes" placeholder="Notes">
-						</div>
-					</th>
-					<th>
-					</th>
-					<th></th>
-					</tr>
-				</thead>
-				<tbody ng-show="callLogs.length>0">
-					<tr dir-paginate=" callLog in callLogsFilter=(callLogs|filter:search|orderBy:sortKey:reverse|itemsPerPage:25)">
-						<td ng-cloak>{{callLog.timeStamp}}</td>
+						<tr>
+							<th ng-mousedown="sort('timeStamp')" class="col-md-2">Date
+								and Time&nbsp&nbsp<span class="glyphicon sort-icon"
+								ng-show="sortKey=='timeStamp'"
+								ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th class="col-md-2">Response</th>
+							<th class="col-md-3">Notes</th>
+							<th class="col-md-2">Caller Name</th>
+							<th class="col-md-2">Actions</th>
+						</tr>
+						<tr>
+							<th>
+								<div class="input-group">
+									<span class="input-group-addon search" id="basic-addon1"><i
+										class="fa fa-search"></i></span> <input class="form-control"
+										type="text" ng-model="search.timeStamp"
+										placeholder="Date Time">
+								</div>
+							</th>
+							<th>
+								<div class="input-group">
+									<span class="input-group-addon search" id="basic-addon1"><i
+										class="fa fa-search"></i></span> <input class="form-control"
+										type="text" ng-model="search.response" placeholder="Response">
+								</div>
+							</th>
+							<th>
+								<div class="input-group">
+									<span class="input-group-addon search" id="basic-addon1"><i
+										class="fa fa-search"></i></span> <input class="form-control"
+										type="text" ng-model="search.notes" placeholder="Notes">
+								</div>
+							</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody ng-show="callLogs.length>0">
+						<tr
+							dir-paginate=" callLog in callLogsFilter=(callLogs|filter:search|orderBy:sortKey:reverse|itemsPerPage:25)">
+							<td ng-cloak>{{callLog.timeStamp}}</td>
 
-						<td ng-cloak>{{callLog.response}}</td>
-						<td ng-cloak class="col-md-3 wrap">{{callLog.notes}}</td>
-						<td ng-cloak class="col-md-2"><span ng-show="{{callLog.callerFirstName!=null}}">{{callLog.callerFirstName}} {{callLog.callerLastName}}</span>
-						<span ng-show="{{callLog.callerFirstName==null}}">{{callLog.callerAdminFirstName}} {{callLog.callerAdminLastName}}</span>
-						</td>
-						<td class="col-md-2">
-							<!-- <span ng-show="{{isAdmin==2}}">
+							<td ng-cloak>{{callLog.response}}</td>
+							<td ng-cloak class="col-md-3 wrap">{{callLog.notes}}</td>
+							<td ng-cloak class="col-md-2"><span
+								ng-show="{{callLog.callerFirstName!=null}}">{{callLog.callerFirstName}}
+									{{callLog.callerLastName}}</span> <span
+								ng-show="{{callLog.callerFirstName==null}}">{{callLog.callerAdminFirstName}}
+									{{callLog.callerAdminLastName}}</span></td>
+							<td class="col-md-2">
+								<!-- <span ng-show="{{isAdmin==2}}">
 							<a ng-cloak type="submit"
 								class="btn btn-xs btn-warning hint--top"
 								data-hint="Edit Call Log"
@@ -714,27 +898,27 @@
 								ng-click="editModal(callLog.callLogId,callLog.appointmentId)">&nbsp;<i
 									class="glyphicon glyphicon-edit"></i>&nbsp;
 							</a>
-							</span> -->
-							<a ng-cloak ng-show="{{callLog.appointmentId!=null}}"
-							class="btn btn-xs btn-primary hint--top"
-							data-hint="View Appointment"
-							ng-click="viewAppointments(callLog.appointmentId)"> &nbsp;<i
-								class="glyphicon glyphicon-eye-open"></i> &nbsp;
-						</a> 
-					</td>
-					</tr>
-				</tbody>
-				<tbody ng-show="!callLogs.length || !callLogsFilter.length">
-					<tr>
-						<td colspan="5" align="center">No Records Found!</td>
-					</tr>
-				</tbody>
-			</table>
-			<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"> </dir-pagination-controls>
-		</div>
-		<div class="modal-footer">
-					<button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
-				</div>
+							</span> --> <a ng-cloak ng-show="{{callLog.appointmentId!=null}}"
+								class="btn btn-xs btn-primary hint--top"
+								data-hint="View Appointment"
+								ng-click="viewAppointments(callLog.appointmentId)"> &nbsp;<i
+									class="glyphicon glyphicon-eye-open"></i> &nbsp;
+							</a>
+							</td>
+						</tr>
+					</tbody>
+					<tbody ng-show="!callLogs.length || !callLogsFilter.length">
+						<tr>
+							<td colspan="5" align="center">No Records Found!</td>
+						</tr>
+					</tbody>
+				</table>
+				<dir-pagination-controls max-size="5" direction-links="true"
+					boundary-links="true"> </dir-pagination-controls>
+			</div>
+			<div class="modal-footer">
+				<button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
 		</div>
 	</div>
 
@@ -759,15 +943,15 @@
 							<td class="col-md-8">{{appointments.scheduledDateTime}}</td>
 						</tr>
 						<tr>
-						<td>Clinic Name</td>
-						<td class="col-md-8 wrap">{{appointments.clinicName}}</td>
+							<td>Clinic Name</td>
+							<td class="col-md-8 wrap">{{appointments.clinicName}}</td>
 						</tr>
 					</tbody>
 					<tbody ng-show="appointments.notavailable">
-					<tr>
-						<td colspan="5" align="center">No Appointment Added!</td>
-					</tr>
-				</tbody>
+						<tr>
+							<td colspan="5" align="center">No Appointment Added!</td>
+						</tr>
+					</tbody>
 
 				</table>
 				<div class="modal-footer">
@@ -780,222 +964,307 @@
 	</div>
 
 </div>
- 
- <!-- Export Options Modal -->
-<div class="modal fade" id="exportOptionModal" role="dialog" data-backdrop="static" 
-   data-keyboard="false" >
-    <div class="modal-dialog">    
-      <!-- Modal content-->
-      <div class="modal-content">
-      <form name="changePasswordModalForm" novalidate>
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Export Preference</h4>
-        </div>
-        <div class="modal-body">
-        	<span class="text-center">
-        	<label class="radio-inline"><input type="radio" value="1" name="exportFormat" ng-model="formatType" ng-click="resetUserPreferenceError()"/>Standard</label> &nbsp;&nbsp;&nbsp;&nbsp;
-        	<label class="radio-inline"><input type="radio" value="2" name="exportFormat" ng-model="formatType" ng-click="checkPreferenceStatus()"/>Custom</label>
-        	</span><br/>
-        	<span style="color:red;" ng-show="userPrefenceError">Currently you are not done with the custom preference. To setup, please <a href="" ng-click="goToSettings()"><u>click here</u></a></span>
-        </div>
-        <div class="modal-footer" >
-         	<button type="close" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-             <a href="" type="submit" class="btn btn-success"  data-dismiss="modal" ng-disabled="userPrefenceExportButton" ng-click="exportExcelByType()">Export</a>
-        </div>
-        </form>
-      </div>
-      
-    </div>
- </div>
- 
- <!-- Export Excel Alert Modal  -->
- <div class="modal fade" id="exportAlertModal" role="dialog" data-backdrop="static" 
-   data-keyboard="false" >
-    <div class="modal-dialog">    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Alert</h4>
-        </div>
-        <div class="modal-body">
-        	<span style="color:red;">Please do filter by Added on From & To date. <br/>System recommends to download 3 months of data.</span>
-        </div>
-        <div class="modal-footer" >
-         	<button type="close" class="btn btn-danger" data-dismiss="modal">OK</button>
-        </div>
-      </div>
-      
-    </div>
- </div>
- 
- <!-- Select Printer -->
-  <div class="modal fade" id="selectPrinterModal" role="dialog" data-backdrop="static" 
-   data-keyboard="false" >
-    <div class="modal-dialog">    
-      <!-- Modal content-->
-      <div class="modal-content">
-      <form name="printerselectform" no-validate>
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Printer</h4>
-        </div>
-        <div class="modal-body">
-        	<label>Logged in User account :</label> {{user}} &nbsp;&nbsp; - <a href="" ng-click="switchAccount()">Switch Account</a><br/><br/>
-        	<select ng-cloak class="form-control" name="printer" ng-model="printerId" required onchange="this.style.color = this.options[this.selectedIndex].style.color;">
-        	<option value="">-- Please Select --</option>
-        	<option ng-repeat="printer in printersList" ng-if="printer.id!='__google__docs'" ng-style="{color:{ONLINE:'green',OFFLINE:'red'}[printer.connectionStatus]}" value="{{printer.id}}">{{printer.defaultDisplayName}} {{printer.displayConnectionStatus}}</option>
-        	</select>
-        	<span class="error-container" ng-show="printerselectform.printer.$dirty && printerselectform.printer.$invalid">
-        		<span style="color:red;" ng-show="printerselectform.printer.$error.required">Please select printer</span>
-        	</span>
-        	<br/>
-        	<div><label>Note :</label> <ul><li>Printers listed here are based on the associated google account. If you want a different printer, Please Click <b>Switch Account</b> link and login with the corresponding google account.</li><li>To add printers in google account, please <a href="" data-dismiss="modal" ng-click="moveToHelpPage();">click here</a> and follow the instructions.</li></ul></div>
-        </div>
-        <div class="modal-footer" >
-         	<a class="btn btn-danger" ng-disabled="printerselectform.$invalid" data-dismiss="modal" ng-click="postFilesToPrint()">Print</a>
-        </div>
-       </form>
-      </div>
-      
-    </div>
- </div>
- 
- <!-- Print Rports Help Info -->
-  <div class="modal fade" id="printReportsHelpModal" role="dialog" data-backdrop="static" 
-   data-keyboard="false" >
-    <div class="modal-dialog modal-lg">    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">How to Print Reports?</h4>
-        </div>
-        <div class="modal-body">
-        	<p><b>For printing reports from CRO, you require the following:</b></p>
-        	<p><ul><li><b>Google Account</b></li><li><b>Google Chrome (For adding Printers)</b></li></ul></p>
-        	<p>If you do not already have a Google account, please create one using the following link: <a href='https://accounts.google.com/SignUp?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ltmpl=default' target='_blank'>https://accounts.google.com/SignUp?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ltmpl=default.</a></p>
-        	<p>Now add printers under your Google account.Printers can be added only by using Google Chrome. If it is not available in your system, please download and install the same using the following link: <a href='https://www.google.com/chrome/browser/features.html?brand=CHBD&gclid=CLzFoaqnhdICFc0TaAodGa4DGg' target='_blank'>https://www.google.com/chrome/browser/features.html?brand=CHBD&gclid=CLzFoaqnhdICFc0TaAodGa4DGg</a></p>
-        	<p>Once you have Google Chrome in your system, simply follow the steps outlined below:</p>
-        	<p><ol>
-        	<li>Type (or copy & paste) <b>chrome://devices</b> in the Chrome browser</li>
-        	<li>Under <b>Classic Printers,</b> click the <b>Add printers</b> button</li>
-        	<li>If you are not already logged into your Google account, you will be asked to log into it. Once you are logged in, the list of printers connected under the local network will be displayed. If the printer is not in the list, Please add the printer by installing corresponding drivers in your local system</li>
-        	<li>You may now select the desired printer from this list and click the <b>Add Printers</b> button to add it to your Google account</li>
-        	<li>Once the required printers are added,you can click the <b>Manage Printers Link</b> to view all the printers under this Google account</li>
-        	<li>Rename the printers if required. <b>(This is for you to identify the printers)</b></li>
-        	<li>Now login into the CRO application and go to <b>Patients</b></li>
-        	<li>Select all the reports you want printed</li>
-        	<li>Click the <b>Print Reports</b> Button</li>
-        	<li>A popup window will appear for authentication of your Google account</li>
-        	<li>Enter the Username and Password of your Google account. Once the account is authenticated, the list of printers associated with that account will be displayed</li>
-        	<li>Now select the desired printer from the list and click the <b>Print</b> button</li>
-        	<li>A popup window will now appear with the list of reports you selected for printing, along with the status of the print job for each report</li>
-        	<li>Once the print jobs are completed, the pop up window can be closed</li></ol></p>
-        </div>
-        <div class="modal-footer" >
-         	<button type="close" class="btn btn-danger" data-dismiss="modal">OK</button>
-        </div>
-      </div>
-      
-    </div>
- </div>
+
+<!-- Export Options Modal -->
+<div class="modal fade" id="exportOptionModal" role="dialog"
+	data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<form name="changePasswordModalForm" novalidate>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Export Preference</h4>
+				</div>
+				<div class="modal-body">
+					<span class="text-center"> <label class="radio-inline"><input
+							type="radio" value="1" name="exportFormat" ng-model="formatType"
+							ng-click="resetUserPreferenceError()" />Standard</label>
+						&nbsp;&nbsp;&nbsp;&nbsp; <label class="radio-inline"><input
+							type="radio" value="2" name="exportFormat" ng-model="formatType"
+							ng-click="checkPreferenceStatus()" />Custom</label>
+					</span><br /> <span style="color: red;" ng-show="userPrefenceError">Currently
+						you are not done with the custom preference. To setup, please <a
+						href="" ng-click="goToSettings()"><u>click here</u></a>
+					</span>
+				</div>
+				<div class="modal-footer">
+					<button type="close" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+					<a href="" type="submit" class="btn btn-success"
+						data-dismiss="modal" ng-disabled="userPrefenceExportButton"
+						ng-click="exportExcelByType()">Export</a>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>
+
+<!-- Export Excel Alert Modal  -->
+<div class="modal fade" id="exportAlertModal" role="dialog"
+	data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Alert</h4>
+			</div>
+			<div class="modal-body">
+				<span style="color: red;">Please do filter by Added on From &
+					To date. <br />System recommends to download 3 months of data.
+				</span>
+			</div>
+			<div class="modal-footer">
+				<button type="close" class="btn btn-danger" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<!-- Select Printer -->
+<div class="modal fade" id="selectPrinterModal" role="dialog"
+	data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<form name="printerselectform" no-validate>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Printer</h4>
+				</div>
+				<div class="modal-body">
+					<label>Logged in User account :</label> {{user}} &nbsp;&nbsp; - <a
+						href="" ng-click="switchAccount()">Switch Account</a><br />
+					<br /> <select ng-cloak class="form-control" name="printer"
+						ng-model="printerId" required
+						onchange="this.style.color = this.options[this.selectedIndex].style.color;">
+						<option value="">-- Please Select --</option>
+						<option ng-repeat="printer in printersList"
+							ng-if="printer.id!='__google__docs'"
+							ng-style="{color:{ONLINE:'green',OFFLINE:'red'}[printer.connectionStatus]}"
+							value="{{printer.id}}">{{printer.defaultDisplayName}}
+							{{printer.displayConnectionStatus}}</option>
+					</select> <span class="error-container"
+						ng-show="printerselectform.printer.$dirty && printerselectform.printer.$invalid">
+						<span style="color: red;"
+						ng-show="printerselectform.printer.$error.required">Please
+							select printer</span>
+					</span> <br />
+					<div>
+						<label>Note :</label>
+						<ul>
+							<li>Printers listed here are based on the associated google
+								account. If you want a different printer, Please Click <b>Switch
+									Account</b> link and login with the corresponding google account.
+							</li>
+							<li>To add printers in google account, please <a href=""
+								data-dismiss="modal" ng-click="moveToHelpPage();">click here</a>
+								and follow the instructions.
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-danger" ng-disabled="printerselectform.$invalid"
+						data-dismiss="modal" ng-click="postFilesToPrint()">Print</a>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>
+
+<!-- Print Rports Help Info -->
+<div class="modal fade" id="printReportsHelpModal" role="dialog"
+	data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">How to Print Reports?</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<b>For printing reports from CRO, you require the following:</b>
+				</p>
+				<p>
+				<ul>
+					<li><b>Google Account</b></li>
+					<li><b>Google Chrome (For adding Printers)</b></li>
+				</ul>
+				</p>
+				<p>
+					If you do not already have a Google account, please create one
+					using the following link: <a
+						href='https://accounts.google.com/SignUp?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ltmpl=default'
+						target='_blank'>https://accounts.google.com/SignUp?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ltmpl=default.</a>
+				</p>
+				<p>
+					Now add printers under your Google account.Printers can be added
+					only by using Google Chrome. If it is not available in your system,
+					please download and install the same using the following link: <a
+						href='https://www.google.com/chrome/browser/features.html?brand=CHBD&gclid=CLzFoaqnhdICFc0TaAodGa4DGg'
+						target='_blank'>https://www.google.com/chrome/browser/features.html?brand=CHBD&gclid=CLzFoaqnhdICFc0TaAodGa4DGg</a>
+				</p>
+				<p>Once you have Google Chrome in your system, simply follow the
+					steps outlined below:</p>
+				<p>
+				<ol>
+					<li>Type (or copy & paste) <b>chrome://devices</b> in the
+						Chrome browser
+					</li>
+					<li>Under <b>Classic Printers,</b> click the <b>Add
+							printers</b> button
+					</li>
+					<li>If you are not already logged into your Google account,
+						you will be asked to log into it. Once you are logged in, the list
+						of printers connected under the local network will be displayed.
+						If the printer is not in the list, Please add the printer by
+						installing corresponding drivers in your local system</li>
+					<li>You may now select the desired printer from this list and
+						click the <b>Add Printers</b> button to add it to your Google
+						account
+					</li>
+					<li>Once the required printers are added,you can click the <b>Manage
+							Printers Link</b> to view all the printers under this Google account
+					</li>
+					<li>Rename the printers if required. <b>(This is for you
+							to identify the printers)</b></li>
+					<li>Now login into the CRO application and go to <b>Patients</b></li>
+					<li>Select all the reports you want printed</li>
+					<li>Click the <b>Print Reports</b> Button
+					</li>
+					<li>A popup window will appear for authentication of your
+						Google account</li>
+					<li>Enter the Username and Password of your Google account.
+						Once the account is authenticated, the list of printers associated
+						with that account will be displayed</li>
+					<li>Now select the desired printer from the list and click the
+						<b>Print</b> button
+					</li>
+					<li>A popup window will now appear with the list of reports
+						you selected for printing, along with the status of the print job
+						for each report</li>
+					<li>Once the print jobs are completed, the pop up window can
+						be closed</li>
+				</ol>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="close" class="btn btn-danger" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+
+	</div>
+</div>
 <script>
-	$(function(){
+	$(function() {
 		$("html,body").scrollTop(0);
 	});
-	    					
+
 	$('#CrashFromDate').datetimepicker({
 		pickTime : false,
-		format:'MM/DD/YYYY',
+		format : 'MM/DD/YYYY',
 		maxDate : new Date()
-	}).on('dp.change', function (selected) {
-	    var minimumDate = new Date(selected.date.valueOf());
-	    $('#CrashToDate').data("DateTimePicker").setMinDate(minimumDate);
+	}).on('dp.change', function(selected) {
+		var minimumDate = new Date(selected.date.valueOf());
+		$('#CrashToDate').data("DateTimePicker").setMinDate(minimumDate);
 	});
 
 	$('#CrashToDate').datetimepicker({
-    	pickTime : false,
-		format:'MM/DD/YYYY',
+		pickTime : false,
+		format : 'MM/DD/YYYY',
 		maxDate : new Date()
-    });
+	});
 
 	$('#AddedOFromDate').datetimepicker({
 		pickTime : false,
-		format:'MM/DD/YYYY',
+		format : 'MM/DD/YYYY',
 		maxDate : new Date()
-	}).on('dp.change', function (selected) {
-	    var minimumDate = new Date(selected.date.valueOf());
-	    $('#AddedOnToDate').data("DateTimePicker").setMinDate(minimumDate);
+	}).on('dp.change', function(selected) {
+		var minimumDate = new Date(selected.date.valueOf());
+		$('#AddedOnToDate').data("DateTimePicker").setMinDate(minimumDate);
 	});
 
 	$('#AddedOnToDate').datetimepicker({
-    	pickTime : false,
-		format:'MM/DD/YYYY',
+		pickTime : false,
+		format : 'MM/DD/YYYY',
 		maxDate : new Date()
-    });
+	});
 
 	$('#archivedFromDate').datetimepicker({
 		pickTime : false,
-		format:'MM/DD/YYYY',
+		format : 'MM/DD/YYYY',
 		maxDate : new Date()
-	}).on('dp.change', function (selected) {
-	    var minimumDate = new Date(selected.date.valueOf());
-	    $('#archivedToDate').data("DateTimePicker").setMinDate(minimumDate);
+	}).on('dp.change', function(selected) {
+		var minimumDate = new Date(selected.date.valueOf());
+		$('#archivedToDate').data("DateTimePicker").setMinDate(minimumDate);
 	});
 
 	$('#archivedToDate').datetimepicker({
-    	pickTime : false,
-		format:'MM/DD/YYYY',
+		pickTime : false,
+		format : 'MM/DD/YYYY',
 		maxDate : new Date()
-    });
-
-	
-	$(document).ready(function(){
-	    $('[data-toggle="popover"]').popover({
-	    	container: 'body',
-	    	content: "<p><b>Tier 1:</b> List of accident victims where there are multiple vehicles and at fault is insured.</p><p><b>Tier 2:</b> List of accident victims where there are multiple vehicles but no at fault insurance and the victim is insured. (Medpay or uninsured motorist)</p><p><b>Tier 3:</b> List of accident victims involved in a single car accident. (includes hit and runs)</p><p><b>Tier 4:</b> List of passengers in at-fault vehicle and driver also, if insured.</p>",
-	    	html: true
-	    	
-	    });  
 	});
 
-	$(document).click(function (e) {
-	    $('[data-toggle="popover"]').each(function () {
-	        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-	        	//$(this).popover('hide');
-	        	 $(this).popover('hide').data('bs.popover').inState.click = false 
-	        }
-	    });
-	});
-	
+	$(document)
+			.ready(
+					function() {
+						$('[data-toggle="popover"]')
+								.popover(
+										{
+											container : 'body',
+											content : "<p><b>Tier 1:</b> List of accident victims where there are multiple vehicles and at fault is insured.</p><p><b>Tier 2:</b> List of accident victims where there are multiple vehicles but no at fault insurance and the victim is insured. (Medpay or uninsured motorist)</p><p><b>Tier 3:</b> List of accident victims involved in a single car accident. (includes hit and runs)</p><p><b>Tier 4:</b> List of passengers in at-fault vehicle and driver also, if insured.</p>",
+											html : true
+
+										});
+					});
+
+	$(document)
+			.click(
+					function(e) {
+						$('[data-toggle="popover"]')
+								.each(
+										function() {
+											if (!$(this).is(e.target)
+													&& $(this).has(e.target).length === 0
+													&& $('.popover').has(
+															e.target).length === 0) {
+												//$(this).popover('hide');
+												$(this).popover('hide').data(
+														'bs.popover').inState.click = false
+											}
+										});
+					});
+
 	// Call Logs
 	$('#timeStamp').datetimepicker({
-			pickTime : true,
-			format:'MM/DD/YYYY hh:mm A',
-			maxDate : new Date()
-		});
-	$('#timeStamp').keydown(function(e){
-	 e.preventDefault();
+		pickTime : true,
+		format : 'MM/DD/YYYY hh:mm A',
+		maxDate : new Date()
 	});
-	$('#timeStamp').bind("cut copy paste",function(e) {
-  	 e.preventDefault();
-	});	
+	$('#timeStamp').keydown(function(e) {
+		e.preventDefault();
+	});
+	$('#timeStamp').bind("cut copy paste", function(e) {
+		e.preventDefault();
+	});
 
 	$('#scheduledDate').datetimepicker({
 		pickTime : true,
-		format:'MM/DD/YYYY hh:mm A',
+		format : 'MM/DD/YYYY hh:mm A',
 		minDate : new Date()
 	});
 
-	$('#scheduledDate').keydown(function(e){
-		 e.preventDefault();
-		});
-	$('#scheduledDate').bind("cut copy paste",function(e) {
-	    e.preventDefault();
-	});    
-    
+	$('#scheduledDate').keydown(function(e) {
+		e.preventDefault();
+	});
+	$('#scheduledDate').bind("cut copy paste", function(e) {
+		e.preventDefault();
+	});
 </script>
 
 <script src="resources/js/fixed-header.js">  </script>
