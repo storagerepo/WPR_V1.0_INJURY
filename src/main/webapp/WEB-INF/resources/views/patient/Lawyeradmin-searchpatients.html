@@ -397,7 +397,8 @@
 					<tr>
 					<td class="col-md-3"><b>Medical Facility</b></td>
 						<td class="col-md-3">{{patientDetails.medicalFacility}}</td>
-						<td colspan="2"></td>
+						<td class="col-md-3"><b>Damage Scale</b></td>
+						<td class="col-md-3">{{patientDetails.damageScale==1?"1 - None":patientDetails.damageScale==2?"2 - Minor":patientDetails.damageScale==3?"3 - Functional":patientDetails.damageScale==4?"4 - Disabling":patientDetails.damageScale==9?"9 - Unknown":"Not Available"}}</td>					
 					</tr>
 					<tr>
 						<td class="col-md-3"><b>At Fault INS. Company</b></td>
