@@ -53,7 +53,8 @@ public class SchedulerService {
 			{
 				System.out.println("Start Read PDF From Folder");
 				if(injuryProperties.getProperty("autoDownloadCrash").equals("on")){
-					crashReportReader.downloadPDFFile(crashReportReader.getCrashId());
+					//crashReportReader.downloadPDFFile(crashReportReader.getCrashId());
+					crashReportReader.downloadPDFAndUploadToAWS(crashReportReader.getCrashId());
 				}else{
 					System.out.println("Auto Download Off");
 				}

@@ -329,5 +329,11 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().createQuery("update CrashReport set crashId='"+newCrashId+"', filePath='"+filePath+"',crashReportError.crashReportErrorId='"+crashReportErrorId+"', isRunnerReport='"+isRunnerReport+"' where crash_id='"+oldCrashId+"' ").executeUpdate();
 	}
+	
+	@Override
+	public void updateCrashReportFileName(String CrashId, String filePath) {
+		// TODO Auto-generated method stub
+		this.sessionFactory.getCurrentSession().createQuery("update CrashReport set filePath='"+filePath+"' where crash_id='"+CrashId+"' ").executeUpdate();
+	}
 
 }

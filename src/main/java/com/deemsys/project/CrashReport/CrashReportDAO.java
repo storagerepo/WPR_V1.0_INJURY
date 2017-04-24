@@ -24,4 +24,6 @@ public interface CrashReportDAO extends IGenericDAO<CrashReport>{
 	public String getCrashReportForChecking(String localReportNumber,String crashDate,Integer countyId);
 	
 	public void updateCrashReportByQuery(String oldCrashId,String newCrashId,Integer crashReportErrorId,String filePath,Integer isRunnerReport);
+
+	public void updateCrashReportFileName(String CrashId, String filePath);
 }

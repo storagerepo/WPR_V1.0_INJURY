@@ -197,6 +197,61 @@ public class PDFCrashReportReader {
 				
 	}  
 	
+	public boolean downloadPDFAndUploadToAWS(String crashId) throws IOException {
+		try{
+				File file=getPDFFile(crashId);
+				Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportTryTimes"));
+				for (int tryCrash = 1; tryCrash < tryCount; tryCrash++) {						
+					if(file!=null){
+						if(file.length()>2000){//2000 File Size refers an crash report not found exception
+							System.out.println("Got it!!");   
+							break;
+						}else{
+							System.out.println(crashId+"..Failed..Lets try next.!");
+							crashId=String.valueOf(Integer.parseInt(crashId)+1);
+							System.out.println("Trying..."+crashId);
+							file=getPDFFile(crashId);
+						}
+					}else{
+						crashId=String.valueOf(Integer.parseInt(crashId)+1);
+						file=getPDFFile(crashId);
+					}
+					
+				}		
+				
+				if(file.length()>2000){//2000 File Size refers an crash report not found exception
+					UUID randomUUID=UUID.randomUUID();
+					
+					String fileName="";
+					String uuid="";
+					
+					if(Integer.parseInt(injuryProperties.getProperty("env"))==0){
+						fileName=crashId + ".pdf";
+						uuid=crashId.toString();
+					}else{
+						fileName=randomUUID+"_"+ crashId + ".pdf";
+						uuid=randomUUID.toString();
+					}
+					//Upload To AWS S3
+					awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);
+					
+					// Update File Name To Crash Report
+					crashReportDAO.updateCrashReportFileName(crashId, fileName);
+					
+					// Update Crash Id
+					this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
+				}else{
+					System.out.println("Waiting.....");
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				
+				System.out.println("Failed"+e.toString());
+			}
+	return true;
+			
+	}  
+	
 	public File getPDFFile(String crashId) throws Exception{
 		File file=null;
 		HttpURLConnection httpURLConnection=null;
