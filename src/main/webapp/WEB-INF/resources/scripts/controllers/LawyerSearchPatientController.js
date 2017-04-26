@@ -516,7 +516,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		//Initialize DropDown
 		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"},{id: 5, label: "Undetermined"}];	
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
-		$scope.defaultDamageScale=[{id: 1, label: "None"},{id: 2, label: "Minor"},{id: 3, label: "Functional"},{id: 4, label: "Disabling"},{id: 9, label: "Unknown"},{id: 5, label: "N/A"}];
+		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
 		
 		$scope.patient={};
 		$scope.totalRecords=0;

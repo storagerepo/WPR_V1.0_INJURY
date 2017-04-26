@@ -43,7 +43,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                 if (checkboxes) {
                     template += '<div class="checkbox"><label><input class="checkboxInput" type="checkbox" ng-click="checkboxClick($event, getPropertyForObject(option,settings.idProp))" ng-checked="isChecked(getPropertyForObject(option,settings.idProp))" /> {{getPropertyForObject(option, settings.displayProp)}}</label></div></a>';
                 } else {
-                    template += '<span style="float:right" data-ng-class="{\'glyphicon glyphicon-ok\': isChecked(getPropertyForObject(option,settings.idProp))}"></span> {{getPropertyForObject(option, settings.displayProp)}}</a>';
+                    template += '<span style="float:right" data-ng-class="{\'glyphicon glyphicon-ok\': isChecked(getPropertyForObject(option,settings.idProp))}"></span> <span  ng-show="settings.showLegend&&option.haveLegend"><span class="badge {{option.legendClass}}">{{option.id}}</span> - </span>{{getPropertyForObject(option, settings.displayProp)}}</a>';
                 }
 
                 template += '</li>';
@@ -115,6 +115,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                     smartButtonTextConverter: angular.noop,
                     buttonDefaultText:"Select",
                     showPreferenceOption:false,
+                    showLegend:false,
                     disable:false
                 };
 
