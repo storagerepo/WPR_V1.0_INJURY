@@ -60,7 +60,7 @@ public class ExportFieldsDAOImpl implements ExportFieldsDAO{
 	@Override
 	public List<ExportFields> getAll() {
 		// TODO Auto-generated method stub
-		return this.sessionFactory.getCurrentSession().createCriteria(ExportFields.class).list();
+		return this.sessionFactory.getCurrentSession().createCriteria(ExportFields.class).addOrder(Order.asc("sequenceNo")).list();
 	}
 
 	@Override
