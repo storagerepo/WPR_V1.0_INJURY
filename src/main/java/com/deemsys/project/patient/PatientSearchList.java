@@ -107,8 +107,8 @@ public class PatientSearchList extends InjuryProperties{
 		if(this.isRunnerReport==1){
 			if(this.reportFrom==Integer.parseInt(getProperty("reportFromDeemsys"))){
 				this.crashReportFileName = getProperty("runnerBucketURL")+crashReportFileName;
-			}else if(this.reportFrom==Integer.parseInt(getProperty("reportFromBoardman"))){
-				this.crashReportFileName = getProperty("boardmanBucketURL")+crashReportFileName;
+			}else{
+				this.crashReportFileName = getProperty("policeDepartmentBucketURL")+this.reportFrom+getProperty("policeDepartmentFolder")+crashReportFileName;
 			}
 		}else{
 			this.crashReportFileName = getProperty("bucketURL")+crashReportFileName;

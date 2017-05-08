@@ -212,8 +212,8 @@ public class CrashReportService {
 		String crashId=localReportNumber;
 		if(runnerCrashReportForm.getReportFrom()==Integer.parseInt(injuryProperties.getProperty("reportFromDeemsys"))){
 			crashId=injuryProperties.getProperty("deemsysCrashIdPrefix")+localReportNumber;
-		}else if(runnerCrashReportForm.getReportFrom()==Integer.parseInt(injuryProperties.getProperty("reportFromBoardman"))){
-			crashId=injuryProperties.getProperty("boardmanCrashIdPrefix")+localReportNumber;
+		}else{
+			crashId=runnerCrashReportForm.getReportPrefixCode()+localReportNumber;
 		}
 		
 		CrashReport crashReport=new CrashReport(crashReportError, localReportNumber, crashId, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 

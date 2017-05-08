@@ -10,6 +10,7 @@ public class RunnerCrashReportForm {
 	private String county;
 	private String filePath;
 	private Integer reportFrom;
+	private String reportPrefixCode;
 	private List<PatientForm> patientForms;
 	public String getLocalReportNumber() {
 		return localReportNumber;
@@ -44,17 +45,24 @@ public class RunnerCrashReportForm {
 	public List<PatientForm> getPatientForms() {
 		return patientForms;
 	}
+	public String getReportPrefixCode() {
+		return reportPrefixCode;
+	}
+	public void setReportPrefixCode(String reportPrefixCode) {
+		this.reportPrefixCode = reportPrefixCode;
+	}
 	public void setPatientForms(List<PatientForm> patientForms) {
 		this.patientForms = patientForms;
 	}
 	public RunnerCrashReportForm(String localReportNumber, String crashDate,
-			String county, String filePath, String crashIdPrefix, Integer reportFrom, List<PatientForm> patientForms) {
+			String county, String filePath, String crashIdPrefix, Integer reportFrom, String reportPrefixCode, List<PatientForm> patientForms) {
 		super();
 		this.localReportNumber = localReportNumber;
 		this.crashDate = crashDate;
 		this.county = county;
 		this.filePath = filePath;
 		this.reportFrom = reportFrom;
+		this.reportPrefixCode = reportPrefixCode;
 		this.patientForms = patientForms;
 	}
 	public RunnerCrashReportForm() {

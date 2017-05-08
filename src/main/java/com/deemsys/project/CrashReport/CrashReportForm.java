@@ -76,8 +76,8 @@ public class CrashReportForm extends InjuryProperties{
 		if(this.isRunnerReport==1){
 			if(this.reportFrom==Integer.parseInt(getProperty("reportFromDeemsys"))){
 				this.filePath = getProperty("runnerBucketURL")+filePath;
-			}else if(this.reportFrom==Integer.parseInt(getProperty("reportFromBoardman"))){
-				this.filePath = getProperty("boardmanBucketURL")+filePath;
+			}else{
+				this.filePath = getProperty("policeDepartmentBucketURL")+this.reportFrom+getProperty("policeDepartmentFolder")+filePath;
 			}
 		}else{
 			this.filePath = getProperty("bucketURL")+filePath;
