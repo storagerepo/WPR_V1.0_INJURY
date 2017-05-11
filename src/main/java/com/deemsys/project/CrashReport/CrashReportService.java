@@ -159,7 +159,7 @@ public class CrashReportService {
 	}
 	
 	// Get Crash Report Form Details from PdfJson Form
-	public CrashReportForm getCrashReportFormDetails(ReportFirstPageForm reportFirstPageForm,Integer crashId,String filePath,Integer crashReportErrorId,Integer numberOfPatients){
+	public CrashReportForm getCrashReportFormDetails(ReportFirstPageForm reportFirstPageForm,String crashId,String filePath,Integer crashReportErrorId,Integer numberOfPatients){
 		Integer isRunnerReport=0;
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), reportFirstPageForm.getLocalReportNumber(), crashId.toString(), reportFirstPageForm.getCrashDate(), reportFirstPageForm.getCounty(),
 				InjuryConstants.convertMonthFormat(new Date()), filePath,numberOfPatients, isRunnerReport, null, 1);
@@ -247,7 +247,7 @@ public class CrashReportService {
 		return 1;
 	}
 	
-	public void updateCrashReport(String runnerReportCrashId, Integer crashId, String fileName, Integer crashReportErrorId){
+	public void updateCrashReport(String runnerReportCrashId, String crashId, String fileName, Integer crashReportErrorId){
 		crashReportDAO.updateCrashReportByQuery(runnerReportCrashId, crashId.toString(), crashReportErrorId, fileName, 2);
 	}
 	

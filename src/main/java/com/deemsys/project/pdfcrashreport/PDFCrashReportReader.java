@@ -178,17 +178,19 @@ public class PDFCrashReportReader {
 					
 					if(file.length()>2000){//2000 File Size refers an crash report not found exception
 						//Parse the PDF
-						parsePDFDocument(new File(file.getAbsoluteFile().getAbsolutePath()),Integer.parseInt(crashId));
+						parsePDFDocument(new File(file.getAbsoluteFile().getAbsolutePath()),crashId);
 						
 						// Update Crash Id
-						this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
+						// Commented for Manual Upload
+						//this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
 					}else{
 						System.out.println("Waiting.....");
 					}
 				} catch (Exception e) {
 					// TODO: handle exception
 					this.crashLogUpdate(crashId, e);
-					this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
+					// Commented for Manual Upload
+					//this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
 					CrashReportError crashReportError=crashReportErrorDAO.get(12);
 					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, null, null, new Date() , "", 0, 0, null, 0, null));
 					System.out.println("Failed"+e.toString());
@@ -197,8 +199,31 @@ public class PDFCrashReportReader {
 				
 	}  
 	
+	// Import Crash Report By Crash Id Manual Entry
+	public boolean importPDFFile(String crashId) throws IOException {
+		try{
+				File file=getPDFFile(crashId);
+				
+				if(file.length()>2000){//2000 File Size refers an crash report not found exception
+					//Parse the PDF
+					parsePDFDocument(new File(file.getAbsoluteFile().getAbsolutePath()),crashId);
+				}else{
+					System.out.println("File Not Found....."+crashId);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				// Commented for Manual Upload
+				CrashReportError crashReportError=crashReportErrorDAO.get(12);
+				crashReportDAO.save(new CrashReport(crashReportError, "", crashId, null, null, new Date() , "", 0, 0, null, 0, null));
+				System.out.println("Failed"+e.toString()+"-->"+crashId);
+			}
+	return true;
+			
+}  
+	
 	public boolean downloadPDFAndUploadToAWS(String crashId) throws IOException {
 		try{
+			if(Integer.parseInt(crashId)<6295000){
 				File file=getPDFFile(crashId);
 				Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportTryTimes"));
 				for (int tryCrash = 1; tryCrash < tryCount; tryCrash++) {						
@@ -243,6 +268,7 @@ public class PDFCrashReportReader {
 				}else{
 					System.out.println("Waiting.....");
 				}
+			}
 			} catch (Exception e) {
 				// TODO: handle exception
 				
@@ -1098,7 +1124,7 @@ public class PDFCrashReportReader {
 	
 	
 	//Main function for PDF Parsing
-	public void parsePDFDocument(File file,Integer crashId) throws Exception{
+	public void parsePDFDocument(File file,String crashId) throws Exception{
 		
 				UUID randomUUID=UUID.randomUUID();
 		
@@ -1426,5 +1452,15 @@ public class PDFCrashReportReader {
 		}
 		
 		return resultName;
+	}
+	
+	// Check Crash Report Id Availability for Manual Upload
+	public boolean isCrashIdAvailable(String crashId) {
+		boolean isAvailable = false;
+		CrashReport crashReport = crashReportDAO.getCrashReport(crashId);
+		if (crashReport != null) {
+			isAvailable = true;
+		}
+		return isAvailable;
 	}
 }

@@ -130,12 +130,20 @@ public class PatientController {
 	}
 
 	// Upload PDF file
-	@RequestMapping(value = "/Admin/readCrashReportFromURLByCrashId", method = RequestMethod.POST)
-	public String readCrashReportFromURLByCrashId(@RequestParam("crashId") String crashReportId, ModelMap model)
+	@RequestMapping(value = "/importReportByCrashId", method = RequestMethod.POST)
+	public String readCrashReportFromURLByCrashId(@RequestParam("crashId") List<String> crashReportId, ModelMap model)
 				throws IOException {
 		try {
-				crashReportReader.parsePDFDocument(crashReportReader.getPDFFile(crashReportId), Integer.parseInt(crashReportId));
-				model.addAttribute("requestSuccess", true);
+				//crashReportReader.parsePDFDocument(crashReportReader.getPDFFile(crashReportId), Integer.parseInt(crashReportId));
+				for (String crashId : crashReportId) {
+					if(!crashReportReader.isCrashIdAvailable(crashId)){
+						crashReportReader.importPDFFile(crashId);
+						model.addAttribute(crashId, true);
+					}
+					else{
+						model.addAttribute(crashId, false);
+					}
+				}
 		} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				model.addAttribute("error", "Number Format Exception");
@@ -145,7 +153,7 @@ public class PatientController {
 				// TODO Auto-generated catch block
 			model.addAttribute("error", e.toString());
 			model.addAttribute("requestSuccess", false);
-				e.printStackTrace();
+			e.printStackTrace();
 		}
 			return "";
 
