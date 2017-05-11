@@ -1218,7 +1218,25 @@ sbAdminApp
 																					}
 																				}
 
-																		});
+																		}).state(
+																				'dashboard.ImportReports',
+																				{
+																					templateUrl : 'views/import-reports.html',
+																					url : '/ImportReports/',
+																					controller : "ImportReportsController",
+																					resolve : {
+																						loadMyFile : function(
+																								$ocLazyLoad) {
+
+																							return $ocLazyLoad
+																									.load({
+																										name : 'sbAdminApp',
+																										files : [ 'scripts/controllers/importReportController.js']
+																									});
+																						}
+																					}
+
+																			});
 
 						} ]).run( [ '$rootScope', function ($rootScope,$state, $stateParams) {
 							$rootScope.$state = $state;

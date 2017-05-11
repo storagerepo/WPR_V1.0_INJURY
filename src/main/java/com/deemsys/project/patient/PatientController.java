@@ -32,6 +32,7 @@ import com.deemsys.project.Map.ClinicLocationForm;
 import com.deemsys.project.Map.SearchClinicsService;
 import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
+import com.deemsys.project.CrashReport.ImportCrashReportStatus;
 
 /**
  * 
@@ -133,29 +134,44 @@ public class PatientController {
 	@RequestMapping(value = "/importReportByCrashId", method = RequestMethod.POST)
 	public String readCrashReportFromURLByCrashId(@RequestParam("crashId") List<String> crashReportId, ModelMap model)
 				throws IOException {
-		try {
+		List<ImportCrashReportStatus> importCrashReportStatusList = new ArrayList<ImportCrashReportStatus>();
+		for (String crashId : crashReportId) {
+			ImportCrashReportStatus importCrashReportStatus = new ImportCrashReportStatus(crashId, true, "");
+			try {
 				//crashReportReader.parsePDFDocument(crashReportReader.getPDFFile(crashReportId), Integer.parseInt(crashReportId));
-				for (String crashId : crashReportId) {
 					if(!crashReportReader.isCrashIdAvailable(crashId)){
-						crashReportReader.importPDFFile(crashId);
-						model.addAttribute(crashId, true);
+						boolean fileStatus=crashReportReader.importPDFFile(crashId);
+						if(fileStatus){
+							importCrashReportStatus.setMessage("Imported Successfully");
+						}else{
+							importCrashReportStatus.setSuccess(false);
+							importCrashReportStatus.setMessage("File (or) Report Not Found");
+						}
+						
 					}
 					else{
-						model.addAttribute(crashId, false);
+						importCrashReportStatus.setSuccess(false);
+						importCrashReportStatus.setMessage("Report Already Exist");
 					}
-				}
-		} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				model.addAttribute("error", "Number Format Exception");
+				importCrashReportStatusList.add(importCrashReportStatus);
+			} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					model.addAttribute("error", "Number Format Exception for - "+crashId);
+					model.addAttribute("requestSuccess", false);
+					model.addAttribute("importCrashReportStatus",importCrashReportStatusList);
+					e.printStackTrace();
+			} catch (Exception e) {
+					// TODO Auto-generated catch block
+				model.addAttribute("error", e.toString()+"For - "+crashId);
 				model.addAttribute("requestSuccess", false);
+				model.addAttribute("importCrashReportStatus",importCrashReportStatusList);
 				e.printStackTrace();
-		} catch (Exception e) {
-				// TODO Auto-generated catch block
-			model.addAttribute("error", e.toString());
-			model.addAttribute("requestSuccess", false);
-			e.printStackTrace();
+			}
 		}
-			return "";
+
+		model.addAttribute("importCrashReportStatus",importCrashReportStatusList);
+		model.addAttribute("requestSuccess", true);
+		return "";
 
 	}
 	

@@ -1,0 +1,93 @@
+<div class="row">
+	<div class="col-lg-12">
+	 <a ui-sref="dashboard.home" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Home</a>
+		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>	
+		<h2 class="page-header">Import Report</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+     <form id="myForm" name="myForm" novalidate>
+   
+        <div class="panel panel-default">
+            <div class="panel-heading">
+               Enter Report Details
+                <span class="pull-right"><span class="redText">*</span> Required Fields</span>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                  
+                    		<div class="col-md-12 no-padding">
+                    		<div class="col-md-3">
+                    			<span class="redText">*</span> <label>Crash Id</label>
+                    		</div>
+                                <div class="col-md-5">
+                                   <textarea class="form-control inputclass"  ng-model="crashId" name="crashId" placeholder="Crash Id" required rows="4"></textarea>
+                                    <span class="error-container" ng-show="myForm.crashId.$dirty && myForm.crashId.$invalid">
+                                    <span ng-cloak style="color:red" ng-show="myForm.crashId.$error.required">Please Enter Crash Id</span>
+                                   	</span><br/>
+                                  </div>
+                                 </div>
+                </div>
+                
+                <div class="col-md-12">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+             <a class="btn btn-success" ng-class="{'button-disable':myForm.$invalid}"  ng-disabled='buttonDisable || myForm.$invalid'  ng-click="importReport()">{{buttonText}}</a>
+              <a ui-sref="dashboard.home"  class="btn btn-danger" ng-disabled='buttonDisable'>Cancel</a><br/><br/>
+            </div>
+               
+           </div>
+            </div>
+            
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+         </form>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<!-- Import Report Success or Error Modal  -->
+<div class="modal fade" id="importReportAlrtModal" role="dialog"
+	data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Import Report Status</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table table-bordered">
+				<thead>
+				<tr>
+				<td>Crash Id</td>
+				<td>Status</td>
+				<td>Message</td>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="importReportStatus in importReportStatusList">
+				<td>{{importReportStatus.crashId}}</td>
+				<td><span ng-show="importReportStatus.success" class="successText">{{importReportStatus.success}}</span><span ng-show="!importReportStatus.success" class="errorText">{{importReportStatus.success}}</span></td>
+				<td><span ng-show="importReportStatus.success" class="successText">{{importReportStatus.message}}</span><span ng-show="!importReportStatus.success" class="errorText">{{importReportStatus.message}}</span></td>
+				</tr>
+				</tbody>
+				</table>
+				<table class="table table-bordered" ng-show="error">
+				<tr>
+				<td>{{errorMsg}}</td>
+				</tr>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="close" class="btn btn-danger" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+
+	</div>
+</div>

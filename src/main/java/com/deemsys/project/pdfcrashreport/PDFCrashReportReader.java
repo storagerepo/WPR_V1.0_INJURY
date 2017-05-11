@@ -200,7 +200,8 @@ public class PDFCrashReportReader {
 	}  
 	
 	// Import Crash Report By Crash Id Manual Entry
-	public boolean importPDFFile(String crashId) throws IOException {
+	public boolean importPDFFile(String crashId) throws Exception {
+		boolean isFileAvailable=true;
 		try{
 				File file=getPDFFile(crashId);
 				
@@ -208,16 +209,17 @@ public class PDFCrashReportReader {
 					//Parse the PDF
 					parsePDFDocument(new File(file.getAbsoluteFile().getAbsolutePath()),crashId);
 				}else{
+					isFileAvailable=false;
 					System.out.println("File Not Found....."+crashId);
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
 				// Commented for Manual Upload
-				CrashReportError crashReportError=crashReportErrorDAO.get(12);
-				crashReportDAO.save(new CrashReport(crashReportError, "", crashId, null, null, new Date() , "", 0, 0, null, 0, null));
 				System.out.println("Failed"+e.toString()+"-->"+crashId);
+				throw e;
+				
 			}
-	return true;
+	return isFileAvailable;
 			
 }  
 	
