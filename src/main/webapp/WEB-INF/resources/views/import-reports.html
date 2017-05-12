@@ -1,3 +1,7 @@
+<link rel="stylesheet"
+	href="resources/components/datetime/datetimepicker.css"></link>
+<script src="resources/components/datetime/datetimepicker.js"></script>
+<script src="resources/components/datetime/moment.js"></script>
 <div class="row">
 	<div class="col-lg-12">
 	 <a ui-sref="dashboard.home" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Home</a>
@@ -19,18 +23,94 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <div class="dataTable_wrapper">
-                  
-                    		<div class="col-md-12 no-padding">
+                  			<div class="col-md-12 no-padding">
+                    		<div class="col-md-3">
+                    		<span class="redText">*</span> <label>Report Type</label>
+                    		</div>
+                    		 <div class="col-md-5">
+                    		 	<input type="radio" ng-model="reportType" value="1" ng-selected="true"> Standard
+                    		 	<input type="radio" ng-model="reportType" value="2"> SAGE
+                    		 	<br/><br/>
+                    		 </div>
+                    		</div>
+                    		<div class="col-md-12 no-padding" ng-show="reportType==1">
                     		<div class="col-md-3">
                     			<span class="redText">*</span> <label>Crash Id</label>
                     		</div>
                                 <div class="col-md-5">
-                                   <textarea class="form-control inputclass"  ng-model="crashId" name="crashId" placeholder="Crash Id" required rows="4"></textarea>
+                                   <textarea class="form-control inputclass"  ng-model="crashId" name="crashId" placeholder="Crash Id" ng-required="reportType==1" rows="4"></textarea>
                                     <span class="error-container" ng-show="myForm.crashId.$dirty && myForm.crashId.$invalid">
                                     <span ng-cloak style="color:red" ng-show="myForm.crashId.$error.required">Please Enter Crash Id</span>
                                    	</span><br/>
                                   </div>
-                                 </div>
+                            </div>
+                            <div ng-show="reportType==2">
+                            <div class="col-md-12 no-padding">
+                    		<div class="col-md-3">
+                    		<span class="redText">*</span> <label>Document Number</label>
+                    		</div>
+                    		 <div class="col-md-5">
+                    		 	<input type="text" ng-model="importReportForm.docNumber" class="form-control" name="docNumber" placeholder="Document Number" ng-required="reportType==2">
+                    		 	  <span class="error-container" ng-show="myForm.docNumber.$dirty && myForm.docNumber.$invalid">
+                                    <span ng-cloak style="color:red" ng-show="myForm.docNumber.$error.required">Please Enter Document Number</span>
+                                   	</span>
+                    		 	<br/>
+                    		 </div>
+                    		</div>
+                    		<div class="col-md-12 no-padding">
+                    		<div class="col-md-3">
+                    		<span class="redText">*</span> <label>Image File Name</label>
+                    		</div>
+                    		 <div class="col-md-5">
+                    		 	<input type="text" ng-model="importReportForm.docImageFileName" class="form-control" name="docImageFileName" placeholder="Image File Name" ng-required="reportType==2">
+                    		 	 <span class="error-container" ng-show="myForm.docImageFileName.$dirty && myForm.docImageFileName.$invalid">
+                                    <span ng-cloak style="color:red" ng-show="myForm.docImageFileName.$error.required">Please Enter Image File Name</span>
+                                   	</span>
+                    		 	<br/>
+                    		 </div>
+                    		</div>
+                            <div class="col-md-12 no-padding">
+                    		<div class="col-md-3">
+                    		<span class="redText">*</span> <label>County</label>
+                    		</div>
+                    		 <div class="col-md-5">
+                    		 	<select class="form-control" ng-model="importReportForm.county" name="county" ng-required="reportType==2">
+          							<option value="" ng-selected="true">-- Select --</option>
+          							<option ng-repeat="county in countylist" value="{{county.id}}" ng-selected="{{county.id === importReport.county}}">{{county.name}}</option>
+     							</select>
+     							 <span class="error-container" ng-show="myForm.county.$dirty && myForm.county.$invalid">
+                                    <span ng-cloak style="color:red" ng-show="myForm.county.$error.required">Please Select County</span>
+                                    </span><br/>
+                    		 </div>
+                    		</div>
+                    		<div class="col-md-12 no-padding">
+                    		<div class="col-md-3">
+                    		<span class="redText">*</span> <label>Local Report Number</label>
+                    		</div>
+                    		 <div class="col-md-5">
+                    		 	<input type="text" ng-model="importReportForm.localReportNumber" name="localReportNumber" class="form-control" placeholder="Local Report Number" ng-required="reportType==2">
+                    		 	 <span class="error-container" ng-show="myForm.localReportNumber.$dirty && myForm.localReportNumber.$invalid">
+                                    <span ng-cloak style="color:red" ng-show="myForm.localReportNumber.$error.required">Please Enter Local Report Number</span>
+                                   	</span>
+                    		 <br/>
+                    		 </div>
+                    		</div>
+                    		<div class="col-md-12 no-padding">
+                    		<div class="col-md-3">
+                    		<span class="redText">*</span> <label>Crash Date</label>
+                    		</div>
+                    		 <div class="col-md-5">
+                    		 	<div class="input-group">
+									<input type="text" name="crashDate" id="CrashDate" class="form-control" ng-model="importReportForm.crashDate" placeholder="Crash Date" ng-required="reportType==2"> 
+									<span class="input-group-addon white-color-bg"> <span class="glyphicon glyphicon-calendar"></span></span>
+								</div>
+								 <span class="error-container" ng-show="myForm.crashDate.$dirty && myForm.crashDate.$invalid">
+                                    <span ng-cloak style="color:red" ng-show="myForm.crashDate.$error.required">Please Enter Crash Date</span>
+                                   	</span>
+								<br/>
+                    		 </div>
+                    		</div>
+                    		</div>
                 </div>
                 
                 <div class="col-md-12">
@@ -52,7 +132,7 @@
 </div>
 
 <!-- Import Report Success or Error Modal  -->
-<div class="modal fade" id="importReportAlrtModal" role="dialog"
+<div class="modal fade" id="importReportAlertModal" role="dialog"
 	data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog">
 		<!-- Modal content-->
@@ -65,7 +145,7 @@
 				<table class="table table-bordered">
 				<thead>
 				<tr>
-				<td>Crash Id</td>
+				<td><span ng-show="reportType==1">Crash Id</span><span ng-show="reportType==2">Document Number</span></td>
 				<td>Status</td>
 				<td>Message</td>
 				</tr>
@@ -91,3 +171,10 @@
 
 	</div>
 </div>
+<script>
+$('#CrashDate').datetimepicker({
+	pickTime : false,
+	format:'MM/DD/YYYY',
+	maxDate : new Date()
+});  
+</script>

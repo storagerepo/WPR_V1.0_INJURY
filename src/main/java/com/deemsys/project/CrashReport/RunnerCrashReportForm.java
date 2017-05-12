@@ -5,6 +5,8 @@ import java.util.List;
 import com.deemsys.project.patient.PatientForm;
 
 public class RunnerCrashReportForm {
+	private String docNumber;
+	private String docImageFileName;
 	private String localReportNumber;
 	private String crashDate;
 	private String county;
@@ -12,6 +14,19 @@ public class RunnerCrashReportForm {
 	private Integer reportFrom;
 	private String reportPrefixCode;
 	private List<PatientForm> patientForms;
+	
+	public String getDocNumber() {
+		return docNumber;
+	}
+	public void setDocNumber(String docNumber) {
+		this.docNumber = docNumber;
+	}
+	public String getDocImageFileName() {
+		return docImageFileName;
+	}
+	public void setDocImageFileName(String docImageFileName) {
+		this.docImageFileName = docImageFileName;
+	}
 	public String getLocalReportNumber() {
 		return localReportNumber;
 	}
@@ -54,9 +69,11 @@ public class RunnerCrashReportForm {
 	public void setPatientForms(List<PatientForm> patientForms) {
 		this.patientForms = patientForms;
 	}
-	public RunnerCrashReportForm(String localReportNumber, String crashDate,
+	public RunnerCrashReportForm(String docNumber, String docImageFileName, String localReportNumber, String crashDate,
 			String county, String filePath, String crashIdPrefix, Integer reportFrom, String reportPrefixCode, List<PatientForm> patientForms) {
 		super();
+		this.docNumber = docNumber;
+		this.docImageFileName = docImageFileName;
 		this.localReportNumber = localReportNumber;
 		this.crashDate = crashDate;
 		this.county = county;

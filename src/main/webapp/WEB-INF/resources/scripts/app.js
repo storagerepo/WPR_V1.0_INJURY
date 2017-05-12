@@ -1231,7 +1231,10 @@ sbAdminApp
 																							return $ocLazyLoad
 																									.load({
 																										name : 'sbAdminApp',
-																										files : [ 'scripts/controllers/importReportController.js']
+																										files : [ 'scripts/controllers/importReportController.js',
+																										          'components/datetime/datetimepicker.css',
+																													'components/datetime/moment.js',
+																													'components/datetime/datetimepicker.js']
 																									});
 																						}
 																					}

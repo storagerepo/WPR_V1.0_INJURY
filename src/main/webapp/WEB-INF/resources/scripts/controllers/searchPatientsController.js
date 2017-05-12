@@ -116,87 +116,97 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		});
 		
 		var defer=$q.defer();
+	
 		requestHandler.postRequest("/Patient/searchPatients.json",$scope.searchParam).then(function(response){
-			$scope.totalRecords=response.data.patientGroupedSearchResult.totalNoOfRecord;
-			$scope.patientSearchData=response.data.patientGroupedSearchResult.patientSearchResults;
-			$.each($scope.patientSearchData, function(index,value) {
-				$.each(value.searchResult, function(index1,value1) {
-					$.each(value1.patientSearchLists,function(index2,value2){
-						switch(value2.patientStatus) {
-						    case null:
-						        value2.patientStatusName="New";
+			if($scope.searchParam.isRunnerReport!=3){
+				$scope.totalRecords=0;
+				$scope.totalRecords=response.data.patientGroupedSearchResult.totalNoOfRecord;
+				$scope.patientSearchData=response.data.patientGroupedSearchResult.patientSearchResults;
+				$.each($scope.patientSearchData, function(index,value) {
+					$.each(value.searchResult, function(index1,value1) {
+						$.each(value1.patientSearchLists,function(index2,value2){
+							switch(value2.patientStatus) {
+							    case null:
+							        value2.patientStatusName="New";
+							        break;
+							    case 1:
+							    	value2.patientStatusName="Active";
+							        break;
+							    case 2:
+							    	value2.patientStatusName="Not Interested/Injured";
+							        break;
+							    case 3:
+							    	value2.patientStatusName="Voice Mail";
+							        break;
+							    case 4:
+							    	value2.patientStatusName="Appointment Scheduled";
+							        break;
+							    case 5:
+							    	value2.patientStatusName="Do Not Call";
+							        break;
+							    case 6:
+							    	value2.patientStatusName="To be Re-Assigned";
+							        break;
+							    case 8:
+							    	value2.patientStatusName="Call Back";
+							        break;
+							    case 9:
+							    	value2.patientStatusName="Unable To Reach";
+							        break;
+							    default:
+							        break;
+							};
+							switch(value2.injuries) {
+						    case "1":
+						    	value2.injuriesName="No Injury/None Reported";
 						        break;
-						    case 1:
-						    	value2.patientStatusName="Active";
+						    case "2":
+						    	value2.injuriesName="Possible";
 						        break;
-						    case 2:
-						    	value2.patientStatusName="Not Interested/Injured";
+						    case "3":
+						    	value2.injuriesName="Non-Incapacitating";
 						        break;
-						    case 3:
-						    	value2.patientStatusName="Voice Mail";
+						    case "4":
+						    	value2.injuriesName="Incapacitating";
 						        break;
-						    case 4:
-						    	value2.patientStatusName="Appointment Scheduled";
+						    case "5":
+						    	value2.injuriesName="Fatal";
 						        break;
-						    case 5:
-						    	value2.patientStatusName="Do Not Call";
-						        break;
-						    case 6:
-						    	value2.patientStatusName="To be Re-Assigned";
-						        break;
-						    case 8:
-						    	value2.patientStatusName="Call Back";
-						        break;
-						    case 9:
-						    	value2.patientStatusName="Unable To Reach";
+						    case "6":
+						    	value2.injuriesName="Not Available";
 						        break;
 						    default:
 						        break;
-						};
-						switch(value2.injuries) {
-					    case "1":
-					    	value2.injuriesName="No Injury/None Reported";
-					        break;
-					    case "2":
-					    	value2.injuriesName="Possible";
-					        break;
-					    case "3":
-					    	value2.injuriesName="Non-Incapacitating";
-					        break;
-					    case "4":
-					    	value2.injuriesName="Incapacitating";
-					        break;
-					    case "5":
-					    	value2.injuriesName="Fatal";
-					        break;
-					    case "6":
-					    	value2.injuriesName="Not Available";
-					        break;
-					    default:
-					        break;
-						};
-						switch(value2.crashSeverity) {
-					    case "1":
-					    	value2.crashSeverityName="Fatal";
-					        break;
-					    case "2":
-					    	value2.crashSeverityName="Injury";
-					        break;
-					    case "3":
-					    	value2.crashSeverityName="PDO";
-					        break;
-					    case "4":
-					    	value2.crashSeverityName="Not Available";
-					        break;
-					    default:
-					        break;
-						};
-						
+							};
+							switch(value2.crashSeverity) {
+						    case "1":
+						    	value2.crashSeverityName="Fatal";
+						        break;
+						    case "2":
+						    	value2.crashSeverityName="Injury";
+						        break;
+						    case "3":
+						    	value2.crashSeverityName="PDO";
+						        break;
+						    case "4":
+						    	value2.crashSeverityName="Not Available";
+						        break;
+						    default:
+						        break;
+							};
+							
+						});
+					
+					defer.resolve(response);
 					});
-				
-				defer.resolve(response);
-			});
-		});
+				});
+			}else{
+				$scope.totalRecords=0;
+				$scope.patientSearchData={};
+				$scope.totalRecords=response.data.crashReportList.totalNoOfRecords;
+				$scope.directRunnerReportSearchData=response.data.crashReportList.crashReportForms;
+			}
+			
 		});
 		return defer.promise;
 	};
