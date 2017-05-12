@@ -32,6 +32,9 @@ import com.deemsys.project.Map.ClinicLocationForm;
 import com.deemsys.project.Map.SearchClinicsService;
 import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
+import com.deemsys.project.CrashReport.CrashReportList;
+import com.deemsys.project.CrashReport.CrashReportSearchForm;
+import com.deemsys.project.CrashReport.CrashReportService;
 import com.deemsys.project.CrashReport.ImportCrashReportStatus;
 
 /**
@@ -74,6 +77,9 @@ public class PatientController {
 	
 	@Autowired
 	ExportFieldsService exportFieldsService;
+	
+	@Autowired
+	CrashReportService crashReportService;
 
 	@RequestMapping(value = { "/Patient/getAllPatients",
 			"/Caller/getAllPatients" }, method = RequestMethod.GET)
@@ -340,10 +346,15 @@ public class PatientController {
 	@RequestMapping(value = { "/Patient/searchPatients" }, method = RequestMethod.POST)
 	public String searchPatientsByAdmin(@RequestBody CallerPatientSearchForm callerPatientSearchForm,ModelMap model) {
 		
-		PatientGroupedSearchResult patientGroupedSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
-		
 		model.addAttribute("status", 1);
-		model.addAttribute(patientGroupedSearchResult);
+		if(callerPatientSearchForm.getIsRunnerReport()!=3){
+			PatientGroupedSearchResult patientGroupedSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+			model.addAttribute(patientGroupedSearchResult);
+		}else{
+			CrashReportList crashReportList=crashReportService.searchCrashReports(new CrashReportSearchForm(callerPatientSearchForm.getLocalReportNumber(),"", callerPatientSearchForm.getCrashFromDate(), callerPatientSearchForm.getCrashToDate(), callerPatientSearchForm.getCountyId(), callerPatientSearchForm.getAddedOnFromDate(), callerPatientSearchForm.getAddedOnToDate(), callerPatientSearchForm.getNumberOfDays().toString(), callerPatientSearchForm.getItemsPerPage(), callerPatientSearchForm.getPageNumber(), callerPatientSearchForm.getIsRunnerReport()));
+			model.addAttribute(crashReportList);
+		}
+		
 		model.addAttribute("requestSuccess", true);
 		return "ok";
 		

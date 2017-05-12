@@ -7,7 +7,7 @@ public class CrashReportSearchForm {
 	private String crashId;
 	private String crashFromDate;
 	private String crashToDate;
-	private String county;
+	private Integer[] countyId;
 	private String addedFromDate;
 	private String addedToDate;
 	private String numberOfDays;
@@ -41,11 +41,11 @@ public class CrashReportSearchForm {
 	public void setCrashToDate(String crashToDate) {
 		this.crashToDate = crashToDate;
 	}
-	public String getCounty() {
-		return county;
+	public Integer[] getCountyId() {
+		return countyId;
 	}
-	public void setCounty(String county) {
-		this.county = county;
+	public void setCounty(Integer[] countyId) {
+		this.countyId = countyId;
 	}
 	public String getAddedFromDate() {
 		return addedFromDate;
@@ -96,7 +96,7 @@ public class CrashReportSearchForm {
 		this.isRunnerReport = isRunnerReport;
 	}
 	public CrashReportSearchForm(String localReportNumber, String crashId,
-			String crashFromDate, String crashToDate, String county,
+			String crashFromDate, String crashToDate, Integer[] countyId,
 			String addedFromDate, String addedToDate, String numberOfDays,
 			Integer recordsPerPage, Integer pageNumber,Integer isRunnerReport) {
 		super();
@@ -104,7 +104,7 @@ public class CrashReportSearchForm {
 		this.crashId = crashId;
 		this.crashFromDate = crashFromDate;
 		this.crashToDate = crashToDate;
-		this.county = county;
+		this.countyId = countyId;
 		this.addedFromDate = addedFromDate;
 		this.addedToDate = addedToDate;
 		this.numberOfDays = numberOfDays;

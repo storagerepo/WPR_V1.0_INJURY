@@ -174,7 +174,7 @@ public class CrashReportService {
 			}
 		}
 		CrashReportList crashReportList=crashReportDAO.searchCrashReports(crashReportSearchForm.getLocalReportNumber(), crashReportSearchForm.getCrashId(), 
-													crashReportSearchForm.getCrashFromDate(), crashReportSearchForm.getCrashToDate(), crashReportSearchForm.getCounty(), crashReportSearchForm.getAddedFromDate(), crashReportSearchForm.getAddedToDate(), crashReportSearchForm.getRecordsPerPage(), crashReportSearchForm.getPageNumber(),crashReportSearchForm.getIsRunnerReport());
+													crashReportSearchForm.getCrashFromDate(), crashReportSearchForm.getCrashToDate(), crashReportSearchForm.getCountyId(), crashReportSearchForm.getAddedFromDate(), crashReportSearchForm.getAddedToDate(), crashReportSearchForm.getRecordsPerPage(), crashReportSearchForm.getPageNumber(),crashReportSearchForm.getIsRunnerReport());
 		
 		return crashReportList;
 	}

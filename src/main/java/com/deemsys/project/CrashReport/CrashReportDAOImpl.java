@@ -154,7 +154,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 	@Override
 	public CrashReportList searchCrashReports(String localReportNumber,
 			String crashId, String crashFromDate, String crashToDate,
-			String county, String addedFromDate, String addedToDate,
+			Integer[] countyId, String addedFromDate, String addedToDate,
 			Integer recordsPerPage, Integer pageNumber,Integer isRunnerReport) {
 		// TODO Auto-generated method stub
 		List<CrashReportForm> crashReportForms=new ArrayList<CrashReportForm>();
@@ -170,8 +170,8 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		if(localReportNumber!=""){
 			criteria.add(Restrictions.like("localReportNumber", localReportNumber,MatchMode.ANYWHERE));
 		}
-		if(county!=""){
-			criteria.add(Restrictions.eq("c1.countyId", Integer.parseInt(county)));
+		if(countyId.length>0){
+			criteria.add(Restrictions.in("c1.countyId",countyId));
 		}
 		if(crashFromDate!=""){
 			criteria.add(Restrictions.between("crashDate", InjuryConstants.convertYearFormat(crashFromDate), InjuryConstants.convertYearFormat(crashToDate)));
