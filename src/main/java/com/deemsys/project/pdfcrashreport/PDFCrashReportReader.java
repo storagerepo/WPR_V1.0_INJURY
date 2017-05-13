@@ -1506,7 +1506,7 @@ public class PDFCrashReportReader {
 				
 				Integer numberOfPatients=0;
 				CrashReport crashReport=new CrashReport(crashReportError, localReportNumber, runnerCrashReportForm.getDocNumber(), InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-							county, new Date(), fileName, numberOfPatients, isRunnerReport, new Date(), runnerCrashReportForm.getReportFrom(),1);
+							county, new Date(), fileName, numberOfPatients, isRunnerReport, new Date(), 0,1);
 				
 				
 				crashReportDAO.save(crashReport);

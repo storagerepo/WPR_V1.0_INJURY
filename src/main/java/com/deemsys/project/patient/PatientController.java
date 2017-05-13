@@ -35,6 +35,7 @@ import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.CrashReport.CrashReportList;
 import com.deemsys.project.CrashReport.CrashReportSearchForm;
 import com.deemsys.project.CrashReport.CrashReportService;
+import com.deemsys.project.CrashReport.DirectRunnerReport;
 import com.deemsys.project.CrashReport.ImportCrashReportStatus;
 import com.deemsys.project.CrashReport.RunnerCrashReportForm;
 
@@ -391,36 +392,36 @@ public class PatientController {
 	
 	// Save Direct Runner Report (SAGE Report FROM ODPS)
     @RequestMapping(value="/saveDirectRunnerCrashReport",method=RequestMethod.POST)
-   	public String saveDirectRunnerCrashReport(@RequestBody RunnerCrashReportForm runnerCrashReportForm,ModelMap model)
+   	public String saveDirectRunnerCrashReport(@RequestBody DirectRunnerReport directRunnerReport,ModelMap model)
    	{
     	List<ImportCrashReportStatus> importCrashReportStatusList = new ArrayList<ImportCrashReportStatus>();
-    	ImportCrashReportStatus importCrashReportStatus = new ImportCrashReportStatus(runnerCrashReportForm.getDocNumber(), true, "");
-    	try {
-    		if(!crashReportReader.isCrashIdAvailable(runnerCrashReportForm.getDocNumber())){
-				int fileAvailable=crashReportReader.saveDirectRunnerCrashReport(runnerCrashReportForm);
-				if(fileAvailable==1){
-					importCrashReportStatus.setMessage("Imported Successfully");
-				}else{
-					importCrashReportStatus.setSuccess(false);
-					importCrashReportStatus.setMessage("File Not Available");
-				}
-    		}else{
-    			importCrashReportStatus.setSuccess(false);
-				importCrashReportStatus.setMessage("Report Already Exist");
+    	for (RunnerCrashReportForm runnerCrashReport : directRunnerReport.getRunnerCrashReportForms()) {
+    		ImportCrashReportStatus importCrashReportStatus = new ImportCrashReportStatus(runnerCrashReport.getDocNumber(), true, "");
+        	try {
+        		if(!crashReportReader.isCrashIdAvailable(runnerCrashReport.getDocNumber())){
+    				int fileAvailable=crashReportReader.saveDirectRunnerCrashReport(runnerCrashReport);
+    				if(fileAvailable==1){
+    					importCrashReportStatus.setMessage("Imported Successfully");
+    				}else{
+    					importCrashReportStatus.setSuccess(false);
+    					importCrashReportStatus.setMessage("File Not Available");
+    				}
+        		}else{
+        			importCrashReportStatus.setSuccess(false);
+    				importCrashReportStatus.setMessage("Report Already Exist");
+        		}
+        		model.addAttribute("requestSuccess",true);
+    			importCrashReportStatusList.add(importCrashReportStatus);
+    			model.addAttribute("importCrashReportStatus",importCrashReportStatusList);
+    		} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    			model.addAttribute("error", e.toString()+" for - "+runnerCrashReport.getDocNumber());
+				model.addAttribute("requestSuccess", false);
+				model.addAttribute("importCrashReportStatus",importCrashReportStatusList);
     		}
-			model.addAttribute("requestSuccess",true);
-			importCrashReportStatusList.add(importCrashReportStatus);
-			model.addAttribute("importCrashReportStatus",importCrashReportStatusList);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			importCrashReportStatus.setSuccess(false);
-			importCrashReportStatus.setMessage(e.toString());
-			model.addAttribute("requestSuccess",false);
-			importCrashReportStatusList.add(importCrashReportStatus);
-			model.addAttribute("importCrashReportStatus",importCrashReportStatusList);
 		}
     	
-   		return "/returnPage";
+    	return "/returnPage";
    	}
 }
