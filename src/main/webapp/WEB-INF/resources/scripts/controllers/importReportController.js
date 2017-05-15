@@ -65,7 +65,7 @@ adminApp.controller('ImportReportsController',function($http,$state,$scope,reque
 					
 					$scope.buttonText="Importing....";
 					$scope.buttonDisable=true;
-					var requestURL=requestHandler.getURL+"saveDirectRunnerCrashReport.json";
+					var requestURL=requestHandler.getURL()+"saveDirectRunnerCrashReport.json";
 					$http.post(requestURL,$scope.importReportList).success(function (response){
 						$scope.buttonText="Import Report";
 						$scope.buttonDisable=false;
