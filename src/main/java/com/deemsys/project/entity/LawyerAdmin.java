@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 May, 2017 10:38:37 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +34,8 @@ public class LawyerAdmin implements java.io.Serializable {
 	private String phoneNumber;
 	private String notes;
 	private Integer status;
+	private Set<DirectReportLawyerAdminMap> directReportLawyerAdminMaps = new HashSet<DirectReportLawyerAdminMap>(
+			0);
 	private Set<PatientLawyerAdminMap> patientLawyerAdminMaps = new HashSet<PatientLawyerAdminMap>(
 			0);
 	private Set<LawyerAdminCountyMap> lawyerAdminCountyMaps = new HashSet<LawyerAdminCountyMap>(
@@ -46,7 +48,9 @@ public class LawyerAdmin implements java.io.Serializable {
 	public LawyerAdmin(Users users, String firstName, String lastName,
 			String street, String city, String state, String zipcode,
 			String emailAddress, String phoneNumber, String notes,
-			Integer status, Set<PatientLawyerAdminMap> patientLawyerAdminMaps,
+			Integer status,
+			Set<DirectReportLawyerAdminMap> directReportLawyerAdminMaps,
+			Set<PatientLawyerAdminMap> patientLawyerAdminMaps,
 			Set<LawyerAdminCountyMap> lawyerAdminCountyMaps, Set<Lawyer> lawyers) {
 		this.users = users;
 		this.firstName = firstName;
@@ -59,6 +63,7 @@ public class LawyerAdmin implements java.io.Serializable {
 		this.phoneNumber = phoneNumber;
 		this.notes = notes;
 		this.status = status;
+		this.directReportLawyerAdminMaps = directReportLawyerAdminMaps;
 		this.patientLawyerAdminMaps = patientLawyerAdminMaps;
 		this.lawyerAdminCountyMaps = lawyerAdminCountyMaps;
 		this.lawyers = lawyers;
@@ -173,6 +178,16 @@ public class LawyerAdmin implements java.io.Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lawyerAdmin")
+	public Set<DirectReportLawyerAdminMap> getDirectReportLawyerAdminMaps() {
+		return this.directReportLawyerAdminMaps;
+	}
+
+	public void setDirectReportLawyerAdminMaps(
+			Set<DirectReportLawyerAdminMap> directReportLawyerAdminMaps) {
+		this.directReportLawyerAdminMaps = directReportLawyerAdminMaps;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lawyerAdmin")

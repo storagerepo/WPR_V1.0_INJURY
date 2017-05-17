@@ -38,5 +38,7 @@
         <mapping class="com.deemsys.project.entity.UserLookupPreferences" />
         <mapping class="com.deemsys.project.entity.UserLookupPreferencesId" />
         <mapping class="com.deemsys.project.entity.RatingReviews" />
+         <mapping class="com.deemsys.project.entity.DirectReportCallerAdminMap" />
+        <mapping class="com.deemsys.project.entity.DirectReportLawyerAdminMap" />
     </session-factory>
 </hibernate-configuration>

@@ -1,9 +1,8 @@
 package com.deemsys.project.entity;
 
-// Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 May, 2017 10:38:37 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
-
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -40,11 +39,12 @@ public class LawyerAdminCountyMap implements java.io.Serializable {
 	}
 
 	public LawyerAdminCountyMap(LawyerAdminCountyMapId id,
-			LawyerAdmin lawyerAdmin, County county,Date subscribedDate, Integer status) {
+			LawyerAdmin lawyerAdmin, County county, Date subscribedDate,
+			Integer status) {
 		this.id = id;
 		this.lawyerAdmin = lawyerAdmin;
 		this.county = county;
-		this.subscribedDate=subscribedDate;
+		this.subscribedDate = subscribedDate;
 		this.status = status;
 	}
 
@@ -80,6 +80,16 @@ public class LawyerAdminCountyMap implements java.io.Serializable {
 		this.county = county;
 	}
 
+	@Temporal(TemporalType.DATE)
+	@Column(name = "subscribed_date", length = 10)
+	public Date getSubscribedDate() {
+		return this.subscribedDate;
+	}
+
+	public void setSubscribedDate(Date subscribedDate) {
+		this.subscribedDate = subscribedDate;
+	}
+
 	@Column(name = "status")
 	public Integer getStatus() {
 		return this.status;
@@ -88,17 +98,5 @@ public class LawyerAdminCountyMap implements java.io.Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="subscribed_date",length=19)
-	public Date getSubscribedDate() {
-		return subscribedDate;
-	}
-
-	public void setSubscribedDate(Date subscribedDate) {
-		this.subscribedDate = subscribedDate;
-	}
-	
-	
 
 }

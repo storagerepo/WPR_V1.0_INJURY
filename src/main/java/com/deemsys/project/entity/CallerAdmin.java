@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 May, 2017 10:38:37 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -40,6 +38,8 @@ public class CallerAdmin implements java.io.Serializable {
 			0);
 	private Set<PatientCallerAdminMap> patientCallerAdminMaps = new HashSet<PatientCallerAdminMap>(
 			0);
+	private Set<DirectReportCallerAdminMap> directReportCallerAdminMaps = new HashSet<DirectReportCallerAdminMap>(
+			0);
 	private Set<Clinic> clinics = new HashSet<Clinic>(0);
 	private Set<Caller> callers = new HashSet<Caller>(0);
 
@@ -51,6 +51,7 @@ public class CallerAdmin implements java.io.Serializable {
 			String emailAddress, String phoneNumber, String notes,
 			Integer status, Set<CallerAdminCountyMap> callerAdminCountyMaps,
 			Set<PatientCallerAdminMap> patientCallerAdminMaps,
+			Set<DirectReportCallerAdminMap> directReportCallerAdminMaps,
 			Set<Clinic> clinics, Set<Caller> callers) {
 		this.users = users;
 		this.firstName = firstName;
@@ -65,6 +66,7 @@ public class CallerAdmin implements java.io.Serializable {
 		this.status = status;
 		this.callerAdminCountyMaps = callerAdminCountyMaps;
 		this.patientCallerAdminMaps = patientCallerAdminMaps;
+		this.directReportCallerAdminMaps = directReportCallerAdminMaps;
 		this.clinics = clinics;
 		this.callers = callers;
 	}
@@ -198,6 +200,16 @@ public class CallerAdmin implements java.io.Serializable {
 	public void setPatientCallerAdminMaps(
 			Set<PatientCallerAdminMap> patientCallerAdminMaps) {
 		this.patientCallerAdminMaps = patientCallerAdminMaps;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "callerAdmin")
+	public Set<DirectReportCallerAdminMap> getDirectReportCallerAdminMaps() {
+		return this.directReportCallerAdminMaps;
+	}
+
+	public void setDirectReportCallerAdminMaps(
+			Set<DirectReportCallerAdminMap> directReportCallerAdminMaps) {
+		this.directReportCallerAdminMaps = directReportCallerAdminMaps;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "callerAdmin")

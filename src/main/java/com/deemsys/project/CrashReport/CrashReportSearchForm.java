@@ -16,7 +16,13 @@ public class CrashReportSearchForm {
 	private List<CrashReportForm> crashReportForms;
 	private Integer totalRecords;
 	private Integer isRunnerReport;
-	
+	private Integer callerAdminId;
+	private Integer callerId;
+	private Integer lawyerAdminId;
+	private Integer lawyerId;
+	private Integer isArchived;
+	private String archivedFromDate;
+	private String archivedToDate;
 	public String getLocalReportNumber() {
 		return localReportNumber;
 	}
@@ -44,7 +50,7 @@ public class CrashReportSearchForm {
 	public Integer[] getCountyId() {
 		return countyId;
 	}
-	public void setCounty(Integer[] countyId) {
+	public void setCountyId(Integer[] countyId) {
 		this.countyId = countyId;
 	}
 	public String getAddedFromDate() {
@@ -95,10 +101,56 @@ public class CrashReportSearchForm {
 	public void setIsRunnerReport(Integer isRunnerReport) {
 		this.isRunnerReport = isRunnerReport;
 	}
+	public Integer getCallerAdminId() {
+		return callerAdminId;
+	}
+	public void setCallerAdminId(Integer callerAdminId) {
+		this.callerAdminId = callerAdminId;
+	}
+	public Integer getCallerId() {
+		return callerId;
+	}
+	public void setCallerId(Integer callerId) {
+		this.callerId = callerId;
+	}
+	public Integer getLawyerAdminId() {
+		return lawyerAdminId;
+	}
+	public void setLawyerAdminId(Integer lawyerAdminId) {
+		this.lawyerAdminId = lawyerAdminId;
+	}
+	public Integer getLawyerId() {
+		return lawyerId;
+	}
+	public void setLawyerId(Integer lawyerId) {
+		this.lawyerId = lawyerId;
+	}
+	public Integer getIsArchived() {
+		return isArchived;
+	}
+	public void setIsArchived(Integer isArchived) {
+		this.isArchived = isArchived;
+	}
+	public String getArchivedFromDate() {
+		return archivedFromDate;
+	}
+	public void setArchivedFromDate(String archivedFromDate) {
+		this.archivedFromDate = archivedFromDate;
+	}
+	public String getArchivedToDate() {
+		return archivedToDate;
+	}
+	public void setArchivedToDate(String archivedToDate) {
+		this.archivedToDate = archivedToDate;
+	}
+	
 	public CrashReportSearchForm(String localReportNumber, String crashId,
 			String crashFromDate, String crashToDate, Integer[] countyId,
 			String addedFromDate, String addedToDate, String numberOfDays,
-			Integer recordsPerPage, Integer pageNumber,Integer isRunnerReport) {
+			Integer recordsPerPage, Integer pageNumber,
+			Integer isRunnerReport, Integer callerAdminId, Integer callerId,
+			Integer lawyerAdminId, Integer lawyerId, Integer isArchived,
+			String archivedFromDate, String archivedToDate) {
 		super();
 		this.localReportNumber = localReportNumber;
 		this.crashId = crashId;
@@ -111,8 +163,14 @@ public class CrashReportSearchForm {
 		this.recordsPerPage = recordsPerPage;
 		this.pageNumber = pageNumber;
 		this.isRunnerReport = isRunnerReport;
+		this.callerAdminId = callerAdminId;
+		this.callerId = callerId;
+		this.lawyerAdminId = lawyerAdminId;
+		this.lawyerId = lawyerId;
+		this.isArchived = isArchived;
+		this.archivedFromDate = archivedFromDate;
+		this.archivedToDate = archivedToDate;
 	}
-	
 	public CrashReportSearchForm(List<CrashReportForm> crashReportForms,
 			Integer totalRecords) {
 		super();

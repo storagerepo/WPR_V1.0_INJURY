@@ -75,7 +75,7 @@ public class CrashReportController {
     @RequestMapping(value="/Admin/getNumberOfCrashReport",method=RequestMethod.GET)
 	public String getNumberOFCrashReport(ModelMap model)
 	{
-    	CrashReportSearchForm crashReportSearchForm=new CrashReportSearchForm("", "", "", "",new Integer[]{}, "", "", "", 1, 10,-1);
+    	CrashReportSearchForm crashReportSearchForm=new CrashReportSearchForm("", "", "", "",new Integer[]{}, "", "", "", 1, 10,-1,null,null,null,null,0,"","");
     	model.addAttribute("numberOfCrashReports",crashReportService.searchCrashReports(crashReportSearchForm).getTotalNoOfRecords());
     	model.addAttribute("requestSuccess",true);
 		return "/returnPage";

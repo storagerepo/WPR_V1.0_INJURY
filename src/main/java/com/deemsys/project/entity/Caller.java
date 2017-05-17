@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 May, 2017 10:38:37 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,20 +30,22 @@ public class Caller implements java.io.Serializable {
 	private String phoneNumber;
 	private String emailAddress;
 	private String notes;
-	private Integer status;
 	private Integer isDelete;
+	private Integer status;
+	private Set<DirectReportCallerAdminMap> directReportCallerAdminMaps = new HashSet<DirectReportCallerAdminMap>(
+			0);
 	private Set<PatientCallerAdminMap> patientCallerAdminMaps = new HashSet<PatientCallerAdminMap>(
 			0);
 	private Set<CallerCountyMap> callerCountyMaps = new HashSet<CallerCountyMap>(
 			0);
-	private Set<CallLog> callLogs = new HashSet<CallLog>(
-			0);
+
 	public Caller() {
 	}
 
 	public Caller(CallerAdmin callerAdmin, Users users, String firstName,
 			String lastName, String phoneNumber, String emailAddress,
-			String notes, Integer status, Integer isDelete,
+			String notes, Integer isDelete, Integer status,
+			Set<DirectReportCallerAdminMap> directReportCallerAdminMaps,
 			Set<PatientCallerAdminMap> patientCallerAdminMaps,
 			Set<CallerCountyMap> callerCountyMaps) {
 		this.callerAdmin = callerAdmin;
@@ -53,8 +55,9 @@ public class Caller implements java.io.Serializable {
 		this.phoneNumber = phoneNumber;
 		this.emailAddress = emailAddress;
 		this.notes = notes;
-		this.status = status;
 		this.isDelete = isDelete;
+		this.status = status;
+		this.directReportCallerAdminMaps = directReportCallerAdminMaps;
 		this.patientCallerAdminMaps = patientCallerAdminMaps;
 		this.callerCountyMaps = callerCountyMaps;
 	}
@@ -135,6 +138,15 @@ public class Caller implements java.io.Serializable {
 		this.notes = notes;
 	}
 
+	@Column(name = "is_delete")
+	public Integer getIsDelete() {
+		return this.isDelete;
+	}
+
+	public void setIsDelete(Integer isDelete) {
+		this.isDelete = isDelete;
+	}
+
 	@Column(name = "status")
 	public Integer getStatus() {
 		return this.status;
@@ -143,14 +155,15 @@ public class Caller implements java.io.Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-	@Column(name = "is_delete")
-	public Integer getIsDelete() {
-		return isDelete;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "caller")
+	public Set<DirectReportCallerAdminMap> getDirectReportCallerAdminMaps() {
+		return this.directReportCallerAdminMaps;
 	}
 
-	public void setIsDelete(Integer isDelete) {
-		this.isDelete = isDelete;
+	public void setDirectReportCallerAdminMaps(
+			Set<DirectReportCallerAdminMap> directReportCallerAdminMaps) {
+		this.directReportCallerAdminMaps = directReportCallerAdminMaps;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "caller")
@@ -171,16 +184,5 @@ public class Caller implements java.io.Serializable {
 	public void setCallerCountyMaps(Set<CallerCountyMap> callerCountyMaps) {
 		this.callerCountyMaps = callerCountyMaps;
 	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "caller")
-	public Set<CallLog> getCallLogs() {
-		return callLogs;
-	}
-
-	public void setCallLogs(Set<CallLog> callLogs) {
-		this.callLogs = callLogs;
-	}
-	
-	
 
 }

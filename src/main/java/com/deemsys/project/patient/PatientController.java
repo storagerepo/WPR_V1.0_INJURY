@@ -35,6 +35,7 @@ import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.CrashReport.CrashReportList;
 import com.deemsys.project.CrashReport.CrashReportSearchForm;
 import com.deemsys.project.CrashReport.CrashReportService;
+import com.deemsys.project.CrashReport.DirectReportGroupResult;
 import com.deemsys.project.CrashReport.DirectRunnerReport;
 import com.deemsys.project.CrashReport.ImportCrashReportStatus;
 import com.deemsys.project.CrashReport.RunnerCrashReportForm;
@@ -353,7 +354,8 @@ public class PatientController {
 			PatientGroupedSearchResult patientGroupedSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 			model.addAttribute(patientGroupedSearchResult);
 		}else{
-			CrashReportList crashReportList=crashReportService.searchCrashReports(new CrashReportSearchForm(callerPatientSearchForm.getLocalReportNumber(),"", callerPatientSearchForm.getCrashFromDate(), callerPatientSearchForm.getCrashToDate(), callerPatientSearchForm.getCountyId(), callerPatientSearchForm.getAddedOnFromDate(), callerPatientSearchForm.getAddedOnToDate(), callerPatientSearchForm.getNumberOfDays().toString(), callerPatientSearchForm.getItemsPerPage(), callerPatientSearchForm.getPageNumber(), callerPatientSearchForm.getIsRunnerReport()));
+			CrashReportSearchForm crashReportSearchForm = new CrashReportSearchForm(callerPatientSearchForm.getLocalReportNumber(),"", callerPatientSearchForm.getCrashFromDate(), callerPatientSearchForm.getCrashToDate(), callerPatientSearchForm.getCountyId(), callerPatientSearchForm.getAddedOnFromDate(), callerPatientSearchForm.getAddedOnToDate(), callerPatientSearchForm.getNumberOfDays().toString(), callerPatientSearchForm.getItemsPerPage(), callerPatientSearchForm.getPageNumber(), callerPatientSearchForm.getIsRunnerReport(), null, null, null, null, callerPatientSearchForm.getIsArchived(), callerPatientSearchForm.getArchivedFromDate(), callerPatientSearchForm.getArchivedToDate());
+			DirectReportGroupResult crashReportList=crashReportService.searchCrashReports(crashReportSearchForm);
 			model.addAttribute(crashReportList);
 		}
 		

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.struts.taglib.html.RewriteTag;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,12 +27,16 @@ import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.Patient;
+import com.deemsys.project.login.LoginService;
 import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 @Repository
 public class CrashReportDAOImpl implements CrashReportDAO{
 
 	@Autowired
 	SessionFactory sessionFactory;
+	
+	@Autowired
+	LoginService loginService;
 	
 	@Override
 	public void save(CrashReport entity) {
@@ -152,12 +157,15 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public CrashReportList searchCrashReports(String localReportNumber,
-			String crashId, String crashFromDate, String crashToDate,
-			Integer[] countyId, String addedFromDate, String addedToDate,
-			Integer recordsPerPage, Integer pageNumber,Integer isRunnerReport) {
+	public CrashReportList searchCrashReports(CrashReportSearchForm crashReportSearchForm) {
 		// TODO Auto-generated method stub
 		List<CrashReportForm> crashReportForms=new ArrayList<CrashReportForm>();
+		
+		if(!crashReportSearchForm.getNumberOfDays().equals("0")){
+			if(!crashReportSearchForm.getCrashFromDate().equals("")){
+				crashReportSearchForm.setCrashToDate(InjuryConstants.getToDateByAddingNumberOfDays(crashReportSearchForm.getCrashFromDate(), Integer.parseInt(crashReportSearchForm.getNumberOfDays())));
+			}
+		}
 		
 		Session session=this.sessionFactory.getCurrentSession();
 		
@@ -167,27 +175,62 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		criteria.createAlias("crashReportError", "e1");
 		
 		//Check Local Report Number
-		if(localReportNumber!=""){
-			criteria.add(Restrictions.like("localReportNumber", localReportNumber,MatchMode.ANYWHERE));
+		if(!crashReportSearchForm.getLocalReportNumber().equals("")){
+			criteria.add(Restrictions.like("localReportNumber", crashReportSearchForm.getLocalReportNumber(),MatchMode.ANYWHERE));
 		}
-		if(countyId.length>0){
-			criteria.add(Restrictions.in("c1.countyId",countyId));
+		if(crashReportSearchForm.getCountyId().length>0){
+			criteria.add(Restrictions.in("c1.countyId",crashReportSearchForm.getCountyId()));
 		}
-		if(crashFromDate!=""){
-			criteria.add(Restrictions.between("crashDate", InjuryConstants.convertYearFormat(crashFromDate), InjuryConstants.convertYearFormat(crashToDate)));
+		if(!crashReportSearchForm.getCrashFromDate().equals("")){
+			criteria.add(Restrictions.between("crashDate", InjuryConstants.convertYearFormat(crashReportSearchForm.getCrashFromDate()), InjuryConstants.convertYearFormat(crashReportSearchForm.getCrashToDate())));
 		}
-		if(addedFromDate!=""){
-			criteria.add(Restrictions.between("addedDate", InjuryConstants.convertYearFormat(addedFromDate), InjuryConstants.convertYearFormat(addedToDate)));
+		if(!crashReportSearchForm.getAddedFromDate().equals("")){
+			criteria.add(Restrictions.between("addedDate", InjuryConstants.convertYearFormat(crashReportSearchForm.getAddedFromDate()), InjuryConstants.convertYearFormat(crashReportSearchForm.getAddedToDate())));
 		}
-		if(crashId!=""){
-			criteria.add(Restrictions.eq("crashId", crashId));
+		if(!crashReportSearchForm.getCrashId().equals("")){
+			criteria.add(Restrictions.eq("crashId", crashReportSearchForm.getCrashId()));
 		}
 		
-		if(isRunnerReport!=null&&isRunnerReport!=-1){
-			if(isRunnerReport==0){
-				criteria.add(Restrictions.or(Restrictions.eq("isRunnerReport", 2),Restrictions.eq("isRunnerReport", isRunnerReport)));
+		if(crashReportSearchForm.getIsRunnerReport()!=null&&crashReportSearchForm.getIsRunnerReport()!=-1){
+			if(crashReportSearchForm.getIsRunnerReport()==0){
+				criteria.add(Restrictions.or(Restrictions.eq("isRunnerReport", 2),Restrictions.eq("isRunnerReport", crashReportSearchForm.getIsRunnerReport())));
 			}else{
-				criteria.add(Restrictions.eq("isRunnerReport", isRunnerReport));
+				criteria.add(Restrictions.eq("isRunnerReport", crashReportSearchForm.getIsRunnerReport()));
+			}
+		}
+		
+		String role=loginService.getCurrentRole();
+		
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			criteria.createAlias("directReportCallerAdminMaps", "dcl1", Criteria.LEFT_JOIN,Restrictions.eq("dcl1.id.callerAdminId", crashReportSearchForm.getCallerAdminId()));
+			
+			// Is Archived Status
+			if(crashReportSearchForm.getIsArchived()==0){
+				criteria.add(Restrictions.or(Restrictions.eq("dcl1.isArchived", crashReportSearchForm.getIsArchived()), Restrictions.isNull("dcl1.isArchived")));
+			}else{
+				criteria.add(Restrictions.eq("dcl1.isArchived", crashReportSearchForm.getIsArchived()));
+			}
+			
+			// Archived From and To Date
+			if(!crashReportSearchForm.getArchivedFromDate().equals("")){
+				Criterion criterion = Restrictions.between("dcl1.archivedDate", InjuryConstants.convertYearFormat(crashReportSearchForm.getArchivedFromDate()), InjuryConstants.convertYearFormat(crashReportSearchForm.getArchivedToDate()));
+				criteria.add(criterion);
+			}
+			
+		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+			criteria.createAlias("directReportLawyerAdminMaps", "dcl1", Criteria.LEFT_JOIN,Restrictions.eq("dcl1.id.lawyerAdminId", crashReportSearchForm.getCallerAdminId()));
+			
+			// Is Archived Status
+			if(crashReportSearchForm.getIsArchived()==0){
+				criteria.add(Restrictions.or(Restrictions.eq("dcl1.isArchived", crashReportSearchForm.getIsArchived()), Restrictions.isNull("dcl1.isArchived")));
+			}else{
+				criteria.add(Restrictions.eq("dcl1.isArchived", crashReportSearchForm.getIsArchived()));
+			}
+			
+			// Archived From and To Date
+			if(!crashReportSearchForm.getArchivedFromDate().equals("")){
+				Criterion criterion = Restrictions.between("dcl1.archivedDate", InjuryConstants.convertYearFormat(crashReportSearchForm.getArchivedFromDate()), InjuryConstants.convertYearFormat(crashReportSearchForm.getArchivedToDate()));
+				criteria.add(criterion);
 			}
 		}
 		
@@ -208,14 +251,25 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		projectionList.add(Projections.alias(Projections.property("numberOfPatients"), "numberOfPatients"));
 		projectionList.add(Projections.alias(Projections.property("status"), "status"));
 		
+		if(!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+			projectionList.add(Projections.alias(Projections.property("dcl1.isArchived"), "isArchived"));
+			projectionList.add(Projections.alias(Projections.property("dcl1.archivedDate"), "archivedDate"));
+			projectionList.add(Projections.alias(Projections.property("dcl1.archivedDateTime"), "archivedDateTime"));
+		}
+		
 		Long totalNoOfRecords= (Long) criteria.setProjection(Projections.count("crashId")).uniqueResult();
 		
 		criteria.setProjection(projectionList);
-		criteria.addOrder(Order.desc("addedDate"));
+		if(crashReportSearchForm.getIsArchived()==1){
+			criteria.addOrder(Order.desc("dcl1.archivedDateTime"));
+		}else{
+			criteria.addOrder(Order.desc("addedDate"));
+		}
+		
 				//criteria.setResultTransformer(new AliasToBeanResultTransformer(CrashReportForm.class)).list().size();
 		//new AliasToBeanConstructorResultTransformer(CrashReportForm.class.getConstructors()[1])
 		
-		crashReportForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(CrashReportForm.class)).setFirstResult((pageNumber-1)*recordsPerPage).setMaxResults(recordsPerPage).list();
+		crashReportForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(CrashReportForm.class)).setFirstResult((crashReportSearchForm.getPageNumber()-1)*crashReportSearchForm.getRecordsPerPage()).setMaxResults(crashReportSearchForm.getRecordsPerPage()).list();
 				
 		return new CrashReportList(totalNoOfRecords, crashReportForms);
 	}

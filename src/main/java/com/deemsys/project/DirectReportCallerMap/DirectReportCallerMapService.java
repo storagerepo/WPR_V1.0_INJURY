@@ -1,0 +1,102 @@
+package com.deemsys.project.DirectReportCallerMap;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.CallerAdmin.CallerAdminService;
+import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.CallerAdmin;
+import com.deemsys.project.entity.CrashReport;
+import com.deemsys.project.entity.DirectReportCallerAdminMap;
+import com.deemsys.project.entity.DirectReportCallerAdminMapId;
+import com.deemsys.project.entity.LawyerAdmin;
+import com.deemsys.project.entity.Patient;
+import com.deemsys.project.entity.PatientLawyerAdminMap;
+import com.deemsys.project.entity.PatientLawyerAdminMapId;
+import com.deemsys.project.login.LoginService;
+/**
+ * 
+ * @author Deemsys
+ *
+ * DirectReportCallerAdminMap 	 - Entity
+ * directReportCallerAdminMap 	 - Entity Object
+ * directReportCallerAdminMaps 	 - Entity List
+ * directReportCallerAdminMapDAO   - Entity DAO
+ * directReportCallerAdminMapForms - EntityForm List
+ * DirectReportCallerAdminMapForm  - EntityForm
+ *
+ */
+@Service
+@Transactional
+public class DirectReportCallerMapService {
+
+	@Autowired
+	DirectReportCallerMapDAO directReportCallerAdminMapDAO;
+	
+	@Autowired
+	LoginService loginService;
+	
+	@Autowired
+	CallerAdminService callerAdminService;
+	
+	@Autowired
+	CallerService callerService;
+	
+	// Move to Archive
+	public boolean directReportMoveOrRelaseArchive(DirectReportCallerMapForm directReportCallerMapForm){
+		
+		try{
+			String role=loginService.getCurrentRole();
+			CallerAdmin callerAdmin = null;
+			if(role==InjuryConstants.INJURY_CALLER_ADMIN_ROLE){
+				callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
+			}else if(role==InjuryConstants.INJURY_CALLER_ROLE){
+				callerAdmin=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin();
+			}
+			
+			for (String crashId : directReportCallerMapForm.getCrashId()) {
+				DirectReportCallerAdminMap directReportCallerAdminMap=new DirectReportCallerAdminMap();
+				directReportCallerAdminMap=directReportCallerAdminMapDAO.getPatientMapsByLawyerAdminId(crashId, callerAdmin.getCallerAdminId());
+				
+				if(directReportCallerAdminMap==null){
+					DirectReportCallerAdminMapId directReportCallerAdminMapId = new DirectReportCallerAdminMapId(crashId, callerAdmin.getCallerAdminId());
+					directReportCallerAdminMap = new DirectReportCallerAdminMap(directReportCallerAdminMapId, callerAdmin, new CrashReport(crashId));
+				}
+				directReportCallerAdminMap.setStatus(1);
+				directReportCallerAdminMap.setIsArchived(directReportCallerMapForm.getStatus());
+				if(directReportCallerMapForm.getStatus()==1){
+					directReportCallerAdminMap.setArchivedDate(new Date());
+					directReportCallerAdminMap.setArchivedDateTime(InjuryConstants.convertUSAFormatWithTime(new Date()));
+				}else{
+					directReportCallerAdminMap.setArchivedDate(null);
+					directReportCallerAdminMap.setArchivedDateTime(null);
+				}
+				
+				directReportCallerAdminMapDAO.merge(directReportCallerAdminMap);			
+				
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+		return true;
+	}
+	
+	//Delete an Entry
+	public int deleteDirectReportCallerAdminMap(Integer id)
+	{
+		directReportCallerAdminMapDAO.delete(id);
+		return 1;
+	}
+	
+	
+	
+}

@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 May, 2017 10:38:37 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +35,8 @@ public class Lawyer implements java.io.Serializable {
 	private String phoneNumber;
 	private String notes;
 	private Integer status;
+	private Set<DirectReportLawyerAdminMap> directReportLawyerAdminMaps = new HashSet<DirectReportLawyerAdminMap>(
+			0);
 	private Set<PatientLawyerAdminMap> patientLawyerAdminMaps = new HashSet<PatientLawyerAdminMap>(
 			0);
 	private Set<LawyerCountyMap> lawyerCountyMaps = new HashSet<LawyerCountyMap>(
@@ -47,6 +49,7 @@ public class Lawyer implements java.io.Serializable {
 			String lastName, String street, String city, String state,
 			String zipcode, String emailAddress, String phoneNumber,
 			String notes, Integer status,
+			Set<DirectReportLawyerAdminMap> directReportLawyerAdminMaps,
 			Set<PatientLawyerAdminMap> patientLawyerAdminMaps,
 			Set<LawyerCountyMap> lawyerCountyMaps) {
 		this.lawyerAdmin = lawyerAdmin;
@@ -61,6 +64,7 @@ public class Lawyer implements java.io.Serializable {
 		this.phoneNumber = phoneNumber;
 		this.notes = notes;
 		this.status = status;
+		this.directReportLawyerAdminMaps = directReportLawyerAdminMaps;
 		this.patientLawyerAdminMaps = patientLawyerAdminMaps;
 		this.lawyerCountyMaps = lawyerCountyMaps;
 	}
@@ -184,6 +188,16 @@ public class Lawyer implements java.io.Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lawyer")
+	public Set<DirectReportLawyerAdminMap> getDirectReportLawyerAdminMaps() {
+		return this.directReportLawyerAdminMaps;
+	}
+
+	public void setDirectReportLawyerAdminMaps(
+			Set<DirectReportLawyerAdminMap> directReportLawyerAdminMaps) {
+		this.directReportLawyerAdminMaps = directReportLawyerAdminMaps;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lawyer")

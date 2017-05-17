@@ -1,7 +1,8 @@
 package com.deemsys.project.entity;
 
-// Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 May, 2017 10:38:37 AM by Hibernate Tools 3.4.0.CR1
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -26,8 +27,8 @@ public class Clinic implements java.io.Serializable {
 	private CallerAdmin callerAdmin;
 	private String clinicName;
 	private String address;
-	private Double latitude;
-	private Double longitude;
+	private BigDecimal latitude;
+	private BigDecimal longitude;
 	private String city;
 	private String state;
 	private String county;
@@ -41,17 +42,16 @@ public class Clinic implements java.io.Serializable {
 	private Integer status;
 	private Set<Doctor> doctors = new HashSet<Doctor>(0);
 	private Set<ClinicTimings> clinicTimingses = new HashSet<ClinicTimings>(0);
-	private Set<Appointments> appointmentses = new HashSet<Appointments>(0);
 
 	public Clinic() {
 	}
 
 	public Clinic(CallerAdmin callerAdmin, String clinicName, String address,
-			Double latitude, Double longitude, String city,
+			BigDecimal latitude, BigDecimal longitude, String city,
 			String state, String county, String country, String zipcode,
-			String officeNumber,String faxNumber, String serviceArea, String directions,
-			String notes, Integer status, Set<Doctor> doctors,
-			Set<ClinicTimings> clinicTimingses) {
+			String officeNumber, String faxNumber, String serviceArea,
+			String directions, String notes, Integer status,
+			Set<Doctor> doctors, Set<ClinicTimings> clinicTimingses) {
 		this.callerAdmin = callerAdmin;
 		this.clinicName = clinicName;
 		this.address = address;
@@ -63,7 +63,7 @@ public class Clinic implements java.io.Serializable {
 		this.country = country;
 		this.zipcode = zipcode;
 		this.officeNumber = officeNumber;
-		this.faxNumber=faxNumber;
+		this.faxNumber = faxNumber;
 		this.serviceArea = serviceArea;
 		this.directions = directions;
 		this.notes = notes;
@@ -112,20 +112,20 @@ public class Clinic implements java.io.Serializable {
 	}
 
 	@Column(name = "latitude", precision = 14, scale = 12)
-	public Double getLatitude() {
+	public BigDecimal getLatitude() {
 		return this.latitude;
 	}
 
-	public void setLatitude(Double latitude) {
+	public void setLatitude(BigDecimal latitude) {
 		this.latitude = latitude;
 	}
 
 	@Column(name = "longitude", precision = 14, scale = 12)
-	public Double getLongitude() {
+	public BigDecimal getLongitude() {
 		return this.longitude;
 	}
 
-	public void setLongitude(Double longitude) {
+	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
 	}
 
@@ -182,7 +182,7 @@ public class Clinic implements java.io.Serializable {
 	public void setOfficeNumber(String officeNumber) {
 		this.officeNumber = officeNumber;
 	}
-	
+
 	@Column(name = "fax_number", length = 20)
 	public String getFaxNumber() {
 		return this.faxNumber;
@@ -244,15 +244,6 @@ public class Clinic implements java.io.Serializable {
 
 	public void setClinicTimingses(Set<ClinicTimings> clinicTimingses) {
 		this.clinicTimingses = clinicTimingses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "clinic")
-	public Set<Appointments> getAppointmentses() {
-		return appointmentses;
-	}
-
-	public void setAppointmentses(Set<Appointments> appointmentses) {
-		this.appointmentses = appointmentses;
 	}
 
 }

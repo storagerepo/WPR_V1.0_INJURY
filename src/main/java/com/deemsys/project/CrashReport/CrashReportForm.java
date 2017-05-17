@@ -27,6 +27,13 @@ public class CrashReportForm extends InjuryProperties{
 	private String runnerReportAddedDate;
 	private Integer reportFrom;
 	private Integer status;
+	private Integer callerAdminId;
+	private Integer callerId;
+	private Integer lawyerAdminId;
+	private Integer lawyerId;
+	private Integer isArchived;
+	private String archivedDate;
+	private String archivedDateTime;
 	public Long getCrashReportId() {
 		return crashReportId;
 	}
@@ -113,6 +120,48 @@ public class CrashReportForm extends InjuryProperties{
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	public Integer getCallerAdminId() {
+		return callerAdminId;
+	}
+	public void setCallerAdminId(Integer callerAdminId) {
+		this.callerAdminId = callerAdminId;
+	}
+	public Integer getCallerId() {
+		return callerId;
+	}
+	public void setCallerId(Integer callerId) {
+		this.callerId = callerId;
+	}
+	public String getArchivedDate() {
+		return archivedDate;
+	}
+	public void setArchivedDate(Date archivedDate) {
+		this.archivedDate = InjuryConstants.convertMonthFormat(archivedDate);
+	}
+	public String getArchivedDateTime() {
+		return archivedDateTime;
+	}
+	public void setArchivedDateTime(String archivedDateTime) {
+		this.archivedDateTime = InjuryConstants.convertUSAFormatWithTimeAMPM(archivedDateTime);
+	}
+	public Integer getLawyerAdminId() {
+		return lawyerAdminId;
+	}
+	public void setLawyerAdminId(Integer lawyerAdminId) {
+		this.lawyerAdminId = lawyerAdminId;
+	}
+	public Integer getLawyerId() {
+		return lawyerId;
+	}
+	public void setLawyerId(Integer lawyerId) {
+		this.lawyerId = lawyerId;
+	}
+	public Integer getIsArchived() {
+		return isArchived;
+	}
+	public void setIsArchived(Integer isArchived) {
+		this.isArchived = isArchived;
 	}
 	public CrashReportForm(Long crashReportId, String crashReportError,
 			String localReportNumber, String crashId, String crashDate,

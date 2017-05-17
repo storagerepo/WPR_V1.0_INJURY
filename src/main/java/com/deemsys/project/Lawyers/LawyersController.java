@@ -19,6 +19,9 @@ import com.deemsys.project.patientLawyerMap.PatientLawyerService;
 import com.deemsys.project.Caller.AssignCallerForm;
 import com.deemsys.project.Caller.CallerForm;
 import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.DirectReportCallerMap.DirectReportCallerMapForm;
+import com.deemsys.project.DirectReportLawyerMap.DirectReportLaywerMapForm;
+import com.deemsys.project.DirectReportLawyerMap.DirectReportLaywerMapService;
 
 @Controller
 public class LawyersController {
@@ -40,6 +43,9 @@ public class LawyersController {
 	
 	@Autowired
 	PatientService patientService;
+	
+	@Autowired
+	DirectReportLaywerMapService directReportLaywerMapService;
 
 	@RequestMapping(value = "/LAdmin/getLawyers", method = RequestMethod.GET)
 	public String getLawyers(@RequestParam("lawyerId") Integer lawyerId, ModelMap model) {
@@ -175,6 +181,14 @@ public class LawyersController {
 		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "", "",new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{});
 		PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 		model.addAttribute("numberOfAssignedPatiets",patientSearchResult.getTotalNoOfRecord());
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
+	// Direct Report Move Or Release From Archive
+	@RequestMapping(value = {"/LAdmin/directReportMoveOrReleaseArchive","/Lawyer/directReportMoveOrReleaseArchive"},method = RequestMethod.POST)
+	public String DirectReportMoveOrReleaseArchive(@RequestBody DirectReportLaywerMapForm directReportLaywerMapForm, ModelMap model) {
+		model.addAttribute("success",directReportLaywerMapService.directReportMoveOrReleaseFromArchive(directReportLaywerMapForm));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

@@ -12,13 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.CrashReportError.CrashReportErrorDAO;
+import com.deemsys.project.LawyerAdmin.LawyerAdminService;
+import com.deemsys.project.Lawyers.LawyersService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.CrashReportError;
+import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientForm;
 import com.deemsys.project.patient.PatientService;
 import com.deemsys.project.pdfcrashreport.ReportFirstPageForm;
@@ -53,6 +58,21 @@ public class CrashReportService {
 	
 	@Autowired
 	PatientService patientService;
+	
+	@Autowired
+	LoginService loginService;
+	
+	@Autowired
+	LawyersService lawyersService;
+	
+	@Autowired
+	CallerService callerService;
+	
+	@Autowired
+	CallerAdminService callerAdminService;
+	
+	@Autowired
+	LawyerAdminService lawyerAdminService;
 	
 	//Get All Entries
 	public List<CrashReportForm> getCrashReportList()
@@ -118,8 +138,8 @@ public class CrashReportService {
 			localReportNumber=localReportNumber+"("+(localReportNumberCount+1)+")";
 			
 		}
-		CrashReport crashReport=new CrashReport(crashReportError, localReportNumber, crashReportForm.getCrashId(), InjuryConstants.convertYearFormat(crashReportForm.getCrashDate()), 
-					county, InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getFilePath(),crashReportForm.getNumberOfPatients(),crashReportForm.getIsRunnerReport(),  null, crashReportForm.getReportFrom(), 1);
+		CrashReport crashReport=new CrashReport(crashReportForm.getCrashId(), crashReportError, county, localReportNumber,  InjuryConstants.convertYearFormat(crashReportForm.getCrashDate()), 
+					 InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getNumberOfPatients(), crashReportForm.getFilePath(), crashReportForm.getIsRunnerReport(),  null, crashReportForm.getReportFrom(), 1, null, null, null);
 		
 	
 		
@@ -167,16 +187,55 @@ public class CrashReportService {
 	}
 	
 	// Search Crash Report
-	public CrashReportList searchCrashReports(CrashReportSearchForm crashReportSearchForm){
-		if(!crashReportSearchForm.getNumberOfDays().equals("0")){
-			if(!crashReportSearchForm.getCrashFromDate().equals("")){
-				crashReportSearchForm.setCrashToDate(InjuryConstants.getToDateByAddingNumberOfDays(crashReportSearchForm.getCrashFromDate(), Integer.parseInt(crashReportSearchForm.getNumberOfDays())));
-			}
-		}
-		CrashReportList crashReportList=crashReportDAO.searchCrashReports(crashReportSearchForm.getLocalReportNumber(), crashReportSearchForm.getCrashId(), 
-													crashReportSearchForm.getCrashFromDate(), crashReportSearchForm.getCrashToDate(), crashReportSearchForm.getCountyId(), crashReportSearchForm.getAddedFromDate(), crashReportSearchForm.getAddedToDate(), crashReportSearchForm.getRecordsPerPage(), crashReportSearchForm.getPageNumber(),crashReportSearchForm.getIsRunnerReport());
+	public DirectReportGroupResult searchCrashReports(CrashReportSearchForm crashReportSearchForm){
 		
-		return crashReportList;
+		String role=loginService.getCurrentRole();
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+			crashReportSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			crashReportSearchForm.setCallerAdminId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId());
+			crashReportSearchForm.setCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
+		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+			crashReportSearchForm.setLawyerAdminId(lawyerAdminService.getLawyerAdminIdByUserId(loginService.getCurrentUserID()).getLawyerAdminId());
+		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
+			crashReportSearchForm.setLawyerAdminId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerAdmin().getLawyerAdminId());
+			crashReportSearchForm.setLawyerId(lawyersService.getLawyerIdByUserId(loginService.getCurrentUserID()).getLawyerId());
+		}
+		
+		CrashReportList crashReportList=crashReportDAO.searchCrashReports(crashReportSearchForm);
+		
+		return this.groupCrashReportListByArchive(crashReportList, crashReportSearchForm.getIsArchived());
+	}
+	
+	public DirectReportGroupResult groupCrashReportListByArchive(CrashReportList crashReportList,Integer isArchived){
+		List<DirectReportGroupListByArchive> directReportGroupListByArchives = new ArrayList<DirectReportGroupListByArchive>();
+		if(isArchived==1){
+			Integer rowCount=0;
+			String archivedDate="";
+			DirectReportGroupListByArchive directReportGroupListByArchive = new DirectReportGroupListByArchive();
+			for (CrashReportForm crashReportForm : crashReportList.getCrashReportForms()) {
+				if(!archivedDate.equals(crashReportForm.getArchivedDate())){
+					archivedDate=crashReportForm.getArchivedDate();
+					if(rowCount!=0){
+						directReportGroupListByArchives.add(directReportGroupListByArchive);
+					}
+					directReportGroupListByArchive = new DirectReportGroupListByArchive(archivedDate, new ArrayList<CrashReportForm>());
+				}
+				// Set Crash Report
+				directReportGroupListByArchive.getCrashReportForms().add(crashReportForm);
+				rowCount++;
+			}
+			if(rowCount>0)
+				directReportGroupListByArchives.add(directReportGroupListByArchive);
+		}else{
+			DirectReportGroupListByArchive directReportGroupListByArchive = new DirectReportGroupListByArchive("" , crashReportList.getCrashReportForms());
+			directReportGroupListByArchives.add(directReportGroupListByArchive);
+		}
+		
+		
+		DirectReportGroupResult directReportGroupResult = new DirectReportGroupResult(crashReportList.getTotalNoOfRecords(), directReportGroupListByArchives);
+		
+		return directReportGroupResult;
 	}
 	
 	// Split the PDF County and get Exact county Name
@@ -216,8 +275,8 @@ public class CrashReportService {
 			crashId=runnerCrashReportForm.getReportPrefixCode()+localReportNumber;
 		}
 		
-		CrashReport crashReport=new CrashReport(crashReportError, localReportNumber, crashId, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-					county, new Date(), runnerCrashReportForm.getFilePath(), numberOfPatients, isRunnerReport, new Date(), runnerCrashReportForm.getReportFrom(),1);
+		CrashReport crashReport=new CrashReport(crashId, crashReportError, county, localReportNumber,  InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
+					 new Date(), numberOfPatients, runnerCrashReportForm.getFilePath(),  isRunnerReport, new Date(), runnerCrashReportForm.getReportFrom(),1,null,null,null);
 		
 		
 		/*String odpsCrashId=this.checkRunnerReportWithODPSReport(runnerCrashReportForm);

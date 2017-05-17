@@ -194,7 +194,7 @@ public class PDFCrashReportReader {
 					// Commented for Manual Upload
 					//this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
 					CrashReportError crashReportError=crashReportErrorDAO.get(12);
-					crashReportDAO.save(new CrashReport(crashReportError, "", crashId, null, null, new Date() , "", 0, 0, null, 0, null));
+					crashReportDAO.save(new CrashReport(crashId, crashReportError, null, "",   null, new Date() ,  0, "", 0, null, 0, 0, null, null, null));
 					System.out.println("Failed"+e.toString());
 				}
 		return true;
@@ -1505,8 +1505,8 @@ public class PDFCrashReportReader {
 				}
 				
 				Integer numberOfPatients=0;
-				CrashReport crashReport=new CrashReport(crashReportError, localReportNumber, runnerCrashReportForm.getDocNumber(), InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-							county, new Date(), fileName, numberOfPatients, isRunnerReport, new Date(), 0,1);
+				CrashReport crashReport=new CrashReport(runnerCrashReportForm.getDocNumber(), crashReportError, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
+							 new Date(), numberOfPatients, fileName, isRunnerReport, new Date(), 0, 1, null, null, null);
 				
 				
 				crashReportDAO.save(crashReport);

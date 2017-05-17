@@ -410,10 +410,10 @@ border-radius:4px !important;
 }
 
 /* Radio Button Override  */
-input[type="radio"]{
-   display:table-cell;
-   vertical-align:middle;
-   margin:0 0 0;
+.import-radio-button{
+   display:table-cell !important;
+   vertical-align:middle !important;
+   margin:0 0 0 !important;
 }
 
 /* tooptip */

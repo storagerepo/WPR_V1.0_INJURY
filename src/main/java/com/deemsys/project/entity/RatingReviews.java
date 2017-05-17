@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 17 Jan, 2017 1:10:25 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 May, 2017 10:38:37 AM by Hibernate Tools 3.4.0.CR1
 
 import java.math.BigDecimal;
 import java.util.Date;

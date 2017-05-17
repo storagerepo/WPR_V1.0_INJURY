@@ -1,5 +1,6 @@
 package com.deemsys.project.common;
 
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -323,5 +324,23 @@ public class InjuryConstants {
 				roleText="Lawyer";
 			}
 			return roleText;
+		}
+		
+		// convert Bigdecimal to Double
+		public static double convertBigDecimaltoDouble(BigDecimal value){
+			double convertedValue = 0;
+			if(value!=null){
+				convertedValue=value.doubleValue();
+			}
+			return convertedValue;
+		}
+		
+		// Convert Double to BigDecimal
+		public static BigDecimal convertDoubleBigDecimal(Double value){
+			BigDecimal convertedValue = new BigDecimal(0);
+			if(value!=null){
+				convertedValue=new BigDecimal(value);
+			}
+			return convertedValue;
 		}
 }

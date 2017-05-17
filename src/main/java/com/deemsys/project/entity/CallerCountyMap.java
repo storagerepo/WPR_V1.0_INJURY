@@ -1,9 +1,8 @@
 package com.deemsys.project.entity;
 
-// Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 May, 2017 10:38:37 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
-
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -38,12 +37,12 @@ public class CallerCountyMap implements java.io.Serializable {
 		this.caller = caller;
 	}
 
-	public CallerCountyMap(CallerCountyMapId id, Caller caller, County county, Date subscribedDate,
-			Integer status) {
+	public CallerCountyMap(CallerCountyMapId id, County county, Caller caller,
+			Date subscribedDate, Integer status) {
 		this.id = id;
 		this.county = county;
 		this.caller = caller;
-		this.subscribedDate=subscribedDate;
+		this.subscribedDate = subscribedDate;
 		this.status = status;
 	}
 
@@ -79,10 +78,10 @@ public class CallerCountyMap implements java.io.Serializable {
 		this.caller = caller;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "subscribed_date", length = 19)
+	@Temporal(TemporalType.DATE)
+	@Column(name = "subscribed_date", length = 10)
 	public Date getSubscribedDate() {
-		return subscribedDate;
+		return this.subscribedDate;
 	}
 
 	public void setSubscribedDate(Date subscribedDate) {

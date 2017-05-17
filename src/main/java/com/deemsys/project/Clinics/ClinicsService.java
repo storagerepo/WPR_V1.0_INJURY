@@ -1,5 +1,6 @@
 package com.deemsys.project.Clinics;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -203,8 +204,8 @@ public class ClinicsService {
 		// Save Clinic
 		Clinic clinics = new Clinic(callerAdmin,clinicsForm.getClinicName(),
 				clinicsForm.getAddress(), 
-				Double.parseDouble(latiudeLongitude[0]),
-				Double.parseDouble(latiudeLongitude[1]),
+				new BigDecimal(latiudeLongitude[0]),
+				new BigDecimal(latiudeLongitude[1]),
 				clinicsForm.getCity(),
 				clinicsForm.getState(), clinicsForm.getCounty(),
 				clinicsForm.getCountry(), clinicsForm.getZipcode(),
@@ -260,8 +261,8 @@ public class ClinicsService {
 		CallerAdmin callerAdmin=callerAdminDAO.getCallerAdminByUserId(callerService.getCurrentUserId());
 		// Update Clinics
 		Clinic clinics = new Clinic(callerAdmin,clinicsForm.getClinicName(),
-				clinicsForm.getAddress(),Double.parseDouble(latiudeLongitude[0]),
-				Double.parseDouble(latiudeLongitude[1]), clinicsForm.getCity(),
+				clinicsForm.getAddress(),new BigDecimal(latiudeLongitude[0]),
+				new BigDecimal(latiudeLongitude[1]), clinicsForm.getCity(),
 				clinicsForm.getState(), clinicsForm.getCounty(),
 				clinicsForm.getCountry(), clinicsForm.getZipcode(),
 				clinicsForm.getOfficeNumber(), clinicsForm.getFaxNumber(),

@@ -1,5 +1,6 @@
 package com.deemsys.project.Map;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,9 +71,10 @@ public class SearchClinicsService {
 		clinics = clinicsDAO.getEnabledClinicsListsByCallerAdmin(callerAdminId);
 
 		for (Clinic clinics2 : clinics) {
-			Double distance = geoLocation.distance(patients.getLatitude(),
-					clinics2.getLatitude(), patients.getLongitude(),
-					clinics2.getLongitude());
+			
+			Double distance = geoLocation.distance(InjuryConstants.convertBigDecimaltoDouble(patients.getLatitude()),
+					InjuryConstants.convertBigDecimaltoDouble(clinics2.getLatitude()), InjuryConstants.convertBigDecimaltoDouble(patients.getLongitude()),
+					InjuryConstants.convertBigDecimaltoDouble(clinics2.getLongitude()));
 			if (distance < convertedRange) {
 				clinicTimingLists = clinicsService
 						.getClinicTimingLists(clinics2.getClinicId());
@@ -81,7 +83,7 @@ public class SearchClinicsService {
 						clinics2.getAddress(), clinics2.getCity(),
 						clinics2.getState(), clinics2.getCounty(),
 						clinics2.getCountry(), clinics2.getZipcode(),
-						clinics2.getLatitude(), clinics2.getLongitude(),
+						InjuryConstants.convertBigDecimaltoDouble(clinics2.getLatitude()), InjuryConstants.convertBigDecimaltoDouble(clinics2.getLongitude()),
 						clinics2.getOfficeNumber(), clinics2.getFaxNumber(),
 						clinics2.getServiceArea(), clinics2.getDirections(),
 						clinics2.getNotes(), clinics2.getStatus(),
@@ -91,8 +93,8 @@ public class SearchClinicsService {
 			}
 		}
 
-		clinicLocationForm = new ClinicLocationForm(patients.getLatitude(),
-				patients.getLongitude(), radius, clinicsForms);
+		clinicLocationForm = new ClinicLocationForm(InjuryConstants.convertBigDecimaltoDouble(patients.getLatitude()),
+				InjuryConstants.convertBigDecimaltoDouble(patients.getLongitude()), radius, clinicsForms);
 
 		return clinicLocationForm;
 

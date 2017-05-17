@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.deemsys.project.DirectReportCallerMap.DirectReportCallerMapForm;
+import com.deemsys.project.DirectReportCallerMap.DirectReportCallerMapService;
 import com.deemsys.project.PatientCallerMap.PatientCallerService;
 import com.deemsys.project.patient.CallerPatientSearchForm;
 import com.deemsys.project.patient.PatientGroupedSearchResult;
@@ -33,6 +35,9 @@ public class CallerController {
 
 	@Autowired
 	PatientService patientService;
+	
+	@Autowired
+	DirectReportCallerMapService directReportCallerMapService;
 	
 	@RequestMapping(value = "/CAdmin/getCaller", method = RequestMethod.GET)
 	public String getCaller(@RequestParam("callerId") Integer callerId, ModelMap model) {
@@ -225,4 +230,11 @@ public class CallerController {
 		return "/returnPage";
 	}
 	
+	// Direct Report Move or Release From Archive
+	@RequestMapping(value = {"/CAdmin/directReportMoveOrReleaseArchive","/Caller/directReportMoveOrReleaseArchive"},method = RequestMethod.POST)
+	public String DirectReportMoveOrReleaseArchive(@RequestBody DirectReportCallerMapForm directReportCallerMapForm, ModelMap model) {
+		model.addAttribute("success",directReportCallerMapService.directReportMoveOrRelaseArchive(directReportCallerMapForm));
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
 }

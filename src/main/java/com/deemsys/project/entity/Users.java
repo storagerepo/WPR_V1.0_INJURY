@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 17 Jan, 2017 1:10:25 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 May, 2017 10:38:37 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +32,14 @@ public class Users implements java.io.Serializable {
 	private String productToken;
 	private Integer isPrivilegedUser;
 	private Integer status;
+	private Set<UserExportPreferences> userExportPreferenceses = new HashSet<UserExportPreferences>(
+			0);
+	private Set<LawyerAdmin> lawyerAdmins = new HashSet<LawyerAdmin>(0);
+	private Set<CallerAdmin> callerAdmins = new HashSet<CallerAdmin>(0);
+	private Set<Lawyer> lawyers = new HashSet<Lawyer>(0);
+	private Set<UserLookupPreferences> userLookupPreferenceses = new HashSet<UserLookupPreferences>(
+			0);
+	private Set<Caller> callers = new HashSet<Caller>(0);
 	private Set<RatingReviews> ratingReviewses = new HashSet<RatingReviews>(0);
 
 	public Users() {
@@ -41,7 +49,11 @@ public class Users implements java.io.Serializable {
 			Integer isEnable, Integer isPasswordChanged,
 			Integer isDisclaimerAccepted, String productToken,
 			Integer isPrivilegedUser, Integer status,
-			Set<RatingReviews> ratingReviewses) {
+			Set<UserExportPreferences> userExportPreferenceses,
+			Set<LawyerAdmin> lawyerAdmins, Set<CallerAdmin> callerAdmins,
+			Set<Lawyer> lawyers,
+			Set<UserLookupPreferences> userLookupPreferenceses,
+			Set<Caller> callers, Set<RatingReviews> ratingReviewses) {
 		this.roles = roles;
 		this.username = username;
 		this.password = password;
@@ -51,6 +63,12 @@ public class Users implements java.io.Serializable {
 		this.productToken = productToken;
 		this.isPrivilegedUser = isPrivilegedUser;
 		this.status = status;
+		this.userExportPreferenceses = userExportPreferenceses;
+		this.lawyerAdmins = lawyerAdmins;
+		this.callerAdmins = callerAdmins;
+		this.lawyers = lawyers;
+		this.userLookupPreferenceses = userLookupPreferenceses;
+		this.callers = callers;
 		this.ratingReviewses = ratingReviewses;
 	}
 
@@ -145,6 +163,62 @@ public class Users implements java.io.Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	public Set<UserExportPreferences> getUserExportPreferenceses() {
+		return this.userExportPreferenceses;
+	}
+
+	public void setUserExportPreferenceses(
+			Set<UserExportPreferences> userExportPreferenceses) {
+		this.userExportPreferenceses = userExportPreferenceses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	public Set<LawyerAdmin> getLawyerAdmins() {
+		return this.lawyerAdmins;
+	}
+
+	public void setLawyerAdmins(Set<LawyerAdmin> lawyerAdmins) {
+		this.lawyerAdmins = lawyerAdmins;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	public Set<CallerAdmin> getCallerAdmins() {
+		return this.callerAdmins;
+	}
+
+	public void setCallerAdmins(Set<CallerAdmin> callerAdmins) {
+		this.callerAdmins = callerAdmins;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	public Set<Lawyer> getLawyers() {
+		return this.lawyers;
+	}
+
+	public void setLawyers(Set<Lawyer> lawyers) {
+		this.lawyers = lawyers;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	public Set<UserLookupPreferences> getUserLookupPreferenceses() {
+		return this.userLookupPreferenceses;
+	}
+
+	public void setUserLookupPreferenceses(
+			Set<UserLookupPreferences> userLookupPreferenceses) {
+		this.userLookupPreferenceses = userLookupPreferenceses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	public Set<Caller> getCallers() {
+		return this.callers;
+	}
+
+	public void setCallers(Set<Caller> callers) {
+		this.callers = callers;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")

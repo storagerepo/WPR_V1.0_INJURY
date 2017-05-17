@@ -1,6 +1,7 @@
 package com.deemsys.project.patient;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -122,25 +123,25 @@ public class PatientService {
 		}
 		Patient patient=patientDAO.getPatientByPatientId(patientId);
 		PatientForm patientForm=this.getPatientForm(patient);
-		if(patient.getLatitude()==0&&patient.getLongitude()==0){
+		if(patient.getLatitude().equals(0)&&patient.getLongitude().equals(0)){
 			String latLong = geoLocation.getLocation(patientForm.getAddress());
-			double longitude = 0.0;
-			double latitude = 0.0;
+			BigDecimal longitude = new BigDecimal(0);
+			BigDecimal latitude = new BigDecimal(0);
 			if (!latLong.equals("NONE")) {
 				String[] latitudeLongitude = latLong.split(",");
-				latitude = Double.parseDouble(latitudeLongitude[0]);
-				longitude = Double.parseDouble(latitudeLongitude[1]);
+				latitude = new BigDecimal(latitudeLongitude[0]);
+				longitude = new BigDecimal(latitudeLongitude[1]);
 			}
-			patientForm.setLatitude(latitude);
-			patientForm.setLongitude(longitude);
+			patientForm.setLatitude(InjuryConstants.convertBigDecimaltoDouble(latitude));
+			patientForm.setLongitude(InjuryConstants.convertBigDecimaltoDouble(longitude));
 			patient.setLatitude(latitude);
 			patient.setLongitude(longitude);
 			
 			// Update Patient With Latitude Longitude
 			patientDAO.update(patient);
 		}else{
-			patientForm.setLatitude(patient.getLatitude());
-			patientForm.setLongitude(patient.getLongitude());
+			patientForm.setLatitude(InjuryConstants.convertBigDecimaltoDouble(patient.getLatitude()));
+			patientForm.setLongitude(InjuryConstants.convertBigDecimaltoDouble(patient.getLongitude()));
 		}
 		
 		return patientForm;
@@ -381,7 +382,7 @@ public class PatientService {
 				patient.getTimeOfCrash(), patient.getUnitNumber(),
 				patient.getName(), patient.getDateOfBirth(),patient.getAge(),patient.getGender(), 
 				patient.getAddress(),
-				patient.getLatitude(), patient.getLongitude(),
+				InjuryConstants.convertBigDecimaltoDouble(patient.getLatitude()), InjuryConstants.convertBigDecimaltoDouble(patient.getLongitude()),
 				patient.getPhoneNumber(), patient.getInjuries(),
 				patient.getEmsAgency(), patient.getMedicalFacility(),
 				patient.getAtFaultInsuranceCompany(),
@@ -425,17 +426,17 @@ public class PatientService {
 	LocalDate addedDate=new LocalDate();
 	
 	//Mapping
-	Patient patient = new Patient(patientForm.getPatientId(),crashReport,
+	Patient patient = new Patient(patientForm.getPatientId(),crashReport, county,
 			patientForm.getLocalReportNumber(),
 			patientForm.getCrashSeverity(),
 			patientForm.getReportingAgencyName(),
 			patientForm.getNumberOfUnits(), patientForm.getUnitInError(),
-			county, patientForm.getCityVillageTownship(),
+			 patientForm.getCityVillageTownship(),
 			InjuryConstants.convertYearFormat(patientForm.getCrashDate()), addedDate.toDate(),
 			patientForm.getTimeOfCrash(), patientForm.getUnitNumber(),
 			patientForm.getName(), patientForm.getDateOfBirth(),patientForm.getAge(),
 			patientForm.getGender(), patientForm.getAddress(),
-			patientForm.getLatitude(), patientForm.getLongitude(),
+			InjuryConstants.convertDoubleBigDecimal(patientForm.getLatitude()), InjuryConstants.convertDoubleBigDecimal(patientForm.getLongitude()),
 			patientForm.getPhoneNumber(), patientForm.getInjuries(),
 			patientForm.getEmsAgency(), patientForm.getMedicalFacility(),
 			patientForm.getAtFaultInsuranceCompany(),

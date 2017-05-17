@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated Nov 17, 2016 6:08:16 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 May, 2017 10:38:37 AM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;

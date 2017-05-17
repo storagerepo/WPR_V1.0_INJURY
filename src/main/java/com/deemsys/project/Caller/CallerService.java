@@ -194,7 +194,7 @@ public class CallerService {
 		users.setIsEnable(1);
 		Caller caller = new Caller(callerAdmin, users, callerForm.getFirstName(),
 				callerForm.getLastName(), callerForm.getPhoneNumber(),
-				callerForm.getEmailAddress(), callerForm.getNotes(), 1, 0, null,null);
+				callerForm.getEmailAddress(), callerForm.getNotes(), 1, 0, null, null,null);
 		caller.setCallerId(callerForm.getCallerId());
 
 		callerDAO.merge(caller);
@@ -227,7 +227,7 @@ public class CallerService {
 		CallerAdmin callerAdmin = callerAdminDAO.getCallerAdminByUserId(getCurrentUserId());
 		Caller caller = new Caller(callerAdmin, users, callerForm.getFirstName(),
 				callerForm.getLastName(), callerForm.getPhoneNumber(),
-				callerForm.getEmailAddress(), callerForm.getNotes(), 1, 0, null,null);
+				callerForm.getEmailAddress(), callerForm.getNotes(), 1, 0, null, null,null);
 
 		callerDAO.save(caller);
 
@@ -235,7 +235,7 @@ public class CallerService {
 		for (Integer countyId : mappedCounty) {
 			County county=countyDAO.get(countyId);
 			CallerCountyMapId callerCountyMapId=new CallerCountyMapId(caller.getCallerId(), countyId);
-			CallerCountyMap callerCountyMap=new CallerCountyMap(callerCountyMapId, caller, county,new Date(),1);
+			CallerCountyMap callerCountyMap=new CallerCountyMap(callerCountyMapId, county, caller,new Date(),1);
 			callerCountyMapDAO.save(callerCountyMap);
 		}
 		
@@ -271,7 +271,7 @@ public class CallerService {
 		for (Integer countyId : newlyMappedCounty) {
 				County county=countyDAO.get(countyId);
 				CallerCountyMapId callerCountyMapId=new CallerCountyMapId(caller.getCallerId(), countyId);
-				CallerCountyMap callerCountyMap=new CallerCountyMap(callerCountyMapId, caller, county,new Date(),1);
+				CallerCountyMap callerCountyMap=new CallerCountyMap(callerCountyMapId, county, caller, new Date(),1);
 				callerCountyMapDAO.save(callerCountyMap);
 			}
 		// Logic Ends

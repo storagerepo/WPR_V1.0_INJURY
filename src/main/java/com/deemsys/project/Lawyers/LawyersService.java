@@ -206,7 +206,7 @@ public class LawyersService {
 				lawyersForm.getStreetAddress(), lawyersForm.getCity(),
 				lawyersForm.getState(), lawyersForm.getZipcode(),
 				lawyersForm.getEmailAddress(), lawyersForm.getPhoneNumber(),
-				lawyersForm.getNotes(), 1, null,null);
+				lawyersForm.getNotes(), 1, null,null,null);
 		lawyers.setLawyerId(lawyersForm.getLawyerId());
 
 		lawyersDAO.merge(lawyers);
@@ -246,7 +246,7 @@ public class LawyersService {
 				lawyersForm.getStreetAddress(), lawyersForm.getCity(),
 				lawyersForm.getState(), lawyersForm.getZipcode(),
 				lawyersForm.getEmailAddress(), lawyersForm.getPhoneNumber(),
-				lawyersForm.getNotes(), 1, null,null);
+				lawyersForm.getNotes(), 1, null,null,null);
 		lawyersDAO.save(lawyers);
 
 

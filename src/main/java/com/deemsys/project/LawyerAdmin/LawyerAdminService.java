@@ -143,7 +143,7 @@ public class LawyerAdminService {
 				lawyerAdminForm.getZipcode(),
 				lawyerAdminForm.getEmailAddress(),
 				lawyerAdminForm.getPhoneNumber(), lawyerAdminForm.getNotes(),
-				lawyerAdminForm.getStatus(), null,null,null);
+				lawyerAdminForm.getStatus(), null,null,null,null);
 		lawyerAdmin.setLawyerAdminId(lawyerAdminForm.getLawyerAdminId());
 		lawyerAdminDAO.merge(lawyerAdmin);
 
@@ -184,7 +184,7 @@ public class LawyerAdminService {
 				lawyerAdminForm.getZipcode(),
 				lawyerAdminForm.getEmailAddress(),
 				lawyerAdminForm.getPhoneNumber(), lawyerAdminForm.getNotes(),
-				1, null,null,null);
+				1, null,null,null,null);
 		lawyerAdminDAO.save(lawyerAdmin);
 
 		
@@ -224,7 +224,7 @@ public class LawyerAdminService {
 				lawyerAdminForm.getZipcode(),
 				lawyerAdminForm.getEmailAddress(),
 				lawyerAdminForm.getPhoneNumber(), lawyerAdminForm.getNotes(),
-				lawyerAdminForm.getStatus(), null,null,null);
+				lawyerAdminForm.getStatus(), null,null,null,null);
 		lawyerAdmin.setLawyerAdminId(lawyerAdminForm.getLawyerAdminId());
 		lawyerAdminDAO.update(lawyerAdmin);
 		

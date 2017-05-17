@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated Mar 16, 2016 12:32:39 PM by Hibernate Tools 3.4.0.CR1
+// Generated 17 May, 2017 10:38:37 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,31 +23,33 @@ public class County implements java.io.Serializable {
 	private Integer countyId;
 	private String name;
 	private Integer status;
+	private Set<Patient> patients = new HashSet<Patient>(0);
 	private Set<LawyerAdminCountyMap> lawyerAdminCountyMaps = new HashSet<LawyerAdminCountyMap>(
 			0);
 	private Set<LawyerCountyMap> lawyerCountyMaps = new HashSet<LawyerCountyMap>(
 			0);
 	private Set<CallerCountyMap> callerCountyMaps = new HashSet<CallerCountyMap>(
 			0);
+	private Set<CrashReport> crashReports = new HashSet<CrashReport>(0);
 	private Set<CallerAdminCountyMap> callerAdminCountyMaps = new HashSet<CallerAdminCountyMap>(
 			0);
-	private Set<CrashReport> crashReports = new HashSet<CrashReport>(
-			0);
-	private Set<Patient> patients=new HashSet<Patient>(0);
-	
+
 	public County() {
 	}
 
-	public County(String name, Integer status,
+	public County(String name, Integer status, Set<Patient> patients,
 			Set<LawyerAdminCountyMap> lawyerAdminCountyMaps,
 			Set<LawyerCountyMap> lawyerCountyMaps,
 			Set<CallerCountyMap> callerCountyMaps,
+			Set<CrashReport> crashReports,
 			Set<CallerAdminCountyMap> callerAdminCountyMaps) {
 		this.name = name;
 		this.status = status;
+		this.patients = patients;
 		this.lawyerAdminCountyMaps = lawyerAdminCountyMaps;
 		this.lawyerCountyMaps = lawyerCountyMaps;
 		this.callerCountyMaps = callerCountyMaps;
+		this.crashReports = crashReports;
 		this.callerAdminCountyMaps = callerAdminCountyMaps;
 	}
 
@@ -81,6 +83,15 @@ public class County implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "county")
+	public Set<Patient> getPatients() {
+		return this.patients;
+	}
+
+	public void setPatients(Set<Patient> patients) {
+		this.patients = patients;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "county")
 	public Set<LawyerAdminCountyMap> getLawyerAdminCountyMaps() {
 		return this.lawyerAdminCountyMaps;
 	}
@@ -109,6 +120,15 @@ public class County implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "county")
+	public Set<CrashReport> getCrashReports() {
+		return this.crashReports;
+	}
+
+	public void setCrashReports(Set<CrashReport> crashReports) {
+		this.crashReports = crashReports;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "county")
 	public Set<CallerAdminCountyMap> getCallerAdminCountyMaps() {
 		return this.callerAdminCountyMaps;
 	}
@@ -116,25 +136,6 @@ public class County implements java.io.Serializable {
 	public void setCallerAdminCountyMaps(
 			Set<CallerAdminCountyMap> callerAdminCountyMaps) {
 		this.callerAdminCountyMaps = callerAdminCountyMaps;
-	}
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "county")
-	public Set<CrashReport> getCrashReports() {
-		return this.crashReports;
-	}
-
-	public void setCrashReports(
-			Set<CrashReport> crashReports) {
-		this.crashReports = crashReports;
-	}
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "county")
-	public Set<Patient> getPatients() {
-		return patients;
-	}
-
-	public void setPatients(Set<Patient> patients) {
-		this.patients = patients;
 	}
 
 }
