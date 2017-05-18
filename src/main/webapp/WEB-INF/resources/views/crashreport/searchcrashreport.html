@@ -9,14 +9,14 @@
 	<label>Report Type:</label>
 			<div class="btn-group">
 				<label class="btn btn-default" btn-radio="0"
-					ng-model="crashreport.isRunnerReport"> Normal <span
+					ng-model="crashreport.isRunnerReport" ng-change="secoundarySearchCrashReport()" ng-disabled="isLoading"> Normal <span
 					class="glyphicon glyphicon-file"></span>
 				</label> <label class="btn btn-default" btn-radio="1"
-					ng-model="crashreport.isRunnerReport"> Runner <span
+					ng-model="crashreport.isRunnerReport" ng-change="secoundarySearchCrashReport()" ng-disabled="isLoading"> Runner <span
 					class="glyphicon glyphicon-file"></span>
 				</label>
 				<label class="btn btn-default" btn-radio="3"
-					ng-model="crashreport.isRunnerReport"> Runner Direct <span
+					ng-model="crashreport.isRunnerReport" ng-change="secoundarySearchCrashReport()" ng-disabled="isLoading"> Scanned <span
 					class="glyphicon glyphicon-file"></span>
 				</label>
 			</div>
@@ -122,30 +122,40 @@
                                 <th class="col-md-1">Crash Date</th>
                                 <th class="col-md-1">Added Date</th>
                                 <th class="col-md-2">Crash Report Status</th>
-                                <th class="col-md-1">No.of.Patients</th>
+                                <th class="col-md-1" ng-show="crashreport.isRunnerReport!=3">No.of.Patients</th>
                                 <th class="col-md-1">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-show="crashSearchData.length>0"  dir-paginate="crashReport in crashSearchData|itemsPerPage:crashreport.recordsPerPage" current-page="crashreport.pageNumber" total-items="totalRecords" pagination-id="crashReportPageId">
+						<tr class="archive-group-header"
+							ng-repeat-start="crashReportMain in crashSearchData"
+							ng-show="crashSearchData[0].archivedDate!=''">
+							<td colspan="1"><input
+								ng-change="selectArchiveGroup(this,'{{crashReportMain.archivedDate}}')"
+								ng-model="isCheckedAllGroupArchivePatients" type="checkbox"
+								id="{{crashReportMain.archivedDate}}"></td>
+							<td colspan="11"><span><b>Archive Date: </b>{{crashReportMain.archivedDate}}</span></td>
+						</tr>
+						<tr ng-show="crashSearchData.length>0"  dir-paginate="crashReport in crashReportMain.crashReportForms|itemsPerPage:crashreport.recordsPerPage" current-page="crashreport.pageNumber" total-items="totalRecords" pagination-id="crashReportPageId">
                                 <td title="County">{{crashReport.county}}</td>
                                 <td title="Local Report Number">{{crashReport.localReportNumber}} <span class="badge badge-warning hint--top" data-hint="Runner Report" ng-show="crashReport.isRunnerReport==2">R</span></td>
                                 <td title="Crash Id">{{crashReport.crashId}}</td>
                                 <td title="Crash Date">{{crashReport.crashDate}}</td>
                                 <td title="Added Date">{{crashReport.addedDate}}</td>
                                 <td title="Crash Report Status">{{crashReport.crashReportError}}</td>
-                                <td title="Number of Patients">{{crashReport.numberOfPatients}}</td>
+                                <td title="Number of Patients" ng-show="crashreport.isRunnerReport!=3">{{crashReport.numberOfPatients}}</td>
                                 <td>
                                 	<a href="{{crashReport.filePath}}" ng-cloak target="_blank" class="btn btn-xs btn-danger hint--top" data-hint="View Crash Report"><i
 								class="fa fa-file-pdf-o"></i></a>
                                 </td>
                             </tr>
+                            <tr ng-repeat-end=""></tr>
                             <tr ng-show="crashSearchData.length==0">
                             <td colspan="8"><center><strong>No Records Found!!!</strong></center></td>
                             </tr>
                         </tbody>
                     </table>
-                    <dir-pagination-controls max-size="5"  direction-links="true" boundary-links="true" pagination-id="crashReportPageId">
+                    <dir-pagination-controls max-size="5"  direction-links="true" boundary-links="true" pagination-id="crashReportPageId" ng-show="crashSearchData.length>0">
     					</dir-pagination-controls> 
     						<div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>

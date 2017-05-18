@@ -217,8 +217,8 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 				criteria.add(criterion);
 			}
 			
-		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
-			criteria.createAlias("directReportLawyerAdminMaps", "dcl1", Criteria.LEFT_JOIN,Restrictions.eq("dcl1.id.lawyerAdminId", crashReportSearchForm.getCallerAdminId()));
+		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
+			criteria.createAlias("directReportLawyerAdminMaps", "dcl1", Criteria.LEFT_JOIN,Restrictions.eq("dcl1.id.lawyerAdminId", crashReportSearchForm.getLawyerAdminId()));
 			
 			// Is Archived Status
 			if(crashReportSearchForm.getIsArchived()==0){

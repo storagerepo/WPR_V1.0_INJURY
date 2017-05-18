@@ -74,7 +74,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		};
 	
 	$scope.searchItems=function(searchObj){
-		
+		$scope.isLoading=true;
 		//To avoid overwriting actual $scope.patient object.
 		$scope.searchParam={};
 		angular.copy(searchObj,$scope.searchParam);
@@ -103,6 +103,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 			$scope.lockSearch=true;
 			var defer=$q.defer();
 			requestHandler.postRequest("Patient/searchPatients.json",$scope.searchParam).then(function(response){
+				$scope.isLoading=false;
 				if($scope.searchParam.isRunnerReport!=3){
 					$scope.totalRecords=0;
 					$scope.totalRecords=response.data.patientGroupedSearchResult.totalNoOfRecord;
@@ -188,8 +189,9 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 					$scope.isCheckedIndividual();
 				}else{
 					$scope.lawyerPatientSearchData={};
-					$scope.totalRecords=response.data.crashReportList.totalNoOfRecords;
-					$scope.directRunnerReportSearchData=response.data.crashReportList.crashReportForms;
+					$scope.totalRecords=response.data.directReportGroupResult.totalNoOfRecords;
+					$scope.directRunnerReportSearchData=response.data.directReportGroupResult.directReportGroupListByArchives;
+					$scope.isCleanCheckboxDirectReport();
 				}
 				
 			});
@@ -418,28 +420,50 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	};
 	
 	// Move Multiple File To Archive
-	$scope.moveArchive=function(){
-		var assignLawyerObj ={};
-		var patientIdArray=[];
-		$.each($scope.lawyerPatientSearchData, function(index,value) {
-			$.each(value.searchResult, function(index1,value1) {
-				$.each(value1.patientSearchLists,function(index2,value2){
-					if(value2.selected==true){
-						patientIdArray.push(value2.patientId);
+	$scope.moveArchive=function(reportType){
+		if(reportType==3){
+			var moveArchiveObj ={};
+			var crashIdArray=[];
+			$.each($scope.directRunnerReportSearchData, function(index,value) {
+				$.each(value.crashReportForms, function(index1,value1) {
+					if(value1.selected==true){
+						crashIdArray.push(value1.crashId);
 					}
-					});
+				});
 			});
+			moveArchiveObj.crashId=crashIdArray;
+			moveArchiveObj.status=1;
+			requestHandler.postRequest("/Lawyer/directReportMoveOrReleaseArchive.json",moveArchiveObj).then(function(response){
+				Flash.create('success', "You have Successfully Moved to Archive!");
+				$scope.searchItems($scope.patient);
+				$(function(){
+					$("html,body").scrollTop(0);
+				});
+			});
+		}else{
+			var assignLawyerObj ={};
+			var patientIdArray=[];
+			$.each($scope.lawyerPatientSearchData, function(index,value) {
+				$.each(value.searchResult, function(index1,value1) {
+					$.each(value1.patientSearchLists,function(index2,value2){
+						if(value2.selected==true){
+							patientIdArray.push(value2.patientId);
+						}
+						});
+				});
+				
+			});
+			assignLawyerObj.patientId=patientIdArray;
 			
-		});
-		assignLawyerObj.patientId=patientIdArray;
-		
-		requestHandler.postRequest("/Lawyer/moveToArchive.json",assignLawyerObj).then(function(response){
-			Flash.create('success', "You have Successfully Moved to Archive!");
-			$scope.searchItems($scope.patient);
-			$(function(){
-				$("html,body").scrollTop(0);
+			requestHandler.postRequest("/Lawyer/moveToArchive.json",assignLawyerObj).then(function(response){
+				Flash.create('success', "You have Successfully Moved to Archive!");
+				$scope.searchItems($scope.patient);
+				$(function(){
+					$("html,body").scrollTop(0);
+				});
 			});
-		});
+		}
+		
 	};
 	
 	// Move Single File To Archive
@@ -459,29 +483,70 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		}
 	};
 	
-	// Release Multiple From Archive
-	$scope.releaseArchive=function(){
-		var assignLawyerObj ={};
-		var patientIdArray=[];
-		$.each($scope.lawyerPatientSearchData, function(index,value) {
-			$.each(value.searchResult, function(index1,value1) {
-				$.each(value1.patientSearchLists,function(index2,value2){
-					if(value2.selected==true){
-						patientIdArray.push(value2.patientId);
-					}
+
+	// Direct Report Single Archive
+		$scope.moveSingleDirectReportToArchive=function(crashId){
+			var moveArchiveObj ={};
+			var crashIdArray=[crashId];
+			if(confirm("Are you sure want to move to archive?")){
+				moveArchiveObj.crashId=crashIdArray;
+				moveArchiveObj.status=1;
+				requestHandler.postRequest("/Lawyer/directReportMoveOrReleaseArchive.json",moveArchiveObj).then(function(response){
+					Flash.create('success', "You have Successfully Moved to Archive!");
+					$scope.searchItems($scope.patient);
+					$(function(){
+						$("html,body").scrollTop(0);
 					});
-			});
+				});
+			}
 			
-		});
-		assignLawyerObj.patientId=patientIdArray;
-		
-		requestHandler.postRequest("/Lawyer/releaseFromArchive.json",assignLawyerObj).then(function(response){
-			Flash.create('success', "You have Successfully released from Archive!");
-			$scope.searchItems($scope.patient);
-			$(function(){
-				$("html,body").scrollTop(0);
+		};
+	
+	// Release Multiple From Archive
+	$scope.releaseArchive=function(reportType){
+		if(reportType==3){
+			var moveArchiveObj ={};
+			var crashIdArray=[];
+			$.each($scope.directRunnerReportSearchData, function(index,value) {
+				$.each(value.crashReportForms, function(index1,value1) {
+					if(value1.selected==true){
+						crashIdArray.push(value1.crashId);
+					}
+				});
 			});
-		});
+			moveArchiveObj.crashId=crashIdArray;
+			moveArchiveObj.status=0;
+			requestHandler.postRequest("/Lawyer/directReportMoveOrReleaseArchive.json",moveArchiveObj).then(function(response){
+				Flash.create('success', "You have Successfully Released from Archive!");
+				$scope.searchItems($scope.patient);
+				$(function(){
+					$("html,body").scrollTop(0);
+				});
+			});
+		}else{
+			var assignLawyerObj ={};
+			var patientIdArray=[];
+			$.each($scope.lawyerPatientSearchData, function(index,value) {
+				$.each(value.searchResult, function(index1,value1) {
+					$.each(value1.patientSearchLists,function(index2,value2){
+						if(value2.selected==true){
+							patientIdArray.push(value2.patientId);
+						}
+						});
+				});
+				
+			});
+			assignLawyerObj.patientId=patientIdArray;
+			
+			requestHandler.postRequest("/Lawyer/releaseFromArchive.json",assignLawyerObj).then(function(response){
+				Flash.create('success', "You have Successfully released from Archive!");
+				$scope.searchItems($scope.patient);
+				$(function(){
+					$("html,body").scrollTop(0);
+				});
+			});
+		}
+		
 	};
 	
 	// Release Single From Archive
@@ -492,6 +557,23 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 			assignLawyerObj.patientId=patientIdArray;
 			requestHandler.postRequest("/Lawyer/releaseFromArchive.json",assignLawyerObj).then(function(response){
 				Flash.create('success', "You have Successfully released from Archive!");
+				$scope.searchItems($scope.patient);
+				$(function(){
+					$("html,body").scrollTop(0);
+				});
+			});
+		}
+	};
+	
+	// Direct Report Release Single From Archive
+	$scope.releaseSingleDirectReportFromArchive=function(crashId){
+		var moveArchiveObj ={};
+		var crashIdArray=[crashId];
+		if(confirm("Are you sure want to release from archive?")){
+			moveArchiveObj.crashId=crashIdArray;
+			moveArchiveObj.status=0;
+			requestHandler.postRequest("/Lawyer/directReportMoveOrReleaseArchive.json",moveArchiveObj).then(function(response){
+				Flash.create('success', "You have Successfully Released from Archive!");
 				$scope.searchItems($scope.patient);
 				$(function(){
 					$("html,body").scrollTop(0);
@@ -740,6 +822,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	$scope.resetResultData=function(){
 		$scope.lawyerPatientSearchData="";
 		$scope.totalRecords="";
+		$scope.directRunnerReportSearchData="";
 	};
 	
 	// Print Reports
@@ -778,22 +861,33 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		$scope.sendingReportsList=[];
 		$scope.sendingReportsList.printerId=$scope.printerId;
 		$scope.sendingReportsList.xsrf=$scope.xsrf;
-		var localReportNumber="";
-		$.each($scope.lawyerPatientSearchData, function(index,value) {
-			$.each(value.searchResult, function(index1,value1) {
-				$.each(value1.patientSearchLists,function(index2,value2){
-					if(value2.selected==true){
-						if(localReportNumber!=value2.localReportNumber){
-							$scope.sendingReportsList.push({"localReportNumber":value2.localReportNumber,"fileName":value2.crashReportFileName,"printStatus":0});
-							localReportNumber=value1.localReportNumber;
-						}
-						else
-							console.log("available");
+		if($scope.patient.isRunnerReport==3){
+			$.each($scope.directRunnerReportSearchData, function(index,value) {
+				$.each(value.crashReportForms, function(index1,value1) {
+					if(value1.selected==true){
+						$scope.sendingReportsList.push({"localReportNumber":value1.localReportNumber,"fileName":value1.filePath,"printStatus":0});
 					}
-					});
+				});
 			});
-			
-		});
+		}else{
+			var localReportNumber="";
+			$.each($scope.lawyerPatientSearchData, function(index,value) {
+				$.each(value.searchResult, function(index1,value1) {
+					$.each(value1.patientSearchLists,function(index2,value2){
+						if(value2.selected==true){
+							if(localReportNumber!=value2.localReportNumber){
+								$scope.sendingReportsList.push({"localReportNumber":value2.localReportNumber,"fileName":value2.crashReportFileName,"printStatus":0});
+								localReportNumber=value1.localReportNumber;
+							}
+							else
+								console.log("available");
+						}
+						});
+				});
+				
+			});
+		}
+		
 		
 		var randomnumber = Math.floor((Math.random()*100)+1);
 		window.$windowScope = $scope;
@@ -854,6 +948,42 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
             
         });
 	};
+	
+	// ----------------- Direct Report -----------
+	// Direct Report Select Archive Group
+	$scope.selectDirectReportArchiveGroup=function(id,archivedDate){
+		$.each($scope.directRunnerReportSearchData, function(index,value) {
+			$.each(value.crashReportForms, function(index1,value1) {
+				if(archivedDate!=''){
+					if(value1.archivedDate==archivedDate){
+						value1.selected=id.isCheckedAllGroupArchiveDirectReport;
+					}
+				}
+			});
+		});
+	};
+	
+	// Direct Report Select All Report
+	$scope.checkedAllDirectReport=function(){
+		$.each($scope.directRunnerReportSearchData, function(index,value) {
+			$.each(value.crashReportForms, function(index1,value1) {
+				value1.selected=$scope.isCheckedAllDirectReport;
+			});
+		});
+	};
+
+// Direct Report Clean Check Box
+	$scope.isCleanCheckboxDirectReport=function(){
+		$scope.isDisableButtons=true;
+		$.each($scope.directRunnerReportSearchData, function(index,value) {
+			$.each(value.crashReportForms, function(index1,value1) {
+				if(value1.selected==true){
+					$scope.isDisableButtons=false;
+				}
+			});
+		});
+	};
+	
 }]); 
 
  

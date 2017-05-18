@@ -9,14 +9,14 @@
 				<label>Report Type:</label>
 				<div class="btn-group">
 					<label class="btn btn-default" btn-radio="0"
-						ng-model="patient.isRunnerReport"> Normal <span
+						ng-model="patient.isRunnerReport" ng-change="secoundarySearchPatient()" ng-disabled="isLoading"> Normal <span
 						class="glyphicon glyphicon-file"></span>
 					</label> <label class="btn btn-default" btn-radio="1"
-						ng-model="patient.isRunnerReport"> Runner <span
+						ng-model="patient.isRunnerReport" ng-change="secoundarySearchPatient()" ng-disabled="isLoading"> Runner <span
 						class="glyphicon glyphicon-file"></span>
 					</label>
 					<label class="btn btn-default" btn-radio="3"
-						ng-model="patient.isRunnerReport"> Runner Direct <span
+						ng-model="patient.isRunnerReport" ng-change="secoundarySearchPatient()" ng-disabled="isLoading"> Scanned <span
 						class="glyphicon glyphicon-file"></span>
 					</label>
 				</div>
@@ -145,7 +145,7 @@
 							placeholder="Local Report Number">
 					</div>
 				</div>
-				<div class="col-md-5ths">
+				<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
 					<label>Damage Scale</label>&nbsp;<a href=""
 						class="some-popover-link" data-placement="bottom"
 						data-original-title="" data-toggle="popover" title="Damage Scale"
@@ -214,7 +214,7 @@
 						<th>
 							<div ng-dropdown-multiselect="" options="defaultAge"
 								selected-model="patient.age"
-								extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false,disable:patient.isRunnerReport==1}"></div>
+								extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false,disable:patient.isRunnerReport==1}" events="ageEvents"></div>
 						</th>
 						<th></th>
 						<th></th>
@@ -340,14 +340,14 @@
 					</tr>
 					<tr ng-repeat-end=""></tr>
 					<tr ng-repeat-end=""></tr>
-					<tr ng-show="totalRecords==0">
+					<tr ng-show="patientSearchData.length==0">
 						<td colspan="7"><center>
 								<strong>No Records Found!!!</strong>
 							</center></td>
 					</tr>
 				</tbody>
 			</table>
-			<dir-pagination-controls ng-show="totalRecords>0" max-size="5"
+			<dir-pagination-controls ng-show="patientSearchData.length>0" max-size="5"
 				direction-links="true" boundary-links="true"
 				pagination-id="superAdminPatientPageId"> </dir-pagination-controls>
 			<div class="col-md-3 pull-right no-padding">
@@ -368,30 +368,40 @@
                     <table class="table table-striped table-bordered" ng-cloak>
                         <thead>
                             <tr>
-                                <th class="col-md-2">County</th>
-                                <th class="col-md-2">Local Report Number</th>
+                              	<th class="col-md-2">Local Report Number</th>
                                 <th class="col-md-2">Crash Date</th>
+                                  <th class="col-md-2">County</th>
                                 <th class="col-md-2">Added Date</th>
                                 <th class="col-md-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-show="directRunnerReportSearchData.length>0"  dir-paginate="directRunnerReport in directRunnerReportSearchData|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords" pagination-id="directRunnerReportPageId">
-                                <td title="County">{{directRunnerReport.county}}</td>
-                                <td title="Local Report Number">{{directRunnerReport.localReportNumber}}</td>
+                        	<tr class="archive-group-header"
+							ng-repeat-start="directRunnerReportMain in directRunnerReportSearchData"
+							ng-show="directRunnerReportSearchData[0].archivedDate!=''">
+							<td colspan="1"><input
+								ng-change="selectArchiveGroup(this,'{{directRunnerReportMain.archivedDate}}')"
+								ng-model="isCheckedAllGroupArchivePatients" type="checkbox"
+								id="{{directRunnerReportMain.archivedDate}}"></td>
+							<td colspan="5"><span><b>Archive Date: </b>{{directRunnerReportMain.archivedDate}}</span></td>
+							</tr>
+                            <tr ng-show="directRunnerReportSearchData.length>0"  dir-paginate="directRunnerReport in directRunnerReportMain.crashReportForms|itemsPerPage:patient.itemsPerPage" current-page="patient.pageNumber" total-items="totalRecords" pagination-id="directRunnerReportPageId">
+                                 <td title="Local Report Number">{{directRunnerReport.localReportNumber}}</td>
                                 <td title="Crash Date">{{directRunnerReport.crashDate}}</td>
+                                <td title="County">{{directRunnerReport.county}}</td>
                                 <td title="Added Date">{{directRunnerReport.addedDate}}</td>
                                 <td>
                                 	<a href="{{directRunnerReport.filePath}}" ng-cloak target="_blank" class="btn btn-xs btn-danger hint--top" data-hint="View Crash Report"><i
 								class="fa fa-file-pdf-o"></i></a>
                                 </td>
                             </tr>
+                            <tr ng-repeat-end=""></tr>
                             <tr ng-show="directRunnerReportSearchData.length==0">
                             <td colspan="8"><center><strong>No Records Found!!!</strong></center></td>
                             </tr>
                         </tbody>
                     </table>
-                    <dir-pagination-controls max-size="5"  direction-links="true" boundary-links="true" pagination-id="directRunnerReportPageId">
+                    <dir-pagination-controls ng-show="directRunnerReportSearchData.length>0" max-size="5"  direction-links="true" boundary-links="true" pagination-id="directRunnerReportPageId">
     					</dir-pagination-controls> 
     						<div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>

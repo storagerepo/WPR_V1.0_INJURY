@@ -9,14 +9,14 @@
 				<label>Report Type:</label>
 				<div class="btn-group">
 					<label class="btn btn-default" btn-radio="0"
-						ng-model="patient.isRunnerReport"> Normal <span
+						ng-model="patient.isRunnerReport" ng-disabled="isLoading"> Normal <span
 						class="glyphicon glyphicon-file"></span>
 					</label> <label class="btn btn-default" btn-radio="1"
-						ng-model="patient.isRunnerReport"> Runner <span
+						ng-model="patient.isRunnerReport" ng-disabled="isLoading"> Runner <span
 						class="glyphicon glyphicon-file"></span>
 					</label>
 					<label class="btn btn-default" btn-radio="3"
-						ng-model="patient.isRunnerReport"> Runner Direct <span
+						ng-model="patient.isRunnerReport" ng-disabled="isLoading"> Scanned <span
 						class="glyphicon glyphicon-file"></span>
 					</label>
 				</div>
@@ -30,7 +30,7 @@
 	<div class="row">
 		<form name="patientSearchForm" novalidate ng-cloak>
 			<div class="col-md-12 no-padding">
-				<div class="col-md-5ths">
+				<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
 					<label>County</label>&nbsp;<a href="" data-toggle="popover"
 						title="Info on County Selection:"
 						data-content="<p><b>Subscribed - </b>All counties you have subscribed to.</p><p><b>Preferred - </b> Only counties you usually prefer to access.</p>"
@@ -42,7 +42,7 @@
 						extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true}"
 						events="countyEvents"></div>
 				</div>
-				<div class="col-md-5ths">
+				<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
 					<label>Crash From Date</label>
 					<div class="input-group">
 						<input type="text" name="crashFromDate" id="CrashFromDate"
@@ -53,7 +53,7 @@
 							class="glyphicon glyphicon-calendar"></span></span>
 					</div>
 				</div>
-				<div class="col-md-5ths">
+				<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
 					<label>Number of Days</label> <select class="form-control input-sm"
 						ng-model="patient.numberOfDays" name="numberOfDays"
 						ng-change="checkCustomDate(patient.numberOfDays)">
@@ -64,7 +64,7 @@
 						<option value="0">Custom</option>
 					</select>
 				</div>
-				<div class="col-md-5ths">
+				<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
 					<label>Crash To Date</label>
 					<div class="input-group">
 						<input type="text" name="crashToDate" id="CrashToDate"
@@ -77,7 +77,7 @@
 					<span style="color: red" ng-if="crashToRequired==true">Please
 						Enter Crash To Date</span>
 				</div>
-				<div class="col-md-5ths">
+				<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
 					<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover"
 						title="Tier Details (Deceased victims not listed)"
 						data-placement="bottom"><i class="fa fa-info-circle"></i></a><span
@@ -94,7 +94,7 @@
 			</div>
 
 			<div class="col-md-12 no-padding">
-				<div class="col-md-5ths">
+				<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
 					<label>Added On From Date</label>
 					<div class="input-group">
 						<input type="text" name="addedOnFromDate" id="AddedFromDate"
@@ -105,7 +105,7 @@
 							class="glyphicon glyphicon-calendar"></span></span>
 					</div>
 				</div>
-				<div class="col-md-5ths">
+				<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
 					<label>Added On To Date</label>
 					<div class="input-group">
 						<input type="text" name="addedOnToDate" id="AddedToDate"
@@ -118,14 +118,14 @@
 					<span style="color: red" ng-if="addedToRequired==true">Please
 						Enter Added On To Date</span>
 				</div>
-				<div class="col-md-5ths">
+				<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
 					<label>Local Report Number</label> <input type="text"
 						name="localReportNumber" class="form-control input-sm"
 						ng-model="patient.localReportNumber"
 						placeholder="Local Report Number">
 
 				</div>
-				<div class="col-md-5ths">
+				<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
 					<label>Damage Scale</label>&nbsp;<a href=""
 						class="some-popover-link" data-placement="bottom"
 						data-original-title="" data-toggle="popover" title="Damage Scale"
@@ -145,18 +145,18 @@
 						class="btn btn-danger btn-sm" ng-click="resetSearchData()">Reset</a>
 				</div>
 			</div>
-			<div class="col-md-12" ng-show="patient.isRunnerReport!=3">
+			<div class="col-md-12">
 				<div class="col-md-12 no-padding hr-tag-alter"></div>
 				<div class="col-md-6 no-padding">
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1"
 						ng-click="releasePatientMultiConfirmPopup()"
-						class="btn btn-sm btn-danger">Release Patients</a> <a href=""
-						ng-disabled="isCleanCheckbox()||patient.isArchived==1"
-						ng-click="moveArchive()" class="btn btn-sm btn-warning">Archive
+						class="btn btn-sm btn-danger" ng-show="patient.isRunnerReport!=3">Release Patients</a> <a href=""
+						ng-disabled="isCleanCheckbox()||patient.isArchived==1||isDisableButtons"
+						ng-click="moveArchive(patient.isRunnerReport)" class="btn btn-sm btn-warning">Archive
 						all</a> <a href=""
-						ng-disabled="isCleanCheckbox()||patient.isArchived==0"
-						ng-click="releaseArchive()" class="btn btn-sm btn-primary">Restore
-						all</a> <a href="" ng-disabled="isCleanCheckbox()"
+						ng-disabled="isCleanCheckbox()||patient.isArchived==0||isDisableButtons"
+						ng-click="releaseArchive(patient.isRunnerReport)" class="btn btn-sm btn-primary">Restore
+						all</a> <a href="" ng-disabled="isCleanCheckbox()||isDisableButtons"
 						ng-click="printReports()" class="btn btn-sm btn-info">Print
 						Reports</a>&nbsp;<a href="" data-toggle="modal"
 						data-target="#printReportsHelpModal"><i
@@ -173,9 +173,9 @@
 							<option value="1">Archived</option>
 						</select>
 					</div>
-					<div class="col-md-3 margin-top-5 text-right no-padding">Filter
+					<div class="col-md-3 margin-top-5 text-right no-padding" ng-show="patient.isRunnerReport!=3">Filter
 						Status by &nbsp;&nbsp;</div>
-					<div class="col-md-3 no-padding">
+					<div class="col-md-3 no-padding" ng-show="patient.isRunnerReport!=3">
 						<select class="form-control input-sm"
 							ng-change="secoundarySearchPatient()" name="patientStatus"
 							ng-model="patient.patientStatus">
@@ -193,7 +193,7 @@
 				</div>
 				<div class="col-md-12 no-padding hr-tag-alter"></div>
 			</div>
-			<div class="col-md-12" ng-show="patient.isRunnerReport!=3">
+			<div class="col-md-12">
 				<div class="col-md-12 archive-filter"
 					ng-show="patient.isArchived==1">
 					<div class="col-md-3"></div>
@@ -488,32 +488,58 @@
 
 		<!-- Direct Runner Report  -->
 		<div class="col-md-12" ng-show="patient.isRunnerReport==3">
-			<div class="col-md-12 no-padding hr-tag-alter"></div>
-			<table class="table table-striped table-bordered" ng-cloak>
+			<table class="table table-bordered" ng-cloak>
 				<thead>
 					<tr>
-						<th class="col-md-2">County</th>
-						<th class="col-md-2">Local Report Number</th>
-						<th class="col-md-2">Crash Date</th>
-						<th class="col-md-2">Added Date</th>
-						<th class="col-md-2">Actions</th>
+						<th width="3%"><input
+							ng-change="checkedAllDirectReport();isCleanCheckboxDirectReport()"
+							ng-model="isCheckedAllDirectReport" type="checkbox" id="checkAll"></th>
+						<th width="20%">Local Report Number</th>
+						<th width="12%">Crash Date</th>
+						<th width="15%">County</th>
+						<th width="12%">Added Date</th>
+						<th width="20%" ng-show="patient.isArchived==1">Archived On</th>
+						<th width="15%">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
+					<tr class="archive-group-header"
+						ng-repeat-start="directRunnerReportMain in directRunnerReportSearchData"
+						ng-show="directRunnerReportSearchData[0].archivedDate!=''">
+						<td colspan="1"><input
+							ng-change="selectDirectReportArchiveGroup(this,'{{directRunnerReportMain.archivedDate}}');isCleanCheckboxDirectReport();"
+							ng-model="isCheckedAllGroupArchiveDirectReport" type="checkbox"
+							id="{{directRunnerReportMain.archivedDate}}"></td>
+						<td colspan="6"><span><b>Archive Date: </b>{{directRunnerReportMain.archivedDate}}</span></td>
+					</tr>
 					<tr ng-show="directRunnerReportSearchData.length>0"
-						dir-paginate="directRunnerReport in directRunnerReportSearchData|itemsPerPage:patient.itemsPerPage"
+						dir-paginate="directRunnerReport in directRunnerReportMain.crashReportForms|itemsPerPage:patient.itemsPerPage"
 						current-page="patient.pageNumber" total-items="totalRecords"
 						pagination-id="directRunnerReportPageId">
-						<td title="County">{{directRunnerReport.county}}</td>
+						<td colspan="1"><input type="checkbox"
+							ng-change="isCleanCheckboxDirectReport()"
+							ng-model="directRunnerReport.selected"
+							ng-checked="directRunnerReport.selected"></td>
 						<td title="Local Report Number">{{directRunnerReport.localReportNumber}}</td>
 						<td title="Crash Date">{{directRunnerReport.crashDate}}</td>
+						<td title="County">{{directRunnerReport.county}}</td>
 						<td title="Added Date">{{directRunnerReport.addedDate}}</td>
+						<td title="Archived On" ng-show="patient.isArchived==1">{{directRunnerReport.archivedDateTime}}</td>
 						<td><a href="{{directRunnerReport.filePath}}" ng-cloak
-							target="_blank" class="btn btn-xs btn-danger hint--top"
+							target="_blank" class="btn btn-xs btn-info hint--top"
 							data-hint="View Crash Report"><i class="fa fa-file-pdf-o"></i></a>
-						</td>
+							<a href="" ng-cloak
+							ng-show={{directRunnerReport.isArchived==0||directRunnerReport.isArchived==null}}
+							ng-click="moveSingleDirectReportToArchive(directRunnerReport.crashId)"
+							class="btn btn-xs btn-success hint--top" data-hint="Archive"><i
+								class="fa fa-archive"></i></a> <a href="" ng-cloak
+							ng-show={{directRunnerReport.isArchived==1}}
+							ng-click="releaseSingleDirectReportFromArchive(directRunnerReport.crashId)"
+							class="btn btn-xs btn-danger hint--top" data-hint="Restore"><i
+								class="fa fa-share-square-o"></i></a></td>
 					</tr>
-					<tr ng-show="directRunnerReportSearchData.length==0">
+					<tr ng-repeat-end=""></tr>
+					<tr ng-show="totalRecords==0">
 						<td colspan="8"><center>
 								<strong>No Records Found!!!</strong>
 							</center></td>

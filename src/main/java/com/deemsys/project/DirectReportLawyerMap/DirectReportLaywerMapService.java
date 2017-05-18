@@ -66,7 +66,7 @@ public class DirectReportLaywerMapService {
 					directReportLawyerAdminMap=new DirectReportLawyerAdminMap(new DirectReportLawyerAdminMapId(crashId, lawyerAdmin.getLawyerAdminId()), new CrashReport(crashId), lawyerAdmin);
 				}
 				directReportLawyerAdminMap.setIsArchived(directReportLaywerMapForm.getStatus());
-				directReportLawyerAdminMap.setStatus(1);
+				directReportLawyerAdminMap.setStatus(directReportLaywerMapForm.getStatus());
 				if(directReportLaywerMapForm.getStatus()==1){
 					directReportLawyerAdminMap.setArchivedDate(new Date());
 					directReportLawyerAdminMap.setArchivedDateTime(InjuryConstants.convertUSAFormatWithTime(new Date()));

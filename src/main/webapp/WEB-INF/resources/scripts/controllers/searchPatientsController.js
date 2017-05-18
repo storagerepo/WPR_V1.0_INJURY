@@ -9,7 +9,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	$scope.ageFilterCurrentSelection=[];
 	$scope.setScrollDown=false;
 	
-	$scope.init=function(){
+	$scope.init=function(callFrom){
 		$scope.example19model = {}; 
 		$scope.example19data = [ { id: 1, name: "David" }, { id: 2, name: "Jhon" }, { id: 3, name: "Lisa" }, { id: 4, name: "Nicole" }, { id: 5, name: "Danny" } ]; 
 		//$scope.example19settings = { template: '<b>{{option.name}}</b>' };
@@ -47,11 +47,13 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$scope.patient.pageNumber= 1;
 		$scope.oldPageNumber= $scope.patient.pageNumber;
 		
-		if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
-			$scope.searchItems($scope.patient);
+		// Calling From Reset
+		if(callFrom==2){
+			if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
+				$scope.searchItems($scope.patient);
+			}
 		}
 		
-		$scope.searchItems($scope.patient);
 	};
 
 	requestHandler.getRequest("Admin/getAllCountys.json","").then(function(response){
@@ -90,7 +92,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	};
 	
 	$scope.searchItems=function(searchObj){
-		
+		$scope.isLoading=true;
 		//To avoid overwriting actual $scope.patient object.
 		$scope.searchParam={};
 		angular.copy(searchObj,$scope.searchParam);
@@ -118,8 +120,8 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		var defer=$q.defer();
 	
 		requestHandler.postRequest("/Patient/searchPatients.json",$scope.searchParam).then(function(response){
+			$scope.isLoading=false;
 			if($scope.searchParam.isRunnerReport!=3){
-				$scope.totalRecords=0;
 				$scope.totalRecords=response.data.patientGroupedSearchResult.totalNoOfRecord;
 				$scope.patientSearchData=response.data.patientGroupedSearchResult.patientSearchResults;
 				$.each($scope.patientSearchData, function(index,value) {
@@ -201,10 +203,9 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 					});
 				});
 			}else{
-				$scope.totalRecords=0;
 				$scope.patientSearchData={};
-				$scope.totalRecords=response.data.crashReportList.totalNoOfRecords;
-				$scope.directRunnerReportSearchData=response.data.crashReportList.crashReportForms;
+				$scope.totalRecords=response.data.directReportGroupResult.totalNoOfRecords;
+				$scope.directRunnerReportSearchData=response.data.directReportGroupResult.directReportGroupListByArchives;
 			}
 			
 		});
@@ -244,7 +245,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	};
 	
 	// Watch Report Type
-	$scope.$watch('patient.isRunnerReport',function(){
+	/*$scope.$watch('patient.isRunnerReport',function(){
 		if($scope.patient.countyId!=''){
 			$scope.patient.pageNumber=1;
 			var promise=$scope.searchItems($scope.patient);
@@ -253,7 +254,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 				console.log(reponse);
 			});	
 		}
-	});
+	});*/
 	
 	$scope.itemsPerFilter=function(){
 		$scope.setScrollDown=true;
@@ -306,10 +307,10 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	$scope.resetSearchData = function(){
 	     $scope.patientSearchForm.$setPristine();
 	     $scope.patientSearchData="";
-	     $scope.init();
+	     $scope.init(2);
 	};
 	
-	$scope.init();
+	$scope.init(1);
 	//Export Excel
 	$scope.exportToExcel=function(){
 		if($scope.totalRecords>searchService.getMaxRecordsDownload()){
@@ -332,14 +333,17 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	$scope.$watch('patient.age' , function() {	
 		if($scope.patient.age.length!=0){
 			angular.copy($scope.patient.age,$scope.ageFilterCurrentSelection);
-			$scope.secoundarySearchPatient();
 		}else{
 			angular.copy($scope.ageFilterCurrentSelection,$scope.patient.age);
 		}
 	    
 	}, true );
 	
-
+	// Age Drop down Events
+	$scope.ageEvents = {onInitDone: function(item) {console.log("initi",item);},
+			onItemDeselect: function(item) {console.log("deselected",item);if($scope.patient.age!=''){$scope.secoundarySearchPatient();}},
+			onItemSelect: function(item) {console.log("selected",item);$scope.secoundarySearchPatient();}};
+	
 	// Watch Damage Scale Filter
 		$scope.$watch('patient.damageScale' , function() {		
 			   if($scope.patient.damageScale.length==0){
