@@ -2,9 +2,11 @@ package com.deemsys.project.CrashReportScheduler;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.deemsys.project.ArchivedPatient.ArchivedPatientService;
+import com.deemsys.project.CrashReport.CrashReportService;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 import com.deemsys.project.pdfcrashreport.PDFReadAndInsertService;
@@ -38,6 +41,9 @@ public class SchedulerService {
 	@Autowired
 	ArchivedPatientService archivedPatientService;
 	
+	@Autowired
+	CrashReportService crashReportService;
+	
 	/**
 	 * You can opt for cron expression or fixedRate or fixedDelay
 	 * <p>
@@ -54,7 +60,12 @@ public class SchedulerService {
 				System.out.println("Start Read PDF From Folder");
 				if(injuryProperties.getProperty("autoDownloadCrash").equals("on")){
 					//crashReportReader.downloadPDFFile(crashReportReader.getCrashId());
-					crashReportReader.downloadPDFAndUploadToAWS(crashReportReader.getCrashId());
+					//crashReportReader.downloadPDFAndUploadToAWS(crashReportReader.getCrashId());
+					String[] agencyIds=injuryProperties.getProperty("agencyIds").split(",");
+					for (String agencyId : agencyIds) {
+						crashReportService.getPoliceDepartmentReportDetails(Integer.parseInt(agencyId),"05/10/2017");
+					}
+					
 				}else{
 					System.out.println("Auto Download Off");
 				}

@@ -1,13 +1,20 @@
 package com.deemsys.project.CrashReport;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 import org.joda.time.LocalDate;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +33,7 @@ import com.deemsys.project.entity.CrashReportError;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientForm;
 import com.deemsys.project.patient.PatientService;
+import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 import com.deemsys.project.pdfcrashreport.ReportFirstPageForm;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 /**
@@ -73,6 +81,9 @@ public class CrashReportService {
 	
 	@Autowired
 	LawyerAdminService lawyerAdminService;
+	
+	@Autowired
+	PDFCrashReportReader pdfCrashReportReader;
 	
 	//Get All Entries
 	public List<CrashReportForm> getCrashReportList()
@@ -328,4 +339,41 @@ public class CrashReportService {
 		
 		return crashId;
 	}
+	
+	//Collect Police Department Reports
+	public List<PoliceDepartmentRunnerDirectReports> getPoliceDepartmentReportDetails(Integer agencyId,String date) throws Exception{
+		List<PoliceDepartmentRunnerDirectReports> policeDepartmentRunnerDirectReports=new ArrayList<PoliceDepartmentRunnerDirectReports>();
+    	
+   	 //Document 
+   	 Document doc = Jsoup.connect("http://webreports.taccomputer.net/policeReport/reports_results.asp?agencyId="+agencyId+"&Date="+date).get();
+
+   	 Elements tables = doc.select("table");
+   	 
+   	 Element table=tables.get(1);
+   	 
+   	 Integer rowIndex=0;
+   	 for (Element row : table.select("tr")) {
+   		 if(rowIndex!=0&&rowIndex%2==0){
+   			Elements tds=row.select("td");
+   			if(!tds.get(0).ownText().equals("No Results Returned")){
+   				if(tds.get(2).ownText().equals("Accident")){
+   					System.out.println("Agency ID:"+agencyId);
+   					System.out.println("LocalReportNumber:"+tds.get(1).ownText());
+   	   				PoliceDepartmentRunnerDirectReports policeRunnerDirectReports=new PoliceDepartmentRunnerDirectReports(tds.get(1).ownText(),tds.get(2).ownText(),2,tds.get(3).ownText(),"http://webreports.taccomputer.net/policeReport/"+tds.get(0).select("a").attr("href"));    				
+   	       			policeDepartmentRunnerDirectReports.add(policeRunnerDirectReports);
+   	       			savePoliceDepartmentReport(policeRunnerDirectReports);
+   	   			}   
+   			}   			 			
+   		 }
+   		 rowIndex++;
+        }
+   	 
+   	 return policeDepartmentRunnerDirectReports;
+	}
+	
+	public int savePoliceDepartmentReport(PoliceDepartmentRunnerDirectReports departmentRunnerDirectReports) throws Exception{
+		
+		return pdfCrashReportReader.saveDirectRunnerCrashReport(new RunnerCrashReportForm(UUID.randomUUID().toString().replaceAll("-", ""), null,departmentRunnerDirectReports.getLocalReportNumber(), departmentRunnerDirectReports.getCrashDate(), departmentRunnerDirectReports.getCountyId().toString(), departmentRunnerDirectReports.getPdfUrl(), null, null, null, null),1);
+	}
+	
 }

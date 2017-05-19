@@ -401,7 +401,7 @@ public class PatientController {
     		ImportCrashReportStatus importCrashReportStatus = new ImportCrashReportStatus(runnerCrashReport.getDocNumber(), true, "");
         	try {
         		if(!crashReportReader.isCrashIdAvailable(runnerCrashReport.getDocNumber())){
-    				int fileAvailable=crashReportReader.saveDirectRunnerCrashReport(runnerCrashReport);
+    				int fileAvailable=crashReportReader.saveDirectRunnerCrashReport(runnerCrashReport,0);
     				if(fileAvailable==1){
     					importCrashReportStatus.setMessage("Imported Successfully");
     				}else{

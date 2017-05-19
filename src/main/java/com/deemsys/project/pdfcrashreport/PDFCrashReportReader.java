@@ -158,7 +158,7 @@ public class PDFCrashReportReader {
 	 */
 	public boolean downloadPDFFile(String crashId) throws IOException {
 			try{
-					File file=getPDFFile(crashId,"",1);
+					File file=getPDFFile(crashId,"",1,"");
 					Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportTryTimes"));
 					for (int tryCrash = 1; tryCrash < tryCount; tryCrash++) {						
 						if(file!=null){
@@ -169,11 +169,11 @@ public class PDFCrashReportReader {
 								System.out.println(crashId+"..Failed..Lets try next.!");
 								crashId=String.valueOf(Integer.parseInt(crashId)+1);
 								System.out.println("Trying..."+crashId);
-								file=getPDFFile(crashId,"",1);
+								file=getPDFFile(crashId,"",1,"");
 							}
 						}else{
 							crashId=String.valueOf(Integer.parseInt(crashId)+1);
-							file=getPDFFile(crashId,"",1);
+							file=getPDFFile(crashId,"",1,"");
 						}
 						
 					}		
@@ -205,7 +205,7 @@ public class PDFCrashReportReader {
 	public boolean importPDFFile(String crashId) throws Exception {
 		boolean isFileAvailable=true;
 		try{
-				File file=getPDFFile(crashId,"",1);
+				File file=getPDFFile(crashId,"",1,"");
 				
 				if(file.length()>2000){//2000 File Size refers an crash report not found exception
 					//Parse the PDF
@@ -228,7 +228,7 @@ public class PDFCrashReportReader {
 	public boolean downloadPDFAndUploadToAWS(String crashId) throws IOException {
 		try{
 			if(Integer.parseInt(crashId)<6295000){
-				File file=getPDFFile(crashId,"",1);
+				File file=getPDFFile(crashId,"",1,"");
 				Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportTryTimes"));
 				for (int tryCrash = 1; tryCrash < tryCount; tryCrash++) {						
 					if(file!=null){
@@ -239,11 +239,11 @@ public class PDFCrashReportReader {
 							System.out.println(crashId+"..Failed..Lets try next.!");
 							crashId=String.valueOf(Integer.parseInt(crashId)+1);
 							System.out.println("Trying..."+crashId);
-							file=getPDFFile(crashId,"",1);
+							file=getPDFFile(crashId,"",1,"");
 						}
 					}else{
 						crashId=String.valueOf(Integer.parseInt(crashId)+1);
-						file=getPDFFile(crashId,"",1);
+						file=getPDFFile(crashId,"",1,"");
 					}
 					
 				}		
@@ -282,14 +282,18 @@ public class PDFCrashReportReader {
 			
 	}  
 	
-	public File getPDFFile(String crashId, String imageFileName,Integer reportType) throws Exception{
+	public File getPDFFile(String crashId, String imageFileName,Integer reportType,String pdfLink) throws Exception{
 		File file=null;
 		HttpURLConnection httpURLConnection=null;
 		try{
 			String pdfAccessURL=injuryProperties.getProperty("odpsLink")+crashId;
 			if(reportType==2){
 				pdfAccessURL=injuryProperties.getProperty("odpsSageLink")+crashId+injuryProperties.getProperty("odpsSageImageParameter")+imageFileName;
+			}else if(reportType==3){
+				pdfAccessURL=pdfLink;
 			}
+			
+			
 			URL url=new URL(pdfAccessURL);
 			httpURLConnection=(HttpURLConnection) url.openConnection();
 			
@@ -1140,7 +1144,7 @@ public class PDFCrashReportReader {
 				String uuid="";
 				
 				if(Integer.parseInt(injuryProperties.getProperty("env"))==0){
-					fileName=crashId + ".pdf";
+					fileName="CrashReport_"+crashId+".pdf";
 					uuid=crashId.toString();
 				}else{
 					fileName=randomUUID+"_"+ crashId + ".pdf";
@@ -1473,21 +1477,27 @@ public class PDFCrashReportReader {
 	}
 	
 	// Save Direct Runner Report (SAGE Report From ODPS)
-	public int saveDirectRunnerCrashReport(RunnerCrashReportForm runnerCrashReportForm) throws Exception
+	//Report From 1 - ODPS 2 - Police Dept 
+	public int saveDirectRunnerCrashReport(RunnerCrashReportForm runnerCrashReportForm,Integer reportFrom) throws Exception
 	{
 		//TODO: Convert Form to Entity Here	
 		int isFileAvailable=1;
 		try {
 			UUID randomUUID = UUID.randomUUID();
-			File file = getPDFFile(runnerCrashReportForm.getDocNumber(),runnerCrashReportForm.getDocImageFileName(),2);
+			File file;
+			if(reportFrom==0)
+				 file=getPDFFile(runnerCrashReportForm.getDocNumber(),runnerCrashReportForm.getDocImageFileName(),2,"");
+			else
+				 file=getPDFFile(runnerCrashReportForm.getDocNumber(),runnerCrashReportForm.getDocImageFileName(),3,runnerCrashReportForm.getFilePath());
+					
 			String fileName="";
 			if(file.length()>2000){//2000 File Size refers an crash report not found exception
 				//Parse the PDF
 				// 16 - Direct Runner Crash Reports
-				if(Integer.parseInt(injuryProperties.getProperty("env"))==0){
+				if(Integer.parseInt(injuryProperties.getProperty("env"))==1){
 					fileName=runnerCrashReportForm.getDocNumber() + ".pdf";
 				}else{
-					fileName=randomUUID+"_"+ runnerCrashReportForm.getDocNumber() + ".pdf";
+					fileName="CrashReport_"+ runnerCrashReportForm.getDocNumber() + ".pdf";
 				}
 				
 				// File Upload To AWS

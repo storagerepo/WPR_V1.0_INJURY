@@ -1,5 +1,8 @@
 package com.deemsys.project.CrashReport;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -89,4 +92,10 @@ public class CrashReportController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+    //Read Table Data
+    @RequestMapping(value = {"/readData"}, method = RequestMethod.POST)
+   	public List<PoliceDepartmentRunnerDirectReports> getDetails(@RequestParam("agencyId") Integer agencyId,@RequestParam("date") String date,ModelMap model) throws Exception {
+    	return crashReportService.getPoliceDepartmentReportDetails(agencyId, date);
+    }
 }
