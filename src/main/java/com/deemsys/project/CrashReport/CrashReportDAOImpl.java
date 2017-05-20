@@ -364,13 +364,18 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 
 	@Override
 	public String getCrashReportForChecking(String localReportNumber,
-			String crashDate, Integer countyId) {
+			String crashDate, Integer countyId, Integer isCheckAll) {
 		// TODO Auto-generated method stub
 		// 1 is Runner Report
 		Criterion reportNumberAndCrashDate=Restrictions.and(Restrictions.eq("localReportNumber", localReportNumber), Restrictions.eq("crashDate", InjuryConstants.convertYearFormat(crashDate)));
 		Criterion countyAndReportCrashDate=Restrictions.and(reportNumberAndCrashDate, Restrictions.eq("county.countyId", countyId));
 		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class);
-		criteria.add(Restrictions.and(countyAndReportCrashDate,Restrictions.eq("isRunnerReport", 1)));
+		if(isCheckAll!=1){
+			Criterion isRunnerReportCriterion=Restrictions.or(Restrictions.eq("isRunnerReport", 1), Restrictions.eq("isRunnerReport", 3));
+			criteria.add(Restrictions.and(countyAndReportCrashDate,isRunnerReportCriterion));
+		}else{
+			criteria.add(countyAndReportCrashDate);
+		}
 		criteria.setProjection(Projections.property("crashId"));
 		return (String) criteria.uniqueResult();
 		

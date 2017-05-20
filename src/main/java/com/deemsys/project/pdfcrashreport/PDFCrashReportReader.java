@@ -1422,12 +1422,13 @@ public class PDFCrashReportReader {
 		Long oldReportCount=crashReportDAO.getLocalReportNumberCount(reportFirstPageForm.getLocalReportNumber());
 		Integer countyId=countyDAO.getCountyByName(crashReportService.splitCountyName(reportFirstPageForm.getCounty())).getCountyId();
 		String crashId=null;
+		Integer isCheckAll=0;
 		for (int i = 0; i <=oldReportCount; i++) {
 			String localReportNumber=reportFirstPageForm.getLocalReportNumber();
 			if(i!=0){
 				localReportNumber=localReportNumber+"("+i+")";
 			}
-			crashId=crashReportDAO.getCrashReportForChecking(localReportNumber,reportFirstPageForm.getCrashDate(), countyId);
+			crashId=crashReportDAO.getCrashReportForChecking(localReportNumber,reportFirstPageForm.getCrashDate(), countyId, isCheckAll);
 			if(crashId!=null&&!crashId.equals("")){
 				break;
 			}
@@ -1518,8 +1519,10 @@ public class PDFCrashReportReader {
 				CrashReport crashReport=new CrashReport(runnerCrashReportForm.getDocNumber(), crashReportError, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
 							 new Date(), numberOfPatients, fileName, isRunnerReport, new Date(), 0, 1, null, null, null);
 				
-				
-				crashReportDAO.save(crashReport);
+				if(!this.isDirectReportAlreadyAvailable(runnerCrashReportForm))
+				  crashReportDAO.save(crashReport);
+				else
+					System.out.println("<<<<---- Already Exist ------>>>");
 			}else{
 				isFileAvailable=0;
 			}
@@ -1530,11 +1533,30 @@ public class PDFCrashReportReader {
 			isFileAvailable=2;
 			throw e;
 		}
-		
-		
 	
 		//Logic Ends
 		
 		return isFileAvailable;
 	}
+		// Direct Report Already Available Checking With 
+		public boolean isDirectReportAlreadyAvailable(RunnerCrashReportForm runnerCrashReportForm){
+			Long oldReportCount=crashReportDAO.getLocalReportNumberCount(runnerCrashReportForm.getLocalReportNumber());
+			Integer countyId=Integer.parseInt(runnerCrashReportForm.getCounty());
+			boolean isExist=false;
+			String crashId=null;
+			Integer isCheckAll=1;
+			for (int i = 0; i <=oldReportCount; i++) {
+				String localReportNumber=runnerCrashReportForm.getLocalReportNumber();
+				if(i!=0){
+					localReportNumber=localReportNumber+"("+i+")";
+				}
+				crashId=crashReportDAO.getCrashReportForChecking(localReportNumber,runnerCrashReportForm.getCrashDate(), countyId, isCheckAll);
+				if(crashId!=null&&!crashId.equals("")){
+					isExist=true;
+					break;
+				}
+			}
+			
+			return isExist;
+		}
 }

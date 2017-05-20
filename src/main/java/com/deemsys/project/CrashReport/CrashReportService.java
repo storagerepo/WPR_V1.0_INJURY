@@ -331,7 +331,7 @@ public class CrashReportService {
 			if(i!=0){
 				localReportNumber=localReportNumber+"("+i+")";
 			}
-			crashId=crashReportDAO.getCrashReportForChecking(localReportNumber,runnerCrashReportForm.getCrashDate(), countyId);
+			crashId=crashReportDAO.getCrashReportForChecking(localReportNumber,runnerCrashReportForm.getCrashDate(), countyId,1);
 			if(crashId!=null&&!crashId.equals("")){
 				break;
 			}
@@ -345,7 +345,7 @@ public class CrashReportService {
 		List<PoliceDepartmentRunnerDirectReports> policeDepartmentRunnerDirectReports=new ArrayList<PoliceDepartmentRunnerDirectReports>();
     	
    	 //Document 
-   	 Document doc = Jsoup.connect("http://webreports.taccomputer.net/policeReport/reports_results.asp?agencyId="+agencyId+"&Date="+date).get();
+	Document doc = Jsoup.connect(injuryProperties.getProperty("policeReportCommonLink")+agencyId+injuryProperties.getProperty("policeReportCommonLinkDateParameter")+date).get();
 
    	 Elements tables = doc.select("table");
    	 
@@ -359,7 +359,7 @@ public class CrashReportService {
    				if(tds.get(2).ownText().equals("Accident")){
    					System.out.println("Agency ID:"+agencyId);
    					System.out.println("LocalReportNumber:"+tds.get(1).ownText());
-   	   				PoliceDepartmentRunnerDirectReports policeRunnerDirectReports=new PoliceDepartmentRunnerDirectReports(tds.get(1).ownText(),tds.get(2).ownText(),2,tds.get(3).ownText(),"http://webreports.taccomputer.net/policeReport/"+tds.get(0).select("a").attr("href"));    				
+   	   				PoliceDepartmentRunnerDirectReports policeRunnerDirectReports=new PoliceDepartmentRunnerDirectReports(tds.get(1).ownText(),tds.get(2).ownText(),2,tds.get(3).ownText(),injuryProperties.getProperty("policeReportPDFCommonLink")+tds.get(0).select("a").attr("href"));    				
    	       			policeDepartmentRunnerDirectReports.add(policeRunnerDirectReports);
    	       			savePoliceDepartmentReport(policeRunnerDirectReports);
    	   			}   
