@@ -99,6 +99,9 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 			$scope.searchParam.damageScale[index]=value.id;
 		});
 		
+		//Reset Check Box - Scanned
+		$scope.isCheckedAllDirectReport=false;
+		
 		if(!$scope.lockSearch){
 			$scope.lockSearch=true;
 			var defer=$q.defer();

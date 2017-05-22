@@ -118,6 +118,9 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		});
 		
 		var defer=$q.defer();
+		
+		//Reset Check Box - Scanned
+		$scope.isCheckedAllDirectReport=false;
 	
 		requestHandler.postRequest("/Patient/searchPatients.json",$scope.searchParam).then(function(response){
 			$scope.isLoading=false;

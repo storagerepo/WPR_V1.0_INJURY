@@ -52,7 +52,7 @@ public class SchedulerService {
 	 * 
 	 */
 	
-	@Scheduled(cron="*/5 * * * * ?")
+	@Scheduled(cron="* * */1 * * ?")
 	public void doSchedule() {
 		worker.work();
 			try
@@ -62,8 +62,11 @@ public class SchedulerService {
 					//crashReportReader.downloadPDFFile(crashReportReader.getCrashId());
 					//crashReportReader.downloadPDFAndUploadToAWS(crashReportReader.getCrashId());
 					String[] agencyIds=injuryProperties.getProperty("agencyIds").split(",");
+					String[] countyIds=injuryProperties.getProperty("respectiveCounties").split(",");
+					Integer i=0;
 					for (String agencyId : agencyIds) {
-						crashReportService.getPoliceDepartmentReportDetails(Integer.parseInt(agencyId),"05/10/2017");
+						crashReportService.getPoliceDepartmentReportDetails(Integer.parseInt(agencyId),Integer.parseInt(countyIds[i]),new LocalDate().toString("MM/dd/yyyy"));
+						i++;
 					}
 					
 				}else{

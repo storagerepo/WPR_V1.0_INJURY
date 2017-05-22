@@ -341,11 +341,14 @@ public class CrashReportService {
 	}
 	
 	//Collect Police Department Reports
-	public List<PoliceDepartmentRunnerDirectReports> getPoliceDepartmentReportDetails(Integer agencyId,String date) throws Exception{
+	public List<PoliceDepartmentRunnerDirectReports> getPoliceDepartmentReportDetails(Integer agencyId,Integer county,String date) throws Exception{
 		List<PoliceDepartmentRunnerDirectReports> policeDepartmentRunnerDirectReports=new ArrayList<PoliceDepartmentRunnerDirectReports>();
     	
-   	 //Document 
-	Document doc = Jsoup.connect(injuryProperties.getProperty("policeReportCommonLink")+agencyId+injuryProperties.getProperty("policeReportCommonLinkDateParameter")+date).get();
+	//Search URL	
+	String searchURL=injuryProperties.getProperty("policeReportCommonLink")+agencyId+"&"+injuryProperties.getProperty("policeReportCommonLinkDateParameter")+"="+date;	
+   	
+	//Document 
+	Document doc = Jsoup.connect(searchURL).get();
 
    	 Elements tables = doc.select("table");
    	 
@@ -359,7 +362,7 @@ public class CrashReportService {
    				if(tds.get(2).ownText().equals("Accident")){
    					System.out.println("Agency ID:"+agencyId);
    					System.out.println("LocalReportNumber:"+tds.get(1).ownText());
-   	   				PoliceDepartmentRunnerDirectReports policeRunnerDirectReports=new PoliceDepartmentRunnerDirectReports(tds.get(1).ownText(),tds.get(2).ownText(),2,tds.get(3).ownText(),injuryProperties.getProperty("policeReportPDFCommonLink")+tds.get(0).select("a").attr("href"));    				
+   	   				PoliceDepartmentRunnerDirectReports policeRunnerDirectReports=new PoliceDepartmentRunnerDirectReports(tds.get(1).ownText(),tds.get(2).ownText(),county,tds.get(3).ownText(),injuryProperties.getProperty("policeReportPDFCommonLink")+tds.get(0).select("a").attr("href"));    				
    	       			policeDepartmentRunnerDirectReports.add(policeRunnerDirectReports);
    	       			savePoliceDepartmentReport(policeRunnerDirectReports);
    	   			}   

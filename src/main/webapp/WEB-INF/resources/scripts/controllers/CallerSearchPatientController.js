@@ -109,6 +109,9 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			$scope.searchParam.damageScale[index]=value.id;
 		});
 		
+		//Reset Check Box - Scanned
+		$scope.isCheckedAllDirectReport=false;
+		
 		var defer=$q.defer();
 			requestHandler.postRequest("Patient/searchPatients.json",$scope.searchParam).then(function(response){
 				$scope.isLoading=false;
