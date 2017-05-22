@@ -24,6 +24,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var archivedToDate="";
 	var isRunnerReport=0;
 	var damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
+	var directReportStatus="-1";
 	
 	// Constant
 	var maxRecordsDownload=100000;
@@ -230,6 +231,13 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		damageScale=damageScaleInput;
 	};
 	
+	this.getDirectReportStatus=function(){
+		return directReportStatus;
+	};
+	this.setDirectReportStatus=function(directReportStatusInput){
+		directReportStatus=directReportStatusInput;
+	};
+	
 	// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
 	this.spiltAndSwapName=function(patientName){
 		var swapName="";
@@ -299,6 +307,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		archivedToDate="";
 		isRunnerReport=0;
 		damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
+		directReportStatus="-1";
 		return true;
 	};
 	

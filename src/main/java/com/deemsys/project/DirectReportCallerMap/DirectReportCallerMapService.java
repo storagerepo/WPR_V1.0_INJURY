@@ -8,15 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.Caller.AssignCallerForm;
 import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.CallerAdmin;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.DirectReportCallerAdminMap;
 import com.deemsys.project.entity.DirectReportCallerAdminMapId;
 import com.deemsys.project.entity.LawyerAdmin;
 import com.deemsys.project.entity.Patient;
+import com.deemsys.project.entity.PatientCallerAdminMap;
+import com.deemsys.project.entity.PatientCallerAdminMapId;
 import com.deemsys.project.entity.PatientLawyerAdminMap;
 import com.deemsys.project.entity.PatientLawyerAdminMapId;
 import com.deemsys.project.login.LoginService;
@@ -62,13 +66,12 @@ public class DirectReportCallerMapService {
 			
 			for (String crashId : directReportCallerMapForm.getCrashId()) {
 				DirectReportCallerAdminMap directReportCallerAdminMap=new DirectReportCallerAdminMap();
-				directReportCallerAdminMap=directReportCallerAdminMapDAO.getPatientMapsByLawyerAdminId(crashId, callerAdmin.getCallerAdminId());
+				directReportCallerAdminMap=directReportCallerAdminMapDAO.getPatientMapsByCallerAdminId(crashId, callerAdmin.getCallerAdminId());
 				
 				if(directReportCallerAdminMap==null){
 					DirectReportCallerAdminMapId directReportCallerAdminMapId = new DirectReportCallerAdminMapId(crashId, callerAdmin.getCallerAdminId());
 					directReportCallerAdminMap = new DirectReportCallerAdminMap(directReportCallerAdminMapId, callerAdmin, new CrashReport(crashId));
 				}
-				directReportCallerAdminMap.setStatus(1);
 				directReportCallerAdminMap.setIsArchived(directReportCallerMapForm.getStatus());
 				if(directReportCallerMapForm.getStatus()==1){
 					directReportCallerAdminMap.setArchivedDate(new Date());
@@ -97,6 +100,33 @@ public class DirectReportCallerMapService {
 		return 1;
 	}
 	
+	// Change Status Of Direct Report 
+	public boolean changeStatusOfDirectReport(DirectReportCallerMapForm directReportCallerMapForm){	
+		
+		String role=loginService.getCurrentRole();
+		CallerAdmin callerAdmin = null;
+		if(role==InjuryConstants.INJURY_CALLER_ADMIN_ROLE){
+			callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
+		}else if(role==InjuryConstants.INJURY_CALLER_ROLE){
+			callerAdmin=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin();
+		}
+		
+		for (String crashId : directReportCallerMapForm.getCrashId()) {
+			DirectReportCallerAdminMap directReportCallerAdminMap=new DirectReportCallerAdminMap();
+			directReportCallerAdminMap=directReportCallerAdminMapDAO.getPatientMapsByCallerAdminId(crashId, callerAdmin.getCallerAdminId());
+			
+			if(directReportCallerAdminMap==null){
+				DirectReportCallerAdminMapId directReportCallerAdminMapId = new DirectReportCallerAdminMapId(crashId, callerAdmin.getCallerAdminId());
+				directReportCallerAdminMap = new DirectReportCallerAdminMap(directReportCallerAdminMapId, callerAdmin, new CrashReport(crashId));
+				directReportCallerAdminMap.setStatus(directReportCallerMapForm.getStatus());
+			}else{
+				directReportCallerAdminMap.setStatus(directReportCallerMapForm.getStatus());
+			}
+			directReportCallerAdminMapDAO.merge(directReportCallerAdminMap);	
+		}
+		
+		return true;
+	}
 	
 	
 }

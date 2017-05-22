@@ -50,6 +50,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.patient.archivedFromDate=searchService.getArchivedFromDate();
 		$scope.patient.archivedToDate=searchService.getArchivedToDate();
 		$scope.patient.isRunnerReport=searchService.getIsRunnerReport();
+		$scope.patient.directReportStatus=searchService.getDirectReportStatus();
 		$scope.totalRecords=0;
 		$scope.countyListType=searchService.getCountyListType();
 		//Patient Search 
@@ -471,6 +472,13 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			
 	};
 	
+	// Direct Report Reset Check All
+	$scope.resetCheckAllDirect=function(){
+		if($scope.isCheckedAllDirectReport){
+			$scope.isCheckedAllDirectReport=false;
+		}
+	};
+	
 	$scope.searchItems=function(searchObj){
 		
 		$scope.isLoading=true;
@@ -597,14 +605,35 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 				$scope.patientSearchData={};
 				$scope.totalRecords=response.data.directReportGroupResult.totalNoOfRecords;
 				$scope.directRunnerReportSearchData=response.data.directReportGroupResult.directReportGroupListByArchives;
+				$.each($scope.directRunnerReportSearchData,function(key,value){
+					$.each(value.crashReportForms,function(key1,value1){
+						switch(value1.directReportStatus){
+						case null:
+							value1.directReportStatusName="New";
+							break;
+						case 1:
+							value1.directReportStatusName="Contacted";
+							break;
+						case 2:
+							value1.directReportStatusName="Follow-Up";
+							break;
+						case 3:
+							value1.directReportStatusName="Not Interested";
+							break;
+						default:
+							break;
+						}
+					});
+					
+				});
 				$scope.isCleanCheckboxDirectReport();
+				$scope.resetCheckAllDirect();
 			}
 			
 			console.log("service call end");
 		});
 		return defer.promise;
 	};
-	
 	
 		
 	$scope.searchPatients = function(){
@@ -651,6 +680,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		searchService.setItemsPerPage($scope.patient.itemsPerPage);
 		searchService.setCountyListType($scope.countyListType);
 		searchService.setDamageScale(angular.copy($scope.patient.damageScale));
+		searchService.setDirectReportStatus($scope.patient.directReportStatus);
 	};
 	
 	
@@ -660,6 +690,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			searchService.setIsArchived($scope.patient.isArchived);
 			searchService.setAge($scope.patient.age);
 			searchService.setPatientStatus($scope.patient.patientStatus);
+			searchService.setDirectReportStatus($scope.patient.directReportStatus);
 			if($scope.patient.isArchived==0){
 				$scope.archivedToDateRequired=false;
 				$scope.archivedFromDateRequired=false;
@@ -682,6 +713,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			$scope.mainSearchParam.archivedToDate=searchService.getArchivedToDate();
 			$scope.mainSearchParam.age=$scope.patient.age;
 			$scope.mainSearchParam.patientStatus=$scope.patient.patientStatus;
+			$scope.mainSearchParam.directReportStatus=$scope.patient.directReportStatus;
 			$scope.mainSearchParam.itemsPerPage=$scope.patient.itemsPerPage;
 			if($scope.oldPageNumber==$scope.patient.pageNumber){
 				// Copy Mainsearchparam to Patient
@@ -1205,6 +1237,32 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.patientSearchData="";
 		$scope.totalRecords="";
 		$scope.directRunnerReportSearchData="";
+	};
+	
+	// Direct Report Change Status Modal
+	$scope.directReportChangeStatusModal=function(crashId,reportStatus){
+		$scope.directReportStatusValue="";
+		$scope.directReportChangeStatusForm.$setPristine();
+		$scope.directReportCrashId=crashId;
+		if(reportStatus!=null){
+			$scope.directReportStatusValue=reportStatus.toString();
+		}
+		$("#directReportChangeStatusModal").modal('show');
+	};
+	
+	// Direct Report Change Status
+	$scope.directReportChangeStatus=function(){
+		$scope.directReportForm={};
+		$scope.directReportForm.crashId=[];
+		$scope.directReportForm.crashId.push($scope.directReportCrashId);
+		$scope.directReportForm.status=$scope.directReportStatusValue;
+		requestHandler.postRequest("/Caller/directReportChangeStatus.json",$scope.directReportForm).then(function(response){
+			if(response.data.success){
+				$("#directReportChangeStatusModal").modal('hide');
+				Flash.create('success', "You have Successfully Changed!");
+				$scope.searchItems($scope.patient);
+			}
+		});
 	};
 	
 	// Print Reports

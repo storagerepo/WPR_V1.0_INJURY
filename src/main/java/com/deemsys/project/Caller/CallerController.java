@@ -222,8 +222,8 @@ public class CallerController {
 
 	@RequestMapping(value = "/Caller/getNumberOfAssignedPatients", method = RequestMethod.GET)
 	public String getNoOfAssignedPatients(ModelMap model) {
-		// -1 is Runner Report Condition
-		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "", "",new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{});
+		// -1 is Runner Report Condition, Direct Report Status
+		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "", "",new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{},-1);
 		PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 		model.addAttribute("numberOfAssignedPatients", patientSearchResult.getTotalNoOfRecord());
 		model.addAttribute("requestSuccess", true);
@@ -234,6 +234,14 @@ public class CallerController {
 	@RequestMapping(value = {"/CAdmin/directReportMoveOrReleaseArchive","/Caller/directReportMoveOrReleaseArchive"},method = RequestMethod.POST)
 	public String DirectReportMoveOrReleaseArchive(@RequestBody DirectReportCallerMapForm directReportCallerMapForm, ModelMap model) {
 		model.addAttribute("success",directReportCallerMapService.directReportMoveOrRelaseArchive(directReportCallerMapForm));
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+	
+	// Direct Report Change Status
+	@RequestMapping(value = {"/CAdmin/directReportChangeStatus","/Caller/directReportChangeStatus"},method = RequestMethod.POST)
+	public String DirectReportChangeStatus(@RequestBody DirectReportCallerMapForm directReportCallerMapForm, ModelMap model) {
+		model.addAttribute("success",directReportCallerMapService.changeStatusOfDirectReport(directReportCallerMapForm));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

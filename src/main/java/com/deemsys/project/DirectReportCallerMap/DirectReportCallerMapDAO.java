@@ -9,6 +9,7 @@ import com.deemsys.project.entity.DirectReportCallerAdminMap;
  */
 public interface DirectReportCallerMapDAO extends IGenericDAO<DirectReportCallerAdminMap>{
 
-	DirectReportCallerAdminMap getPatientMapsByLawyerAdminId(String crashId,Integer callerAdminId);
+	public DirectReportCallerAdminMap getPatientMapsByCallerAdminId(String crashId,
+			Integer callerAdminId);
 
 }

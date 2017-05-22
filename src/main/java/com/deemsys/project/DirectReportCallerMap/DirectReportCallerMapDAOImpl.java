@@ -136,7 +136,7 @@ public class DirectReportCallerMapDAOImpl implements DirectReportCallerMapDAO{
 	}
 
 	@Override
-	public DirectReportCallerAdminMap getPatientMapsByLawyerAdminId(
+	public DirectReportCallerAdminMap getPatientMapsByCallerAdminId(
 			String crashId, Integer callerAdminId) {
 		// TODO Auto-generated method stub
 		return (DirectReportCallerAdminMap) this.sessionFactory.getCurrentSession().createCriteria(DirectReportCallerAdminMap.class).add(Restrictions.and(Restrictions.eq("id.crashId", crashId),Restrictions.eq("id.callerAdminId", callerAdminId))).uniqueResult();

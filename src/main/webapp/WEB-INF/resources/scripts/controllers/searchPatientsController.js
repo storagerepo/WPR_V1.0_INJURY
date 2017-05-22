@@ -39,6 +39,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$scope.patient.addedOnToDate="";
 		$scope.patient.patientStatus="7";
 		$scope.patient.isArchived="0";
+		$scope.patient.directReportStatus=0;
 		$scope.patient.archivedFromDate="";
 		$scope.patient.archivedToDate="";
 		$scope.isSelectedAddedFromDate=true;

@@ -354,7 +354,7 @@ public class PatientController {
 			PatientGroupedSearchResult patientGroupedSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 			model.addAttribute(patientGroupedSearchResult);
 		}else{
-			CrashReportSearchForm crashReportSearchForm = new CrashReportSearchForm(callerPatientSearchForm.getLocalReportNumber(),"", callerPatientSearchForm.getCrashFromDate(), callerPatientSearchForm.getCrashToDate(), callerPatientSearchForm.getCountyId(), callerPatientSearchForm.getAddedOnFromDate(), callerPatientSearchForm.getAddedOnToDate(), callerPatientSearchForm.getNumberOfDays().toString(), callerPatientSearchForm.getItemsPerPage(), callerPatientSearchForm.getPageNumber(), callerPatientSearchForm.getIsRunnerReport(), null, null, null, null, callerPatientSearchForm.getIsArchived(), callerPatientSearchForm.getArchivedFromDate(), callerPatientSearchForm.getArchivedToDate());
+			CrashReportSearchForm crashReportSearchForm = new CrashReportSearchForm(callerPatientSearchForm.getLocalReportNumber(),"", callerPatientSearchForm.getCrashFromDate(), callerPatientSearchForm.getCrashToDate(), callerPatientSearchForm.getCountyId(), callerPatientSearchForm.getAddedOnFromDate(), callerPatientSearchForm.getAddedOnToDate(), callerPatientSearchForm.getNumberOfDays().toString(), callerPatientSearchForm.getItemsPerPage(), callerPatientSearchForm.getPageNumber(), callerPatientSearchForm.getIsRunnerReport(), null, null, null, null, callerPatientSearchForm.getIsArchived(), callerPatientSearchForm.getArchivedFromDate(), callerPatientSearchForm.getArchivedToDate(),callerPatientSearchForm.getDirectReportStatus());
 			DirectReportGroupResult crashReportList=crashReportService.searchCrashReports(crashReportSearchForm);
 			model.addAttribute(crashReportList);
 		}
@@ -367,8 +367,8 @@ public class PatientController {
 	@RequestMapping(value = { "/Patient/getNumberOfPatients" }, method = RequestMethod.GET)
 	public String getNumberPatients(ModelMap model) {
 		
-		// -1 is Runner Report Condition
-		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "", "",new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{});
+		// -1 is Runner Report Condition, Direct Report Status
+		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "", "",new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{},-1);
 		PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 		model.addAttribute("numberOfPatients",patientSearchResult.getTotalNoOfRecord());
 		model.addAttribute("requestSuccess", true);

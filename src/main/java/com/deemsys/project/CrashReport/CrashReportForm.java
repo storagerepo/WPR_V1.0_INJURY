@@ -34,6 +34,7 @@ public class CrashReportForm extends InjuryProperties{
 	private Integer isArchived;
 	private String archivedDate;
 	private String archivedDateTime;
+	private Integer directReportStatus;
 	public Long getCrashReportId() {
 		return crashReportId;
 	}
@@ -162,6 +163,12 @@ public class CrashReportForm extends InjuryProperties{
 	}
 	public void setIsArchived(Integer isArchived) {
 		this.isArchived = isArchived;
+	}
+	public Integer getDirectReportStatus() {
+		return directReportStatus;
+	}
+	public void setDirectReportStatus(Integer directReportStatus) {
+		this.directReportStatus = directReportStatus;
 	}
 	public CrashReportForm(Long crashReportId, String crashReportError,
 			String localReportNumber, String crashId, String crashDate,

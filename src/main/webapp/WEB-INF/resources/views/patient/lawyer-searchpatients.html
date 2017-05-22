@@ -174,7 +174,19 @@
 						<option value="1">Archived</option>
 					</select>
 				</div>
-
+				<div class="col-md-3 margin-top-5 text-right no-padding" ng-show="patient.isRunnerReport==3">Filter
+						Status by&nbsp;&nbsp;</div>
+					<div class="col-md-3 no-padding" ng-show="patient.isRunnerReport==3">
+						<select class="form-control input-sm" name="directReportStatus"
+							ng-change="secoundarySearchPatient()"
+							ng-model="patient.directReportStatus">
+							<option value="-1">All</option>
+							<option value="0">New</option>
+							<option value="1">Contacted</option>
+							<option value="2">Follow-Up</option>
+							<option value="3">Not Interested</option>
+						</select>
+					</div>
 			</div>
 			<div class="col-md-12 no-padding hr-tag-alter"></div>
 		</div>
@@ -434,78 +446,83 @@
 	
 <!-- Direct Runner Report  -->
 	<div class="col-md-12" ng-show="patient.isRunnerReport==3">
-		<table class="table table-bordered" ng-cloak>
-			<thead>
-				<tr>
-					<th width="3%"><input
-						ng-change="checkedAllDirectReport();isCleanCheckboxDirectReport()"
-						ng-model="isCheckedAllDirectReport" type="checkbox" id="checkAll"></th>
-					<th width="20%">Local Report Number</th>
-					<th width="12%">Crash Date</th>
-					<th width="15%">County</th>
-					<th width="12%">Added Date</th>
-					<th width="20%" ng-show="patient.isArchived==1">Archived On</th>
-					<th width="15%">Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="archive-group-header"
-					ng-repeat-start="directRunnerReportMain in directRunnerReportSearchData"
-					ng-show="directRunnerReportSearchData[0].archivedDate!=''">
-					<td colspan="1"><input
-						ng-change="selectDirectReportArchiveGroup(this,'{{directRunnerReportMain.archivedDate}}');isCleanCheckboxDirectReport();"
-						ng-model="isCheckedAllGroupArchiveDirectReport" type="checkbox"
-						id="{{directRunnerReportMain.archivedDate}}"></td>
-					<td colspan="6"><span><b>Archive Date: </b>{{directRunnerReportMain.archivedDate}}</span></td>
-				</tr>
-				<tr ng-show="directRunnerReportSearchData.length>0"
-					dir-paginate="directRunnerReport in directRunnerReportMain.crashReportForms|itemsPerPage:patient.itemsPerPage"
-					current-page="patient.pageNumber" total-items="totalRecords"
-					pagination-id="directRunnerReportPageId">
-					<td colspan="1"><input type="checkbox"
-						ng-change="isCleanCheckboxDirectReport()"
-						ng-model="directRunnerReport.selected"
-						ng-checked="directRunnerReport.selected"></td>
-					<td title="Local Report Number">{{directRunnerReport.localReportNumber}}</td>
-					<td title="Crash Date">{{directRunnerReport.crashDate}}</td>
-					<td title="County">{{directRunnerReport.county}}</td>
-					<td title="Added Date">{{directRunnerReport.addedDate}}</td>
-					<td title="Archived On" ng-show="patient.isArchived==1">{{directRunnerReport.archivedDateTime}}</td>
-					<td><a href="{{directRunnerReport.filePath}}" ng-cloak
-						target="_blank" class="btn btn-xs btn-info hint--top"
-						data-hint="View Crash Report"><i class="fa fa-file-pdf-o"></i></a>
-						<a href="" ng-cloak
-						ng-show={{directRunnerReport.isArchived==0||directRunnerReport.isArchived==null}}
-						ng-click="moveSingleDirectReportToArchive(directRunnerReport.crashId)"
-						class="btn btn-xs btn-success hint--top" data-hint="Archive"><i
-							class="fa fa-archive"></i></a> <a href="" ng-cloak
-						ng-show={{directRunnerReport.isArchived==1}}
-						ng-click="releaseSingleDirectReportFromArchive(directRunnerReport.crashId)"
-						class="btn btn-xs btn-danger hint--top" data-hint="Restore"><i
-							class="fa fa-share-square-o"></i></a></td>
-				</tr>
-				<tr ng-repeat-end=""></tr>
-				<tr ng-show="totalRecords==0">
-					<td colspan="8"><center>
-							<strong>No Records Found!!!</strong>
-						</center></td>
-				</tr>
-			</tbody>
-		</table>
-		<dir-pagination-controls max-size="5" direction-links="true"
-			boundary-links="true" pagination-id="directRunnerReportPageId">
-		</dir-pagination-controls>
-		<div class="col-md-3 pull-right no-padding">
-			<label>Number of Records</label> <select class="form-control"
-				ng-model="patient.itemsPerPage" ng-change="itemsPerFilter()"
-				name="noOfRows" id="noOfRows">
-				<option value="10">Show 10 Per Page</option>
-				<option value="25">Show 25 Per Page</option>
-				<option value="50">Show 50 Per Page</option>
-				<option value="100">Show 100 Per Page</option>
-			</select>
+			<table class="table table-bordered" ng-cloak>
+				<thead>
+					<tr>
+						<th width="3%"><input
+							ng-change="checkedAllDirectReport();isCleanCheckboxDirectReport()"
+							ng-model="isCheckedAllDirectReport" type="checkbox" id="checkAll"></th>
+						<th width="18%">Local Report Number</th>
+						<th width="10%">Crash Date</th>
+						<th width="15%">County</th>
+						<th width="10%">Added Date</th>
+						<th width="12%">Status</th>
+						<th width="20%" ng-show="patient.isArchived==1">Archived On</th>
+						<th width="15%">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="archive-group-header"
+						ng-repeat-start="directRunnerReportMain in directRunnerReportSearchData"
+						ng-show="directRunnerReportSearchData[0].archivedDate!=''">
+						<td colspan="1"><input
+							ng-change="selectDirectReportArchiveGroup(this,'{{directRunnerReportMain.archivedDate}}');isCleanCheckboxDirectReport();"
+							ng-model="isCheckedAllGroupArchiveDirectReport" type="checkbox"
+							id="{{directRunnerReportMain.archivedDate}}"></td>
+						<td colspan="7"><span><b>Archive Date: </b>{{directRunnerReportMain.archivedDate}}</span></td>
+					</tr>
+					<tr ng-show="directRunnerReportSearchData.length>0"
+						dir-paginate="directRunnerReport in directRunnerReportMain.crashReportForms|itemsPerPage:patient.itemsPerPage"
+						current-page="patient.pageNumber" total-items="totalRecords"
+						pagination-id="directRunnerReportPageId">
+						<td colspan="1"><input type="checkbox"
+							ng-change="isCleanCheckboxDirectReport()"
+							ng-model="directRunnerReport.selected"
+							ng-checked="directRunnerReport.selected"></td>
+						<td title="Local Report Number">{{directRunnerReport.localReportNumber}}</td>
+						<td title="Crash Date">{{directRunnerReport.crashDate}}</td>
+						<td title="County">{{directRunnerReport.county}}</td>
+						<td title="Added Date">{{directRunnerReport.addedDate}}</td>
+						<td title="Report Status">{{directRunnerReport.directReportStatusName}}</td>
+						<td title="Archived On" ng-show="patient.isArchived==1">{{directRunnerReport.archivedDateTime}}</td>
+						<td><a href="{{directRunnerReport.filePath}}" ng-cloak
+							target="_blank" class="btn btn-xs btn-info hint--top"
+							data-hint="View Crash Report"><i class="fa fa-file-pdf-o"></i></a>
+							<a href="" ng-cloak
+							ng-show={{directRunnerReport.isArchived==0||directRunnerReport.isArchived==null}}
+							ng-click="moveSingleDirectReportToArchive(directRunnerReport.crashId)"
+							class="btn btn-xs btn-success hint--top" data-hint="Archive"><i
+								class="fa fa-archive"></i></a> <a href="" ng-cloak
+							ng-show={{directRunnerReport.isArchived==1}}
+							ng-click="releaseSingleDirectReportFromArchive(directRunnerReport.crashId)"
+							class="btn btn-xs btn-danger hint--top" data-hint="Restore"><i
+								class="fa fa-share-square-o"></i></a> <a href="" ng-cloak
+							ng-click="directReportChangeStatusModal(directRunnerReport.crashId,directRunnerReport.directReportStatus)"
+							class="btn btn-xs btn-warning hint--top"
+							data-hint="Change Status"><i class="fa fa-exchange"></i></a></td>
+					</tr>
+					<tr ng-repeat-end=""></tr>
+					<tr ng-show="totalRecords==0">
+						<td colspan="8"><center>
+								<strong>No Records Found!!!</strong>
+							</center></td>
+					</tr>
+				</tbody>
+			</table>
+			<dir-pagination-controls max-size="5" direction-links="true"
+				boundary-links="true" pagination-id="directRunnerReportPageId">
+			</dir-pagination-controls>
+			<div class="col-md-3 pull-right no-padding">
+				<label>Number of Records</label> <select class="form-control"
+					ng-model="patient.itemsPerPage" ng-change="itemsPerFilter()"
+					name="noOfRows" id="noOfRows">
+					<option value="10">Show 10 Per Page</option>
+					<option value="25">Show 25 Per Page</option>
+					<option value="50">Show 50 Per Page</option>
+					<option value="100">Show 100 Per Page</option>
+				</select>
+			</div>
 		</div>
-	</div>
 
 
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -775,6 +792,42 @@
 
 		</div>
 	</div>
+	
+	<!-- Direct Report Change Status Modal -->
+<div class="modal fade" id="directReportChangeStatusModal" role="dialog"
+	data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<form name="directReportChangeStatusForm">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Change Status</h4>
+			</div>
+			<div class="modal-body">
+				<label>Select Status:</label>
+				<select class="form-control" ng-model="directReportStatusValue" name="directReportStatus" required>
+				<option value="">-- Select --</option>
+				<option value="1">Contacted</option>
+				<option value="2">Follow-Up</option>
+				<option value="3">Not Interested</option>
+				</select>
+				<span class="error-container"
+						ng-show="directReportChangeStatusForm.directReportStatus.$dirty && directReportChangeStatusForm.directReportStatus.$invalid">
+						<span style="color: red;"
+						ng-show="directReportChangeStatusForm.directReportStatus.$error.required">Please
+							select status</span>
+					</span>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-success" ng-disabled="directReportChangeStatusForm.$invalid" ng-click="directReportChangeStatus()">Change</button>
+				<button type="close" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+			</div>
+			</form>
+		</div>
+
+	</div>
+</div>
 	<script>
 		$(function() {
 			$("html,body").scrollTop(0);

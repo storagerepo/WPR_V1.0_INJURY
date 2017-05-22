@@ -26,6 +26,7 @@ public class CallerPatientSearchForm {
 	private Integer formatType;
 	private Integer isRunnerReport;
 	private Integer[] damageScale; 
+	private Integer directReportStatus;
 	
 	public Integer getCallerAdminId() {
 		return callerAdminId;
@@ -177,10 +178,16 @@ public class CallerPatientSearchForm {
 	public void setDamageScale(Integer[] damageScale) {
 		this.damageScale = damageScale;
 	}
+	public Integer getDirectReportStatus() {
+		return directReportStatus;
+	}
+	public void setDirectReportStatus(Integer directReportStatus) {
+		this.directReportStatus = directReportStatus;
+	}
 public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 			Integer tier[], Integer patientStatus, String crashFromDate,Integer numberOfDays,
 			String crashToDate, String localReportNumber, String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived,String archivedFromDate, String archivedToDate,
-			Integer isRunnerReport,Integer[] damageScale) {
+			Integer isRunnerReport,Integer[] damageScale,Integer directReportStatus) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.countyId = countyId;
@@ -205,6 +212,7 @@ public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 		this.archivedToDate=archivedToDate;
 		this.isRunnerReport=isRunnerReport;
 		this.damageScale=damageScale;
+		this.directReportStatus=directReportStatus;
 	}
 	public CallerPatientSearchForm() {
 		super();

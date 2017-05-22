@@ -217,6 +217,17 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 				criteria.add(criterion);
 			}
 			
+			// Direct Report Status
+			if(crashReportSearchForm.getDirectReportStatus()!=null&&crashReportSearchForm.getDirectReportStatus()!=-1){
+				if(crashReportSearchForm.getDirectReportStatus()==0){
+					Criterion directReportSatusCriterion=Restrictions.isNull("dcl1.status");
+					criteria.add(directReportSatusCriterion);
+				}else{
+					Criterion directReportSatusCriterion=Restrictions.eq("dcl1.status", crashReportSearchForm.getDirectReportStatus());
+					criteria.add(directReportSatusCriterion);
+				}
+			}
+			
 		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
 			criteria.createAlias("directReportLawyerAdminMaps", "dcl1", Criteria.LEFT_JOIN,Restrictions.eq("dcl1.id.lawyerAdminId", crashReportSearchForm.getLawyerAdminId()));
 			
@@ -231,6 +242,17 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 			if(!crashReportSearchForm.getArchivedFromDate().equals("")){
 				Criterion criterion = Restrictions.between("dcl1.archivedDate", InjuryConstants.convertYearFormat(crashReportSearchForm.getArchivedFromDate()), InjuryConstants.convertYearFormat(crashReportSearchForm.getArchivedToDate()));
 				criteria.add(criterion);
+			}
+			
+			// Direct Report Status
+			if(crashReportSearchForm.getDirectReportStatus()!=null&&crashReportSearchForm.getDirectReportStatus()!=-1){
+				if(crashReportSearchForm.getDirectReportStatus()==0){
+					Criterion directReportSatusCriterion=Restrictions.isNull("dcl1.status");
+					criteria.add(directReportSatusCriterion);
+				}else{
+					Criterion directReportSatusCriterion=Restrictions.eq("dcl1.status", crashReportSearchForm.getDirectReportStatus());
+					criteria.add(directReportSatusCriterion);
+				}
 			}
 		}
 		
@@ -255,12 +277,14 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 			projectionList.add(Projections.alias(Projections.property("dcl1.isArchived"), "isArchived"));
 			projectionList.add(Projections.alias(Projections.property("dcl1.archivedDate"), "archivedDate"));
 			projectionList.add(Projections.alias(Projections.property("dcl1.archivedDateTime"), "archivedDateTime"));
+			projectionList.add(Projections.alias(Projections.property("dcl1.status"), "directReportStatus"));
 		}
 		
 		Long totalNoOfRecords= (Long) criteria.setProjection(Projections.count("crashId")).uniqueResult();
 		
 		criteria.setProjection(projectionList);
-		if(crashReportSearchForm.getIsArchived()==1){
+		if(!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+			criteria.addOrder(Order.desc("addedDate"));
 			criteria.addOrder(Order.desc("dcl1.archivedDateTime"));
 		}else{
 			criteria.addOrder(Order.desc("addedDate"));

@@ -18,6 +18,7 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler','$
 		$scope.crashreport.recordsPerPage="25";
 		$scope.crashreport.isRunnerReport=0;
 		$scope.crashreport.isArchived=0;
+		$scope.crashreport.directReportStatus=0;
 		$scope.crashreport.archivedFromDate="";
 		$scope.crashreport.archivedToDate="";
 		$scope.totalRecords=0;
