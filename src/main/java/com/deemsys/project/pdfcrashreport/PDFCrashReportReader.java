@@ -1483,49 +1483,57 @@ public class PDFCrashReportReader {
 	{
 		//TODO: Convert Form to Entity Here	
 		int isFileAvailable=1;
+		Integer reportFromMapId=0;
 		try {
-			UUID randomUUID = UUID.randomUUID();
-			File file;
-			if(reportFrom==0)
-				 file=getPDFFile(runnerCrashReportForm.getDocNumber(),runnerCrashReportForm.getDocImageFileName(),2,"");
-			else
-				 file=getPDFFile(runnerCrashReportForm.getDocNumber(),runnerCrashReportForm.getDocImageFileName(),3,runnerCrashReportForm.getFilePath());
+			
+			if(!this.isDirectReportAlreadyAvailable(runnerCrashReportForm)){
+				UUID randomUUID = UUID.randomUUID();
+				File file;
+				if(reportFrom==0){
+					file=getPDFFile(runnerCrashReportForm.getDocNumber(),runnerCrashReportForm.getDocImageFileName(),2,"");
+				}
+				else{
+					file=getPDFFile(runnerCrashReportForm.getDocNumber(),runnerCrashReportForm.getDocImageFileName(),3,runnerCrashReportForm.getFilePath());
+					reportFromMapId=runnerCrashReportForm.getReportFrom();
+				}
+					 
+						
+				String fileName="";
+				if(file.length()>2000){//2000 File Size refers an crash report not found exception
+					//Parse the PDF
+					// 16 - Direct Runner Crash Reports
+					if(Integer.parseInt(injuryProperties.getProperty("env"))==1){
+						fileName=runnerCrashReportForm.getDocNumber() + ".pdf";
+					}else{
+						fileName="CrashReport_"+ runnerCrashReportForm.getDocNumber() + ".pdf";
+					}
 					
-			String fileName="";
-			if(file.length()>2000){//2000 File Size refers an crash report not found exception
-				//Parse the PDF
-				// 16 - Direct Runner Crash Reports
-				if(Integer.parseInt(injuryProperties.getProperty("env"))==1){
-					fileName=runnerCrashReportForm.getDocNumber() + ".pdf";
+					// File Upload To AWS
+					if(Integer.parseInt(injuryProperties.getProperty("awsUpload"))==1)				
+						awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);
+					
+					Integer crashReportErrorId=16;
+					Integer isRunnerReport=3;
+					County county= countyDAO.get(Integer.parseInt(runnerCrashReportForm.getCounty()));
+					CrashReportError crashReportError=crashReportErrorDAO.get(crashReportErrorId);
+					String localReportNumber=runnerCrashReportForm.getLocalReportNumber();
+					if(crashReportDAO.getCrashReportCountByLocalReportNumber(localReportNumber)>0){
+						Long localReportNumberCount=crashReportDAO.getLocalReportNumberCount(localReportNumber+"(");
+						localReportNumber=localReportNumber+"("+(localReportNumberCount+1)+")";
+					}
+					
+					Integer numberOfPatients=0;
+					CrashReport crashReport=new CrashReport(runnerCrashReportForm.getDocNumber(), crashReportError, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
+								 new Date(), numberOfPatients, fileName, isRunnerReport, new Date(), reportFromMapId, 1, null, null, null);
+					
+					
+					  crashReportDAO.save(crashReport);
 				}else{
-					fileName="CrashReport_"+ runnerCrashReportForm.getDocNumber() + ".pdf";
+					isFileAvailable=0;
 				}
-				
-				// File Upload To AWS
-				if(Integer.parseInt(injuryProperties.getProperty("awsUpload"))==1)				
-					awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);
-				
-				Integer crashReportErrorId=16;
-				Integer isRunnerReport=3;
-				County county= countyDAO.get(Integer.parseInt(runnerCrashReportForm.getCounty()));
-				CrashReportError crashReportError=crashReportErrorDAO.get(crashReportErrorId);
-				String localReportNumber=runnerCrashReportForm.getLocalReportNumber();
-				if(crashReportDAO.getCrashReportCountByLocalReportNumber(localReportNumber)>0){
-					Long localReportNumberCount=crashReportDAO.getLocalReportNumberCount(localReportNumber+"(");
-					localReportNumber=localReportNumber+"("+(localReportNumberCount+1)+")";
-				}
-				
-				Integer numberOfPatients=0;
-				CrashReport crashReport=new CrashReport(runnerCrashReportForm.getDocNumber(), crashReportError, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-							 new Date(), numberOfPatients, fileName, isRunnerReport, new Date(), 0, 1, null, null, null);
-				
-				if(!this.isDirectReportAlreadyAvailable(runnerCrashReportForm))
-				  crashReportDAO.save(crashReport);
-				else
-					System.out.println("<<<<---- Already Exist ------>>>");
 			}else{
-				isFileAvailable=0;
-			}
+				System.out.println("<<<<---- Already Exist ------>>>");
+			}	
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

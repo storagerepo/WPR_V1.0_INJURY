@@ -201,13 +201,10 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 								value1.directReportStatusName="New";
 								break;
 							case 1:
-								value1.directReportStatusName="Contacted";
+								value1.directReportStatusName="Processing";
 								break;
 							case 2:
-								value1.directReportStatusName="Follow-Up";
-								break;
-							case 3:
-								value1.directReportStatusName="Not Interested";
+								value1.directReportStatusName="Do Not Call";
 								break;
 							default:
 								break;

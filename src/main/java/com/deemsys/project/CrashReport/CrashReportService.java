@@ -341,7 +341,7 @@ public class CrashReportService {
 	}
 	
 	//Collect Police Department Reports
-	public List<PoliceDepartmentRunnerDirectReports> getPoliceDepartmentReportDetails(Integer agencyId,Integer county,String date) throws Exception{
+	public List<PoliceDepartmentRunnerDirectReports> getPoliceDepartmentReportDetails(Integer agencyId,Integer county,String date,Integer mapId) throws Exception{
 		List<PoliceDepartmentRunnerDirectReports> policeDepartmentRunnerDirectReports=new ArrayList<PoliceDepartmentRunnerDirectReports>();
     	
 	//Search URL	
@@ -362,7 +362,7 @@ public class CrashReportService {
    				if(tds.get(2).ownText().equals("Accident")){
    					System.out.println("Agency ID:"+agencyId);
    					System.out.println("LocalReportNumber:"+tds.get(1).ownText());
-   	   				PoliceDepartmentRunnerDirectReports policeRunnerDirectReports=new PoliceDepartmentRunnerDirectReports(tds.get(1).ownText(),tds.get(2).ownText(),county,tds.get(3).ownText(),injuryProperties.getProperty("policeReportPDFCommonLink")+tds.get(0).select("a").attr("href"));    				
+   	   				PoliceDepartmentRunnerDirectReports policeRunnerDirectReports=new PoliceDepartmentRunnerDirectReports(tds.get(1).ownText(),tds.get(2).ownText(),county,tds.get(3).ownText(),injuryProperties.getProperty("policeReportPDFCommonLink")+tds.get(0).select("a").attr("href"),mapId);    				
    	       			policeDepartmentRunnerDirectReports.add(policeRunnerDirectReports);
    	       			savePoliceDepartmentReport(policeRunnerDirectReports);
    	   			}   
@@ -376,7 +376,7 @@ public class CrashReportService {
 	
 	public int savePoliceDepartmentReport(PoliceDepartmentRunnerDirectReports departmentRunnerDirectReports) throws Exception{
 		
-		return pdfCrashReportReader.saveDirectRunnerCrashReport(new RunnerCrashReportForm(UUID.randomUUID().toString().replaceAll("-", ""), null,departmentRunnerDirectReports.getLocalReportNumber(), departmentRunnerDirectReports.getCrashDate(), departmentRunnerDirectReports.getCountyId().toString(), departmentRunnerDirectReports.getPdfUrl(), null, null, null, null),1);
+		return pdfCrashReportReader.saveDirectRunnerCrashReport(new RunnerCrashReportForm(UUID.randomUUID().toString().replaceAll("-", ""), null,departmentRunnerDirectReports.getLocalReportNumber(), departmentRunnerDirectReports.getCrashDate(), departmentRunnerDirectReports.getCountyId().toString(), departmentRunnerDirectReports.getPdfUrl(), departmentRunnerDirectReports.getMapId(), null, null),1);
 	}
 	
 }

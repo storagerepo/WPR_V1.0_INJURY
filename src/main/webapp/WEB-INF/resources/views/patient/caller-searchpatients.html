@@ -198,9 +198,8 @@
 						ng-model="patient.directReportStatus">
 						<option value="-1">All</option>
 						<option value="0">New</option>
-						<option value="1">Contacted</option>
-						<option value="2">Follow-Up</option>
-						<option value="3">Not Interested</option>
+						<option value="1">Processing</option>
+						<option value="2">Do Not Call</option>
 					</select>
 				</div>
 				</div>
@@ -1165,9 +1164,8 @@
 				<label>Select Status:</label>
 				<select class="form-control" ng-model="directReportStatusValue" name="directReportStatus" required>
 				<option value="">-- Select --</option>
-				<option value="1">Contacted</option>
-				<option value="2">Follow-Up</option>
-				<option value="3">Not Interested</option>
+				<option value="1">Processing</option>
+				<option value="2">Do Not Call</option>
 				</select>
 				<span class="error-container"
 						ng-show="directReportChangeStatusForm.directReportStatus.$dirty && directReportChangeStatusForm.directReportStatus.$invalid">

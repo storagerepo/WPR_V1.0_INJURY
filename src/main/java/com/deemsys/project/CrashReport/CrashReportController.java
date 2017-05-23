@@ -79,7 +79,7 @@ public class CrashReportController {
 	public String getNumberOFCrashReport(ModelMap model)
 	{
     	// -1 ---> Direct Report Status(All Report)
-    	CrashReportSearchForm crashReportSearchForm=new CrashReportSearchForm("", "", "", "",new Integer[]{}, "", "", "", 1, 10,-1,null,null,null,null,0,"","",-1);
+    	CrashReportSearchForm crashReportSearchForm=new CrashReportSearchForm("", "", "", "",new Integer[]{}, "", "", "", 1, 10,-1,null,null,null,null,0,"","",-1,null);
     	model.addAttribute("numberOfCrashReports",crashReportService.searchCrashReports(crashReportSearchForm).getTotalNoOfRecords());
     	model.addAttribute("requestSuccess",true);
 		return "/returnPage";
@@ -96,7 +96,7 @@ public class CrashReportController {
     
     //Read Table Data
     @RequestMapping(value = {"/readData"}, method = RequestMethod.POST)
-   	public List<PoliceDepartmentRunnerDirectReports> getDetails(@RequestParam("agencyId") Integer agencyId,@RequestParam("date") String date,ModelMap model) throws Exception {
-    	return crashReportService.getPoliceDepartmentReportDetails(agencyId, date);
+   	public List<PoliceDepartmentRunnerDirectReports> getDetails(@RequestParam("agencyId") Integer agencyId,@RequestParam("countyId") Integer countyId,@RequestParam("date") String date,@RequestParam("mapId") Integer mapId,ModelMap model) throws Exception {
+    	return crashReportService.getPoliceDepartmentReportDetails(agencyId, countyId, date,mapId);
     }
 }

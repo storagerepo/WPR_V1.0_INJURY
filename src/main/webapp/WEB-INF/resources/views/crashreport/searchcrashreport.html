@@ -101,6 +101,13 @@
 				</div>
 				<span style="color:red" ng-if="addedToRequired==true">Please Enter Added On To Date</span>
        		</div>
+       		<div class="col-md-5ths" ng-show="crashreport.isRunnerReport!=0">
+       			<label>Police Agency</label>
+         		<select class="form-control"  ng-model="crashreport.reportFrom" name="reportFrom">
+                	<option value="-1">All</option>
+                	<option value="{{agency.mapId}}" ng-repeat="agency in policeAgencyList" ng-selected="crashreport.reportFrom==agency.mapId">{{agency.name}}</option>
+                </select>
+       		</div>
        		<div class="col-md-5ths">
        			<label>&nbsp;</label>
        			<div>
@@ -122,6 +129,7 @@
                                 <th class="col-md-1">Crash Date</th>
                                 <th class="col-md-1">Added Date</th>
                                 <th class="col-md-2">Crash Report Status</th>
+                                <th class="col-md-2" ng-show="crashreport.isRunnerReport!=0">Report From</th>
                                 <th class="col-md-1" ng-show="crashreport.isRunnerReport!=3">No.of.Patients</th>
                                 <th class="col-md-1">Actions</th>
                             </tr>
@@ -143,6 +151,7 @@
                                 <td title="Crash Date">{{crashReport.crashDate}}</td>
                                 <td title="Added Date">{{crashReport.addedDate}}</td>
                                 <td title="Crash Report Status">{{crashReport.crashReportError}}</td>
+                                <td title="Report From" ng-show="crashreport.isRunnerReport!=0">{{crashReport.reportFromName}}</td>
                                 <td title="Number of Patients" ng-show="crashreport.isRunnerReport!=3">{{crashReport.numberOfPatients}}</td>
                                 <td>
                                 	<a href="{{crashReport.filePath}}" ng-cloak target="_blank" class="btn btn-xs btn-danger hint--top" data-hint="View Crash Report"><i
@@ -150,8 +159,8 @@
                                 </td>
                             </tr>
                             <tr ng-repeat-end=""></tr>
-                            <tr ng-show="crashSearchData.length==0">
-                            <td colspan="8"><center><strong>No Records Found!!!</strong></center></td>
+                            <tr ng-show="totalRecords==0">
+                            <td colspan="9"><center><strong>No Records Found!!!</strong></center></td>
                             </tr>
                         </tbody>
                     </table>

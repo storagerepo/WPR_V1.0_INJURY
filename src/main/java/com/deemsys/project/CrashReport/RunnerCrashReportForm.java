@@ -70,7 +70,7 @@ public class RunnerCrashReportForm {
 		this.patientForms = patientForms;
 	}
 	public RunnerCrashReportForm(String docNumber, String docImageFileName, String localReportNumber, String crashDate,
-			String county, String filePath, String crashIdPrefix, Integer reportFrom, String reportPrefixCode, List<PatientForm> patientForms) {
+			String county, String filePath, Integer reportFrom, String reportPrefixCode, List<PatientForm> patientForms) {
 		super();
 		this.docNumber = docNumber;
 		this.docImageFileName = docImageFileName;

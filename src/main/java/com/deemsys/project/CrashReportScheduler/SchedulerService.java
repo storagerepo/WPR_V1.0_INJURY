@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import com.deemsys.project.ArchivedPatient.ArchivedPatientService;
 import com.deemsys.project.CrashReport.CrashReportService;
+import com.deemsys.project.PoliceAgency.PoliceAgencyForm;
+import com.deemsys.project.PoliceAgency.PoliceAgencyService;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 import com.deemsys.project.pdfcrashreport.PDFReadAndInsertService;
@@ -44,6 +46,9 @@ public class SchedulerService {
 	@Autowired
 	CrashReportService crashReportService;
 	
+	@Autowired
+	PoliceAgencyService policeAgencyService;
+	
 	/**
 	 * You can opt for cron expression or fixedRate or fixedDelay
 	 * <p>
@@ -61,11 +66,11 @@ public class SchedulerService {
 				if(injuryProperties.getProperty("autoDownloadCrash").equals("on")){
 					//crashReportReader.downloadPDFFile(crashReportReader.getCrashId());
 					//crashReportReader.downloadPDFAndUploadToAWS(crashReportReader.getCrashId());
-					String[] agencyIds=injuryProperties.getProperty("agencyIds").split(",");
-					String[] countyIds=injuryProperties.getProperty("respectiveCounties").split(",");
+					List<PoliceAgencyForm> policeAgencyForms = policeAgencyService.getPoliceAgenciesByStatus(3);
 					Integer i=0;
-					for (String agencyId : agencyIds) {
-						crashReportService.getPoliceDepartmentReportDetails(Integer.parseInt(agencyId),Integer.parseInt(countyIds[i]),new LocalDate().toString("MM/dd/yyyy"));
+					for (PoliceAgencyForm agencyForm : policeAgencyForms) {
+						// new LocalDate().toString("MM/dd/yyyy")
+						crashReportService.getPoliceDepartmentReportDetails(agencyForm.getAgencyId(),agencyForm.getCountyId(),"05/19/2017",agencyForm.getMapId());
 						i++;
 					}
 					

@@ -471,14 +471,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			});
 			
 	};
-	
-	// Direct Report Reset Check All
-	$scope.resetCheckAllDirect=function(){
-		if($scope.isCheckedAllDirectReport){
-			$scope.isCheckedAllDirectReport=false;
-		}
-	};
-	
+
 	$scope.searchItems=function(searchObj){
 		
 		$scope.isLoading=true;
@@ -612,13 +605,10 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 							value1.directReportStatusName="New";
 							break;
 						case 1:
-							value1.directReportStatusName="Contacted";
+							value1.directReportStatusName="Processing";
 							break;
 						case 2:
-							value1.directReportStatusName="Follow-Up";
-							break;
-						case 3:
-							value1.directReportStatusName="Not Interested";
+							value1.directReportStatusName="Do Not Call";
 							break;
 						default:
 							break;
@@ -627,7 +617,6 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 					
 				});
 				$scope.isCleanCheckboxDirectReport();
-				$scope.resetCheckAllDirect();
 			}
 			
 			console.log("service call end");

@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 17 May, 2017 10:38:37 AM by Hibernate Tools 3.4.0.CR1
+// Generated 23 May, 2017 4:20:19 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +26,7 @@ public class County implements java.io.Serializable {
 	private Set<Patient> patients = new HashSet<Patient>(0);
 	private Set<LawyerAdminCountyMap> lawyerAdminCountyMaps = new HashSet<LawyerAdminCountyMap>(
 			0);
+	private Set<PoliceAgency> policeAgencies = new HashSet<PoliceAgency>(0);
 	private Set<LawyerCountyMap> lawyerCountyMaps = new HashSet<LawyerCountyMap>(
 			0);
 	private Set<CallerCountyMap> callerCountyMaps = new HashSet<CallerCountyMap>(
@@ -39,6 +40,7 @@ public class County implements java.io.Serializable {
 
 	public County(String name, Integer status, Set<Patient> patients,
 			Set<LawyerAdminCountyMap> lawyerAdminCountyMaps,
+			Set<PoliceAgency> policeAgencies,
 			Set<LawyerCountyMap> lawyerCountyMaps,
 			Set<CallerCountyMap> callerCountyMaps,
 			Set<CrashReport> crashReports,
@@ -47,6 +49,7 @@ public class County implements java.io.Serializable {
 		this.status = status;
 		this.patients = patients;
 		this.lawyerAdminCountyMaps = lawyerAdminCountyMaps;
+		this.policeAgencies = policeAgencies;
 		this.lawyerCountyMaps = lawyerCountyMaps;
 		this.callerCountyMaps = callerCountyMaps;
 		this.crashReports = crashReports;
@@ -99,6 +102,15 @@ public class County implements java.io.Serializable {
 	public void setLawyerAdminCountyMaps(
 			Set<LawyerAdminCountyMap> lawyerAdminCountyMaps) {
 		this.lawyerAdminCountyMaps = lawyerAdminCountyMaps;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "county")
+	public Set<PoliceAgency> getPoliceAgencies() {
+		return this.policeAgencies;
+	}
+
+	public void setPoliceAgencies(Set<PoliceAgency> policeAgencies) {
+		this.policeAgencies = policeAgencies;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "county")

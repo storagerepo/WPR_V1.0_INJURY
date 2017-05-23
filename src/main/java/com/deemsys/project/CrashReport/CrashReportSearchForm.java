@@ -24,6 +24,7 @@ public class CrashReportSearchForm {
 	private String archivedFromDate;
 	private String archivedToDate;
 	private Integer directReportStatus;
+	private Integer reportFrom;
 	public String getLocalReportNumber() {
 		return localReportNumber;
 	}
@@ -150,13 +151,19 @@ public class CrashReportSearchForm {
 	public void setDirectReportStatus(Integer directReportStatus) {
 		this.directReportStatus = directReportStatus;
 	}
+	public Integer getReportFrom() {
+		return reportFrom;
+	}
+	public void setReportFrom(Integer reportFrom) {
+		this.reportFrom = reportFrom;
+	}
 	public CrashReportSearchForm(String localReportNumber, String crashId,
 			String crashFromDate, String crashToDate, Integer[] countyId,
 			String addedFromDate, String addedToDate, String numberOfDays,
 			Integer recordsPerPage, Integer pageNumber,
 			Integer isRunnerReport, Integer callerAdminId, Integer callerId,
 			Integer lawyerAdminId, Integer lawyerId, Integer isArchived,
-			String archivedFromDate, String archivedToDate,Integer directReportStatus) {
+			String archivedFromDate, String archivedToDate,Integer directReportStatus, Integer reportFrom) {
 		super();
 		this.localReportNumber = localReportNumber;
 		this.crashId = crashId;
@@ -177,6 +184,7 @@ public class CrashReportSearchForm {
 		this.archivedFromDate = archivedFromDate;
 		this.archivedToDate = archivedToDate;
 		this.directReportStatus = directReportStatus;
+		this.reportFrom = reportFrom;
 	}
 	public CrashReportSearchForm(List<CrashReportForm> crashReportForms,
 			Integer totalRecords) {

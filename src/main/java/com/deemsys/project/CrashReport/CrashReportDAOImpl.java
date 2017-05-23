@@ -199,6 +199,12 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 			}
 		}
 		
+		// Report From Criterion
+		if(crashReportSearchForm.getReportFrom()!=null&&crashReportSearchForm.getReportFrom()!=-1){
+			Criterion reportFromCriterion=Restrictions.eq("reportFrom", crashReportSearchForm.getReportFrom());
+			criteria.add(reportFromCriterion);
+		}
+		
 		String role=loginService.getCurrentRole();
 		
 		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
@@ -289,6 +295,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		}else{
 			criteria.addOrder(Order.desc("addedDate"));
 		}
+		criteria.addOrder(Order.desc("localReportNumber"));
 		
 				//criteria.setResultTransformer(new AliasToBeanResultTransformer(CrashReportForm.class)).list().size();
 		//new AliasToBeanConstructorResultTransformer(CrashReportForm.class.getConstructors()[1])

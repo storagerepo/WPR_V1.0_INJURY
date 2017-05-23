@@ -7,6 +7,7 @@ public class PoliceDepartmentRunnerDirectReports {
 	private Integer countyId;
 	private String crashDate;
 	private String pdfUrl;
+	private Integer mapId;
 	public String getLocalReportNumber() {
 		return localReportNumber;
 	}
@@ -37,19 +38,26 @@ public class PoliceDepartmentRunnerDirectReports {
 	public void setPdfUrl(String pdfUrl) {
 		this.pdfUrl = pdfUrl;
 	}
+	public Integer getMapId() {
+		return mapId;
+	}
+	public void setMapId(Integer mapId) {
+		this.mapId = mapId;
+	}
 	public PoliceDepartmentRunnerDirectReports() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public PoliceDepartmentRunnerDirectReports(String localReportNumber,
 			String typeOfReport, Integer countyId, String crashDate,
-			String pdfUrl) {
+			String pdfUrl,Integer mapId) {
 		super();
 		this.localReportNumber = localReportNumber;
 		this.typeOfReport = typeOfReport;
 		this.countyId = countyId;
 		this.crashDate = crashDate;
 		this.pdfUrl = pdfUrl;
+		this.mapId = mapId;
 	}
 	
 	
