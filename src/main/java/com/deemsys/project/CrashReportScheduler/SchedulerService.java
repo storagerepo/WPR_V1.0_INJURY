@@ -66,11 +66,10 @@ public class SchedulerService {
 				if(injuryProperties.getProperty("autoDownloadCrash").equals("on")){
 					//crashReportReader.downloadPDFFile(crashReportReader.getCrashId());
 					//crashReportReader.downloadPDFAndUploadToAWS(crashReportReader.getCrashId());
-					List<PoliceAgencyForm> policeAgencyForms = policeAgencyService.getPoliceAgenciesByStatus(3);
+					List<PoliceAgencyForm> policeAgencyForms = policeAgencyService.getPoliceAgenciesForScheduler();
 					Integer i=0;
 					for (PoliceAgencyForm agencyForm : policeAgencyForms) {
-						// new LocalDate().toString("MM/dd/yyyy")
-						crashReportService.getPoliceDepartmentReportDetails(agencyForm.getAgencyId(),agencyForm.getCountyId(),"05/19/2017",agencyForm.getMapId());
+						crashReportService.getPoliceDepartmentReportDetails(agencyForm.getAgencyId(),agencyForm.getCountyId(),new LocalDate().toString("MM/dd/yyyy"),agencyForm.getMapId());
 						i++;
 					}
 					

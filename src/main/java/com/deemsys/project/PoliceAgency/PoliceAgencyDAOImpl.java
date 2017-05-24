@@ -3,6 +3,7 @@ package com.deemsys.project.PoliceAgency;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,7 +140,20 @@ public class PoliceAgencyDAOImpl implements PoliceAgencyDAO{
 	@Override
 	public List<PoliceAgency> getPoliceAgenciesBystatus(Integer status) {
 		// TODO Auto-generated method stub
-		return this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class).add(Restrictions.eq("status", status)).list();
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class);
+		if(status==3){
+			criteria.add(Restrictions.or(Restrictions.eq("status", status), Restrictions.eq("mapId", 0)));
+		}else{
+			criteria.add(Restrictions.eq("status", status));
+		}
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PoliceAgency> getPoliceAgenciesForScheduler() {
+		// TODO Auto-generated method stub
+		return this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class).add(Restrictions.eq("status", 3)).list();
 	}
 
 	

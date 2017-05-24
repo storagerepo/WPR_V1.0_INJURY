@@ -126,4 +126,15 @@ public class PoliceAgencyService {
 		return policeAgencyForms;
 	}
 	
+	public List<PoliceAgencyForm> getPoliceAgenciesForScheduler(){
+		List<PoliceAgencyForm> policeAgencyForms = new ArrayList<PoliceAgencyForm>();
+		List<PoliceAgency> policeAgencies = policeAgencyDAO.getPoliceAgenciesForScheduler();
+		for (PoliceAgency policeAgency : policeAgencies) {
+			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getId(), policeAgency.getCounty().getCountyId(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getMapId(), policeAgency.getStatus());
+			policeAgencyForms.add(agencyForm);
+		}
+		
+		return policeAgencyForms;
+	}
+	
 }
