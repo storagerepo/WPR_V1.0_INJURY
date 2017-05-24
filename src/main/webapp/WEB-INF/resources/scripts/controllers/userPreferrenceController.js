@@ -20,12 +20,17 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
           console.log("list " + _listName + ": beforeStop");
       },
       change: function() {
-          console.log("list " + _listName + ": change");
+    	  console.log("list " + _listName + ": change");
       },
       create: function() {
           console.log("list " + _listName + ": create");
       },
       deactivate: function() {
+    	  if(_listName=='B'){
+    		  $scope.updateDefaultValueList();
+    	  }else{
+    		  $scope.removeDefaultValueList();
+    	  }
           console.log("list " + _listName + ": deactivate");
       },
       out: function() {
@@ -38,7 +43,7 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
           console.log("list " + _listName + ": receive");
       },
       remove: function() {
-          console.log("list " + _listName + ": remove");
+    	 console.log("list " + _listName + ": remove");
       },
       sort: function() {
           console.log("list " + _listName + ": sort");
@@ -47,10 +52,10 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
           console.log("list " + _listName + ": start");
       },
       stop: function() {
-          console.log("list " + _listName + ": stop");
+    	  console.log("list " + _listName + ": stop");
       },
       update: function() {
-          console.log("list " + _listName + ": update");
+    	 console.log("list " + _listName + ": update");
       }
     };
     return options;
@@ -208,7 +213,54 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	$scope.getUserExportPreference=function(){
 		requestHandler.getRequest("Patient/getAllUserExportPreferencess.json","").then(function(response){
 			$scope.exportFieldsFormsSelected=response.data.userExportPreferencesForms;
+			$scope.getDefaultValueMinorField();
 			$scope.splitObjects();
+		});
+	};
+	
+	// Get Default Value Minor field 37 ---> Static Id for this field
+	$scope.exportDefaultValueList=[];
+	var exportDefaultValueListOrginal=[];
+	$scope.getDefaultValueMinorField=function(){
+		angular.forEach($scope.exportFieldsFormsSelected,function(item,index){
+			if(item.fieldId==37){
+				var result = $.grep(exportDefaultValueListOrginal, function(e){ return e.fieldId == item.fieldId;});
+				if (result.length == 0) {
+	 			 // not found
+					var exportDefaultCopy=angular.copy(item);
+					$scope.exportDefaultValueList.push(exportDefaultCopy);
+				} else if (result.length == 1) {
+					
+	  			// access the foo property using result[0].foo
+				}
+			}
+		});
+		exportDefaultValueListOrginal=angular.copy($scope.exportDefaultValueList);
+	 };
+	
+	$scope.updateDefaultValueList=function(){
+		angular.forEach($scope.rawScreens[1],function(item,index){
+			if(item.fieldId==37){
+				var result = $.grep(exportDefaultValueListOrginal, function(e){ return e.fieldId == item.fieldId;});
+				if (result.length == 0) {
+	 			 // not found
+					var exportDefaultCopy=angular.copy(item);
+					$scope.exportDefaultValueList.push(exportDefaultCopy);
+				} else if (result.length == 1) {
+					
+	  			// access the foo property using result[0].foo
+				}
+			}
+		});
+		exportDefaultValueListOrginal=angular.copy($scope.exportDefaultValueList);
+	};
+	
+	$scope.removeDefaultValueList=function(){
+		angular.forEach($scope.rawScreens[0],function(item,index){
+			//var removeIndex=$scope.exportDefaultValueList.indexOf(item);
+			if(item.fieldId==37){
+				$scope.exportDefaultValueList.splice(0,1);
+			}
 		});
 	};
 	
@@ -233,12 +285,20 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	
 	// Get Exports Fields List
 	$scope.getExportFieldsList();
-	
+
 	// Save User Export Preferences
 	$scope.saveUserExportPreferences=function(fromLocation){
 		$scope.userPreferenceSaveForm={};
 		$scope.userPreferenceSaveForm.exportFieldsForms=$scope.rawScreens[1];
-		 requestHandler.postRequest("/Patient/saveUpdateUserExportPreferences.json",$scope.userPreferenceSaveForm).then(function(response){
+		angular.forEach($scope.exportDefaultValueList,function(item,index){
+			angular.forEach($scope.userPreferenceSaveForm.exportFieldsForms,function(item1,index1){
+				if(item.fieldId==item1.fieldId){
+					item1.defaultValue=item.defaultValue;
+				}
+			});
+		});
+
+		requestHandler.postRequest("/Patient/saveUpdateUserExportPreferences.json",$scope.userPreferenceSaveForm).then(function(response){
 			  if(fromLocation==1){
 				  Flash.create('success', "You have Successfully Updated!");
 				  $scope.getExportFieldsList();
@@ -249,6 +309,8 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 		 });
 		
 	 };
+	
+	 
 	 // Move All
 	 $scope.moveAll=function(){
 		 $scope.rawScreens[0]=[];
@@ -269,8 +331,8 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	 // Compare Two List
 	 $rootScope.exportPreferenceChanged=true;
 	 $scope.isCleanForExport = function() {
-		 $rootScope.exportPreferenceChanged=angular.equals(rawScreensOriginal,$scope.rawScreens);
-	    return angular.equals(rawScreensOriginal,$scope.rawScreens);
+		 $rootScope.exportPreferenceChanged=angular.equals(rawScreensOriginal,$scope.rawScreens)&&angular.equals(exportDefaultValueListOrginal,$scope.exportDefaultValueList);
+	    return angular.equals(rawScreensOriginal,$scope.rawScreens)&&angular.equals(exportDefaultValueListOrginal,$scope.exportDefaultValueList);
 	 };
 	 
 	 $rootScope.rootSaveUserExportPreference=function(){

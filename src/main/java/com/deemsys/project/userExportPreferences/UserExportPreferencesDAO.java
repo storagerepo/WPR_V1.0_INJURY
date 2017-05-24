@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.deemsys.project.common.IGenericDAO;
 import com.deemsys.project.entity.UserExportPreferences;
+import com.deemsys.project.exportFields.ExportFieldsForm;
 /**
  * 
  * @author Deemsys
@@ -14,5 +15,7 @@ public interface UserExportPreferencesDAO extends IGenericDAO<UserExportPreferen
 	public List<UserExportPreferences> getAll(Integer userId);
 	
 	public void deleteAllByUserId(Integer userId);;
+	
+	public List<ExportFieldsForm> getUserExportPreferenceList(Integer userId);
 
 }

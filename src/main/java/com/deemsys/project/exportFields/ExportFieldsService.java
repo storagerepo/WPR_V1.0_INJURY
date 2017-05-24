@@ -38,7 +38,7 @@ public class ExportFieldsService {
 		
 		for (ExportFields exportFields : exportFieldss) {
 			//TODO: Fill the List
-			exportFieldsForms.add(new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getStatus()));
+			exportFieldsForms.add(new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getDefaultValue(), exportFields.getSequenceNo(), exportFields.getStatus()));
 		}
 		
 		return exportFieldsForms;
@@ -54,7 +54,7 @@ public class ExportFieldsService {
 		//TODO: Convert Entity to Form
 		//Start
 		
-		ExportFieldsForm exportFieldsForm=new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getStatus());
+		ExportFieldsForm exportFieldsForm=new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getDefaultValue(), exportFields.getSequenceNo(), exportFields.getStatus());
 		
 		//End
 		
@@ -72,7 +72,7 @@ public class ExportFieldsService {
 		
 		for (ExportFields exportFields : exportFieldss) {
 			//TODO: Fill the List
-			exportFieldsForms.add(new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getStatus()));
+			exportFieldsForms.add(new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getDefaultValue(), exportFields.getSequenceNo(), exportFields.getStatus()));
 		}
 		
 		return exportFieldsForms;
@@ -85,8 +85,8 @@ public class ExportFieldsService {
 		
 		//Logic Starts
 		
-		ExportFields exportFields=new ExportFields();
-		
+		ExportFields exportFields=new ExportFields(exportFieldsForm.getFieldName(), exportFieldsForm.getSequenceNo(), exportFieldsForm.getIsCustom(), exportFieldsForm.getDefaultValue(), exportFieldsForm.getStatus(), null);
+		exportFields.setFieldId(exportFieldsForm.getFieldId());
 		//Logic Ends
 		
 		
@@ -101,7 +101,7 @@ public class ExportFieldsService {
 		
 		//Logic Starts
 		
-		ExportFields exportFields=new ExportFields();
+		ExportFields exportFields=new ExportFields(exportFieldsForm.getFieldName(), exportFieldsForm.getSequenceNo(), exportFieldsForm.getIsCustom(), exportFieldsForm.getDefaultValue(), exportFieldsForm.getStatus(), null);
 		
 		//Logic Ends
 		
@@ -116,8 +116,8 @@ public class ExportFieldsService {
 		
 		//Logic Starts
 		
-		ExportFields exportFields=new ExportFields();
-		
+		ExportFields exportFields=new ExportFields(exportFieldsForm.getFieldName(), exportFieldsForm.getSequenceNo(), exportFieldsForm.getIsCustom(), exportFieldsForm.getDefaultValue(), exportFieldsForm.getStatus(), null);
+		exportFields.setFieldId(exportFieldsForm.getFieldId());
 		//Logic Ends
 		
 		exportFieldsDAO.update(exportFields);

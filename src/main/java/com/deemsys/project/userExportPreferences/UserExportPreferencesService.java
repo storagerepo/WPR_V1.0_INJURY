@@ -42,16 +42,7 @@ public class UserExportPreferencesService {
 	//Get All Entries
 	public List<ExportFieldsForm> getUserExportPreferencesList()
 	{
-		List<ExportFieldsForm> exportFieldsForms =new ArrayList<ExportFieldsForm>();
-		
-		List<UserExportPreferences> userExportPreferencess=new ArrayList<UserExportPreferences>();
-		
-		userExportPreferencess=userExportPreferencesDAO.getAll(loginService.getPreferenceUserId());
-		
-		for (UserExportPreferences userExportPreferences : userExportPreferencess) {
-			//TODO: Fill the List
-			exportFieldsForms.add(new ExportFieldsForm(userExportPreferences.getId().getFieldId(), userExportPreferences.getExportFields().getFieldName(), userExportPreferences.getExportFields().getIsCustom(), userExportPreferences.getExportFields().getStatus()));
-		}
+		List<ExportFieldsForm> exportFieldsForms =userExportPreferencesDAO.getUserExportPreferenceList(loginService.getPreferenceUserId());
 		
 		return exportFieldsForms;
 	}
@@ -73,7 +64,7 @@ public class UserExportPreferencesService {
 		Users users=usersDAO.get(userId);
 		
 		for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {			
-			userExportPreferencesDAO.save(new UserExportPreferences(new UserExportPreferencesId(userId, exportFieldsForm.getFieldId(), sequenceNo++, 1),users));
+			userExportPreferencesDAO.save(new UserExportPreferences(new UserExportPreferencesId(userId, exportFieldsForm.getFieldId(), sequenceNo++, exportFieldsForm.getDefaultValue(), 1),users));
 		}
 		//Logic Ends	
 		

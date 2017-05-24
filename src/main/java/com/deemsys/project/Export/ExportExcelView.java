@@ -108,7 +108,7 @@ public class ExportExcelView extends AbstractExcelView {
 			row = sheet.createRow(r++);
 			c = 0;
 			for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
-				String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId());
+				String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue());
 				row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
 			}
 			
@@ -269,7 +269,7 @@ public class ExportExcelView extends AbstractExcelView {
 	}
 	
 	// Get Cell Value
-	public String getCellValueFromPatient(PatientSearchList patientSearchList,Integer fieldValue){
+	public String getCellValueFromPatient(PatientSearchList patientSearchList,Integer fieldValue, String defaultValue){
 		
 		String value="";
 		switch (fieldValue) {
@@ -415,6 +415,13 @@ public class ExportExcelView extends AbstractExcelView {
 				value="";
 			}
 			
+			break;
+		case 37:
+			// Salutation of Minor
+			if(defaultValue!=null)
+				value=defaultValue;
+			else
+				value="";
 			break;
 		default:
 			break;

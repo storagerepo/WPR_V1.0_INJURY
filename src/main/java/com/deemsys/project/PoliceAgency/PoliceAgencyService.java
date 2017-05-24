@@ -116,6 +116,7 @@ public class PoliceAgencyService {
 	
 	// Get Scheduler Police Agencies
 	public List<PoliceAgencyForm> getPoliceAgenciesByStatus(Integer status){
+		
 		List<PoliceAgencyForm> policeAgencyForms = new ArrayList<PoliceAgencyForm>();
 		List<PoliceAgency> policeAgencies = policeAgencyDAO.getPoliceAgenciesBystatus(status);
 		for (PoliceAgency policeAgency : policeAgencies) {

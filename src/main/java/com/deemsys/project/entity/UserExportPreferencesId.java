@@ -14,6 +14,7 @@ public class UserExportPreferencesId implements java.io.Serializable {
 	private int userId;
 	private Integer fieldId;
 	private Integer sequenceNo;
+	private String defaultValue;
 	private Integer status;
 
 	public UserExportPreferencesId() {
@@ -24,10 +25,11 @@ public class UserExportPreferencesId implements java.io.Serializable {
 	}
 
 	public UserExportPreferencesId(int userId, Integer fieldId,
-			Integer sequenceNo, Integer status) {
+			Integer sequenceNo, String defaultValue, Integer status) {
 		this.userId = userId;
 		this.fieldId = fieldId;
 		this.sequenceNo = sequenceNo;
+		this.defaultValue = defaultValue;
 		this.status = status;
 	}
 
@@ -56,6 +58,15 @@ public class UserExportPreferencesId implements java.io.Serializable {
 
 	public void setSequenceNo(Integer sequenceNo) {
 		this.sequenceNo = sequenceNo;
+	}
+
+	@Column(name="default_value", length=600)
+	public String getDefaultValue() {
+		return defaultValue;
+	}
+
+	public void setDefaultValue(String defaultValue) {
+		this.defaultValue = defaultValue;
 	}
 
 	@Column(name = "status")

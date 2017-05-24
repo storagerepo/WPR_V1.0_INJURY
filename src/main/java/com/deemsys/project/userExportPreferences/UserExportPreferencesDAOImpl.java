@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.UserExportPreferences;
+import com.deemsys.project.exportFields.ExportFieldsForm;
 
 /**
  * 
@@ -149,8 +155,29 @@ public class UserExportPreferencesDAOImpl implements UserExportPreferencesDAO{
 		for (UserExportPreferences userExportPreferences : this.getAll(userId)) {
 			this.sessionFactory.getCurrentSession().delete(userExportPreferences);
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ExportFieldsForm> getUserExportPreferenceList(Integer userId) {
+		// TODO Auto-generated method stub
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(UserExportPreferences.class,"ue1");
+		criteria.createAlias("ue1.exportFields", "e1");
 		
+		criteria.add(Restrictions.eq("ue1.id.userId", userId));
 		
+		ProjectionList projectionList = Projections.projectionList();
+		projectionList.add(Projections.property("ue1.id.fieldId"),"fieldId");
+		projectionList.add(Projections.property("e1.fieldName"),"fieldName");
+		projectionList.add(Projections.property("e1.isCustom"),"isCustom");
+		projectionList.add(Projections.property("ue1.id.defaultValue"),"defaultValue");
+		projectionList.add(Projections.property("ue1.id.sequenceNo"),"sequenceNo");
+		projectionList.add(Projections.property("ue1.id.status"),"status");
+		
+		criteria.setProjection(projectionList);
+		criteria.addOrder(Order.asc("ue1.id.sequenceNo"));
+		
+		return criteria.setResultTransformer(new AliasToBeanResultTransformer(ExportFieldsForm.class)).list();
 	}
 
 	

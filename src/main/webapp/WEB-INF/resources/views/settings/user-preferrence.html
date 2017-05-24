@@ -159,6 +159,7 @@
 								<div class="margin-top-10">24. VICTIM INSURANCE COMPANY</div>
 								<div class="margin-top-10">25. VICTIM POLICY NUMBER</div>
 								<div class="margin-top-10">26. TIER</div>
+								<div class="margin-top-10">27. SALUTATION OF MINOR</div>
 							</div>
 	</div>
     </div>
@@ -199,16 +200,41 @@
 								<div style="clear: both;"></div>
 								
 							</div>
-							<div class="col-md-12  margin-top-20">
+							<form name="exportFieldsDefaultValueForm">
+								<div class="col-md-12" ng-show="exportDefaultValueList.length>0" style="margin-top: 50px;">
+										<legend>
+											<p class="font-for-subheading">Fields Default Value</p>
+										</legend>
+										
+									<div class="col-md-12 margin-top-20" ng-repeat="exportDefaultValue in exportDefaultValueList">
+											<div class="col-md-3">
+												<label>{{exportDefaultValue.fieldName}} :</label>
+											</div>
+											<div class="col-md-5">
+												<textarea class="form-control" rows="3"
+													ng-model="exportDefaultValue.defaultValue"
+													name="defaultValue" required></textarea>
+												<span class="error-container"
+													ng-show="exportFieldsDefaultValueForm.defaultValue.$dirty && exportFieldsDefaultValueForm.defaultValue.$invalid">
+													<span style="color: red;"
+													ng-show="exportFieldsDefaultValueForm.defaultValue.$error.required">Please
+														enter value</span>
+												</span>
+											</div>
+									</div>
+								</div>
+									<div class="col-md-12  margin-top-20">
 								<div class="col-md-9"></div>
 								<div class="col-md-3 text-right">
-                					<a class="btn btn-success" ng-disabled='isCleanForExport()' ng-click="saveUserExportPreferences(1)">Submit</a>
+                					<a class="btn btn-success" ng-disabled='isCleanForExport()||exportFieldsDefaultValueForm.$invalid' ng-click="saveUserExportPreferences(1)">Submit</a>
               						<a ui-sref="dashboard.home"  class="btn btn-danger" >Cancel</a><br/><br/>
               					</div>
            					</div>
+           					</form>
 	</div>
     </div>
    </div>
+  
 				</div>
 			</div>
 		</div>
