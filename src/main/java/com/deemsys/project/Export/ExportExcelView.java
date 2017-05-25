@@ -418,10 +418,15 @@ public class ExportExcelView extends AbstractExcelView {
 			break;
 		case 37:
 			// Salutation of Minor
-			if(defaultValue!=null)
-				value=defaultValue;
-			else
+			if(patientSearchList.getAge()!=null){
+				if(defaultValue!=null&&patientSearchList.getAge()<18)
+					value=defaultValue;
+				else
+					value="";
+			}else{
 				value="";
+			}
+			
 			break;
 		default:
 			break;
