@@ -123,6 +123,21 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler','$
 						case 5002:
 							value1.reportFromName="Bedford Heights";
 							break;
+						case 5003:
+							value1.reportFromName="Fairview Park";
+							break;
+						case 5004:
+							value1.reportFromName="North Olmsted";
+							break;
+						case 5005:
+							value1.reportFromName="North Royalton";
+							break;
+						case 5006:
+							value1.reportFromName="Pepper Pike";
+							break;
+						case 5007:
+							value1.reportFromName="Chagrin Falls";
+							break;
 					}
 				});
 			});
