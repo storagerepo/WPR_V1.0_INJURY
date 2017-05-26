@@ -35,6 +35,7 @@ public class CrashReportForm extends InjuryProperties{
 	private String archivedDate;
 	private String archivedDateTime;
 	private Integer directReportStatus;
+	private String oldFilePath;
 	public Long getCrashReportId() {
 		return crashReportId;
 	}
@@ -169,6 +170,24 @@ public class CrashReportForm extends InjuryProperties{
 	}
 	public void setDirectReportStatus(Integer directReportStatus) {
 		this.directReportStatus = directReportStatus;
+	}
+	public String getOldFilePath() {
+		return oldFilePath;
+	}
+	public void setOldFilePath(String oldFilePath) {
+		if(oldFilePath!=null){
+			if(this.isRunnerReport==2){
+				if(this.reportFrom==Integer.parseInt(getProperty("reportFromDeemsys"))){
+					this.oldFilePath = getProperty("runnerBucketURL")+oldFilePath;
+				}else{
+					this.oldFilePath = getProperty("policeDepartmentBucketURL")+this.reportFrom+getProperty("policeDepartmentFolder")+oldFilePath;
+				}
+			}else{
+				this.oldFilePath = getProperty("bucketURL")+oldFilePath;
+			}
+		}else{
+			this.oldFilePath=oldFilePath;
+		}
 	}
 	public CrashReportForm(Long crashReportId, String crashReportError,
 			String localReportNumber, String crashId, String crashDate,

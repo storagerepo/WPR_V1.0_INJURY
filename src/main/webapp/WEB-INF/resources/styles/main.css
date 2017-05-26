@@ -600,17 +600,16 @@ input[type=text]::-ms-clear { display: none; }
 	background-color:#cc2900;
 }
 
-.group-header-back{
-	background-color:rgba(0, 109, 204,0.05)!important;
-}
-
-
 .search{
 	background-color:#1A4D81;
 	color: #fff; 
 }
 .group-header-back{
 	background-color:rgba(0, 109, 204,0.1)!important;
+}
+
+.group-header-back-convert{
+	background-color:rgba(240, 173, 78, 0.15) !important;
 }
 .patient-count-circle{
 	height:20px;

@@ -31,6 +31,7 @@ public class CrashReport implements java.io.Serializable {
 	private Date addedDate;
 	private Integer numberOfPatients;
 	private String filePath;
+	private String oldFilePath;
 	private Integer isRunnerReport;
 	private Date runnerReportAddedDate;
 	private Integer reportFrom;
@@ -50,7 +51,7 @@ public class CrashReport implements java.io.Serializable {
 
 	public CrashReport(String crashId, CrashReportError crashReportError,
 			County county, String localReportNumber, Date crashDate,
-			Date addedDate, Integer numberOfPatients, String filePath,
+			Date addedDate, Integer numberOfPatients, String filePath, String oldFilePath,
 			Integer isRunnerReport, Date runnerReportAddedDate,
 			Integer reportFrom, Integer status,
 			Set<DirectReportCallerAdminMap> directReportCallerAdminMaps,
@@ -64,6 +65,7 @@ public class CrashReport implements java.io.Serializable {
 		this.addedDate = addedDate;
 		this.numberOfPatients = numberOfPatients;
 		this.filePath = filePath;
+		this.oldFilePath = oldFilePath;
 		this.isRunnerReport = isRunnerReport;
 		this.runnerReportAddedDate = runnerReportAddedDate;
 		this.reportFrom = reportFrom;
@@ -148,6 +150,15 @@ public class CrashReport implements java.io.Serializable {
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+
+	@Column(name = "old_file_path", length = 100)
+	public String getOldFilePath() {
+		return oldFilePath;
+	}
+
+	public void setOldFilePath(String oldFilePath) {
+		this.oldFilePath = oldFilePath;
 	}
 
 	@Column(name = "is_runner_report")

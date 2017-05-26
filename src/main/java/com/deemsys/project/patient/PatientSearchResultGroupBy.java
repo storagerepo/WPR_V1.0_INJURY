@@ -11,6 +11,7 @@ public class PatientSearchResultGroupBy {
 	private Integer isRunnerReport;
 	private String runnerReportAddedDate;
 	private Integer numberOfPatients;
+	private Integer directReportStatus;
 	private List<PatientSearchList> patientSearchLists;
 
 	public String getLocalReportNumber() {
@@ -69,6 +70,14 @@ public class PatientSearchResultGroupBy {
 		this.numberOfPatients = numberOfPatients;
 	}
 
+	public Integer getDirectReportStatus() {
+		return directReportStatus;
+	}
+
+	public void setDirectReportStatus(Integer directReportStatus) {
+		this.directReportStatus = directReportStatus;
+	}
+
 	public String getUnitInError() {
 		return unitInError;
 	}
@@ -78,7 +87,7 @@ public class PatientSearchResultGroupBy {
 	}
 
 	public PatientSearchResultGroupBy(String localReportNumber,String unitInError,String crashDate,
-			String addedDate, Integer isRunnerReport, String runnerReportAddedDate, Integer numberOfPatients,List<PatientSearchList> patientSearchLists) {
+			String addedDate, Integer isRunnerReport, String runnerReportAddedDate, Integer numberOfPatients, Integer directReportStatus,List<PatientSearchList> patientSearchLists) {
 		super();
 		this.localReportNumber = localReportNumber;
 		this.unitInError=unitInError;
@@ -87,6 +96,7 @@ public class PatientSearchResultGroupBy {
 		this.isRunnerReport = isRunnerReport;
 		this.runnerReportAddedDate = runnerReportAddedDate;
 		this.numberOfPatients=numberOfPatients;
+		this.directReportStatus = directReportStatus;
 		this.patientSearchLists=patientSearchLists;
 	}
 

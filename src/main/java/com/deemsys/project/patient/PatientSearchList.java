@@ -57,6 +57,8 @@ public class PatientSearchList extends InjuryProperties{
 	private Integer reportFrom;
 	private String runnerReportAddedDate;
 	private Integer damageScale;
+	private String oldFilePath;
+	private Integer directReportStatus;
 	
 	public String getPatientId() {
 		return patientId;
@@ -369,6 +371,31 @@ public class PatientSearchList extends InjuryProperties{
 	}
 	public void setReportFrom(Integer reportFrom) {
 		this.reportFrom = reportFrom;
+	}
+	public String getOldFilePath() {
+		return oldFilePath;
+	}
+	public void setOldFilePath(String oldFilePath) {
+		if(oldFilePath!= null){
+			if(this.isRunnerReport==2){
+				if(this.reportFrom==Integer.parseInt(getProperty("reportFromDeemsys"))){
+					this.oldFilePath = getProperty("runnerBucketURL")+oldFilePath;
+				}else{
+					this.oldFilePath = getProperty("policeDepartmentBucketURL")+this.reportFrom+getProperty("policeDepartmentFolder")+oldFilePath;
+				}
+			}else{
+				this.oldFilePath = getProperty("bucketURL")+oldFilePath;
+			}
+		}else{
+			this.oldFilePath=oldFilePath;
+		}
+		
+	}
+	public Integer getDirectReportStatus() {
+		return directReportStatus;
+	}
+	public void setDirectReportStatus(Integer directReportStatus) {
+		this.directReportStatus = directReportStatus;
 	}
 	public PatientSearchList(String patientId, String localReportNumber,
 			Integer numberOfPatients, String crashDate, String addedDate,

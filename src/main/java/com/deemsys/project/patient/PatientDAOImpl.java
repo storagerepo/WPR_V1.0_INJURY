@@ -543,10 +543,11 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	criteria.add(localReportNumberCriterion);
 	}
 	
-	// Common Constrain is Runner Reports 
+	// Common Constrain is Runner Reports 0- ODPS, 2,4 - Converted to ODPS from Runner, Scanned
 	if(callerPatientSearchForm.getIsRunnerReport()!=-1){
 		if(callerPatientSearchForm.getIsRunnerReport()==0){
-			criteria.add(Restrictions.or(Restrictions.eq("cr.isRunnerReport", 2),Restrictions.eq("cr.isRunnerReport", callerPatientSearchForm.getIsRunnerReport())));
+			Criterion isRunnerCriterion=Restrictions.or(Restrictions.eq("cr.isRunnerReport", 2),Restrictions.eq("cr.isRunnerReport",0));
+			criteria.add(Restrictions.or(Restrictions.eq("cr.isRunnerReport", 4), isRunnerCriterion));
 		}else{
 			criteria.add(Restrictions.eq("cr.isRunnerReport", callerPatientSearchForm.getIsRunnerReport()));
 		}
@@ -615,6 +616,11 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		
 		criteria.add(Restrictions.or(Subqueries.propertyEq("cl1.callLogId", maxCallLog), Restrictions.isNull("cl1.timeStamp")));
 		
+		if(callerPatientSearchForm.getIsRunnerReport()!=-1){
+			if(callerPatientSearchForm.getIsRunnerReport()==0){
+				criteria.createAlias("cr.directReportCallerAdminMaps", "drc1",Criteria.LEFT_JOIN);
+			}
+		}
 		
 	}else if(role.equals("ROLE_LAWYER_ADMIN")||role.equals("ROLE_LAWYER")){
 		
@@ -664,7 +670,12 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		criteria.createAlias("t2.lawyer", "l1",Criteria.LEFT_JOIN);
 		
 		criteria.createAlias("c1.lawyerAdminCountyMaps","lmap",Criteria.INNER_JOIN,Restrictions.eq("lawyerAdmin.lawyerAdminId",callerPatientSearchForm.getLawyerAdminId()));
-				
+		
+		if(callerPatientSearchForm.getIsRunnerReport()!=-1){
+			if(callerPatientSearchForm.getIsRunnerReport()==0){
+				criteria.createAlias("cr.directReportLawyerAdminMaps", "drc1", Criteria.LEFT_JOIN);
+			}
+		}
 	}
 	
 	
@@ -675,6 +686,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	// From Crash Report Table
 	projectionList.add(Projections.property("cr.isRunnerReport"),"isRunnerReport");
 	projectionList.add(Projections.property("cr.reportFrom"),"reportFrom");
+	projectionList.add(Projections.property("cr.oldFilePath"),"oldFilePath");
 	
 	projectionList.add(Projections.property("t1.patientId"),"patientId");
 	projectionList.add(Projections.property("cr.localReportNumber"),"localReportNumber");
@@ -720,13 +732,14 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		projectionList.add(Projections.property("c2.firstName"),"callerFirstName");
 		projectionList.add(Projections.property("c2.lastName"),"callerLastName");
 		projectionList.add(Projections.property("cl1.timeStamp"),"lastCallLogTimeStamp");
-		
+				
 	}else if(role.equals("ROLE_LAWYER_ADMIN")||role.equals("ROLE_LAWYER")){
 		
 		projectionList.add(Projections.property("t2.lawyerAdmin.lawyerAdminId"),"lawyerAdminId");
 		projectionList.add(Projections.property("t2.lawyer.lawyerId"),"lawyerId");
 		projectionList.add(Projections.property("l1.firstName"),"lawyerFirstName");
 		projectionList.add(Projections.property("l1.lastName"),"lawyerLastName");
+		
 	}
 	
 	if(!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
@@ -737,6 +750,11 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		projectionList.add(Projections.property("t2.archivedDateTime"),"archivedDateTime");
 		projectionList.add(Projections.property("t2.patientStatus"),"patientStatus");
 		
+		if(callerPatientSearchForm.getIsRunnerReport()!=-1){
+			if(callerPatientSearchForm.getIsRunnerReport()==0){
+				projectionList.add(Projections.property("drc1.status"),"directReportStatus");
+			}
+		}
 	}
 
 	

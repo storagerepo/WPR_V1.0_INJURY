@@ -320,6 +320,15 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 		return null;
 	};
 	
+	// Load County Preference
+	$scope.loadCountyByPreference=function(){
+		$scope.countyListType=searchService.getCountyListType();
+		searchService.getPreferenceCoutyList($scope.countyListType).then(function(response){
+			$scope.mycounties=response;
+			$scope.loadingCounties=false;
+		});
+	};
+	
 	$scope.itemsPerFilter=function(){
 		$scope.setScrollDown=true;
 		var promise=$scope.secoundarySearchPatient();
@@ -453,7 +462,9 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 	$scope.releasePatientRequest=function(assignCallerObj){
 		requestHandler.postRequest("/Caller/releaseCaller.json",assignCallerObj).then(function(response){
 			Flash.create('success', "You successfully released patients that were checked.!");
-			$scope.searchItems($scope.patient);
+			$scope.searchItems($scope.mainSearchParam);
+			$scope.loadCountyByPreference();
+			angular.copy($scope.mainSearchParam,$scope.patient);
 			$(function(){
 				$("html,body").scrollTop(0);
 			});
@@ -487,7 +498,9 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			moveArchiveObj.status=1;
 			requestHandler.postRequest("/Caller/directReportMoveOrReleaseArchive.json",moveArchiveObj).then(function(response){
 				Flash.create('success', "You have Successfully Moved to Archive!");
-				$scope.searchItems($scope.patient);
+				$scope.searchItems($scope.mainSearchParam);
+				$scope.loadCountyByPreference();
+				angular.copy($scope.mainSearchParam,$scope.patient);
 				$(function(){
 					$("html,body").scrollTop(0);
 				});
@@ -509,7 +522,9 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			
 			requestHandler.postRequest("/Caller/moveToArchive.json",assignCallerObj).then(function(response){
 				Flash.create('success', "You have Successfully Moved to Archive!");
-				$scope.searchItems($scope.patient);
+				$scope.searchItems($scope.mainSearchParam);
+				$scope.loadCountyByPreference();
+				angular.copy($scope.mainSearchParam,$scope.patient);
 				$(function(){
 					$("html,body").scrollTop(0);
 				});
@@ -526,7 +541,9 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			assignCallerObj.patientId=patientIdArray;
 			requestHandler.postRequest("/Caller/moveToArchive.json",assignCallerObj).then(function(response){
 				Flash.create('success', "You have Successfully Moved to Archive!");
-				$scope.searchItems($scope.patient);
+				$scope.searchItems($scope.mainSearchParam);
+				$scope.loadCountyByPreference();
+				angular.copy($scope.mainSearchParam,$scope.patient);
 				$(function(){
 					$("html,body").scrollTop(0);
 				});
@@ -544,7 +561,9 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			moveArchiveObj.status=1;
 			requestHandler.postRequest("/Caller/directReportMoveOrReleaseArchive.json",moveArchiveObj).then(function(response){
 				Flash.create('success', "You have Successfully Moved to Archive!");
-				$scope.searchItems($scope.patient);
+				$scope.searchItems($scope.mainSearchParam);
+				$scope.loadCountyByPreference();
+				angular.copy($scope.mainSearchParam,$scope.patient);
 				$(function(){
 					$("html,body").scrollTop(0);
 				});
@@ -569,7 +588,9 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			moveArchiveObj.status=0;
 			requestHandler.postRequest("/Caller/directReportMoveOrReleaseArchive.json",moveArchiveObj).then(function(response){
 				Flash.create('success', "You have Successfully Released from Archive!");
-				$scope.searchItems($scope.patient);
+				$scope.searchItems($scope.mainSearchParam);
+				$scope.loadCountyByPreference();
+				angular.copy($scope.mainSearchParam,$scope.patient);
 				$(function(){
 					$("html,body").scrollTop(0);
 				});
@@ -591,7 +612,9 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			
 			requestHandler.postRequest("/Caller/releaseFromArchive.json",assignCallerObj).then(function(response){
 				Flash.create('success', "You have Successfully released from Archive!");
-				$scope.searchItems($scope.patient);
+				$scope.searchItems($scope.mainSearchParam);
+				$scope.loadCountyByPreference();
+				angular.copy($scope.mainSearchParam,$scope.patient);
 				$(function(){
 					$("html,body").scrollTop(0);
 				});
@@ -608,7 +631,9 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			assignCallerObj.patientId=patientIdArray;
 			requestHandler.postRequest("/Caller/releaseFromArchive.json",assignCallerObj).then(function(response){
 				Flash.create('success', "You have Successfully Released from Archive!");
-				$scope.searchItems($scope.patient);
+				$scope.searchItems($scope.mainSearchParam);
+				$scope.loadCountyByPreference();
+				angular.copy($scope.mainSearchParam,$scope.patient);
 				$(function(){
 					$("html,body").scrollTop(0);
 				});
@@ -625,7 +650,9 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			moveArchiveObj.status=0;
 			requestHandler.postRequest("/Caller/directReportMoveOrReleaseArchive.json",moveArchiveObj).then(function(response){
 				Flash.create('success', "You have Successfully Released from Archive!");
-				$scope.searchItems($scope.patient);
+				$scope.searchItems($scope.mainSearchParam);
+				$scope.loadCountyByPreference();
+				angular.copy($scope.mainSearchParam,$scope.patient);
 				$(function(){
 					$("html,body").scrollTop(0);
 				});
@@ -930,7 +957,9 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 				.then(function(response)
 					{
 					Flash.create("success","You have Successfully Added!");
-					$scope.searchItems($scope.patient);
+					$scope.searchItems($scope.mainSearchParam);
+					$scope.loadCountyByPreference();
+					angular.copy($scope.mainSearchParam,$scope.patient);
 					$(function(){
 						$("html,body").scrollTop(0);
 					});
@@ -1295,10 +1324,23 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 					if(response.data.success){
 						$("#directReportChangeStatusModal").modal('hide');
 						Flash.create('success', "You have Successfully Changed!");
-						$scope.searchItems($scope.patient);
+						$scope.searchItems($scope.mainSearchParam);
+						$scope.loadCountyByPreference();
+						angular.copy($scope.mainSearchParam,$scope.patient);
 					}
 			});
 		};
 }]); 
 
+adminApp.directive( 'popoverHtmlUnsafePopup', function () {
+    return {
+        restrict: 'EA',
+        replace: true,
+        scope: { title: '@', content: '@', placement: '@', animation: '&', isOpen: '&' },
+        template: '<div class="popover {{placement}}" ng-class="{ in: isOpen(), fade: animation() }"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title" bind-html-unsafe="title" ng-show="title"></h3><div class="popover-content" bind-html-unsafe="content"></div></div></div>'
+    };
+})
+.directive( 'popoverHtmlUnsafe', [ '$tooltip', function ( $tooltip ) {
+    return $tooltip('popoverHtmlUnsafe', 'popover', 'click' );
+}]);
  

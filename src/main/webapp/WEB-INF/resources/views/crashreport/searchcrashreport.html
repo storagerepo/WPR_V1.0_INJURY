@@ -146,7 +146,7 @@
 						</tr>
 						<tr ng-show="crashSearchData.length>0"  dir-paginate="crashReport in crashReportMain.crashReportForms|itemsPerPage:crashreport.recordsPerPage" current-page="crashreport.pageNumber" total-items="totalRecords" pagination-id="crashReportPageId">
                                 <td title="County">{{crashReport.county}}</td>
-                                <td title="Local Report Number">{{crashReport.localReportNumber}} <span class="badge badge-warning hint--top" data-hint="Runner Report" ng-show="crashReport.isRunnerReport==2">R</span></td>
+                                <td title="Local Report Number">{{crashReport.localReportNumber}} <span class="badge badge-warning hint--top" data-hint="Runner Report" ng-show="crashReport.isRunnerReport==2">R</span><span class="badge badge-success hint--top" data-hint="Scanned Report" ng-show="crashReport.isRunnerReport==4">S</span></td>
                                 <td title="Crash Id">{{crashReport.crashId}}</td>
                                 <td title="Crash Date">{{crashReport.crashDate}}</td>
                                 <td title="Added Date">{{crashReport.addedDate}}</td>
@@ -154,8 +154,10 @@
                                 <td title="Report From" ng-show="crashreport.isRunnerReport!=0">{{crashReport.reportFromName}}</td>
                                 <td title="Number of Patients" ng-show="crashreport.isRunnerReport!=3">{{crashReport.numberOfPatients}}</td>
                                 <td>
-                                	<a href="{{crashReport.filePath}}" ng-cloak target="_blank" class="btn btn-xs btn-danger hint--top" data-hint="View Crash Report"><i
+                                	<a href="{{crashReport.filePath}}" ng-cloak target="_blank" class="btn btn-xs btn-danger hint--top" data-hint="View Crash Report" ng-show="{{(crashReport.isRunnerReport==0||crashReport.isRunnerReport==1||crashReport.isRunnerReport==3)||((crashReport.isRunnerReport==4&&crashReport.oldFilePath==null)||(crashReport.isRunnerReport==2&&crashReport.oldFilePath==null))}}"><i
 								class="fa fa-file-pdf-o"></i></a>
+								<a href="" tabindex=0 ng-cloak popover-html-unsafe="<p><a href='{{crashReport.filePath}}' target='_blank' class='btn btn-success btn-xs'>New Report</a> &nbsp;&nbsp; <a href='{{crashReport.oldFilePath}}' target='_blank' class='btn btn-danger btn-xs'>Old Report</a></p>" popover-title="Select Report" popover-placement="top"
+								class="btn btn-xs btn-danger hint--right" data-hint="View Crash Report" popover-trigger="focus" ng-show="{{(crashReport.isRunnerReport==4&&crashReport.oldFilePath!=null)||(crashReport.isRunnerReport==2&&crashReport.oldFilePath!=null)}}"><i class="fa fa-file-pdf-o"></i></a>
                                 </td>
                             </tr>
                             <tr ng-repeat-end=""></tr>

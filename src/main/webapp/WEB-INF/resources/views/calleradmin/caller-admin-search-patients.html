@@ -356,8 +356,8 @@
 						id="{{resultMainData.archivedDate}}"></td>
 					<td colspan="11"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
 				</tr>
-				<tr class="group-header-back"
-					ng-repeat-start="resultData in resultMainData.searchResult">
+				<tr
+					ng-repeat-start="resultData in resultMainData.searchResult" ng-class="resultData.isRunnerReport==4?'group-header-back-convert':'group-header-back'">
 					<td colspan="1"><input
 						ng-change="selectGroup(this,'{{resultMainData.archivedDate}}');enableCallLogsButton('{{resultData.localReportNumber}}','{{resultMainData.archivedDate}}');"
 						ng-model="isCheckedAllGroupPatients" type="checkbox"
@@ -365,6 +365,12 @@
 					<td colspan="11"><span><b>Local Report No: </b>{{resultData.localReportNumber}}</span>
 						<span class="badge badge-warning hint--top"
 						ng-show="resultData.isRunnerReport==2" data-hint="Runner Report">R</span>
+						<span class="badge badge-success hint--top"
+						ng-show="resultData.isRunnerReport==4&&resultData.directReportStatus==null" data-hint="Status: New">New</span>
+						<span class="badge badge-warning hint--top"
+						ng-show="resultData.isRunnerReport==4&&resultData.directReportStatus==1" data-hint="Status: Processing">Proc</span>
+						<span class="badge badge-danger hint--top"
+						ng-show="resultData.isRunnerReport==4&&resultData.directReportStatus==2" data-hint="Status: Do-Not-Call">DNC</span>
 						<span class="col-md-9 no-padding pull-right text-right"><span><b><a
 									href=""
 									id="addCallLog{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"
@@ -479,9 +485,12 @@
 						ng-show="cAdminPatient.lastCallLogTimeStamp==null && cAdminPatient.lastCallLogTimeStamp==null">-</span><b>{{cAdminPatient.lastCallLogTimeStamp}}</b></td>
 					<td title="Archived On" ng-show="cAdminPatient.isArchived==1"
 						ng-cloak>{{cAdminPatient.archivedDateTime}}</td>
-					<td><a href="{{cAdminPatient.crashReportFileName}}" ng-cloak
-						target="_blank" class="btn btn-xs btn-info hint--top"
-						data-hint="View Crash Report"><i class="fa fa-file-pdf-o"></i></a>
+					<td>
+						<a href="{{cAdminPatient.crashReportFileName}}" ng-cloak
+							target="_blank" class="btn btn-xs btn-info hint--top"
+							data-hint="View Crash Report" ng-show="{{(resultData.isRunnerReport==0||resultData.isRunnerReport==1)||((resultData.isRunnerReport==4&&cAdminPatient.oldFilePath==null)||(resultData.isRunnerReport==2&&cAdminPatient.oldFilePath==null))}}"><i class="fa fa-file-pdf-o"></i></a>
+						<a href="" tabindex=0 ng-cloak popover-html-unsafe="<p><a href='{{cAdminPatient.crashReportFileName}}' target='_blank' class='btn btn-success btn-xs'>New Report</a> &nbsp;&nbsp; <a href='{{cAdminPatient.oldFilePath}}' target='_blank' class='btn btn-danger btn-xs'>Old Report</a></p>" popover-title="Select Report" popover-placement="top"
+						class="btn btn-xs btn-info hint--right" data-hint="View Crash Report" popover-trigger="focus" ng-show="{{(resultData.isRunnerReport==4&&cAdminPatient.oldFilePath!=null)||(resultData.isRunnerReport==2&&cAdminPatient.oldFilePath!=null)}}"><i class="fa fa-file-pdf-o"></i></a>
 						<span
 						ng-show={{cAdminPatient.isArchived==0||cAdminPatient.isArchived==null}}>
 							<a href="" ng-cloak ng-show={{cAdminPatient.callerId!=null}}

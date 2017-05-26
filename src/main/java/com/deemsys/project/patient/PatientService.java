@@ -487,7 +487,7 @@ public class PatientService {
 						if(rowCount!=0){
 							patientSearchResultGroupByList.add(patientSearchResultGroupBy);
 						}				
-						patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getIsRunnerReport(),resultSet.getRunnerReportAddedDate(),resultSet.getNumberOfPatients(),new ArrayList<PatientSearchList>());
+						patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getIsRunnerReport(),resultSet.getRunnerReportAddedDate(),resultSet.getNumberOfPatients(),resultSet.getDirectReportStatus(),new ArrayList<PatientSearchList>());
 					}				
 					//Set patient
 					patientSearchResultGroupBy.getPatientSearchLists().add(resultSet);
@@ -514,7 +514,7 @@ public class PatientService {
 					if(rowCount!=0){
 						patientSearchResultGroupByList.add(patientSearchResultGroupBy);
 					}				
-					patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getIsRunnerReport(),resultSet.getRunnerReportAddedDate(),resultSet.getNumberOfPatients(),new ArrayList<PatientSearchList>());
+					patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getIsRunnerReport(),resultSet.getRunnerReportAddedDate(),resultSet.getNumberOfPatients(),resultSet.getDirectReportStatus(),new ArrayList<PatientSearchList>());
 				}				
 				//Set patient
 				patientSearchResultGroupBy.getPatientSearchLists().add(resultSet);

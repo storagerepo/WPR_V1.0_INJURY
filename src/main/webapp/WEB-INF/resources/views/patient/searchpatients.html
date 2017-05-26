@@ -232,8 +232,8 @@
 						ng-repeat-start="resultMainData in patientSearchData">
 						<td colspan="7"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
 					</tr>
-					<tr class="group-header-back" ng-show="patientSearchData.length>0"
-						ng-repeat-start="resultData in resultMainData.searchResult">
+					<tr ng-show="patientSearchData.length>0"
+						ng-repeat-start="resultData in resultMainData.searchResult" ng-class="resultData.isRunnerReport==4?'group-header-back-convert':'group-header-back'">
 						<td colspan="10"><span><b>Local Report No:</b>
 								{{resultData.localReportNumber}}</span>&nbsp;<span
 							class="badge badge-warning hint--top"
@@ -335,19 +335,21 @@
 							ng-show="sAdminPatient.address==''||sAdminPatient.address==null">-</span></td>
 						<td><a href="{{sAdminPatient.crashReportFileName}}" ng-cloak
 							target="_blank" class="btn btn-xs btn-danger hint--top"
-							data-hint="View Crash Report"><i class="fa fa-file-pdf-o"></i></a>
+							data-hint="View Crash Report" ng-show="{{(resultData.isRunnerReport==0||resultData.isRunnerReport==1)||((resultData.isRunnerReport==4&&sAdminPatient.oldFilePath==null)||(resultData.isRunnerReport==2&&sAdminPatient.oldFilePath==null))}}"><i class="fa fa-file-pdf-o"></i></a>
+							<a href="" tabindex=0 ng-cloak popover-html-unsafe="<p><a href='{{sAdminPatient.crashReportFileName}}' target='_blank' class='btn btn-success btn-xs'>New Report</a> &nbsp;&nbsp; <a href='{{sAdminPatient.oldFilePath}}' target='_blank' class='btn btn-danger btn-xs'>Old Report</a></p>" popover-title="Select Report" popover-placement="top"
+						class="btn btn-xs btn-danger hint--right" data-hint="View Crash Report" popover-trigger="focus" ng-show="{{(resultData.isRunnerReport==4&&sAdminPatient.oldFilePath!=null)||(resultData.isRunnerReport==2&&sAdminPatient.oldFilePath!=null)}}"><i class="fa fa-file-pdf-o"></i></a>
 						</td>
 					</tr>
 					<tr ng-repeat-end=""></tr>
 					<tr ng-repeat-end=""></tr>
-					<tr ng-show="patientSearchData.length==0">
+					<tr ng-show="totalRecords==0">
 						<td colspan="7"><center>
 								<strong>No Records Found!!!</strong>
 							</center></td>
 					</tr>
 				</tbody>
 			</table>
-			<dir-pagination-controls ng-show="patientSearchData.length>0" max-size="5"
+			<dir-pagination-controls ng-show="totalRecords>0" max-size="5"
 				direction-links="true" boundary-links="true"
 				pagination-id="superAdminPatientPageId"> </dir-pagination-controls>
 			<div class="col-md-3 pull-right no-padding">
@@ -396,12 +398,12 @@
                                 </td>
                             </tr>
                             <tr ng-repeat-end=""></tr>
-                            <tr ng-show="directRunnerReportSearchData.length==0">
+                            <tr ng-show="totalRecords==0">
                             <td colspan="8"><center><strong>No Records Found!!!</strong></center></td>
                             </tr>
                         </tbody>
                     </table>
-                    <dir-pagination-controls ng-show="directRunnerReportSearchData.length>0" max-size="5"  direction-links="true" boundary-links="true" pagination-id="directRunnerReportPageId">
+                    <dir-pagination-controls ng-show="totalRecords>0" max-size="5"  direction-links="true" boundary-links="true" pagination-id="directRunnerReportPageId">
     					</dir-pagination-controls> 
     						<div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>

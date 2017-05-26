@@ -331,8 +331,7 @@
 							id="{{resultMainData.archivedDate}}"></td>
 						<td colspan="10"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
 					</tr>
-					<tr class="group-header-back"
-						ng-repeat-start="resultData in resultMainData.searchResult">
+					<tr ng-repeat-start="resultData in resultMainData.searchResult" ng-class="resultData.isRunnerReport==4?'group-header-back-convert':'group-header-back'">
 						<td colspan="1"><input
 							ng-change="selectGroup(this,'{{resultMainData.archivedDate}}')"
 							ng-model="isCheckedAllGroupPatients" ng-true-value="true"
@@ -341,8 +340,14 @@
 						<td colspan="10"><span><b>Local Report No:</b>
 								{{resultData.localReportNumber}} </span><span
 							class="badge badge-warning hint--top"
-							ng-show="resultData.isRunnerReport==2" data-hint="Runner Report">R</span><span
-							class="pull-right"><span><b>Unit In Error: </b><span
+							ng-show="resultData.isRunnerReport==2" data-hint="Runner Report">R</span>
+							<span class="badge badge-success hint--top"
+								ng-show="resultData.isRunnerReport==4&&resultData.directReportStatus==null" data-hint="Status: New">New</span>
+							<span class="badge badge-warning hint--top"
+								ng-show="resultData.isRunnerReport==4&&resultData.directReportStatus==1" data-hint="Status: Processing">Proc</span>
+							<span class="badge badge-danger hint--top"
+								ng-show="resultData.isRunnerReport==4&&resultData.directReportStatus==2" data-hint="Status: Do-Not-Call">DNC</span>
+							<span class="pull-right"><span><b>Unit In Error: </b><span
 									ng-show="resultData.unitInError!='' && resultData.unitInError!=null">{{resultData.unitInError}}</span><span
 									ng-show="resultData.unitInError=='' || resultData.unitInError==null">-</span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Crash
 										Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added
@@ -445,7 +450,9 @@
 						<td title="Archived On" ng-show="patient.isArchived==1" ng-cloak>{{lAdminData.archivedDateTime}}</td>
 						<td><a href="{{lAdminData.crashReportFileName}}" ng-cloak
 							target="_blank" class="btn btn-xs btn-info hint--top"
-							data-hint="View Crash Report"><i class="fa fa-file-pdf-o"></i></a>
+							data-hint="View Crash Report" ng-show="{{(resultData.isRunnerReport==0||resultData.isRunnerReport==1)||((resultData.isRunnerReport==4&&lAdminData.oldFilePath==null)||(resultData.isRunnerReport==2&&lAdminData.oldFilePath==null))}}"><i class="fa fa-file-pdf-o"></i></a>
+							<a href="" tabindex=0 ng-cloak popover-html-unsafe="<p><a href='{{lAdminData.crashReportFileName}}' target='_blank' class='btn btn-success btn-xs'>New Report</a> &nbsp;&nbsp; <a href='{{lAdminData.oldFilePath}}' target='_blank' class='btn btn-danger btn-xs'>Old Report</a></p>" popover-title="Select Report" popover-placement="top"
+						class="btn btn-xs btn-info hint--right" data-hint="View Crash Report" popover-trigger="focus" ng-show="{{(resultData.isRunnerReport==4&&lAdminData.oldFilePath!=null)||(resultData.isRunnerReport==2&&lAdminData.oldFilePath!=null)}}"><i class="fa fa-file-pdf-o"></i></a>
 							<span
 							ng-show={{lAdminData.isArchived==0||lAdminData.isArchived==null}}>
 								<a href="" ng-cloak ng-hide={{lAdminData.lawyerId!=null}}

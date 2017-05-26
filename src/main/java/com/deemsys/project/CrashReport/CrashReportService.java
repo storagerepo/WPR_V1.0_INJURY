@@ -150,7 +150,7 @@ public class CrashReportService {
 			
 		}
 		CrashReport crashReport=new CrashReport(crashReportForm.getCrashId(), crashReportError, county, localReportNumber,  InjuryConstants.convertYearFormat(crashReportForm.getCrashDate()), 
-					 InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getNumberOfPatients(), crashReportForm.getFilePath(), crashReportForm.getIsRunnerReport(),  null, crashReportForm.getReportFrom(), 1, null, null, null);
+					 InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getNumberOfPatients(), crashReportForm.getFilePath(), null, crashReportForm.getIsRunnerReport(),  null, crashReportForm.getReportFrom(), 1, null, null, null);
 		
 	
 		
@@ -287,7 +287,7 @@ public class CrashReportService {
 		}
 		
 		CrashReport crashReport=new CrashReport(crashId, crashReportError, county, localReportNumber,  InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-					 new Date(), numberOfPatients, runnerCrashReportForm.getFilePath(),  isRunnerReport, new Date(), runnerCrashReportForm.getReportFrom(),1,null,null,null);
+					 new Date(), numberOfPatients, runnerCrashReportForm.getFilePath(), null, isRunnerReport, new Date(), runnerCrashReportForm.getReportFrom(),1,null,null,null);
 		
 		
 		/*String odpsCrashId=this.checkRunnerReportWithODPSReport(runnerCrashReportForm);
@@ -317,27 +317,31 @@ public class CrashReportService {
 		return 1;
 	}
 	
-	public void updateCrashReport(String runnerReportCrashId, String crashId, String fileName, Integer crashReportErrorId){
-		crashReportDAO.updateCrashReportByQuery(runnerReportCrashId, crashId.toString(), crashReportErrorId, fileName, 2);
+	public void updateCrashReport(String runnerReportCrashId, String crashId, String fileName, Integer crashReportErrorId, Integer isRunnerReport){
+		Integer reportConverstionStatus=2;
+		if(isRunnerReport==3){
+			reportConverstionStatus=4;
+		}
+		crashReportDAO.updateCrashReportByQuery(runnerReportCrashId, crashId.toString(), crashReportErrorId, fileName, reportConverstionStatus);
 	}
 	
 	//Check Runner Report With ODPS
-	public String checkRunnerReportWithODPSReport(RunnerCrashReportForm runnerCrashReportForm){
+	public CrashReport checkRunnerReportWithODPSReport(RunnerCrashReportForm runnerCrashReportForm){
 		Long oldReportCount=crashReportDAO.getLocalReportNumberCount(runnerCrashReportForm.getLocalReportNumber());
 		Integer countyId=Integer.parseInt(runnerCrashReportForm.getCounty());
-		String crashId=null;
+		CrashReport crashReport=null;
 		for (int i = 0; i <=oldReportCount; i++) {
 			String localReportNumber=runnerCrashReportForm.getLocalReportNumber();
 			if(i!=0){
 				localReportNumber=localReportNumber+"("+i+")";
 			}
-			crashId=crashReportDAO.getCrashReportForChecking(localReportNumber,runnerCrashReportForm.getCrashDate(), countyId,1);
-			if(crashId!=null&&!crashId.equals("")){
+			crashReport=crashReportDAO.getCrashReportForChecking(localReportNumber,runnerCrashReportForm.getCrashDate(), countyId,1);
+			if(crashReport!=null&&!crashReport.equals("")){
 				break;
 			}
 		}
 		
-		return crashId;
+		return crashReport;
 	}
 	
 	//Collect Police Department Reports

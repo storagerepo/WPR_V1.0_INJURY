@@ -193,7 +193,8 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		
 		if(crashReportSearchForm.getIsRunnerReport()!=null&&crashReportSearchForm.getIsRunnerReport()!=-1){
 			if(crashReportSearchForm.getIsRunnerReport()==0){
-				criteria.add(Restrictions.or(Restrictions.eq("isRunnerReport", 2),Restrictions.eq("isRunnerReport", crashReportSearchForm.getIsRunnerReport())));
+				Criterion isRunnerReportCriterion=Restrictions.or(Restrictions.eq("isRunnerReport", 2),Restrictions.eq("isRunnerReport", 0));
+				criteria.add(Restrictions.or(isRunnerReportCriterion, Restrictions.eq("isRunnerReport", 4)));
 			}else{
 				criteria.add(Restrictions.eq("isRunnerReport", crashReportSearchForm.getIsRunnerReport()));
 			}
@@ -276,6 +277,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		projectionList.add(Projections.alias(Projections.property("c1.name"), "county"));
 		projectionList.add(Projections.alias(Projections.property("addedDate"), "addedDate"));
 		projectionList.add(Projections.alias(Projections.property("filePath"), "filePath"));
+		projectionList.add(Projections.alias(Projections.property("oldFilePath"), "oldFilePath"));
 		projectionList.add(Projections.alias(Projections.property("numberOfPatients"), "numberOfPatients"));
 		projectionList.add(Projections.alias(Projections.property("status"), "status"));
 		
@@ -394,7 +396,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 	}
 
 	@Override
-	public String getCrashReportForChecking(String localReportNumber,
+	public CrashReport getCrashReportForChecking(String localReportNumber,
 			String crashDate, Integer countyId, Integer isCheckAll) {
 		// TODO Auto-generated method stub
 		// 1 is Runner Report
@@ -407,8 +409,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		}else{
 			criteria.add(countyAndReportCrashDate);
 		}
-		criteria.setProjection(Projections.property("crashId"));
-		return (String) criteria.uniqueResult();
+		return (CrashReport) criteria.uniqueResult();
 		
 	}
 
@@ -417,7 +418,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 			String newCrashId, Integer crashReportErrorId, String filePath,
 			Integer isRunnerReport) {
 		// TODO Auto-generated method stub
-		this.sessionFactory.getCurrentSession().createQuery("update CrashReport set crashId='"+newCrashId+"', filePath='"+filePath+"',crashReportError.crashReportErrorId='"+crashReportErrorId+"', isRunnerReport='"+isRunnerReport+"' where crash_id='"+oldCrashId+"' ").executeUpdate();
+		this.sessionFactory.getCurrentSession().createQuery("update CrashReport set crashId='"+newCrashId+"', oldFilePath=filePath, filePath='"+filePath+"',crashReportError.crashReportErrorId='"+crashReportErrorId+"', isRunnerReport='"+isRunnerReport+"' where crash_id='"+oldCrashId+"' ").executeUpdate();
 	}
 	
 	@Override
