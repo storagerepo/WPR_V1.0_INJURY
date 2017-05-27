@@ -156,7 +156,7 @@
                                 <td>
                                 	<a href="{{crashReport.filePath}}" ng-cloak target="_blank" class="btn btn-xs btn-danger hint--top" data-hint="View Crash Report" ng-show="{{(crashReport.isRunnerReport==0||crashReport.isRunnerReport==1||crashReport.isRunnerReport==3)||((crashReport.isRunnerReport==4&&crashReport.oldFilePath==null)||(crashReport.isRunnerReport==2&&crashReport.oldFilePath==null))}}"><i
 								class="fa fa-file-pdf-o"></i></a>
-								<a href="" tabindex=0 ng-cloak popover-html-unsafe="<p><a href='{{crashReport.filePath}}' target='_blank' class='btn btn-success btn-xs'>New Report</a> &nbsp;&nbsp; <a href='{{crashReport.oldFilePath}}' target='_blank' class='btn btn-danger btn-xs'>Old Report</a></p>" popover-title="Select Report" popover-placement="top"
+								<a href="" tabindex=0 ng-cloak popover-html-unsafe="<p><a href='{{crashReport.filePath}}' target='_blank' class='btn btn-success btn-xs'>Normal <i class='fa fa-file-pdf-o'></i></a> &nbsp;&nbsp; <a href='{{crashReport.oldFilePath}}' target='_blank' class='btn btn-danger btn-xs'>Scanned <i class='fa fa-file-pdf-o'></i></a></p>" popover-title="Select Report" popover-placement="top"
 								class="btn btn-xs btn-danger hint--right" data-hint="View Crash Report" popover-trigger="focus" ng-show="{{(crashReport.isRunnerReport==4&&crashReport.oldFilePath!=null)||(crashReport.isRunnerReport==2&&crashReport.oldFilePath!=null)}}"><i class="fa fa-file-pdf-o"></i></a>
                                 </td>
                             </tr>
