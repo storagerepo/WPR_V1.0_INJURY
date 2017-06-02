@@ -37,12 +37,14 @@ import com.deemsys.project.CrashReport.CrashReportDAO;
 import com.deemsys.project.CrashReport.CrashReportService;
 import com.deemsys.project.CrashReport.RunnerCrashReportForm;
 import com.deemsys.project.CrashReportError.CrashReportErrorDAO;
+import com.deemsys.project.PoliceAgency.PoliceAgencyDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.CrashReportError;
 import com.deemsys.project.entity.Patient;
+import com.deemsys.project.entity.PoliceAgency;
 import com.deemsys.project.patient.PatientDAO;
 import com.deemsys.project.patient.PatientForm;
 import com.deemsys.project.patient.PatientService;
@@ -53,6 +55,13 @@ import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 import java.io.*;
 
 import javax.ejb.Local;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.security.cert.X509Certificate;
 
 @Service
 @Transactional
@@ -83,6 +92,9 @@ public class PDFCrashReportReader {
 	@Autowired
 	PatientDAO patientDAO;
 
+	@Autowired
+	PoliceAgencyDAO policeAgencyDAO;
+	
 	protected static Logger logger = LoggerFactory.getLogger("service");
 
 	/**
@@ -194,7 +206,7 @@ public class PDFCrashReportReader {
 					// Commented for Manual Upload
 					//this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
 					CrashReportError crashReportError=crashReportErrorDAO.get(12);
-					crashReportDAO.save(new CrashReport(crashId, crashReportError, null, "",   null, new Date() ,  0, "", "", 0, null, 0, 0, null, null, null));
+					crashReportDAO.save(new CrashReport(crashId, crashReportError, null, null, "",   null, new Date() ,  0, "", "", 0, null, 0, null, null, null));
 					System.out.println("Failed"+e.toString());
 				}
 		return true;
@@ -292,8 +304,33 @@ public class PDFCrashReportReader {
 			}else if(reportType==3){
 				pdfAccessURL=pdfLink;
 			}
-			
-			
+			 
+			// Create a trust manager that does not validate certificate chains
+	        TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
+	                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+	                    return null;
+	                }
+	                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+	                }
+	                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+	                }
+	            }
+	        };
+	 
+	        // Install the all-trusting trust manager
+	        SSLContext sc = SSLContext.getInstance("SSL");
+	        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+	        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+	 
+	        // Create all-trusting host name verifier
+	        HostnameVerifier allHostsValid = new HostnameVerifier() {
+	           @Override
+				public boolean verify(String arg0, SSLSession arg1) {
+					// TODO Auto-generated method stub
+					return true;
+				}
+	        };
+	        
 			URL url=new URL(pdfAccessURL);
 			httpURLConnection=(HttpURLConnection) url.openConnection();
 			
@@ -1480,8 +1517,8 @@ public class PDFCrashReportReader {
 		return isAvailable;
 	}
 	
-	// Save Direct Runner Report (SAGE Report From ODPS)
-	//Report From 1 - ODPS 2 - Police Dept 
+	// Save Direct Runner Report (SAGE Report From ODPS) And Scheduler PD
+	//Report From 0 - ODPS 1 - Police Dept 
 	public int saveDirectRunnerCrashReport(RunnerCrashReportForm runnerCrashReportForm,Integer reportFrom) throws Exception
 	{
 		//TODO: Convert Form to Entity Here	
@@ -1490,7 +1527,6 @@ public class PDFCrashReportReader {
 		try {
 			
 			if(!this.isDirectReportAlreadyAvailable(runnerCrashReportForm)){
-				UUID randomUUID = UUID.randomUUID();
 				File file;
 				if(reportFrom==0){
 					file=getPDFFile(runnerCrashReportForm.getDocNumber(),runnerCrashReportForm.getDocImageFileName(),2,"");
@@ -1525,9 +1561,10 @@ public class PDFCrashReportReader {
 						localReportNumber=localReportNumber+"("+(localReportNumberCount+1)+")";
 					}
 					
+					PoliceAgency policeAgency = policeAgencyDAO.get(reportFromMapId);
 					Integer numberOfPatients=0;
-					CrashReport crashReport=new CrashReport(runnerCrashReportForm.getDocNumber(), crashReportError, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-								 new Date(), numberOfPatients, fileName, null, isRunnerReport, new Date(), reportFromMapId, 1, null, null, null);
+					CrashReport crashReport=new CrashReport(runnerCrashReportForm.getDocNumber(), crashReportError, policeAgency, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
+								 new Date(), numberOfPatients, fileName, null, isRunnerReport, new Date(), 1, null, null, null);
 					
 					
 					  crashReportDAO.save(crashReport);
@@ -1549,25 +1586,134 @@ public class PDFCrashReportReader {
 		
 		return isFileAvailable;
 	}
-		// Direct Report Already Available Checking With 
-		public boolean isDirectReportAlreadyAvailable(RunnerCrashReportForm runnerCrashReportForm){
-			Long oldReportCount=crashReportDAO.getLocalReportNumberCount(runnerCrashReportForm.getLocalReportNumber());
-			Integer countyId=Integer.parseInt(runnerCrashReportForm.getCounty());
-			boolean isExist=false;
-			CrashReport crashReport=null;
-			Integer isCheckAll=1;
-			for (int i = 0; i <=oldReportCount; i++) {
-				String localReportNumber=runnerCrashReportForm.getLocalReportNumber();
-				if(i!=0){
-					localReportNumber=localReportNumber+"("+i+")";
+	
+	// Save Runner Direct Report (Scanned) From Nightwatch Automation
+	public int saveRunnerDirectOrScannedReport(RunnerCrashReportForm runnerCrashReportForm) throws Exception{
+		int status=1;
+		
+		Integer crashReportErrorId=16;
+		Integer isRunnerReport=3;
+		UUID randomUUID = UUID.randomUUID();
+		String crashId=randomUUID.toString().replaceAll("-", "");
+		File file = null;
+		
+		try{
+			boolean isSaveReport=true;
+			String fileName="";
+			// Police Agency
+			PoliceAgency policeAgency = policeAgencyDAO.get(runnerCrashReportForm.getReportFrom());
+			County county= countyDAO.get(policeAgency.getCounty().getCountyId());
+			CrashReportError crashReportError=crashReportErrorDAO.get(crashReportErrorId);
+			
+			runnerCrashReportForm.setCounty(county.getCountyId().toString());
+			if(runnerCrashReportForm.getIsNormal()==0){
+				if(!this.isDirectReportAlreadyAvailable(runnerCrashReportForm)){
+					file=getPDFFile(crashId,runnerCrashReportForm.getDocImageFileName(),3,runnerCrashReportForm.getFilePath());
+					if(file.length()>2000){//2000 File Size refers an crash report not found exception
+						//Parse the PDF
+						// 16 - Direct Runner Crash Reports
+						if(Integer.parseInt(injuryProperties.getProperty("env"))==1){
+							fileName=crashId + ".pdf";
+						}else{
+							fileName="CrashReport_"+ crashId + ".pdf";
+						}
+					}else{
+						isSaveReport=false;
+						status=0;
+					}
+				}else{
+					isSaveReport=false;
+					status=2;
 				}
-				crashReport=crashReportDAO.getCrashReportForChecking(localReportNumber,runnerCrashReportForm.getCrashDate(), countyId, isCheckAll);
-				if(crashReport!=null){
-					isExist=true;
-					break;
+			}else if(runnerCrashReportForm.getIsNormal()==1){
+				file=getPDFFile(crashId,runnerCrashReportForm.getDocImageFileName(),3,runnerCrashReportForm.getFilePath());
+				if(file.length()>2000){//2000 File Size refers an crash report not found exception
+					//Parse the PDF
+					// 16 - Direct Runner Crash Reports
+					if(Integer.parseInt(injuryProperties.getProperty("env"))==1){
+						fileName=crashId + ".pdf";
+					}else{
+						fileName="CrashReport_"+ crashId + ".pdf";
+					}
+					
+
+					// Parse PDF and Upate in Runner Crash Report Form
+					if(!this.isDirectReportAlreadyAvailable(runnerCrashReportForm)){
+						// Save PDF FILE and Set FileName, File
+					}else{
+						isSaveReport=false;
+						status=2;
+					}
+				}else{
+					isSaveReport=false;
+					status=0;
+				}
+				
+			}else if(runnerCrashReportForm.getIsNormal()==2){
+				// Values with PDF File
+				if(!this.isDirectReportAlreadyAvailable(runnerCrashReportForm)){
+					// Save PDF FILE and Set FileName, File
+				}else{
+					isSaveReport=false;
+					status=2;
+				}
+			}else if(runnerCrashReportForm.getIsNormal()==3){
+				// No Value With PDF File
+				// Save PDF FILE, Parse for Value and Update in Runner Crash Report Form
+				
+				if(!this.isDirectReportAlreadyAvailable(runnerCrashReportForm)){
+					// Save PDF FILE and Set FileName
+				}else{
+					isSaveReport=false;
+					status=2;
 				}
 			}
 			
-			return isExist;
+			if(isSaveReport){
+				// File Upload To AWS
+				if(Integer.parseInt(injuryProperties.getProperty("awsUpload"))==1)				
+					awsFileUpload.uploadFileToAWSS3(file.getAbsolutePath(), fileName);
+				
+				
+				String localReportNumber=runnerCrashReportForm.getLocalReportNumber();
+				if(crashReportDAO.getCrashReportCountByLocalReportNumber(localReportNumber)>0){
+					Long localReportNumberCount=crashReportDAO.getLocalReportNumberCount(localReportNumber+"(");
+					localReportNumber=localReportNumber+"("+(localReportNumberCount+1)+")";
+				}
+				
+				Integer numberOfPatients=0;
+				CrashReport crashReport=new CrashReport(crashId, crashReportError, policeAgency, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
+							 new Date(), numberOfPatients, fileName, null, isRunnerReport, new Date(), 1, null, null, null);
+				
+				crashReportDAO.save(crashReport);
+			}
+			
+		}catch(Exception e){
+			throw e;
 		}
+		
+		return status;
+	}
+	
+	// Direct Report Already Available Checking With 
+	public boolean isDirectReportAlreadyAvailable(RunnerCrashReportForm runnerCrashReportForm){
+		Long oldReportCount=crashReportDAO.getLocalReportNumberCount(runnerCrashReportForm.getLocalReportNumber());
+		Integer countyId=Integer.parseInt(runnerCrashReportForm.getCounty());
+		boolean isExist=false;
+		CrashReport crashReport=null;
+		Integer isCheckAll=1;
+		for (int i = 0; i <=oldReportCount; i++) {
+			String localReportNumber=runnerCrashReportForm.getLocalReportNumber();
+			if(i!=0){
+				localReportNumber=localReportNumber+"("+i+")";
+			}
+			crashReport=crashReportDAO.getCrashReportForChecking(localReportNumber,runnerCrashReportForm.getCrashDate(), countyId, isCheckAll);
+			if(crashReport!=null){
+				isExist=true;
+				break;
+			}
+		}
+			
+		return isExist;
+	}
 }

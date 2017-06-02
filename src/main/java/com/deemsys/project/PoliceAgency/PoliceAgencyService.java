@@ -37,7 +37,7 @@ public class PoliceAgencyService {
 		policeAgencys=policeAgencyDAO.getAll();
 		
 		for (PoliceAgency policeAgency : policeAgencys) {
-			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getId(), policeAgency.getCounty().getCountyId(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getMapId(), policeAgency.getStatus());
+			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getSchedulerType(), policeAgency.getStatus());
 			policeAgencyForms.add(agencyForm);
 		}
 		
@@ -120,18 +120,18 @@ public class PoliceAgencyService {
 		List<PoliceAgencyForm> policeAgencyForms = new ArrayList<PoliceAgencyForm>();
 		List<PoliceAgency> policeAgencies = policeAgencyDAO.getPoliceAgenciesBystatus(status);
 		for (PoliceAgency policeAgency : policeAgencies) {
-			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getId(), policeAgency.getCounty().getCountyId(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getMapId(), policeAgency.getStatus());
+			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getSchedulerType(), policeAgency.getStatus());
 			policeAgencyForms.add(agencyForm);
 		}
 		
 		return policeAgencyForms;
 	}
 	
-	public List<PoliceAgencyForm> getPoliceAgenciesForScheduler(){
+	public List<PoliceAgencyForm> getPoliceAgenciesForScheduler(Integer schedulerType){
 		List<PoliceAgencyForm> policeAgencyForms = new ArrayList<PoliceAgencyForm>();
-		List<PoliceAgency> policeAgencies = policeAgencyDAO.getPoliceAgenciesForScheduler();
+		List<PoliceAgency> policeAgencies = policeAgencyDAO.getPoliceAgenciesForScheduler(schedulerType);
 		for (PoliceAgency policeAgency : policeAgencies) {
-			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getId(), policeAgency.getCounty().getCountyId(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getMapId(), policeAgency.getStatus());
+			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getSchedulerType(), policeAgency.getStatus());
 			policeAgencyForms.add(agencyForm);
 		}
 		

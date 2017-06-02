@@ -173,6 +173,8 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		
 		criteria.createAlias("county", "c1");
 		criteria.createAlias("crashReportError", "e1");
+		// Join Police Agency
+		criteria.createAlias("policeAgency", "pd");
 		
 		//Check Local Report Number
 		if(!crashReportSearchForm.getLocalReportNumber().equals("")){
@@ -202,7 +204,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		
 		// Report From Criterion
 		if(crashReportSearchForm.getReportFrom()!=null&&crashReportSearchForm.getReportFrom()!=-1){
-			Criterion reportFromCriterion=Restrictions.eq("reportFrom", crashReportSearchForm.getReportFrom());
+			Criterion reportFromCriterion=Restrictions.eq("pd.mapId", crashReportSearchForm.getReportFrom());
 			criteria.add(reportFromCriterion);
 		}
 		
@@ -269,7 +271,8 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		//projectionList.add(Projections.alias(Projections.property("crashReportId"), "crashReportId"));
 
 		projectionList.add(Projections.alias(Projections.property("isRunnerReport"), "isRunnerReport"));
-		projectionList.add(Projections.alias(Projections.property("reportFrom"), "reportFrom"));
+		projectionList.add(Projections.alias(Projections.property("pd.mapId"), "reportFrom"));
+		projectionList.add(Projections.alias(Projections.property("pd.name"), "reportFromDepartment"));
 		projectionList.add(Projections.alias(Projections.property("e1.description"), "crashReportError"));
 		projectionList.add(Projections.alias(Projections.property("localReportNumber"), "localReportNumber"));
 		projectionList.add(Projections.alias(Projections.property("crashId"), "crashId"));

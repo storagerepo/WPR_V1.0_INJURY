@@ -59,6 +59,7 @@ public class PatientSearchList extends InjuryProperties{
 	private Integer damageScale;
 	private String oldFilePath;
 	private Integer directReportStatus;
+	private String reportFromDepartment;
 	
 	public String getPatientId() {
 		return patientId;
@@ -396,6 +397,12 @@ public class PatientSearchList extends InjuryProperties{
 	}
 	public void setDirectReportStatus(Integer directReportStatus) {
 		this.directReportStatus = directReportStatus;
+	}
+	public String getReportFromDepartment() {
+		return reportFromDepartment;
+	}
+	public void setReportFromDepartment(String reportFromDepartment) {
+		this.reportFromDepartment = reportFromDepartment;
 	}
 	public PatientSearchList(String patientId, String localReportNumber,
 			Integer numberOfPatients, String crashDate, String addedDate,

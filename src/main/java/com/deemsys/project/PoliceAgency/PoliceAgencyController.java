@@ -42,7 +42,7 @@ public class PoliceAgencyController {
     @RequestMapping(value="/saveUpdatePoliceAgency",method=RequestMethod.POST)
    	public String savePoliceAgency(@ModelAttribute("policeAgencyForm") PoliceAgencyForm policeAgencyForm,ModelMap model)
    	{
-    	if(policeAgencyForm.getId()!=null)
+    	if(policeAgencyForm.getMapId()!=null)
     		policeAgencyService.savePoliceAgency(policeAgencyForm);
     	else
     		policeAgencyService.updatePoliceAgency(policeAgencyForm);

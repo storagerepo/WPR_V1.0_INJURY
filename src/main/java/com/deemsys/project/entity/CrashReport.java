@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 23 May, 2017 4:20:19 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2 Jun, 2017 3:50:38 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -25,6 +25,7 @@ public class CrashReport implements java.io.Serializable {
 
 	private String crashId;
 	private CrashReportError crashReportError;
+	private PoliceAgency policeAgency;
 	private County county;
 	private String localReportNumber;
 	private Date crashDate;
@@ -34,7 +35,6 @@ public class CrashReport implements java.io.Serializable {
 	private String oldFilePath;
 	private Integer isRunnerReport;
 	private Date runnerReportAddedDate;
-	private Integer reportFrom;
 	private Integer status;
 	private Set<DirectReportCallerAdminMap> directReportCallerAdminMaps = new HashSet<DirectReportCallerAdminMap>(
 			0);
@@ -50,15 +50,16 @@ public class CrashReport implements java.io.Serializable {
 	}
 
 	public CrashReport(String crashId, CrashReportError crashReportError,
-			County county, String localReportNumber, Date crashDate,
-			Date addedDate, Integer numberOfPatients, String filePath, String oldFilePath,
-			Integer isRunnerReport, Date runnerReportAddedDate,
-			Integer reportFrom, Integer status,
+			PoliceAgency policeAgency, County county, String localReportNumber,
+			Date crashDate, Date addedDate, Integer numberOfPatients,
+			String filePath, String oldFilePath, Integer isRunnerReport,
+			Date runnerReportAddedDate, Integer status,
 			Set<DirectReportCallerAdminMap> directReportCallerAdminMaps,
 			Set<Patient> patients,
 			Set<DirectReportLawyerAdminMap> directReportLawyerAdminMaps) {
 		this.crashId = crashId;
 		this.crashReportError = crashReportError;
+		this.policeAgency = policeAgency;
 		this.county = county;
 		this.localReportNumber = localReportNumber;
 		this.crashDate = crashDate;
@@ -68,7 +69,6 @@ public class CrashReport implements java.io.Serializable {
 		this.oldFilePath = oldFilePath;
 		this.isRunnerReport = isRunnerReport;
 		this.runnerReportAddedDate = runnerReportAddedDate;
-		this.reportFrom = reportFrom;
 		this.status = status;
 		this.directReportCallerAdminMaps = directReportCallerAdminMaps;
 		this.patients = patients;
@@ -93,6 +93,16 @@ public class CrashReport implements java.io.Serializable {
 
 	public void setCrashReportError(CrashReportError crashReportError) {
 		this.crashReportError = crashReportError;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "report_from")
+	public PoliceAgency getPoliceAgency() {
+		return this.policeAgency;
+	}
+
+	public void setPoliceAgency(PoliceAgency policeAgency) {
+		this.policeAgency = policeAgency;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -154,7 +164,7 @@ public class CrashReport implements java.io.Serializable {
 
 	@Column(name = "old_file_path", length = 100)
 	public String getOldFilePath() {
-		return oldFilePath;
+		return this.oldFilePath;
 	}
 
 	public void setOldFilePath(String oldFilePath) {
@@ -178,15 +188,6 @@ public class CrashReport implements java.io.Serializable {
 
 	public void setRunnerReportAddedDate(Date runnerReportAddedDate) {
 		this.runnerReportAddedDate = runnerReportAddedDate;
-	}
-
-	@Column(name = "report_from")
-	public Integer getReportFrom() {
-		return this.reportFrom;
-	}
-
-	public void setReportFrom(Integer reportFrom) {
-		this.reportFrom = reportFrom;
 	}
 
 	@Column(name = "status")

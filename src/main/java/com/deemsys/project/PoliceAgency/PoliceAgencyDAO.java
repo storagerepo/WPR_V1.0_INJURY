@@ -12,5 +12,5 @@ import com.deemsys.project.entity.PoliceAgency;
 public interface PoliceAgencyDAO extends IGenericDAO<PoliceAgency>{
 	
 	public List<PoliceAgency> getPoliceAgenciesBystatus(Integer status);
-	public List<PoliceAgency> getPoliceAgenciesForScheduler();
+	public List<PoliceAgency> getPoliceAgenciesForScheduler(Integer schedulerType);
 }

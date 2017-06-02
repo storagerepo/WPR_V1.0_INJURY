@@ -426,4 +426,32 @@ public class PatientController {
     	
     	return "/returnPage";
    	}
+    
+    // Save Runner Direct or Scanned From NightWatch
+    @RequestMapping(value="/saveDirectOrScannedCrashReport",method=RequestMethod.POST)
+   	public String saveDirectRunnerOrScannedCrashReport(@RequestBody RunnerCrashReportForm runnerCrashReportForm,ModelMap model)
+   	{
+    	try {
+    			int status=crashReportReader.saveRunnerDirectOrScannedReport(runnerCrashReportForm);
+				if(status==1){
+					model.addAttribute("reportSave", true);
+					model.addAttribute("message", "Report Saved Successfully");
+				}else if(status==0){
+					model.addAttribute("reportSave", false);
+					model.addAttribute("message", "File is Not Available");
+				}else if(status==2){
+					model.addAttribute("reportSave", false);
+					model.addAttribute("message", "Report Already Exist");
+				}
+
+	    		model.addAttribute("requestSuccess",true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			model.addAttribute("message", e.toString()+" for - "+runnerCrashReportForm.getLocalReportNumber());
+			model.addAttribute("requestSuccess", false);
+		}
+    	
+    	return "/returnPage";
+   	}
 }

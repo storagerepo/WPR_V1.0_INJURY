@@ -2,6 +2,8 @@ package com.deemsys.project.CrashReport;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.deemsys.project.patient.PatientForm;
 
 public class RunnerCrashReportForm {
@@ -15,6 +17,9 @@ public class RunnerCrashReportForm {
 	private String reportPrefixCode;
 	private List<PatientForm> patientForms;
 	
+	//Scanned Report 
+	private Integer isNormal;
+	private MultipartFile pdfFile;
 	public String getDocNumber() {
 		return docNumber;
 	}
@@ -69,6 +74,21 @@ public class RunnerCrashReportForm {
 	public void setPatientForms(List<PatientForm> patientForms) {
 		this.patientForms = patientForms;
 	}
+	
+	// Scanned Report
+	public Integer getIsNormal() {
+		return isNormal;
+	}
+	public void setIsNormal(Integer isNormal) {
+		this.isNormal = isNormal;
+	}
+	public MultipartFile getPdfFile() {
+		return pdfFile;
+	}
+	public void setPdfFile(MultipartFile pdfFile) {
+		this.pdfFile = pdfFile;
+	}
+	
 	public RunnerCrashReportForm(String docNumber, String docImageFileName, String localReportNumber, String crashDate,
 			String county, String filePath, Integer reportFrom, String reportPrefixCode, List<PatientForm> patientForms) {
 		super();

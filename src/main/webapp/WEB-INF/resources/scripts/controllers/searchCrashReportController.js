@@ -102,45 +102,6 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler','$
 			$scope.isLoading=false;
 			$scope.totalRecords=response.data.searchResults.totalNoOfRecords;
 			$scope.crashSearchData=response.data.searchResults.directReportGroupListByArchives;
-			$.each($scope.crashSearchData,function(key,value){
-				$.each(value.crashReportForms,function(key1,value1){
-					switch(value1.reportFrom){
-						case 0:
-							value1.reportFromName="ODPS";
-							break;
-						case 1:
-							value1.reportFromName="Deemsys Upload";
-							break;
-						case 2:
-							value1.reportFromName="Boardman";
-							break;
-						case 3:
-							value1.reportFromName="Fairborn";
-							break;
-						case 5001:
-							value1.reportFromName="Beachwood";
-							break;
-						case 5002:
-							value1.reportFromName="Bedford Heights";
-							break;
-						case 5003:
-							value1.reportFromName="Fairview Park";
-							break;
-						case 5004:
-							value1.reportFromName="North Olmsted";
-							break;
-						case 5005:
-							value1.reportFromName="North Royalton";
-							break;
-						case 5006:
-							value1.reportFromName="Pepper Pike";
-							break;
-						case 5007:
-							value1.reportFromName="Chagrin Falls";
-							break;
-					}
-				});
-			});
 			defer.resolve(response);
 		});
 		return defer.promise;

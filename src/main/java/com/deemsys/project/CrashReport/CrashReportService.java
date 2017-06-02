@@ -25,11 +25,13 @@ import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.CrashReportError.CrashReportErrorDAO;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersService;
+import com.deemsys.project.PoliceAgency.PoliceAgencyDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.CrashReportError;
+import com.deemsys.project.entity.PoliceAgency;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientForm;
 import com.deemsys.project.patient.PatientService;
@@ -84,6 +86,9 @@ public class CrashReportService {
 	
 	@Autowired
 	PDFCrashReportReader pdfCrashReportReader;
+	
+	@Autowired
+	PoliceAgencyDAO policeAgencyDAO;
 	
 	//Get All Entries
 	public List<CrashReportForm> getCrashReportList()
@@ -149,8 +154,11 @@ public class CrashReportService {
 			localReportNumber=localReportNumber+"("+(localReportNumberCount+1)+")";
 			
 		}
-		CrashReport crashReport=new CrashReport(crashReportForm.getCrashId(), crashReportError, county, localReportNumber,  InjuryConstants.convertYearFormat(crashReportForm.getCrashDate()), 
-					 InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getNumberOfPatients(), crashReportForm.getFilePath(), null, crashReportForm.getIsRunnerReport(),  null, crashReportForm.getReportFrom(), 1, null, null, null);
+		// Police Agency
+		PoliceAgency policeAgency = policeAgencyDAO.get(crashReportForm.getReportFrom());
+		
+		CrashReport crashReport=new CrashReport(crashReportForm.getCrashId(), crashReportError, policeAgency, county, localReportNumber,  InjuryConstants.convertYearFormat(crashReportForm.getCrashDate()), 
+					 InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getNumberOfPatients(), crashReportForm.getFilePath(), null, crashReportForm.getIsRunnerReport(),  null, 1, null, null, null);
 		
 	
 		
@@ -184,16 +192,18 @@ public class CrashReportService {
 	
 	// Get Crash Report Form Details from Patient Form
 	public CrashReportForm getCrashReportFormDetails(PatientForm patientForm,Integer crashId,String filePath,Integer crashReportErrorId){
+		Integer reportFrom=0;
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), patientForm.getLocalReportNumber(), crashId.toString(), patientForm.getCrashDate(), patientForm.getCounty(),
-				InjuryConstants.convertMonthFormat(new Date()), filePath, 0, 0, InjuryConstants.convertMonthFormat(new Date()),1);
+				InjuryConstants.convertMonthFormat(new Date()), filePath, 0, 0, InjuryConstants.convertMonthFormat(new Date()),1,reportFrom);
 		return crashReportForm;
 	}
 	
 	// Get Crash Report Form Details from PdfJson Form
 	public CrashReportForm getCrashReportFormDetails(ReportFirstPageForm reportFirstPageForm,String crashId,String filePath,Integer crashReportErrorId,Integer numberOfPatients){
 		Integer isRunnerReport=0;
+		Integer reportFrom=0;
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), reportFirstPageForm.getLocalReportNumber(), crashId.toString(), reportFirstPageForm.getCrashDate(), reportFirstPageForm.getCounty(),
-				InjuryConstants.convertMonthFormat(new Date()), filePath,numberOfPatients, isRunnerReport, null, 1);
+				InjuryConstants.convertMonthFormat(new Date()), filePath,numberOfPatients, isRunnerReport, null, 1, reportFrom);
 		return crashReportForm;
 	}
 	
@@ -285,9 +295,10 @@ public class CrashReportService {
 		}else{
 			crashId=runnerCrashReportForm.getReportPrefixCode()+localReportNumber;
 		}
-		
-		CrashReport crashReport=new CrashReport(crashId, crashReportError, county, localReportNumber,  InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-					 new Date(), numberOfPatients, runnerCrashReportForm.getFilePath(), null, isRunnerReport, new Date(), runnerCrashReportForm.getReportFrom(),1,null,null,null);
+		// Police Agency
+		PoliceAgency policeAgency = policeAgencyDAO.get(runnerCrashReportForm.getReportFrom());
+		CrashReport crashReport=new CrashReport(crashId, crashReportError, policeAgency, county, localReportNumber,  InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
+					 new Date(), numberOfPatients, runnerCrashReportForm.getFilePath(), null, isRunnerReport, new Date(), 1,null,null,null);
 		
 		
 		/*String odpsCrashId=this.checkRunnerReportWithODPSReport(runnerCrashReportForm);
@@ -370,7 +381,9 @@ public class CrashReportService {
    	       			policeDepartmentRunnerDirectReports.add(policeRunnerDirectReports);
    	       			savePoliceDepartmentReport(policeRunnerDirectReports);
    	   			}   
-   			}   			 			
+   			}else{
+   				System.out.println("No Results Returned");
+   			}
    		 }
    		 rowIndex++;
         }

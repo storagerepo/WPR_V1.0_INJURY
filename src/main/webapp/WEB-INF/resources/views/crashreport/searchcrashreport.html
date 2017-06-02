@@ -151,7 +151,7 @@
                                 <td title="Crash Date">{{crashReport.crashDate}}</td>
                                 <td title="Added Date">{{crashReport.addedDate}}</td>
                                 <td title="Crash Report Status">{{crashReport.crashReportError}}</td>
-                                <td title="Report From" ng-show="crashreport.isRunnerReport!=0">{{crashReport.reportFromName}}</td>
+                                <td title="Report From" ng-show="crashreport.isRunnerReport!=0">{{crashReport.reportFromDepartment}}</td>
                                 <td title="Number of Patients" ng-show="crashreport.isRunnerReport!=3">{{crashReport.numberOfPatients}}</td>
                                 <td>
                                 	<a href="{{crashReport.filePath}}" ng-cloak target="_blank" class="btn btn-xs btn-danger hint--top" data-hint="View Crash Report" ng-show="{{(crashReport.isRunnerReport==0||crashReport.isRunnerReport==1||crashReport.isRunnerReport==3)||((crashReport.isRunnerReport==4&&crashReport.oldFilePath==null)||(crashReport.isRunnerReport==2&&crashReport.oldFilePath==null))}}"><i

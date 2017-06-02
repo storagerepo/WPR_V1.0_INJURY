@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 23 May, 2017 4:20:19 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2 Jun, 2017 3:50:38 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -43,6 +43,7 @@ public class UserExportPreferences implements java.io.Serializable {
 			@AttributeOverride(name = "userId", column = @Column(name = "user_id", nullable = false)),
 			@AttributeOverride(name = "fieldId", column = @Column(name = "field_id")),
 			@AttributeOverride(name = "sequenceNo", column = @Column(name = "sequence_no")),
+			@AttributeOverride(name = "defaultValue", column = @Column(name = "default_value", length = 600)),
 			@AttributeOverride(name = "status", column = @Column(name = "status")) })
 	public UserExportPreferencesId getId() {
 		return this.id;

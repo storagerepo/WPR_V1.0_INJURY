@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 23 May, 2017 4:20:19 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2 Jun, 2017 3:50:38 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,8 +32,9 @@ public class ExportFields implements java.io.Serializable {
 	public ExportFields() {
 	}
 
-	public ExportFields(String fieldName, Integer sequenceNo, Integer isCustom, String defaultValue,
-			Integer status, Set<UserExportPreferences> userExportPreferenceses) {
+	public ExportFields(String fieldName, Integer sequenceNo, Integer isCustom,
+			String defaultValue, Integer status,
+			Set<UserExportPreferences> userExportPreferenceses) {
 		this.fieldName = fieldName;
 		this.sequenceNo = sequenceNo;
 		this.isCustom = isCustom;
@@ -82,7 +83,7 @@ public class ExportFields implements java.io.Serializable {
 
 	@Column(name = "default_value", length = 600)
 	public String getDefaultValue() {
-		return defaultValue;
+		return this.defaultValue;
 	}
 
 	public void setDefaultValue(String defaultValue) {

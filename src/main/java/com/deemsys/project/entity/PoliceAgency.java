@@ -1,15 +1,16 @@
 package com.deemsys.project.entity;
 
-// Generated 23 May, 2017 4:20:19 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2 Jun, 2017 3:50:38 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -19,34 +20,41 @@ import javax.persistence.Table;
 @Table(name = "police_agency", catalog = "injuryreportsdbtest")
 public class PoliceAgency implements java.io.Serializable {
 
-	private Integer id;
+	private int mapId;
 	private County county;
 	private Integer agencyId;
 	private String name;
-	private Integer mapId;
+	private Integer schedulerType;
 	private Integer status;
+	private Set<CrashReport> crashReports = new HashSet<CrashReport>(0);
 
 	public PoliceAgency() {
 	}
 
-	public PoliceAgency(County county, Integer agencyId, String name,
-			Integer mapId, Integer status) {
+	public PoliceAgency(int mapId) {
+		this.mapId = mapId;
+	}
+
+	public PoliceAgency(int mapId, County county, Integer agencyId,
+			String name, Integer schedulerType, Integer status,
+			Set<CrashReport> crashReports) {
+		this.mapId = mapId;
 		this.county = county;
 		this.agencyId = agencyId;
 		this.name = name;
-		this.mapId = mapId;
+		this.schedulerType = schedulerType;
 		this.status = status;
+		this.crashReports = crashReports;
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
-		return this.id;
+	@Column(name = "map_id", unique = true, nullable = false)
+	public int getMapId() {
+		return this.mapId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setMapId(int mapId) {
+		this.mapId = mapId;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -77,13 +85,13 @@ public class PoliceAgency implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "map_id")
-	public Integer getMapId() {
-		return this.mapId;
+	@Column(name = "scheduler_type")
+	public Integer getSchedulerType() {
+		return this.schedulerType;
 	}
 
-	public void setMapId(Integer mapId) {
-		this.mapId = mapId;
+	public void setSchedulerType(Integer schedulerType) {
+		this.schedulerType = schedulerType;
 	}
 
 	@Column(name = "status")
@@ -93,6 +101,15 @@ public class PoliceAgency implements java.io.Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "policeAgency")
+	public Set<CrashReport> getCrashReports() {
+		return this.crashReports;
+	}
+
+	public void setCrashReports(Set<CrashReport> crashReports) {
+		this.crashReports = crashReports;
 	}
 
 }

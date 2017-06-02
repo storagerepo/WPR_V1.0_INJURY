@@ -151,9 +151,9 @@ public class PoliceAgencyDAOImpl implements PoliceAgencyDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PoliceAgency> getPoliceAgenciesForScheduler() {
+	public List<PoliceAgency> getPoliceAgenciesForScheduler(Integer schedulerType) {
 		// TODO Auto-generated method stub
-		return this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class).add(Restrictions.eq("status", 3)).list();
+		return this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class).add(Restrictions.eq("schedulerType", schedulerType)).list();
 	}
 
 	

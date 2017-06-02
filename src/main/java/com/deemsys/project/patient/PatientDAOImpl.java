@@ -427,6 +427,8 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	//Join Crash Report
 	criteria.createAlias("crashReport", "cr");
 	
+	// Join Police Agency 
+	criteria.createAlias("cr.policeAgency", "pd");
 	
 	
 	//Common Constrains - County
@@ -685,7 +687,8 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	
 	// From Crash Report Table
 	projectionList.add(Projections.property("cr.isRunnerReport"),"isRunnerReport");
-	projectionList.add(Projections.property("cr.reportFrom"),"reportFrom");
+	projectionList.add(Projections.property("pd.mapId"),"reportFrom");
+	projectionList.add(Projections.property("pd.name"),"reportFromDepartment");
 	projectionList.add(Projections.property("cr.oldFilePath"),"oldFilePath");
 	
 	projectionList.add(Projections.property("t1.patientId"),"patientId");

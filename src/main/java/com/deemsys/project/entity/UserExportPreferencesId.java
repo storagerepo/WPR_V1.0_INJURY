@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 23 May, 2017 4:20:19 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2 Jun, 2017 3:50:38 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -60,9 +60,9 @@ public class UserExportPreferencesId implements java.io.Serializable {
 		this.sequenceNo = sequenceNo;
 	}
 
-	@Column(name="default_value", length=600)
+	@Column(name = "default_value", length = 600)
 	public String getDefaultValue() {
-		return defaultValue;
+		return this.defaultValue;
 	}
 
 	public void setDefaultValue(String defaultValue) {
@@ -95,6 +95,10 @@ public class UserExportPreferencesId implements java.io.Serializable {
 						.getSequenceNo() != null
 						&& castOther.getSequenceNo() != null && this
 						.getSequenceNo().equals(castOther.getSequenceNo())))
+				&& ((this.getDefaultValue() == castOther.getDefaultValue()) || (this
+						.getDefaultValue() != null
+						&& castOther.getDefaultValue() != null && this
+						.getDefaultValue().equals(castOther.getDefaultValue())))
 				&& ((this.getStatus() == castOther.getStatus()) || (this
 						.getStatus() != null && castOther.getStatus() != null && this
 						.getStatus().equals(castOther.getStatus())));
@@ -109,6 +113,10 @@ public class UserExportPreferencesId implements java.io.Serializable {
 		result = 37
 				* result
 				+ (getSequenceNo() == null ? 0 : this.getSequenceNo()
+						.hashCode());
+		result = 37
+				* result
+				+ (getDefaultValue() == null ? 0 : this.getDefaultValue()
 						.hashCode());
 		result = 37 * result
 				+ (getStatus() == null ? 0 : this.getStatus().hashCode());
