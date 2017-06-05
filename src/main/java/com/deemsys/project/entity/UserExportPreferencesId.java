@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 2 Jun, 2017 3:50:38 PM by Hibernate Tools 3.4.0.CR1
+// Generated 5 Jun, 2017 1:18:21 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -15,6 +15,7 @@ public class UserExportPreferencesId implements java.io.Serializable {
 	private Integer fieldId;
 	private Integer sequenceNo;
 	private String defaultValue;
+	private Integer format;
 	private Integer status;
 
 	public UserExportPreferencesId() {
@@ -25,11 +26,13 @@ public class UserExportPreferencesId implements java.io.Serializable {
 	}
 
 	public UserExportPreferencesId(int userId, Integer fieldId,
-			Integer sequenceNo, String defaultValue, Integer status) {
+			Integer sequenceNo, String defaultValue, Integer format,
+			Integer status) {
 		this.userId = userId;
 		this.fieldId = fieldId;
 		this.sequenceNo = sequenceNo;
 		this.defaultValue = defaultValue;
+		this.format = format;
 		this.status = status;
 	}
 
@@ -69,6 +72,15 @@ public class UserExportPreferencesId implements java.io.Serializable {
 		this.defaultValue = defaultValue;
 	}
 
+	@Column(name = "format")
+	public Integer getFormat() {
+		return this.format;
+	}
+
+	public void setFormat(Integer format) {
+		this.format = format;
+	}
+
 	@Column(name = "status")
 	public Integer getStatus() {
 		return this.status;
@@ -99,6 +111,9 @@ public class UserExportPreferencesId implements java.io.Serializable {
 						.getDefaultValue() != null
 						&& castOther.getDefaultValue() != null && this
 						.getDefaultValue().equals(castOther.getDefaultValue())))
+				&& ((this.getFormat() == castOther.getFormat()) || (this
+						.getFormat() != null && castOther.getFormat() != null && this
+						.getFormat().equals(castOther.getFormat())))
 				&& ((this.getStatus() == castOther.getStatus()) || (this
 						.getStatus() != null && castOther.getStatus() != null && this
 						.getStatus().equals(castOther.getStatus())));
@@ -118,6 +133,8 @@ public class UserExportPreferencesId implements java.io.Serializable {
 				* result
 				+ (getDefaultValue() == null ? 0 : this.getDefaultValue()
 						.hashCode());
+		result = 37 * result
+				+ (getFormat() == null ? 0 : this.getFormat().hashCode());
 		result = 37 * result
 				+ (getStatus() == null ? 0 : this.getStatus().hashCode());
 		return result;

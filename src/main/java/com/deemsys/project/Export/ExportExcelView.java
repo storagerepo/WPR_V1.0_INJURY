@@ -108,7 +108,7 @@ public class ExportExcelView extends AbstractExcelView {
 			row = sheet.createRow(r++);
 			c = 0;
 			for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
-				String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue());
+				String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue(),exportFieldsForm.getFormat());
 				row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
 			}
 			
@@ -269,7 +269,7 @@ public class ExportExcelView extends AbstractExcelView {
 	}
 	
 	// Get Cell Value
-	public String getCellValueFromPatient(PatientSearchList patientSearchList,Integer fieldValue, String defaultValue){
+	public String getCellValueFromPatient(PatientSearchList patientSearchList,Integer fieldValue, String defaultValue,Integer format){
 		
 		String value="";
 		switch (fieldValue) {
@@ -326,7 +326,11 @@ public class ExportExcelView extends AbstractExcelView {
 			value=patientSearchList.getAddress();
 			break;
 		case 17:
-			value=patientSearchList.getPhoneNumber();
+			if(patientSearchList.getPhoneNumber()!=null&&!patientSearchList.getPhoneNumber().equals("")){
+				value=this.formatPhoneNumber(patientSearchList.getPhoneNumber(),format);
+			}else{
+				value=patientSearchList.getPhoneNumber();
+			}
 			break;
 		case 18:
 			value=patientSearchList.getInjuries();
@@ -450,6 +454,70 @@ public class ExportExcelView extends AbstractExcelView {
 		}
 		
 		return modifiedValue;
+	}
+	
+	// Format Phone Number 
+	public String formatPhoneNumber(String phoneNumber,Integer format){
+		String formattedPhoneNumber="";
+	    String[] arrayPhone=new String[5];
+	  	if(phoneNumber.contains("-")&&phoneNumber.contains("(")){
+	       arrayPhone[0]=phoneNumber.substring(1,4);
+	      arrayPhone[1]=phoneNumber.substring(phoneNumber.lastIndexOf(")")+1,phoneNumber.indexOf("-"));
+	      arrayPhone[2]=phoneNumber.substring(phoneNumber.indexOf("-")+1,phoneNumber.length());
+	      if(phoneNumber.contains(" ")){
+	         arrayPhone[1]=phoneNumber.substring(phoneNumber.lastIndexOf(")")+2,phoneNumber.indexOf("-"));
+	        arrayPhone[2]=phoneNumber.substring(phoneNumber.indexOf("-")+1,phoneNumber.length());
+	      }
+	      
+	    }else if(phoneNumber.contains("-")){
+	      arrayPhone=phoneNumber.split("-");
+	   	 
+	    }else{
+	      arrayPhone[0]=phoneNumber.substring(0,3);
+	      arrayPhone[1]=phoneNumber.substring(3,6);
+	      arrayPhone[2]=phoneNumber.substring(6,10);
+	    }
+	  	
+	  	switch (format) {
+		case 1:
+			formattedPhoneNumber="+1-("+arrayPhone[0]+")-"+arrayPhone[1]+"-"+arrayPhone[2];
+			break;
+		case 2:
+			formattedPhoneNumber="+1 ("+arrayPhone[0]+") "+arrayPhone[1]+" "+arrayPhone[2];
+			break;
+		case 3:
+			formattedPhoneNumber="+1("+arrayPhone[0]+")"+arrayPhone[1]+arrayPhone[2];
+			break;
+		case 4:
+			formattedPhoneNumber="+1"+arrayPhone[0]+arrayPhone[1]+arrayPhone[2];
+			break;
+		case 5:
+			formattedPhoneNumber="1 ("+arrayPhone[0]+") "+arrayPhone[1]+" "+arrayPhone[2];
+			break;
+		case 6:
+			formattedPhoneNumber="1("+arrayPhone[0]+")"+arrayPhone[1]+""+arrayPhone[2];
+			break;
+		case 7:
+			formattedPhoneNumber="1"+arrayPhone[0]+arrayPhone[1]+arrayPhone[2];
+			break;
+		case 8:
+			formattedPhoneNumber="("+arrayPhone[0]+")-"+arrayPhone[1]+"-"+arrayPhone[2];
+			break;
+		case 9:
+			formattedPhoneNumber="("+arrayPhone[0]+") "+arrayPhone[1]+" "+arrayPhone[2];
+			break;
+		case 10:
+			formattedPhoneNumber="("+arrayPhone[0]+")"+arrayPhone[1]+arrayPhone[2];
+			break;
+		case 11:
+			formattedPhoneNumber=arrayPhone[0]+arrayPhone[1]+arrayPhone[2];
+			break;
+		default:
+			formattedPhoneNumber=phoneNumber;
+			break;
+		}
+	  	
+	  	return formattedPhoneNumber;
 	}
 }
 

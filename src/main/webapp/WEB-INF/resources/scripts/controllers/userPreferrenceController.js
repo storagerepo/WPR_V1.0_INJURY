@@ -218,9 +218,11 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 		});
 	};
 	
-	// Get Default Value Minor field 37 ---> Static Id for this field
+	// Get Default Value Minor field 37 ---> Static Id for this field, 17 ---> Contact Phone Field Id
 	$scope.exportDefaultValueList=[];
 	var exportDefaultValueListOrginal=[];
+	$scope.exportFormatValueList=[];
+	var exportFormatValueListOrginal=[];
 	$scope.getDefaultValueMinorField=function(){
 		angular.forEach($scope.exportFieldsFormsSelected,function(item,index){
 			if(item.fieldId==37){
@@ -234,8 +236,25 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	  			// access the foo property using result[0].foo
 				}
 			}
+			
+			if(item.fieldId==17){
+				var result = $.grep(exportFormatValueListOrginal, function(e){ return e.fieldId == item.fieldId;});
+				if (result.length == 0) {
+	 			 // not found
+					var exportFormatCopy=angular.copy(item);
+					if(exportFormatCopy.format==0){
+						exportFormatCopy.format="";
+					}
+					exportFormatCopy.format=exportFormatCopy.format.toString();
+					$scope.exportFormatValueList.push(exportFormatCopy);
+				} else if (result.length == 1) {
+					
+	  			// access the foo property using result[0].foo
+				}
+			}
 		});
 		exportDefaultValueListOrginal=angular.copy($scope.exportDefaultValueList);
+		exportFormatValueListOrginal=angular.copy($scope.exportFormatValueList);
 	 };
 	
 	$scope.updateDefaultValueList=function(){
@@ -251,8 +270,25 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	  			// access the foo property using result[0].foo
 				}
 			}
+			
+			if(item.fieldId==17){
+				var result = $.grep(exportFormatValueListOrginal, function(e){ return e.fieldId == item.fieldId;});
+				if (result.length == 0) {
+	 			 // not found
+					var exportFormatCopy=angular.copy(item);
+					if(exportFormatCopy.format==0){
+						exportFormatCopy.format="";
+					}
+					exportFormatCopy.format=exportFormatCopy.format.toString();
+					$scope.exportFormatValueList.push(exportFormatCopy);
+				} else if (result.length == 1) {
+					
+	  			// access the foo property using result[0].foo
+				}
+			}
 		});
 		exportDefaultValueListOrginal=angular.copy($scope.exportDefaultValueList);
+		exportFormatValueListOrginal=angular.copy($scope.exportFormatValueList);
 	};
 	
 	$scope.removeDefaultValueList=function(){
@@ -260,6 +296,9 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 			//var removeIndex=$scope.exportDefaultValueList.indexOf(item);
 			if(item.fieldId==37){
 				$scope.exportDefaultValueList.splice(0,1);
+			}
+			if(item.fieldId==17){
+				$scope.exportFormatValueList.splice(0,1);
 			}
 		});
 	};
@@ -297,6 +336,14 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 				}
 			});
 		});
+		
+		angular.forEach($scope.exportFormatValueList,function(item,index){
+			angular.forEach($scope.userPreferenceSaveForm.exportFieldsForms,function(item1,index1){
+				if(item.fieldId==item1.fieldId){
+					item1.format=item.format;
+				}
+			});
+		});
 
 		requestHandler.postRequest("/Patient/saveUpdateUserExportPreferences.json",$scope.userPreferenceSaveForm).then(function(response){
 			  if(fromLocation==1){
@@ -331,8 +378,8 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	 // Compare Two List
 	 $rootScope.exportPreferenceChanged=true;
 	 $scope.isCleanForExport = function() {
-		 $rootScope.exportPreferenceChanged=angular.equals(rawScreensOriginal,$scope.rawScreens)&&angular.equals(exportDefaultValueListOrginal,$scope.exportDefaultValueList);
-	    return angular.equals(rawScreensOriginal,$scope.rawScreens)&&angular.equals(exportDefaultValueListOrginal,$scope.exportDefaultValueList);
+		 $rootScope.exportPreferenceChanged=angular.equals(rawScreensOriginal,$scope.rawScreens)&&angular.equals(exportDefaultValueListOrginal,$scope.exportDefaultValueList)&&angular.equals(exportFormatValueListOrginal,$scope.exportFormatValueList);
+	    return angular.equals(rawScreensOriginal,$scope.rawScreens)&&angular.equals(exportDefaultValueListOrginal,$scope.exportDefaultValueList)&&angular.equals(exportFormatValueListOrginal,$scope.exportFormatValueList);
 	 };
 	 
 	 $rootScope.rootSaveUserExportPreference=function(){

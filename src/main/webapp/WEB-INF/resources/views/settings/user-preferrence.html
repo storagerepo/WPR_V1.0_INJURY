@@ -222,6 +222,45 @@
 											</div>
 									</div>
 								</div>
+								<div class="col-md-12" ng-show="exportFormatValueList.length>0" style="margin-top: 50px;">
+										<legend>
+											<p class="font-for-subheading">Fields Format</p>
+										</legend>
+										
+									<div class="col-md-12 margin-top-20" ng-repeat="exportFormatValue in exportFormatValueList">
+											<div class="col-md-3">
+												<label>{{exportFormatValue.fieldName}} :</label>
+											</div>
+											<div class="col-md-5">
+												<select class="form-control" ng-model="exportFormatValue.format" name="format" required>
+												<option value="">-- Select --</option>
+												<optgroup label="-----------------------------------">
+													<option value="1">+1-(999)-999-9999</option>
+													<option value="2">+1 (999) 999 9999</option>
+													<option value="3">+1(999)9999999</option>
+													<option value="4">+19999999999</option>
+												</optgroup>
+												<optgroup label="-----------------------------------">
+													<option value="5">1 (999) 999 9999</option>
+													<option value="6">1(999)9999999</option>
+													<option value="7">19999999999</option>
+												</optgroup>
+												<optgroup label="-----------------------------------">
+													<option value="8">(999)-999-9999</option>
+													<option value="9">(999) 999 9999</option>
+													<option value="10">(999)9999999</option>
+													<option value="11">9999999999</option>
+												</optgroup>
+												</select>
+												<span class="error-container"
+													ng-show="exportFieldsDefaultValueForm.format.$dirty && exportFieldsDefaultValueForm.format.$invalid">
+													<span style="color: red;"
+													ng-show="exportFieldsDefaultValueForm.format.$error.required">Please
+														select format</span>
+												</span>
+											</div>
+									</div>
+								</div>
 									<div class="col-md-12  margin-top-20">
 								<div class="col-md-9"></div>
 								<div class="col-md-3 text-right">

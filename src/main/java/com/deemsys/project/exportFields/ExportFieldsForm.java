@@ -13,8 +13,9 @@ public class ExportFieldsForm {
 	private Integer fieldId;
 	private String fieldName;
 	private Integer isCustom;
-	private String defaultValue;
 	private Integer sequenceNo;
+	private String defaultValue;
+	private Integer format;
 	private Integer status;
 	public Integer getFieldId() {
 		return fieldId;
@@ -46,19 +47,26 @@ public class ExportFieldsForm {
 	public void setSequenceNo(Integer sequenceNo) {
 		this.sequenceNo = sequenceNo;
 	}
+	public Integer getFormat() {
+		return format;
+	}
+	public void setFormat(Integer format) {
+		this.format = format;
+	}
 	public Integer getStatus() {
 		return status;
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public ExportFieldsForm(Integer fieldId, String fieldName, Integer isCustom, String defaultValue, Integer sequenceNo, Integer status) {
+	public ExportFieldsForm(Integer fieldId, String fieldName, Integer isCustom, Integer sequenceNo, String defaultValue, Integer format, Integer status) {
 		super();
 		this.fieldId = fieldId;
 		this.fieldName = fieldName;
 		this.isCustom = isCustom;
-		this.defaultValue = defaultValue;
 		this.sequenceNo = sequenceNo;
+		this.defaultValue = defaultValue;
+		this.format = format;
 		this.status = status;
 	}
 	public ExportFieldsForm() {

@@ -171,6 +171,7 @@ public class UserExportPreferencesDAOImpl implements UserExportPreferencesDAO{
 		projectionList.add(Projections.property("e1.fieldName"),"fieldName");
 		projectionList.add(Projections.property("e1.isCustom"),"isCustom");
 		projectionList.add(Projections.property("ue1.id.defaultValue"),"defaultValue");
+		projectionList.add(Projections.property("ue1.id.format"),"format");
 		projectionList.add(Projections.property("ue1.id.sequenceNo"),"sequenceNo");
 		projectionList.add(Projections.property("ue1.id.status"),"status");
 		

@@ -64,7 +64,7 @@ public class UserExportPreferencesService {
 		Users users=usersDAO.get(userId);
 		
 		for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {			
-			userExportPreferencesDAO.save(new UserExportPreferences(new UserExportPreferencesId(userId, exportFieldsForm.getFieldId(), sequenceNo++, exportFieldsForm.getDefaultValue(), 1),users));
+			userExportPreferencesDAO.save(new UserExportPreferences(new UserExportPreferencesId(userId, exportFieldsForm.getFieldId(), sequenceNo++, exportFieldsForm.getDefaultValue(), exportFieldsForm.getFormat(), 1),users));
 		}
 		//Logic Ends	
 		
