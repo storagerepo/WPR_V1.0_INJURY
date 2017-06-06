@@ -218,14 +218,14 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 		});
 	};
 	
-	// Get Default Value Minor field 37 ---> Static Id for this field, 17 ---> Contact Phone Field Id
+	// Get Default Value Minor field 34 ---> Static Id for this field, 17 ---> Contact Phone Field Id
 	$scope.exportDefaultValueList=[];
 	var exportDefaultValueListOrginal=[];
 	$scope.exportFormatValueList=[];
 	var exportFormatValueListOrginal=[];
 	$scope.getDefaultValueMinorField=function(){
 		angular.forEach($scope.exportFieldsFormsSelected,function(item,index){
-			if(item.fieldId==37){
+			if(item.fieldId==34){
 				var result = $.grep(exportDefaultValueListOrginal, function(e){ return e.fieldId == item.fieldId;});
 				if (result.length == 0) {
 	 			 // not found
@@ -237,15 +237,24 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 				}
 			}
 			
-			if(item.fieldId==17){
+			if(item.fieldId==17||item.fieldId==12){
+				
 				var result = $.grep(exportFormatValueListOrginal, function(e){ return e.fieldId == item.fieldId;});
 				if (result.length == 0) {
 	 			 // not found
 					var exportFormatCopy=angular.copy(item);
+					if(item.fieldId==17){
+						exportFormatCopy.dropDownValue=[{"name":"+1-(999)-999-9999","groupName":"Format Type 1","value":1},{"name":"+1 (999) 999 9999","groupName":"Format Type 1","value":2},{"name":"+1(999)9999999","groupName":"Format Type 1","value":3},{"name":"+19999999999","groupName":"Format Type 1","value":4}
+						,{"name":"1 (999) 999 9999","groupName":"Format Type 2","value":5},{"name":"1(999)9999999","groupName":"Format Type 2","value":6},{"name":"19999999999","groupName":"Format Type 2","value":7}
+						,{"name":"(999)-999-9999","groupName":"Format Type 3","value":8},{"name":"(999) 999 9999","groupName":"Format Type 3","value":9},{"name":"(999)9999999","groupName":"Format Type 3","value":10},{"name":"9999999999","groupName":"Format Type 3","value":11}];
+					}
+					if(item.fieldId==12){
+						exportFormatCopy.dropDownValue=[{"name":"FIRST NAME LAST NAME","groupName":"","value":1},{"name":"FIRST NAME MIDDLE NAME LAST NAME","groupName":"","value":2},{"name":"LAST NAME FIRST NAME","groupName":"","value":3}];
+					}
 					if(exportFormatCopy.format==0){
 						exportFormatCopy.format="";
 					}
-					exportFormatCopy.format=exportFormatCopy.format.toString();
+					//exportFormatCopy.format=exportFormatCopy.format.toString();
 					$scope.exportFormatValueList.push(exportFormatCopy);
 				} else if (result.length == 1) {
 					
@@ -259,7 +268,7 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	
 	$scope.updateDefaultValueList=function(){
 		angular.forEach($scope.rawScreens[1],function(item,index){
-			if(item.fieldId==37){
+			if(item.fieldId==34){
 				var result = $.grep(exportDefaultValueListOrginal, function(e){ return e.fieldId == item.fieldId;});
 				if (result.length == 0) {
 	 			 // not found
@@ -271,15 +280,24 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 				}
 			}
 			
-			if(item.fieldId==17){
+			if(item.fieldId==17||item.fieldId==12){
+				
 				var result = $.grep(exportFormatValueListOrginal, function(e){ return e.fieldId == item.fieldId;});
 				if (result.length == 0) {
 	 			 // not found
 					var exportFormatCopy=angular.copy(item);
+					if(item.fieldId==17){
+						exportFormatCopy.dropDownValue=[{"name":"+1-(999)-999-9999","groupName":"Format Type 1","value":1},{"name":"+1 (999) 999 9999","groupName":"Format Type 1","value":2},{"name":"+1(999)9999999","groupName":"Format Type 1","value":3},{"name":"+19999999999","groupName":"Format Type 1","value":4}
+						,{"name":"1 (999) 999 9999","groupName":"Format Type 2","value":5},{"name":"1(999)9999999","groupName":"Format Type 2","value":6},{"name":"19999999999","groupName":"Format Type 2","value":7}
+						,{"name":"(999)-999-9999","groupName":"Format Type 3","value":8},{"name":"(999) 999 9999","groupName":"Format Type 3","value":9},{"name":"(999)9999999","groupName":"Format Type 3","value":10},{"name":"9999999999","groupName":"Format Type 3","value":11}];
+					}
+					if(item.fieldId==12){
+						exportFormatCopy.dropDownValue=[{"name":"FIRST NAME LAST NAME","groupName":"","value":1},{"name":"FIRST NAME MIDDLE NAME LAST NAME","groupName":"","value":2},{"name":"LAST NAME FIRST NAME","groupName":"","value":3}];
+					}
 					if(exportFormatCopy.format==0){
 						exportFormatCopy.format="";
 					}
-					exportFormatCopy.format=exportFormatCopy.format.toString();
+					//exportFormatCopy.format=exportFormatCopy.format.toString();
 					$scope.exportFormatValueList.push(exportFormatCopy);
 				} else if (result.length == 1) {
 					
@@ -294,14 +312,28 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	$scope.removeDefaultValueList=function(){
 		angular.forEach($scope.rawScreens[0],function(item,index){
 			//var removeIndex=$scope.exportDefaultValueList.indexOf(item);
-			if(item.fieldId==37){
-				$scope.exportDefaultValueList.splice(0,1);
+			var defaultValueindex = arrayObjectIndexOf($scope.exportDefaultValueList,item.fieldId);
+			if(item.fieldId==34){
+				if(defaultValueindex!=-1){
+					$scope.exportDefaultValueList.splice(defaultValueindex,1);
+				}
 			}
-			if(item.fieldId==17){
-				$scope.exportFormatValueList.splice(0,1);
+			var defaultFormatindex = arrayObjectIndexOf($scope.exportFormatValueList,item.fieldId);
+			if(item.fieldId==17||item.fieldId==12){
+				if(defaultFormatindex!=-1){
+					$scope.exportFormatValueList.splice(defaultFormatindex,1);
+				}
 			}
 		});
 	};
+	
+	
+	function arrayObjectIndexOf(myArray, searchTerm) {
+	    for(var i = 0, len = myArray.length; i < len; i++) {
+	        if (myArray[i].fieldId === searchTerm) return i;
+	    }
+	    return -1;
+	}
 	
 	// Split List Objects
 	var rawScreensOriginal=[];

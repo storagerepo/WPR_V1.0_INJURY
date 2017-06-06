@@ -232,9 +232,10 @@
 												<label>{{exportFormatValue.fieldName}} :</label>
 											</div>
 											<div class="col-md-5">
-												<select class="form-control" ng-model="exportFormatValue.format" name="format" required>
+												<select class="form-control" ng-model="exportFormatValue.format" name="format{{exportFormatValue.fieldId}}" required ng-options="dropDown.value as dropDown.name group by dropDown.groupName for dropDown in exportFormatValue.dropDownValue" ng-selected="dropDown.value==exportFormatValue.format">
 												<option value="">-- Select --</option>
-												<optgroup label="-----------------------------------">
+												<!-- <option ng-repeat="dropDown in exportFormatValue.dropDownValue" value="{{dropDown.value}}" ng-selected="dropDown.value==exportFormatValue.format">{{dropDown.name}}</option> -->
+												<!-- <optgroup label="-----------------------------------">
 													<option value="1">+1-(999)-999-9999</option>
 													<option value="2">+1 (999) 999 9999</option>
 													<option value="3">+1(999)9999999</option>
@@ -250,12 +251,12 @@
 													<option value="9">(999) 999 9999</option>
 													<option value="10">(999)9999999</option>
 													<option value="11">9999999999</option>
-												</optgroup>
+												</optgroup> -->
 												</select>
 												<span class="error-container"
-													ng-show="exportFieldsDefaultValueForm.format.$dirty && exportFieldsDefaultValueForm.format.$invalid">
+													ng-show="exportFieldsDefaultValueForm.format{{exportFormatValue.fieldId}}.$dirty && exportFieldsDefaultValueForm.format{{exportFormatValue.fieldId}}.$invalid">
 													<span style="color: red;"
-													ng-show="exportFieldsDefaultValueForm.format.$error.required">Please
+													ng-show="exportFieldsDefaultValueForm.format{{exportFormatValue.fieldId}}.$error.required">Please
 														select format</span>
 												</span>
 											</div>

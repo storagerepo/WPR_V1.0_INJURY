@@ -96,6 +96,18 @@ public class ExportExcelView extends AbstractExcelView {
 		for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
 			cell = row.createCell(c++);
 			cell.setCellStyle(style);
+			if(exportFieldsForm.getFieldId()==12){
+				if(exportFieldsForm.getFormat()==1){
+					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": FIRST NAME LAST NAME");
+				}else if(exportFieldsForm.getFormat()==2){
+					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": FIRST NAME MIDDLE NAME LAST NAME");
+				}else if(exportFieldsForm.getFormat()==3){
+					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": LAST NAME FIRST NAME");
+				}else{
+					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": LAST FIRST MIDDLE");
+				}
+				
+			}
 			cell.setCellValue(exportFieldsForm.getFieldName());
 		}
 		
@@ -308,6 +320,19 @@ public class ExportExcelView extends AbstractExcelView {
 			break;
 		case 12:
 			value=patientSearchList.getName();
+			if(format==1){
+				// First Name, Last Name
+				String[] firstNameLastName=this.changeNameFormat(patientSearchList.getName());
+				value=firstNameLastName[1]+" "+firstNameLastName[0];
+			}else if(format==2){
+				// First Middle Last Name
+				String[] firstMiddleLastName=this.changeNameFormat(patientSearchList.getName());
+				value=firstMiddleLastName[1]+" "+firstMiddleLastName[2]+" "+firstMiddleLastName[0];
+			}else if(format==3){
+				// Last Name First Name
+				String[] lastFirstName=this.changeNameFormat(patientSearchList.getName());
+				value=lastFirstName[0]+" "+lastFirstName[1];
+			}
 			break;
 		case 13:
 			value=patientSearchList.getDateOfBirth();
@@ -361,32 +386,32 @@ public class ExportExcelView extends AbstractExcelView {
 			}
 			
 			break;
-		case 26:
+		/*case 26:
 			// First Name Last Name
 			String[] firstNameLastName=this.changeNameFormat(patientSearchList.getName());
 			value=firstNameLastName[1]+" "+firstNameLastName[0];
-			break;
-		case 27:
+			break;*/
+		case 26:
 			// Street Address
 			String[] address=this.splitAddress(patientSearchList.getAddress());
 			value=address[0];
 			break;
-		case 28:
+		case 27:
 			// City
 			String[] city=this.splitAddress(patientSearchList.getAddress());
 			value=city[1];
 			break;
-		case 29:
+		case 28:
 			// State
 			String[] state=this.splitAddress(patientSearchList.getAddress());
 			value=state[2];
 			break;
-		case 30:
+		case 29:
 			// ZIP
 			String[] zip=this.splitAddress(patientSearchList.getAddress());
 			value=zip[3];
 			break;
-		case 31:
+		/*case 30:
 			// First Middle Last Name
 			String[] firstMiddleLastName=this.changeNameFormat(patientSearchList.getName());
 			value=firstMiddleLastName[1]+" "+firstMiddleLastName[2]+" "+firstMiddleLastName[0];
@@ -395,23 +420,23 @@ public class ExportExcelView extends AbstractExcelView {
 			// Last Name First Name
 			String[] lastFirstName=this.changeNameFormat(patientSearchList.getName());
 			value=lastFirstName[0]+" "+lastFirstName[1];
-			break;
-		case 33:
+			break;*/
+		case 30:
 			//First Name
 			String[] firstName=this.changeNameFormat(patientSearchList.getName());
 			value=firstName[1];
 			break;
-		case 34:
+		case 31:
 			// Middle Name
 			String[] middleName=this.changeNameFormat(patientSearchList.getName());
 			value=middleName[2];
 			break;
-		case 35:
+		case 32:
 			// Last Name
 			String[] lastName=this.changeNameFormat(patientSearchList.getName());
 			value=lastName[0];
 			break;
-		case 36:
+		case 33:
 			// Damage Scale
 			if(patientSearchList.getDamageScale()!=null){
 				value=this.getDamageScaleValue(patientSearchList.getDamageScale());
@@ -420,7 +445,7 @@ public class ExportExcelView extends AbstractExcelView {
 			}
 			
 			break;
-		case 37:
+		case 34:
 			// Salutation of Minor
 			if(patientSearchList.getAge()!=null){
 				if(defaultValue!=null&&patientSearchList.getAge()<18)
