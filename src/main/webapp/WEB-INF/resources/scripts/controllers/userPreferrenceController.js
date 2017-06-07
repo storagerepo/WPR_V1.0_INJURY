@@ -244,16 +244,14 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	 			 // not found
 					var exportFormatCopy=angular.copy(item);
 					if(item.fieldId==17){
-						exportFormatCopy.dropDownValue=[{"name":"+1-(999)-999-9999","groupName":"Format Type 1","value":1},{"name":"+1 (999) 999 9999","groupName":"Format Type 1","value":2},{"name":"+1(999)9999999","groupName":"Format Type 1","value":3},{"name":"+19999999999","groupName":"Format Type 1","value":4}
+						exportFormatCopy.dropDownValue=[{"name":"999-999-9999","groupName":"Default","value":0},{"name":"+1-(999)-999-9999","groupName":"Format Type 1","value":1},{"name":"+1 (999) 999 9999","groupName":"Format Type 1","value":2},{"name":"+1(999)9999999","groupName":"Format Type 1","value":3},{"name":"+19999999999","groupName":"Format Type 1","value":4}
 						,{"name":"1 (999) 999 9999","groupName":"Format Type 2","value":5},{"name":"1(999)9999999","groupName":"Format Type 2","value":6},{"name":"19999999999","groupName":"Format Type 2","value":7}
 						,{"name":"(999)-999-9999","groupName":"Format Type 3","value":8},{"name":"(999) 999 9999","groupName":"Format Type 3","value":9},{"name":"(999)9999999","groupName":"Format Type 3","value":10},{"name":"9999999999","groupName":"Format Type 3","value":11}];
 					}
 					if(item.fieldId==12){
-						exportFormatCopy.dropDownValue=[{"name":"FIRST NAME LAST NAME","groupName":"","value":1},{"name":"FIRST NAME MIDDLE NAME LAST NAME","groupName":"","value":2},{"name":"LAST NAME FIRST NAME","groupName":"","value":3}];
+						exportFormatCopy.dropDownValue=[{"name":"LASTNAME FIRSTNAME MIDDLENAME","groupName":"","value":0},{"name":"FIRSTNAME LASTNAME","groupName":"","value":1},{"name":"FIRSTNAME MIDDLENAME LASTNAME","groupName":"","value":2},{"name":"LASTNAME FIRSTNAME","groupName":"","value":3}];
 					}
-					if(exportFormatCopy.format==0){
-						exportFormatCopy.format="";
-					}
+					
 					//exportFormatCopy.format=exportFormatCopy.format.toString();
 					$scope.exportFormatValueList.push(exportFormatCopy);
 				} else if (result.length == 1) {
@@ -287,16 +285,14 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	 			 // not found
 					var exportFormatCopy=angular.copy(item);
 					if(item.fieldId==17){
-						exportFormatCopy.dropDownValue=[{"name":"+1-(999)-999-9999","groupName":"Format Type 1","value":1},{"name":"+1 (999) 999 9999","groupName":"Format Type 1","value":2},{"name":"+1(999)9999999","groupName":"Format Type 1","value":3},{"name":"+19999999999","groupName":"Format Type 1","value":4}
+						exportFormatCopy.dropDownValue=[{"name":"999-999-9999","groupName":"Default","value":0},{"name":"+1-(999)-999-9999","groupName":"Format Type 1","value":1},{"name":"+1 (999) 999 9999","groupName":"Format Type 1","value":2},{"name":"+1(999)9999999","groupName":"Format Type 1","value":3},{"name":"+19999999999","groupName":"Format Type 1","value":4}
 						,{"name":"1 (999) 999 9999","groupName":"Format Type 2","value":5},{"name":"1(999)9999999","groupName":"Format Type 2","value":6},{"name":"19999999999","groupName":"Format Type 2","value":7}
 						,{"name":"(999)-999-9999","groupName":"Format Type 3","value":8},{"name":"(999) 999 9999","groupName":"Format Type 3","value":9},{"name":"(999)9999999","groupName":"Format Type 3","value":10},{"name":"9999999999","groupName":"Format Type 3","value":11}];
 					}
 					if(item.fieldId==12){
-						exportFormatCopy.dropDownValue=[{"name":"FIRST NAME LAST NAME","groupName":"","value":1},{"name":"FIRST NAME MIDDLE NAME LAST NAME","groupName":"","value":2},{"name":"LAST NAME FIRST NAME","groupName":"","value":3}];
+						exportFormatCopy.dropDownValue=[{"name":"LASTNAME FIRSTNAME MIDDLENAME","groupName":"","value":0},{"name":"FIRSTNAME LASTNAME","groupName":"","value":1},{"name":"FIRSTNAME MIDDLENAME LASTNAME","groupName":"","value":2},{"name":"LASTNAME FIRSTNAME","groupName":"","value":3}];
 					}
-					if(exportFormatCopy.format==0){
-						exportFormatCopy.format="";
-					}
+					
 					//exportFormatCopy.format=exportFormatCopy.format.toString();
 					$scope.exportFormatValueList.push(exportFormatCopy);
 				} else if (result.length == 1) {
