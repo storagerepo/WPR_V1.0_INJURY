@@ -249,7 +249,7 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 						,{"name":"(999)-999-9999","groupName":"Format Type 3","value":8},{"name":"(999) 999 9999","groupName":"Format Type 3","value":9},{"name":"(999)9999999","groupName":"Format Type 3","value":10},{"name":"9999999999","groupName":"Format Type 3","value":11}];
 					}
 					if(item.fieldId==12){
-						exportFormatCopy.dropDownValue=[{"name":"LASTNAME FIRSTNAME MIDDLENAME","groupName":"","value":0},{"name":"FIRSTNAME LASTNAME","groupName":"","value":1},{"name":"FIRSTNAME MIDDLENAME LASTNAME","groupName":"","value":2},{"name":"LASTNAME FIRSTNAME","groupName":"","value":3}];
+						exportFormatCopy.dropDownValue=[{"name":"LAST FIRST MIDDLE","groupName":"","value":0},{"name":"FIRST LAST","groupName":"","value":1},{"name":"FIRST MIDDLE LAST","groupName":"","value":2},{"name":"LAST FIRST","groupName":"","value":3}];
 					}
 					
 					//exportFormatCopy.format=exportFormatCopy.format.toString();
@@ -290,7 +290,7 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 						,{"name":"(999)-999-9999","groupName":"Format Type 3","value":8},{"name":"(999) 999 9999","groupName":"Format Type 3","value":9},{"name":"(999)9999999","groupName":"Format Type 3","value":10},{"name":"9999999999","groupName":"Format Type 3","value":11}];
 					}
 					if(item.fieldId==12){
-						exportFormatCopy.dropDownValue=[{"name":"LASTNAME FIRSTNAME MIDDLENAME","groupName":"","value":0},{"name":"FIRSTNAME LASTNAME","groupName":"","value":1},{"name":"FIRSTNAME MIDDLENAME LASTNAME","groupName":"","value":2},{"name":"LASTNAME FIRSTNAME","groupName":"","value":3}];
+						exportFormatCopy.dropDownValue=[{"name":"LAST FIRST MIDDLE","groupName":"","value":0},{"name":"FIRST LAST","groupName":"","value":1},{"name":"FIRST MIDDLE LAST","groupName":"","value":2},{"name":"LAST FIRST","groupName":"","value":3}];
 					}
 					
 					//exportFormatCopy.format=exportFormatCopy.format.toString();

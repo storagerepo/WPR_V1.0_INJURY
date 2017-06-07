@@ -98,11 +98,11 @@ public class ExportExcelView extends AbstractExcelView {
 			cell.setCellStyle(style);
 			if(exportFieldsForm.getFieldId()==12){
 				if(exportFieldsForm.getFormat()==1){
-					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": FIRST NAME LAST NAME");
+					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": FIRST LAST");
 				}else if(exportFieldsForm.getFormat()==2){
-					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": FIRST NAME MIDDLE NAME LAST NAME");
+					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": FIRST MIDDLE LAST");
 				}else if(exportFieldsForm.getFormat()==3){
-					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": LAST NAME FIRST NAME");
+					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": LAST FIRST");
 				}else{
 					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": LAST FIRST MIDDLE");
 				}
