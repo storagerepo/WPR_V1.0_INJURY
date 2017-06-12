@@ -45,6 +45,8 @@ public class PatientForm {
 	private String crashReportFileName;
 	private Integer isRunnerReport;
 	private Integer status;
+	// For Parse PDF
+	private Integer isOccupantAvailable;
 	
 	public String getPatientId() {
 		return patientId;
@@ -275,6 +277,14 @@ public class PatientForm {
 	}
 	public void setDamageScale(Integer damageScale) {
 		this.damageScale = damageScale;
+	}
+	
+	// For Parse PDF
+	public Integer getIsOccupantAvailable() {
+		return isOccupantAvailable;
+	}
+	public void setIsOccupantAvailable(Integer isOccupantAvailable) {
+		this.isOccupantAvailable = isOccupantAvailable;
 	}
 	public PatientForm(String patientId,String crashId, String localReportNumber, String crashSeverity,
 			String reportingAgencyName, String numberOfUnits,

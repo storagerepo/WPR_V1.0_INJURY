@@ -290,6 +290,7 @@ public class InjuryConstants {
 			invalidInsurance.add("none");
 			invalidInsurance.add("no insurance");
 			invalidInsurance.add("n/a");
+			invalidInsurance.add("na");
 			invalidInsurance.add("not shown fra");
 			invalidInsurance.add("none shown");
 			invalidInsurance.add("fra not shown");			
