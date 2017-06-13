@@ -21,7 +21,7 @@ body {
 @media(min-width:768px) {
     #page-wrapper {
         position: inherit;
-        margin: 0 0 0 145px;
+        margin: 0 0 0 160px;
         padding: 0 20px;
         border-left: 1px solid #e7e7e7;
     }
@@ -140,6 +140,7 @@ body {
         z-index: 1;
         position: absolute;
         margin-top: 51px;
+        width:160px;
     }
 
     .navbar-top-links .dropdown-messages,

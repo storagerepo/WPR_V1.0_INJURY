@@ -37,14 +37,14 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	    $scope.getLawyerList(); 
 	 
 	 
-		 $scope.checkCustomDate=function(custom){
+		 $scope.checkCustomDate=function(){
 		//Reset to date if less than from date
 			var fromDate=new Date($scope.patient.crashFromDate);
 			var toDate=new Date($scope.patient.crashToDate);
 			if(toDate<fromDate)
 				$scope.patient.crashToDate="";
 			//End Reset to date if less than from date
-		 if(custom=='0' && $scope.patient.crashFromDate!=''){
+		 if($scope.patient.crashFromDate!=''){
 				$scope.disableCustom=false;
 			}
 			else{
@@ -98,6 +98,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	
 	$scope.searchItems=function(searchObj){
 		$scope.isLoading=true;
+		$scope.isDisableButtons=false;
 		//To avoid overwriting actual $scope.patient object.
 		$scope.searchParam={};
 		angular.copy(searchObj,$scope.searchParam);
@@ -285,6 +286,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	searchService.setCountyListType($scope.countyListType);
 	searchService.setDamageScale(angular.copy($scope.patient.damageScale));
 	searchService.setDirectReportStatus($scope.patient.directReportStatus);
+	searchService.setReportingAgency($scope.patient.reportingAgency);
 	};
 	
 	$scope.secoundarySearchPatient=function(){
@@ -738,7 +740,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	$scope.init=function(){
 
 		//Initialize DropDown
-		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"}, {id: 5, label: "Undetermined"}];	
+		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"}, {id: 5, label: "Undetermined"}, {id: 0, label: "Others"}];	
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
 		
@@ -768,6 +770,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 		$scope.patient.patientStatus=searchService.getPatientStatus();
 		$scope.countyListType=searchService.getCountyListType();
 		$scope.patient.directReportStatus=searchService.getDirectReportStatus();
+		$scope.patient.reportingAgency=searchService.getReportingAgency();
 		$scope.isSelectedAddedFromDate=true;
 
 		// Report Type
@@ -819,7 +822,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	
 	$scope.resetSearchData = function(){
 		 $scope.patient={};
-		 $scope.patient.numberOfDays="1";
+		 $scope.patient.numberOfDays="0";
 		 $scope.patient.lawyerId="0";
 	     $scope.patientSearchForm.$setPristine();
 	     $scope.lAdminPatientSearchData="";

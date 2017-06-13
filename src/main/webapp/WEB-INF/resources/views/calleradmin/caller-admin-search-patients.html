@@ -167,7 +167,7 @@
 						ng-class="{'button-disable':patientSearchForm.$invalid}"
 						ng-disabled='isClean() || patientSearchForm.$invalid ||disableSearch'
 						ng-click="searchPatients()" data-hint="Search"><i
-						class="fa fa-search"></i>&nbsp;Search</a>&nbsp;<a href=""
+						class="fa fa-search"></i></a>&nbsp;<a href=""
 						class="btn btn-sm btn-danger hint--top"
 						ng-click="resetSearchData()" data-hint="Reset"><i
 						class="fa fa-undo"></i></a>
@@ -286,7 +286,7 @@
 		</div>
 
 	</form>
-	<div ng-show="patient.isRunnerReport!=3">
+	<div class="col-md-12" ng-show="patient.isRunnerReport!=3">
 		<table class="table table-bordered persist-area" ng-cloak>
 			<thead class="persist-header" ng-cloak>
 				<tr>
@@ -298,8 +298,8 @@
 					<th width="8%">Age</th>
 					<th width="8%">Unit / Damage</th>
 					<th width="10%">County</th>
-					<th width="5%">Tier</th>									
 					<th width="9%">Reporting Agency</th>
+					<th width="5%">Tier</th>									
 					<th width="9%">Caller</th>	
 					<th width="10%">Status</th>
 					<th width="10%" ng-show="patient.isArchived==1" ng-cloak>Archived
@@ -403,7 +403,7 @@
 						ng-if="(cAdminPatient.injuries==2 || cAdminPatient.injuries==3 || cAdminPatient.injuries==4) && (cAdminPatient.age>=18 || cAdminPatient.age==null) "><a
 							href="" class="hint--top redText"
 							ng-click="viewPatientModal(cAdminPatient.patientId)"
-							data-hint="View Patient">{{cAdminPatient.name}}</a><span
+							data-hint="View Patient"><span ng-show="cAdminPatient.name!=null">{{cAdminPatient.name}}</span><span ng-show="cAdminPatient.name==null">N/A</span></a><span
 							class="redText margin-left-10 hint--top"
 							data-hint="Injuries : {{cAdminPatient.injuriesName}}"><i
 								class="fa fa-arrow-up"></i></span> <span
@@ -418,7 +418,7 @@
 						ng-if="(cAdminPatient.injuries==2 || cAdminPatient.injuries==3 || cAdminPatient.injuries==4) && (cAdminPatient.age<18 && cAdminPatient.age!=null)"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(cAdminPatient.patientId)"
-							data-hint="View Patient">{{cAdminPatient.name}}</a><span
+							data-hint="View Patient"><span ng-show="cAdminPatient.name!=null">{{cAdminPatient.name}}</span><span ng-show="cAdminPatient.name==null">N/A</span></a><span
 							class="redText margin-left-10 hint--top"
 							data-hint="Injuries : {{cAdminPatient.injuriesName}}"><i
 								class="fa fa-arrow-up"></i></span> <span
@@ -433,7 +433,7 @@
 						ng-if="(cAdminPatient.injuries!=2 && cAdminPatient.injuries!=3 && cAdminPatient.injuries!=4) && (cAdminPatient.age>=18 || cAdminPatient.age==null)"><a
 							href="" class="hint--top"
 							ng-click="viewPatientModal(cAdminPatient.patientId)"
-							data-hint="View Patient">{{cAdminPatient.name}}</a> <span
+							data-hint="View Patient"><span ng-show="cAdminPatient.name!=null">{{cAdminPatient.name}}</span><span ng-show="cAdminPatient.name==null">N/A</span></a> <span
 							ng-show="cAdminPatient.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
 							<span class="badge hint--top"
@@ -445,7 +445,7 @@
 						ng-if="(cAdminPatient.injuries!=2 && cAdminPatient.injuries!=3 && cAdminPatient.injuries!=4) && (cAdminPatient.age<18 && cAdminPatient.age!=null)"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(cAdminPatient.patientId)"
-							data-hint="View Patient">{{cAdminPatient.name}}</a> <span
+							data-hint="View Patient"><span ng-show="cAdminPatient.name!=null">{{cAdminPatient.name}}</span><span ng-show="cAdminPatient.name==null">N/A</span></a> <span
 							ng-show="cAdminPatient.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
 							<span class="badge hint--top"
@@ -453,7 +453,8 @@
 							data-hint="Runner Report">R</span> <span
 							class="badge badge-success hint--top"
 							ng-show="cAdminPatient.isRunnerReport==2&&cAdminPatient.isRunnerReportPatient==2"
-							data-hint="Updated Runner Report">R</span> </span></td>
+							data-hint="Updated Runner Report">R</span> </span>
+							</td>
 
 					<td title="Phone Number"><span
 						ng-show="cAdminPatient.phoneNumber!=''&&cAdminPatient.phoneNumber!=null">{{cAdminPatient.phoneNumber}}</span><span
@@ -476,21 +477,21 @@
 					</span> <span
 						ng-show="cAdminPatient.unitNumber==''||cAdminPatient.unitNumber==null">-</span>
 					</td>
-					<td title="County">{{cAdminPatient.county}}</td>					
+					<td title="County">{{cAdminPatient.county}}</td>	
+					<td title="Reporting Agency"><span
+						ng-show="cAdminPatient.reportingAgencyName!=''&&cAdminPatient.reportingAgencyName!=null">{{cAdminPatient.reportingAgencyName}}</span><span
+						ng-show="cAdminPatient.reportingAgencyName==''||cAdminPatient.reportingAgencyName==null">-</span></td>				
 					<td><span
 						ng-show="cAdminPatient.tier!=''&&cAdminPatient.tier!=null">Tier
 							{{cAdminPatient.tier}}</span><span
 						ng-show="cAdminPatient.tier==''||cAdminPatient.tier==null">-</span></td>
-					<td title="Reporting Agency"><span
-						ng-show="cAdminPatient.reportingAgencyName!=''&&cAdminPatient.reportingAgencyName!=null">{{cAdminPatient.reportingAgencyName}}</span><span
-						ng-show="cAdminPatient.reportingAgencyName==''||cAdminPatient.reportingAgencyName==null">-</span></td>
 					<td title="Caller Name"><span
 						ng-show="cAdminPatient.callerFirstName==null && cAdminPatient.callerLastName==null">N/A</span>{{cAdminPatient.callerFirstName}}
 						{{cAdminPatient.callerLastName}}</td>
 					
 					<td title="Status">{{cAdminPatient.patientStatusName}}<br/>
 					<span
-						ng-show="cAdminPatient.lastCallLogTimeStamp!=null && cAdminPatient.lastCallLogTimeStamp!=null"><b><i title="{{cAdminPatient.lastCallLogTimeStamp}}" style="color:blue;font-size:10px;padding:1px;border:solid 1px #ddd;background:#fff;border-radius:2px;">{{cAdminPatient.lastCallLogTimeStamp}}</i></b></span></td>
+						ng-show="cAdminPatient.lastCallLogTimeStamp!=null && cAdminPatient.lastCallLogTimeStamp!=null"><b><i title="{{cAdminPatient.lastCallLogTimeStamp}}" class="status-label-primary">{{cAdminPatient.lastCallLogTimeStamp}}</i></b></span></td>
 					<td title="Archived On" ng-show="cAdminPatient.isArchived==1"
 						ng-cloak>{{cAdminPatient.archivedDateTime}}</td>
 					<td>
@@ -1362,7 +1363,7 @@
 								.popover(
 										{
 											container : 'body',
-											content : "<p><b>Tier 1:</b> List of accident victims where there are multiple vehicles and at fault is insured.</p><p><b>Tier 2:</b> List of accident victims where there are multiple vehicles but no at fault insurance and the victim is insured. (Medpay or uninsured motorist)</p><p><b>Tier 3:</b> List of accident victims involved in a single car accident. (includes hit and runs)</p><p><b>Tier 4:</b> List of passengers in at-fault vehicle and driver also, if insured.</p>",
+											content : "<p><b>Tier 1:</b> List of accident victims where there are multiple vehicles and at fault is insured.</p><p><b>Tier 2:</b> List of accident victims where there are multiple vehicles but no at fault insurance and the victim is insured. (Medpay or uninsured motorist)</p><p><b>Tier 3:</b> List of accident victims involved in a single car accident. (includes hit and runs)</p><p><b>Tier 4:</b> List of passengers in at-fault vehicle and driver also, if insured.</p><p><b>Others:</b> List of passengers, Not under any tiers.</p>",
 											html : true
 
 										});

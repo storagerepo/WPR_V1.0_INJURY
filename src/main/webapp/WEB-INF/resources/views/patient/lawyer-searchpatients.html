@@ -29,7 +29,7 @@
 <div class="row">
 	<form name="patientSearchForm" novalidate ng-cloak>
 		<div class="col-md-12 no-padding">
-			<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
+			<div class="col-md-5ths">
 				<label>County</label> &nbsp;<a href="" data-toggle="popover"
 					title="Info on County Selection:"
 					data-content="<p><b>Subscribed - </b>All counties you have subscribed to.</p><p><b>Preferred - </b> Only counties you usually prefer to access.</p>"
@@ -41,18 +41,18 @@
 					extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true}"
 					events="countyEvents"></div>
 			</div>
-			<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
+			<div class="col-md-5ths">
 				<label>Crash From Date</label>
 				<div class="input-group">
 					<input type="text" name="crashFromDate" id="CrashFromDate"
 						class="form-control" ng-model="patient.crashFromDate"
-						ng-change="checkCustomDate(patient.numberOfDays)"
+						ng-change="checkCustomDate()"
 						placeholder="Crash From Date"> <span
 						class="input-group-addon white-color-bg"> <span
 						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
 			</div>
-			<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
+		<!-- 	<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
 				<label>Number of Days</label> <select class="form-control"
 					ng-model="patient.numberOfDays" name="numberOfDays"
 					ng-change="checkCustomDate(patient.numberOfDays)">
@@ -62,8 +62,8 @@
 					<option value="30">30</option>
 					<option value="0">Custom</option>
 				</select>
-			</div>
-			<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
+			</div> -->
+			<div class="col-md-5ths">
 				<label>Crash To Date</label>
 				<div class="input-group">
 					<input type="text" name="crashToDate" id="CrashToDate"
@@ -75,25 +75,7 @@
 				<span style="color: red" ng-if="crashToRequired==true">Please
 					Enter Crash To Date</span>
 			</div>
-			<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
-				<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover"
-					title="Tier Details (Deceased victims not listed)"
-					data-placement="bottom"><i class="fa fa-info-circle"></i></a><span
-					class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select
-					at least one tier</span>
-				<div ng-dropdown-multiselect="" options="defaultTiers"
-					selected-model="patient.tier"
-					extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1||patient.isRunnerReport==3}"></div>
-			</div>
-		</div>
-
-		<div class="col-md-12">
-			<br />
-		</div>
-
-		<div class="col-md-12 no-padding">
-
-			<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
+			<div class="col-md-5ths">
 				<label>Added On From Date</label>
 				<div class="input-group">
 					<input type="text" name="addedOnFromDate" id="AddedFromDate"
@@ -103,7 +85,7 @@
 						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
 			</div>
-			<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
+			<div class="col-md-5ths">
 				<label>Added On To Date</label>
 				<div class="input-group">
 					<input type="text" name="addedOnToDate" id="AddedToDate"
@@ -116,12 +98,23 @@
 				<span style="color: red" ng-if="addedToRequired==true">Please
 					Enter Added On To Date</span>
 			</div>
+			
+		</div>
 
-			<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
-				<label>Local Report Number</label> <input type="text"
-					name="localReportNumber" class="form-control"
-					ng-model="patient.localReportNumber"
-					placeholder="Local Report Number">
+		<div class="col-md-12">
+			<br />
+		</div>
+
+		<div class="col-md-12 no-padding">
+			<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
+				<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover"
+					title="Tier Details (Deceased victims not listed)"
+					data-placement="bottom"><i class="fa fa-info-circle"></i></a><span
+					class="error-class" ng-show="searchTierMinError">&nbsp;&nbsp;Select
+					at least one tier</span>
+				<div ng-dropdown-multiselect="" options="defaultTiers"
+					selected-model="patient.tier"
+					extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1||patient.isRunnerReport==3}"></div>
 			</div>
 			<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
 				<label>Damage Scale</label>&nbsp;<a href=""
@@ -135,6 +128,18 @@
 				<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select
 					at least one Damage Scale</span>
 			</div>
+			<div class="col-md-5ths">
+				<label>Local Report Number</label> <input type="text"
+					name="localReportNumber" class="form-control"
+					ng-model="patient.localReportNumber"
+					placeholder="Local Report Number">
+			</div>
+			<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
+				<label>Reporting Agency</label> <input type="text"
+					name="reportingAgency" class="form-control input-sm"
+					ng-model="patient.reportingAgency" ng-disabled="patient.isRunnerReport==1"
+					placeholder="Reporting Agency">
+				</div>
 			<div class="col-md-5ths">
 				<label>&nbsp;</label>
 				<div>
@@ -242,18 +247,17 @@
 				<tr>
 					<th width="2%"><input ng-change="isChecked()"
 						ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
-					<th width="18%">Client Name <br /> <span class="client-name">(Last,
+					<th width="20%">Client Name <br /> <span class="client-name">(Last,
 							First, Middle)</span></th>
 					<th width="12%">Age</th>
 					<th width="6%">Unit / Damage</th>
 					<th width="8%">County</th>
-
-					<th width="20%">Address</th>
-
-					<th width="12%">Tier</th>
+					<th width="12%">Reporting Agency</th>
+					<th width="16%">Address</th>
+					<th width="7%">Tier</th>
 					<th width="8%" ng-show="patient.isArchived==1" ng-cloak>Archived
 						On</th>
-					<th width="16%">Actions</th>
+					<th width="18%">Actions</th>
 				</tr>
 				<tr>
 					<th></th>
@@ -281,6 +285,7 @@
 					<th></th>
 					<th></th>
 					<th></th>
+					<th></th>
 					<th ng-show="patient.isArchived==1"></th>
 					<th></th>
 				</tr>
@@ -293,14 +298,14 @@
 						ng-change="selectArchiveGroup(this,'{{resultMainData.archivedDate}}')"
 						ng-model="isCheckedAllGroupArchivePatients" type="checkbox"
 						id="{{resultMainData.archivedDate}}"></td>
-					<td colspan="8"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
+					<td colspan="9"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
 				</tr>
 				<tr ng-repeat-start="resultData in resultMainData.searchResult" ng-class="resultData.isRunnerReport==4?'group-header-back-convert':'group-header-back'">
 					<td colspan="1"><input
 						ng-change="selectGroup(this,'{{resultMainData.archivedDate}}')"
 						ng-model="isCheckedAllGroupPatients" type="checkbox"
 						id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td>
-					<td colspan="8"><span><b>Local Report No:</b>
+					<td colspan="9"><span><b>Local Report No:</b>
 							{{resultData.localReportNumber}} </span><span
 						class="badge badge-warning hint--top"
 						ng-show="resultData.isRunnerReport==2" data-hint="Runner Report">R</span>
@@ -330,7 +335,7 @@
 						ng-if="(lawyerData.injuries==2 || lawyerData.injuries==3 || lawyerData.injuries==4) && (lawyerData.age>=18 || lawyerData.age==null)"><a
 							href="" class="hint--top redText"
 							ng-click="viewPatientModal(lawyerData.patientId)"
-							data-hint="View Client">{{lawyerData.name}}</a><span
+							data-hint="View Client"><span ng-show="lawyerData.name!=null">{{lawyerData.name}}</span><span ng-show="lawyerData.name==null">N/A</span></a><span
 							class="redText margin-left-10 hint--top"
 							data-hint="Injuries : {{lawyerData.injuriesName}}"><i
 								class="fa fa-arrow-up"></i></span><span
@@ -345,7 +350,7 @@
 						ng-if="(lawyerData.injuries==2 || lawyerData.injuries==3 || lawyerData.injuries==4) && (lawyerData.age<18 && lawyerData.age!=null)"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(lawyerData.patientId)"
-							data-hint="View Client">{{lawyerData.name}}</a><span
+							data-hint="View Client"><span ng-show="lawyerData.name!=null">{{lawyerData.name}}</span><span ng-show="lawyerData.name==null">N/A</span></a></a><span
 							class="redText margin-left-10 hint--top"
 							data-hint="Injuries : {{lawyerData.injuriesName}}"><i
 								class="fa fa-arrow-up"></i></span><span
@@ -360,7 +365,7 @@
 						ng-if="(lawyerData.injuries!=2 && lawyerData.injuries!=3 && lawyerData.injuries!=4) && (lawyerData.age>=18 || lawyerData.age==null)"><a
 							href="" class="hint--top"
 							ng-click="viewPatientModal(lawyerData.patientId)"
-							data-hint="View Client">{{lawyerData.name}}</a><span
+							data-hint="View Client"><span ng-show="lawyerData.name!=null">{{lawyerData.name}}</span><span ng-show="lawyerData.name==null">N/A</span></a></a><span
 							ng-show="lawyerData.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
 							<span class="badge hint--top"
@@ -372,7 +377,7 @@
 						ng-if="(lawyerData.injuries!=2 && lawyerData.injuries!=3 && lawyerData.injuries!=4) && (lawyerData.age<18 && lawyerData.age!=null)"><a
 							href="" class="hint--top warningText"
 							ng-click="viewPatientModal(lawyerData.patientId)"
-							data-hint="View Client">{{lawyerData.name}}</a><span
+							data-hint="View Client"><span ng-show="lawyerData.name!=null">{{lawyerData.name}}</span><span ng-show="lawyerData.name==null">N/A</span></a></a><span
 							ng-show="lawyerData.seatingPosition=='1'"
 							class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
 							<span class="badge hint--top"
@@ -380,7 +385,8 @@
 							data-hint="Runner Report">R</span> <span
 							class="badge badge-success hint--top"
 							ng-show="lawyerData.isRunnerReport==2&&lawyerData.isRunnerReportPatient==2"
-							data-hint="Updated Runner Report">R</span></span></td>
+							data-hint="Updated Runner Report">R</span></span>
+							</td>
 					<td title="Age"><span
 						ng-show="lawyerData.age!='' && lawyerData.age!=null">{{lawyerData.age}}</span><span
 						ng-show="lawyerData.age=='' || lawyerData.age==null">-</span></td>
@@ -399,7 +405,9 @@
 					</span> <span
 						ng-show="lawyerData.unitNumber=='' || lawyerData.unitNumber==null">-</span></td>
 					<td title="County">{{lawyerData.county}}</td>
-
+					<td title="Reporting Agency">
+					<span ng-show="lawyerData.reportingAgencyName!=''&&lawyerData.reportingAgencyName!=null">{{lawyerData.reportingAgencyName}}</span><span
+						ng-show="lawyerData.reportingAgencyName==''||lawyerData.reportingAgencyName==null">-</span></td>
 					<td title="Address"><span
 						ng-show="lawyerData.address!='' && lawyerData.address!=null">{{lawyerData.address}}</span><span
 						ng-show="lawyerData.address=='' || lawyerData.address==null">-</span></td>
@@ -427,7 +435,7 @@
 				<tr ng-repeat-end=""></tr>
 				<tr ng-repeat-end=""></tr>
 				<tr ng-show="totalRecords==0">
-					<td colspan="9"><center>
+					<td colspan="10"><center>
 							<strong>No Records Found!!!</strong>
 						</center></td>
 				</tr>
@@ -529,8 +537,7 @@
 				</select>
 			</div>
 		</div>
-
-
+</div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-lg" role="document">
@@ -891,7 +898,7 @@
 							$('[data-toggle="popover"]')
 									.popover(
 											{
-												content : "<p><b>Tier 1:</b> List of accident victims where there are multiple vehicles and at fault is insured.</p><p><b>Tier 2:</b> List of accident victims where there are multiple vehicles but no at fault insurance and the victim is insured. (Medpay or uninsured motorist)</p><p><b>Tier 3:</b> List of accident victims involved in a single car accident. (includes hit and runs)</p><p><b>Tier 4:</b> List of passengers in at-fault vehicle and driver also, if insured.</p>",
+												content : "<p><b>Tier 1:</b> List of accident victims where there are multiple vehicles and at fault is insured.</p><p><b>Tier 2:</b> List of accident victims where there are multiple vehicles but no at fault insurance and the victim is insured. (Medpay or uninsured motorist)</p><p><b>Tier 3:</b> List of accident victims involved in a single car accident. (includes hit and runs)</p><p><b>Tier 4:</b> List of passengers in at-fault vehicle and driver also, if insured.</p><p><b>Others:</b> List of passengers, Not under any tiers.</p>",
 												html : true
 											});
 						});

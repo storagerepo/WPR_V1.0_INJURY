@@ -455,6 +455,9 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		if(ArrayUtils.contains(callerPatientSearchForm.getTier(), 5)){
 			tierCondition.add(Restrictions.isNull("t1.tier"));
 		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getTier(), 0)){
+			tierCondition.add(Restrictions.eq("t1.tier",0));
+		}
 	//	Criterion tierCriterion=Restrictions.in("t1.tier", callerPatientSearchForm.getTier());
 		criteria.add(tierCondition);
 	}

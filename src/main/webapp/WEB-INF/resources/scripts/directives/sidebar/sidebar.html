@@ -7,22 +7,22 @@
                 <a ui-sref="dashboard.home"><span ng-cloak class="dashboard-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Home</a>
             </li>
                 <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
-                <a ui-sref="dashboard.CallerAdmin"><i ng-cloak class="fa fa-phone fa-fw"></i> Call Center Admin<span></span></a>
+                <a ui-sref="dashboard.CallerAdmin"><i ng-cloak class="fa fa-phone fa-fw"></i> <small>Call Center Admin</small></a>
             </li>
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
-                <a ui-sref="dashboard.LawyerAdmin"><span ng-cloak class="lawyer-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Lawyer Admin<span></span></a>
+                <a ui-sref="dashboard.LawyerAdmin"><span ng-cloak class="lawyer-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <small>Lawyer Admin</small></a>
             </li>
               <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
-                <a ui-sref="dashboard.SearchCrashreport"><i ng-cloak class="fa fa-file-excel-o fa-fw"></i> Crash Report<span></span></a>
+                <a ui-sref="dashboard.SearchCrashreport"><i ng-cloak class="fa fa-file-excel-o fa-fw"></i> <small>Crash Report</small></a>
             </li>
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
-                <a ui-sref="dashboard.SearchPatients"><span ng-cloak class="patient-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Search Clients<span></span></a>
+                <a ui-sref="dashboard.SearchPatients"><span ng-cloak class="patient-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <small>Search Clients</small><span></span></a>
             </li>
-           <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}"><a ui-sref="dashboard.ratings-reviews"><i ng-cloak class="fa fa-star-o fa-fw"></i> Ratings & Reviews</a></li>
+           <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}"><a ui-sref="dashboard.ratings-reviews"><i ng-cloak class="fa fa-star-o fa-fw"></i> <small>Ratings & Reviews</small></a></li>
            
            <!--  Manual Import Of Crash Report By Id-->
            <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
-                <a ui-sref="dashboard.ImportReports"><i ng-cloak class="fa fa-file fa-fw"></i> Import Reports</a>
+                <a ui-sref="dashboard.ImportReports"><i ng-cloak class="fa fa-file fa-fw"></i> <small>Import Reports</small></a>
             </li>
            <!--   <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.payment"><i ng-cloak class="fa fa-money fa-fw"></i> Payment<span></span></a>

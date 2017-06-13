@@ -2,7 +2,7 @@ var adminApp=angular.module("searchModule",['requestModule']);
 
 adminApp.service('searchService',function($rootScope,requestHandler){
 	var countySession=[];
-	var numberOfDays="1";
+	var numberOfDays="0";
 	var crashFromDate="";
 	var callerId="0";
 	var tier=[{id:1},{id:2},{id:3},{id:4},{id:5}];
@@ -295,12 +295,13 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	// Reset Search Data
 	this.resetSearchData=function(){
 		countySession=[];
-		numberOfDays="1";
+		numberOfDays="0";
 		crashFromDate="";
 		callerId="0";
 		tier=[{id:1},{id:2},{id:3},{id:4},{id:5}];
 		crashToDate="";
 		localReportNumber="";
+		reportingAgency="";
 		patientName="";
 		age=[{id:1},{id:2},{id:4}];
 		lAdminAge=[{id:1}];

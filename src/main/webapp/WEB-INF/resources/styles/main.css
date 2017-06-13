@@ -984,3 +984,12 @@ ul.rating {
 	color:#ffffff;
 	border-radius:15px !important;
 }
+
+.status-label-primary{
+	color:blue;
+	font-size:10px;
+	padding:1px;
+	border:solid 1px #ddd;
+	background:#fff;
+	border-radius:2px;
+}
