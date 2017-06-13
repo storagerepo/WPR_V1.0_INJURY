@@ -10,6 +10,7 @@ public class CallerPatientSearchForm {
 	private Integer numberOfDays;
 	private String crashToDate;
 	private String localReportNumber;
+	private String reportingAgency;
 	private String patientName;
 	private Integer[] age;
 	private Integer callerId;
@@ -69,6 +70,13 @@ public class CallerPatientSearchForm {
 	}
 	public void setLocalReportNumber(String localReportNumber) {
 		this.localReportNumber = localReportNumber;
+	}
+	
+	public String getReportingAgency() {
+		return reportingAgency;
+	}
+	public void setReportingAgency(String reportingAgency) {
+		this.reportingAgency = reportingAgency;
 	}
 	public String getPatientName() {
 		return patientName;
@@ -186,7 +194,7 @@ public class CallerPatientSearchForm {
 	}
 public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 			Integer tier[], Integer patientStatus, String crashFromDate,Integer numberOfDays,
-			String crashToDate, String localReportNumber, String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived,String archivedFromDate, String archivedToDate,
+			String crashToDate, String localReportNumber,String reportingAgency,String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived,String archivedFromDate, String archivedToDate,
 			Integer isRunnerReport,Integer[] damageScale,Integer directReportStatus) {
 		super();
 		this.callerAdminId = callerAdminId;
@@ -197,6 +205,7 @@ public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 		this.numberOfDays=numberOfDays;
 		this.crashToDate = crashToDate;
 		this.localReportNumber = localReportNumber;
+		this.reportingAgency=reportingAgency;
 		this.patientName = patientName;
 		this.age=age;
 		this.callerId = callerId;

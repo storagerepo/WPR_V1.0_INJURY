@@ -502,6 +502,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	
 	
 	//Common Constrains - Crash Date
+	callerPatientSearchForm.setNumberOfDays(0);
 	if(!callerPatientSearchForm.getCrashFromDate().equals("")){		
 		DateTime crashStartDate=DateTime.parse(callerPatientSearchForm.getCrashFromDate(),DateTimeFormat.forPattern("MM/dd/yyyy"));
 		DateTime crashToDate=new DateTime();		
@@ -543,6 +544,13 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	if(!callerPatientSearchForm.getLocalReportNumber().equals("")){
 	Criterion localReportNumberCriterion=Restrictions.like("cr.localReportNumber", callerPatientSearchForm.getLocalReportNumber(),MatchMode.START);
 	criteria.add(localReportNumberCriterion);
+	}
+	
+	//Common Constrain Reporting Agency
+	if(callerPatientSearchForm.getIsRunnerReport()==0)
+	if(!callerPatientSearchForm.getReportingAgency().equals("")){
+	Criterion reportingAgencyCriterion=Restrictions.like("t1.reportingAgencyName", callerPatientSearchForm.getReportingAgency(),MatchMode.START);
+	criteria.add(reportingAgencyCriterion);
 	}
 	
 	// Common Constrain is Runner Reports 0- ODPS, 2,4 - Converted to ODPS from Runner, Scanned

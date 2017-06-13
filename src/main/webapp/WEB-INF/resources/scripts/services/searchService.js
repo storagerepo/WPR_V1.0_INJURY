@@ -8,6 +8,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var tier=[{id:1},{id:2},{id:3},{id:4},{id:5}];
 	var crashToDate="";
 	var localReportNumber="";
+	var reportingAgency="";
 	var patientName="";
 	var age=[{id:1},{id:2},{id:4}];
 	var lAdminAge=[{id:1}];
@@ -93,6 +94,15 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	
 	this.getLocalReportNumber=function(){
 		return localReportNumber;
+	};
+	
+	//Reporting Agency
+	this.setReportingAgency=function(reportingAgencyInput){
+		reportingAgency=reportingAgencyInput;
+	};
+	
+	this.getReportingAgency=function(){
+		return reportingAgency;
 	};
 	
 	//Patient Name

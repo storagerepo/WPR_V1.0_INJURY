@@ -31,8 +31,8 @@
 
 <div class="row">
 	<form name="patientSearchForm" novalidate ng-cloak>
-		<div class="col-md-12 no-padding">
-			<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
+		<div class="col-md-12 no-padding" >
+			<div class="col-md-5ths">
 				<label>County</label>&nbsp;<a href="" class="some-popover-link"
 					data-original-title="" data-placement="right" data-toggle="popover"
 					title="Info on County Selection:"
@@ -47,18 +47,18 @@
 					style="text-decoration: underline;" ng-show="countyListType==2">Change
 					Lookup Preference</a>
 			</div>
-			<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
+			<div class="col-md-5ths">
 				<label>Crash From Date</label>
 				<div class="input-group">
 					<input type="text" name="crashFromDate" id="CrashFromDate"
-						ng-change="checkCustomDate(patient.numberOfDays)"
+						ng-change="checkCustomDate()"
 						class="form-control input-sm" ng-model="patient.crashFromDate"
 						placeholder="Crash From Date"> <span
 						class="input-group-addon white-color-bg"> <span
 						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
 			</div>
-			<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
+			<!-- <div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
 				<label>Number of Days</label> <select class="form-control input-sm"
 					ng-model="patient.numberOfDays" name="numberOfDays"
 					ng-change="checkCustomDate(patient.numberOfDays)">
@@ -68,31 +68,45 @@
 					<option value="30">30</option>
 					<option value="0">Custom</option>
 				</select>
-			</div>
-			<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
+			</div> -->
+			<div class="col-md-5ths">
 				<label>Crash To Date</label>
 				<div class="input-group">
 					<input type="text" name="crashToDate" id="CrashToDate"
 						ng-change="crashToRequired=fasle" class="form-control input-sm"
 						ng-model="patient.crashToDate" placeholder="Crash To Date"
-						ng-disabled="disableCustom"> <span
+						ng-disabled="isSelectedCrashFromDate"> <span
 						class="input-group-addon white-color-bg"> <span
 						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
 				<span style="color: red; font-size: 13px"
 					ng-if="crashToRequired==true">Please Enter Crash To Date</span>
 			</div>
-			<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
-				<label>Caller</label> <select ng-cloak class="form-control input-sm"
-					ng-model="patient.callerId" ng-disabled="patient.isRunnerReport==3">
-					<option value="0">All</option>
-					<option value="-1">N/A</option>
-					<option ng-repeat="caller in callerList"
-						value="{{caller.callerId}}"
-						ng-selected="{{caller.callerId == patient.callerId}}">{{caller.firstName}}
-						{{caller.lastName}}</option>
-				</select>
+			<div class="col-md-5ths">
+				<label>Added On From Date</label>
+				<div class="input-group">
+					<input type="text" name="addedOnFromDate" id="AddedOFromDate"
+						ng-change="checkAddedOnToDate()" class="form-control input-sm"
+						ng-model="patient.addedOnFromDate"
+						placeholder="Added On From Date"> <span
+						class="input-group-addon white-color-bg"> <span
+						class="glyphicon glyphicon-calendar"></span></span>
+				</div>
 			</div>
+			<div class="col-md-5ths">
+				<label>Added On To Date</label>
+				<div class="input-group">
+					<input type="text" name="addedOnToDate" id="AddedOnToDate"
+						ng-change="AddedOnToRequired=false" class="form-control input-sm"
+						ng-model="patient.addedOnToDate" placeholder="Added On To Date"
+						ng-disabled="isSelectedAddedFromDate"> <span
+						class="input-group-addon white-color-bg"> <span
+						class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+				<span style="color: red; font-size: 13px"
+					ng-if="AddedOnToRequired==true">Please Enter Added On To
+					Date</span>
+			</div>			
 		</div>
 
 		<div class="col-md-12">
@@ -111,37 +125,6 @@
 					selected-model="patient.tier"
 					extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1||patient.isRunnerReport==3}"></div>
 			</div>
-			<div ng-class="patient.isRunnerReport!=3?'col-md-3ths':'col-md-3'">
-				<label>Added On From Date</label>
-				<div class="input-group">
-					<input type="text" name="addedOnFromDate" id="AddedOFromDate"
-						ng-change="checkAddedOnToDate()" class="form-control input-sm"
-						ng-model="patient.addedOnFromDate"
-						placeholder="Added On From Date"> <span
-						class="input-group-addon white-color-bg"> <span
-						class="glyphicon glyphicon-calendar"></span></span>
-				</div>
-			</div>
-			<div ng-class="patient.isRunnerReport!=3?'col-md-3ths':'col-md-3'">
-				<label>Added On To Date</label>
-				<div class="input-group">
-					<input type="text" name="addedOnToDate" id="AddedOnToDate"
-						ng-change="AddedOnToRequired=false" class="form-control input-sm"
-						ng-model="patient.addedOnToDate" placeholder="Added On To Date"
-						ng-disabled="isSelectedAddedFromDate"> <span
-						class="input-group-addon white-color-bg"> <span
-						class="glyphicon glyphicon-calendar"></span></span>
-				</div>
-				<span style="color: red; font-size: 13px"
-					ng-if="AddedOnToRequired==true">Please Enter Added On To
-					Date</span>
-			</div>
-			<div ng-class="patient.isRunnerReport!=3?'col-md-3ths':'col-md-3'">
-				<label>Local Report Number</label> <input type="text"
-					name="localReportNumber" class="form-control input-sm"
-					ng-model="patient.localReportNumber"
-					placeholder="Local Report Number">
-			</div>
 			<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3">
 				<label>Damage Scale</label>&nbsp;<a href=""
 					class="some-popover-link" data-placement="top"
@@ -153,6 +136,29 @@
 					extra-settings="{smartButtonMaxItems:0,disable:patient.isRunnerReport==1 || patient.isRunnerReport==3,showLegend:'true'}"></div>
 				<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select
 					at least one Damage Scale</span>
+			</div>			
+			<div ng-class="patient.isRunnerReport!=3?'col-md-3ths':'col-md-5ths'">
+				<label>Local Report Number</label> <input type="text"
+					name="localReportNumber" class="form-control input-sm"
+					ng-model="patient.localReportNumber"
+					placeholder="Local Report Number">
+			</div>
+			<div ng-class="patient.isRunnerReport!=3?'col-md-3ths':'col-md-3'" ng-show="patient.isRunnerReport!=3">
+				<label>Reporting Agency</label> <input type="text"
+					name="reportingAgency" class="form-control input-sm"
+					ng-model="patient.reportingAgency" ng-disabled="patient.isRunnerReport==1"
+					placeholder="Reporting Agency">
+			</div>			
+			<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3">
+				<label>Caller</label> <select ng-cloak class="form-control input-sm"
+					ng-model="patient.callerId" ng-disabled="patient.isRunnerReport==3">
+					<option value="0">All</option>
+					<option value="-1">N/A</option>
+					<option ng-repeat="caller in callerList"
+						value="{{caller.callerId}}"
+						ng-selected="{{caller.callerId == patient.callerId}}">{{caller.firstName}}
+						{{caller.lastName}}</option>
+				</select>
 			</div>
 			<div class="col-md-2ths">
 				<label>&nbsp;</label>
@@ -161,7 +167,7 @@
 						ng-class="{'button-disable':patientSearchForm.$invalid}"
 						ng-disabled='isClean() || patientSearchForm.$invalid ||disableSearch'
 						ng-click="searchPatients()" data-hint="Search"><i
-						class="fa fa-search"></i></a> <a href=""
+						class="fa fa-search"></i>&nbsp;Search</a>&nbsp;<a href=""
 						class="btn btn-sm btn-danger hint--top"
 						ng-click="resetSearchData()" data-hint="Reset"><i
 						class="fa fa-undo"></i></a>
@@ -280,7 +286,7 @@
 		</div>
 
 	</form>
-	<div class="col-md-12" ng-show="patient.isRunnerReport!=3">
+	<div ng-show="patient.isRunnerReport!=3">
 		<table class="table table-bordered persist-area" ng-cloak>
 			<thead class="persist-header" ng-cloak>
 				<tr>
@@ -289,16 +295,16 @@
 					<th width="16%">Patient Name <br />
 					<span class="client-name">(Last, First, Middle)</span></th>
 					<th width="12%">Phone Number</th>
-					<th width="7%">Age</th>
-					<th width="5%">Unit / Damage</th>
-					<th width="9%">County</th>
-					<th width="5%">Tier</th>
-					<th width="9%">Caller</th>
-					<th width="6%">Status</th>
-					<th width="9%">Status On</th>
-					<th width="6%" ng-show="patient.isArchived==1" ng-cloak>Archived
+					<th width="8%">Age</th>
+					<th width="8%">Unit / Damage</th>
+					<th width="10%">County</th>
+					<th width="5%">Tier</th>									
+					<th width="9%">Reporting Agency</th>
+					<th width="9%">Caller</th>	
+					<th width="10%">Status</th>
+					<th width="10%" ng-show="patient.isArchived==1" ng-cloak>Archived
 						On</th>
-					<th width="14%">Actions</th>
+					<th width="11%">Actions</th>
 				</tr>
 				<tr>
 					<th></th>
@@ -333,7 +339,6 @@
 					</th>
 					<th>
 					<th></th>
-					<!-- <th></th> -->
 					<th></th>
 					<th></th>
 					<th></th>
@@ -471,18 +476,21 @@
 					</span> <span
 						ng-show="cAdminPatient.unitNumber==''||cAdminPatient.unitNumber==null">-</span>
 					</td>
-					<td title="County">{{cAdminPatient.county}}</td>
-
+					<td title="County">{{cAdminPatient.county}}</td>					
 					<td><span
 						ng-show="cAdminPatient.tier!=''&&cAdminPatient.tier!=null">Tier
 							{{cAdminPatient.tier}}</span><span
 						ng-show="cAdminPatient.tier==''||cAdminPatient.tier==null">-</span></td>
+					<td title="Reporting Agency"><span
+						ng-show="cAdminPatient.reportingAgencyName!=''&&cAdminPatient.reportingAgencyName!=null">{{cAdminPatient.reportingAgencyName}}</span><span
+						ng-show="cAdminPatient.reportingAgencyName==''||cAdminPatient.reportingAgencyName==null">-</span></td>
 					<td title="Caller Name"><span
 						ng-show="cAdminPatient.callerFirstName==null && cAdminPatient.callerLastName==null">N/A</span>{{cAdminPatient.callerFirstName}}
 						{{cAdminPatient.callerLastName}}</td>
-					<td title="Status">{{cAdminPatient.patientStatusName}}</td>
-					<td><span
-						ng-show="cAdminPatient.lastCallLogTimeStamp==null && cAdminPatient.lastCallLogTimeStamp==null">-</span><b>{{cAdminPatient.lastCallLogTimeStamp}}</b></td>
+					
+					<td title="Status">{{cAdminPatient.patientStatusName}}<br/>
+					<span
+						ng-show="cAdminPatient.lastCallLogTimeStamp!=null && cAdminPatient.lastCallLogTimeStamp!=null"><b><i title="{{cAdminPatient.lastCallLogTimeStamp}}" style="color:blue;font-size:10px;padding:1px;border:solid 1px #ddd;background:#fff;border-radius:2px;">{{cAdminPatient.lastCallLogTimeStamp}}</i></b></span></td>
 					<td title="Archived On" ng-show="cAdminPatient.isArchived==1"
 						ng-cloak>{{cAdminPatient.archivedDateTime}}</td>
 					<td>

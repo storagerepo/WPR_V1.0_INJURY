@@ -5,6 +5,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	$scope.crashSearchData="";
 	$scope.patientSearchData=$scope.patientSearchDataOrginal=[];
 	$scope.isSelectedAddedFromDate=true;
+	$scope.isSelectedCrashFromDate=true;
 	$scope.exportButtonText="Export to Excel";
 	$scope.exportButton=false;
 	$scope.setScrollDown=false;
@@ -36,6 +37,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.patient.crashFromDate=searchService.getCrashFromDate();
 		$scope.patient.crashToDate=searchService.getCrashToDate();
 		$scope.patient.localReportNumber=searchService.getLocalReportNumber();
+		$scope.patient.reportingAgency=searchService.getReportingAgency();
 		$scope.patient.patientName=searchService.getPatientName();
 		$scope.patient.age=searchService.getAge();
 		$scope.patient.callerId=searchService.getCallerId();
@@ -106,20 +108,19 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.callerList=response.data.callerForms;
 	});
 	 
-	$scope.checkCustomDate=function(custom){
+	$scope.checkCustomDate=function(){
+		if($scope.patient.crashFromDate!="")
+			$scope.isSelectedCrashFromDate=false;
+		else{
+			$scope.patient.crashToDate="";
+			$scope.isSelectedCrashFromDate=true;
+		}
 		//Reset to date if less than from date
 		var fromDate=new Date($scope.patient.crashFromDate);
 		var toDate=new Date($scope.patient.crashToDate);
 		if(toDate<fromDate)
 			$scope.patient.crashToDate="";
 		//End Reset to date if less than from date
-		if(custom=='0'&& $scope.patient.crashFromDate!=''){
-			$scope.disableCustom=false;
-		}
-		else{
-			$scope.disableCustom=true;
-			$scope.patient.crashToDate="";
-		}
 	};
 	
 	$scope.checkAddedOnToDate=function(){
@@ -659,12 +660,12 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	
 		
 	$scope.searchPatients = function(){
-		if($scope.patient.crashFromDate!="" && $scope.patient.numberOfDays=="0" && $scope.patient.crashToDate==""){
+		if($scope.patient.crashFromDate!="" && $scope.patient.crashToDate==""){
 			$scope.crashToRequired=true;
 		}
 		else if($scope.patient.addedOnFromDate!="" && $scope.patient.addedOnToDate==""){
-			$scope.AddedOnToRequired=true;
-		}
+				$scope.AddedOnToRequired=true;
+			}
 		else{
 			$scope.addedToRequired=false;
 			$scope.crashToRequired=false;
@@ -693,6 +694,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		searchService.setPatientName($scope.patient.patientName);
 		searchService.setAge(angular.copy($scope.patient.age));
 		searchService.setLocalReportNumber($scope.patient.localReportNumber);
+		searchService.setReportingAgency($scope.patient.reportingAgency);
 		searchService.setTier(angular.copy($scope.patient.tier));
 		searchService.setAddedOnFromDate($scope.patient.addedOnFromDate);
 		searchService.setAddedOnToDate($scope.patient.addedOnToDate);

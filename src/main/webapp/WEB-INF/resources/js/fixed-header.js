@@ -1,5 +1,5 @@
 setTimeout(function(){ 
-		var tablewidth = $('.persist-area').width()-16;
+		var tablewidth = $('.persist-area').width();
 		if(tablewidth<1087){
 			tablewidth=1087;
 		}
