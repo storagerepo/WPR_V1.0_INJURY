@@ -107,7 +107,7 @@ public class CountyService {
 		// Logic Starts
 
 		County county = new County(countyForm.getName(),
-				countyForm.getStatus(), null, null, null, null, null, null, null);
+				countyForm.getStatus(), null, null, null, null, null, null, null, null);
 		county.setCountyId(countyForm.getId());
 
 		// Logic Ends
@@ -123,7 +123,7 @@ public class CountyService {
 		// Logic Starts
 
 		County county = new County(countyForm.getName(),
-				countyForm.getStatus(), null, null, null, null, null, null, null);
+				countyForm.getStatus(), null, null, null, null, null, null, null, null);
 
 		// Logic Ends
 
@@ -138,7 +138,7 @@ public class CountyService {
 		// Logic Starts
 
 		County county = new County(countyForm.getName(),
-				countyForm.getStatus(), null, null, null, null, null, null, null);
+				countyForm.getStatus(), null, null, null, null, null, null, null, null);
 		county.setCountyId(countyForm.getId());
 		// Logic Ends
 
