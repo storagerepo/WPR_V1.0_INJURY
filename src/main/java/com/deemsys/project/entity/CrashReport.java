@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 15 Jun, 2017 1:44:49 PM by Hibernate Tools 3.4.0.CR1
+// Generated 16 Jun, 2017 12:16:19 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -31,6 +31,7 @@ public class CrashReport implements java.io.Serializable {
 	private Date crashDate;
 	private Date addedDate;
 	private Integer numberOfPatients;
+	private Integer vehicleCount;
 	private String filePath;
 	private String oldFilePath;
 	private Integer isRunnerReport;
@@ -52,8 +53,8 @@ public class CrashReport implements java.io.Serializable {
 	public CrashReport(String crashId, CrashReportError crashReportError,
 			PoliceAgency policeAgency, County county, String localReportNumber,
 			Date crashDate, Date addedDate, Integer numberOfPatients,
-			String filePath, String oldFilePath, Integer isRunnerReport,
-			Date runnerReportAddedDate, Integer status,
+			Integer vehicleCount, String filePath, String oldFilePath,
+			Integer isRunnerReport, Date runnerReportAddedDate, Integer status,
 			Set<DirectReportCallerAdminMap> directReportCallerAdminMaps,
 			Set<Patient> patients,
 			Set<DirectReportLawyerAdminMap> directReportLawyerAdminMaps) {
@@ -65,6 +66,7 @@ public class CrashReport implements java.io.Serializable {
 		this.crashDate = crashDate;
 		this.addedDate = addedDate;
 		this.numberOfPatients = numberOfPatients;
+		this.vehicleCount = vehicleCount;
 		this.filePath = filePath;
 		this.oldFilePath = oldFilePath;
 		this.isRunnerReport = isRunnerReport;
@@ -151,6 +153,15 @@ public class CrashReport implements java.io.Serializable {
 
 	public void setNumberOfPatients(Integer numberOfPatients) {
 		this.numberOfPatients = numberOfPatients;
+	}
+
+	@Column(name = "vehicle_count")
+	public Integer getVehicleCount() {
+		return this.vehicleCount;
+	}
+
+	public void setVehicleCount(Integer vehicleCount) {
+		this.vehicleCount = vehicleCount;
 	}
 
 	@Column(name = "file_path", length = 100)

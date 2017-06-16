@@ -801,7 +801,7 @@ sbAdminApp
 									// End Lawyer Admin
 									// Caller Admin starts
 									.state(
-											'dashboard.CallerAdmin',
+											'dashboard.calleradmin',
 											{
 												resolve : {
 													loadMyFile : function(
@@ -817,7 +817,8 @@ sbAdminApp
 												},
 												controller : 'ShowCallerAdminController',
 												templateUrl : 'views/calleradmin/view-caller-admin.html',
-												url : '/CallerAdmin'
+												url : '/calleradmin',
+												roleId:2,
 
 											})
 											.state(
@@ -858,8 +859,8 @@ sbAdminApp
 														url : '/UserPreferrence/:fid'
 
 													})
-									.state(
-											'dashboard.add-caller-admin',
+											.state(
+											'dashboard.add-calleradmin',
 											{
 
 												resolve : {
@@ -876,11 +877,12 @@ sbAdminApp
 												},
 												controller : 'SaveCallerAdminController',
 												templateUrl : 'views/calleradmin/add-caller-admin.html',
-												url : '/add-caller-admin',
-												title : 'Add Call Center Admin'
+												url : '/add-calleradmin',
+												title : 'Add Call Center Admin',
+												roleId:2,
 											})
 									.state(
-											'dashboard.EditCallerAdmin/:callerAdminId',
+											'dashboard.edit-calleradmin/:callerAdminId',
 											{
 
 												resolve : {
@@ -896,9 +898,74 @@ sbAdminApp
 												},
 												controller : 'EditCallerAdminController',
 												templateUrl : 'views/calleradmin/add-caller-admin.html',
-												url : '/EditCallerAdmin/:callerAdminId',
-												title : 'Edit Call Center Admin'
-											})
+												url : '/edit-calleradmin/:callerAdminId',
+												title : 'Edit Call Center Admin',
+												roleId:2,
+											})	// Caller Admin Ends
+											// Auto Manager Starts
+											.state(
+													'dashboard.automanager',
+													{
+														resolve : {
+															loadMyFile : function(
+																	$ocLazyLoad) {
+																return $ocLazyLoad
+																		.load({
+																			name : 'sbAdminApp',
+																			files : [
+																					'scripts/controllers/callerAdminController.js',
+																					'js/mask.js' ]
+																		});
+															}
+														},
+														controller : 'ShowCallerAdminController',
+														templateUrl : 'views/calleradmin/view-caller-admin.html',
+														url : '/automanager',
+														roleId:6,
+
+													}).state(
+													'dashboard.add-automanager',
+													{
+
+														resolve : {
+															loadMyFiles : function(
+																	$ocLazyLoad) {
+																return $ocLazyLoad
+																		.load({
+																			name : 'sbAdminApp',
+																			files : [
+																					'scripts/controllers/callerAdminController.js',
+																					'js/mask.js' ]
+																		});
+															}
+														},
+														controller : 'SaveCallerAdminController',
+														templateUrl : 'views/calleradmin/add-caller-admin.html',
+														url : '/add-automanager',
+														title : 'Add Dealer Manager',
+														roleId:6,
+													})
+											.state(
+													'dashboard.edit-automanager/:callerAdminId',
+													{
+
+														resolve : {
+															loadMyFile : function(
+																	$ocLazyLoad) {
+
+																return $ocLazyLoad
+																		.load({
+																			name : 'sbAdminApp',
+																			files : [ 'scripts/controllers/callerAdminController.js' ]
+																		});
+															}
+														},
+														controller : 'EditCallerAdminController',
+														templateUrl : 'views/calleradmin/add-caller-admin.html',
+														url : '/edit-automanager/:callerAdminId',
+														title : 'Edit Dealer Manager',
+														roleId:6,
+													})
 											.state(
 											'dashboard.callerAdminSearchPatients',
 											{
@@ -1006,7 +1073,8 @@ sbAdminApp
 												},
 												controller : 'ShowCallersController',
 												templateUrl : 'views/caller/view-callers.html',
-												url : '/Callers'
+												url : '/Callers',
+												roleId:4,
 
 											})
 									.state(
@@ -1028,7 +1096,8 @@ sbAdminApp
 												controller : 'SaveCallerController',
 												templateUrl : 'views/caller/add-caller.html',
 												url : '/addCaller',
-												title : 'Add Caller'
+												title : 'Add Caller',
+												roleId:4,
 											})
 									.state(
 											'dashboard.EditCaller/:callerId',
@@ -1048,10 +1117,76 @@ sbAdminApp
 												controller : 'EditCallerController',
 												templateUrl : 'views/caller/add-caller.html',
 												url : '/EditCaller/:callerId',
-												title : 'Edit Caller'
+												title : 'Edit Caller',
+												roleId:4,
 											})
 									// Caller Ends
-											
+									// Auto Dealer Starts
+									.state(
+											'dashboard.autoDealer',
+											{
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/callersController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'ShowCallersController',
+												templateUrl : 'views/caller/view-callers.html',
+												url : '/autoDealer',
+												roleId:7,
+
+											})
+									.state(
+											'dashboard.addAutoDealer',
+											{
+
+												resolve : {
+													loadMyFiles : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/callersController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'SaveCallerController',
+												templateUrl : 'views/caller/add-caller.html',
+												url : '/addAutoDealer',
+												title : 'Add Dealer',
+												roleId:7,
+											})
+									.state(
+											'dashboard.editAutoDealer/:callerId',
+											{
+
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [ 'scripts/controllers/callersController.js' ]
+																});
+													}
+												},
+												controller : 'EditCallerController',
+												templateUrl : 'views/caller/add-caller.html',
+												url : '/editAutoDealer/:callerId',
+												title : 'Edit Dealer',
+												roleId:7,
+											})
+									// Auto Dealer Ends
 									.state(
 											'dashboard.Changepassword',
 											{
@@ -1301,6 +1436,14 @@ sbAdminApp
 											} else if (response.data.role == "ROLE_LAWYER") {
 												$rootScope.authenticated = true;
 												$rootScope.isAdmin = 5;
+												$rootScope.username = response.data.username;
+											} else if (response.data.role == "ROLE_AUTO_MANAGER") {
+												$rootScope.authenticated = true;
+												$rootScope.isAdmin = 6;
+												$rootScope.username = response.data.username;
+											} else if (response.data.role == "ROLE_AUTO_DEALER") {
+												$rootScope.authenticated = true;
+												$rootScope.isAdmin = 7;
 												$rootScope.username = response.data.username;
 											}
 										});

@@ -24,6 +24,7 @@ adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHa
 			
 			requestHandler.getRequest("Admin/getNumberOfCallerAdmin.json","").then( function(response) {
 			      $scope.numberCallerAdmin=response.data.numberOfCallerAdmin;
+			      $scope.numberDealerManager=response.data.numberOfDealerManager;
 			   });
 			
 			requestHandler.getRequest("Admin/getNoOfLawyerAdmin.json","").then( function(response) {
@@ -80,6 +81,11 @@ adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHa
 		   else if($rootScope.isAdmin==5){
 			   requestHandler.getRequest("Lawyer/getNumberOfAssignedPatients.json","").then( function(response) {
 				   $scope.numberPatients=response.data.numberOfAssignedPatiets;
+				     });
+		   } 
+		   else if($rootScope.isAdmin==6){
+			   requestHandler.getRequest("CAdmin/getNumberOfCallers.json","").then( function(response) {
+				   $scope.numberOfDealers=response.data.numberOfCallers;
 				     });
 		   }
 		   

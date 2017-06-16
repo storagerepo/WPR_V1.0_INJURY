@@ -376,6 +376,7 @@ public class PatientService {
 
 		PatientForm patientForm = new PatientForm(patient.getPatientId(),patient.getCrashReport().getCrashId(),
 				patient.getCrashReport().getLocalReportNumber(), patient.getCrashSeverity(),
+				patient.getReportingAgencyNcic(),
 				patient.getReportingAgencyName(), patient.getNumberOfUnits(),
 				patient.getUnitInError(), patient.getCityVillageTownship(),
 				InjuryConstants.convertMonthFormat(patient.getCrashDate()), InjuryConstants.convertMonthFormat(patient.getAddedDate()),
@@ -388,7 +389,10 @@ public class PatientService {
 				patient.getAtFaultInsuranceCompany(),
 				patient.getAtFaultPolicyNumber(),
 				patient.getVictimInsuranceCompany(),
-				patient.getVictimPolicyNumber(),patient.getTier(),patient.getPatientStatus(),
+				patient.getVictimPolicyNumber(),patient.getTier(),
+				patient.getVehicleMake(),patient.getVehicleYear(),
+				patient.getVin(),patient.getLicensePlateNumber(),patient.getIsOwner(),
+				patient.getPatientStatus(),
 				patient.getCrashReport().getFilePath(), patient.getStatus(),patient.getSeatingPosition(),patient.getDamageScale(),patient.getIsRunnerReport());
 
 		// Null Exception Check
@@ -429,6 +433,7 @@ public class PatientService {
 	Patient patient = new Patient(patientForm.getPatientId(),crashReport, county,
 			patientForm.getLocalReportNumber(),
 			patientForm.getCrashSeverity(),
+			patientForm.getReportingAgencyNcic(),
 			patientForm.getReportingAgencyName(),
 			patientForm.getNumberOfUnits(), patientForm.getUnitInError(),
 			 patientForm.getCityVillageTownship(),
@@ -443,6 +448,8 @@ public class PatientService {
 			patientForm.getAtFaultPolicyNumber(),
 			patientForm.getVictimInsuranceCompany(),
 			patientForm.getVictimPolicyNumber(), patientForm.getSeatingPosition(), patientForm.getDamageScale(),patientForm.getTier(),
+			patientForm.getVehicleMake(),patientForm.getVehicleYear(),patientForm.getVin(),
+			patientForm.getLicensePlateNumber(), patientForm.getIsOwner(),
 			patientForm.getPatientStatus(),
 			patientForm.getCrashReportFileName(), patientForm.getIsRunnerReport(), patientForm.getStatus(),
 			null, null);

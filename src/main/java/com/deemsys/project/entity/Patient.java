@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 15 Jun, 2017 1:44:49 PM by Hibernate Tools 3.4.0.CR1
+// Generated 16 Jun, 2017 12:16:19 PM by Hibernate Tools 3.4.0.CR1
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -29,6 +29,7 @@ public class Patient implements java.io.Serializable {
 	private County county;
 	private String localReportNumber;
 	private String crashSeverity;
+	private String reportingAgencyNcic;
 	private String reportingAgencyName;
 	private String numberOfUnits;
 	private String unitInError;
@@ -55,6 +56,11 @@ public class Patient implements java.io.Serializable {
 	private String seatingPosition;
 	private Integer damageScale;
 	private Integer tier;
+	private String vehicleMake;
+	private String vehicleYear;
+	private String vin;
+	private String licensePlateNumber;
+	private Integer isOwner;
 	private Integer patientStatus;
 	private String crashReportFileName;
 	private Integer isRunnerReport;
@@ -73,17 +79,19 @@ public class Patient implements java.io.Serializable {
 
 	public Patient(String patientId, CrashReport crashReport, County county,
 			String localReportNumber, String crashSeverity,
-			String reportingAgencyName, String numberOfUnits,
-			String unitInError, String cityVillageTownship, Date crashDate,
-			Date addedDate, String timeOfCrash, String unitNumber, String name,
+			String reportingAgencyNcic, String reportingAgencyName,
+			String numberOfUnits, String unitInError,
+			String cityVillageTownship, Date crashDate, Date addedDate,
+			String timeOfCrash, String unitNumber, String name,
 			String dateOfBirth, Integer age, String gender, String address,
 			BigDecimal latitude, BigDecimal longitude, String phoneNumber,
 			String injuries, String emsAgency, String medicalFacility,
 			String atFaultInsuranceCompany, String atFaultPolicyNumber,
 			String victimInsuranceCompany, String victimPolicyNumber,
 			String seatingPosition, Integer damageScale, Integer tier,
-			Integer patientStatus, String crashReportFileName,
-			Integer isRunnerReport, Integer status,
+			String vehicleMake, String vehicleYear, String vin,
+			String licensePlateNumber, Integer isOwner, Integer patientStatus,
+			String crashReportFileName, Integer isRunnerReport, Integer status,
 			Set<PatientCallerAdminMap> patientCallerAdminMaps,
 			Set<PatientLawyerAdminMap> patientLawyerAdminMaps) {
 		this.patientId = patientId;
@@ -91,6 +99,7 @@ public class Patient implements java.io.Serializable {
 		this.county = county;
 		this.localReportNumber = localReportNumber;
 		this.crashSeverity = crashSeverity;
+		this.reportingAgencyNcic = reportingAgencyNcic;
 		this.reportingAgencyName = reportingAgencyName;
 		this.numberOfUnits = numberOfUnits;
 		this.unitInError = unitInError;
@@ -117,6 +126,11 @@ public class Patient implements java.io.Serializable {
 		this.seatingPosition = seatingPosition;
 		this.damageScale = damageScale;
 		this.tier = tier;
+		this.vehicleMake = vehicleMake;
+		this.vehicleYear = vehicleYear;
+		this.vin = vin;
+		this.licensePlateNumber = licensePlateNumber;
+		this.isOwner = isOwner;
 		this.patientStatus = patientStatus;
 		this.crashReportFileName = crashReportFileName;
 		this.isRunnerReport = isRunnerReport;
@@ -171,6 +185,15 @@ public class Patient implements java.io.Serializable {
 
 	public void setCrashSeverity(String crashSeverity) {
 		this.crashSeverity = crashSeverity;
+	}
+
+	@Column(name = "reporting_agency_ncic", length = 10)
+	public String getReportingAgencyNcic() {
+		return this.reportingAgencyNcic;
+	}
+
+	public void setReportingAgencyNcic(String reportingAgencyNcic) {
+		this.reportingAgencyNcic = reportingAgencyNcic;
 	}
 
 	@Column(name = "reporting_agency_name", length = 100)
@@ -407,6 +430,51 @@ public class Patient implements java.io.Serializable {
 
 	public void setTier(Integer tier) {
 		this.tier = tier;
+	}
+
+	@Column(name = "vehicle_make", length = 45)
+	public String getVehicleMake() {
+		return this.vehicleMake;
+	}
+
+	public void setVehicleMake(String vehicleMake) {
+		this.vehicleMake = vehicleMake;
+	}
+
+	@Column(name = "vehicle_year", length = 10)
+	public String getVehicleYear() {
+		return this.vehicleYear;
+	}
+
+	public void setVehicleYear(String vehicleYear) {
+		this.vehicleYear = vehicleYear;
+	}
+
+	@Column(name = "VIN", length = 45)
+	public String getVin() {
+		return this.vin;
+	}
+
+	public void setVin(String vin) {
+		this.vin = vin;
+	}
+
+	@Column(name = "license_plate_number", length = 45)
+	public String getLicensePlateNumber() {
+		return this.licensePlateNumber;
+	}
+
+	public void setLicensePlateNumber(String licensePlateNumber) {
+		this.licensePlateNumber = licensePlateNumber;
+	}
+
+	@Column(name = "is_owner")
+	public Integer getIsOwner() {
+		return this.isOwner;
+	}
+
+	public void setIsOwner(Integer isOwner) {
+		this.isOwner = isOwner;
 	}
 
 	@Column(name = "patient_status")

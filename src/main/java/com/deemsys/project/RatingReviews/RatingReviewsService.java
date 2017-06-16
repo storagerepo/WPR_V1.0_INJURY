@@ -144,24 +144,33 @@ public class RatingReviewsService {
 		
 		BigDecimal callerAdminRating=new BigDecimal(0);
 		BigDecimal lawyerAdminRating=new BigDecimal(0);
+		BigDecimal dealerManagerRating=new BigDecimal(0);
 		// Total Rating Count
 		Integer callerAdminReviewCount=0;
 		Integer lawyerAdminReviewCount=0;
+		Integer dealerManagerReviewCount=0;
 		List<RatingReviews> ratingReviewss=new ArrayList<RatingReviews>();
 		ratingReviewss=ratingReviewsDAO.getAll();
 		for (RatingReviews ratingReviews : ratingReviewss) {
-			if(ratingReviews.getUsers().getRoles().getRoleId().equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
+			Integer roleId=ratingReviews.getUsers().getRoles().getRoleId();
+			if(roleId.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
 				callerAdminRating=callerAdminRating.add(ratingReviews.getOverallRating());
 				callerAdminReviewCount++;
-			}else if(ratingReviews.getUsers().getRoles().getRoleId().equals(InjuryConstants.INJURY_CALLER_ROLE_ID)){
+			}else if(roleId.equals(InjuryConstants.INJURY_CALLER_ROLE_ID)){
 				callerAdminRating=callerAdminRating.add(ratingReviews.getOverallRating());
 				callerAdminReviewCount++;
-			}else if(ratingReviews.getUsers().getRoles().getRoleId().equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
+			}else if(roleId.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
 				lawyerAdminRating=lawyerAdminRating.add(ratingReviews.getOverallRating());
 				lawyerAdminReviewCount++;
-			}else if(ratingReviews.getUsers().getRoles().getRoleId().equals(InjuryConstants.INJURY_LAWYER_ROLE_ID)){
+			}else if(roleId.equals(InjuryConstants.INJURY_LAWYER_ROLE_ID)){
 				lawyerAdminRating=lawyerAdminRating.add(ratingReviews.getOverallRating());
 				lawyerAdminReviewCount++;
+			}if(roleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
+				dealerManagerRating=dealerManagerRating.add(ratingReviews.getOverallRating());
+				dealerManagerReviewCount++;
+			}else if(roleId.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE_ID)){
+				dealerManagerRating=dealerManagerRating.add(ratingReviews.getOverallRating());
+				dealerManagerReviewCount++;
 			}
 		}
 		

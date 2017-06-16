@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="resources/components/metisMenu/dist/metisMenu.min.css">
 	<link rel="stylesheet" href="resources/components/angular-loading-bar/build/loading-bar.min.css">
 	<link rel="stylesheet" href="resources/components/font-awesome/css/font-awesome.min.css" type="text/css">
-	
+	<script src="resources/components/jquery/dist/jquery.min.js"></script>
 	<style media="screen" type="text/css">
 	html,
 	body {
@@ -34,7 +34,7 @@
 		padding:20px 40px;
 		background:rgba(0, 77, 153,0.9);
 		color:rgba(255, 255, 255,1);
-		width:50%;
+		width:60%;
 		font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 	}
 	#body {
@@ -94,10 +94,15 @@
 		color:rgba(0, 51, 102,1)!important;
 	}
 	
+	.no-padding{
+		padding:0 !important;
+	}
+	
 	</style>
 </head>
 
 <div id="container">
+ <div class="col-md-12 no-padding" id="callcenter">
 	<div id="header" style="width:100%!important;">
 		<h2>Lightning fast reports upon request!</h2>
 		
@@ -115,7 +120,7 @@
 		                            <div style="color:#FF0000;"><i class="fa fa-exclamation-triangle"></i>&nbsp;${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}<br/><br/></div>
 		                             </c:if>
 		                    <form role="form" action="j_spring_security_check" method="post">
-		                    <div id="sessionout" style="color:#FF0000">Your Session has been expired. Please login again!<br/><br/></div>
+		                    <div class="sessionout" style="color:#FF0000">Your Session has been expired. Please login again!<br/><br/></div>
 		                        <fieldset>
 		                            <div class="form-group">
 		                                <input class="form-control input-md" placeholder="Username" name="username" id="username" type="text" autofocus>
@@ -136,6 +141,51 @@
         </div>
 		<div class="col-md-7"></div>
 	</div>
+	</div>
+	<div class="col-md-12 auto">
+		<div id="body">
+		<div class="col-md-12"><div class="col-md-10"></div><div class="col-md-2 pull-right"><img src="resources/images/logo_crashreportsonline1.png" width="180px;" height="190px" style="border-radius: 100px;"/></div></div>
+		<div class="col-md-12" style="margin-top:-40px;">
+		<div class="col-md-7"></div>
+        <div class="col-md-5" style="margin-top:50px;">
+	        <div>
+		            <div class="panel panel-default panel-override">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">Please Sign In</h3>
+		                </div>
+		                <div class="panel-body">
+		                 <c:if test="${not empty param['error']}">
+		                            <div style="color:#FF0000;"><i class="fa fa-exclamation-triangle"></i>&nbsp;${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}<br/><br/></div>
+		                             </c:if>
+		                    <form role="form" action="j_spring_security_check" method="post">
+		                    <div class="sessionout" style="color:#FF0000">Your Session has been expired. Please login again!<br/><br/></div>
+		                        <fieldset>
+		                            <div class="form-group">
+		                                <input class="form-control input-md" placeholder="Username" name="username" id="username" type="text" autofocus>
+		                                <span style="color:#FF0000" id="username_error"></span>
+		                            </div>
+		                            <div class="form-group">
+		                                <input class="form-control input-md" placeholder="Password" name="password" id="password" type="password" value="">
+		                                <span style="color:#FF0000" id="password_error"></span>
+		                            </div>
+		                                             
+		                            <!-- Change this to a button or input when using this as a form -->
+		                            <input type="submit" onclick="return checkValidation()" value="Login" class="btn btn-primary btn-login pull-right"> 
+		                         </fieldset>
+		                    </form>
+		                </div>
+		            </div>
+	            </div>
+        </div>
+		</div>
+	</div>
+	</div> 
+	<div class="col-md-12 auto no-padding">
+	<div id="header" style="width:100%!important;">
+		<h2 id="header-h2">Lightning fast reports upon request!</h2>
+		
+	</div>
+	</div>
 	<div id="footer">
 		<!-- Footer start -->
 		<p>Copyright &copy; 2017 &middot; All Rights Reserved &middot; <a class="tag-color-white" target="#blank" href="http://www.deemsysinc.com/" >Deemsys Inc</a></p>
@@ -144,11 +194,27 @@
 </div>
 
 <script>
-if(location.search=='?sessionout'){
-	document.getElementById('sessionout').style.display = 'inline';
+
+// Get Hostname and Url to change the content of page
+var hostname=window.location.hostname;
+var url=hostname.split(".");
+
+if(location.search=='?id'){
+	$(".auto").css({'display':'block'});
+	$("#callcenter").css({'display':'none'});
+	$("#header-h2").css({'border':'2px solid white','border-left':'none'});
+	$("body").css({ 'background-image': 'url("resources/images/auto -dealers-login-back.jpg")' });
 }else{
-	document.getElementById('sessionout').style.display = 'none';
+	$(".auto").css({'display':'none'});
+	$("#callcenter").css({'display':'block'});
 }
+
+if(location.search=='?sessionout'){
+	$('.sessionout').css({'display':'block'});
+}else{
+	$('.sessionout').css({'display':'none'});
+}
+
 
 function checkValidation(){
 	var username=document.getElementById("username").value;

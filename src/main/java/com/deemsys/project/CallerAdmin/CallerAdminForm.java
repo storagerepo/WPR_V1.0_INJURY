@@ -28,6 +28,7 @@ public class CallerAdminForm {
 	List<Integer> county;
 	List<CountyForm> countyForms;
 	private String productToken;
+	private Integer roleId;
 	
 	public Integer getCallerAdminId() {
 		return callerAdminId;
@@ -130,6 +131,12 @@ public class CallerAdminForm {
 	}
 	public void setProductToken(String productToken) {
 		this.productToken = productToken;
+	}
+	public Integer getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 	public CallerAdminForm(Integer callerAdminId, Integer userId,
 			String firstName, String lastName, String street, String city,

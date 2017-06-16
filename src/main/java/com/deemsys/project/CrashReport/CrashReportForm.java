@@ -23,6 +23,7 @@ public class CrashReportForm extends InjuryProperties{
 	private String addedDate;
 	private String filePath;
 	private Integer numberOfPatients;
+	private Integer vehicleCount;
 	private Integer isRunnerReport;
 	private String runnerReportAddedDate;
 	private Integer reportFrom;
@@ -99,6 +100,12 @@ public class CrashReportForm extends InjuryProperties{
 	}
 	public void setNumberOfPatients(Integer numberOfPatients) {
 		this.numberOfPatients = numberOfPatients;
+	}
+	public Integer getVehicleCount() {
+		return vehicleCount;
+	}
+	public void setVehicleCount(Integer vehicleCount) {
+		this.vehicleCount = vehicleCount;
 	}
 	public Integer getIsRunnerReport() {
 		return isRunnerReport;
@@ -215,7 +222,7 @@ public class CrashReportForm extends InjuryProperties{
 	}
 	public CrashReportForm(String crashReportError,
 			String localReportNumber, String crashId, String crashDate,
-			String county, String addedDate, String filePath,Integer numberOfPatients, Integer isRunnerReport, String runnerReportAddedDate,Integer status,Integer reportFrom) {
+			String county, String addedDate, String filePath,Integer numberOfPatients, Integer vehicleCount, Integer isRunnerReport, String runnerReportAddedDate,Integer status,Integer reportFrom) {
 		super();
 		this.crashReportError = crashReportError;
 		this.localReportNumber = localReportNumber;
@@ -225,6 +232,7 @@ public class CrashReportForm extends InjuryProperties{
 		this.addedDate = addedDate;
 		this.filePath = filePath;
 		this.numberOfPatients=numberOfPatients;
+		this.vehicleCount = vehicleCount;
 		this.isRunnerReport = isRunnerReport;
 		this.runnerReportAddedDate = runnerReportAddedDate;
 		this.status = status;

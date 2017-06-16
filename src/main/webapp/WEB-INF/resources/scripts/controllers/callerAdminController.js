@@ -1,21 +1,37 @@
 var adminApp=angular.module('sbAdminApp',['requestModule','flash','ngAnimate']);
 
-adminApp.controller('ShowCallerAdminController',function($http,$state,$scope,requestHandler,Flash){
+adminApp.controller('ShowCallerAdminController',function($http,$state,$scope,$location,requestHandler,Flash){
 	
 	$scope.noOfRows="25";
+	$scope.roleId=$state.current.roleId;
 	
 	$scope.sort = function(keyname){
         $scope.sortKey = keyname;   //set the sortKey to the param passed
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
     };
-    
-    requestHandler.getRequest("Admin/getAllCallerAdmins.json","").then(function(response){
+   
+   
+    if($scope.roleId==2){
+    	$scope.addLink="dashboard.add-calleradmin";
+    	$scope.editLink="edit-calleradmin";
+    	$scope.headingText="Call Center Admin";
+    	$scope.addButtonText="Add Call Center Admin";
+    	$scope.hintText="Caller Admin";
+    }else{
+    	$scope.addLink="dashboard.add-automanager";
+    	$scope.editLink="edit-automanager";
+    	$scope.headingText="Dealer Manager";
+    	$scope.addButtonText="Add Dealer Manager";
+    	$scope.hintText="Dealer Manager";
+    }
+	
+    requestHandler.getRequest("Admin/getAllCallerAdmins.json?roleId="+$scope.roleId,"").then(function(response){
 		$scope.callerAdmins=response.data.callerAdminForms;
 		$scope.sort('username');
 	});
     
     $scope.getCallerAdminList=function(){
-    	requestHandler.getRequest("Admin/getAllCallerAdmins.json","").then(function(response){
+    	requestHandler.getRequest("Admin/getAllCallerAdmins.json?roleId="+$scope.roleId,"").then(function(response){
     		$scope.callerAdmins=response.data.callerAdminForms;
     	});
     };
@@ -83,11 +99,21 @@ adminApp.controller('SaveCallerAdminController', function($http,$state,$scope,$l
 	$scope.options=true;
 	$scope.title=$state.current.title;
 	$scope.isAdd=true;
-	
+
 	$scope.callerAdmin={};
 	$scope.callerAdmin.county=[];
 	$scope.callerAdmin.countyForms=[];
 	$scope.requiredValue= false;
+	
+	$scope.roleId=$state.current.roleId;
+    if($scope.roleId==2){
+    	$scope.backLink="dashboard.calleradmin";
+    	$scope.detailsText="Enter Call Center Admin Details";
+    }else{
+    	$scope.backLink="dashboard.automanager";
+    	$scope.detailsText="Enter Dealer Manager Details";
+    }
+	
 	$scope.selectedCounties=function(countyId){
 		
 		var idx=$scope.callerAdmin.county.indexOf(countyId);
@@ -139,11 +165,15 @@ adminApp.controller('SaveCallerAdminController', function($http,$state,$scope,$l
 	
 	
 	$scope.saveCallerAdmin=function(){
-		
+		$scope.callerAdmin.roleId=$scope.roleId;
 			 requestHandler.postRequest("Admin/saveUpdateCallerAdmin.json",$scope.callerAdmin).then(function(response){
 				  Flash.create('success', "You have Successfully Added!");
-				  $location.path('dashboard/CallerAdmin');
-				});
+				  if($scope.roleId==2){
+					  $location.path('dashboard/calleradmin');
+				  }else{
+					  $location.path('dashboard/automanager');
+				  }
+		});
 			
 	};
 });
@@ -158,7 +188,15 @@ adminApp.controller('EditCallerAdminController', function($http,$state,$location
 	$scope.callerAdmin.county=[];
 	$scope.callerAdmin.countyForms=[];
 	
-	
+	$scope.roleId=$state.current.roleId;
+    if($scope.roleId==2){
+    	$scope.backLink="dashboard.calleradmin";
+    	$scope.detailsText="Enter Call Center Admin Details";
+    }else{
+    	$scope.backLink="dashboard.automanager";
+    	$scope.detailsText="Enter Dealer Manager Details";
+    }
+    
 	var callerAdminOriginal="";
 	requestHandler.getRequest("Admin/getCallerAdmin.json?callerAdminId="+$stateParams.callerAdminId,"").then(function(response){
 		callerAdminOriginal=angular.copy(response.data.callerAdminForm);
@@ -174,9 +212,13 @@ adminApp.controller('EditCallerAdminController', function($http,$state,$location
 	$scope.updateCallerAdmin=function(){
 		console.log("caller",$scope.callerAdmin);
 		requestHandler.postRequest("Admin/saveUpdateCallerAdmin.json",$scope.callerAdmin).then(function(response){
-			  Flash.create('success', "You have Successfully Added!");
-			  $location.path('dashboard/CallerAdmin');
-			});
+			  Flash.create('success', "You have Successfully Updated!");
+			  if($scope.roleId==2){
+				  $location.path('dashboard/calleradmin');
+			  }else{
+				  $location.path('dashboard/automanager');
+			  }
+		});
 	};
 	
 	

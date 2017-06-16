@@ -3,10 +3,14 @@ package com.deemsys.project.CallerAdmin;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -162,6 +166,36 @@ public class CallerAdminDAOImpl implements CallerAdminDAO{
 		// TODO Auto-generated method stub
 		CallerAdmin callerAdmin=(CallerAdmin) this.sessionFactory.getCurrentSession().createCriteria(CallerAdmin.class).add(Restrictions.eq("users.userId", userId)).uniqueResult();
 		return callerAdmin;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CallerAdminForm> getCallerAdminListByRoleId(Integer roleId) {
+		// TODO Auto-generated method stub
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(CallerAdmin.class,"c1");
+		criteria.createAlias("c1.users", "u1");
+		criteria.createAlias("u1.roles", "r1");
+		
+		ProjectionList projectionList=Projections.projectionList();
+		projectionList.add(Projections.property("c1.callerAdminId"),"callerAdminId");
+		projectionList.add(Projections.property("c1.firstName"),"firstName");
+		projectionList.add(Projections.property("c1.lastName"),"lastName");
+		projectionList.add(Projections.property("c1.street"),"street");
+		projectionList.add(Projections.property("c1.city"),"city");
+		projectionList.add(Projections.property("c1.state"),"state");
+		projectionList.add(Projections.property("c1.zipcode"),"zipcode");
+		projectionList.add(Projections.property("c1.emailAddress"),"emailAddress");
+		projectionList.add(Projections.property("c1.phoneNumber"),"phoneNumber");
+		projectionList.add(Projections.property("c1.notes"),"notes");
+		projectionList.add(Projections.property("c1.status"),"status");
+		projectionList.add(Projections.property("u1.userId"),"userId");
+		projectionList.add(Projections.property("u1.username"),"username");
+		projectionList.add(Projections.property("u1.isPrivilegedUser"),"isPrivilegedUser");
+		projectionList.add(Projections.property("u1.productToken"),"productToken");
+		
+		criteria.setProjection(projectionList);
+		
+		return criteria.add(Restrictions.eq("r1.roleId", roleId)).setResultTransformer(new AliasToBeanResultTransformer(CallerAdminForm.class)).list();
 	}
 
 }

@@ -61,9 +61,9 @@ public class CallerAdminController {
    	}
     
     @RequestMapping(value="/Admin/getAllCallerAdmins",method=RequestMethod.GET)
-   	public String getAllCallerAdmins(ModelMap model)
+   	public String getAllCallerAdmins(@RequestParam("roleId") Integer roleId,ModelMap model)
    	{
-    	model.addAttribute("callerAdminForms",callerAdminService.getCallerAdminList());
+    	model.addAttribute("callerAdminForms",callerAdminService.getCallerAdminList(roleId));
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
@@ -89,6 +89,7 @@ public class CallerAdminController {
     @RequestMapping(value = "/Admin/getNumberOfCallerAdmin", method = RequestMethod.GET)
 	public String getNoOfCallerAdmin(ModelMap model) {
 		model.addAttribute("numberOfCallerAdmin", callerAdminService.getNumberOfCallerAdmins());
+		model.addAttribute("numberOfDealerManager", callerAdminService.getNumberOfManagers());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

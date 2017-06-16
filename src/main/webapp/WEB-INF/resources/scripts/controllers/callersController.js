@@ -10,6 +10,20 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
     };
     
     $scope.sortKey = 'username';
+    $scope.roleId=$state.current.roleId;
+    if($scope.roleId==4){
+    	$scope.addLink="dashboard.addCaller";
+    	$scope.editLink="EditCaller";
+    	$scope.headingText="Callers";
+    	$scope.addButtonText="Add Caller";
+    	$scope.hintText="Caller";
+    }else{
+    	$scope.addLink="dashboard.addAutoDealer";
+    	$scope.editLink="editAutoDealer";
+    	$scope.headingText="Dealers";
+    	$scope.addButtonText="Add Dealer";
+    	$scope.hintText="Dealer";
+    }
     
     $scope.getCallersList=function(){
     	requestHandler.getRequest("CAdmin/getCallersByCallerAdmin.json","").then(function(response){
@@ -59,7 +73,12 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
 				if(response.data.isDeleteable==true){
 					$("#deleteCallerConfirmOne").modal("hide");
 					$('.modal-backdrop').hide();
-					Flash.create('success', "You have Successfully Deleted the Caller!");
+					 if($scope.roleId==4){
+						 Flash.create('success', "You have Successfully Deleted the Caller!");
+					 }else{
+						 Flash.create('success', "You have Successfully Deleted the Dealer!");
+					 }
+					
 					$scope.getCallersList();
 					$(function(){
 						$("html,body").scrollTop(0);
@@ -72,7 +91,11 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
 						requestHandler.postRequest("CAdmin/deleteCallerWithMap.json?callerId="+callerId,"").then(function(response) {
 							$("#deleteCallerConfirmTwo").modal("hide");
 							$('.modal-backdrop').hide();
-							Flash.create('success', "You have Successfully Deleted the Caller!");
+							 if($scope.roleId==4){
+								 Flash.create('success', "You have Successfully Deleted the Caller!");
+							 }else{
+								 Flash.create('success', "You have Successfully Deleted the Dealer!");
+							 }
 							$scope.getCallersList();
 							$(function(){
 								$("html,body").scrollTop(0);
@@ -94,6 +117,16 @@ adminApp.controller('SaveCallerController', function($http,$state,$scope,$locati
 	$scope.caller.county=[];
 	$scope.caller.countyForms=[];
 	$scope.requiredValue= false;
+	
+	$scope.roleId=$state.current.roleId;
+    if($scope.roleId==4){
+    	$scope.backLink="dashboard.callers";
+    	$scope.detailsText="Enter Caller Details";
+    }else{
+    	$scope.backLink="dashboard.autoDealer";
+    	$scope.detailsText="Enter Dealer Details";
+    }
+	
 	$scope.selectedCounties=function(countyId){
 		
 		var idx=$scope.caller.county.indexOf(countyId);
@@ -126,9 +159,15 @@ adminApp.controller('SaveCallerController', function($http,$state,$scope,$locati
 			var isNew=response.data.isUserNameExist;
 			if(isNew==0){
 				$("#username_exists").text("");*/
+			$scope.caller.roleId=$scope.roleId;
 			 requestHandler.postRequest("CAdmin/saveUpdateCaller.json",$scope.caller).then(function(response){
 				  Flash.create('success', "You have Successfully Added!");
-				  $location.path('dashboard/Callers');
+				  if($scope.roleId==4){
+					  $location.path('dashboard/Callers');
+				   }else{
+					   $location.path('dashboard/autoDealer');
+				   }
+				  
 				});
 			 /*}
 			else{
@@ -144,6 +183,14 @@ adminApp.controller('EditCallerController', function($http,$state,$location,$sco
 	$scope.requiredValue=true;
 	$scope.isAdd=false;
 	
+	$scope.roleId=$state.current.roleId;
+    if($scope.roleId==2){
+    	$scope.backLink="dashboard.callers";
+    	$scope.detailsText="Enter Caller Details";
+    }else{
+    	$scope.backLink="dashboard.autoDealer";
+    	$scope.detailsText="Enter Dealer Details";
+    }
 	
 	var callerOriginal="";
 	requestHandler.getRequest("CAdmin/getCaller.json?callerId="+$stateParams.callerId,"").then(function(response){
@@ -153,8 +200,12 @@ adminApp.controller('EditCallerController', function($http,$state,$location,$sco
 	
 	$scope.updateCaller=function(){
 		requestHandler.postRequest("CAdmin/saveUpdateCaller.json",$scope.caller).then(function(response){
-			Flash.create('success', "You have Successfully Added!");
-			$location.path('dashboard/Callers');
+			Flash.create('success', "You have Successfully Updated!");
+			if($scope.roleId==4){
+				$location.path('dashboard/Callers');
+			}else{
+				$location.path('dashboard/autoDealer');
+			}
 		});
 	};
 	

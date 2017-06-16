@@ -24,6 +24,7 @@ public class CallerForm {
 	private Integer status;
 	private List<Integer> county;
 	private List<CountyForm> countyForms;
+	private Integer roleId;
 	public Integer getCallerId() {
 		return callerId;
 	}
@@ -95,6 +96,12 @@ public class CallerForm {
 	}
 	public void setCountyForms(List<CountyForm> countyForms) {
 		this.countyForms = countyForms;
+	}
+	public Integer getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 	public CallerForm(Integer callerId, Integer callerAdminId, Integer userId,
 			String username, String firstName, String lastName,

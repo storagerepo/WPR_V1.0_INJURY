@@ -13,6 +13,7 @@ public class PatientForm {
 	private String callerName;
 	private String localReportNumber;
 	private String crashSeverity;
+	private String reportingAgencyNcic;
 	private String reportingAgencyName;
 	private String numberOfUnits;
 	private String unitInError;
@@ -41,6 +42,11 @@ public class PatientForm {
 	private Integer tier;
 	private String seatingPosition;
 	private Integer damageScale;
+	private String vehicleMake;
+	private String vehicleYear;
+	private String vin;
+	private String licensePlateNumber;
+	private Integer isOwner;
 	private Integer patientStatus;
 	private String crashReportFileName;
 	private Integer isRunnerReport;
@@ -83,6 +89,12 @@ public class PatientForm {
 	}
 	public void setCrashSeverity(String crashSeverity) {
 		this.crashSeverity = crashSeverity;
+	}
+	public String getReportingAgencyNcic() {
+		return reportingAgencyNcic;
+	}
+	public void setReportingAgencyNcic(String reportingAgencyNcic) {
+		this.reportingAgencyNcic = reportingAgencyNcic;
 	}
 	public String getReportingAgencyName() {
 		return reportingAgencyName;
@@ -242,6 +254,36 @@ public class PatientForm {
 	public void setTier(Integer tier) {
 		this.tier = tier;
 	}
+	public String getVehicleMake() {
+		return vehicleMake;
+	}
+	public void setVehicleMake(String vehicleMake) {
+		this.vehicleMake = vehicleMake;
+	}
+	public String getVehicleYear() {
+		return vehicleYear;
+	}
+	public void setVehicleYear(String vehicleYear) {
+		this.vehicleYear = vehicleYear;
+	}
+	public String getVin() {
+		return vin;
+	}
+	public void setVin(String vin) {
+		this.vin = vin;
+	}
+	public String getLicensePlateNumber() {
+		return licensePlateNumber;
+	}
+	public void setLicensePlateNumber(String licensePlateNumber) {
+		this.licensePlateNumber = licensePlateNumber;
+	}
+	public Integer getIsOwner() {
+		return isOwner;
+	}
+	public void setIsOwner(Integer isOwner) {
+		this.isOwner = isOwner;
+	}
 	public Integer getPatientStatus() {
 		return patientStatus;
 	}
@@ -287,6 +329,7 @@ public class PatientForm {
 		this.isOccupantAvailable = isOccupantAvailable;
 	}
 	public PatientForm(String patientId,String crashId, String localReportNumber, String crashSeverity,
+			String reportingAgencyNcic,
 			String reportingAgencyName, String numberOfUnits,
 			String unitInError, String cityVillageTownship,
 			String crashDate, String addedDate, String timeOfCrash,
@@ -295,13 +338,16 @@ public class PatientForm {
 			String phoneNumber, String injuries, String emsAgency,
 			String medicalFacility, String atFaultInsuranceCompany,
 			String atFaultPolicyNumber, String victimInsuranceCompany,
-			String victimPolicyNumber,Integer tier, Integer patientStatus,
+			String victimPolicyNumber,Integer tier, String vehicleMake, String vehicleYear,
+			String VIN, String licensePlateNumber, Integer isOwner,
+			Integer patientStatus,
 			String crashReportFileName, Integer status,String seatingPosition, Integer damageScale,Integer isRunnerReport) {
 		super();
 		this.patientId = patientId;
 		this.crashId=crashId;
 		this.localReportNumber = localReportNumber;
 		this.crashSeverity = crashSeverity;
+		this.reportingAgencyNcic = reportingAgencyNcic;
 		this.reportingAgencyName = reportingAgencyName;
 		this.numberOfUnits = numberOfUnits;
 		this.unitInError = unitInError;
@@ -326,6 +372,11 @@ public class PatientForm {
 		this.victimInsuranceCompany = victimInsuranceCompany;
 		this.victimPolicyNumber = victimPolicyNumber;
 		this.tier=tier;
+		this.vehicleMake =  vehicleMake;
+		this.vehicleYear = vehicleYear;
+		this.vin = VIN;
+		this.licensePlateNumber = licensePlateNumber;
+		this.isOwner = isOwner;
 		this.patientStatus = patientStatus;
 		this.crashReportFileName = crashReportFileName;
 		this.status = status;

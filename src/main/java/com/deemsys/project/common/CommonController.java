@@ -156,10 +156,11 @@ public class CommonController {
    	{
     	
     	Users users=loginService.getUserByProductToken(customerProductToken);
-    	if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
+    	Integer roleId=users.getRoles().getRoleId();
+    	if(roleId.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)||roleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
     		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(users.getUserId());
     		callerAdminCountyMapService.deleteCallerAdminCountyMapByCountyAndCAdminId(countyId, callerAdmin.getCallerAdminId());
-    	}else if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
+    	}else if(roleId.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
     		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
     		lawyerAdminCountyMappingService.deleteLawyerAdminCountyMapByCountyAndLAdminId(countyId, lawyerAdmin.getLawyerAdminId());
     	}
@@ -173,10 +174,11 @@ public class CommonController {
    	{
     	
     	Users users=loginService.getUserByProductToken(customerProductToken);
-    	if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
+    	Integer roleId=users.getRoles().getRoleId();
+    	if(roleId.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)||roleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
     		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(users.getUserId());
     		callerAdminCountyMapService.saveCallerAdminCountyMap(countyId, callerAdmin);
-    	}else if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
+    	}else if(roleId.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
     		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
     		lawyerAdminCountyMappingService.saveLawyerAdminCountyMap(countyId, lawyerAdmin);
     	}
@@ -189,10 +191,11 @@ public class CommonController {
    	{
     	
     	Users users=loginService.getUserByProductToken(customerProductToken);
-    	if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
+    	Integer roleId=users.getRoles().getRoleId();
+    	if(roleId.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)||roleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
     		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(users.getUserId());
     		callerAdminService.enableOrDisableCallerAdminAndCallers(callerAdmin.getCallerAdminId(),status);
-    	}else if(users.getRoles().getRoleId().equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
+    	}else if(roleId.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
     		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
     		lawyerAdminService.enableOrDisableLawyerAdminAndLawyers(lawyerAdmin.getLawyerAdminId(),status);
     	}
@@ -215,13 +218,13 @@ public class CommonController {
    	public String getCurrentUserDetails(ModelMap model) {
     	String currentRole=loginService.getCurrentRole();
     	CurrentUserDetailsForm currentUserDetailsForm = new CurrentUserDetailsForm();
-    	if(currentRole.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+    	if(currentRole.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||currentRole.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
     		CallerAdmin callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
     		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"), InjuryConstants.getRoleAsText(currentRole), callerAdmin.getFirstName(), callerAdmin.getLastName(), callerAdmin.getPhoneNumber(), callerAdmin.getEmailAddress());
     	}else if(currentRole.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
     		LawyerAdmin lawyerAdmin = lawyerAdminService.getLawyerAdminIdByUserId(loginService.getCurrentUserID());
     		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"), InjuryConstants.getRoleAsText(currentRole), lawyerAdmin.getFirstName(), lawyerAdmin.getLastName(), lawyerAdmin.getPhoneNumber(), lawyerAdmin.getEmailAddress());
-    	}else if(currentRole.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+    	}else if(currentRole.equals(InjuryConstants.INJURY_CALLER_ROLE)||currentRole.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
     		Caller caller = callerService.getCallerByUserId(loginService.getCurrentUserID());
     		currentUserDetailsForm = new CurrentUserDetailsForm(injuryProperties.getProperty("CRO_PRODUCT_ID"), InjuryConstants.getRoleAsText(currentRole), caller.getFirstName(), caller.getLastName(), caller.getPhoneNumber(), caller.getEmailAddress());
     	}else if(currentRole.equals(InjuryConstants.INJURY_LAWYER_ROLE)){

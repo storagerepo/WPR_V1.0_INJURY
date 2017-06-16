@@ -65,22 +65,20 @@ public class CallerAdminService {
 	CallerAdminCountyMapService callerAdminCountyMapService;
 	
 	//Get All Entries
-	public List<CallerAdminForm> getCallerAdminList()
+	public List<CallerAdminForm> getCallerAdminList(Integer roleId)
 	{
 		List<CallerAdminForm> callerAdminForms=new ArrayList<CallerAdminForm>();
 		
-		List<CallerAdmin> callerAdmins=new ArrayList<CallerAdmin>();
+		callerAdminForms=callerAdminDAO.getCallerAdminListByRoleId(roleId);
 		
-		callerAdmins=callerAdminDAO.getAll();
-		
-		for (CallerAdmin callerAdmin : callerAdmins) {
+		/*for (CallerAdmin callerAdmin : callerAdmins) {
 			//TODO: Fill the List
 			CallerAdminForm callerAdminForm=new CallerAdminForm(callerAdmin.getCallerAdminId(), callerAdmin.getUsers().getUserId(), callerAdmin.getUsers().getUsername(), callerAdmin.getFirstName(), callerAdmin.getLastName(),
 					callerAdmin.getStreet(), callerAdmin.getCity(), callerAdmin.getState(), callerAdmin.getZipcode(), callerAdmin.getEmailAddress(), callerAdmin.getPhoneNumber(), 
 					callerAdmin.getNotes(), callerAdmin.getUsers().getIsPrivilegedUser(), callerAdmin.getStatus());
 			callerAdminForm.setProductToken(callerAdmin.getUsers().getProductToken());
 			callerAdminForms.add(callerAdminForm);
-		}
+		}*/
 		
 		return callerAdminForms;
 	}
@@ -138,7 +136,13 @@ public class CallerAdminService {
 		
 		//Logic Starts
 		Users users = new Users();
-		Roles roles = roleDAO.get(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID);
+		Roles roles = new Roles();
+		if(callerAdminForm.getRoleId()==2){
+			roles=roleDAO.get(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID);
+		}else{
+			roles=roleDAO.get(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID);
+		}
+				
 		users.setUsername(callerAdminForm.getUsername());
 		users.setPassword(callerAdminForm.getUsername());
 		users.setIsEnable(1);
@@ -302,8 +306,14 @@ public class CallerAdminService {
 	
 	// Get Number of Caller Admin
 	public Integer getNumberOfCallerAdmins(){
-		List<CallerAdmin> callerAdmins=callerAdminDAO.getAll();
-		return callerAdmins.size();
+		List<CallerAdminForm> callerAdminForms=callerAdminDAO.getCallerAdminListByRoleId(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID);
+		return callerAdminForms.size();
+	}
+	
+	// Get Number of Manager
+	public Integer getNumberOfManagers(){
+		List<CallerAdminForm> callerAdminForms=callerAdminDAO.getCallerAdminListByRoleId(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID);
+		return callerAdminForms.size();
 	}
 	
 	//Get Caller Admin by User Id

@@ -57,6 +57,12 @@ public class LoginService {
 		else if (role[0].toString()
 				.equals(InjuryConstants.INJURY_LAWYER_ROLE)) {
 			currentRole = InjuryConstants.INJURY_LAWYER_ROLE;
+		}else if (role[0].toString()
+				.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)) {
+			currentRole = InjuryConstants.INJURY_AUTO_MANAGER_ROLE;
+		}else if (role[0].toString()
+				.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)) {
+			currentRole = InjuryConstants.INJURY_AUTO_DEALER_ROLE;
 		}
 		return currentRole;
 	}
@@ -101,13 +107,13 @@ public class LoginService {
 		if(currentRole.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
 			return this.getCurrentUserID();
 		}
-		else if(currentRole.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+		else if(currentRole.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||currentRole.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
 			return this.getCurrentUserID();
 		}
 		else if(currentRole.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
 			return this.getCurrentUserID();
 		}
-		else if(currentRole.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+		else if(currentRole.equals(InjuryConstants.INJURY_CALLER_ROLE)||currentRole.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
 			return callerService.getCallerByUserId(this.getCurrentUserID()).getCallerAdmin().getUsers().getUserId();
 		}
 		else if(currentRole.equals(InjuryConstants.INJURY_LAWYER_ROLE)){			

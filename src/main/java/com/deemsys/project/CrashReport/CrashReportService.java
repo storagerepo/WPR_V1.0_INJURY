@@ -158,7 +158,7 @@ public class CrashReportService {
 		PoliceAgency policeAgency = policeAgencyDAO.get(crashReportForm.getReportFrom());
 		
 		CrashReport crashReport=new CrashReport(crashReportForm.getCrashId(), crashReportError, policeAgency, county, localReportNumber,  InjuryConstants.convertYearFormat(crashReportForm.getCrashDate()), 
-					 InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getNumberOfPatients(), crashReportForm.getFilePath(), null, crashReportForm.getIsRunnerReport(),  null, 1, null, null, null);
+					 InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getNumberOfPatients(), crashReportForm.getVehicleCount(), crashReportForm.getFilePath(), null, crashReportForm.getIsRunnerReport(),  null, 1, null, null, null);
 		
 	
 		
@@ -194,16 +194,16 @@ public class CrashReportService {
 	public CrashReportForm getCrashReportFormDetails(PatientForm patientForm,Integer crashId,String filePath,Integer crashReportErrorId){
 		Integer reportFrom=0;
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), patientForm.getLocalReportNumber(), crashId.toString(), patientForm.getCrashDate(), patientForm.getCounty(),
-				InjuryConstants.convertMonthFormat(new Date()), filePath, 0, 0, InjuryConstants.convertMonthFormat(new Date()),1,reportFrom);
+				InjuryConstants.convertMonthFormat(new Date()), filePath, 0, 0 , 0, InjuryConstants.convertMonthFormat(new Date()),1,reportFrom);
 		return crashReportForm;
 	}
 	
 	// Get Crash Report Form Details from PdfJson Form
-	public CrashReportForm getCrashReportFormDetails(ReportFirstPageForm reportFirstPageForm,String crashId,String filePath,Integer crashReportErrorId,Integer numberOfPatients){
+	public CrashReportForm getCrashReportFormDetails(ReportFirstPageForm reportFirstPageForm,String crashId,String filePath,Integer crashReportErrorId,Integer numberOfPatients,Integer vehicleCount){
 		Integer isRunnerReport=0;
 		Integer reportFrom=0;
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), reportFirstPageForm.getLocalReportNumber(), crashId.toString(), reportFirstPageForm.getCrashDate(), reportFirstPageForm.getCounty(),
-				InjuryConstants.convertMonthFormat(new Date()), filePath,numberOfPatients, isRunnerReport, null, 1, reportFrom);
+				InjuryConstants.convertMonthFormat(new Date()), filePath,numberOfPatients, vehicleCount, isRunnerReport, null, 1, reportFrom);
 		return crashReportForm;
 	}
 	
@@ -280,6 +280,7 @@ public class CrashReportService {
 		// 15 - Runner Crash Reports
 		Integer crashReportErrorId=15;
 		Integer isRunnerReport=1;
+		Integer vehicleCount=0;
 		Integer numberOfPatients=runnerCrashReportForm.getPatientForms().size();
 		County county= countyDAO.get(Integer.parseInt(runnerCrashReportForm.getCounty()));
 		CrashReportError crashReportError=crashReportErrorDAO.get(crashReportErrorId);
@@ -298,7 +299,7 @@ public class CrashReportService {
 		// Police Agency
 		PoliceAgency policeAgency = policeAgencyDAO.get(runnerCrashReportForm.getReportFrom());
 		CrashReport crashReport=new CrashReport(crashId, crashReportError, policeAgency, county, localReportNumber,  InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-					 new Date(), numberOfPatients, runnerCrashReportForm.getFilePath(), null, isRunnerReport, new Date(), 1,null,null,null);
+					 new Date(), numberOfPatients, vehicleCount, runnerCrashReportForm.getFilePath(), null, isRunnerReport, new Date(), 1,null,null,null);
 		
 		
 		/*String odpsCrashId=this.checkRunnerReportWithODPSReport(runnerCrashReportForm);

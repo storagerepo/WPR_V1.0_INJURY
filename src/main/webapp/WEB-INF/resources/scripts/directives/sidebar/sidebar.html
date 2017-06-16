@@ -6,11 +6,14 @@
             <li ui-sref-active="active">
                 <a ui-sref="dashboard.home"><span ng-cloak class="dashboard-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Home</a>
             </li>
-                <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
-                <a ui-sref="dashboard.CallerAdmin"><i ng-cloak class="fa fa-phone fa-fw"></i> <small>Call Center Admin</small></a>
+             <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
+                <a ui-sref="dashboard.calleradmin"><i ng-cloak class="fa fa-phone fa-fw"></i> <small>Call Center Admin</small></a>
             </li>
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.LawyerAdmin"><span ng-cloak class="lawyer-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <small>Lawyer Admin</small></a>
+            </li>
+             <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
+                <a ui-sref="dashboard.automanager"><i ng-cloak class="fa fa-user-circle-o fa-fw"></i> <small>Dealer Manager</small></a>
             </li>
               <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.SearchCrashreport"><i ng-cloak class="fa fa-file-excel-o fa-fw"></i> <small>Crash Report</small></a>
@@ -40,16 +43,16 @@
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
                 <a ui-sref="dashboard.appointment"><i ng-cloak class="fa fa-calendar fa-fw"></i> Appointments<span></span></a>
             </li>
-          	<li ui-sref-active="active" ng-show="{{$root.isAdmin==2 && $root.productToken!=''}}">
+          	
+          
+            <!-- 
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==2 && $root.productToken!=''}}">
                 <a ui-sref="dashboard.payment"><i ng-cloak class="fa fa-money fa-fw"></i> Payment<span></span></a>
-            </li>
-            <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
-                <a href="#/dashboard/UserPreferrence/1"><i ng-cloak class="fa fa-wrench fa-fw"></i> Settings<span></span></a>
             </li>
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==2}}">
                 <a ui-sref="dashboard.report-issue"><span ng-cloak class="fa fa-bug fa-fw">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Report Issue<span></span></a>
             </li>
-            
+             -->
               
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
                 <a ui-sref="dashboard.Lawyer"><span ng-cloak class="lawyer-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Lawyer</a>
@@ -57,35 +60,49 @@
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
                 <a ui-sref="dashboard.LawyerAdminSearchPatients"><span ng-cloak class="patient-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Clients<span></span></a>
             </li>
-            <li ui-sref-active="active" ng-show="{{$root.isAdmin==3 && $root.productToken!=''}}">
-                <a ui-sref="dashboard.payment"><i ng-cloak class="fa fa-money fa-fw"></i> Payment<span></span></a>
-            </li>
-            <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
+          
+           <!--  <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
                 <a href="#/dashboard/UserPreferrence/1"><i ng-cloak class="fa fa-wrench fa-fw"></i> Settings<span></span></a>
-            </li>
+            </li> 
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==3}}">
                 <a ui-sref="dashboard.report-issue"><span ng-cloak class="fa fa-bug fa-fw">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Report Issue<span></span></a>
-            </li>
+            </li>-->
             
              <li ui-sref-active="active" ng-show="{{$root.isAdmin==4}}">
                 <a ui-sref="dashboard.CallerSearchPatients"><span ng-cloak class="patient-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Patients<span></span></a>
             </li>
              <li ui-sref-active="active" ng-show="{{$root.isAdmin==4}}">
                 <a ui-sref="dashboard.clinics"><span ng-cloak class="clinic-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Clinics<span></span></a>
-            </li>
+          <!--   </li>
               <li ui-sref-active="active" ng-show="{{$root.isAdmin==4}}">
                 <a ui-sref="dashboard.report-issue"><span ng-cloak class="fa fa-bug fa-fw">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Report Issue<span></span></a>
-            </li>
+            </li> -->
             
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==5}}">
                 <a ui-sref="dashboard.LawyerSearchPatients"><span ng-cloak class="patient-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Clients<span></span></a>
             </li>
-             <li ui-sref-active="active" ng-show="{{$root.isAdmin==5}}">
-                <a ui-sref="dashboard.report-issue"><span ng-cloak class="fa fa-bug fa-fw">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Report Issue<span></span></a>
+            
+            <!-- Auto Dealer Manager -->
+             <li ui-sref-active="active" ng-show="{{$root.isAdmin==6}}">
+                <a ui-sref="dashboard.autoDealer"><span ng-cloak class="dealer-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Dealer</a>
+            </li>
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==6}}">
+                <a ui-sref="dashboard.autodealer-search-vehicles"><span ng-cloak class="vehicle-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Vehicles<span></span></a>
             </li>
             
             <!-- Common To all -->
-              <li ui-sref-active="active" ng-show="{{$root.isAdmin!=1}}"><a ui-sref="dashboard.rate-review"><i ng-cloak class="fa fa-star-o fa-fw"></i> Rate & Review</a></li>
+             <li ui-sref-active="active" ng-show="{{($root.isAdmin==2||$root.isAdmin==3||$root.isAdmin==6) && $root.productToken!=''}}">
+                <a ui-sref="dashboard.payment"><i ng-cloak class="fa fa-money fa-fw"></i> Payment<span></span></a>
+            </li>
+              <li ui-sref-active="active" ng-show="{{$root.isAdmin==2||$root.isAdmin==3||$root.isAdmin==6}}">
+                <a href="#/dashboard/UserPreferrence/1"><i ng-cloak class="fa fa-wrench fa-fw"></i> Settings<span></span></a>
+            </li>
+            
+             <li ui-sref-active="active" ng-show="{{$root.isAdmin!=1}}">
+                <a ui-sref="dashboard.report-issue"><span ng-cloak class="fa fa-bug fa-fw">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Report Issue<span></span></a>
+            </li>
+            
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin!=1}}"><a ui-sref="dashboard.rate-review"><i ng-cloak class="fa fa-star-o fa-fw"></i> Rate & Review</a></li>
            
         </ul>
     </div>

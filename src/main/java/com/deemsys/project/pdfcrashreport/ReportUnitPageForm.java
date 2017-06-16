@@ -11,6 +11,10 @@ public class ReportUnitPageForm {
     private String insuranceCompany;
     private String policyNumber;
     private String damageScale;
+    private String vehicleMake;
+    private String vehicleYear;
+    private String VIN;
+    private String licensePlatNumber;
 	public String getUnitNumber() {
 		return unitNumber;
 	}
@@ -59,9 +63,33 @@ public class ReportUnitPageForm {
 	public void setDamageScale(String damageScale) {
 		this.damageScale = damageScale;
 	}
+	public String getVehicleMake() {
+		return vehicleMake;
+	}
+	public void setVehicleMake(String vehicleMake) {
+		this.vehicleMake = vehicleMake;
+	}
+	public String getVehicleYear() {
+		return vehicleYear;
+	}
+	public void setVehicleYear(String vehicleYear) {
+		this.vehicleYear = vehicleYear;
+	}
+	public String getVIN() {
+		return VIN;
+	}
+	public void setVIN(String vIN) {
+		VIN = vIN;
+	}
+	public String getLicensePlatNumber() {
+		return licensePlatNumber;
+	}
+	public void setLicensePlatNumber(String licensePlatNumber) {
+		this.licensePlatNumber = licensePlatNumber;
+	}
 	public ReportUnitPageForm(String unitNumber, String ownerName,
 			String ownerPhoneNumber, String ownerAddress, String occupants,
-			String insuranceCompany, String policyNumber, String damageScale) {
+			String insuranceCompany, String policyNumber, String damageScale, String vehicleMake, String vehicleYear, String VIN, String licensePlatNumber) {
 		super();
 		this.unitNumber = unitNumber;
 		this.ownerName = ownerName;
@@ -71,6 +99,10 @@ public class ReportUnitPageForm {
 		this.insuranceCompany = insuranceCompany;
 		this.policyNumber = policyNumber;
 		this.damageScale = damageScale;
+		this.vehicleMake = vehicleMake;
+		this.vehicleYear = vehicleYear;
+		this.VIN = VIN;
+		this.licensePlatNumber = licensePlatNumber;
 	}
     
 		public static Comparator<ReportUnitPageForm> ReportUnitPageComparitor 

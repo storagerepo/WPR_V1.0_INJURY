@@ -206,7 +206,7 @@ public class PDFCrashReportReader {
 					// Commented for Manual Upload
 					//this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
 					CrashReportError crashReportError=crashReportErrorDAO.get(12);
-					crashReportDAO.save(new CrashReport(crashId, crashReportError, null, null, "",   null, new Date() ,  0, "", "", 0, null, 0, null, null, null));
+					crashReportDAO.save(new CrashReport(crashId, crashReportError, null, null, "",   null, new Date() ,  0, 0, "", "", 0, null, 0, null, null, null));
 					System.out.println("Failed"+e.toString());
 				}
 		return true;
@@ -555,6 +555,7 @@ public class PDFCrashReportReader {
 					firstPage
 							.get(firstPage.indexOf("LOCAL REPORT NUMBER *") + 1).replaceAll("\\s+", " ").trim(),
 					firstPage.get(firstPage.indexOf("CRASH SEVERITY HIT/SKIP") - 4),
+					firstPage.get(firstPage.indexOf("REPORTING AGENCY NCIC *") + 1),
 					firstPage.get(firstPage.indexOf("REPORTING AGENCY NAME *") + 1),
 					firstPage.get(firstPage.indexOf("NUMBER OF ") - 1).trim(),
 					firstPage.get(firstPage.indexOf("UNIT IN ERROR") - 1).trim(),
@@ -572,7 +573,7 @@ public class PDFCrashReportReader {
 				// Unit Page Content
 				List<String> unitPage = content.get(i);
 
-				String ownerPhoneNumber = "", damageScale = "", insuranceCompany = "", policyNumber = "";
+				String ownerPhoneNumber = "", ownerAddress="", occupants="", damageScale = "", insuranceCompany = "", policyNumber = "", vehicleMake = "", vehicleYear = "", VIN = "", licensePlateNumber="";
 
 				ownerPhoneNumber = unitPage
 						.get(unitPage
@@ -581,30 +582,87 @@ public class PDFCrashReportReader {
 						: unitPage
 								.get(unitPage
 										.indexOf("OWNER PHONE NUMBER -  INC, AREA  CODE     ( SAME AS DRIVER )") + 1);
+				// Address
+				ownerAddress=unitPage.indexOf("OWNER ADDRESS: CITY, STATE, ZIP                  SAME AS DRIVER )")==-1?""
+						:unitPage.get(unitPage.indexOf("OWNER ADDRESS: CITY, STATE, ZIP                  SAME AS DRIVER )")+1);
+				if(ownerAddress.equals("VEHICLE MODEL")){
+					ownerAddress="";
+				}
+				
+				// Occupants
+				if(unitPage.indexOf("# OCCUPANTS")==-1){
+					if(unitPage.indexOf("LICENSE PLATE NUMBER VEHICLE IDENTIFICATION NUMBER # OCCUPANTS")==-1){
+						if(unitPage.indexOf("VEHICLE IDENTIFICATION NUMBER # OCCUPANTS")==-1){
+							occupants="";
+						}else{
+							occupants=unitPage.get(unitPage.indexOf("VEHICLE IDENTIFICATION NUMBER # OCCUPANTS")+1);
+						}
+						
+					}else{
+						occupants=unitPage.get(unitPage.indexOf("LICENSE PLATE NUMBER VEHICLE IDENTIFICATION NUMBER # OCCUPANTS")+1);
+					}
+				}else{
+					occupants=unitPage.get(unitPage.indexOf("# OCCUPANTS")+1);
+				}
+				
+				// Damage Scale
 				damageScale = unitPage
 						.get(unitPage.indexOf("DAMAGE SCALE") + 1).equals(
 								"1 - NONE") ? "" : unitPage.get(unitPage
 						.indexOf("DAMAGE SCALE") + 1);
+				
+				// Insurance Company
 				insuranceCompany = unitPage.indexOf("INSURANCE COMPANY") == -1 ? ""
 						: unitPage
 								.get(unitPage.indexOf("INSURANCE COMPANY") + 1);
 				if (insuranceCompany.equals("POLICY NUMBER"))
 					insuranceCompany = "";
 
+				// Policy Number
 				policyNumber = unitPage.indexOf("POLICY NUMBER") == -1 ? ""
 						: unitPage.get(unitPage.indexOf("POLICY NUMBER") + 1);
 				if (policyNumber.equals("TOWED BY"))
 					policyNumber = "";
 
+				// Vehicle Make
+				vehicleMake=unitPage.indexOf("VEHICLE MAKE")==-1?"":unitPage.get(unitPage.indexOf("VEHICLE MAKE")+1);
+				if(vehicleMake.equals("VEHICLE COLOR")){
+					vehicleMake="";
+				}
+				
+				// Vehicle Year
+				vehicleYear=unitPage.indexOf("VEHICLE YEAR")==-1?"":unitPage.get(unitPage.indexOf("VEHICLE YEAR")-1);
+				if(vehicleYear.equals("TOWED BY")){
+					vehicleYear="";
+				}
+				
+				// VIN
+				if(unitPage.indexOf("VEHICLE IDENTIFICATION NUMBER")==-1){
+					if(unitPage.indexOf("LICENSE PLATE NUMBER VEHICLE IDENTIFICATION NUMBER")==-1){
+						if(unitPage.indexOf("LP STATE LICENSE PLATE NUMBER VEHICLE IDENTIFICATION NUMBER")==-1){
+							VIN="";
+						}else{
+							VIN=unitPage.get(unitPage.indexOf("LP STATE LICENSE PLATE NUMBER VEHICLE IDENTIFICATION NUMBER")+1);
+						}
+						
+					}else{
+						VIN=unitPage.get(unitPage.indexOf("LICENSE PLATE NUMBER VEHICLE IDENTIFICATION NUMBER")+1);
+					}
+				}else{
+					VIN=unitPage.get(unitPage.indexOf("VEHICLE IDENTIFICATION NUMBER")+1);
+				}
+				
+				// License Plate Number
+				licensePlateNumber=unitPage.indexOf("LICENSE PLATE NUMBER")==-1?"":unitPage.get(unitPage.indexOf("LICENSE PLATE NUMBER")+1);
+				
 				ReportUnitPageForm reportUnitPageForm = new ReportUnitPageForm(
 						unitPage.get(unitPage.indexOf("UNIT NUMBER") + 1).trim(),
 						unitPage.get(unitPage
 								.indexOf("OWNER NAME: LAST, FIRST, MIDDLE       ( SAME AS DRIVER )") + 1),
 						ownerPhoneNumber,
-						unitPage.get(unitPage
-								.indexOf("OWNER ADDRESS: CITY, STATE, ZIP                  SAME AS DRIVER )") + 1),
-						unitPage.get(unitPage.indexOf("# OCCUPANTS") + 1),
-						insuranceCompany, policyNumber, damageScale);
+						ownerAddress,
+						occupants,
+						insuranceCompany, policyNumber, damageScale,vehicleMake,vehicleYear,VIN,licensePlateNumber);
 
 				reportUnitPageForms.add(reportUnitPageForm);
 			}
@@ -1094,25 +1152,21 @@ public class PDFCrashReportReader {
 								if(patientsForm.getInjuries()!=null){
 								if(!patientsForm.getInjuries().equals("5")){
 									patientsForm.setTier(4);
-									patientsForm.setIsOccupantAvailable(1);
 									patientsForms.add(patientsForm);
 									}
 								}else{
 									patientsForm.setTier(4);
-									patientsForm.setIsOccupantAvailable(1);
 									patientsForms.add(patientsForm);
 								}
 							}else{
 								if(patientsForm.getInjuries()!=null){
 									if(!patientsForm.getInjuries().equals("5")){
 											patientsForm.setTier(1);
-											patientsForm.setIsOccupantAvailable(1);
 											patientsForms.add(patientsForm);
 									}
 								}
 								else{
 											patientsForm.setTier(1);
-											patientsForm.setIsOccupantAvailable(1);
 											patientsForms.add(patientsForm);
 								}
 							}
@@ -1120,7 +1174,6 @@ public class PDFCrashReportReader {
 					}else{
 						// Unit Number is Not Mentioned in Motorist Page improper details in Motorist page
 						PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
-						patientsForm.setIsOccupantAvailable(1);
 						patientsForm.setTier(0);
 						patientsForms.add(patientsForm);
 					}
@@ -1129,6 +1182,7 @@ public class PDFCrashReportReader {
 			}else{
 				PatientForm patientsForm=getPatientForm(null, firstPageForm,reportUnitPageForms);
 				patientsForm.setTier(0);
+				patientsForm.setIsOwner(0);
 				// Occupants Or Motorist Details is Not Available
 				patientsForm.setIsOccupantAvailable(0);
 				patientsForms.add(patientsForm);
@@ -1147,19 +1201,16 @@ public class PDFCrashReportReader {
 									if(patientsForm.getInjuries()!=null){
 										if(!patientsForm.getInjuries().equals("5")){
 											patientsForm.setTier(2);
-											patientsForm.setIsOccupantAvailable(1);
 											patientsForms.add(patientsForm);
 										}
 									}else{
 											patientsForm.setTier(2);
-											patientsForm.setIsOccupantAvailable(1);
 											patientsForms.add(patientsForm);
 									}
 								}
 							}else{
 								// Unit Number is Not Mentioned in Motorist Page improper details in Motorist page
 								PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
-								patientsForm.setIsOccupantAvailable(1);
 								patientsForm.setTier(0);
 								patientsForms.add(patientsForm);
 							}
@@ -1180,7 +1231,6 @@ public class PDFCrashReportReader {
 							PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 							if(patientsForm!=null){
 								patientsForm.setTier(3);
-								patientsForm.setIsOccupantAvailable(1);
 								patientsForms.add(patientsForm);
 							}
 						}else{
@@ -1192,12 +1242,10 @@ public class PDFCrashReportReader {
 							if(patientsForm.getInjuries()!=null){
 								if(!patientsForm.getInjuries().equals("5")){							
 								patientsForm.setTier(3);
-								patientsForm.setIsOccupantAvailable(1);
 								patientsForms.add(patientsForm);
 								}
 							}else{
 								patientsForm.setTier(3);
-								patientsForm.setIsOccupantAvailable(1);
 								patientsForms.add(patientsForm);
 							}
 						}
@@ -1205,7 +1253,6 @@ public class PDFCrashReportReader {
 				}else{
 					// Unit Number is Not Mentioned in Motorist Page improper details in Motorist page
 					PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
-					patientsForm.setIsOccupantAvailable(1);
 					patientsForm.setTier(0);
 					patientsForms.add(patientsForm);
 				}
@@ -1217,12 +1264,12 @@ public class PDFCrashReportReader {
 						.getReportMotoristPageForms()) {
 					PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms);
 					patientsForm.setTier(0);
-					patientsForm.setIsOccupantAvailable(1);
 					patientsForms.add(patientsForm);
 				}
 			}else{
 				PatientForm patientsForm=getPatientForm(null, firstPageForm,reportUnitPageForms);
 				patientsForm.setTier(0);
+				patientsForm.setIsOwner(0);
 				patientsForm.setIsOccupantAvailable(0);
 				patientsForms.add(patientsForm);
 			}
@@ -1254,6 +1301,7 @@ public class PDFCrashReportReader {
 				patientsForm.setLocalReportNumber(firstPageForm
 						.getLocalReportNumber());
 				patientsForm.setCrashSeverity(firstPageForm.getCrashSeverity());
+				patientsForm.setReportingAgencyNcic(firstPageForm.getReportingAgencyNCIC());
 				patientsForm.setReportingAgencyName(firstPageForm
 						.getReportingAgencyName());
 				patientsForm.setCounty(firstPageForm.getCounty());
@@ -1284,10 +1332,14 @@ public class PDFCrashReportReader {
 				patientsForm.setSeatingPosition(motoristPageForm.getSeatingPosition());
 				patientsForm.setPatientStatus(1);
 				patientsForm.setIsRunnerReport(0);
+				
+				patientsForm.setIsOwner(0);
+				patientsForm.setIsOccupantAvailable(1);
 			}else{	
 				patientsForm.setLocalReportNumber(firstPageForm
 					.getLocalReportNumber());
 				patientsForm.setCrashSeverity(firstPageForm.getCrashSeverity());
+				patientsForm.setReportingAgencyNcic(firstPageForm.getReportingAgencyNCIC());
 				patientsForm.setReportingAgencyName(firstPageForm
 						.getReportingAgencyName());
 				patientsForm.setCounty(firstPageForm.getCounty());
@@ -1299,6 +1351,8 @@ public class PDFCrashReportReader {
 				patientsForm.setTimeOfCrash(firstPageForm.getTimeOfCrash());
 				patientsForm.setPatientStatus(1);
 				patientsForm.setIsRunnerReport(0);
+				patientsForm.setIsOwner(0);
+				patientsForm.setIsOccupantAvailable(0);
 			}
 			
 			
@@ -1306,6 +1360,91 @@ public class PDFCrashReportReader {
 		
 	}
 	
+	// Get Vehicle and Owner Details
+	public List<PatientForm> getVehicleOwnerDetails(PDFCrashReportJson pdfCrashReportJson){
+		List<PatientForm> vehicleOwnerDetails=new ArrayList<PatientForm>();
+		
+		ReportFirstPageForm reportFirstPageForm = pdfCrashReportJson.getFirstPageForm();
+		List<ReportUnitPageForm> reportUnitPageForms = pdfCrashReportJson.getReportUnitPageForms();
+		List<ReportMotoristPageForm> reportMotoristPageForms = pdfCrashReportJson.getReportMotoristPageForms();
+		String atFaultInsuranceCompany=null;
+		String atFaultPolicyNumber=null;
+		for (ReportUnitPageForm reportUnitPageForm : reportUnitPageForms) {
+			if((reportFirstPageForm.getUnitInError()!=null&&!reportFirstPageForm.getUnitInError().equals(""))
+					&&(reportUnitPageForm.getUnitNumber()!=null&&!reportUnitPageForm.getUnitNumber().equals(""))){
+				if(Integer.parseInt(reportFirstPageForm.getUnitInError())==Integer.parseInt(reportUnitPageForm.getUnitNumber())){
+					atFaultInsuranceCompany=reportUnitPageForm.getInsuranceCompany();
+					atFaultPolicyNumber=reportUnitPageForm.getPolicyNumber();
+				}
+			}
+		}
+		
+		for (ReportUnitPageForm reportUnitPageForm : reportUnitPageForms) {
+			PatientForm patientForm = new PatientForm();
+			
+			patientForm.setLocalReportNumber(reportFirstPageForm.getLocalReportNumber());
+			patientForm.setCrashSeverity(reportFirstPageForm.getCrashSeverity());
+			patientForm.setReportingAgencyNcic(reportFirstPageForm.getReportingAgencyNCIC());
+			patientForm.setReportingAgencyName(reportFirstPageForm
+					.getReportingAgencyName());
+			patientForm.setCounty(reportFirstPageForm.getCounty());
+			patientForm.setNumberOfUnits(reportFirstPageForm.getNumberOfUnits());
+			patientForm.setUnitInError(reportFirstPageForm.getUnitInError());
+			patientForm.setCityVillageTownship(reportFirstPageForm
+					.getCityVillageTownship());
+			patientForm.setCrashDate(reportFirstPageForm.getCrashDate());
+			patientForm.setTimeOfCrash(reportFirstPageForm.getTimeOfCrash());
+			
+			patientForm.setUnitNumber(reportUnitPageForm.getUnitNumber());
+			patientForm.setName(reportUnitPageForm.getOwnerName());
+			patientForm.setAddress(reportUnitPageForm.getOwnerAddress());
+			patientForm.setPhoneNumber(reportUnitPageForm.getOwnerPhoneNumber());
+			patientForm.setVehicleMake(reportUnitPageForm.getVehicleMake());
+			patientForm.setVehicleYear(reportUnitPageForm.getVehicleYear());
+			patientForm.setVin(reportUnitPageForm.getVIN());
+			patientForm.setLicensePlateNumber(reportUnitPageForm.getLicensePlatNumber());
+			patientForm.setIsOwner(1);
+			if(reportUnitPageForm.getDamageScale()!=null&&!reportUnitPageForm.getDamageScale().equals("")){
+				patientForm.setDamageScale(Integer.parseInt(reportUnitPageForm.getDamageScale()));
+			}
+			
+			patientForm.setVictimInsuranceCompany(reportUnitPageForm.getInsuranceCompany());
+			patientForm.setVictimPolicyNumber(reportUnitPageForm.getPolicyNumber());
+			
+			// At fault Policy and Insurance
+			patientForm.setAtFaultInsuranceCompany(atFaultInsuranceCompany);
+			patientForm.setAtFaultPolicyNumber(atFaultPolicyNumber);
+			
+			patientForm.setPatientStatus(1);
+			patientForm.setIsRunnerReport(0);
+			
+			ReportMotoristPageForm motoristPageForm=this.compareUnitPageWithMotoristPage(reportUnitPageForm, reportMotoristPageForms);
+			if(motoristPageForm!=null){
+				if(motoristPageForm.getAge()!=null&&!motoristPageForm.equals(""))
+					patientForm.setAge(Integer.parseInt(motoristPageForm.getAge()));
+				
+				patientForm.setGender(motoristPageForm.getGender());
+				patientForm.setDateOfBirth(motoristPageForm.getDateOfBirth());
+				
+			}
+			vehicleOwnerDetails.add(patientForm);
+		}
+		return vehicleOwnerDetails;
+	}
+	
+	// Check Owner Details with Motorist Page to get Extra Details
+	public ReportMotoristPageForm compareUnitPageWithMotoristPage(ReportUnitPageForm unitPageForm,List<ReportMotoristPageForm> reportMotoristPageForms){
+		ReportMotoristPageForm motoristPageForm = null;
+		for (ReportMotoristPageForm motoristPage : reportMotoristPageForms) {
+			if(motoristPage.getName()!=null&&unitPageForm.getOwnerName()!=null&&motoristPage.getAdddressCityStateZip()!=null&&unitPageForm.getOwnerAddress()!=null){
+				String ownerName=unitPageForm.getOwnerName().replaceAll(", $", "");
+				if(motoristPage.getName().equals(ownerName)&&motoristPage.getAdddressCityStateZip().equals(unitPageForm.getOwnerAddress())){
+					return motoristPage;
+				}
+			}
+		}
+		return motoristPageForm;
+	}
 	
 	//Main function for PDF Parsing
 	public void parsePDFDocument(File file,String crashId) throws Exception{
@@ -1332,6 +1471,15 @@ public class PDFCrashReportReader {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				// Vehicle Details with Owner Information
+				List<PatientForm> vehicleOwnerDetails = this.getVehicleOwnerDetails(pdfCrashReportJson);
+				// Vehicle Count From Report First Page Number of Units
+				Integer vehicleCount=0;
+				if(pdfCrashReportJson.getFirstPageForm().getNumberOfUnits()!=null&&!pdfCrashReportJson.getFirstPageForm().getNumberOfUnits().equals(""))
+					 vehicleCount=Integer.parseInt(pdfCrashReportJson.getFirstPageForm().getNumberOfUnits());
+				
+				
 				Integer patientsCount=0;
 				List<PatientForm> patientsForms = new ArrayList<PatientForm>();
 				List<PatientForm> filteredPatientsForms=new ArrayList<PatientForm>();
@@ -1340,6 +1488,7 @@ public class PDFCrashReportReader {
 				patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);
 				// Check Crash Report is Runner Report
 				CrashReport runnerReportCrashId =this.checkODPSReportWithRunnerReport(pdfCrashReportJson.getFirstPageForm());
+				
 				switch (tierType) {
 				case 1:
 					filteredPatientsForms=filterPatientForms(patientsForms);
@@ -1354,7 +1503,7 @@ public class PDFCrashReportReader {
 						}
 						//#9 Tier 1 Error None of the Patient are not having address and the phone number
 						if(runnerReportCrashId==null){
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 9,patientsCount));
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 9,patientsCount,vehicleCount));
 						}else{
 							crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, 9, runnerReportCrashId.getIsRunnerReport());
 						}
@@ -1365,28 +1514,28 @@ public class PDFCrashReportReader {
 						Integer patientAvailableTier=checkTierFourPatientsAvailable(filteredPatientsForms);
 						if(patientAvailableTier==3){
 							if(runnerReportCrashId==null){
-								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 13,filteredPatientsForms.size()));
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 13,filteredPatientsForms.size(),vehicleCount));
 							}else{
 								System.out.println("Matched------>> Update Report");
 								crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, 13, runnerReportCrashId.getIsRunnerReport());
 							}
 						}else if(patientAvailableTier==1){
 							if(runnerReportCrashId==null){
-								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 1,filteredPatientsForms.size()));
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 1,filteredPatientsForms.size(),vehicleCount));
 							}else{
 								System.out.println("Matched------>> Update Report");
 								crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, 1, runnerReportCrashId.getIsRunnerReport());
 							}
 						}else if(patientAvailableTier==2){
 							if(runnerReportCrashId==null){
-								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 14,filteredPatientsForms.size()));
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 14,filteredPatientsForms.size(),vehicleCount));
 							}else{
 								System.out.println("Matched------>> Update Report");
 								crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, 14, runnerReportCrashId.getIsRunnerReport());
 							}
 						}else{
 							if(runnerReportCrashId==null){
-								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 17,filteredPatientsForms.size()));
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 17,filteredPatientsForms.size(),vehicleCount));
 							}else{
 								System.out.println("Matched------>> Update Report");
 								crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, 17, runnerReportCrashId.getIsRunnerReport());
@@ -1400,6 +1549,8 @@ public class PDFCrashReportReader {
 							throw e;
 						}
 					}
+					// Save Vehicle and Owner Details
+					this.savePatientList(vehicleOwnerDetails, crashId, runnerReportCrashId);
 					break;
 				case 2:
 					if(patientsForms.size()==0){
@@ -1412,7 +1563,7 @@ public class PDFCrashReportReader {
 							}
 						}
 						if(runnerReportCrashId==null){
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 7,patientsCount));
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 7,patientsCount,vehicleCount));
 						}else{
 							System.out.println("Matched------>> Update Report");
 							crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, 7, runnerReportCrashId.getIsRunnerReport());
@@ -1431,7 +1582,7 @@ public class PDFCrashReportReader {
 								patientForm.setTier(0);
 							}
 							if(runnerReportCrashId==null){
-								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 10,patientsCount));
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 10,patientsCount,vehicleCount));
 							}else{
 								System.out.println("Matched------>> Update Report");
 								crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, 10, runnerReportCrashId.getIsRunnerReport());
@@ -1451,7 +1602,7 @@ public class PDFCrashReportReader {
 							}
 							//Insert patients
 							if(runnerReportCrashId==null){
-								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, crashReportType,filteredPatientsForms.size()));
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, crashReportType,filteredPatientsForms.size(),vehicleCount));
 							}else{
 								System.out.println("Matched------>> Update Report");
 								crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, crashReportType, runnerReportCrashId.getIsRunnerReport());
@@ -1465,7 +1616,8 @@ public class PDFCrashReportReader {
 							}
 							}
 					}
-					
+					// Save Vehicle and Owner Details
+					this.savePatientList(vehicleOwnerDetails, crashId, runnerReportCrashId);
 					break;
 				case 3:
 					if(patientsForms.size()==0){
@@ -1478,7 +1630,7 @@ public class PDFCrashReportReader {
 							}
 						}
 						if(runnerReportCrashId==null){
-							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 8,patientsCount));
+							crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 8,patientsCount,vehicleCount));
 						}else{
 							System.out.println("Matched------>> Update Report");
 							crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, 8, runnerReportCrashId.getIsRunnerReport());
@@ -1497,7 +1649,7 @@ public class PDFCrashReportReader {
 								patientForm.setTier(0);
 							}
 							if(runnerReportCrashId==null){
-								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 11,patientsCount));
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 11,patientsCount,vehicleCount));
 							}else{
 								System.out.println("Matched------>> Update Report");
 								crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, 11, runnerReportCrashId.getIsRunnerReport());
@@ -1517,7 +1669,7 @@ public class PDFCrashReportReader {
 							}
 							//Insert patients
 							if(runnerReportCrashId==null){
-								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, crashReportType,filteredPatientsForms.size()));
+								crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, crashReportType,filteredPatientsForms.size(),vehicleCount));
 							}else{
 								System.out.println("Matched------>> Update Report");
 								crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, crashReportType, runnerReportCrashId.getIsRunnerReport());
@@ -1531,6 +1683,8 @@ public class PDFCrashReportReader {
 							
 						}
 					}
+					// Save Vehicle and Owner Details
+					this.savePatientList(vehicleOwnerDetails, crashId, runnerReportCrashId);
 					break;
 				case 4:
 					//Insert into crash report table number of units > 1 and unit in error is an animal
@@ -1541,12 +1695,15 @@ public class PDFCrashReportReader {
 						}
 					}
 					if(runnerReportCrashId==null){
-						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 4,patientsCount));
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 4,patientsCount,vehicleCount));
 					}else{
 						System.out.println("Matched------>> Update Report");
 						crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, 4, runnerReportCrashId.getIsRunnerReport());
 					}
 					this.savePatientList(patientsForms, crashId.toString(),runnerReportCrashId);
+					
+					// Save Vehicle and Owner Details
+					this.savePatientList(vehicleOwnerDetails, crashId, runnerReportCrashId);
 					break;
 				case 5:
 					//Insert into crash report table number of units == 1 and unit in error is an animal
@@ -1557,12 +1714,14 @@ public class PDFCrashReportReader {
 						}
 					}
 					if(runnerReportCrashId==null){
-						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 5,patientsCount));
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 5,patientsCount,vehicleCount));
 					}else{
 						System.out.println("Matched------>> Update Report");
 						crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, 5, runnerReportCrashId.getIsRunnerReport());
 					}
 					this.savePatientList(patientsForms, crashId.toString(),runnerReportCrashId);
+					// Save Vehicle and Owner Details
+					this.savePatientList(vehicleOwnerDetails, crashId, runnerReportCrashId);
 					break;
 				case 6:
 					//Insert into crash report table number of units == 1 and unit in error not having insurance details
@@ -1573,12 +1732,14 @@ public class PDFCrashReportReader {
 						}
 					}
 					if(runnerReportCrashId==null){
-						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 6,patientsCount));
+						crashReportService.saveCrashReport(crashReportService.getCrashReportFormDetails(pdfCrashReportJson.getFirstPageForm(), crashId, fileName, 6,patientsCount,vehicleCount));
 					}else{
 						System.out.println("Matched------>> Update Report");
 						crashReportService.updateCrashReport(runnerReportCrashId.getCrashId(), crashId, fileName, 6, runnerReportCrashId.getIsRunnerReport());
 					}
 					this.savePatientList(patientsForms, crashId.toString(),runnerReportCrashId);
+					// Save Vehicle and Owner Details
+					this.savePatientList(vehicleOwnerDetails, crashId, runnerReportCrashId);
 					break;
 				default:
 					break;
@@ -1597,27 +1758,33 @@ public class PDFCrashReportReader {
 			patientsForm.setCrashReportFileName(crashId+".pdf");
 			patientsForm.setCrashId(crashId);
 			try {
-				if(runnerReportCrashId!=null){
-					Patient patient = this.checkODPSPatientsWithRunnerReportPatients(patientsForm);
-					if(patient!=null){
-						// Update Patient Details
-						System.out.println("Matched----->>>Update Patient Details");
-						patientsForm.setPatientId(patient.getPatientId());
-						patientsForm.setIsRunnerReport(2);
-						if(runnerReportCrashId.getIsRunnerReport()==3){
-							patientsForm.setIsRunnerReport(4);
+				if(patientsForm.getIsOwner()==1){
+					patientsService.savePatient(patientsForm);
+					System.out.println("Save Vehicle And Owner Details");
+				}else{
+					if(runnerReportCrashId!=null){
+						Patient patient = this.checkODPSPatientsWithRunnerReportPatients(patientsForm);
+						if(patient!=null){
+							// Update Patient Details
+							System.out.println("Matched----->>>Update Patient Details");
+							patientsForm.setPatientId(patient.getPatientId());
+							patientsForm.setIsRunnerReport(2);
+							if(runnerReportCrashId.getIsRunnerReport()==3){
+								patientsForm.setIsRunnerReport(4);
+							}
+							patientsForm.setStatus(1);
+							patientsService.updatePatientCurrentAddedDate(patientsForm);
+						}else{
+							patientsService.savePatient(patientsForm);
+							patientCount++;
+							System.out.println("Not Matched----->>>Save Patient Details");
 						}
-						patientsForm.setStatus(1);
-						patientsService.updatePatientCurrentAddedDate(patientsForm);
 					}else{
 						patientsService.savePatient(patientsForm);
-						patientCount++;
-						System.out.println("Not Matched----->>>Save Patient Details");
+						System.out.println("No Need To Check----->>>Save Patient Details");
 					}
-				}else{
-					patientsService.savePatient(patientsForm);
-					System.out.println("No Need To Check----->>>Save Patient Details");
 				}
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				throw e;
@@ -1797,8 +1964,9 @@ public class PDFCrashReportReader {
 					
 					PoliceAgency policeAgency = policeAgencyDAO.get(reportFromMapId);
 					Integer numberOfPatients=0;
+					Integer vehicleCount=0;
 					CrashReport crashReport=new CrashReport(runnerCrashReportForm.getDocNumber(), crashReportError, policeAgency, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-								 new Date(), numberOfPatients, fileName, null, isRunnerReport, new Date(), 1, null, null, null);
+								 new Date(), numberOfPatients, vehicleCount, fileName, null, isRunnerReport, new Date(), 1, null, null, null);
 					
 					
 					  crashReportDAO.save(crashReport);
@@ -1920,8 +2088,9 @@ public class PDFCrashReportReader {
 				}
 				
 				Integer numberOfPatients=0;
+				Integer vehicleCount=0;
 				CrashReport crashReport=new CrashReport(crashId, crashReportError, policeAgency, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-							 new Date(), numberOfPatients, fileName, null, isRunnerReport, new Date(), 1, null, null, null);
+							 new Date(), numberOfPatients, vehicleCount, fileName, null, isRunnerReport, new Date(), 1, null, null, null);
 				
 				crashReportDAO.save(crashReport);
 			}
