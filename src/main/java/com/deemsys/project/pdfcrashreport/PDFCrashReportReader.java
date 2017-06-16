@@ -1437,8 +1437,9 @@ public class PDFCrashReportReader {
 		ReportMotoristPageForm motoristPageForm = null;
 		for (ReportMotoristPageForm motoristPage : reportMotoristPageForms) {
 			if(motoristPage.getName()!=null&&unitPageForm.getOwnerName()!=null&&motoristPage.getAdddressCityStateZip()!=null&&unitPageForm.getOwnerAddress()!=null){
-				String ownerName=unitPageForm.getOwnerName().replaceAll(", $", "");
-				if(motoristPage.getName().equals(ownerName)&&motoristPage.getAdddressCityStateZip().equals(unitPageForm.getOwnerAddress())){
+				String ownerName=unitPageForm.getOwnerName().substring(0, unitPageForm.getOwnerName().lastIndexOf(","));
+				String motoristName=motoristPage.getName().substring(0,motoristPage.getName().lastIndexOf(","));
+				if(motoristName.equals(ownerName)&&motoristPage.getAdddressCityStateZip().equals(unitPageForm.getOwnerAddress())){
 					return motoristPage;
 				}
 			}
