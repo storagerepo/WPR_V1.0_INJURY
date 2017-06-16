@@ -8,7 +8,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var tier=[{id:1},{id:2},{id:3},{id:4},{id:5}];
 	var crashToDate="";
 	var localReportNumber="";
-	var reportingAgency="";
+	var reportingAgency=[];
 	var patientName="";
 	var age=[{id:1},{id:2},{id:4}];
 	var lAdminAge=[{id:1}];
@@ -291,6 +291,17 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		});
 	};
 	
+	
+	// Get Reporting Agency List List
+	this.getReportingAgencyList=function(countyIds){
+		var countySelection=[];
+		$.each(countyIds, function(index,value) {
+			countySelection.push(value.id);
+		});
+		return requestHandler.getRequest("Patient/getReportingAgencyByCounties.json?countyIds="+countySelection,"").then(function(response){
+			 return response.data.reportingAgencyForms;
+		});
+	};
 	
 	// Reset Search Data
 	this.resetSearchData=function(){

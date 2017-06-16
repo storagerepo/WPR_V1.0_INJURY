@@ -29,6 +29,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		
 		$scope.patient={};
 		$scope.patient.countyId=[];
+		$scope.patient.reportingAgency=[];
 		$scope.patient.tier=[];
 		$scope.patient.damageScale=[];
 		angular.copy(searchService.getCounty(),$scope.patient.countyId);
@@ -519,6 +520,11 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		//Manipulate Damage Scale Array
 		$.each($scope.searchParam.damageScale, function(index,value) {
 			$scope.searchParam.damageScale[index]=value.id;
+		});
+		
+		//Manipulate Reporting Agency Array
+		$.each($scope.searchParam.reportingAgency, function(index,value) {
+			$scope.searchParam.reportingAgency[index]=value.id;
 		});
 		
 		//Reset Check Box - Scanned
@@ -1210,6 +1216,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	
 	//Watch County Filter
 	$scope.$watch('patient.countyId' , function() {		
+		
 	   if(!$scope.loadingCounties){
 		   if($scope.patient.countyId.length==0){
 			   $scope.disableSearch=true;
@@ -1220,7 +1227,13 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 				   $scope.disableSearch=false;			   
 		   }
 	   }
-		
+	   $scope.patient.reportingAgency=[];
+	   //Some change happened in county selection lets update reporting agency list too
+	   searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
+		 //Load Reporting Agency List		   
+		 $scope.reportingAgencyList=response;  
+	   });
+	   
 	}, true );
 	
 	//Watch Tier Filter
@@ -1259,13 +1272,25 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 					if($scope.countylist.length>0){
 						$.each(response, function(index,value) {
 							$scope.patient.countyId.push({"id":value.countyId});
+							//console.log("Response Length:"+response.length+"| Current aray length"+$scope.patient)
+							//if(response.length==$scope.patient.countyId)		
+								//searchService.getReportingAgencyList($scope.patient.countyId);//Load Reporting Agency List
 						});
 					}else{
 						$location.path("dashboard/UserPreferrence/1");
 					}
-				
+					
 				});
+				
+				
 			}};
+	
+	//Reporting Agency Drop Down Events
+	$scope.reportingAgencyEvents={onInitDone: function(item) {console.log("initi ciuny",$scope.countyListType);},
+			onItemDeselect: function(item) {console.log("deselected couny",item);},
+			onItemSelect: function(item) {console.log("selected couny",item);},
+			onPreferenceChange: function(item) {}
+	};
 	
 	// While Change to Open to Archive vice versa
 	$scope.resetResultData=function(){

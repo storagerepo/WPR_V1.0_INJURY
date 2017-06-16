@@ -36,6 +36,7 @@ public class PatientSearchList extends InjuryProperties{
 	private String atFaultInsuranceCompany;
 	private String victimInsuranceCompany;
 	private Integer tier;
+	private String reportingAgencyNcic;
 	private String reportingAgencyName;
 	private String numberOfUnits;
 	private String unitInError;
@@ -246,6 +247,12 @@ public class PatientSearchList extends InjuryProperties{
 	}
 	public void setAge(Integer age) {
 		this.age = age;
+	}	
+	public String getReportingAgencyNcic() {
+		return reportingAgencyNcic;
+	}
+	public void setReportingAgencyNcic(String reportingAgencyNcic) {
+		this.reportingAgencyNcic = reportingAgencyNcic;
 	}
 	public String getReportingAgencyName() {
 		return reportingAgencyName;

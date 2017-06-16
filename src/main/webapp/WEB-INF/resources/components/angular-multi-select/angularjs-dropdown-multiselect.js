@@ -28,7 +28,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                 template += '<li class="divider" ng-hide="!settings.showPreferenceOption"></li><li ng-hide="!settings.showCheckAll || settings.selectionLimit > 0" style="padding:0px 5px 0px 5px;"><button class="btn btn-sm btn-default" data-ng-click="selectAll()">{{texts.checkAll}}</button>&nbsp;&nbsp;<button class="btn btn-sm btn-default" data-ng-click="deselectAll();">{{texts.uncheckAll}}</button></li>';
                 
                 template += '<li ng-hide="(!settings.showCheckAll || settings.selectionLimit > 0) && !settings.showUncheckAll" class="divider"></li>';
-                template += '<li ng-show="settings.enableSearch"><div class="dropdown-header"><input type="text" class="form-control" style="width: 100%;" ng-model="searchFilter" placeholder="{{texts.searchPlaceholder}}" /></li>';
+                template += '<li ng-show="settings.enableSearch"><div class="multidrop-search"><input type="text" class="form-control" style="width: 100%;" ng-model="searchFilter" placeholder="{{texts.searchPlaceholder}}" /></li>';
                 template += '<li ng-show="settings.enableSearch" class="divider"></li>';
 
                 if (groups) {
@@ -38,7 +38,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                     template += '<li style="border-bottom:0.5px solid #999;cursor:pointer;" role="presentation" ng-repeat="option in options | filter: searchFilter">';
                 }
 
-                template += '<a role="menuitem" tabindex="-1" ng-click="setSelectedItem(getPropertyForObject(option,settings.idProp))">';
+                template += '<a ng-class="settings.optionClass" role="menuitem" tabindex="-1" ng-click="setSelectedItem(getPropertyForObject(option,settings.idProp))">';
 
                 if (checkboxes) {
                     template += '<div class="checkbox"><label><input class="checkboxInput" type="checkbox" ng-click="checkboxClick($event, getPropertyForObject(option,settings.idProp))" ng-checked="isChecked(getPropertyForObject(option,settings.idProp))" /> {{getPropertyForObject(option, settings.displayProp)}}</label></div></a>';
@@ -99,6 +99,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                     scrollable: false,
                     scrollableHeight: 'auto',
                     closeOnBlur: true,
+                    optionClass:'',
                     displayProp: 'label',
                     idProp: 'id',
                     externalIdProp: 'id',

@@ -10,7 +10,7 @@ public class CallerPatientSearchForm {
 	private Integer numberOfDays;
 	private String crashToDate;
 	private String localReportNumber;
-	private String reportingAgency;
+	private String[] reportingAgency;
 	private String patientName;
 	private Integer[] age;
 	private Integer callerId;
@@ -72,10 +72,10 @@ public class CallerPatientSearchForm {
 		this.localReportNumber = localReportNumber;
 	}
 	
-	public String getReportingAgency() {
+	public String[] getReportingAgency() {
 		return reportingAgency;
 	}
-	public void setReportingAgency(String reportingAgency) {
+	public void setReportingAgency(String[] reportingAgency) {
 		this.reportingAgency = reportingAgency;
 	}
 	public String getPatientName() {
@@ -194,7 +194,7 @@ public class CallerPatientSearchForm {
 	}
 public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 			Integer tier[], Integer patientStatus, String crashFromDate,Integer numberOfDays,
-			String crashToDate, String localReportNumber,String reportingAgency,String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived,String archivedFromDate, String archivedToDate,
+			String crashToDate, String localReportNumber,String[] reportingAgency,String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived,String archivedFromDate, String archivedToDate,
 			Integer isRunnerReport,Integer[] damageScale,Integer directReportStatus) {
 		super();
 		this.callerAdminId = callerAdminId;

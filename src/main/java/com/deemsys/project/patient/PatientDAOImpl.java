@@ -1,6 +1,7 @@
 package com.deemsys.project.patient;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -35,6 +36,7 @@ import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.Patient;
 import com.deemsys.project.login.LoginService;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 /**
  * 
@@ -550,10 +552,12 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	}
 	
 	//Common Constrain Reporting Agency
-	if(callerPatientSearchForm.getIsRunnerReport()==0)
-	if(!callerPatientSearchForm.getReportingAgency().equals("")){
-	Criterion reportingAgencyCriterion=Restrictions.like("t1.reportingAgencyName", callerPatientSearchForm.getReportingAgency(),MatchMode.START);
-	criteria.add(reportingAgencyCriterion);
+	if(callerPatientSearchForm.getIsRunnerReport()==0){
+		if(callerPatientSearchForm.getReportingAgency().length>0){
+			callerPatientSearchForm.setReportingAgency(this.manupulateReportingAgency(callerPatientSearchForm.getReportingAgency(),callerPatientSearchForm.getCountyId()));
+			Criterion reportingAgencyCriterion=Restrictions.in("t1.reportingAgencyNcic", callerPatientSearchForm.getReportingAgency());
+			criteria.add(reportingAgencyCriterion);
+		}		
 	}
 	
 	// Common Constrain is Runner Reports 0- ODPS, 2,4 - Converted to ODPS from Runner, Scanned
@@ -719,7 +723,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	projectionList.add(Projections.property("t1.tier"),"tier");
 	projectionList.add(Projections.property("t1.atFaultInsuranceCompany"),"atFaultInsuranceCompany");
 	projectionList.add(Projections.property("t1.victimInsuranceCompany"),"victimInsuranceCompany");
-	
+	projectionList.add(Projections.property("t1.reportingAgencyNcic"),"reportingAgencyNcic");
 	projectionList.add(Projections.property("t1.reportingAgencyName"),"reportingAgencyName");
 	projectionList.add(Projections.property("t1.numberOfUnits"),"numberOfUnits");
 	projectionList.add(Projections.property("t1.unitInError"),"unitInError");
@@ -857,5 +861,30 @@ public List<Patient> getRunnerReportPatients(String crashId,
 	List<Patient> patients = this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.and(Restrictions.eq("crashReport.crashId", crashId),Restrictions.eq("isRunnerReport", isRunnerReport))).list();
 	return patients;
 }
+
+public String[] manupulateReportingAgency(String[] reportingAgency,Integer[] countyId){
+	
+	List<String> reportingAgencyIds=new ArrayList<String>(Arrays.asList(reportingAgency));
+	
+	
+	
+	if(reportingAgencyIds.contains("OH")){
+		reportingAgencyIds.remove("OH");
+		for (Integer county : countyId) {
+			if(county<10){
+				reportingAgencyIds.add("OH0"+county);
+			}else{
+				reportingAgencyIds.add("OH"+county);
+			}
+		}
+	}
+	int index=0;
+	String[] reportingAgencyList = new String[reportingAgencyIds.size()];
+	for (String reportingAgencyId : reportingAgencyIds) {
+		reportingAgencyList[index++]=reportingAgencyId;
+	}
+	return reportingAgencyList;
+}
+
 
 }

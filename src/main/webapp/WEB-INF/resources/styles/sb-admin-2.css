@@ -365,3 +365,15 @@ table.dataTable thead .sorting:after {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+.multidrop-option-class{
+	white-space:normal !important;
+	font-size:12px;
+}
+.multidrop-search {
+  display: block;
+  padding: 2px 4px 2px 4px;
+  font-size: 12px;
+  line-height: 1.42857143;
+  color: #777;
+  white-space: nowrap;
+}
