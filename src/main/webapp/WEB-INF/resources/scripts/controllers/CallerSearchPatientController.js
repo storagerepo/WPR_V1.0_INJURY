@@ -109,6 +109,11 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			$scope.searchParam.damageScale[index]=value.id;
 		});
 		
+		//Manipulate Reporting Agency Array
+		$.each($scope.searchParam.reportingAgency, function(index,value) {
+			$scope.searchParam.reportingAgency[index]=value.id;
+		});
+		
 		//Reset Check Box - Scanned
 		$scope.isCheckedAllDirectReport=false;
 		
@@ -693,6 +698,7 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 		$scope.patient.countyId=[];
 		$scope.patient.tier=[];
 		$scope.patient.damageScale=[];
+		$scope.patient.reportingAgency=[];	
 		angular.copy(searchService.getCounty(),$scope.patient.countyId);
 		angular.copy(searchService.getTier(),$scope.patient.tier);
 		angular.copy(searchService.getDamageScale(),$scope.patient.damageScale);
@@ -1090,7 +1096,12 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 					   $scope.disableSearch=false;			   
 			   }
 		   }
-			
+		   $scope.patient.reportingAgency=[];
+		   //Some change happened in county selection lets update reporting agency list too
+		   searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
+			 //Load Reporting Agency List		   
+			 $scope.reportingAgencyList=response;  
+		   });
 		}, true );
 		
 		// County Drop down Events

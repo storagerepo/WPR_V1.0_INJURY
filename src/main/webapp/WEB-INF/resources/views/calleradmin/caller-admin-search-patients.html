@@ -114,13 +114,14 @@
 		</div>
 
 		<div class="col-md-12 no-padding">
-			<div ng-class="patient.isRunnerReport!=3?'col-md-3ths':'col-md-3'" ng-show="patient.isRunnerReport!=3">
+			<div ng-class="patient.isRunnerReport!=3?'col-md-3ths':'col-md-3'" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
 				<label>Reporting Agency</label> <div ng-dropdown-multiselect=""
 					options="reportingAgencyList" selected-model="patient.reportingAgency"
 					extra-settings="{idProp:'code',displayProp:'reportingAgencyName',smartButtonMaxItems:'0',enableSearch:true,optionClass:'multidrop-option-class',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Reporting Agency',showPreferenceOption:false}"
-					events="reportingAgencyEvents"></div>
+					events="reportingAgencyEvents">
+					</div>
 			</div>		
-			<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3">
+			<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
 				<label>Tier</label>&nbsp;&nbsp;<a href="" class="some-popover-link"
 					data-placement="right" data-original-title="" data-toggle="popover"
 					title="Tier Details (Deceased victims not listed)"><i
@@ -131,7 +132,7 @@
 					selected-model="patient.tier"
 					extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1||patient.isRunnerReport==3}"></div>
 			</div>
-			<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3">
+			<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
 				<label>Damage Scale</label>&nbsp;<a href=""
 					class="some-popover-link" data-placement="top"
 					data-original-title="" data-toggle="popover" title="Damage Scale"
@@ -148,9 +149,11 @@
 					name="localReportNumber" class="form-control input-sm"
 					ng-model="patient.localReportNumber"
 					placeholder="Local Report Number">
-			</div>				
+			</div>
+						
 			<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3">
-				<label>Caller</label> <select ng-cloak class="form-control input-sm"
+				<label>Caller</label> 
+				<select ng-cloak class="form-control input-sm"
 					ng-model="patient.callerId" ng-disabled="patient.isRunnerReport==3">
 					<option value="0">All</option>
 					<option value="-1">N/A</option>
@@ -160,6 +163,7 @@
 						{{caller.lastName}}</option>
 				</select>
 			</div>
+			
 			<div class="col-md-2ths">
 				<label>&nbsp;</label>
 				<div>

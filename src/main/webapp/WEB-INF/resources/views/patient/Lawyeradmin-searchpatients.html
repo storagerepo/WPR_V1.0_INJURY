@@ -109,6 +109,13 @@
 			</div>
 
 			<div class="col-md-12 no-padding">
+			<div ng-class="patient.isRunnerReport!=3?'col-md-3ths':'col-md-3'" ng-show="patient.isRunnerReport!=3">
+				<label>Reporting Agency</label> <div ng-dropdown-multiselect=""
+					options="reportingAgencyList" selected-model="patient.reportingAgency"
+					extra-settings="{idProp:'code',displayProp:'reportingAgencyName',smartButtonMaxItems:'0',enableSearch:true,optionClass:'multidrop-option-class',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Reporting Agency',showPreferenceOption:false}"
+					events="reportingAgencyEvents">
+					</div>
+			</div>	
 				<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3">
 					<label>Tier</label>&nbsp;&nbsp;<a href="" data-placement="right"
 						data-toggle="popover"
@@ -140,12 +147,7 @@
 						placeholder="Local Report Number">
 
 				</div>
-				<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3">
-					<label>Reporting Agency</label> <input type="text"
-					name="reportingAgency" class="form-control input-sm"
-					ng-model="patient.reportingAgency" ng-disabled="patient.isRunnerReport==1"
-					placeholder="Reporting Agency">
-				</div>
+				
 				<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3">
 					<label>Lawyers</label> <select class="form-control input-sm"
 						ng-model="patient.lawyerId" ng-disabled="patient.isRunnerReport==3">

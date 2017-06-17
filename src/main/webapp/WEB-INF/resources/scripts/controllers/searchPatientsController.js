@@ -27,7 +27,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$scope.patient.crashFromDate="";
 		$scope.patient.crashToDate="";
 		$scope.patient.localReportNumber="";
-		$scope.patient.reportingAgency="";
+		$scope.patient.reportingAgency=[];
 		$scope.patient.patientName="";
 		$scope.patient.age=[{id:1},{id:2},{id:4}],
 		$scope.patient.callerId=0;
@@ -62,14 +62,14 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$scope.countylist=response.data.countyForms;
 	});
 	 
-	$scope.checkCustomDate=function(custom){
+	$scope.checkCustomDate=function(){
 		//Reset to date if less than from date
 		var fromDate=new Date($scope.patient.crashFromDate);
 		var toDate=new Date($scope.patient.crashToDate);
 		if(toDate<fromDate)
 			$scope.patient.crashToDate="";
 		//End Reset to date if less than from date
-		if(custom=='0'&&$scope.patient.crashFromDate!=''){
+		if($scope.patient.crashFromDate!=''){
 			$scope.disableCustom=false;
 		}
 		else{
@@ -119,6 +119,11 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 			$scope.searchParam.damageScale[index]=value.id;
 		});
 		
+		//Manipulate Reporting Agency Array
+		$.each($scope.searchParam.reportingAgency, function(index,value) {
+			$scope.searchParam.reportingAgency[index]=value.id;
+		});
+		
 		var defer=$q.defer();
 		
 		//Reset Check Box - Scanned
@@ -129,6 +134,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 			if($scope.searchParam.isRunnerReport!=3){
 				$scope.totalRecords=response.data.patientGroupedSearchResult.totalNoOfRecord;
 				$scope.patientSearchData=response.data.patientGroupedSearchResult.patientSearchResults;
+			
 				$.each($scope.patientSearchData, function(index,value) {
 					$.each(value.searchResult, function(index1,value1) {
 						$.each(value1.patientSearchLists,function(index2,value2){
@@ -138,7 +144,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 							        break;
 							    case 1:
 							    	value2.patientStatusName="Active";
-							        break;
+ 							        break;
 							    case 2:
 							    	value2.patientStatusName="Not Interested/Injured";
 							        break;
@@ -371,6 +377,13 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		   if(!$scope.searchTierMinError)
 			   $scope.disableSearch=false;			   
 	   }
+	   $scope.patient.reportingAgency=[];
+	   //Some change happened in county selection lets update reporting agency list too
+	   searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
+		 //Load Reporting Agency List		   
+		 $scope.reportingAgencyList=response;  
+	   });
+	   
 	}, true );
 	
 	//Watch Tier Filter

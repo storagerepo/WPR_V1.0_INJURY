@@ -312,6 +312,12 @@
 		<version>1.10.59</version>
 	</dependency>
 	   
+	  <!--  Http core -->
+	   <dependency>
+	<groupId>org.apache.httpcomponents</groupId>
+	<artifactId>httpcore</artifactId>
+	<version>4.4.4</version>
+</dependency>
 	   <!-- Http Client -->
 	   <dependency>
 	<groupId>org.apache.httpcomponents</groupId>
