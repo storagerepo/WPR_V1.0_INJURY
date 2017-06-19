@@ -87,6 +87,13 @@ adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHa
 			   requestHandler.getRequest("CAdmin/getNumberOfCallers.json","").then( function(response) {
 				   $scope.numberOfDealers=response.data.numberOfCallers;
 				     });
+			   requestHandler.getRequest("Patient/getNumberOfPatients.json","").then( function(response) {
+				   $scope.numberOfVehicles= response.data.numberOfPatients;
+			   });
+		   } else if($rootScope.isAdmin==7){
+			   requestHandler.getRequest("Caller/getNumberOfAssignedPatients.json","").then( function(response) {
+				   $scope.numberOfVehicles= response.data.numberOfAssignedPatients;
+			   });
 		   }
 		   
 	}, 500);

@@ -75,13 +75,13 @@ public class PatientCallerService {
 		return true;
 	}
 	
-public boolean releaseCaller(AssignCallerForm assignCallerForm){	
+	public boolean releaseCaller(AssignCallerForm assignCallerForm){	
 				
 		String role=loginService.getCurrentRole();
 		CallerAdmin callerAdmin = null;
-		if(role==InjuryConstants.INJURY_CALLER_ADMIN_ROLE){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
 			callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
-		}else if(role==InjuryConstants.INJURY_CALLER_ROLE){
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
 			callerAdmin=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin();
 		}
 		
@@ -100,13 +100,13 @@ public boolean releaseCaller(AssignCallerForm assignCallerForm){
 		return true;
 	}
 
-public boolean moveToArchive(AssignCallerForm assignCallerForm,Integer archiveStatus){	
+	public boolean moveToArchive(AssignCallerForm assignCallerForm,Integer archiveStatus){	
 	
 	String role=loginService.getCurrentRole();
 	CallerAdmin callerAdmin = null;
-	if(role==InjuryConstants.INJURY_CALLER_ADMIN_ROLE){
+	if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
 		callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
-	}else if(role==InjuryConstants.INJURY_CALLER_ROLE){
+	}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
 		callerAdmin=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin();
 	}
 	

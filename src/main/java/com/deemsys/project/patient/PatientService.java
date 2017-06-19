@@ -354,9 +354,9 @@ public class PatientService {
 		PatientGroupedSearchResult patientGroupedSearchResult = new PatientGroupedSearchResult();
 		
 		String role=loginService.getCurrentRole();
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
 			callerPatientSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
-		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
 			callerPatientSearchForm.setCallerAdminId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId());
 			callerPatientSearchForm.setCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
 		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
@@ -494,7 +494,7 @@ public class PatientService {
 						if(rowCount!=0){
 							patientSearchResultGroupByList.add(patientSearchResultGroupBy);
 						}				
-						patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getIsRunnerReport(),resultSet.getRunnerReportAddedDate(),resultSet.getNumberOfPatients(),resultSet.getDirectReportStatus(),new ArrayList<PatientSearchList>());
+						patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getIsRunnerReport(),resultSet.getRunnerReportAddedDate(),resultSet.getNumberOfPatients(),resultSet.getDirectReportStatus(),resultSet.getVehicleCount(),new ArrayList<PatientSearchList>());
 					}				
 					//Set patient
 					patientSearchResultGroupBy.getPatientSearchLists().add(resultSet);
@@ -521,7 +521,7 @@ public class PatientService {
 					if(rowCount!=0){
 						patientSearchResultGroupByList.add(patientSearchResultGroupBy);
 					}				
-					patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getIsRunnerReport(),resultSet.getRunnerReportAddedDate(),resultSet.getNumberOfPatients(),resultSet.getDirectReportStatus(),new ArrayList<PatientSearchList>());
+					patientSearchResultGroupBy=new PatientSearchResultGroupBy(resultSet.getLocalReportNumber(),resultSet.getUnitInError(),resultSet.getCrashDate(),resultSet.getAddedDate(),resultSet.getIsRunnerReport(),resultSet.getRunnerReportAddedDate(),resultSet.getNumberOfPatients(),resultSet.getDirectReportStatus(),resultSet.getVehicleCount(),new ArrayList<PatientSearchList>());
 				}				
 				//Set patient
 				patientSearchResultGroupBy.getPatientSearchLists().add(resultSet);

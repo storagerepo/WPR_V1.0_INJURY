@@ -210,7 +210,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		
 		String role=loginService.getCurrentRole();
 		
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
 			criteria.createAlias("directReportCallerAdminMaps", "dcl1", Criteria.LEFT_JOIN,Restrictions.eq("dcl1.id.callerAdminId", crashReportSearchForm.getCallerAdminId()));
 			
 			// Is Archived Status

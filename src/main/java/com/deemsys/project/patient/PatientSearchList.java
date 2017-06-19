@@ -62,6 +62,13 @@ public class PatientSearchList extends InjuryProperties{
 	private Integer directReportStatus;
 	private String reportFromDepartment;
 	
+	// Vehicle Details
+	private String vehicleMake;
+	private String vehicleYear;
+	private String VIN;
+	private Integer isOwner;
+	private Integer vehicleCount;
+	
 	public String getPatientId() {
 		return patientId;
 	}
@@ -410,6 +417,36 @@ public class PatientSearchList extends InjuryProperties{
 	}
 	public void setReportFromDepartment(String reportFromDepartment) {
 		this.reportFromDepartment = reportFromDepartment;
+	}
+	public String getVehicleMake() {
+		return vehicleMake;
+	}
+	public void setVehicleMake(String vehicleMake) {
+		this.vehicleMake = vehicleMake;
+	}
+	public String getVehicleYear() {
+		return vehicleYear;
+	}
+	public void setVehicleYear(String vehicleYear) {
+		this.vehicleYear = vehicleYear;
+	}
+	public String getVIN() {
+		return VIN;
+	}
+	public void setVIN(String vIN) {
+		VIN = vIN;
+	}
+	public Integer getIsOwner() {
+		return isOwner;
+	}
+	public void setIsOwner(Integer isOwner) {
+		this.isOwner = isOwner;
+	}
+	public Integer getVehicleCount() {
+		return vehicleCount;
+	}
+	public void setVehicleCount(Integer vehicleCount) {
+		this.vehicleCount = vehicleCount;
 	}
 	public PatientSearchList(String patientId, String localReportNumber,
 			Integer numberOfPatients, String crashDate, String addedDate,

@@ -440,7 +440,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	}
 	
 	//Common Constrains - Tier
-	if(callerPatientSearchForm.getTier().length>0&&callerPatientSearchForm.getIsRunnerReport()!=-1&&callerPatientSearchForm.getIsRunnerReport()==0){
+	if(callerPatientSearchForm.getTier()!=null&&callerPatientSearchForm.getTier().length>0&&callerPatientSearchForm.getIsRunnerReport()!=-1&&callerPatientSearchForm.getIsRunnerReport()==0){
 		Disjunction tierCondition=Restrictions.disjunction();
 		if(ArrayUtils.contains(callerPatientSearchForm.getTier(), 1)){
 			tierCondition.add(Restrictions.eq("t1.tier", 1));
@@ -539,14 +539,14 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	}
 	
 	//Common Constrain Phone Number
-	if(!callerPatientSearchForm.getPhoneNumber().equals("")){
+	if(callerPatientSearchForm.getPhoneNumber()!=null&&!callerPatientSearchForm.getPhoneNumber().equals("")){
 		Criterion patientPhoneCriterion=Restrictions.like("t1.phoneNumber", callerPatientSearchForm.getPhoneNumber(),MatchMode.START);
 		criteria.add(patientPhoneCriterion);
 	}
 	
 	
 	//Common Constrain Local Report Number
-	if(!callerPatientSearchForm.getLocalReportNumber().equals("")){
+	if(callerPatientSearchForm.getLocalReportNumber()!=null&&!callerPatientSearchForm.getLocalReportNumber().equals("")){
 	Criterion localReportNumberCriterion=Restrictions.like("cr.localReportNumber", callerPatientSearchForm.getLocalReportNumber(),MatchMode.START);
 	criteria.add(localReportNumberCriterion);
 	}
@@ -569,15 +569,34 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 			criteria.add(Restrictions.eq("cr.isRunnerReport", callerPatientSearchForm.getIsRunnerReport()));
 		}
 	}
-		
+	
 	String role=loginService.getCurrentRole();
+	
+	// Vehicle Constraints
+	if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+		if(callerPatientSearchForm.getVehicleMake()!=null&&!callerPatientSearchForm.getVehicleMake().equals("")){
+			Criterion vehicleMakeCriterion=Restrictions.like("t1.vehicleMake", callerPatientSearchForm.getVehicleMake(),MatchMode.ANYWHERE);
+			criteria.add(vehicleMakeCriterion);
+		}
+		if(callerPatientSearchForm.getVehicleYear()!=null&&!callerPatientSearchForm.getVehicleYear().equals("")){
+			Criterion vehicleYearCriterion=Restrictions.like("t1.vehicleYear", callerPatientSearchForm.getVehicleYear(),MatchMode.ANYWHERE);
+			criteria.add(vehicleYearCriterion);
+		}
+		// Is Owner Criterion 1 - Vehicle Owner
+		Criterion isOwnerCriterion=Restrictions.eq("t1.isOwner", 1);
+		criteria.add(isOwnerCriterion);
+	}else if(!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+		// Is Owner Criterion 0 - Patients
+		Criterion isOwnerCriterion=Restrictions.eq("t1.isOwner", 0);
+		criteria.add(isOwnerCriterion);
+	}
 	
 	//Join County
 	criteria.createAlias("county", "c1");
 	
 	if(role.equals("ROLE_SUPER_ADMIN")){
 		
-	}else if(role.equals("ROLE_CALLER_ADMIN")||role.equals("ROLE_CALLER")){
+	}else if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
 		
 		criteria.createAlias("patientCallerAdminMaps", "t2", Criteria.LEFT_JOIN,Restrictions.eq("t2.id.callerAdminId",callerPatientSearchForm.getCallerAdminId()));
 		
@@ -639,7 +658,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 			}
 		}
 		
-	}else if(role.equals("ROLE_LAWYER_ADMIN")||role.equals("ROLE_LAWYER")){
+	}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
 		
 		criteria.createAlias("patientLawyerAdminMaps", "t2", Criteria.LEFT_JOIN,Restrictions.eq("t2.id.lawyerAdminId", callerPatientSearchForm.getLawyerAdminId()));		
 				
@@ -743,7 +762,14 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	projectionList.add(Projections.property("t1.isRunnerReport"),"isRunnerReportPatient");
 	projectionList.add(Projections.property("cr.runnerReportAddedDate"),"runnerReportAddedDate");
 	
-	if(role.equals("ROLE_CALLER_ADMIN")||role.equals("ROLE_CALLER")){
+	// Vehicle Details
+	projectionList.add(Projections.property("t1.vehicleMake"),"vehicleMake");
+	projectionList.add(Projections.property("t1.vehicleYear"),"vehicleYear");
+	projectionList.add(Projections.property("t1.vin"),"VIN");
+	projectionList.add(Projections.property("t1.isOwner"),"isOwner");
+	projectionList.add(Projections.property("cr.vehicleCount"),"vehicleCount");
+	
+	if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
 	
 		projectionList.add(Projections.property("t2.callerAdmin.callerAdminId"),"callerAdminId");
 		projectionList.add(Projections.property("t2.caller.callerId"),"callerId");
@@ -751,7 +777,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		projectionList.add(Projections.property("c2.lastName"),"callerLastName");
 		projectionList.add(Projections.property("cl1.timeStamp"),"lastCallLogTimeStamp");
 				
-	}else if(role.equals("ROLE_LAWYER_ADMIN")||role.equals("ROLE_LAWYER")){
+	}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
 		
 		projectionList.add(Projections.property("t2.lawyerAdmin.lawyerAdminId"),"lawyerAdminId");
 		projectionList.add(Projections.property("t2.lawyer.lawyerId"),"lawyerId");

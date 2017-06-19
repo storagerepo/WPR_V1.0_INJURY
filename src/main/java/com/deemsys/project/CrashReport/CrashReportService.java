@@ -211,9 +211,9 @@ public class CrashReportService {
 	public DirectReportGroupResult searchCrashReports(CrashReportSearchForm crashReportSearchForm){
 		
 		String role=loginService.getCurrentRole();
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
 			crashReportSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
-		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
 			crashReportSearchForm.setCallerAdminId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId());
 			crashReportSearchForm.setCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
 		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){

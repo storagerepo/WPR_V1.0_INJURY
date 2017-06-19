@@ -60,7 +60,7 @@ sbAdminApp
 														}
 														case 500: {
 															alert("Please try again!");
-															window.location.href = window.location.origin+"/Injury/logout";
+														    window.location.href = window.location.origin+"/Injury/logout";
 															break;
 														}
 														default: {
@@ -901,7 +901,29 @@ sbAdminApp
 												url : '/edit-calleradmin/:callerAdminId',
 												title : 'Edit Call Center Admin',
 												roleId:2,
-											})	// Caller Admin Ends
+											}).state(
+													'dashboard.callerAdminSearchPatients',
+													{
+														templateUrl : 'views/calleradmin/caller-admin-search-patients.html',
+														url : '/callerAdminSearchPatients',
+														controller : "searchPatientsController",
+														resolve : {
+															loadMyFile : function(
+																	$ocLazyLoad) {
+
+																return $ocLazyLoad
+																		.load({
+																			name : 'sbAdminApp',
+																			files : [ 'scripts/controllers/callerAdminSearchPatientsController.js',
+																			          'components/datetime/datetimepicker.css',
+																						'components/datetime/moment.js',
+																						'components/datetime/datetimepicker.js'
+																			          ]
+																		});
+															}
+														}
+
+													})	// Caller Admin Ends
 											// Auto Manager Starts
 											.state(
 													'dashboard.automanager',
@@ -965,34 +987,31 @@ sbAdminApp
 														url : '/edit-automanager/:callerAdminId',
 														title : 'Edit Dealer Manager',
 														roleId:6,
-													})
-											.state(
-											'dashboard.callerAdminSearchPatients',
-											{
-												templateUrl : 'views/calleradmin/caller-admin-search-patients.html',
-												url : '/callerAdminSearchPatients',
-												controller : "searchPatientsController",
-												resolve : {
-													loadMyFile : function(
-															$ocLazyLoad) {
+													}).state(
+															'dashboard.autoDealerVehicleSearch',
+															{
+																templateUrl : 'views/vehicle/auto-dealer-vehicle-search.html',
+																url : '/autoDealerVehicleSearch',
+																controller : "AutoDealerVehicleSearchController",
+																resolve : {
+																	loadMyFile : function(
+																			$ocLazyLoad) {
 
-														return $ocLazyLoad
-																.load({
-																	name : 'sbAdminApp',
-																	files : [ 'scripts/controllers/callerAdminSearchPatientsController.js',
-																	          'components/datetime/datetimepicker.css',
-																				'components/datetime/moment.js',
-																				'components/datetime/datetimepicker.js'
-																	          ]
-																});
-													}
-												}
+																		return $ocLazyLoad
+																				.load({
+																					name : 'sbAdminApp',
+																					files : [ 'scripts/controllers/autoDealerVehicleSearchController.js',
+																					          'components/datetime/datetimepicker.css',
+																								'components/datetime/moment.js',
+																								'components/datetime/datetimepicker.js'
+																					          ]
+																				});
+																	}
+																}
 
-											})
-									// Caller Admin Ends
-
-									// Lawyers starts
-									.state(
+												})// Auto Manager Ends
+												// Lawyers starts
+										    .state(
 											'dashboard.Lawyer',
 											{
 												resolve : {

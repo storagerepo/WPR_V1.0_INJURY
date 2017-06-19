@@ -27,6 +27,10 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
 	var directReportStatus="-1";
 	
+	// Vehicle Search
+	var vehicleMake="";
+	var vehicleYear="";
+	
 	// Constant
 	var maxRecordsDownload=100000;
 	this.getMaxRecordsDownload=function(){
@@ -248,6 +252,21 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		directReportStatus=directReportStatusInput;
 	};
 	
+	// Vehicle Make
+	this.getVehicleMake=function(){
+		return vehicleMake;
+	};
+	this.setVehicleMake=function(vehicleMakeInput){
+		vehicleMake=vehicleMakeInput;
+	};
+	
+	// Vehicle Year
+	this.getVehicleYear=function(){
+		return vehicleYear;
+	};
+	this.setVehicleYear=function(vehicleYearInput){
+		vehicleYear=vehicleYearInput;
+	};
 	// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
 	this.spiltAndSwapName=function(patientName){
 		var swapName="";
@@ -312,7 +331,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		tier=[{id:1},{id:2},{id:3},{id:4},{id:5}];
 		crashToDate="";
 		localReportNumber="";
-		reportingAgency="";
+		reportingAgency=[];
 		patientName="";
 		age=[{id:1},{id:2},{id:4}];
 		lAdminAge=[{id:1}];
@@ -330,6 +349,8 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		isRunnerReport=0;
 		damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
 		directReportStatus="-1";
+		vehicleMake="";
+		vehicleYear="";
 		return true;
 	};
 	

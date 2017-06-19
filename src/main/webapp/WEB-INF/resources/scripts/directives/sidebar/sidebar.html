@@ -86,8 +86,8 @@
              <li ui-sref-active="active" ng-show="{{$root.isAdmin==6}}">
                 <a ui-sref="dashboard.autoDealer"><span ng-cloak class="dealer-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Dealer</a>
             </li>
-            <li ui-sref-active="active" ng-show="{{$root.isAdmin==6}}">
-                <a ui-sref="dashboard.autodealer-search-vehicles"><span ng-cloak class="vehicle-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Vehicles<span></span></a>
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==6||$root.isAdmin==7}}">
+                <a ui-sref="dashboard.autoDealerVehicleSearch"><span ng-cloak class="vehicle-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Vehicles<span></span></a>
             </li>
             
             <!-- Common To all -->

@@ -125,7 +125,7 @@
 <div class="col-lg-2 col-md-6"></div>
  <div class="col-lg-3 col-md-6">
     <div ng-cloak class="panel panel-primary" style="min-height:300px;">
-     <a ng-cloak ui-sref="dashboard.LawyerAdminSearchPatients">
+     <a ng-cloak ui-sref="dashboard.autoDealerVehicleSearch">
         <div class="panel-heading" style="min-height:300px;">
             <div class="row">
                 <div class="col-xs-12 text-center vehicle-icon" style="min-height:180px;">
@@ -134,7 +134,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <div ng-cloak class="huge">{{numberPatients}}</div>
+                    <div ng-cloak class="huge">{{numberOfVehicles}}</div>
                     <div ng-cloak>Vehicles</div>
                 </div>
             </div>
@@ -151,7 +151,7 @@
  </div>  
   
  <!--  Auto Dealer Dashboard Starts -->
-  <stats ng-cloak number="{{numberPatients}}" comments="Vehicles" colour="primary" type="vehicle-icon" goto="dashboard.LawyerSearchPatients" ng-show="{{isAdmin==7}}"></stats>
+  <stats ng-cloak number="{{numberOfVehicles}}" comments="Vehicles" colour="primary" type="vehicle-icon" goto="dashboard.autoDealerVehicleSearch" ng-show="{{isAdmin==7}}"></stats>
  <!--  Auto Dealer Dashboard Ends -->
 </div>
       

@@ -29,6 +29,10 @@ public class CallerPatientSearchForm {
 	private Integer[] damageScale; 
 	private Integer directReportStatus;
 	
+	// Vehicle Search
+	private String vehicleMake;
+	private String vehicleYear;
+	
 	public Integer getCallerAdminId() {
 		return callerAdminId;
 	}
@@ -192,10 +196,24 @@ public class CallerPatientSearchForm {
 	public void setDirectReportStatus(Integer directReportStatus) {
 		this.directReportStatus = directReportStatus;
 	}
+	
+	public String getVehicleMake() {
+		return vehicleMake;
+	}
+	public void setVehicleMake(String vehicleMake) {
+		this.vehicleMake = vehicleMake;
+	}
+	public String getVehicleYear() {
+		return vehicleYear;
+	}
+	public void setVehicleYear(String vehicleYear) {
+		this.vehicleYear = vehicleYear;
+	}
+	
 public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 			Integer tier[], Integer patientStatus, String crashFromDate,Integer numberOfDays,
 			String crashToDate, String localReportNumber,String[] reportingAgency,String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived,String archivedFromDate, String archivedToDate,
-			Integer isRunnerReport,Integer[] damageScale,Integer directReportStatus) {
+			Integer isRunnerReport,Integer[] damageScale,Integer directReportStatus,String vehicleMake, String vehicleYear) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.countyId = countyId;
@@ -222,6 +240,8 @@ public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 		this.isRunnerReport=isRunnerReport;
 		this.damageScale=damageScale;
 		this.directReportStatus=directReportStatus;
+		this.vehicleMake = vehicleMake;
+		this.vehicleYear = vehicleYear;
 	}
 	public CallerPatientSearchForm() {
 		super();

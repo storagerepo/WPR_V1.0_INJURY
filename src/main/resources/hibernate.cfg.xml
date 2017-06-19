@@ -41,5 +41,6 @@
          <mapping class="com.deemsys.project.entity.DirectReportCallerAdminMap" />
         <mapping class="com.deemsys.project.entity.DirectReportLawyerAdminMap" />
         <mapping class="com.deemsys.project.entity.PoliceAgency" />
+        <mapping class="com.deemsys.project.entity.ReportingAgency" />
     </session-factory>
 </hibernate-configuration>
