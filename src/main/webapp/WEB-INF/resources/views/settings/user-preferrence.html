@@ -128,7 +128,8 @@
       <p>This format, exports the Crash Reports into Excel, in the exact same format as the original one. The exported report will contain all the fields, in the order, as present in the original Crash Report.
       </p>
       <legend><p class="font-for-subheading">Fields in order of appearance in Excel</p></legend>
-							<div class="col-md-4">
+      					<div class="col-md-12" ng-show="$root.isAdmin!=6">
+      						<div class="col-md-4">
 								<div class="margin-top-10">1. LOCAL REPORT NUMBER</div>
 								<div class="margin-top-10">2. CRASH SEVERITY</div>
 								<div class="margin-top-10">3. REPORTING AGENCY NAME</div>
@@ -160,6 +161,31 @@
 								<div class="margin-top-10">25. VICTIM POLICY NUMBER</div>
 								<div class="margin-top-10">26. TIER</div>
 							</div>
+     					</div>
+						<div class="col-md-12" ng-show="$root.isAdmin==6">
+      						<div class="col-md-4">
+								<div class="margin-top-10">1. NAME: LAST FIRST MIDDLE</div>
+								<div class="margin-top-10">2. GENDER</div>
+								<div class="margin-top-10">3. DATE OF BIRTH</div>
+								<div class="margin-top-10">4. AGE</div>
+								<div class="margin-top-10">5. CONTACT PHONE - INCLUDE AREA CODE</div>
+								<div class="margin-top-10">6. ADDRESS CITY STATE ZIP</div>
+							</div>
+							<div class="col-md-4">
+								<div class="margin-top-10">7. CRASH DATE</div>
+								<div class="margin-top-10">8. DAMAGE SCALE</div>
+								<div class="margin-top-10">9. VEHICLE MAKE</div>
+								<div class="margin-top-10">10. VEHICLE YEAR</div>
+								<div class="margin-top-10">11. VIN</div>
+								<div class="margin-top-10">12. COUNTY</div>
+							</div>
+							<div class="col-md-4">
+								<div class="margin-top-10">13. ATFAULT INSURANCE COMPANY</div>
+								<div class="margin-top-10">14. ATFAULT POLICY NUMBER</div>
+								<div class="margin-top-10">15. VICTIM INSURANCE COMPANY</div>
+								<div class="margin-top-10">16. VICTIM POLICY NUMBER</div>
+							</div>
+     					</div>
 	</div>
     </div>
     <div id="customPreference" class="tab-pane fade" ng-class="{'in':prefenceTabActive==2,'active':prefenceTabActive==2}">

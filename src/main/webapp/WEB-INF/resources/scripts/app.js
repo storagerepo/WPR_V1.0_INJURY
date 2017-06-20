@@ -663,7 +663,29 @@ sbAdminApp
 													}
 												}
 
-											})
+											}).state(
+													'dashboard.SearchVehicles',
+													{
+														templateUrl : 'views/vehicle/searchvehicles.html',
+														url : '/SearchVehicles',
+														controller : "searchVehiclesController",
+														resolve : {
+															loadMyFile : function(
+																	$ocLazyLoad) {
+
+																return $ocLazyLoad
+																		.load({
+																			name : 'sbAdminApp',
+																			files : [ 'scripts/controllers/searchVehiclesController.js',
+																			          'components/datetime/datetimepicker.css',
+																						'components/datetime/moment.js',
+																						'components/datetime/datetimepicker.js'
+																			          ]
+																		});
+															}
+														}
+
+													})
 										
 											.state(
 											'dashboard.LawyerAdminSearchPatients',

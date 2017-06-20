@@ -16,6 +16,9 @@ public class ExportFieldsForm {
 	private Integer sequenceNo;
 	private String defaultValue;
 	private Integer format;
+	private Integer isCallerLawyer;
+	private Integer autoDealerSequence;
+	private Integer isAutoDealer;
 	private Integer status;
 	public Integer getFieldId() {
 		return fieldId;
@@ -53,13 +56,32 @@ public class ExportFieldsForm {
 	public void setFormat(Integer format) {
 		this.format = format;
 	}
+	public Integer getIsCallerLawyer() {
+		return isCallerLawyer;
+	}
+	public void setIsCallerLawyer(Integer isCallerLawyer) {
+		this.isCallerLawyer = isCallerLawyer;
+	}
+	public Integer getAutoDealerSequence() {
+		return autoDealerSequence;
+	}
+	public void setAutoDealerSequence(Integer autoDealerSequence) {
+		this.autoDealerSequence = autoDealerSequence;
+	}
+	public Integer getIsAutoDealer() {
+		return isAutoDealer;
+	}
+	public void setIsAutoDealer(Integer isAutoDealer) {
+		this.isAutoDealer = isAutoDealer;
+	}
 	public Integer getStatus() {
 		return status;
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public ExportFieldsForm(Integer fieldId, String fieldName, Integer isCustom, Integer sequenceNo, String defaultValue, Integer format, Integer status) {
+	public ExportFieldsForm(Integer fieldId, String fieldName, Integer isCustom, Integer sequenceNo, String defaultValue, Integer format,
+			Integer isCallerLawyer, Integer autoDealerSequence, Integer isAutoDealer, Integer status) {
 		super();
 		this.fieldId = fieldId;
 		this.fieldName = fieldName;
@@ -67,6 +89,9 @@ public class ExportFieldsForm {
 		this.sequenceNo = sequenceNo;
 		this.defaultValue = defaultValue;
 		this.format = format;
+		this.isCallerLawyer = isCallerLawyer;
+		this.autoDealerSequence = autoDealerSequence;
+		this.isAutoDealer = isAutoDealer;
 		this.status = status;
 	}
 	public ExportFieldsForm() {

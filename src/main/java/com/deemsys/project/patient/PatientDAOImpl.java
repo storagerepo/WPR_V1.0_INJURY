@@ -582,14 +582,13 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 			Criterion vehicleYearCriterion=Restrictions.like("t1.vehicleYear", callerPatientSearchForm.getVehicleYear(),MatchMode.ANYWHERE);
 			criteria.add(vehicleYearCriterion);
 		}
-		// Is Owner Criterion 1 - Vehicle Owner
-		Criterion isOwnerCriterion=Restrictions.eq("t1.isOwner", 1);
-		criteria.add(isOwnerCriterion);
-	}else if(!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
-		// Is Owner Criterion 0 - Patients
-		Criterion isOwnerCriterion=Restrictions.eq("t1.isOwner", 0);
-		criteria.add(isOwnerCriterion);
+		// Is Owner Criterion 
+		
 	}
+	
+	// Is Owner Criterion 0 - Patients 1 - Vehicle Owner
+	Criterion isOwnerCriterion=Restrictions.eq("t1.isOwner", callerPatientSearchForm.getIsOwner());
+	criteria.add(isOwnerCriterion);
 	
 	//Join County
 	criteria.createAlias("county", "c1");

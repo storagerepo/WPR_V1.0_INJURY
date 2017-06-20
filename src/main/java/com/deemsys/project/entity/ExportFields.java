@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 16 Jun, 2017 12:16:19 PM by Hibernate Tools 3.4.0.CR1
+// Generated 20 Jun, 2017 11:39:16 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +26,9 @@ public class ExportFields implements java.io.Serializable {
 	private Integer isCustom;
 	private String defaultValue;
 	private Integer format;
+	private Integer isCallerLawyer;
+	private Integer autoDealerSequence;
+	private Integer isAutoDealer;
 	private Integer status;
 	private Set<UserExportPreferences> userExportPreferenceses = new HashSet<UserExportPreferences>(
 			0);
@@ -34,13 +37,17 @@ public class ExportFields implements java.io.Serializable {
 	}
 
 	public ExportFields(String fieldName, Integer sequenceNo, Integer isCustom,
-			String defaultValue, Integer format, Integer status,
+			String defaultValue, Integer format, Integer isCallerLawyer,
+			Integer autoDealerSequence, Integer isAutoDealer, Integer status,
 			Set<UserExportPreferences> userExportPreferenceses) {
 		this.fieldName = fieldName;
 		this.sequenceNo = sequenceNo;
 		this.isCustom = isCustom;
 		this.defaultValue = defaultValue;
 		this.format = format;
+		this.isCallerLawyer = isCallerLawyer;
+		this.autoDealerSequence = autoDealerSequence;
+		this.isAutoDealer = isAutoDealer;
 		this.status = status;
 		this.userExportPreferenceses = userExportPreferenceses;
 	}
@@ -99,6 +106,33 @@ public class ExportFields implements java.io.Serializable {
 
 	public void setFormat(Integer format) {
 		this.format = format;
+	}
+
+	@Column(name = "is_caller_lawyer")
+	public Integer getIsCallerLawyer() {
+		return this.isCallerLawyer;
+	}
+
+	public void setIsCallerLawyer(Integer isCallerLawyer) {
+		this.isCallerLawyer = isCallerLawyer;
+	}
+
+	@Column(name = "auto_dealer_sequence")
+	public Integer getAutoDealerSequence() {
+		return this.autoDealerSequence;
+	}
+
+	public void setAutoDealerSequence(Integer autoDealerSequence) {
+		this.autoDealerSequence = autoDealerSequence;
+	}
+
+	@Column(name = "is_auto_dealer")
+	public Integer getIsAutoDealer() {
+		return this.isAutoDealer;
+	}
+
+	public void setIsAutoDealer(Integer isAutoDealer) {
+		this.isAutoDealer = isAutoDealer;
 	}
 
 	@Column(name = "status")

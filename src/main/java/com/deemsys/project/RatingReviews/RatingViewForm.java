@@ -3,8 +3,10 @@ package com.deemsys.project.RatingReviews;
 public class RatingViewForm {
 	private String callCentersAverageRating;
 	private String lawyersAverageRating;
+	private String dealersAverageRating;
 	private Integer numberOfCallCentersRating;
 	private Integer numberOfLawyersRating;
+	private Integer numberOfDealersRating;
 	private Integer totalNumberOfRating;
 	public String getCallCentersAverageRating() {
 		return callCentersAverageRating;
@@ -18,6 +20,12 @@ public class RatingViewForm {
 	public void setLawyersAverageRating(String lawyersAverageRating) {
 		this.lawyersAverageRating = lawyersAverageRating;
 	}
+	public String getDealersAverageRating() {
+		return dealersAverageRating;
+	}
+	public void setDealersAverageRating(String dealersAverageRating) {
+		this.dealersAverageRating = dealersAverageRating;
+	}
 	public Integer getNumberOfCallCentersRating() {
 		return numberOfCallCentersRating;
 	}
@@ -30,6 +38,12 @@ public class RatingViewForm {
 	public void setNumberOfLawyersRating(Integer numberOfLawyersRating) {
 		this.numberOfLawyersRating = numberOfLawyersRating;
 	}
+	public Integer getNumberOfDealersRating() {
+		return numberOfDealersRating;
+	}
+	public void setNumberOfDealersRating(Integer numberOfDealersRating) {
+		this.numberOfDealersRating = numberOfDealersRating;
+	}
 	public Integer getTotalNumberOfRating() {
 		return totalNumberOfRating;
 	}
@@ -37,13 +51,15 @@ public class RatingViewForm {
 		this.totalNumberOfRating = totalNumberOfRating;
 	}
 	public RatingViewForm(String callCentersAverageRating,
-			String lawyersAverageRating, Integer numberOfCallCentersRating,
-			Integer numberOfLawyersRating, Integer totalNumberOfRating) {
+			String lawyersAverageRating, String dealersAverageRating, Integer numberOfCallCentersRating,
+			Integer numberOfLawyersRating, Integer numberOfDealersRating, Integer totalNumberOfRating) {
 		super();
 		this.callCentersAverageRating = callCentersAverageRating;
 		this.lawyersAverageRating = lawyersAverageRating;
+		this.dealersAverageRating = dealersAverageRating;
 		this.numberOfCallCentersRating = numberOfCallCentersRating;
 		this.numberOfLawyersRating = numberOfLawyersRating;
+		this.numberOfDealersRating = numberOfDealersRating;
 		this.totalNumberOfRating = totalNumberOfRating;
 	}
 	public RatingViewForm() {

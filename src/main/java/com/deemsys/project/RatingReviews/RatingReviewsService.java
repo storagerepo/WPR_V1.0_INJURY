@@ -141,6 +141,7 @@ public class RatingReviewsService {
 		// Average Rating
 		Double callerAdminAverageRating=0.00;
 		Double lawyerAdminAverageRating=0.00;
+		Double dealerManagerAverageRating=0.00;
 		
 		BigDecimal callerAdminRating=new BigDecimal(0);
 		BigDecimal lawyerAdminRating=new BigDecimal(0);
@@ -180,8 +181,11 @@ public class RatingReviewsService {
 		if(lawyerAdminReviewCount>0){
 			lawyerAdminAverageRating=lawyerAdminRating.doubleValue()/lawyerAdminReviewCount.doubleValue();	
 		}
+		if(dealerManagerReviewCount>0){
+			dealerManagerAverageRating=dealerManagerRating.doubleValue()/dealerManagerReviewCount.doubleValue();
+		}
 	
-		ratingViewForm=new RatingViewForm(String.format( "%.1f", callerAdminAverageRating), String.format( "%.1f", lawyerAdminAverageRating), callerAdminReviewCount, lawyerAdminReviewCount, (callerAdminReviewCount+lawyerAdminReviewCount));
+		ratingViewForm=new RatingViewForm(String.format( "%.1f", callerAdminAverageRating), String.format( "%.1f", lawyerAdminAverageRating), String.format( "%.1f", dealerManagerAverageRating), callerAdminReviewCount, lawyerAdminReviewCount, dealerManagerReviewCount, (callerAdminReviewCount+lawyerAdminReviewCount+dealerManagerReviewCount));
 		return ratingViewForm;
 	}
 

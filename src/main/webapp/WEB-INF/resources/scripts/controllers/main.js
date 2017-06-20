@@ -87,12 +87,12 @@ adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHa
 			   requestHandler.getRequest("CAdmin/getNumberOfCallers.json","").then( function(response) {
 				   $scope.numberOfDealers=response.data.numberOfCallers;
 				     });
-			   requestHandler.getRequest("Patient/getNumberOfPatients.json","").then( function(response) {
-				   $scope.numberOfVehicles= response.data.numberOfPatients;
+			   requestHandler.getRequest("Patient/getNumberOfVehicles.json","").then( function(response) {
+				   $scope.numberOfVehicles= response.data.numberOfVehicles;
 			   });
 		   } else if($rootScope.isAdmin==7){
-			   requestHandler.getRequest("Caller/getNumberOfAssignedPatients.json","").then( function(response) {
-				   $scope.numberOfVehicles= response.data.numberOfAssignedPatients;
+			   requestHandler.getRequest("Caller/getNumberOfAssignedVehicles.json","").then( function(response) {
+				   $scope.numberOfVehicles= response.data.numberOfAssignedVehicles;
 			   });
 		   }
 		   

@@ -32,6 +32,7 @@ public class CallerPatientSearchForm {
 	// Vehicle Search
 	private String vehicleMake;
 	private String vehicleYear;
+	private Integer isOwner;
 	
 	public Integer getCallerAdminId() {
 		return callerAdminId;
@@ -209,11 +210,17 @@ public class CallerPatientSearchForm {
 	public void setVehicleYear(String vehicleYear) {
 		this.vehicleYear = vehicleYear;
 	}
+	public Integer getIsOwner() {
+		return isOwner;
+	}
+	public void setIsOwner(Integer isOwner) {
+		this.isOwner = isOwner;
+	}
 	
-public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
+	public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 			Integer tier[], Integer patientStatus, String crashFromDate,Integer numberOfDays,
 			String crashToDate, String localReportNumber,String[] reportingAgency,String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived,String archivedFromDate, String archivedToDate,
-			Integer isRunnerReport,Integer[] damageScale,Integer directReportStatus,String vehicleMake, String vehicleYear) {
+			Integer isRunnerReport,Integer[] damageScale,Integer directReportStatus,String vehicleMake, String vehicleYear, Integer isOwner) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.countyId = countyId;
@@ -242,6 +249,7 @@ public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 		this.directReportStatus=directReportStatus;
 		this.vehicleMake = vehicleMake;
 		this.vehicleYear = vehicleYear;
+		this.isOwner = isOwner;
 	}
 	public CallerPatientSearchForm() {
 		super();

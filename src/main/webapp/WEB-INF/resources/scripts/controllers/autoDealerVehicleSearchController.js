@@ -257,7 +257,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 	searchService.setCrashToDate($scope.vehicle.crashToDate);
 	searchService.setCallerId($scope.vehicle.callerId);
 	searchService.setPatientName($scope.vehicle.patientName);
-	searchService.setAge($scope.vehicle.age);
+	searchService.setDealerAge($scope.vehicle.age);
 	searchService.setLocalReportNumber($scope.vehicle.localReportNumber);
 	searchService.setAddedOnFromDate($scope.vehicle.addedOnFromDate);
 	searchService.setAddedOnToDate($scope.vehicle.addedOnToDate);
@@ -284,7 +284,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 			searchService.setArchivedFromDate($scope.vehicle.archivedFromDate);
 			searchService.setArchivedToDate($scope.vehicle.archivedToDate);
 		}
-		searchService.setAge($scope.vehicle.age);
+		searchService.setDealerAge($scope.vehicle.age);
 		searchService.setPatientStatus($scope.vehicle.patientStatus);
 		searchService.setDirectReportStatus($scope.vehicle.directReportStatus);
 		$scope.oldPageNumber=$scope.vehicle.pageNumber;
@@ -723,20 +723,21 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 
 		//Initialize DropDown
 			
-		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
+		$scope.defaultAge=[{id:1,label:"Adults"},{id:4,label:"Not Known"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
 		
 		$scope.vehicle={};
 		$scope.totalRecords=0;
 		$scope.vehicle.countyId=[];
 		$scope.vehicle.damageScale=[];
+		$scope.vehicle.isOwner=1;
 		angular.copy(searchService.getCounty(),$scope.vehicle.countyId);
 		angular.copy(searchService.getDamageScale(),$scope.vehicle.damageScale);
 		$scope.vehicle.crashFromDate=searchService.getCrashFromDate();
 		$scope.vehicle.crashToDate=searchService.getCrashToDate();
 		$scope.vehicle.localReportNumber=searchService.getLocalReportNumber();
 		$scope.vehicle.patientName=searchService.getPatientName();
-		$scope.vehicle.age=searchService.getAge();
+		$scope.vehicle.age=searchService.getDealerAge();
 		$scope.vehicle.callerId=searchService.getCallerId();
 		$scope.vehicle.phoneNumber=searchService.getPhoneNumber();
 		$scope.vehicle.itemsPerPage=searchService.getItemsPerPage();

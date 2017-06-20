@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.ExportFields;
+import com.deemsys.project.login.LoginService;
 /**
  * 
  * @author Deemsys
@@ -27,18 +29,25 @@ public class ExportFieldsService {
 	@Autowired
 	ExportFieldsDAO exportFieldsDAO;
 	
+	@Autowired
+	LoginService loginService;
+	
 	//Get All Entries
 	public List<ExportFieldsForm> getExportFieldsList()
 	{
 		List<ExportFieldsForm> exportFieldsForms=new ArrayList<ExportFieldsForm>();
 		
 		List<ExportFields> exportFieldss=new ArrayList<ExportFields>();
-		
-		exportFieldss=exportFieldsDAO.getAll();
+		String role=loginService.getCurrentRole();
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+			exportFieldss=exportFieldsDAO.getCallerLawyerExportFields();
+		}else if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+			exportFieldss=exportFieldsDAO.getAutoDealerAllFields();
+		}
 		
 		for (ExportFields exportFields : exportFieldss) {
 			//TODO: Fill the List
-			exportFieldsForms.add(new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getSequenceNo(), exportFields.getDefaultValue(), exportFields.getFormat(), exportFields.getStatus()));
+			exportFieldsForms.add(new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getSequenceNo(), exportFields.getDefaultValue(), exportFields.getFormat(), exportFields.getIsCallerLawyer(), exportFields.getAutoDealerSequence(), exportFields.getIsAutoDealer(), exportFields.getStatus()));
 		}
 		
 		return exportFieldsForms;
@@ -54,7 +63,7 @@ public class ExportFieldsService {
 		//TODO: Convert Entity to Form
 		//Start
 		
-		ExportFieldsForm exportFieldsForm=new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getSequenceNo(), exportFields.getDefaultValue(), exportFields.getFormat(), exportFields.getStatus());
+		ExportFieldsForm exportFieldsForm=new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getSequenceNo(), exportFields.getDefaultValue(), exportFields.getFormat(), exportFields.getIsCallerLawyer(), exportFields.getAutoDealerSequence(), exportFields.getIsAutoDealer(), exportFields.getStatus());
 		
 		//End
 		
@@ -67,12 +76,17 @@ public class ExportFieldsService {
 		List<ExportFieldsForm> exportFieldsForms=new ArrayList<ExportFieldsForm>();
 		
 		List<ExportFields> exportFieldss=new ArrayList<ExportFields>();
+		String role=loginService.getCurrentRole();
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+			exportFieldss=exportFieldsDAO.getStandardExportFields();
+		}else if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+			exportFieldss=exportFieldsDAO.getAutoDealerStandardExportFields();
+		}
 		
-		exportFieldss=exportFieldsDAO.getStandardExportFields();
 		
 		for (ExportFields exportFields : exportFieldss) {
 			//TODO: Fill the List
-			exportFieldsForms.add(new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getSequenceNo(), exportFields.getDefaultValue(), exportFields.getFormat(), exportFields.getStatus()));
+			exportFieldsForms.add(new ExportFieldsForm(exportFields.getFieldId(), exportFields.getFieldName(), exportFields.getIsCustom(), exportFields.getSequenceNo(), exportFields.getDefaultValue(), exportFields.getFormat(), exportFields.getIsCallerLawyer(), exportFields.getAutoDealerSequence(), exportFields.getIsAutoDealer(), exportFields.getStatus()));
 		}
 		
 		return exportFieldsForms;
@@ -85,7 +99,7 @@ public class ExportFieldsService {
 		
 		//Logic Starts
 		
-		ExportFields exportFields=new ExportFields(exportFieldsForm.getFieldName(), exportFieldsForm.getSequenceNo(), exportFieldsForm.getIsCustom(), exportFieldsForm.getDefaultValue(), exportFieldsForm.getFormat(), exportFieldsForm.getStatus(), null);
+		ExportFields exportFields=new ExportFields(exportFieldsForm.getFieldName(), exportFieldsForm.getSequenceNo(), exportFieldsForm.getIsCustom(), exportFieldsForm.getDefaultValue(), exportFieldsForm.getFormat(), exportFieldsForm.getIsCallerLawyer(), exportFieldsForm.getAutoDealerSequence(), exportFieldsForm.getIsAutoDealer(), exportFieldsForm.getStatus(), null);
 		exportFields.setFieldId(exportFieldsForm.getFieldId());
 		//Logic Ends
 		
@@ -101,7 +115,7 @@ public class ExportFieldsService {
 		
 		//Logic Starts
 		
-		ExportFields exportFields=new ExportFields(exportFieldsForm.getFieldName(), exportFieldsForm.getSequenceNo(), exportFieldsForm.getIsCustom(), exportFieldsForm.getDefaultValue(), exportFieldsForm.getFormat(), exportFieldsForm.getStatus(), null);
+		ExportFields exportFields=new ExportFields(exportFieldsForm.getFieldName(), exportFieldsForm.getSequenceNo(), exportFieldsForm.getIsCustom(), exportFieldsForm.getDefaultValue(), exportFieldsForm.getFormat(), exportFieldsForm.getIsCallerLawyer(), exportFieldsForm.getAutoDealerSequence(), exportFieldsForm.getIsAutoDealer(), exportFieldsForm.getStatus(), null);
 		
 		//Logic Ends
 		
@@ -116,7 +130,7 @@ public class ExportFieldsService {
 		
 		//Logic Starts
 		
-		ExportFields exportFields=new ExportFields(exportFieldsForm.getFieldName(), exportFieldsForm.getSequenceNo(), exportFieldsForm.getIsCustom(), exportFieldsForm.getDefaultValue(), exportFieldsForm.getFormat(), exportFieldsForm.getStatus(), null);
+		ExportFields exportFields=new ExportFields(exportFieldsForm.getFieldName(), exportFieldsForm.getSequenceNo(), exportFieldsForm.getIsCustom(), exportFieldsForm.getDefaultValue(), exportFieldsForm.getFormat(), exportFieldsForm.getIsCallerLawyer(), exportFieldsForm.getAutoDealerSequence(), exportFieldsForm.getIsAutoDealer(), exportFieldsForm.getStatus(), null);
 		exportFields.setFieldId(exportFieldsForm.getFieldId());
 		//Logic Ends
 		

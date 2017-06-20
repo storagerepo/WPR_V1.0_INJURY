@@ -39,6 +39,12 @@ adminApp.controller('RatingsReviewsController',function($scope,$http,requestHand
 				}else if(value.role=='Lawyer'){
 					value.roleId=4;
 				}
+				else if(value.role=='Dealer Manager'){
+					value.roleId=5;
+				}
+				else if(value.role=='Dealer'){
+					value.roleId=6;
+				}
 			});
 			$scope.enableViewAll=true;
 		});

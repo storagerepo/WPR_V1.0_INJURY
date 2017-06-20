@@ -457,6 +457,33 @@ public class ExportExcelView extends AbstractExcelView {
 			}
 			
 			break;
+		case 35:
+			// Vehicle Make
+			if(patientSearchList.getVehicleMake()!=null){
+				value=patientSearchList.getVehicleMake();
+			}else{
+				value="";
+			}
+			
+			break;
+		case 36:
+			// Vehicle Make
+			if(patientSearchList.getVehicleYear()!=null){
+				value=patientSearchList.getVehicleYear();
+			}else{
+				value="";
+			}
+			
+			break;
+		case 37:
+			// Vehicle Make
+			if(patientSearchList.getVIN()!=null){
+				value=patientSearchList.getVIN();
+			}else{
+				value="";
+			}
+			
+			break;
 		default:
 			break;
 		}

@@ -1,0 +1,679 @@
+<link rel="stylesheet"
+	href="resources/components/datetime/datetimepicker.css"></link>
+<script src="resources/components/datetime/datetimepicker.js"></script>
+<script src="resources/components/datetime/moment.js"></script>
+<div ng-cloak>
+	<div class="row">
+		<div class="col-lg-12">
+		<!-- 	<div class="form-group passenger-type pull-right margin-top35">
+				<label>Report Type:</label>
+				<div class="btn-group">
+					<label class="btn btn-default" btn-radio="0"
+						ng-model="vehicle.isRunnerReport" ng-change="secoundarySearchPatient()" ng-disabled="isLoading"> Normal <span
+						class="glyphicon glyphicon-file"></span>
+					</label> <label class="btn btn-default" btn-radio="1"
+						ng-model="patient.isRunnerReport" ng-disabled="isLoading"> Runner <span
+						class="glyphicon glyphicon-file"></span>
+					</label>
+					<label class="btn btn-default" btn-radio="3"
+					ng-model="vehicle.isRunnerReport" ng-change="secoundarySearchPatient()" ng-disabled="isLoading"> Scanned <span
+					class="glyphicon glyphicon-file"></span>
+				</label>
+				</div>
+			</div> -->
+			<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
+			<h2 class="page-header">Search Vehicles</h2>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+
+	<div class="row">
+	<form name="vehicleSearchForm" novalidate ng-cloak>
+			<div class="col-md-12 no-padding">
+					<div class="col-md-5ths no-padding">
+					<div class="col-md-12">
+						<label>County</label><span class="error-class"
+							ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least
+							one county</span>
+					</div>
+					<div class="col-md-12">
+						<div ng-dropdown-multiselect="" options="countylist"
+							selected-model="vehicle.countyId"
+							extra-settings="{idProp:'id',displayProp:'name',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties'}"></div>
+					</div>
+				</div>
+				<div class="col-md-5ths">
+					<label>Crash From Date</label>
+					<div class="input-group">
+						<input type="text" name="crashFromDate" id="CrashFromDate"
+							class="form-control input-sm" ng-model="vehicle.crashFromDate"
+							ng-change="checkCustomDate()"
+							placeholder="Crash From Date"> <span
+							class="input-group-addon white-color-bg"> <span
+							class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+				</div>
+
+			<!-- 	<div class="col-md-5ths">
+					<label>Number of Days</label> <select class="form-control input-sm"
+						ng-model="patient.numberOfDays" name="numberOfDays"
+						ng-change="checkCustomDate(patient.numberOfDays)">
+						<option value="1">1</option>
+						<option value="7">7</option>
+						<option value="15">15</option>
+						<option value="30">30</option>
+						<option value="0">Custom</option>
+					</select>
+				</div> -->
+				<div class="col-md-5ths">
+					<label>Crash To Date</label>
+					<div class="input-group">
+						<input type="text" name="crashToDate" id="CrashToDate"
+							class="form-control input-sm" ng-model="vehicle.crashToDate"
+							placeholder="Crash To Date" ng-disabled="disableCustom">
+						<span class="input-group-addon white-color-bg"> <span
+							class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+					<span style="color: red" ng-if="crashToRequired==true">Please
+						Enter Crash To Date</span>
+				</div>
+				<div class="col-md-5ths">
+					<label>Added On From Date</label>
+					<div class="input-group">
+						<input type="text" name="addedOnFromDate" id="AddedFromDate"
+							class="form-control input-sm" ng-model="vehicle.addedOnFromDate"
+							ng-change="checkAddedOnToDate()" placeholder="Added On From Date">
+						<span class="input-group-addon white-color-bg"> <span
+							class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+				</div>
+				<div class="col-md-5ths">
+					<label>Added On To Date</label>
+					<div class="input-group">
+						<input type="text" name="addedOnToDate" id="AddedToDate"
+							class="form-control input-sm" ng-model="vehicle.addedOnToDate"
+							ng-disabled="isSelectedAddedFromDate"
+							placeholder="Added On To Date"> <span
+							class="input-group-addon white-color-bg"> <span
+							class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+					<span style="color: red" ng-if="addedToRequired==true">Please
+						Enter Added On To Date</span>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<br />
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-3ths" ng-show="vehicle.isRunnerReport!=3&&vehicle.isRunnerReport!=1">
+				<label>Reporting Agency</label> <div ng-dropdown-multiselect=""
+					options="reportingAgencyList" selected-model="vehicle.reportingAgency"
+					extra-settings="{idProp:'code',displayProp:'reportingAgencyName',smartButtonMaxItems:'0',enableSearch:true,optionClass:'multidrop-option-class',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Reporting Agency',showPreferenceOption:false}"
+					events="reportingAgencyEvents">
+					</div>
+				</div>
+				<div ng-class="patient.isRunnerReport!=3?'col-md-3ths':'col-md-5ths'" ng-show="vehicle.isRunnerReport==3">
+					<label>Local Report Number</label> <input type="text"
+						name="localReportNumber" class="form-control input-sm"
+						ng-model="patient.localReportNumber"
+						placeholder="Local Report Number">
+
+				</div>
+				<div ng-class="vehicle.isRunnerReport!=3?'col-md-3ths':'col-md-5ths'" ng-show="vehicle.isRunnerReport!=3">
+					<label>Vehicle Make</label> <input type="text"
+						name="vehicleMake" class="form-control input-sm"
+						ng-model="vehicle.vehicleMake"
+						placeholder="Vehicle Make">
+
+				</div>
+				<div ng-class="vehicle.isRunnerReport!=3?'col-md-3ths':'col-md-5ths'" ng-show="vehicle.isRunnerReport!=3">
+					<label>Vehicle Year</label> <input type="text"
+						name="vehicleYear" class="form-control input-sm"
+						ng-model="vehicle.vehicleYear"
+						placeholder="Vehicle Year">
+
+				</div>
+				
+				<div class="col-md-3ths" ng-show="vehicle.isRunnerReport!=3">
+					<label>Damage Scale</label>&nbsp;<a href=""
+						class="some-popover-link" data-placement="top"
+						data-original-title="" data-toggle="popover" title="Damage Scale"
+						data-content="<p>This combination of number & color denote <br/> the scale of damage to the related vehicle.<br/><br/><span class='badge badge-success'>1</span> - None<br/><span class='badge badge-yellow'>2</span> - Minor<br/><span class='badge badge-primary'>3</span> - Functional<br/><span class='badge badge-danger'>4</span> - Disabling<br/><span class='badge badge-default'>9</span> - Unknown</p>"><i
+						class="fa fa-info-circle"></i></a>
+					<div ng-dropdown-multiselect="" options="defaultDamageScale"
+						selected-model="vehicle.damageScale"
+						extra-settings="{smartButtonMaxItems:0,disable:vehicle.isRunnerReport==1||vehicle.isRunnerReport==3,showLegend:'true'}"></div>
+					<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select
+						at least one Damage Scale</span>
+				</div>
+				<div class="col-md-3ths" ng-show="vehicle.isRunnerReport!=3&&$root.isAdmin==6">
+					<label>Dealers</label> <select class="form-control input-sm"
+						ng-model="vehicle.callerId" ng-disabled="vehicle.isRunnerReport==3">
+						<option value="0">All</option>
+						<option value="-1">N/A</option>
+						<option ng-repeat="dealer in dealerList" value="{{dealer.callerId}}"
+							ng-selected="{{dealer.callerId == vehicle.callerId}}">{{dealer.firstName}}&nbsp;{{dealer.lastName}}</option>
+					</select>
+				</div>
+				
+				
+				<div class="col-md-2ths">
+					<label>&nbsp;</label>
+					<div>
+						<a class="btn btn-success hint--top"
+							ng-class="{'button-disable':vehicleSearchForm.$invalid}"
+							ng-disabled='vehicleSearchForm.$invalid||disableSearch'
+							ng-click="searchPatients()" data-hint="Search"><i
+							class="fa fa-search"></i></a> <a class="btn btn-danger hint--top"
+							ng-click="resetSearchData()" data-hint="Reset"><i
+							class="fa fa-undo"></i></a>
+					</div>
+				</div>
+			</div>
+		<div class="col-md-12 no-padding hr-tag-alter"></div>
+			
+		</form>
+
+	<div class="col-md-12" ng-show="vehicle.isRunnerReport!=3">
+			<table class="table table-bordered persist-area" ng-cloak>
+				<thead class="persist-header">
+					<tr>
+						<th width="2%"><input ng-change="isChecked()"
+							ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
+						<th width="13%">Client Name <br />
+						<span class="client-name">(Last, First, Middle)</span></th>
+						<th width="6%">Age</th>
+						<th width="6%">Unit / Damage</th>
+						<th width="8%">County</th>
+						<th width="10%">Reporting Agency</th>
+						<th width="8%" ng-show="$root.isAdmin==6">Dealer</th>
+						<th width="10%">Address</th>
+						<th width="5%">Make & Year</th>
+						<th width="13%">VIN</th>
+						<th width="5%">Actions</th>
+					</tr>
+					<tr>
+						<th></th>
+						<th>
+							<div class="input-group">
+								<span class="input-group-addon search" id="basic-addon2"><i
+									class="fa fa-search"></i></span> <input class="form-control"
+									type="text" ng-model="vehicle.patientName"
+									ng-change="secoundarySearchPatient()" placeholder="Name">
+							</div>
+						</th>
+						<th>
+							<div ng-dropdown-multiselect="" options="defaultAge"
+								selected-model="vehicle.age"
+								extra-settings="{smartButtonMaxItems:'0',scrollable:false,showCheckAll: false,showUncheckAll:false,disable:vehicle.isRunnerReport==1}"
+								events="ageEvents"></div>
+						</th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th ng-show="$root.isAdmin==6"></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th><a href="" ng-click="exportToExcel()"
+							class="btn btn-sm btn-export"
+							ng-disabled="exportButton || totalRecords==0" ng-show="$root.isAdmin==6"><span
+								ng-show="exportButton"><i
+									class="glyphicon glyphicon-refresh spinning"></i>&nbsp;</span>{{exportButtonText}}</a></th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="archive-group-header"
+						ng-show="vehicleSearchData[0].archivedDate!=''"
+						ng-repeat-start="resultMainData in vehicleSearchData">
+						<td colspan="1"><input
+							ng-change="selectArchiveGroup(this,'{{resultMainData.archivedDate}}')"
+							ng-model="isCheckedAllGroupArchivePatients" ng-true-value="true"
+							ng-false-value="false" type="checkbox"
+							id="{{resultMainData.archivedDate}}"></td>
+						<td colspan="11"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
+					</tr>
+					<tr ng-repeat-start="resultData in resultMainData.searchResult" ng-class="resultData.isRunnerReport==4?'group-header-back-convert':'group-header-back'">
+						<td colspan="1"><input
+							ng-change="selectGroup(this,'{{resultMainData.archivedDate}}')"
+							ng-model="isCheckedAllGroupPatients" ng-true-value="true"
+							ng-false-value="false" type="checkbox"
+							id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td>
+						<td colspan="11"><span><b>Local Report No:</b>
+								{{resultData.localReportNumber}} </span><span
+							class="badge badge-warning hint--top"
+							ng-show="resultData.isRunnerReport==2" data-hint="Runner Report">R</span>
+							<span class="badge badge-success hint--top"
+								ng-show="resultData.isRunnerReport==4&&resultData.directReportStatus==null" data-hint="Status: New">New</span>
+							<span class="badge badge-warning hint--top"
+								ng-show="resultData.isRunnerReport==4&&resultData.directReportStatus==1" data-hint="Status: Processing">Proc</span>
+							<span class="badge badge-danger hint--top"
+								ng-show="resultData.isRunnerReport==4&&resultData.directReportStatus==2" data-hint="Status: Do-Not-Call">DNC</span>
+							<span class="pull-right"><span><b>Crash
+										Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added
+										Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Vehicle
+										Count:</b></span>&nbsp;&nbsp;<span class="hint--top patient-count-circle"
+								data-hint="{{resultData.vehicleCount}} Vehicles">{{resultData.vehicleCount}}</span>&nbsp;&nbsp;&nbsp;</span></td>
+					</tr>
+					<tr
+						dir-paginate="autoDealerData in resultData.patientSearchLists|itemsPerPage:vehicle.itemsPerPage"
+						current-page="vehicle.pageNumber" total-items="totalRecords"
+						pagination-id="lawyerAdminPatientPageId">
+
+						<td><input type="checkbox" ng-change="isCheckedIndividual()"
+							ng-model="autoDealerData.selected" /></td>
+						<td><span
+							ng-if="(autoDealerData.injuries==2 || autoDealerData.injuries==3 || autoDealerData.injuries==4) && (autoDealerData.age>=18||autoDealerData.age==null)"><a
+								href="" class="hint--top redText"
+								ng-click="viewPatientModal(autoDealerData.patientId)"
+								data-hint="View Client"><span ng-show="autoDealerData.name!=null">{{autoDealerData.name}}</span><span ng-show="autoDealerData.name==null">N/A</span></a><span
+								class="redText margin-left-10 hint--top"
+								data-hint="Injuries : {{autoDealerData.injuriesName}}"><i
+									class="fa fa-arrow-up"></i></span><span
+								ng-show="autoDealerData.seatingPosition=='1'"
+								class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>
+								<span class="badge hint--top"
+								ng-show="autoDealerData.isRunnerReport==2&&autoDealerData.isRunnerReportPatient==1"
+								data-hint="Runner Report">R</span><span
+								class="badge badge-success hint--top"
+								ng-show="autoDealerData.isRunnerReport==2&&autoDealerData.isRunnerReportPatient==2"
+								data-hint="Updated Runner Report">R</span> </span> <span
+							ng-if="(autoDealerData.injuries==2 || autoDealerData.injuries==3 || autoDealerData.injuries==4) && autoDealerData.crashSeverity==2 && (autoDealerData.age<18 && autoDealerData.age!=null)"><a
+								href="" class="hint--top warningText"
+								ng-click="viewPatientModal(autoDealerData.patientId)"
+								data-hint="View Client"><span ng-show="autoDealerData.name!=null">{{autoDealerData.name}}</span><span ng-show="autoDealerData.name==null">N/A</span></a><span
+								class="redText margin-left-10 hint--top"
+								data-hint="Injuries : {{autoDealerData.injuriesName}}"><i
+									class="fa fa-arrow-up"></i></span><span
+								ng-show="autoDealerData.seatingPosition=='1'"
+								class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span><span
+								class="badge hint--top"
+								ng-show="autoDealerData.isRunnerReport==2&&autoDealerData.isRunnerReportPatient==1"
+								data-hint="Runner Report">R</span><span
+								class="badge badge-success hint--top"
+								ng-show="autoDealerData.isRunnerReport==2&&autoDealerData.isRunnerReportPatient==2"
+								data-hint="Updated Runner Report">R</span></span> <span
+							ng-if="(autoDealerData.injuries!=2 && autoDealerData.injuries!=3 && autoDealerData.injuries!=4) && (autoDealerData.age>=18||autoDealerData.age==null)"><a
+								href="" class="hint--top"
+								ng-click="viewPatientModal(autoDealerData.patientId)"
+								data-hint="View Client"><span ng-show="autoDealerData.name!=null">{{autoDealerData.name}}</span><span ng-show="autoDealerData.name==null">N/A</span></a><span
+								ng-show="autoDealerData.seatingPosition=='1'"
+								class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span><span
+								class="badge hint--top"
+								ng-show="autoDealerData.isRunnerReport==2&&autoDealerData.isRunnerReportPatient==1"
+								data-hint="Runner Report">R</span><span
+								class="badge badge-success hint--top"
+								ng-show="autoDealerData.isRunnerReport==2&&autoDealerData.isRunnerReportPatient==2"
+								data-hint="Updated Runner Report">R</span></span> <span
+							ng-if="(autoDealerData.injuries!=2 && autoDealerData.injuries!=3 && autoDealerData.injuries!=4) && (autoDealerData.age<18 && autoDealerData.age!=null)"><a
+								href="" class="hint--top warningText"
+								ng-click="viewPatientModal(autoDealerData.patientId)"
+								data-hint="View Client"><span ng-show="autoDealerData.name!=null">{{autoDealerData.name}}</span><span ng-show="autoDealerData.name==null">N/A</span></a><span
+								ng-show="autoDealerData.seatingPosition=='1'"
+								class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span><span
+								class="badge hint--top"
+								ng-show="autoDealerData.isRunnerReport==2&&autoDealerData.isRunnerReportPatient==1"
+								data-hint="Runner Report">R</span><span
+								class="badge badge-success hint--top"
+								ng-show="autoDealerData.isRunnerReport==2&&autoDealerData.isRunnerReportPatient==2"
+								data-hint="Updated Runner Report">R</span></span></td>
+						<td title="Age"><span
+							ng-show="autoDealerData.age!='' && autoDealerData.age!=null">{{autoDealerData.age}}</span><span
+							ng-show="autoDealerData.age=='' || autoDealerData.age==null">-</span></td>
+						<td title="Unit Number"><span
+							ng-show="autoDealerData.unitNumber!='' && autoDealerData.unitNumber!=null">{{autoDealerData.unitNumber}}
+								<span class="badge badge-success hint--top"
+								ng-show="autoDealerData.damageScale==1" data-hint="None">{{autoDealerData.damageScale}}</span>
+								<span class="badge badge-yellow hint--top"
+								ng-show="autoDealerData.damageScale==2" data-hint="Minor">{{autoDealerData.damageScale}}</span>
+								<span class="badge badge-primary hint--top"
+								ng-show="autoDealerData.damageScale==3" data-hint="Functional">{{autoDealerData.damageScale}}</span>
+								<span class="badge badge-danger hint--top"
+								ng-show="autoDealerData.damageScale==4" data-hint="Disabling">{{autoDealerData.damageScale}}</span>
+								<span class="badge badge-default hint--top"
+								ng-show="autoDealerData.damageScale==9" data-hint="Unknown">{{autoDealerData.damageScale}}</span>
+						</span> <span
+							ng-show="autoDealerData.unitNumber=='' || autoDealerData.unitNumber==null">-</span></td>
+						<td title="County">{{autoDealerData.county}}</td>
+						<td title="Reporting Agency">
+					<span ng-show="autoDealerData.reportingAgencyName!=''&&autoDealerData.reportingAgencyName!=null">{{autoDealerData.reportingAgencyName}}</span><span
+						ng-show="autoDealerData.reportingAgencyName==''||autoDealerData.reportingAgencyName==null">-</span></td>
+						<td title="Dealer Name" ng-show="$root.isAdmin==6"><span
+							ng-if="autoDealerData.callerLasttName==null && autoDealerData.callerLastName==null">N/A</span>{{autoDealerData.callerFirstName}}&nbsp;{{autoDealerData.callerLastName}}</td>
+
+						<td title="Address"><span
+							ng-show="autoDealerData.address!='' && autoDealerData.address!=null">{{autoDealerData.address}}</span><span
+							ng-show="autoDealerData.address=='' || autoDealerData.address==null">-</span></td>
+
+						<td><span
+							ng-show="autoDealerData.vehicleMake!='' && autoDealerData.vehicleMake!=null">
+								{{autoDealerData.vehicleMake}},</span>
+								<span ng-show="autoDealerData.vehicleYear!='' && autoDealerData.vehicleYear!=null">{{autoDealerData.vehicleYear}}</span>
+								<span
+							ng-show="(autoDealerData.vehicleMake=='' && autoDealerData.vehicleMake==null)&&(autoDealerData.vehicleYear=='' && autoDealerData.vehicleYear==null)">
+								-</span></td>
+						<td title="Status">{{autoDealerData.vin}}</td>
+						<td><a href="{{autoDealerData.crashReportFileName}}" ng-cloak
+							target="_blank" class="btn btn-xs btn-info hint--top"
+							data-hint="View Crash Report" ng-show="{{(resultData.isRunnerReport==0||resultData.isRunnerReport==1)||((resultData.isRunnerReport==4&&autoDealerData.oldFilePath==null)||(resultData.isRunnerReport==2&&autoDealerData.oldFilePath==null))}}"><i class="fa fa-file-pdf-o"></i></a>
+							<a href="" tabindex=0 ng-cloak popover-html-unsafe="<p><a href='{{autoDealerData.crashReportFileName}}' target='_blank' class='btn btn-success btn-xs'>Normal <i class='fa fa-file-pdf-o'></i></a> &nbsp;&nbsp; <a href='{{autoDealerData.oldFilePath}}' target='_blank' class='btn btn-danger btn-xs'>Scanned <i class='fa fa-file-pdf-o'></i></a></p>" popover-title="Report Type" popover-placement="top"
+						class="btn btn-xs btn-info hint--right" data-hint="View Crash Report" popover-trigger="focus" ng-show="{{(resultData.isRunnerReport==4&&autoDealerData.oldFilePath!=null)||(resultData.isRunnerReport==2&&autoDealerData.oldFilePath!=null)}}"><i class="fa fa-file-pdf-o"></i></a>
+						</td>
+					</tr>
+					<tr ng-repeat-end=""></tr>
+					<tr ng-repeat-end=""></tr>
+					<tr ng-show="totalRecords==0">
+						<td colspan="12"><center>
+								<strong>No Records Found!!!</strong>
+							</center></td>
+					</tr>
+				</tbody>
+			</table>
+			<dir-pagination-controls ng-show="totalRecords>0" max-size="5"
+				direction-links="true" boundary-links="true"
+				pagination-id="lawyerAdminPatientPageId">
+			</dir-pagination-controls>
+
+			<div class="col-md-3 pull-right no-padding">
+				<label>Number of Records</label> <select class="form-control"
+					ng-model="vehicle.itemsPerPage" ng-change="itemsPerFilter()"
+					name="itemsPerPage" id="noOfRows">
+					<option value="10">Show 10 Per Page</option>
+					<option value="25">Show 25 Per Page</option>
+					<option value="50">Show 50 Per Page</option>
+					<option value="100">Show 100 Per Page</option>
+					<option value="250">Show 250 Per Page</option>
+				</select>
+			</div>
+		</div>
+
+	<!-- Direct Runner Report  -->
+		<div class="col-md-12" ng-show="vehicle.isRunnerReport==3">
+			<table class="table table-bordered" ng-cloak>
+				<thead>
+					<tr>
+						<th width="3%"><input
+							ng-change="checkedAllDirectReport();isCleanCheckboxDirectReport()"
+							ng-model="isCheckedAllDirectReport" type="checkbox" id="checkAll"></th>
+						<th width="18%">Local Report Number</th>
+						<th width="10%">Crash Date</th>
+						<th width="15%">County</th>
+						<th width="10%">Added Date</th>
+						<th width="12%">Status</th>
+						<th width="20%" ng-show="vehicle.isArchived==1">Archived On</th>
+						<th width="15%">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="archive-group-header"
+						ng-repeat-start="directRunnerReportMain in directRunnerReportSearchData"
+						ng-show="directRunnerReportSearchData[0].archivedDate!=''">
+						<td colspan="1"><input
+							ng-change="selectDirectReportArchiveGroup(this,'{{directRunnerReportMain.archivedDate}}');isCleanCheckboxDirectReport();"
+							ng-model="isCheckedAllGroupArchiveDirectReport" type="checkbox"
+							id="{{directRunnerReportMain.archivedDate}}"></td>
+						<td colspan="7"><span><b>Archive Date: </b>{{directRunnerReportMain.archivedDate}}</span></td>
+					</tr>
+					<tr ng-show="directRunnerReportSearchData.length>0"
+						dir-paginate="directRunnerReport in directRunnerReportMain.crashReportForms|itemsPerPage:vehicle.itemsPerPage"
+						current-page="vehicle.pageNumber" total-items="totalRecords"
+						pagination-id="directRunnerReportPageId">
+						<td colspan="1"><input type="checkbox"
+							ng-change="isCleanCheckboxDirectReport()"
+							ng-model="directRunnerReport.selected"
+							ng-checked="directRunnerReport.selected"></td>
+						<td title="Local Report Number">{{directRunnerReport.localReportNumber}}</td>
+						<td title="Crash Date">{{directRunnerReport.crashDate}}</td>
+						<td title="County">{{directRunnerReport.county}}</td>
+						<td title="Added Date">{{directRunnerReport.addedDate}}</td>
+						<td title="Report Status">{{directRunnerReport.directReportStatusName}}</td>
+						<td title="Archived On" ng-show="vehicle.isArchived==1">{{directRunnerReport.archivedDateTime}}</td>
+						<td><a href="{{directRunnerReport.filePath}}" ng-cloak
+							target="_blank" class="btn btn-xs btn-info hint--top"
+							data-hint="View Crash Report"><i class="fa fa-file-pdf-o"></i></a>
+							<a href="" ng-cloak
+							ng-show={{directRunnerReport.isArchived==0||directRunnerReport.isArchived==null}}
+							ng-click="moveSingleDirectReportToArchive(directRunnerReport.crashId)"
+							class="btn btn-xs btn-success hint--top" data-hint="Archive"><i
+								class="fa fa-archive"></i></a> <a href="" ng-cloak
+							ng-show={{directRunnerReport.isArchived==1}}
+							ng-click="releaseSingleDirectReportFromArchive(directRunnerReport.crashId)"
+							class="btn btn-xs btn-danger hint--top" data-hint="Restore"><i
+								class="fa fa-share-square-o"></i></a> <a href="" ng-cloak
+							ng-click="directReportChangeStatusModal(directRunnerReport.crashId,directRunnerReport.directReportStatus)"
+							class="btn btn-xs btn-warning hint--top"
+							data-hint="Change Status"><i class="fa fa-exchange"></i></a></td>
+					</tr>
+					<tr ng-repeat-end=""></tr>
+					<tr ng-show="totalRecords==0">
+						<td colspan="8"><center>
+								<strong>No Records Found!!!</strong>
+							</center></td>
+					</tr>
+				</tbody>
+			</table>
+			<dir-pagination-controls max-size="5" direction-links="true" ng-show="totalRecords>0"
+				boundary-links="true" pagination-id="directRunnerReportPageId">
+			</dir-pagination-controls>
+			<div class="col-md-3 pull-right no-padding">
+				<label>Number of Records</label> <select class="form-control"
+					ng-model="vehicle.itemsPerPage" ng-change="itemsPerFilter()"
+					name="noOfRows" id="noOfRows">
+					<option value="10">Show 10 Per Page</option>
+					<option value="25">Show 25 Per Page</option>
+					<option value="50">Show 50 Per Page</option>
+					<option value="100">Show 100 Per Page</option>
+				</select>
+			</div>
+		</div>	
+	</div>
+
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content ">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<div class="form-group passenger-type pull-right">
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-default unit-toggle-label"
+								ng-class="{active:patientDetails.seatingPosition!='1' || patientDetails.seatingPosition==null}"
+								ng-disabled="patientDetails.seatingPosition=='1'"> <input
+								type="radio" name="unit"
+								ng-model="patientDetails.seatingPosition" id="option1"
+								autocomplete="off"> Passenger
+							</label> <label class="btn btn-default unit-toggle-label"
+								ng-class="{active:patientDetails.seatingPosition=='1'}"
+								ng-disabled="patientDetails.seatingPosition!='1' || patientDetails.seatingPosition==null">
+								<input type="radio" name="unit"
+								ng-model="patientDetails.seatingPosition"
+								ng-selected="patientDetails.seatingPosition=='1'" id="option2"
+								autocomplete="off"> &nbsp;&nbsp;Driver&nbsp;&nbsp;
+							</label>
+						</div>
+					</div>
+					<h4 class="modal-title" id="myModalLabel">Client Details</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td class="col-md-3"><b>Name</b></td>
+							<td class="col-md-3">{{patientDetails.name}}</td>
+							<td class="col-md-3"><b>Gender</b></td>
+							<td class="col-md-3">{{patientDetails.gender}}</td>
+
+						</tr>
+						<tr>
+							<td class="col-md-3"><b>Date Of Birth</b></td>
+							<td class="col-md-3">{{patientDetails.dateOfBirth}}</td>
+							<td class="col-md-3"><b>Age</b></td>
+							<td class="col-md-3">{{patientDetails.age}}</td>
+						</tr>
+						<tr>
+							<td class="col-md-3"><b>Phone Number</b></td>
+							<td class="col-md-3">{{patientDetails.phoneNumber}}</td>
+							<td class="col-md-3"><b>Address</b></td>
+							<td class="col-md-3">{{patientDetails.address}}</td>
+
+						</tr>
+						<tr>
+							<td class="col-md-3"><b>Unit Number</b></td>
+							<td class="col-md-3">{{patientDetails.unitNumber}}</td>
+							<td class="col-md-3"><b>Damage Scale</b></td>
+							<td class="col-md-3">{{patientDetails.damageScale==1?"1 -
+								None":patientDetails.damageScale==2?"2 -
+								Minor":patientDetails.damageScale==3?"3 -
+								Functional":patientDetails.damageScale==4?"4 -
+								Disabling":patientDetails.damageScale==9?"9 - Unknown":"Not
+								Available"}}</td>
+
+
+						</tr>
+						<tr>
+							<td class="col-md-3"><b>Number of Units</b></td>
+							<td class="col-md-3">{{patientDetails.numberOfUnits}}</td>
+							<td class="col-md-3"><b>Units in Error</b></td>
+							<td class="col-md-3">{{patientDetails.unitInError}}</td>
+
+
+
+						</tr>
+						<tr>
+							<td class="col-md-3"><b>Local Report Number</b></td>
+							<td class="col-md-3">{{patientDetails.localReportNumber}}</td>
+							<td class="col-md-3"><b>Injuries</b></td>
+							<td class="col-md-3">{{patientDetails.injuriesName}}</td>
+
+							</td>
+						</tr>
+						<tr>
+							<td class="col-md-3"><b>Crash Severity</b></td>
+							<td class="col-md-3">{{patientDetails.crashSeverityName}}
+							<td class="col-md-3"><b>Crash Date</b></td>
+							<td class="col-md-3">{{patientDetails.crashDate}}</td>
+
+						</tr>
+						<tr>
+
+							<td class="col-md-3"><b>Time of Crash</b></td>
+							<td class="col-md-3">{{patientDetails.timeOfCrash}}</td>
+							<td class="col-md-3"><b>EMS Agency</b></td>
+							<td class="col-md-3">{{patientDetails.emsAgency}}</td>
+
+						</tr>
+
+						<tr>
+							<td class="col-md-3"><b>Report Agency Name</b></td>
+							<td class="col-md-3">{{patientDetails.reportingAgencyName}}</td>
+							<td class="col-md-3"><b>County</b></td>
+							<td class="col-md-3">{{patientDetails.county}}</td>
+
+						</tr>
+						<tr>
+							<td class="col-md-3"><b>City Village Township</b></td>
+							<td class="col-md-3">{{patientDetails.cityVillageTownship}}</td>
+							<td class="col-md-3"><b>Medical Facility</b></td>
+							<td class="col-md-3">{{patientDetails.medicalFacility}}</td>
+
+						</tr>
+						<tr>
+							<td class="col-md-3"><b>At Fault INS. Company</b></td>
+							<td class="col-md-3">{{patientDetails.atFaultInsuranceCompany}}</td>
+							<td class="col-md-3"><b>At Fault Policy Number</b></td>
+							<td class="col-md-3">{{patientDetails.atFaultPolicyNumber}}</td>
+						</tr>
+						<tr>
+							<td class="col-md-3"><b>Victim INS. Company</b></td>
+							<td class="col-md-3">{{patientDetails.victimInsuranceCompany}}</td>
+							<td class="col-md-3"><b>Victim Policy Number</b></td>
+							<td class="col-md-3">{{patientDetails.victimPolicyNumber}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Export Excel Alert Modal  -->
+	<div class="modal fade" id="exportAlertModal" role="dialog"
+		data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Alert</h4>
+				</div>
+				<div class="modal-body">
+					<span style="color: red;">Please do filter by Added on From
+						& To date. <br />System recommends to download 3 months of data.
+					</span>
+				</div>
+				<div class="modal-footer">
+					<button type="close" class="btn btn-danger" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<script>
+	$(function(){
+		$("html,body").scrollTop(0);
+	});
+	    					
+	$('#CrashFromDate').datetimepicker({
+		pickTime : false,
+		format:'MM/DD/YYYY',
+		maxDate : new Date()
+	}).on('dp.change', function (selected) {
+	    var minimumDate = new Date(selected.date.valueOf());
+	    $('#CrashToDate').data("DateTimePicker").setMinDate(minimumDate);
+	});
+
+	$('#CrashToDate').datetimepicker({
+    	pickTime : false,
+		format:'MM/DD/YYYY',
+		maxDate : new Date()
+    });
+
+	$('#addedOnFromDate').datetimepicker({
+		pickTime : false,
+		format:'MM/DD/YYYY',
+		maxDate : new Date()
+	}).on('dp.change', function (selected) {
+	    var minimumDate = new Date(selected.date.valueOf());
+	    $('#addedOnToDate').data("DateTimePicker").setMinDate(minimumDate);
+	});
+
+	$('#addedOnToDate').datetimepicker({
+    	pickTime : false,
+		format:'MM/DD/YYYY',
+		maxDate : new Date()
+    });
+	
+	$(document).ready(function(){
+	    $('[data-toggle="popover"]').popover({
+	    	html: true
+	     });   
+	});
+	
+	$(document).click(function (e) {
+	    $('[data-toggle="popover"]').each(function () {
+	        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+	        	//$(this).popover('hide');
+	        	 $(this).popover('hide').data('bs.popover').inState.click = false 
+	        }
+	    });
+	});
+</script>
+
+	<script src="resources/js/fixed-header.js">  </script>

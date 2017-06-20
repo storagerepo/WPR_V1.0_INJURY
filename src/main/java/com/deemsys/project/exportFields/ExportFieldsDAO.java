@@ -11,4 +11,7 @@ import com.deemsys.project.entity.ExportFields;
  */
 public interface ExportFieldsDAO extends IGenericDAO<ExportFields>{
 		public List<ExportFields> getStandardExportFields();
+		public List<ExportFields> getCallerLawyerExportFields();
+		public List<ExportFields> getAutoDealerStandardExportFields();
+		public List<ExportFields> getAutoDealerAllFields();
 }

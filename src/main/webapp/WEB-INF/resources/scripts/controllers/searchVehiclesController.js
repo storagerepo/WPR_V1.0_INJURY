@@ -1,59 +1,59 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','angularjs-dropdown-multiselect','searchModule','flash','ngFileSaver']);
 
-adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler','searchService','$state','FileSaver', function($q,$scope,requestHandler,searchService,$state,FileSaver) {
+adminApp.controller('searchVehiclesController', ['$q','$scope','requestHandler','searchService','$state','FileSaver', function($q,$scope,requestHandler,searchService,$state,FileSaver) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
-	$scope.patientSearchData=[];	
+	$scope.vehicleSearchData=[];	
 	$scope.exportButtonText="Export to Excel";
 	$scope.exportButton=false;
 	$scope.ageFilterCurrentSelection=[];
 	$scope.setScrollDown=false;
 	
 	$scope.init=function(callFrom){
-		$scope.example19model = {}; 
-		$scope.example19data = [ { id: 1, name: "David" }, { id: 2, name: "Jhon" }, { id: 3, name: "Lisa" }, { id: 4, name: "Nicole" }, { id: 5, name: "Danny" } ]; 
-		//$scope.example19settings = { template: '<b>{{option.name}}</b>' };
+		
 		//Initialize DropDown
 		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"}, {id: 5, label: "Undetermined"},{id: 0, label: "Others"}];
-		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
+		$scope.defaultAge=[{id:1,label:"Adults"},{id:4,label:"Not Known"}];
 		
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
 		
-		$scope.patient={};
-		$scope.patient.countyId=[{"id":1},{"id":2},{"id":3},{"id":4},{"id":5},{"id":6},{"id":7},{"id":8},{"id":9},{"id":10},{"id":11},{"id":12},{"id":13},{"id":14},{"id":15},{"id":16},{"id":17},{"id":18},{"id":19},{"id":20},{"id":21},{"id":22},{"id":23},{"id":24},{"id":25},{"id":26},{"id":27},{"id":28},{"id":29},{"id":30},{"id":31},{"id":32},{"id":33},{"id":34},{"id":35},{"id":36},{"id":37},{"id":38},{"id":39},{"id":40},{"id":41},{"id":42},{"id":43},{"id":44},{"id":45},{"id":46},{"id":47},{"id":48},{"id":49},{"id":50},{"id":51},{"id":52},{"id":53},{"id":54},{"id":55},{"id":56},{"id":57},{"id":58},{"id":59},{"id":60},{"id":61},{"id":62},{"id":63},{"id":64},{"id":65},{"id":66},{"id":67},{"id":68},{"id":69},{"id":70},{"id":71},{"id":72},{"id":73},{"id":74},{"id":75},{"id":76},{"id":77},{"id":78},{"id":79},{"id":80},{"id":81},{"id":82},{"id":83},{"id":84},{"id":85},{"id":86},{"id":87},{"id":88}];
-		$scope.patient.tier=[{id:1},{id:2},{id:3},{id:4},{id:5},{id:0}];
-		$scope.patient.damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
-		$scope.patient.patientStatus=0;
-		$scope.patient.crashFromDate="";
-		$scope.patient.crashToDate="";
-		$scope.patient.localReportNumber="";
-		$scope.patient.reportingAgency=[];
-		$scope.patient.patientName="";
-		$scope.patient.age=[{id:1},{id:2},{id:4}],
-		$scope.patient.callerId=0;
-		$scope.patient.phoneNumber= "";
-		$scope.patient.lawyerId="0";
-		$scope.patient.numberOfDays="1";
-		$scope.patient.itemsPerPage="25";
+		$scope.vehicle={};
+		$scope.vehicle.countyId=[{"id":1},{"id":2},{"id":3},{"id":4},{"id":5},{"id":6},{"id":7},{"id":8},{"id":9},{"id":10},{"id":11},{"id":12},{"id":13},{"id":14},{"id":15},{"id":16},{"id":17},{"id":18},{"id":19},{"id":20},{"id":21},{"id":22},{"id":23},{"id":24},{"id":25},{"id":26},{"id":27},{"id":28},{"id":29},{"id":30},{"id":31},{"id":32},{"id":33},{"id":34},{"id":35},{"id":36},{"id":37},{"id":38},{"id":39},{"id":40},{"id":41},{"id":42},{"id":43},{"id":44},{"id":45},{"id":46},{"id":47},{"id":48},{"id":49},{"id":50},{"id":51},{"id":52},{"id":53},{"id":54},{"id":55},{"id":56},{"id":57},{"id":58},{"id":59},{"id":60},{"id":61},{"id":62},{"id":63},{"id":64},{"id":65},{"id":66},{"id":67},{"id":68},{"id":69},{"id":70},{"id":71},{"id":72},{"id":73},{"id":74},{"id":75},{"id":76},{"id":77},{"id":78},{"id":79},{"id":80},{"id":81},{"id":82},{"id":83},{"id":84},{"id":85},{"id":86},{"id":87},{"id":88}];
+		$scope.vehicle.tier=[];
+		$scope.vehicle.damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
+		$scope.vehicle.patientStatus=0;
+		$scope.vehicle.crashFromDate="";
+		$scope.vehicle.crashToDate="";
+		$scope.vehicle.localReportNumber="";
+		$scope.vehicle.reportingAgency=[];
+		$scope.vehicle.patientName="";
+		$scope.vehicle.age=[{id:1},{id:4}],
+		$scope.vehicle.callerId=0;
+		$scope.vehicle.phoneNumber= "";
+		$scope.vehicle.lawyerId="0";
+		$scope.vehicle.numberOfDays="1";
+		$scope.vehicle.itemsPerPage="25";
 		$scope.totalRecords=0;
-		$scope.patient.addedOnFromDate="";
-		$scope.patient.addedOnToDate="";
-		$scope.patient.patientStatus="7";
-		$scope.patient.isArchived="0";
-		$scope.patient.directReportStatus=0;
-		$scope.patient.archivedFromDate="";
-		$scope.patient.archivedToDate="";
+		$scope.vehicle.addedOnFromDate="";
+		$scope.vehicle.addedOnToDate="";
+		$scope.vehicle.patientStatus="7";
+		$scope.vehicle.isArchived="0";
+		$scope.vehicle.directReportStatus=0;
+		$scope.vehicle.archivedFromDate="";
+		$scope.vehicle.archivedToDate="";
 		$scope.isSelectedAddedFromDate=true;
-		$scope.patient.isRunnerReport=0;
-		$scope.patient.isOwner=0;
+		$scope.vehicle.isRunnerReport=0;
+		$scope.vehicle.isOwner=1;
+		$scope.vehicle.vehicleMake="";
+		$scope.vehicle.vehicleYear="";
 		
-		$scope.patient.pageNumber= 1;
-		$scope.oldPageNumber= $scope.patient.pageNumber;
+		$scope.vehicle.pageNumber= 1;
+		$scope.oldPageNumber= $scope.vehicle.pageNumber;
 		
 		// Calling From Reset
 		if(callFrom==2){
-			if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
-				$scope.searchItems($scope.patient);
+			if($scope.oldPageNumber==$scope.vehicle.pageNumber){//This will call search function thru vehicle.pageNumber object $watch function 
+				$scope.searchItems($scope.vehicle);
 			}
 		}
 		
@@ -65,38 +65,38 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	 
 	$scope.checkCustomDate=function(){
 		//Reset to date if less than from date
-		var fromDate=new Date($scope.patient.crashFromDate);
-		var toDate=new Date($scope.patient.crashToDate);
+		var fromDate=new Date($scope.vehicle.crashFromDate);
+		var toDate=new Date($scope.vehicle.crashToDate);
 		if(toDate<fromDate)
-			$scope.patient.crashToDate="";
+			$scope.vehicle.crashToDate="";
 		//End Reset to date if less than from date
-		if($scope.patient.crashFromDate!=''){
+		if($scope.vehicle.crashFromDate!=''){
 			$scope.disableCustom=false;
 		}
 		else{
 			$scope.disableCustom=true;
-			$scope.patient.crashToDate="";
+			$scope.vehicle.crashToDate="";
 		}
 	};
 	
 	$scope.checkAddedOnToDate=function(){
-		if($scope.patient.addedOnFromDate!="")
+		if($scope.vehicle.addedOnFromDate!="")
 			$scope.isSelectedAddedFromDate=false;
 		else{
-			$scope.patient.addedOnToDate="";
+			$scope.vehicle.addedOnToDate="";
 			$scope.isSelectedAddedFromDate=true;
 		}
 		//Reset to date if less than from date
-		var fromDate=new Date($scope.patient.addedOnFromDate);
-		var toDate=new Date($scope.patient.addedOnToDate);
+		var fromDate=new Date($scope.vehicle.addedOnFromDate);
+		var toDate=new Date($scope.vehicle.addedOnToDate);
 		if(toDate<fromDate)
-			$scope.patient.addedOnToDate="";
+			$scope.vehicle.addedOnToDate="";
 		//End Reset to date if less than from date
 	};
 	
 	$scope.searchItems=function(searchObj){
 		$scope.isLoading=true;
-		//To avoid overwriting actual $scope.patient object.
+		//To avoid overwriting actual $scope.vehicle object.
 		$scope.searchParam={};
 		angular.copy(searchObj,$scope.searchParam);
 		
@@ -134,9 +134,9 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 			$scope.isLoading=false;
 			if($scope.searchParam.isRunnerReport!=3){
 				$scope.totalRecords=response.data.patientGroupedSearchResult.totalNoOfRecord;
-				$scope.patientSearchData=response.data.patientGroupedSearchResult.patientSearchResults;
+				$scope.vehicleSearchData=response.data.patientGroupedSearchResult.patientSearchResults;
 			
-				$.each($scope.patientSearchData, function(index,value) {
+				$.each($scope.vehicleSearchData, function(index,value) {
 					$.each(value.searchResult, function(index1,value1) {
 						$.each(value1.patientSearchLists,function(index2,value2){
 							switch(value2.patientStatus) {
@@ -225,42 +225,42 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	};
 	 
 	$scope.searchPatients = function(){
-		if($scope.patient.addedFromDate!="" && $scope.patient.addedToDate==""){
+		if($scope.vehicle.addedFromDate!="" && $scope.vehicle.addedToDate==""){
 			$scope.addedToRequired=true;
 		}
-		else if($scope.patient.crashFromDate!="" && $scope.patient.numberOfDays=="0" && $scope.patient.crashToDate==""){
+		else if($scope.vehicle.crashFromDate!="" && $scope.vehicle.numberOfDays=="0" && $scope.vehicle.crashToDate==""){
 			$scope.crashToRequired=true;
 		}
-		else if($scope.patient.addedOnFromDate!="" && $scope.patient.addedOnToDate==""){
+		else if($scope.vehicle.addedOnFromDate!="" && $scope.vehicle.addedOnToDate==""){
 			$scope.AddedOnToRequired=true;
 		}
 		else{
 			$scope.addedToRequired=false;
 			$scope.crashToRequired=false;
-			$scope.patient.patientName="";
-			$scope.patient.phoneNumber= "";
-			$scope.oldPageNumber=$scope.patient.pageNumber;
-			$scope.patient.pageNumber=1;
-			if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
-				$scope.searchItems($scope.patient);
+			$scope.vehicle.patientName="";
+			$scope.vehicle.phoneNumber= "";
+			$scope.oldPageNumber=$scope.vehicle.pageNumber;
+			$scope.vehicle.pageNumber=1;
+			if($scope.oldPageNumber==$scope.vehicle.pageNumber){//This will call search function thru vehicle.pageNumber object $watch function 
+				$scope.searchItems($scope.vehicle);
 			}
 		}
 	};
 	
 	$scope.secoundarySearchPatient=function(){
-		$scope.oldPageNumber=$scope.patient.pageNumber;
-		$scope.patient.pageNumber=1;
-		if($scope.oldPageNumber==$scope.patient.pageNumber){//This will call search function thru patient.pageNumber object $watch function 
-			return $scope.searchItems($scope.patient);
+		$scope.oldPageNumber=$scope.vehicle.pageNumber;
+		$scope.vehicle.pageNumber=1;
+		if($scope.oldPageNumber==$scope.vehicle.pageNumber){//This will call search function thru vehicle.pageNumber object $watch function 
+			return $scope.searchItems($scope.vehicle);
 		}
 		return null;
 	};
 	
 	// Watch Report Type
-	/*$scope.$watch('patient.isRunnerReport',function(){
-		if($scope.patient.countyId!=''){
-			$scope.patient.pageNumber=1;
-			var promise=$scope.searchItems($scope.patient);
+	/*$scope.$watch('vehicle.isRunnerReport',function(){
+		if($scope.vehicle.countyId!=''){
+			$scope.vehicle.pageNumber=1;
+			var promise=$scope.searchItems($scope.vehicle);
 			if(promise!=null)
 			promise.then(function(reponse){
 				console.log(reponse);
@@ -281,8 +281,8 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		});	
 	};
 	
-	$scope.$watch("patient.pageNumber",function(){
-		var promise=$scope.searchItems($scope.patient); 
+	$scope.$watch("vehicle.pageNumber",function(){
+		var promise=$scope.searchItems($scope.vehicle); 
 		if($scope.setScrollDown){
 			promise.then(function(response){
 				console.log("scroll down complex");
@@ -298,7 +298,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	$scope.viewPatientModal=function(patientId){
 		$("#myModal").modal("show");
 		
-		$.each($scope.patientSearchData, function(index,value) {
+		$.each($scope.vehicleSearchData, function(index,value) {
 			$.each(value.searchResult, function(index1,value1) {
 				$.each(value1.patientSearchLists,function(index2,value2){
 					if(value2.patientId ==patientId){
@@ -317,8 +317,8 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	
 	
 	$scope.resetSearchData = function(){
-	     $scope.patientSearchForm.$setPristine();
-	     $scope.patientSearchData="";
+	     $scope.vehicleSearchForm.$setPristine();
+	     $scope.vehicleSearchData="";
 	     $scope.init(2);
 	};
 	
@@ -342,23 +342,23 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	};
 	
 	//Watch Age Filter
-	$scope.$watch('patient.age' , function() {	
-		if($scope.patient.age.length!=0){
-			angular.copy($scope.patient.age,$scope.ageFilterCurrentSelection);
+	$scope.$watch('vehicle.age' , function() {	
+		if($scope.vehicle.age.length!=0){
+			angular.copy($scope.vehicle.age,$scope.ageFilterCurrentSelection);
 		}else{
-			angular.copy($scope.ageFilterCurrentSelection,$scope.patient.age);
+			angular.copy($scope.ageFilterCurrentSelection,$scope.vehicle.age);
 		}
 	    
 	}, true );
 	
 	// Age Drop down Events
 	$scope.ageEvents = {onInitDone: function(item) {console.log("initi",item);},
-			onItemDeselect: function(item) {console.log("deselected",item);if($scope.patient.age!=''){$scope.secoundarySearchPatient();}},
+			onItemDeselect: function(item) {console.log("deselected",item);if($scope.vehicle.age!=''){$scope.secoundarySearchPatient();}},
 			onItemSelect: function(item) {console.log("selected",item);$scope.secoundarySearchPatient();}};
 	
 	// Watch Damage Scale Filter
-		$scope.$watch('patient.damageScale' , function() {		
-			   if($scope.patient.damageScale.length==0){
+		$scope.$watch('vehicle.damageScale' , function() {		
+			   if($scope.vehicle.damageScale.length==0){
 				   $scope.disableSearch=true;
 				   $scope.searchDamageScaleMinError=true;
 			   }else{
@@ -369,8 +369,8 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 			}, true );
 	
 	//Watch County Filter
-	$scope.$watch('patient.countyId' , function() {		
-	   if($scope.patient.countyId.length==0){
+	$scope.$watch('vehicle.countyId' , function() {		
+	   if($scope.vehicle.countyId.length==0){
 		   $scope.disableSearch=true;
 		   $scope.searchCountyMinError=true;
 	   }else{
@@ -378,26 +378,16 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		   if(!$scope.searchTierMinError)
 			   $scope.disableSearch=false;			   
 	   }
-	   $scope.patient.reportingAgency=[];
+	   $scope.vehicle.reportingAgency=[];
 	   //Some change happened in county selection lets update reporting agency list too
-	   searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
+	   searchService.getReportingAgencyList($scope.vehicle.countyId).then(function(response){
 		 //Load Reporting Agency List		   
 		 $scope.reportingAgencyList=response;  
 	   });
 	   
 	}, true );
 	
-	//Watch Tier Filter
-	$scope.$watch('patient.tier' , function() {		
-		   if($scope.patient.tier.length==0){
-			   $scope.disableSearch=true;
-			   $scope.searchTierMinError=true;
-		   }else{
-			   $scope.searchTierMinError=false;
-			   if(!$scope.searchCountyMinError)
-				   $scope.disableSearch=false;	
-		   }
-		}, true );
+
 }]); 
 
 adminApp.directive( 'popoverHtmlUnsafePopup', function () {

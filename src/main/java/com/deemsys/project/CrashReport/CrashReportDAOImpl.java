@@ -283,6 +283,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		projectionList.add(Projections.alias(Projections.property("oldFilePath"), "oldFilePath"));
 		projectionList.add(Projections.alias(Projections.property("numberOfPatients"), "numberOfPatients"));
 		projectionList.add(Projections.alias(Projections.property("status"), "status"));
+		projectionList.add(Projections.alias(Projections.property("vehicleCount"), "vehicleCount"));
 		
 		if(!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
 			projectionList.add(Projections.alias(Projections.property("dcl1.isArchived"), "isArchived"));

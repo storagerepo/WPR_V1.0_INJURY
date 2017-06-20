@@ -21,6 +21,9 @@
             <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.SearchPatients"><span ng-cloak class="patient-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <small>Search Clients</small><span></span></a>
             </li>
+             <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
+                <a ui-sref="dashboard.SearchVehicles"><span ng-cloak class="vehicle-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Search Vehicles<span></span></a>
+            </li>
            <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}"><a ui-sref="dashboard.ratings-reviews"><i ng-cloak class="fa fa-star-o fa-fw"></i> <small>Ratings & Reviews</small></a></li>
            
            <!--  Manual Import Of Crash Report By Id-->

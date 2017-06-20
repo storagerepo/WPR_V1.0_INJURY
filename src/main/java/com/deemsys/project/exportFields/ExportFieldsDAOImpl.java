@@ -140,7 +140,31 @@ public class ExportFieldsDAOImpl implements ExportFieldsDAO{
 	@Override
 	public List<ExportFields> getStandardExportFields() {
 		// TODO Auto-generated method stub
-		List<ExportFields> exportFields=this.sessionFactory.getCurrentSession().createCriteria(ExportFields.class).add(Restrictions.eq("isCustom", 0)).addOrder(Order.asc("sequenceNo")).list();
+		List<ExportFields> exportFields=this.sessionFactory.getCurrentSession().createCriteria(ExportFields.class).add(Restrictions.and(Restrictions.eq("isCustom", 0),Restrictions.eq("isCallerLawyer", 1))).addOrder(Order.asc("sequenceNo")).list();
+		return exportFields;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ExportFields> getAutoDealerStandardExportFields() {
+		// TODO Auto-generated method stub
+		List<ExportFields> exportFields=this.sessionFactory.getCurrentSession().createCriteria(ExportFields.class).add(Restrictions.and(Restrictions.eq("isCustom", 0),Restrictions.eq("isAutoDealer", 1))).addOrder(Order.asc("autoDealerSequence")).list();
+		return exportFields;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ExportFields> getAutoDealerAllFields() {
+		// TODO Auto-generated method stub
+		List<ExportFields> exportFields=this.sessionFactory.getCurrentSession().createCriteria(ExportFields.class).add(Restrictions.eq("isAutoDealer", 1)).addOrder(Order.asc("autoDealerSequence")).list();
+		return exportFields;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ExportFields> getCallerLawyerExportFields() {
+		// TODO Auto-generated method stub
+		List<ExportFields> exportFields=this.sessionFactory.getCurrentSession().createCriteria(ExportFields.class).add(Restrictions.eq("isCallerLawyer", 1)).addOrder(Order.asc("sequenceNo")).list();
 		return exportFields;
 	}
 

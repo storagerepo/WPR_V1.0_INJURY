@@ -671,6 +671,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		$scope.patient.tier=[];
 		$scope.patient.damageScale=[];
 		$scope.patient.reportingAgency=[];	
+		$scope.patient.isOwner=0;
 		angular.copy(searchService.getCounty(),$scope.patient.countyId);
 		angular.copy(searchService.getTier(),$scope.patient.tier);
 		angular.copy(searchService.getDamageScale(),$scope.patient.damageScale);
