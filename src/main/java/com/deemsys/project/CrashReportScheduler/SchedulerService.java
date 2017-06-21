@@ -69,8 +69,12 @@ public class SchedulerService {
 					Integer schedulerType=2;
 					List<PoliceAgencyForm> policeAgencyForms = policeAgencyService.getPoliceAgenciesForScheduler(schedulerType);
 					Integer i=0;
+					LocalDate previousDate=new LocalDate().minusDays(30);
 					for (PoliceAgencyForm agencyForm : policeAgencyForms) {
-						crashReportService.getPoliceDepartmentReportDetails(agencyForm.getAgencyId(),agencyForm.getCountyId(),new LocalDate().toString("MM/dd/yyyy"),agencyForm.getMapId());
+						for (LocalDate j = previousDate; j.isBefore(new LocalDate().plusDays(1)); j=j.plusDays(1)) {
+							System.out.println(j.toString("MM/dd/yyyy"));
+							crashReportService.getPoliceDepartmentReportDetails(agencyForm.getAgencyId(),agencyForm.getCountyId(),j.toString("MM/dd/yyyy"),agencyForm.getMapId());
+						}
 						i++;
 					}
 					

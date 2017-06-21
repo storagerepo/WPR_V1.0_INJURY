@@ -573,7 +573,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	String role=loginService.getCurrentRole();
 	
 	// Vehicle Constraints
-	if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+	if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
 		if(callerPatientSearchForm.getVehicleMake()!=null&&!callerPatientSearchForm.getVehicleMake().equals("")){
 			Criterion vehicleMakeCriterion=Restrictions.like("t1.vehicleMake", callerPatientSearchForm.getVehicleMake(),MatchMode.ANYWHERE);
 			criteria.add(vehicleMakeCriterion);
