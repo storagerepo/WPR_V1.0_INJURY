@@ -231,7 +231,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 	 
 	$scope.searchPatients = function(){
 		
-	if($scope.vehicle.crashFromDate!="" && $scope.vehicle.numberOfDays=="" && $scope.vehicle.crashToDate==""){
+	if($scope.vehicle.crashFromDate!="" && $scope.vehicle.crashToDate==""){
 			$scope.crashToRequired=true;
 		}
 	else if($scope.vehicle.addedOnFromDate!="" && $scope.vehicle.addedOnToDate==""){
@@ -966,7 +966,11 @@ $scope.archivedToDateRequired=false;
 							$scope.vehicle.countyId.push({"id":value.countyId});
 						});
 					}else{
-						$location.path("dashboard/UserPreferrence/1");
+						if($rootScope.isAdmin==6){
+							$location.path("dashboard/UserPreferrence/1");
+						}else{
+							alert("Not done with Preference, Please Contact Manager to set up.");
+						}
 					}
 					
 				});
