@@ -29,6 +29,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 			}
 			else{
 				$scope.disableCustom=true;
+				$scope.crashToRequired=false;
 				$scope.patient.crashToDate="";
 			}
 		};
@@ -38,6 +39,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 				$scope.isSelectedAddedFromDate=false;
 			else{
 				$scope.patient.addedOnToDate="";
+				$scope.addedToRequired=false;
 				$scope.isSelectedAddedFromDate=true;
 			}
 			//Reset to date if less than from date
@@ -231,7 +233,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	 
 	$scope.searchPatients = function(){
 	
-	if($scope.patient.crashFromDate!="" && $scope.patient.numberOfDays=="" && $scope.patient.crashToDate==""){
+	if($scope.patient.crashFromDate!="" && $scope.patient.crashToDate==""){
 			$scope.crashToRequired=true;
 		}
 	else if($scope.patient.addedOnFromDate!="" && $scope.patient.addedOnToDate==""){

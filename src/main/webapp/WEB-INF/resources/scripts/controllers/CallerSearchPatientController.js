@@ -62,6 +62,7 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 			}
 			else{
 				$scope.disableCustom=true;
+				$scope.crashToRequired=false;
 				$scope.patient.crashToDate="";
 			}
 		};
@@ -71,6 +72,7 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 				$scope.isSelectedAddedFromDate=false;
 			else{
 				$scope.patient.addedOnToDate="";
+				$scope.addedToRequired=false;
 				$scope.isSelectedAddedFromDate=true;
 			}
 			//Reset to date if less than from date
@@ -236,7 +238,7 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 	};
 	 
 	$scope.searchPatients = function(){
-		if($scope.patient.crashFromDate!="" && $scope.patient.numberOfDays=="0" && $scope.patient.crashToDate==""){
+		if($scope.patient.crashFromDate!="" && $scope.patient.crashToDate==""){
 				$scope.crashToRequired=true;
 			}
 		else if($scope.patient.addedOnFromDate!="" && $scope.patient.addedOnToDate==""){

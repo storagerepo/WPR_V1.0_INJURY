@@ -115,6 +115,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			$scope.isSelectedCrashFromDate=false;
 		else{
 			$scope.patient.crashToDate="";
+			$scope.crashToRequired=false;
 			$scope.isSelectedCrashFromDate=true;
 		}
 		//Reset to date if less than from date
@@ -130,6 +131,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			$scope.isSelectedAddedFromDate=false;
 		else{
 			$scope.patient.addedOnToDate="";
+			$scope.AddedOnToRequired=false;
 			$scope.isSelectedAddedFromDate=true;
 		}
 		//Reset to date if less than from date
@@ -674,7 +676,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 				$scope.AddedOnToRequired=true;
 			}
 		else{
-			$scope.addedToRequired=false;
+			$scope.AddedOnToRequired=false;
 			$scope.crashToRequired=false;
 		/*	$scope.patient.patientName="";
 			$scope.patient.phoneNumber= "";*/

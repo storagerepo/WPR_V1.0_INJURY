@@ -291,12 +291,13 @@
 						<span class="client-name">(Last, First, Middle)</span></th>
 						<th width="6%">Age</th>
 						<th width="6%">Unit / Damage</th>
-						<th width="8%">County</th>
+						<th width="6%">County</th>
 						<th width="10%">Reporting Agency</th>
 						<th width="8%" ng-show="$root.isAdmin==6">Dealer</th>
 						<th width="10%">Address</th>
-						<th width="5%">Make & Year</th>
-						<th width="13%">VIN</th>
+						<th width="5%">Make</th>
+						<th width="5%">Year</th>
+						<th width="15%">VIN</th>
 						<th width="8%" ng-show="vehicle.isArchived==1" ng-cloak>Archived
 							On</th>
 						<th width="5%">Actions</th>
@@ -324,6 +325,7 @@
 						<th></th>
 						<th></th>
 						<th></th>
+						<th></th>
 						<th ng-show="vehicle.isArchived==1"></th>
 						<th><a href="" ng-click="exportToExcel()"
 							class="btn btn-sm btn-export"
@@ -342,7 +344,7 @@
 							ng-model="isCheckedAllGroupArchivePatients" ng-true-value="true"
 							ng-false-value="false" type="checkbox"
 							id="{{resultMainData.archivedDate}}"></td>
-						<td colspan="11"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
+						<td colspan="12"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
 					</tr>
 					<tr ng-repeat-start="resultData in resultMainData.searchResult" ng-class="resultData.isRunnerReport==4?'group-header-back-convert':'group-header-back'">
 						<td colspan="1"><input
@@ -458,10 +460,14 @@
 
 						<td><span
 							ng-show="autoDealerData.vehicleMake!='' && autoDealerData.vehicleMake!=null">
-								{{autoDealerData.vehicleMake}},</span>
+								{{autoDealerData.vehicleMake}}</span>
+								<span
+							ng-show="autoDealerData.vehicleMake=='' && autoDealerData.vehicleMake==null">
+								-</span></td>
+						<td>
 								<span ng-show="autoDealerData.vehicleYear!='' && autoDealerData.vehicleYear!=null">{{autoDealerData.vehicleYear}}</span>
 								<span
-							ng-show="(autoDealerData.vehicleMake=='' && autoDealerData.vehicleMake==null)&&(autoDealerData.vehicleYear=='' && autoDealerData.vehicleYear==null)">
+							ng-show="autoDealerData.vehicleYear=='' && autoDealerData.vehicleYear==null">
 								-</span></td>
 						<td title="Status">{{autoDealerData.vin}}</td>
 						<td title="Archived On" ng-show="vehicle.isArchived==1" ng-cloak>{{autoDealerData.archivedDateTime}}</td>
@@ -693,7 +699,10 @@
 							<td class="col-md-3"><b>County</b></td>
 							<td class="col-md-3">{{patientDetails.county}}</td>
 						</tr>
-						
+						<tr>
+							<td class="col-md-3"><b>Reporting Agency Name</b></td>
+							<td class="col-md-3" colspan="3">{{patientDetails.reportingAgencyName}}</td>
+						</tr>
 						<tr>
 							<td class="col-md-3"><b>At Fault INS. Company</b></td>
 							<td class="col-md-3">{{patientDetails.atFaultInsuranceCompany}}</td>

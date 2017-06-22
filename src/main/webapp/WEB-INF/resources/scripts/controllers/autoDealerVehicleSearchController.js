@@ -38,6 +38,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 			}
 			else{
 				$scope.disableCustom=true;
+				$scope.crashToRequired=false;
 				$scope.vehicle.crashToDate="";
 			}
 		};
@@ -46,6 +47,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 				$scope.isSelectedAddedFromDate=false;
 			else{
 				$scope.vehicle.addedOnToDate="";
+				$scope.addedToRequired=false;
 				$scope.isSelectedAddedFromDate=true;
 			}
 			//Reset to date if less than from date
