@@ -279,7 +279,7 @@
 							ng-if="(sAdminPatient.injuries==2 || sAdminPatient.injuries==3 || sAdminPatient.injuries==4) && (sAdminPatient.age>=18 || sAdminPatient.age==null)"><a
 								href="" class="hint--top redText"
 								ng-click="viewPatientModal(sAdminPatient.patientId)"
-								data-hint="View Client">{{sAdminPatient.name}}</a><span
+								data-hint="View Client"><span ng-show="{{sAdminPatient.name==null||sAdminPatient.name==''}}">N/A</span><span ng-show="{{sAdminPatient.name!=null}}">{{sAdminPatient.name}}</span></a><span
 								class="redText margin-left-10 hint--top"
 								data-hint="Injuries : {{sAdminPatient.injuriesName}}"><i
 									class="fa fa-arrow-up"></i></span><span
@@ -294,7 +294,7 @@
 							ng-if="(sAdminPatient.injuries==2 || sAdminPatient.injuries==3 || sAdminPatient.injuries==4) && (sAdminPatient.age<18 && sAdminPatient.age!=null)"><a
 								href="" class="hint--top warningText"
 								ng-click="viewPatientModal(sAdminPatient.patientId)"
-								data-hint="View Client">{{sAdminPatient.name}}</a><span
+								data-hint="View Client"><span ng-show="{{sAdminPatient.name==null||sAdminPatient.name==''}}">N/A</span><span ng-show="{{sAdminPatient.name!=null}}">{{sAdminPatient.name}}</span></a><span
 								class="redText margin-left-10 hint--top"
 								data-hint="Injuries : {{sAdminPatient.injuriesName}}"><i
 									class="fa fa-arrow-up"></i></span><span
@@ -309,7 +309,7 @@
 							ng-if="(sAdminPatient.injuries!=2 && sAdminPatient.injuries!=3 && sAdminPatient.injuries!=4) && (sAdminPatient.age>=18 || sAdminPatient.age==null)"><a
 								href="" class="hint--top"
 								ng-click="viewPatientModal(sAdminPatient.patientId)"
-								data-hint="View Client">{{sAdminPatient.name}}</a><span
+								data-hint="View Client"><span ng-show="{{sAdminPatient.name==null||sAdminPatient.name==''}}">N/A</span><span ng-show="{{sAdminPatient.name!=null}}">{{sAdminPatient.name}}</span></a><span
 								ng-show="sAdminPatient.seatingPosition=='1'"
 								class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>&nbsp;<span
 								class="badge hint--top"
@@ -321,7 +321,7 @@
 							ng-if="(sAdminPatient.injuries!=2 && sAdminPatient.injuries!=3 && sAdminPatient.injuries!=4) && (sAdminPatient.age<18 && sAdminPatient.age!=null)"><a
 								href="" class="hint--top warningText"
 								ng-click="viewPatientModal(sAdminPatient.patientId)"
-								data-hint="View Client">{{sAdminPatient.name}}</a><span
+								data-hint="View Client"><span ng-show="{{sAdminPatient.name==null||sAdminPatient.name==''}}">N/A</span><span ng-show="{{sAdminPatient.name!=null}}">{{sAdminPatient.name}}</span></a><span
 								ng-show="sAdminPatient.seatingPosition=='1'"
 								class="margin-left-10 hint--top driver-icon" data-hint="Driver">&nbsp;</span>&nbsp;<span
 								class="badge hint--top"
