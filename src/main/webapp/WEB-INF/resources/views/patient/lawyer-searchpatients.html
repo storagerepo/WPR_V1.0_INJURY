@@ -107,14 +107,18 @@
 
 		<div class="col-md-12 no-padding">
 		
-		<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-5'" ng-show="patient.isRunnerReport!=3">
+		<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-5'" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
 				<label>Reporting Agency</label> <div ng-dropdown-multiselect=""
 					options="reportingAgencyList" selected-model="patient.reportingAgency"
 					extra-settings="{idProp:'code',displayProp:'reportingAgencyName',smartButtonMaxItems:'0',enableSearch:true,optionClass:'multidrop-option-class',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Reporting Agency',showPreferenceOption:false}"
 					events="reportingAgencyEvents">
 					</div>
+					
+					<span
+					class="error-class" ng-show="searchReportingAgencyMinError">&nbsp;&nbsp;Select
+					at least one Agency</span>
 			</div>	
-			<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
+			<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
 				<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover"
 					title="Tier Details (Deceased victims not listed)"
 					data-placement="bottom"><i class="fa fa-info-circle"></i></a><span
@@ -124,7 +128,7 @@
 					selected-model="patient.tier"
 					extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1||patient.isRunnerReport==3}"></div>
 			</div>
-			<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
+			<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
 				<label>Damage Scale</label>&nbsp;<a href=""
 					class="some-popover-link" data-placement="bottom"
 					data-original-title="" data-toggle="popover" title="Damage Scale"

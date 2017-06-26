@@ -109,14 +109,14 @@
 			</div>
 
 			<div class="col-md-12 no-padding">
-				<div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-5'" ng-show="patient.isRunnerReport!=3">
+				<!-- <div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-5'" ng-show="patient.isRunnerReport!=3">
 				<label>Reporting Agency</label> <div ng-dropdown-multiselect=""
 					options="reportingAgencyList" selected-model="patient.reportingAgency"
 					extra-settings="{idProp:'code',displayProp:'reportingAgencyName',smartButtonMaxItems:'0',enableSearch:true,optionClass:'multidrop-option-class',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Reporting Agency',showPreferenceOption:false}"
 					events="reportingAgencyEvents">
 					</div>
-			</div>	
-				<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
+			</div>	 -->
+				<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
 					<label>Tier</label>&nbsp;&nbsp;<a href="" data-toggle="popover"
 						title="Tier Details (Deceased victims not listed)"
 						data-placement="bottom"><i class="fa fa-info-circle"></i></a><span
@@ -126,7 +126,7 @@
 						selected-model="patient.tier"
 						extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1||patient.isRunnerReport==3}"></div>
 				</div>
-				<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
+				<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
 					<label>Damage Scale</label>&nbsp;<a href=""
 						class="some-popover-link" data-placement="bottom"
 						data-original-title="" data-toggle="popover" title="Damage Scale"
@@ -273,12 +273,12 @@
 							ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
 						<th width="15%">Patient Name <br />
 						<span class="client-name">(Last, First, Middle)</span></th>
-						<th width="12%">Phone Number</th>
+						<th width="15%">Phone Number</th>
 						<th width="9%">Age</th>
-						<th width="5%">Unit / Damage</th>
-						<th width="9%">County</th>
-						<th width="11%">Reporting Agency</th>
-						<th width="6%">Tier</th>
+						<th width="8%">Unit / Damage</th>
+						<th width="12%">County</th>
+						
+						<th width="8%">Tier</th>
 						<th width="11%">Status</th>
 						<!-- <th width="10%">Status On</th> -->
 						<th width="8%" ng-show="patient.isArchived==1" ng-cloak>Archived
@@ -320,7 +320,7 @@
 						<!-- <th></th> -->
 						<th></th>
 						<th></th>
-						<th></th>
+					
 						<th></th>
 						<th ng-show="patient.isArchived==1"></th>
 						<th>
@@ -454,9 +454,9 @@
 						</span> <span
 							ng-show="callerData.unitNumber==''||callerData.unitNumber==null">-</span></td>
 						<td title="County">{{callerData.county}}</td>
-						<td title="Reporting Agency"><span
+						<!-- <td title="Reporting Agency"><span
 						ng-show="callerData.reportingAgencyName!=''&&callerData.reportingAgencyName!=null">{{callerData.reportingAgencyName}}</span><span
-						ng-show="callerData.reportingAgencyName==''||callerData.reportingAgencyName==null">-</span></td>
+						ng-show="callerData.reportingAgencyName==''||callerData.reportingAgencyName==null">-</span></td> -->
 						<td><span
 							ng-show="callerData.tier!=''&&callerData.tier!=null">Tier
 								{{callerData.tier}}</span><span

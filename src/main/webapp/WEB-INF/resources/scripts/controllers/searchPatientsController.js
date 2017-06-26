@@ -1,6 +1,6 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','angularjs-dropdown-multiselect','searchModule','flash','ngFileSaver']);
 
-adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler','searchService','$state','FileSaver', function($q,$scope,requestHandler,searchService,$state,FileSaver) {
+adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler','searchService','$state','FileSaver','$timeout', function($q,$scope,requestHandler,searchService,$state,FileSaver,$timeout) {
 	$scope.disableCustom=true;
 	$scope.crashSearchData="";
 	$scope.patientSearchData=[];	
@@ -8,6 +8,8 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	$scope.exportButton=false;
 	$scope.ageFilterCurrentSelection=[];
 	$scope.setScrollDown=false;
+	
+	
 	
 	$scope.init=function(callFrom){
 		$scope.example19model = {}; 
@@ -18,16 +20,19 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
 		
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
-		
 		$scope.patient={};
 		$scope.patient.countyId=[{"id":1},{"id":2},{"id":3},{"id":4},{"id":5},{"id":6},{"id":7},{"id":8},{"id":9},{"id":10},{"id":11},{"id":12},{"id":13},{"id":14},{"id":15},{"id":16},{"id":17},{"id":18},{"id":19},{"id":20},{"id":21},{"id":22},{"id":23},{"id":24},{"id":25},{"id":26},{"id":27},{"id":28},{"id":29},{"id":30},{"id":31},{"id":32},{"id":33},{"id":34},{"id":35},{"id":36},{"id":37},{"id":38},{"id":39},{"id":40},{"id":41},{"id":42},{"id":43},{"id":44},{"id":45},{"id":46},{"id":47},{"id":48},{"id":49},{"id":50},{"id":51},{"id":52},{"id":53},{"id":54},{"id":55},{"id":56},{"id":57},{"id":58},{"id":59},{"id":60},{"id":61},{"id":62},{"id":63},{"id":64},{"id":65},{"id":66},{"id":67},{"id":68},{"id":69},{"id":70},{"id":71},{"id":72},{"id":73},{"id":74},{"id":75},{"id":76},{"id":77},{"id":78},{"id":79},{"id":80},{"id":81},{"id":82},{"id":83},{"id":84},{"id":85},{"id":86},{"id":87},{"id":88}];
 		$scope.patient.tier=[{id:1},{id:2},{id:3},{id:4},{id:5},{id:0}];
 		$scope.patient.damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
+		
+		//Reporting Agency
+		$scope.patient.reportingAgency=[];
+		$scope.reportingAgencyLoaded=false;
+
 		$scope.patient.patientStatus=0;
 		$scope.patient.crashFromDate="";
 		$scope.patient.crashToDate="";
 		$scope.patient.localReportNumber="";
-		$scope.patient.reportingAgency=[];
 		$scope.patient.patientName="";
 		$scope.patient.age=[{id:1},{id:2},{id:4}],
 		$scope.patient.callerId=0;
@@ -306,6 +311,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 					}
 				});
 			});
+			
 		});
 		
 		/*requestHandler.getRequest("/Patient/getPatient.json?patientId="+patientId,"").then(function(response){
@@ -369,8 +375,11 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 			}, true );
 	
 	//Watch County Filter
-	$scope.$watch('patient.countyId' , function() {		
+	$scope.$watch('patient.countyId' , function() {
+		 $scope.reportingAgencyLoaded=false;
+		//console.log("County Hits");
 	   if($scope.patient.countyId.length==0){
+		   $scope.patient.reportingAgency=[];
 		   $scope.disableSearch=true;
 		   $scope.searchCountyMinError=true;
 	   }else{
@@ -379,13 +388,42 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 			   $scope.disableSearch=false;			   
 	   }
 	   $scope.patient.reportingAgency=[];
+	   $scope.searchReportingAgencyMinError=false;
 	   //Some change happened in county selection lets update reporting agency list too
 	   searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
 		 //Load Reporting Agency List		   
-		 $scope.reportingAgencyList=response;  
+		 $scope.reportingAgencyList=response;
+			// pushing received reporting Agency List to $scope.patient.reportingAgency Array.	
+		 $scope.reportingAgencyLoaded=true;
+		 /*$.each($scope.reportingAgencyList, function(index,value) {
+			 $scope.patient.reportingAgency.push({"id":value.code});
+		 });*/
 	   });
 	   
 	}, true );
+	
+
+	
+	/*//watch Reporting Agency Filter
+	$scope.$watch('patient.reportingAgency',function()
+			{
+		if($scope.reportingAgencyLoaded){
+			//console.log("Reporting Agency Hits"+$scope.patient.reportingAgency.length);
+			if($scope.patient.reportingAgency.length==0)
+				{
+				$scope.disableSearch=true;
+				$scope.searchReportingAgencyMinError=true;
+				}
+			else
+				{
+				$scope.disableSearch=false;
+				$scope.searchReportingAgencyMinError=false;
+				}
+			}
+		
+			},true);
+	*/
+	
 	
 	//Watch Tier Filter
 	$scope.$watch('patient.tier' , function() {		

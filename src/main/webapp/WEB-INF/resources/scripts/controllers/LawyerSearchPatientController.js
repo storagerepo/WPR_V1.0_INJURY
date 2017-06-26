@@ -191,7 +191,6 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 							    default:
 							        break;
 								};
-								
 							});
 						});
 						defer.resolve(response);
@@ -218,17 +217,13 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 								break;
 							}
 						});
-						
 					});
 					$scope.isCleanCheckboxDirectReport();
 				}
-				
 			});
 			$scope.lockSearch=false;
 			return defer.promise;
-			
-		}		
-		
+		}	
 	};
 	 
 	$scope.searchPatients = function(){
@@ -350,6 +345,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		searchService.setIsRunnerReport($scope.patient.isRunnerReport);
 		searchService.setPageNumber($scope.patient.pageNumber);
 		searchService.setItemsPerPage($scope.patient.itemsPerPage);
+		$scope.mainSearchParam.reportingAgency=$scope.patient.reportingAgency;
 		// Copy Mainsearchparam to Patient
 		angular.copy($scope.mainSearchParam,$scope.patient);
 		if($scope.mainSearchParam.countyId!=''){
@@ -674,6 +670,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		$scope.patient.damageScale=[];
 		$scope.patient.reportingAgency=[];	
 		$scope.patient.isOwner=0;
+		$scope.reportingAgencyLoaded=false;
 		angular.copy(searchService.getCounty(),$scope.patient.countyId);
 		angular.copy(searchService.getTier(),$scope.patient.tier);
 		angular.copy(searchService.getDamageScale(),$scope.patient.damageScale);
@@ -823,25 +820,56 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 			onItemDeselect: function(item) {console.log("deselected",item);if($scope.patient.age!=''){$scope.secoundarySearchPatient();}},
 			onItemSelect: function(item) {console.log("selected",item);$scope.secoundarySearchPatient();}};
 	//Watch County Filter
-	$scope.$watch('patient.countyId' , function() {		
+	$scope.$watch('patient.countyId' , function() {
+		 $scope.reportingAgencyLoaded=false;
 	   if(!$scope.loadingCounties){
+		
 		   if($scope.patient.countyId.length==0){
+			   $scope.patient.reportingAgency=[];
+
 			   $scope.disableSearch=true;
 			   $scope.searchCountyMinError=true;
-		   }else{
+		   }
+		   else
+		   {
 			   $scope.searchCountyMinError=false;
 			   if(!$scope.searchTierMinError)
 				   $scope.disableSearch=false;			   
 		   }
 	   }
 	   $scope.patient.reportingAgency=[];
+		$scope.searchReportingAgencyMinError=false;
 	   //Some change happened in county selection lets update reporting agency list too
 	   searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
 		 //Load Reporting Agency List		   
 		 $scope.reportingAgencyList=response;  
+		 $scope.reportingAgencyLoaded=true;
+		// pushing received reporting Agency List to $scope.patient.reportingAgency Array.
+		 $.each($scope.reportingAgencyList, function(index,value) {
+			 $scope.patient.reportingAgency.push({"id":value.code});
+			 searchService.setReportingAgency($scope.patient.reportingAgency);
+		 });
 	   });
 	}, true );
 	
+	
+	//watch Reporting Agency Filter
+	$scope.$watch('patient.reportingAgency',function()
+			{
+		if($scope.reportingAgencyLoaded)
+			{
+		if($scope.patient.reportingAgency.length==0)
+			{
+			$scope.disableSearch=true;
+			$scope.searchReportingAgencyMinError=true;
+			}
+		else
+			{
+			$scope.disableSearch=false;
+			$scope.searchReportingAgencyMinError=false;
+			}
+			}
+			},true);
 	// County Drop down events
 	$scope.countyEvents = {onInitDone: function(item) {},
 			onItemDeselect: function(item) {},
@@ -906,7 +934,6 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 						if(value.defaultDisplayName==""){
 							value.defaultDisplayName=value.name;
 						}
-						
 						if(value.connectionStatus=='UNKNOWN'){
 							value.connectionStatus="";
 						}else{
@@ -951,7 +978,6 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 						}
 						});
 				});
-				
 			});
 		}
 		
