@@ -52,11 +52,13 @@
 				<div class="input-group">
 					<input type="text" name="crashFromDate" id="CrashFromDate"
 						ng-change="checkCustomDate()"
-						class="form-control input-sm" ng-model="patient.crashFromDate"
+						class="form-control input-sm" ng-model="patient.crashFromDate" validate-date
 						placeholder="Crash From Date"> <span
 						class="input-group-addon white-color-bg"> <span
 						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
+				<span style="color: red" ng-show="patientSearchForm.crashFromDate.$error.validateDate">Please
+						Enter Valid Date</span>
 			</div>
 			<!-- <div ng-class="patient.isRunnerReport!=3?'col-md-5ths':'col-md-3'">
 				<label>Number of Days</label> <select class="form-control input-sm"
@@ -74,31 +76,35 @@
 				<div class="input-group">
 					<input type="text" name="crashToDate" id="CrashToDate"
 						ng-change="crashToRequired=fasle" class="form-control input-sm"
-						ng-model="patient.crashToDate" placeholder="Crash To Date"
+						ng-model="patient.crashToDate" placeholder="Crash To Date" validate-date
 						ng-disabled="isSelectedCrashFromDate"> <span
 						class="input-group-addon white-color-bg"> <span
 						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
 				<span style="color: red; font-size: 13px"
 					ng-if="crashToRequired==true">Please Enter Crash To Date</span>
+				<span style="color: red" ng-show="patientSearchForm.crashToDate.$error.validateDate">Please
+						Enter Valid Date</span>
 			</div>
 			<div class="col-md-5ths">
 				<label>Added On From Date</label>
 				<div class="input-group">
 					<input type="text" name="addedOnFromDate" id="AddedOFromDate"
 						ng-change="checkAddedOnToDate()" class="form-control input-sm"
-						ng-model="patient.addedOnFromDate"
+						ng-model="patient.addedOnFromDate" validate-date
 						placeholder="Added On From Date"> <span
 						class="input-group-addon white-color-bg"> <span
 						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
+				<span style="color: red" ng-show="patientSearchForm.addedOnFromDate.$error.validateDate">Please
+						Enter Valid Date</span>
 			</div>
 			<div class="col-md-5ths">
 				<label>Added On To Date</label>
 				<div class="input-group">
 					<input type="text" name="addedOnToDate" id="AddedOnToDate"
 						ng-change="AddedOnToRequired=false" class="form-control input-sm"
-						ng-model="patient.addedOnToDate" placeholder="Added On To Date"
+						ng-model="patient.addedOnToDate" placeholder="Added On To Date" validate-date
 						ng-disabled="isSelectedAddedFromDate"> <span
 						class="input-group-addon white-color-bg"> <span
 						class="glyphicon glyphicon-calendar"></span></span>
@@ -106,6 +112,8 @@
 				<span style="color: red; font-size: 13px"
 					ng-if="AddedOnToRequired==true">Please Enter Added On To
 					Date</span>
+				<span style="color: red" ng-show="patientSearchForm.addedOnToDate.$error.validateDate">Please
+						Enter Valid Date</span>
 			</div>			
 		</div>
 

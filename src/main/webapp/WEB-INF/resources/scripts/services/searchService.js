@@ -11,7 +11,6 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var reportingAgency=[];
 	var patientName="";
 	var age=[{id:1},{id:2},{id:4}];
-	var dealerAge=[{id:1},{id:4}];
 	var lAdminAge=[{id:1}];
 	var phoneNumber= "";
 	var lawyerId="0";
@@ -128,14 +127,6 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		return age;
 	};
 	
-	this.setDealerAge=function(dealerAgeInput){
-		dealerAge=dealerAgeInput;
-	};
-	
-	this.getDealerAge=function(){
-		return dealerAge;
-	};
-	
 	//Age
 	this.setLAdminAge=function(ladminAgeInput){
 		lAdminAge=ladminAgeInput;
@@ -223,6 +214,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	this.getCountyListType=function(){
 		return countyListType;
 	};
+	
 	// Archived From Date
 	this.setArchivedFromDate=function(archivedFromDateInput){
 		archivedFromDate=archivedFromDateInput;
@@ -343,7 +335,6 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		reportingAgency=[];
 		patientName="";
 		age=[{id:1},{id:2},{id:4}];
-		dealerAge=[{id:1},{id:4}];
 		lAdminAge=[{id:1}];
 		phoneNumber= "";
 		lawyerId="0";

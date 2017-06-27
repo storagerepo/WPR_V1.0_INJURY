@@ -74,4 +74,6 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 	public Patient checkPatientForRunnerReport(Integer countyId,String crashDate,String patientName);
 	
 	public List<Patient> getRunnerReportPatients(String crashId,Integer isRunnerReport);
+	
+	public List<Patient> getPatientsListByAddedOnDates(String fromDate,String toDate);
 }

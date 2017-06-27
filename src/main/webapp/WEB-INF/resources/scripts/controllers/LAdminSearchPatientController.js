@@ -654,7 +654,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 			moveArchiveObj.crashId=crashIdArray;
 			moveArchiveObj.status=0;
 			requestHandler.postRequest("/Lawyer/directReportMoveOrReleaseArchive.json",moveArchiveObj).then(function(response){
-				Flash.create('success', "You have Successfully Released from Archive!");
+				Flash.create('success', "You have Successfully released from Archive!");
 				$scope.searchItems($scope.mainSearchParam);
 				$scope.loadPreferenceCountyList();
 				angular.copy($scope.mainSearchParam,$scope.patient);
@@ -693,7 +693,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	$scope.releaseSingleFileFromArchive=function(patientId){
 		var assignLawyerObj ={};
 		var patientIdArray=[patientId];
-		if(confirm("Are you sure want to relaese from archive?")){
+		if(confirm("Are you sure want to release from archive?")){
 			assignLawyerObj.patientId=patientIdArray;
 			requestHandler.postRequest("/Lawyer/releaseFromArchive.json",assignLawyerObj).then(function(response){
 				Flash.create('success', "You have Successfully released from Archive!");
@@ -715,7 +715,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 			moveArchiveObj.crashId=crashIdArray;
 			moveArchiveObj.status=0;
 			requestHandler.postRequest("/Lawyer/directReportMoveOrReleaseArchive.json",moveArchiveObj).then(function(response){
-				Flash.create('success', "You have Successfully Released from Archive!");
+				Flash.create('success', "You have Successfully released from Archive!");
 				$scope.searchItems($scope.mainSearchParam);
 				$scope.loadPreferenceCountyList();
 				angular.copy($scope.mainSearchParam,$scope.patient);

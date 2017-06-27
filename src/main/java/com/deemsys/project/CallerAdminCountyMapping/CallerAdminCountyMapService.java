@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingForm;
+import com.deemsys.project.UserLookupPreferences.UserLookupPreferencesDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.CallerAdmin;
 import com.deemsys.project.entity.CallerAdminCountyMap;
@@ -26,6 +27,10 @@ public class CallerAdminCountyMapService {
 	
 	@Autowired
 	CountyDAO countyDAO;
+	
+	@Autowired
+	UserLookupPreferencesDAO userLookupPreferencesDAO;
+	
 	
 	//Get County Mapping By Caller Admin Id
 		public List<CallerAdminCountyMapForm> getCallerAdminCountyMapByCallerAdminId(Integer callerAdminId){
@@ -51,7 +56,7 @@ public class CallerAdminCountyMapService {
 		}
 		
 	// Delete Unmapped County Id
-		public void deleteCallerAdminCountyMap(List<Integer> county,Integer callerAdminId){
+		public void deleteCallerAdminCountyMap(List<Integer> county,Integer callerAdminId,Integer userId){
 			List<CallerAdminCountyMapForm> callerAdminCountyMapForms=this.getCallerAdminCountyMapByCallerAdminId(callerAdminId);
 			
 			for (CallerAdminCountyMapForm callerAdminCountyMapForm : callerAdminCountyMapForms) {
@@ -61,6 +66,7 @@ public class CallerAdminCountyMapService {
 					}
 					else{
 						callerAdminCountyMapDAO.deleteCallerAdminCountyMapByCallerAdminIdAndCountyId(callerAdminCountyMapForm.getCallerAdminId(), callerAdminCountyMapForm.getCountyId());
+						userLookupPreferencesDAO.deleteUserLookupPreferenceByUserAndPPreferedId(userId, callerAdminCountyMapForm.getCountyId());
 					}
 				}
 		}

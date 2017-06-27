@@ -153,6 +153,17 @@ public class UserLookupPreferencesDAOImpl implements UserLookupPreferencesDAO{
 		}
 	}
 
+	@Override
+	public void deleteUserLookupPreferenceByUserAndPPreferedId(Integer userId,
+			Integer preferredId) {
+		// TODO Auto-generated method stub
+		UserLookupPreferences userLookupPreferences=(UserLookupPreferences) this.sessionFactory.getCurrentSession().createCriteria(UserLookupPreferences.class)
+				.add(Restrictions.and(Restrictions.eq("id.userId", userId), Restrictions.eq("id.preferedId", preferredId))).uniqueResult();
+		if(userLookupPreferences!=null){
+			this.sessionFactory.getCurrentSession().delete(userLookupPreferences);
+		}
+	}
+
 	
 
 }

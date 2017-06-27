@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingDAO;
 import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingForm;
+import com.deemsys.project.UserLookupPreferences.UserLookupPreferencesDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.LawyerAdmin;
@@ -26,6 +27,9 @@ public class LawyerAdminCountyMappingService {
 	
 	@Autowired
 	CountyDAO countyDAO;
+	
+	@Autowired
+	UserLookupPreferencesDAO userLookupPreferencesDAO;
 	
 	//Get County Mapping By Lawyer Id
 		public List<LawyerAdminCountyMappingForm> getLawyerAdminCountyMappingByLawyerAdminId(Integer lawyerAdminId){
@@ -61,7 +65,7 @@ public class LawyerAdminCountyMappingService {
 		}
 		
 		
-		public void deleteLawyerAdminCountyMapping(List<Integer> countyId,Integer lawyerAdminId){
+		public void deleteLawyerAdminCountyMapping(List<Integer> countyId,Integer lawyerAdminId, Integer userId){
 			List<LawyerAdminCountyMappingForm> lawyerAdminCountyMappingForms=this.getLawyerAdminCountyMappingByLawyerAdminId(lawyerAdminId);
 			
 			for (LawyerAdminCountyMappingForm lawyerAdminCountyMappingForm : lawyerAdminCountyMappingForms) {
@@ -72,6 +76,7 @@ public class LawyerAdminCountyMappingService {
 					}
 					else{
 						lawyerAdminCountyMappingDAO.deleteLawyerAdminCountyMappingsByLawyerAdminIdAndCountyId(lawyerAdminCountyMappingForm.getLawyerAdminId(), lawyerAdminCountyMappingForm.getCountyId());
+						userLookupPreferencesDAO.deleteUserLookupPreferenceByUserAndPPreferedId(userId, lawyerAdminCountyMappingForm.getCountyId());
 					}
 				
 			}

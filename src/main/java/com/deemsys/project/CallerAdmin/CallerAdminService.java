@@ -192,7 +192,7 @@ public class CallerAdminService {
 		callerAdminDAO.update(callerAdmin);
 		
 		// Delete Unmapped County
-		callerAdminCountyMapService.deleteCallerAdminCountyMap(callerAdminForm.getCounty(), callerAdminForm.getCallerAdminId());
+		callerAdminCountyMapService.deleteCallerAdminCountyMap(callerAdminForm.getCounty(), callerAdminForm.getCallerAdminId(),users.getUserId());
 		
 		// Get Newly Added County List
 		List<Integer> newlyMappedCounty=callerAdminCountyMapService.getNewlyAddedCountyId(callerAdminForm.getCounty(), callerAdminForm.getCallerAdminId());

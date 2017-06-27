@@ -12,4 +12,5 @@ import com.deemsys.project.entity.UserLookupPreferences;
 public interface UserLookupPreferencesDAO extends IGenericDAO<UserLookupPreferences>{
 	public List<UserLookupPreferences> getUserLookupPreferencesByUserId(Integer userId);
 	public void deleteUserLookupPreferencesByUserId(Integer userId);
+	public void deleteUserLookupPreferenceByUserAndPPreferedId(Integer userId,Integer preferredId);
 }

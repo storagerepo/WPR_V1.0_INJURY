@@ -11,4 +11,5 @@ import com.deemsys.project.entity.ReportingAgency;
  */
 public interface ReportingAgencyDAO extends IGenericDAO<ReportingAgency>{
 	public List<ReportingAgency> getReportingAgencyListByCounties(Integer[] countyIds);
+	public List<ReportingAgency> getReportingAgencyByCountyAndAgencyName(Integer countyId, String agencyName);
 }	

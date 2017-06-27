@@ -13,7 +13,7 @@ adminApp.controller('searchVehiclesController', ['$q','$scope','requestHandler',
 		
 		//Initialize DropDown
 		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"}, {id: 5, label: "Undetermined"},{id: 0, label: "Others"}];
-		$scope.defaultAge=[{id:1,label:"Adults"},{id:4,label:"Not Known"}];
+		$scope.defaultAge=[{id:1,label:"Adults"},{id:1,label:"Minors"},{id:4,label:"Not Known"}];
 		
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
 		
@@ -27,7 +27,7 @@ adminApp.controller('searchVehiclesController', ['$q','$scope','requestHandler',
 		$scope.vehicle.localReportNumber="";
 		$scope.vehicle.reportingAgency=[];
 		$scope.vehicle.patientName="";
-		$scope.vehicle.age=[{id:1},{id:4}],
+		$scope.vehicle.age=[{id:1},{id:2},{id:4}],
 		$scope.vehicle.callerId=0;
 		$scope.vehicle.phoneNumber= "";
 		$scope.vehicle.lawyerId="0";
@@ -378,12 +378,12 @@ adminApp.controller('searchVehiclesController', ['$q','$scope','requestHandler',
 		   if(!$scope.searchTierMinError)
 			   $scope.disableSearch=false;			   
 	   }
-	   $scope.vehicle.reportingAgency=[];
+	 /*  $scope.vehicle.reportingAgency=[];
 	   //Some change happened in county selection lets update reporting agency list too
 	   searchService.getReportingAgencyList($scope.vehicle.countyId).then(function(response){
 		 //Load Reporting Agency List		   
 		 $scope.reportingAgencyList=response;  
-	   });
+	   });*/
 	   
 	}, true );
 	

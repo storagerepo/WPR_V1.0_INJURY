@@ -232,26 +232,25 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 	};
 	 
 	$scope.searchPatients = function(){
-		
+	
 	if($scope.vehicle.crashFromDate!="" && $scope.vehicle.crashToDate==""){
-			$scope.crashToRequired=true;
-		}
+		$scope.crashToRequired=true;
+	}
 	else if($scope.vehicle.addedOnFromDate!="" && $scope.vehicle.addedOnToDate==""){
 		$scope.addedToRequired=true;
-	}
-	else{
-			$scope.crashToRequired=false;
-			$scope.addedToRequired=false;
-			$scope.oldPageNumber=$scope.vehicle.pageNumber;
-			$scope.vehicle.pageNumber=1;
-			if($scope.oldPageNumber==$scope.vehicle.pageNumber){//This will call search function thru vehicle.pageNumber object $watch function 
-				$scope.vehicle.archivedFromDate=searchService.getArchivedFromDate();
-				$scope.vehicle.archivedToDate=searchService.getArchivedToDate(); 
-				$scope.searchItems($scope.vehicle);
-			}
-			// To Avoid Main Search Parameter Override
-			angular.copy($scope.vehicle,$scope.mainSearchParam);
+	}else {
+		$scope.crashToRequired=false;
+		$scope.addedToRequired=false;
+		$scope.oldPageNumber=$scope.vehicle.pageNumber;
+		$scope.vehicle.pageNumber=1;
+		if($scope.oldPageNumber==$scope.vehicle.pageNumber){//This will call search function thru vehicle.pageNumber object $watch function 
+			$scope.vehicle.archivedFromDate=searchService.getArchivedFromDate();
+			$scope.vehicle.archivedToDate=searchService.getArchivedToDate(); 
+			$scope.searchItems($scope.vehicle);
 		}
+		// To Avoid Main Search Parameter Override
+		angular.copy($scope.vehicle,$scope.mainSearchParam);	
+	}
 	// Set To Service
 	searchService.setCounty(angular.copy($scope.vehicle.countyId));
 	searchService.setNumberOfDays($scope.vehicle.numberOfDays);
@@ -259,7 +258,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 	searchService.setCrashToDate($scope.vehicle.crashToDate);
 	searchService.setCallerId($scope.vehicle.callerId);
 	searchService.setPatientName($scope.vehicle.patientName);
-	searchService.setDealerAge($scope.vehicle.age);
+	searchService.setAge($scope.vehicle.age);
 	searchService.setLocalReportNumber($scope.vehicle.localReportNumber);
 	searchService.setAddedOnFromDate($scope.vehicle.addedOnFromDate);
 	searchService.setAddedOnToDate($scope.vehicle.addedOnToDate);
@@ -286,7 +285,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 			searchService.setArchivedFromDate($scope.vehicle.archivedFromDate);
 			searchService.setArchivedToDate($scope.vehicle.archivedToDate);
 		}
-		searchService.setDealerAge($scope.vehicle.age);
+		searchService.setAge($scope.vehicle.age);
 		searchService.setPatientStatus($scope.vehicle.patientStatus);
 		searchService.setDirectReportStatus($scope.vehicle.directReportStatus);
 		$scope.oldPageNumber=$scope.vehicle.pageNumber;
@@ -628,7 +627,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 			moveArchiveObj.crashId=crashIdArray;
 			moveArchiveObj.status=0;
 			requestHandler.postRequest("/Caller/directReportMoveOrReleaseArchive.json",moveArchiveObj).then(function(response){
-				Flash.create('success', "You have Successfully Released from Archive!");
+				Flash.create('success', "You have Successfully released from Archive!");
 				$scope.searchItems($scope.mainSearchParam);
 				$scope.loadPreferenceCountyList();
 				angular.copy($scope.mainSearchParam,$scope.vehicle);
@@ -667,7 +666,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 	$scope.releaseSingleFileFromArchive=function(patientId){
 		var moveArchiveObj ={};
 		var patientIdArray=[patientId];
-		if(confirm("Are you sure want to relaese from archive?")){
+		if(confirm("Are you sure want to release from archive?")){
 			moveArchiveObj.patientId=patientIdArray;
 			requestHandler.postRequest("/Caller/releaseFromArchive.json",moveArchiveObj).then(function(response){
 				Flash.create('success', "You have Successfully released from Archive!");
@@ -689,7 +688,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 			moveArchiveObj.crashId=crashIdArray;
 			moveArchiveObj.status=0;
 			requestHandler.postRequest("/Caller/directReportMoveOrReleaseArchive.json",moveArchiveObj).then(function(response){
-				Flash.create('success', "You have Successfully Released from Archive!");
+				Flash.create('success', "You have Successfully released from Archive!");
 				$scope.searchItems($scope.mainSearchParam);
 				$scope.loadPreferenceCountyList();
 				angular.copy($scope.mainSearchParam,$scope.vehicle);
@@ -725,7 +724,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 
 		//Initialize DropDown
 			
-		$scope.defaultAge=[{id:1,label:"Adults"},{id:4,label:"Not Known"}];
+		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
 		
 		$scope.vehicle={};
@@ -739,7 +738,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 		$scope.vehicle.crashToDate=searchService.getCrashToDate();
 		$scope.vehicle.localReportNumber=searchService.getLocalReportNumber();
 		$scope.vehicle.patientName=searchService.getPatientName();
-		$scope.vehicle.age=searchService.getDealerAge();
+		$scope.vehicle.age=searchService.getAge();
 		$scope.vehicle.callerId=searchService.getCallerId();
 		$scope.vehicle.phoneNumber=searchService.getPhoneNumber();
 		$scope.vehicle.itemsPerPage=searchService.getItemsPerPage();
@@ -944,12 +943,12 @@ $scope.archivedToDateRequired=false;
 				   $scope.disableSearch=false;			   
 		   }
 	   }
-	   $scope.vehicle.reportingAgency=[];
+	   /*$scope.vehicle.reportingAgency=[];
 	   //Some change happened in county selection lets update reporting agency list too
 	   searchService.getReportingAgencyList($scope.vehicle.countyId).then(function(response){
 		 //Load Reporting Agency List		   
 		 $scope.reportingAgencyList=response;  
-	   });
+	   });*/
 	   
 	   
 	}, true );

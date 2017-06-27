@@ -1619,6 +1619,22 @@ sbAdminApp.directive('validateZipcode', function() {
 	};
 });
 
+sbAdminApp.directive('validateDate', function() {
+	return {
+		require : 'ngModel',
+		restrict : '',
+		link : function(scope, elm, attrs, ngModel) {
+			ngModel.$validators.validateDate = function(modelValue) {
+				if(modelValue=="" || modelValue==undefined){
+					return true;
+				}else{
+					return moment(modelValue, 'MM/DD/YYYY',true).isValid();
+				}
+			};
+		}
+	};
+});
+
 sbAdminApp.directive('validateCitytownship', function() {
 	var NUMBER_EXPR = /^ *([a-zA-Z,()]+ ?)+ *$/;
 	// var USA_MOB_EXPR_WITH_BR=/^(\([0-9]{3}\)|[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;

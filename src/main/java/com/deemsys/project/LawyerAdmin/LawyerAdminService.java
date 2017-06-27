@@ -229,7 +229,7 @@ public class LawyerAdminService {
 		lawyerAdminDAO.update(lawyerAdmin);
 		
 		List<Integer> countyMapped = lawyerAdminForm.getCounty();
-		lawyerAdminCountyMappingService.deleteLawyerAdminCountyMapping(countyMapped,lawyerAdminForm.getLawyerAdminId());
+		lawyerAdminCountyMappingService.deleteLawyerAdminCountyMapping(countyMapped,lawyerAdminForm.getLawyerAdminId(),users.getUserId());
 		// Add a New County List
 		
 		List<Integer> newlyAddedCounty = lawyerAdminCountyMappingService

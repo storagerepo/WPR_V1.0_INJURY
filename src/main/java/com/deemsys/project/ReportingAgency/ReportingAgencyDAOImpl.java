@@ -7,6 +7,7 @@ import org.apache.xmlbeans.impl.xb.xsdschema.RestrictionDocument.Restriction;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -155,6 +156,16 @@ public class ReportingAgencyDAOImpl implements ReportingAgencyDAO{
 		
 		criteria.add(countyCondition);
 		
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ReportingAgency> getReportingAgencyByCountyAndAgencyName(
+			Integer countyId, String agencyName) {
+		// TODO Auto-generated method stub
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(ReportingAgency.class);
+		criteria.add(Restrictions.and(Restrictions.eq("county.countyId", countyId), Restrictions.like("", agencyName, MatchMode.START)));
 		return criteria.list();
 	}
 

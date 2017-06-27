@@ -545,8 +545,8 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	}
 	
 	
-	//Common Constrain Local Report Number
-	if(callerPatientSearchForm.getLocalReportNumber()!=null&&!callerPatientSearchForm.getLocalReportNumber().equals("")){
+	//Common Constrain Local Report Number isOwner condition for Dealer Interface
+	if(callerPatientSearchForm.getLocalReportNumber()!=null&&!callerPatientSearchForm.getLocalReportNumber().equals("")&&callerPatientSearchForm.getIsOwner()!=1){
 	Criterion localReportNumberCriterion=Restrictions.like("cr.localReportNumber", callerPatientSearchForm.getLocalReportNumber(),MatchMode.START);
 	criteria.add(localReportNumberCriterion);
 	}
@@ -909,6 +909,16 @@ public String[] manupulateReportingAgency(String[] reportingAgency,Integer[] cou
 		reportingAgencyList[index++]=reportingAgencyId;
 	}
 	return reportingAgencyList;
+}
+
+@SuppressWarnings("unchecked")
+@Override
+public List<Patient> getPatientsListByAddedOnDates(String fromDate,
+		String toDate) {
+	// TODO Auto-generated method stub
+	Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Patient.class);
+	criteria.add(Restrictions.between("addedOnDate", InjuryConstants.convertYearFormat(fromDate), InjuryConstants.convertYearFormat(toDate)));
+	return criteria.list();
 }
 
 
