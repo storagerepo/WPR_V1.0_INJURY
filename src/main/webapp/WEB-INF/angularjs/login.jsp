@@ -144,10 +144,10 @@
 	</div>
 	<div class="col-md-12 auto">
 		<div id="body">
-		<div class="col-md-12"><div class="col-md-10"></div><div class="col-md-2 pull-right"><img src="resources/images/logo_crashreportsonline1.png" width="180px;" height="190px" style="border-radius: 100px;"/></div></div>
+		<div class="col-md-12"><div class="col-md-10"></div><div class="col-md-2 pull-right"><img src="resources/images/logo_crashreportsonline1.png" width="180px;" height="180px" style="border-radius: 90px;"/></div></div>
 		<div class="col-md-12" style="margin-top:-40px;">
-		<div class="col-md-7"></div>
-        <div class="col-md-5" style="margin-top:50px;">
+		<div class="col-md-8"></div>
+        <div class="col-md-4" style="margin-top:50px;">
 	        <div>
 		            <div class="panel panel-default panel-override">
 		                <div class="panel-heading">
