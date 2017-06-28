@@ -467,4 +467,22 @@ public class PatientController {
     	
     	return "/returnPage";
    	}
+    
+    // Update Rporing Agency For Existing Data
+    @RequestMapping(value="/updateReportingAgencyForExistingReports",method=RequestMethod.POST)
+    public String updateReportingAgencyToExistReports(@RequestParam("fromDate") String addedFromDate, @RequestParam("toDate") String addedToDate, ModelMap model){
+    	
+    	try {
+			crashReportReader.updateReportingAgencyForExistingReports(addedFromDate, addedToDate);
+			model.addAttribute("requestSuccess",true);
+			model.addAttribute("message","Success");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			model.addAttribute("message", e.toString());
+			model.addAttribute("requestSuccess",false);
+		}
+    	
+     return "";
+    }
 }

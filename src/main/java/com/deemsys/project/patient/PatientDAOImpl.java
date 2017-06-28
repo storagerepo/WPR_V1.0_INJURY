@@ -917,7 +917,10 @@ public List<Patient> getPatientsListByAddedOnDates(String fromDate,
 		String toDate) {
 	// TODO Auto-generated method stub
 	Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Patient.class);
-	criteria.add(Restrictions.between("addedOnDate", InjuryConstants.convertYearFormat(fromDate), InjuryConstants.convertYearFormat(toDate)));
+	criteria.add(Restrictions.between("addedDate", InjuryConstants.convertYearFormat(fromDate), InjuryConstants.convertYearFormat(toDate)));
+	criteria.add(Restrictions.isNull("reportingAgencyNcic"));
+	criteria.add(Restrictions.or(Restrictions.or(Restrictions.eq("isRunnerReport", 0), Restrictions.eq("isRunnerReport", 2)), Restrictions.eq("isRunnerReport", 4)));
+	
 	return criteria.list();
 }
 

@@ -128,6 +128,27 @@ public class PDFCrashReportReader {
 		return contentList;
 	}
 
+	public List<List<String>> parsePdfFromWebUrl(String pdfUrl) {
+		List<List<String>> contentList = new ArrayList<List<String>>();
+		try {
+			InputStream inputStream = new URL(pdfUrl).openStream();
+			PdfReader reader = new PdfReader(inputStream);
+			PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+			String pdfText = "";
+			TextExtractionStrategy strategy;
+			for (int i = 1; i <= reader.getNumberOfPages(); i++) {
+				strategy = parser.processContent(i,
+						new SimpleTextExtractionStrategy());
+				pdfText = strategy.getResultantText();
+				contentList.add(Arrays.asList(pdfText.split("\n")));
+			}
+		} catch (Exception ex) {
+			logger.error(ex.toString());
+		}
+
+		return contentList;
+	}
+	
 	/**
 	 * Parses a Manual PDF
 	 * 
@@ -2141,5 +2162,19 @@ public class PDFCrashReportReader {
 		details.add(localReportNumber);
 		details.add(crashDate);
 		return details;
+	}
+	
+	public Integer updateReportingAgencyForExistingReports(String fromDate, String toDate) throws IOException{
+		Integer status=0;
+		List<Patient> patients=patientDAO.getPatientsListByAddedOnDates(fromDate, toDate);
+		for (Patient patient : patients) {
+			System.out.println("Patient Crash Id"+patient.getCrashReport().getCrashId());
+			String filePath=injuryProperties.getProperty("bucketURL")+"CrashReport_"+patient.getCrashReport().getFilePath();
+			PDFCrashReportJson pdfCrashReportJson = this.getValuesFromPDF(this.parsePdfFromWebUrl(filePath));
+			System.out.println("Reporting Agency"+pdfCrashReportJson.getFirstPageForm().getReportingAgencyNCIC());
+			patient.setReportingAgencyNcic(pdfCrashReportJson.getFirstPageForm().getReportingAgencyNCIC());
+			patientDAO.update(patient);
+		}
+		return status;
 	}
 }

@@ -30,8 +30,6 @@ import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.Caller;
-import com.deemsys.project.entity.PoliceAgency;
-import com.deemsys.project.entity.ReportingAgency;
 import com.deemsys.project.login.LoginService;
 
 /**
@@ -589,32 +587,4 @@ public class PatientService {
 		return patientSearchResultGroupByArchivedList;
 	}
 	
-	// Update Police Agency
-	public Integer updatePoliceAgency(String fromDate, String toDate){
-		Integer status=0;
-		List<Patient> patients=patientDAO.getPatientsListByAddedOnDates(fromDate, toDate);
-		for (Patient patient : patients) {
-			String[] splittedAgency=patient.getReportingAgencyName().split(" ");
-			List<ReportingAgency> agencies=reportingAgencyDAO.getReportingAgencyByCountyAndAgencyName(patient.getCounty().getCountyId(), splittedAgency[0]);
-			if(agencies!=null&&agencies.size()>0){
-				if(agencies.size()==1){
-					patient.setReportingAgencyNcic(agencies.get(0).getCode().toString());
-					patientDAO.update(patient);
-				}else{
-					agencies=new ArrayList<ReportingAgency>();
-					if(agencies!=null&&agencies.size()==1){
-						patient.setReportingAgencyNcic(agencies.get(0).getCode().toString());
-						patientDAO.update(patient);
-					}
-				}
-			}else{
-				agencies=new ArrayList<ReportingAgency>();
-				if(agencies!=null&&agencies.size()==1){
-					patient.setReportingAgencyNcic(agencies.get(0).getCode().toString());
-					patientDAO.update(patient);
-				}
-			}
-		}
-		return status;
-	}
 }
