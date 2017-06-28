@@ -199,7 +199,7 @@
 var hostname=window.location.hostname;
 var url=hostname.split(".");
 
-if(location.search=='?id'){
+if(url[0]=='auto'){
 	$(".auto").css({'display':'block'});
 	$("#callcenter").css({'display':'none'});
 	$("#header-h2").css({'border':'2px solid white','border-left':'none'});
