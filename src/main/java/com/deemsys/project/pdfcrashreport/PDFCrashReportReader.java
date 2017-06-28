@@ -2169,7 +2169,7 @@ public class PDFCrashReportReader {
 		List<Patient> patients=patientDAO.getPatientsListByAddedOnDates(fromDate, toDate);
 		for (Patient patient : patients) {
 			System.out.println("Patient Crash Id"+patient.getCrashReport().getCrashId());
-			String filePath=injuryProperties.getProperty("bucketURL")+"CrashReport_"+patient.getCrashReport().getFilePath();
+			String filePath=injuryProperties.getProperty("bucketURL")+patient.getCrashReport().getFilePath();
 			PDFCrashReportJson pdfCrashReportJson = this.getValuesFromPDF(this.parsePdfFromWebUrl(filePath));
 			System.out.println("Reporting Agency"+pdfCrashReportJson.getFirstPageForm().getReportingAgencyNCIC());
 			patient.setReportingAgencyNcic(pdfCrashReportJson.getFirstPageForm().getReportingAgencyNCIC());

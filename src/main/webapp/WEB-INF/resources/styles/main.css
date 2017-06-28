@@ -1028,3 +1028,7 @@ ul.rating {
 	background:#fff;
 	border-radius:2px;
 }
+
+.dashboard-panel-lg-2{
+	width: 20% !important;	
+}

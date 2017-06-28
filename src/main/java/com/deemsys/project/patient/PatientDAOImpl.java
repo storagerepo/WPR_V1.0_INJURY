@@ -893,13 +893,13 @@ public String[] manupulateReportingAgency(String[] reportingAgency,Integer[] cou
 	
 	
 	
-	if(reportingAgencyIds.contains("OH")){
-		reportingAgencyIds.remove("OH");
+	if(reportingAgencyIds.contains("OHP")){
+		reportingAgencyIds.remove("OHP");
 		for (Integer county : countyId) {
 			if(county<10){
-				reportingAgencyIds.add("OH0"+county);
+				reportingAgencyIds.add("OHP0"+county);
 			}else{
-				reportingAgencyIds.add("OH"+county);
+				reportingAgencyIds.add("OHP"+county);
 			}
 		}
 	}
