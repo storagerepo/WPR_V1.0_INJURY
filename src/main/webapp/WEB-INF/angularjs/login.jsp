@@ -161,16 +161,16 @@
 		                    <div class="sessionout" style="color:#FF0000">Your Session has been expired. Please login again!<br/><br/></div>
 		                        <fieldset>
 		                            <div class="form-group">
-		                                <input class="form-control input-md" placeholder="Username" name="username" id="username" type="text" autofocus>
-		                                <span style="color:#FF0000" id="username_error"></span>
+		                                <input class="form-control input-md" placeholder="Username" name="username" id="usernameauto" type="text" autofocus>
+		                                <span style="color:#FF0000" id="usernameauto_error"></span>
 		                            </div>
 		                            <div class="form-group">
-		                                <input class="form-control input-md" placeholder="Password" name="password" id="password" type="password" value="">
-		                                <span style="color:#FF0000" id="password_error"></span>
+		                                <input class="form-control input-md" placeholder="Password" name="password" id="passwordauto" type="password" value="">
+		                                <span style="color:#FF0000" id="passwordauto_error"></span>
 		                            </div>
 		                                             
 		                            <!-- Change this to a button or input when using this as a form -->
-		                            <input type="submit" onclick="return checkValidation()" value="Login" class="btn btn-primary btn-login pull-right"> 
+		                            <input type="submit" onclick="return checkValidationAuto()" value="Login" class="btn btn-primary btn-login pull-right"> 
 		                         </fieldset>
 		                    </form>
 		                </div>
@@ -231,6 +231,29 @@ function checkValidation(){
 	if(password==""){
 		error=true;
 		document.getElementById("password_error").innerText="Please Enter Password";
+	}
+	if(error){
+		return false;
+	}else{
+		return true;
+	}
+}
+
+function checkValidationAuto(){
+	var username=document.getElementById("usernameauto").value;
+	var password=document.getElementById("passwordauto").value;
+
+	document.getElementById("usernameauto_error").innerText="";
+	document.getElementById("passwordauto_error").innerText="";
+	
+	var error=false;
+	if(username==""){
+		error=true;
+		document.getElementById("usernameauto_error").innerText="Please Enter Username";
+	}
+	if(password==""){
+		error=true;
+		document.getElementById("passwordauto_error").innerText="Please Enter Password";
 	}
 	if(error){
 		return false;
