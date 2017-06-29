@@ -268,7 +268,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	searchService.setCountyListType($scope.countyListType);
 	searchService.setDamageScale(angular.copy($scope.patient.damageScale));
 	searchService.setDirectReportStatus($scope.patient.directReportStatus);
-	searchService.setReportingAgency($scope.patient.reportingAgency);
+	searchService.setReportingAgency(angular.copy($scope.patient.reportingAgency));
 	};
 	
 	$scope.secoundarySearchPatient=function(){
@@ -345,7 +345,6 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		searchService.setIsRunnerReport($scope.patient.isRunnerReport);
 		searchService.setPageNumber($scope.patient.pageNumber);
 		searchService.setItemsPerPage($scope.patient.itemsPerPage);
-		$scope.mainSearchParam.reportingAgency=$scope.patient.reportingAgency;
 		// Copy Mainsearchparam to Patient
 		angular.copy($scope.mainSearchParam,$scope.patient);
 		if($scope.mainSearchParam.countyId!=''){
@@ -692,7 +691,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		$scope.patient.patientStatus=searchService.getPatientStatus();
 		$scope.countyListType=searchService.getCountyListType();
 		$scope.patient.directReportStatus=searchService.getDirectReportStatus();
-		$scope.patient.reportingAgency=searchService.getReportingAgency();
+		angular.copy(searchService.getReportingAgency(),$scope.patient.reportingAgency);
 		$scope.isSelectedAddedFromDate=true;
 		
 		// Report Type
@@ -721,7 +720,19 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 					searchService.getInitPreferenceCoutyList($scope.countyListType).then(function(response){
 						angular.copy(response,$scope.patient.countyId);
 						$scope.mainSearchParam.countyId=angular.copy($scope.patient.countyId);
-						$scope.searchItems($scope.patient);
+						searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
+							 //Load Reporting Agency List		   
+							 $scope.reportingAgencyList=response;  
+							 $scope.reportingAgencyLoaded=true;
+							// pushing received reporting Agency List to $scope.patient.reportingAgency Array.
+							 $scope.patient.reportingAgency=[];
+							 $.each($scope.reportingAgencyList, function(index,value) {
+								 $scope.patient.reportingAgency.push({"id":value.code});
+								 searchService.setReportingAgency(angular.copy($scope.patient.reportingAgency));
+							 });
+							 $scope.mainSearchParam.reportingAgency=angular.copy($scope.patient.reportingAgency);
+							 $scope.searchItems($scope.patient);
+						  });
 					});
 				});
 			}
@@ -734,7 +745,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		if(searchService.getAddedOnFromDate()!=""){
 			$scope.isSelectedAddedFromDate=false;
 		}
-		$scope.searchItems($scope.patient);
+		
 	};
 	
 	$scope.init();
@@ -837,17 +848,18 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 				   $scope.disableSearch=false;			   
 		   }
 	   }
-	   $scope.patient.reportingAgency=[];
+	  
 		$scope.searchReportingAgencyMinError=false;
 	   //Some change happened in county selection lets update reporting agency list too
 	   searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
+		   $scope.patient.reportingAgency=[];
 		 //Load Reporting Agency List		   
 		 $scope.reportingAgencyList=response;  
 		 $scope.reportingAgencyLoaded=true;
 		// pushing received reporting Agency List to $scope.patient.reportingAgency Array.
 		 $.each($scope.reportingAgencyList, function(index,value) {
 			 $scope.patient.reportingAgency.push({"id":value.code});
-			 searchService.setReportingAgency($scope.patient.reportingAgency);
+			 searchService.setReportingAgency(angular.copy($scope.patient.reportingAgency));
 		 });
 	   });
 	}, true );
@@ -869,7 +881,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 			$scope.searchReportingAgencyMinError=false;
 			}
 			}
-			},true);
+		},true);
 	// County Drop down events
 	$scope.countyEvents = {onInitDone: function(item) {},
 			onItemDeselect: function(item) {},
