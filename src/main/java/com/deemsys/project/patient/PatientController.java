@@ -163,6 +163,8 @@ public class PatientController {
 						importCrashReportStatus.setMessage("Report Already Exist");
 					}
 				importCrashReportStatusList.add(importCrashReportStatus);
+				model.addAttribute("error","");
+				model.addAttribute("requestSuccess", true);
 			} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
 					model.addAttribute("error", "Number Format Exception for - "+crashId);
@@ -179,7 +181,6 @@ public class PatientController {
 		}
 
 		model.addAttribute("importCrashReportStatus",importCrashReportStatusList);
-		model.addAttribute("requestSuccess", true);
 		return "";
 
 	}
@@ -426,6 +427,7 @@ public class PatientController {
     				importCrashReportStatus.setMessage("Report Already Exist");
         		}
         		model.addAttribute("requestSuccess",true);
+        		model.addAttribute("error","");
     			importCrashReportStatusList.add(importCrashReportStatus);
     			model.addAttribute("importCrashReportStatus",importCrashReportStatusList);
     		} catch (Exception e) {
