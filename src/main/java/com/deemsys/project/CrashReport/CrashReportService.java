@@ -316,6 +316,7 @@ public class CrashReportService {
 				patientForm.setCallerId(null);
 				patientForm.setLatitude(null);
 				patientForm.setLongitude(null);
+				patientForm.setIsOwner(0);
 				patientForm.setCountyId(Integer.parseInt(runnerCrashReportForm.getCounty()));
 				patientService.savePatient(patientForm);
 			} catch (Exception e) {

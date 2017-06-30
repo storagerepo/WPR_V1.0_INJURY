@@ -719,8 +719,14 @@ public class PDFCrashReportReader {
 									motoristPageForm
 											.setDateOfBirth(motoristPage
 													.get(index + 5));
-								if(motoristPage.get(index+4).equals("GENDER"))
-									motoristPageForm.setGender(motoristPage.get(index + 5));
+								if(motoristPage.get(index+4).equals("GENDER")){
+									if(!motoristPage.get(index + 5).equals("F - FEMALE")){
+										motoristPageForm.setGender(motoristPage.get(index + 5));
+									}else{
+										motoristPageForm.setGender("");
+									}
+								}
+									
 								if(motoristPage.get(index+2).equals("NAME: LAST, FIRST, MIDDLE DATE  OF BIRTH AGE"))
 									motoristPageForm.setAge(motoristPage.get(index + 3));
 								if (motoristPage.get(index + 6).equals(
