@@ -1464,15 +1464,23 @@ public class PDFCrashReportReader {
 		ReportMotoristPageForm motoristPageForm = null;
 		for (ReportMotoristPageForm motoristPage : reportMotoristPageForms) {
 			if(motoristPage.getName()!=null&&unitPageForm.getOwnerName()!=null&&motoristPage.getAdddressCityStateZip()!=null&&unitPageForm.getOwnerAddress()!=null){
-				String ownerName=unitPageForm.getOwnerName().substring(0, unitPageForm.getOwnerName().lastIndexOf(","));
-				String motoristName=motoristPage.getName().substring(0,motoristPage.getName().lastIndexOf(","));
-				if(motoristName.equals(ownerName)&&motoristPage.getAdddressCityStateZip().equals(unitPageForm.getOwnerAddress())){
+				
+				String[] ownerName=new String[]{"","",""};
+				String[] motoristName=new String[]{"","",""};
+				
+				ownerName=unitPageForm.getOwnerName().split(",");
+				motoristName=motoristPage.getName().split(",");
+				
+				
+				if(motoristName[0].equals(ownerName[0])&&motoristName[1].equals(ownerName[1])&&motoristPage.getAdddressCityStateZip().equals(unitPageForm.getOwnerAddress())){
 					return motoristPage;
 				}
 			}
 		}
 		return motoristPageForm;
 	}
+	
+
 	
 	//Main function for PDF Parsing
 	public void parsePDFDocument(File file,String crashId) throws Exception{
