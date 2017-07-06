@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.apache.commons.io.FileUtils;
@@ -655,6 +656,10 @@ public class PDFCrashReportReader {
 				vehicleYear=unitPage.indexOf("VEHICLE YEAR")==-1?"":unitPage.get(unitPage.indexOf("VEHICLE YEAR")-1);
 				if(vehicleYear.equals("TOWED BY")){
 					vehicleYear="";
+				}else{
+					if(!Pattern.matches("[0-9]{4}", vehicleYear.trim())){
+						vehicleYear="";
+					}
 				}
 				
 				// VIN
