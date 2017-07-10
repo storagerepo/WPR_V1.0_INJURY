@@ -21,6 +21,7 @@ import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersService;
 import com.deemsys.project.Map.GeoLocation;
 import com.deemsys.project.ReportingAgency.ReportingAgencyDAO;
+import com.deemsys.project.VehicleMakeAbbreviation.VehicleMakeAbbreviationDAO;
 import com.deemsys.project.Caller.CallerDAO;
 import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
@@ -30,6 +31,7 @@ import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.Caller;
+import com.deemsys.project.entity.VehicleMakeAbbreviation;
 import com.deemsys.project.login.LoginService;
 
 /**
@@ -65,6 +67,9 @@ public class PatientService {
 	
 	@Autowired
 	ReportingAgencyDAO reportingAgencyDAO;
+	
+	@Autowired
+	VehicleMakeAbbreviationDAO vehicleMakeAbbreviationDAO;
 	
 	@Autowired
 	CrashReportService crashReportService;
@@ -394,7 +399,7 @@ public class PatientService {
 				patient.getAtFaultPolicyNumber(),
 				patient.getVictimInsuranceCompany(),
 				patient.getVictimPolicyNumber(),patient.getTier(),
-				patient.getVehicleMake(),patient.getVehicleYear(),
+				patient.getVehicleMakeAbbreviation().getAbbreviation(),patient.getVehicleYear(),
 				patient.getVin(),patient.getLicensePlateNumber(),patient.getIsOwner(),
 				patient.getPatientStatus(),
 				patient.getCrashReport().getFilePath(), patient.getStatus(),patient.getSeatingPosition(),patient.getDamageScale(),patient.getIsRunnerReport());
@@ -429,12 +434,18 @@ public class PatientService {
 		crashReport=crashReportDAO.getCrashReport(patientForm.getCrashId());
 	}
 	
+	VehicleMakeAbbreviation vehicleMakeAbbreviation = vehicleMakeAbbreviationDAO.getVehicleMakeAbbreviationByMake(patientForm.getVehicleMake());
+	if(vehicleMakeAbbreviation==null){
+		vehicleMakeAbbreviation=new VehicleMakeAbbreviation(patientForm.getVehicleMake(), patientForm.getVehicleMake(), 1, null);
+		vehicleMakeAbbreviationDAO.save(vehicleMakeAbbreviation);
+	}
 	
 	//Date 
 	LocalDate addedDate=new LocalDate();
 	
 	//Mapping
 	Patient patient = new Patient(patientForm.getPatientId(),crashReport, county,
+			vehicleMakeAbbreviation,
 			patientForm.getLocalReportNumber(),
 			patientForm.getCrashSeverity(),
 			patientForm.getReportingAgencyNcic(),
@@ -452,7 +463,7 @@ public class PatientService {
 			patientForm.getAtFaultPolicyNumber(),
 			patientForm.getVictimInsuranceCompany(),
 			patientForm.getVictimPolicyNumber(), patientForm.getSeatingPosition(), patientForm.getDamageScale(),patientForm.getTier(),
-			patientForm.getVehicleMake(),patientForm.getVehicleYear(),patientForm.getVin(),
+			patientForm.getVehicleYear(),patientForm.getVin(),
 			patientForm.getLicensePlateNumber(), patientForm.getIsOwner(),
 			patientForm.getPatientStatus(),
 			patientForm.getCrashReportFileName(), patientForm.getIsRunnerReport(), patientForm.getStatus(),

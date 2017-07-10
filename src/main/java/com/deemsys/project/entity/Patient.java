@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 20 Jun, 2017 11:39:16 AM by Hibernate Tools 3.4.0.CR1
+// Generated 7 Jul, 2017 3:20:55 PM by Hibernate Tools 3.4.0.CR1
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -27,6 +27,7 @@ public class Patient implements java.io.Serializable {
 	private String patientId;
 	private CrashReport crashReport;
 	private County county;
+	private VehicleMakeAbbreviation vehicleMakeAbbreviation;
 	private String localReportNumber;
 	private String crashSeverity;
 	private String reportingAgencyNcic;
@@ -56,7 +57,6 @@ public class Patient implements java.io.Serializable {
 	private String seatingPosition;
 	private Integer damageScale;
 	private Integer tier;
-	private String vehicleMake;
 	private String vehicleYear;
 	private String vin;
 	private String licensePlateNumber;
@@ -78,6 +78,7 @@ public class Patient implements java.io.Serializable {
 	}
 
 	public Patient(String patientId, CrashReport crashReport, County county,
+			VehicleMakeAbbreviation vehicleMakeAbbreviation,
 			String localReportNumber, String crashSeverity,
 			String reportingAgencyNcic, String reportingAgencyName,
 			String numberOfUnits, String unitInError,
@@ -89,14 +90,15 @@ public class Patient implements java.io.Serializable {
 			String atFaultInsuranceCompany, String atFaultPolicyNumber,
 			String victimInsuranceCompany, String victimPolicyNumber,
 			String seatingPosition, Integer damageScale, Integer tier,
-			String vehicleMake, String vehicleYear, String vin,
-			String licensePlateNumber, Integer isOwner, Integer patientStatus,
-			String crashReportFileName, Integer isRunnerReport, Integer status,
+			String vehicleYear, String vin, String licensePlateNumber,
+			Integer isOwner, Integer patientStatus, String crashReportFileName,
+			Integer isRunnerReport, Integer status,
 			Set<PatientCallerAdminMap> patientCallerAdminMaps,
 			Set<PatientLawyerAdminMap> patientLawyerAdminMaps) {
 		this.patientId = patientId;
 		this.crashReport = crashReport;
 		this.county = county;
+		this.vehicleMakeAbbreviation = vehicleMakeAbbreviation;
 		this.localReportNumber = localReportNumber;
 		this.crashSeverity = crashSeverity;
 		this.reportingAgencyNcic = reportingAgencyNcic;
@@ -126,7 +128,6 @@ public class Patient implements java.io.Serializable {
 		this.seatingPosition = seatingPosition;
 		this.damageScale = damageScale;
 		this.tier = tier;
-		this.vehicleMake = vehicleMake;
 		this.vehicleYear = vehicleYear;
 		this.vin = vin;
 		this.licensePlateNumber = licensePlateNumber;
@@ -167,6 +168,17 @@ public class Patient implements java.io.Serializable {
 
 	public void setCounty(County county) {
 		this.county = county;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "vehicle_make")
+	public VehicleMakeAbbreviation getVehicleMakeAbbreviation() {
+		return this.vehicleMakeAbbreviation;
+	}
+
+	public void setVehicleMakeAbbreviation(
+			VehicleMakeAbbreviation vehicleMakeAbbreviation) {
+		this.vehicleMakeAbbreviation = vehicleMakeAbbreviation;
 	}
 
 	@Column(name = "local_report_number", length = 45)
@@ -430,15 +442,6 @@ public class Patient implements java.io.Serializable {
 
 	public void setTier(Integer tier) {
 		this.tier = tier;
-	}
-
-	@Column(name = "vehicle_make", length = 45)
-	public String getVehicleMake() {
-		return this.vehicleMake;
-	}
-
-	public void setVehicleMake(String vehicleMake) {
-		this.vehicleMake = vehicleMake;
 	}
 
 	@Column(name = "vehicle_year", length = 10)

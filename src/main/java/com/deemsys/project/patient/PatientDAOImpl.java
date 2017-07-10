@@ -572,17 +572,20 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	
 	String role=loginService.getCurrentRole();
 	
+	// Join Vehicle Make abbreviation
+	criteria.createAlias("t1.vehicleMakeAbbreviation", "vma1",Criteria.LEFT_JOIN);
+	
 	// Vehicle Constraints
 	if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+		
 		if(callerPatientSearchForm.getVehicleMake()!=null&&!callerPatientSearchForm.getVehicleMake().equals("")){
-			Criterion vehicleMakeCriterion=Restrictions.like("t1.vehicleMake", callerPatientSearchForm.getVehicleMake(),MatchMode.ANYWHERE);
+			Criterion vehicleMakeCriterion=Restrictions.like("vma1.abbreviation", callerPatientSearchForm.getVehicleMake(),MatchMode.ANYWHERE);
 			criteria.add(vehicleMakeCriterion);
 		}
 		if(callerPatientSearchForm.getVehicleYear()!=null&&!callerPatientSearchForm.getVehicleYear().equals("")){
 			Criterion vehicleYearCriterion=Restrictions.like("t1.vehicleYear", callerPatientSearchForm.getVehicleYear(),MatchMode.ANYWHERE);
 			criteria.add(vehicleYearCriterion);
 		}
-		// Is Owner Criterion 
 		
 	}
 	
@@ -762,7 +765,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	projectionList.add(Projections.property("cr.runnerReportAddedDate"),"runnerReportAddedDate");
 	
 	// Vehicle Details
-	projectionList.add(Projections.property("t1.vehicleMake"),"vehicleMake");
+	projectionList.add(Projections.property("vma1.abbreviation"),"vehicleMake");
 	projectionList.add(Projections.property("t1.vehicleYear"),"vehicleYear");
 	projectionList.add(Projections.property("t1.vin"),"VIN");
 	projectionList.add(Projections.property("t1.isOwner"),"isOwner");

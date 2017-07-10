@@ -42,5 +42,6 @@
         <mapping class="com.deemsys.project.entity.DirectReportLawyerAdminMap" />
         <mapping class="com.deemsys.project.entity.PoliceAgency" />
         <mapping class="com.deemsys.project.entity.ReportingAgency" />
+        <mapping class="com.deemsys.project.entity.VehicleMakeAbbreviation" />
     </session-factory>
 </hibernate-configuration>
