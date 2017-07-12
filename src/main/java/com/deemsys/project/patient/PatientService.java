@@ -383,6 +383,11 @@ public class PatientService {
 	//Patient -> Patient Form	
 	public PatientForm getPatientForm(Patient patient) {
 
+		String abbreviation="";
+		if(patient.getVehicleMakeAbbreviation()!=null){
+			abbreviation=patient.getVehicleMakeAbbreviation().getAbbreviation();
+		}
+		
 		PatientForm patientForm = new PatientForm(patient.getPatientId(),patient.getCrashReport().getCrashId(),
 				patient.getCrashReport().getLocalReportNumber(), patient.getCrashSeverity(),
 				patient.getReportingAgencyNcic(),
@@ -399,7 +404,7 @@ public class PatientService {
 				patient.getAtFaultPolicyNumber(),
 				patient.getVictimInsuranceCompany(),
 				patient.getVictimPolicyNumber(),patient.getTier(),
-				patient.getVehicleMakeAbbreviation().getAbbreviation(),patient.getVehicleYear(),
+				abbreviation,patient.getVehicleYear(),
 				patient.getVin(),patient.getLicensePlateNumber(),patient.getIsOwner(),
 				patient.getPatientStatus(),
 				patient.getCrashReport().getFilePath(), patient.getStatus(),patient.getSeatingPosition(),patient.getDamageScale(),patient.getIsRunnerReport());
@@ -435,7 +440,7 @@ public class PatientService {
 	}
 	
 	VehicleMakeAbbreviation vehicleMakeAbbreviation = vehicleMakeAbbreviationDAO.getVehicleMakeAbbreviationByMake(patientForm.getVehicleMake());
-	if(vehicleMakeAbbreviation==null){
+	if(vehicleMakeAbbreviation==null&&patientForm.getVehicleMake()!=null){
 		vehicleMakeAbbreviation=new VehicleMakeAbbreviation(patientForm.getVehicleMake(), patientForm.getVehicleMake(), 1, null);
 		vehicleMakeAbbreviationDAO.save(vehicleMakeAbbreviation);
 	}
