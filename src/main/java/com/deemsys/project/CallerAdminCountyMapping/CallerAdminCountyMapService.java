@@ -99,4 +99,8 @@ public class CallerAdminCountyMapService {
 			callerAdminCountyMapDAO.deleteCallerAdminCountyMapByCallerAdminIdAndCountyId(callerAdminId, countyId);
 		}
 		
+		// Delete Caller Admin County Map By Caller Admin Id
+		public void deleteCallerAdminCountyMapByCAdminId(Integer callerAdminId){
+			callerAdminCountyMapDAO.deleteCallerAdminCountyMapByCallerAdminId(callerAdminId);
+		}
 }

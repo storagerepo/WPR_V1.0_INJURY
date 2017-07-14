@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.CallerAdmin.CallerAdminForm;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.CallerAdminCountyMapping.CallerAdminCountyMapService;
 import com.deemsys.project.CrashReport.PoliceDepartmentRunnerDirectReports;
@@ -185,6 +186,33 @@ public class CommonController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+    
+    // Reset County Map
+    @RequestMapping(value="/resetCountyMap",method=RequestMethod.POST)
+   	public String resetCountyMap(@RequestBody CallerAdminForm callerAdminForm,ModelMap model)
+   	{
+    	
+    	Users users=loginService.getUserByProductToken(callerAdminForm.getProductToken());
+    	Integer roleId=users.getRoles().getRoleId();
+    	if(roleId.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)||roleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
+    		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(users.getUserId());
+    		callerAdminCountyMapService.deleteCallerAdminCountyMapByCAdminId(callerAdmin.getCallerAdminId());
+    		for (Integer countyId : callerAdminForm.getCounty()) {
+    			callerAdminCountyMapService.saveCallerAdminCountyMap(countyId, callerAdmin);
+			}
+    	}else if(roleId.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
+    		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
+    		lawyerAdminCountyMappingService.deleteLawyerAdminCountyMapByLAdminId(lawyerAdmin.getLawyerAdminId());
+    		for (Integer countyId : callerAdminForm.getCounty()) {
+    			lawyerAdminCountyMappingService.saveLawyerAdminCountyMap(countyId, lawyerAdmin);
+    		}
+    		
+    	}
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+    
     // enable or Disable User
     @RequestMapping(value="/enableOrDisableUser",method=RequestMethod.POST)
    	public String enableOrDisableUser(@RequestParam("customerProductToken") String customerProductToken,@RequestParam("status") Integer status,ModelMap model)

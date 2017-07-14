@@ -112,4 +112,9 @@ public class LawyerAdminCountyMappingService {
 		public void deleteLawyerAdminCountyMapByCountyAndLAdminId(Integer countyId,Integer lawyerAdminId){
 			lawyerAdminCountyMappingDAO.deleteLawyerAdminCountyMappingsByLawyerAdminIdAndCountyId(lawyerAdminId, countyId);
 		}
+		
+		// Delete County Map by ladmin Id
+		public void deleteLawyerAdminCountyMapByLAdminId(Integer lawyerAdminId){
+			lawyerAdminCountyMappingDAO.deleteLawyerAdminCountyMappingsByLawyerAdminId(lawyerAdminId);
+		}
 }

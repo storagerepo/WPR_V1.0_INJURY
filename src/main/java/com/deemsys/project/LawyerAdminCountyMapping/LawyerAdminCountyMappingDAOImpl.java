@@ -159,9 +159,11 @@ public class LawyerAdminCountyMappingDAOImpl implements LawyerAdminCountyMapping
 			Integer lawyerAdminId) {
 		// TODO Auto-generated method stub
 		
-		LawyerAdminCountyMap lawyerAdminCountyMap=(LawyerAdminCountyMap) this.sessionFactory.getCurrentSession().createCriteria(LawyerAdminCountyMap.class).add(Restrictions.eq("lawyerAdmin.id", lawyerAdminId)).uniqueResult();
-		this.sessionFactory.getCurrentSession().delete(lawyerAdminCountyMap);
+		List<LawyerAdminCountyMap> lawyerAdminCountyMaps= this.sessionFactory.getCurrentSession().createCriteria(LawyerAdminCountyMap.class).add(Restrictions.eq("lawyerAdmin.id", lawyerAdminId)).list();
 		
+		for (LawyerAdminCountyMap lawyerAdminCountyMap : lawyerAdminCountyMaps) {
+			this.sessionFactory.getCurrentSession().delete(lawyerAdminCountyMap);
+		}
 	}
 
 	@Override
