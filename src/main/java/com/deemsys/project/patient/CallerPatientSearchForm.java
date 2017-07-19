@@ -34,6 +34,10 @@ public class CallerPatientSearchForm {
 	private String vehicleYear;
 	private Integer isOwner;
 	
+	// Export Excel
+	private Integer exportType;
+	private String[] exportPatientIds;
+	
 	public Integer getCallerAdminId() {
 		return callerAdminId;
 	}
@@ -215,6 +219,19 @@ public class CallerPatientSearchForm {
 	}
 	public void setIsOwner(Integer isOwner) {
 		this.isOwner = isOwner;
+	}
+	
+	public Integer getExportType() {
+		return exportType;
+	}
+	public void setExportType(Integer exportType) {
+		this.exportType = exportType;
+	}
+	public String[] getExportPatientIds() {
+		return exportPatientIds;
+	}
+	public void setExportPatientIds(String[] exportPatientIds) {
+		this.exportPatientIds = exportPatientIds;
 	}
 	
 	public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],

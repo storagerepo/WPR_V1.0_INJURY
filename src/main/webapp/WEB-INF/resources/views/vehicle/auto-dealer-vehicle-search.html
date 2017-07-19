@@ -731,24 +731,42 @@
 				<form name="changePasswordModalForm" novalidate>
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Export Preference</h4>
+						<h4 class="modal-title">Export Options</h4>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body modal-min-height-120">
+						<div class="col-md-12">
+						<div class="col-md-4"><label>Preference :</label></div> 
+						<div class="col-md-8">
 						<span class="text-center"> <label class="radio-inline"><input
 								type="radio" value="1" name="exportFormat" ng-model="formatType"
 								ng-click="resetUserPreferenceError()" />Standard</label>
 							&nbsp;&nbsp;&nbsp;&nbsp; <label class="radio-inline"><input
 								type="radio" value="2" name="exportFormat" ng-model="formatType"
 								ng-click="checkPreferenceStatus()" />Custom</label>
-						</span><br /> <span style="color: red" ng-show="userPrefenceError">Currently
+						</span><br /> <div class="error-message"><span ng-show="userPrefenceError">Currently
 							you are not done with the custom preference. To setup, please <a
-							href="" ng-click="goToSettings()"><u>click here</u></a>
-						</span>
+							href="" ng-click="goToSettings()"><u>click here</u></a><br/>
+						</span></div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						
+						<div class="col-md-4"><label>Export Type :</label> </div>
+						<div class="col-md-8">
+						<span class="text-center"> <label class="radio-inline"><input
+							type="radio" value="1" name="exportType" ng-model="exportType"
+							ng-click="checkExportSelectedVehicles()" />Export Only Selected</label>
+						&nbsp;&nbsp;&nbsp;&nbsp; <label class="radio-inline"><input
+							type="radio" value="2" name="exportType" ng-model="exportType" ng-click="checkExportSelectedVehicles()"
+							 />Export All</label>
+					</span><br/> <div class="error-message"><span ng-show="!isExportVehicleSelected"> Select atleast one vehicle</span></div>
+					</div>
+					</div> 
 					</div>
 					<div class="modal-footer">
 						<button type="close" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 						<a href="" type="submit" class="btn btn-success"
-							data-dismiss="modal" ng-disabled="userPrefenceExportButton"
+							data-dismiss="modal" ng-disabled="userPrefenceExportButton || !isExportVehicleSelected"
 							ng-click="exportExcelByType()">Export</a>
 					</div>
 				</form>

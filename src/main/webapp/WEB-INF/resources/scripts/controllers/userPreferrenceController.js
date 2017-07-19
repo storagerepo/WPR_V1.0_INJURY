@@ -223,6 +223,8 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	var exportDefaultValueListOrginal=[];
 	$scope.exportFormatValueList=[];
 	var exportFormatValueListOrginal=[];
+	$scope.exportDefaultValueListSelected=[];
+	$scope.exportFormatValueListSelected=[];
 	$scope.getDefaultValueMinorField=function(){
 		angular.forEach($scope.exportFieldsFormsSelected,function(item,index){
 			if(item.fieldId==34){
@@ -262,6 +264,8 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 		});
 		exportDefaultValueListOrginal=angular.copy($scope.exportDefaultValueList);
 		exportFormatValueListOrginal=angular.copy($scope.exportFormatValueList);
+		$scope.exportDefaultValueListSelected=angular.copy($scope.exportDefaultValueList);
+		$scope.exportFormatValueListSelected=angular.copy($scope.exportFormatValueList);
 	 };
 	
 	$scope.updateDefaultValueList=function(){
@@ -391,17 +395,58 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 		 $scope.rawScreens[0]=[];
 		 $scope.rawScreens[1]=[];
 		angular.copy($scope.exportFieldsFormsOriginal,$scope.rawScreens[1]);
+		angular.copy(exportDefaultValueListOrginal,$scope.exportDefaultValueList);
+		angular.copy(exportFormatValueListOrginal,$scope.exportFormatValueList);
 	 };
 	
 	 // Reset
 	 $scope.resetAll=function(){
 		 $scope.splitObjects();
+		
+		 if($scope.exportDefaultValueListSelected.length>0){
+			 angular.forEach($scope.exportDefaultValueListSelected,function(item,index){
+				 var result = $.grep($scope.exportDefaultValueList, function(e){ return e.fieldId == item.fieldId;});
+						if (result.length == 0) {
+			 			 // not found
+							var exportDefaultCopy=angular.copy(item);
+							$scope.exportDefaultValueList.push(exportDefaultCopy);
+						} else if (result.length == 1) {
+							
+			  			// access the foo property using result[0].foo
+						}
+			});
+		 }else{
+			 $scope.exportDefaultValueList=[];
+		 }
+		 
+		 if($scope.exportFormatValueListSelected.length>0){
+			angular.forEach($scope.exportFormatValueListSelected,function(item,index){
+				 var result = $.grep($scope.exportFormatValueList, function(e){ return e.fieldId == item.fieldId;});
+				 
+						if (result.length == 0) {
+			 			 // not found
+							var exportDefaultCopy=angular.copy(item);
+							$scope.exportFormatValueList.push(exportDefaultCopy);
+						} else if (result.length == 1) {
+							
+			  			// access the foo property using result[0].foo
+						}
+			});
+		 }else{
+			 $scope.exportFormatValueList=[]; 
+		 }
+		
+		exportDefaultValueListOrginal=angular.copy($scope.exportDefaultValueList);
+		exportFormatValueListOrginal=angular.copy($scope.exportFormatValueList);
 	 };
 	 
 	 // Remove All
 	 $scope.removeAll=function(){
 		 angular.copy($scope.exportFieldsFormsOriginal,$scope.rawScreens[0]);
 		 $scope.rawScreens[1]=[];
+		 $scope.exportFormatValueList=[];
+		 $scope.exportDefaultValueList=[];
+		 $scope.exportFormatValueList=[];
 	 };
 	 // Compare Two List
 	 $rootScope.exportPreferenceChanged=true;

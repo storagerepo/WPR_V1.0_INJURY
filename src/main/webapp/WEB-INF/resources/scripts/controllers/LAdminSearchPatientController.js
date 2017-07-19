@@ -7,6 +7,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	$scope.isCheckedAllPatients=false;
 	$scope.exportButtonText="Export to Excel";
 	$scope.exportButton=false;
+	$scope.isExportPatientSelected=true;
 	$scope.ageFilterCurrentSelection=[];
 	$scope.setScrollDown=false;
 	$scope.loadingCounties=true;
@@ -913,16 +914,20 @@ $scope.archivedToDateRequired=false;
 	};
 	//Export Excel
 	$scope.exportToExcel=function(){
+		$scope.isExportPatientSelected=true;
 		if($scope.totalRecords>searchService.getMaxRecordsDownload()){
 			$("#exportAlertModal").modal('show');
 		}else{
 			$scope.formatType=1;
+			$scope.exportType=2;
 			$scope.resetUserPreferenceError();
 			$("#exportOptionModal").modal('show');
 			$scope.exportExcelByType=function(){
 				$scope.exportButtonText="Exporting...";
 				$scope.exportButton=true;
 				$scope.searchParam.formatType=$scope.formatType;
+				$scope.searchParam.exportType=$scope.exportType;
+				$scope.searchParam.exportPatientIds=$scope.exportPatientIds;
 				requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.searchParam).success(function(responseData){
 					 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
 					 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
@@ -931,6 +936,27 @@ $scope.archivedToDateRequired=false;
 				});
 			};
 		}
+	};
+	
+	// get Selected Patients
+	$scope.checkExportSelectedPatients=function(){
+		$scope.exportPatientIds=[];
+		$scope.isExportPatientSelected=false;
+		if($scope.exportType==1){
+			$.each($scope.lAdminPatientSearchData, function(index,value) {
+				$.each(value.searchResult, function(index1,value1) {
+					$.each(value1.patientSearchLists,function(index2,value2){
+						if(value2.selected==true){
+							$scope.exportPatientIds.push(value2.patientId);
+							$scope.isExportPatientSelected=true;
+						}
+						});
+				});
+			});
+		}else{
+			$scope.isExportPatientSelected=true;
+		}
+		
 	};
 	
 	// Check User Preference Status

@@ -893,6 +893,18 @@ html {
 	min-height: 850px !important;
 }
 
+.modal-min-height-100{
+	min-height: 100px !important;
+}
+
+.modal-min-height-120{
+	min-height: 120px !important;
+}
+
+.modal-min-height-150{
+	min-height: 150px !important;
+}
+
 .patient-count-circle-primary{
 	height:20px;
 	border-radius:3px;

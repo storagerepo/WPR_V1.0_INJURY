@@ -77,7 +77,7 @@ public class ExportFieldsService {
 		
 		List<ExportFields> exportFieldss=new ArrayList<ExportFields>();
 		String role=loginService.getCurrentRole();
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
 			exportFieldss=exportFieldsDAO.getStandardExportFields();
 		}else if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
 			exportFieldss=exportFieldsDAO.getAutoDealerStandardExportFields();

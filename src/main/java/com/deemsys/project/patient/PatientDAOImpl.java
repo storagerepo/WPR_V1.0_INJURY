@@ -716,7 +716,13 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		}
 	}
 	
-	
+	// Export Excel Criterion
+	if(isExport&&!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+		if(callerPatientSearchForm.getExportType()==1){
+			Criterion exportCriterion = Restrictions.in("t1.patientId", callerPatientSearchForm.getExportPatientIds());
+			criteria.add(exportCriterion);
+		}
+	}
 	
 	//Add Projections
 	ProjectionList projectionList = Projections.projectionList();
