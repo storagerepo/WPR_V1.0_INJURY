@@ -395,8 +395,74 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 		 $scope.rawScreens[0]=[];
 		 $scope.rawScreens[1]=[];
 		angular.copy($scope.exportFieldsFormsOriginal,$scope.rawScreens[1]);
-		angular.copy(exportDefaultValueListOrginal,$scope.exportDefaultValueList);
-		angular.copy(exportFormatValueListOrginal,$scope.exportFormatValueList);
+		
+		if($scope.exportDefaultValueListSelected.length>0){
+			 angular.forEach($scope.exportDefaultValueListSelected,function(item,index){
+				 var result = $.grep($scope.exportDefaultValueList, function(e){ return e.fieldId == item.fieldId;});
+						if (result.length == 0) {
+			 			 // not found
+							var exportDefaultCopy=angular.copy(item);
+							$scope.exportDefaultValueList.push(exportDefaultCopy);
+						} else if (result.length == 1) {
+							
+			  			// access the foo property using result[0].foo
+						}
+			});
+		 }else{
+			 angular.forEach($scope.rawScreens[1],function(item,index){
+				 if(item.fieldId==34){
+					 var result = $.grep($scope.exportDefaultValueList, function(e){ return e.fieldId == item.fieldId;});
+						if (result.length == 0) {
+			 			 // not found
+							var exportDefaultCopy=angular.copy(item);
+							$scope.exportDefaultValueList.push(exportDefaultCopy);
+						} else if (result.length == 1) {
+							
+			  			// access the foo property using result[0].foo
+						}
+				 }
+			}); 
+		 }
+		 
+		 if($scope.exportFormatValueListSelected.length>0){
+			angular.forEach($scope.exportFormatValueListSelected,function(item,index){
+				 var result = $.grep($scope.exportFormatValueList, function(e){ return e.fieldId == item.fieldId;});
+				 
+						if (result.length == 0) {
+			 			 // not found
+							var exportDefaultCopy=angular.copy(item);
+							$scope.exportFormatValueList.push(exportDefaultCopy);
+						} else if (result.length == 1) {
+							
+			  			// access the foo property using result[0].foo
+						}
+			});
+		 }else{
+			 angular.forEach($scope.rawScreens[1],function(item,index){
+				 if(item.fieldId==17||item.fieldId==12){
+				 	var result = $.grep($scope.exportFormatValueList, function(e){ return e.fieldId == item.fieldId;});
+				 
+						if (result.length == 0) {
+			 			 // not found
+							var exportFormatCopy=angular.copy(item);
+							if(item.fieldId==17){
+								exportFormatCopy.dropDownValue=[{"name":"999-999-9999","groupName":"Default","value":0},{"name":"+1-(999)-999-9999","groupName":"Format Type 1","value":1},{"name":"+1 (999) 999 9999","groupName":"Format Type 1","value":2},{"name":"+1(999)9999999","groupName":"Format Type 1","value":3},{"name":"+19999999999","groupName":"Format Type 1","value":4}
+								,{"name":"1 (999) 999 9999","groupName":"Format Type 2","value":5},{"name":"1(999)9999999","groupName":"Format Type 2","value":6},{"name":"19999999999","groupName":"Format Type 2","value":7}
+								,{"name":"(999)-999-9999","groupName":"Format Type 3","value":8},{"name":"(999) 999 9999","groupName":"Format Type 3","value":9},{"name":"(999)9999999","groupName":"Format Type 3","value":10},{"name":"9999999999","groupName":"Format Type 3","value":11}];
+							}
+							if(item.fieldId==12){
+								exportFormatCopy.dropDownValue=[{"name":"LAST FIRST MIDDLE","groupName":"","value":0},{"name":"FIRST LAST","groupName":"","value":1},{"name":"FIRST MIDDLE LAST","groupName":"","value":2},{"name":"LAST FIRST","groupName":"","value":3}];
+							}
+							$scope.exportFormatValueList.push(exportFormatCopy);
+						} else if (result.length == 1) {
+							
+			  			// access the foo property using result[0].foo
+						}
+				 }
+			});
+		 }
+		 exportDefaultValueListOrginal=angular.copy($scope.exportDefaultValueList);
+		 exportFormatValueListOrginal=angular.copy($scope.exportFormatValueList);
 	 };
 	
 	 // Reset
