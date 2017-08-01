@@ -355,6 +355,7 @@ public class PDFCrashReportReader {
 	        
 			URL url=new URL(pdfAccessURL);
 			httpURLConnection=(HttpURLConnection) url.openConnection();
+			//httpURLConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
 			
 			Integer tryCount=Integer.parseInt(injuryProperties.getProperty("reportAccessTry"));
 			
@@ -367,6 +368,7 @@ public class PDFCrashReportReader {
 							+ "CrashReport_"
 							+ crashId + ".pdf";
 					try {
+						
 						InputStream in = url.openStream();	
 						Files.copy(in, Paths.get(filePath),
 								StandardCopyOption.REPLACE_EXISTING);
@@ -1470,12 +1472,8 @@ public class PDFCrashReportReader {
 		for (ReportMotoristPageForm motoristPage : reportMotoristPageForms) {
 			if(motoristPage.getName()!=null&&unitPageForm.getOwnerName()!=null&&motoristPage.getAdddressCityStateZip()!=null&&unitPageForm.getOwnerAddress()!=null){
 				
-				String[] ownerName=new String[]{"","",""};
-				String[] motoristName=new String[]{"","",""};
-				
-				ownerName=unitPageForm.getOwnerName().split(",");
-				motoristName=motoristPage.getName().split(",");
-				
+				String[] ownerName=InjuryConstants.splitNameByComma(unitPageForm.getOwnerName());
+				String[] motoristName=InjuryConstants.splitNameByComma(motoristPage.getName());
 				
 				if(motoristName[0].equals(ownerName[0])&&motoristName[1].equals(ownerName[1])&&motoristPage.getAdddressCityStateZip().equals(unitPageForm.getOwnerAddress())){
 					return motoristPage;

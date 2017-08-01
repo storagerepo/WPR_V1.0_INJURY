@@ -136,7 +136,7 @@
 				</div>
 				<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
 					<label>Damage Scale</label>&nbsp;<a href=""
-						class="some-popover-link" data-placement="bottom"
+						class="some-popover-link" data-placement="right"
 						data-original-title="" data-toggle="popover" title="Damage Scale"
 						data-content="<p>This combination of number & color denote <br/> the scale of damage to the related vehicle.<br/><br/><span class='badge badge-success'>1</span> - None<br/><span class='badge badge-yellow'>2</span> - Minor<br/><span class='badge badge-primary'>3</span> - Functional<br/><span class='badge badge-danger'>4</span> - Disabling<br/><span class='badge badge-default'>9</span> - Unknown</p>"><i
 						class="fa fa-info-circle"></i></a>
@@ -592,7 +592,7 @@
 				</tbody>
 			</table>
 			<dir-pagination-controls max-size="5" direction-links="true"
-				boundary-links="true" pagination-id="directRunnerReportPageId">
+				boundary-links="true" pagination-id="directRunnerReportPageId" ng-show="totalRecords>0">
 			</dir-pagination-controls>
 			<div class="col-md-3 pull-right no-padding">
 				<label>Number of Records</label> <select class="form-control"

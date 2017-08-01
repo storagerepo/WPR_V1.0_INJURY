@@ -15,7 +15,7 @@ adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHa
 		// For Password Change Modal
 		requestHandler.getRequest("checkPasswordChangedStatus.json","").then( function(response) {
 		      var status=response.data.status;
-		      if(status!=1){
+		      if(status!=undefined && status!=1){
 		    	$("#changePasswordModal").modal('show',{backdrop: 'static', keyboard: true});
 		      }
 		   });

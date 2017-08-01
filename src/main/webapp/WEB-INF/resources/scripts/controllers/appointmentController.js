@@ -22,29 +22,34 @@ adminApp.controller('ShowAppointmentsCtrl', function($scope,$http,$location,$sta
 	};
 	$scope.searchAppointments=function(){
 		$scope.searchAppointment.pageNumber=1;
-	    requestHandler.postRequest("Caller/searchAppointments.json",$scope.searchAppointment).then(function(response){
-			//alert(JSON.stringify(response));
-	    	$scope.totalRecords=response.data.appointmentsSearchRessult.totalRecords;
-	    	 $scope.appointments = response.data.appointmentsSearchRessult.appointmentsForms;
-	       $.each($scope.appointments,function(index,value){
-	        	 value.status=(value.status).toString();
-	        	
-	        });
-		  });
+		if($scope.searchAppointment.year!=''){
+			requestHandler.postRequest("Caller/searchAppointments.json",$scope.searchAppointment).then(function(response){
+				//alert(JSON.stringify(response));
+		    	$scope.totalRecords=response.data.appointmentsSearchRessult.totalRecords;
+		    	 $scope.appointments = response.data.appointmentsSearchRessult.appointmentsForms;
+		       $.each($scope.appointments,function(index,value){
+		        	 value.status=(value.status).toString();
+		        	
+		        });
+			  });
+		}
+	    
 	};
 	
 
 	$scope.init();
 	$scope.searchAppointmentByPage=function(newPageNumber){
 		 $scope.searchAppointment.pageNumber=newPageNumber;
-		 requestHandler.postRequest("Caller/searchAppointments.json",$scope.searchAppointment).then(function(response){
+		 if($scope.searchAppointment.year!=''){
+			requestHandler.postRequest("Caller/searchAppointments.json",$scope.searchAppointment).then(function(response){
 				//alert(JSON.stringify(response));
 		    	$scope.totalRecords=response.data.appointmentsSearchRessult.totalRecords;
 		    	 $scope.appointments = response.data.appointmentsSearchRessult.appointmentsForms;
 		       $.each($scope.appointments,function(index,value){
 		        	 value.status=(value.status).toString();
 		   		});
-		});
+			});
+		 }
 	};
 	
 	
