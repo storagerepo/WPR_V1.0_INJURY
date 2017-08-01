@@ -76,7 +76,7 @@ public class LawyerAdminCountyMappingService {
 					}
 					else{
 						lawyerAdminCountyMappingDAO.deleteLawyerAdminCountyMappingsByLawyerAdminIdAndCountyId(lawyerAdminCountyMappingForm.getLawyerAdminId(), lawyerAdminCountyMappingForm.getCountyId());
-						userLookupPreferencesDAO.deleteUserLookupPreferenceByUserAndPPreferedId(userId, lawyerAdminCountyMappingForm.getCountyId());
+						userLookupPreferencesDAO.deleteUserLookupPreferenceByUserAndPPreferedId(userId, 1, lawyerAdminCountyMappingForm.getCountyId());
 					}
 				
 			}

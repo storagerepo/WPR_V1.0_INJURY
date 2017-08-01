@@ -13,6 +13,7 @@ public class UserLookupPreferencesId implements java.io.Serializable {
 
 	private int userId;
 	private Integer type;
+	private Integer countyId;
 	private Integer preferedId;
 	private Integer status;
 
@@ -23,10 +24,11 @@ public class UserLookupPreferencesId implements java.io.Serializable {
 		this.userId = userId;
 	}
 
-	public UserLookupPreferencesId(int userId, Integer type,
+	public UserLookupPreferencesId(int userId, Integer type, Integer countyId,
 			Integer preferedId, Integer status) {
 		this.userId = userId;
 		this.type = type;
+		this.countyId = countyId;
 		this.preferedId = preferedId;
 		this.status = status;
 	}
@@ -49,6 +51,15 @@ public class UserLookupPreferencesId implements java.io.Serializable {
 		this.type = type;
 	}
 
+	@Column(name = "county_id")
+	public Integer getCountyId() {
+		return this.countyId;
+	}
+
+	public void setCountyId(Integer countyId) {
+		this.countyId = countyId;
+	}
+	
 	@Column(name = "prefered_id")
 	public Integer getPreferedId() {
 		return this.preferedId;

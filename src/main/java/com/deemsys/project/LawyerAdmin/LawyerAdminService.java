@@ -16,6 +16,7 @@ import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingServ
 import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingForm;
 import com.deemsys.project.Lawyers.LawyersDAO;
 import com.deemsys.project.Role.RoleDAO;
+import com.deemsys.project.UserLookupPreferences.UserLookupPreferencesService;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.CallerAdmin;
@@ -56,6 +57,9 @@ public class LawyerAdminService {
 	
 	@Autowired
 	LawyerAdminCountyMappingService lawyerAdminCountyMappingService;
+	
+	@Autowired
+	UserLookupPreferencesService userLookupPreferencesService;
 
 	// Get All Lawyer Admin List
 	public List<LawyerAdminForm> getLawyerAdminList() {
@@ -198,6 +202,9 @@ public class LawyerAdminService {
 			LawyerAdminCountyMapId lawyerAdminCountyMapId=new LawyerAdminCountyMapId(lawyerAdmin.getLawyerAdminId(), countyId);
 			LawyerAdminCountyMap lawyerAdminCountyMapping = new LawyerAdminCountyMap(lawyerAdminCountyMapId,lawyerAdmin, county,new Date(),1);
 			lawyerAdminCountyMappingDAO.save(lawyerAdminCountyMapping);
+			
+			// Update Reporting Agency Preference List
+			userLookupPreferencesService.saveAndUpdateReportingAgencyUserLookupPreferencesByCounty(users.getUserId(),countyId);
 		}
 		// Logic Ends
 
@@ -237,12 +244,14 @@ public class LawyerAdminService {
 		
 		
 		// Map the County
-				for (Integer countyId : newlyAddedCounty) {
-					County county = countyDAO.get(countyId);
-					LawyerAdminCountyMapId lawyerAdminCountyMapId=new LawyerAdminCountyMapId(lawyerAdmin.getLawyerAdminId(), countyId);
-					LawyerAdminCountyMap lawyerAdminCountyMapping = new LawyerAdminCountyMap(lawyerAdminCountyMapId,lawyerAdmin, county,new Date(),1);
-					lawyerAdminCountyMappingDAO.save(lawyerAdminCountyMapping);
-				}
+		for (Integer countyId : newlyAddedCounty) {
+			County county = countyDAO.get(countyId);
+			LawyerAdminCountyMapId lawyerAdminCountyMapId=new LawyerAdminCountyMapId(lawyerAdmin.getLawyerAdminId(), countyId);
+			LawyerAdminCountyMap lawyerAdminCountyMapping = new LawyerAdminCountyMap(lawyerAdminCountyMapId,lawyerAdmin, county,new Date(),1);
+			lawyerAdminCountyMappingDAO.save(lawyerAdminCountyMapping);
+			// Update Reporting Agency Preference List
+			userLookupPreferencesService.saveAndUpdateReportingAgencyUserLookupPreferencesByCounty(users.getUserId(),countyId);
+		}
 		
 		//Logic Ends
 		return 1;

@@ -25,7 +25,7 @@
 					    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Preferred Counties will need to be set up here.This will list only those counties you usually prefer to access. </p>					
 							<div class="col-md-12">
 							<fieldset>
-							<legend>Counties</legend>
+							<legend>Counties & Reporting Agencies</legend>
 								<div class="col-md-12">
 									<div class="col-md-2">
 										<label class="checkbox"> <input type="checkbox"
@@ -34,11 +34,10 @@
 									</div>
 								</div>
 								<div class="col-md-12">
-									<div class="col-md-2" ng-repeat="county in countyform">
-								      <label class="checkbox" for="{{county.countyId}}"> 
+									<div ng-class="$root.isAdmin==3?'col-md-3':'col-md-2'" ng-repeat="county in countyform">
+								      <label class="checkbox" for="{{county.countyId}}"> </label>
 								        <input type="checkbox" value="{{county.countyId}}" name="countygroup" id="{{county.countyId}}" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId.indexOf(county.countyId)>-1" ng-click="selectedCounties(county.countyId)"/>
-								        {{county.countyName}}
-								      </label>
+								        <label>{{county.countyName}}</label> &nbsp; <span ng-show="$root.isAdmin==3"><a href="" ng-click="selectReportingAgency(county.countyId,county.countyName)" style="text-decoration: underline;"><small>Reporting Agency</small> <span class="badge">{{county.newCount}}</span></a></span>
 								    </div>
 								</div>
 								</fieldset>
@@ -306,6 +305,43 @@
 		</div>
 	</div>
 	<!-- /.panel -->
+</div>
+
+<div class="modal fade" id="reportingAgencyModal" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">Reporting Agency - {{selectedCountyName}}</h4>
+			</div>
+			<div class="modal-body">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="col-md-2">
+						<label class="checkbox"> <input type="checkbox"
+							id="reportingAgencyCheckAll" ng-click="isCheckedReportingAgency()" ng-checked="reportingAgencyPreferencesForm.preferredId.length==reportingAgencyForms.length">Select All
+						</label>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-4" ng-repeat="reportingAgency in reportingAgencyForms">
+						<label class="checkbox" for="{{reportingAgency.reportingAgencyId}}"> </label>
+						<input type="checkbox" value="{{reportingAgency.reportingAgencyId}}" name="reportingAgencygroup" id="{{reportingAgency.reportingAgencyId}}" ng-checked="reportingAgencyPreferencesForm.preferredId.indexOf(reportingAgency.reportingAgencyId)>-1" ng-click="selectedReportingAgency(reportingAgency.reportingAgencyId)"/>
+							<small>{{reportingAgency.reportingAgencyName}}</small>
+					</div>
+				</div>
+				<div class="col-md-12 error-message" ng-show="isReportingAgencyError">Select At least one</div>
+			 </div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" ng-click="saveReportingAgencyPreference()" ng-disabled="reportingAgencyClean()||isReportingAgencyError">Save</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>

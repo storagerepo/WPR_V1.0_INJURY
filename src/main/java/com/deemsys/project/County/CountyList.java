@@ -4,7 +4,7 @@ public class CountyList {
 
 	private Integer countyId;
 	private String countyName;
-	private Integer newCount;
+	private Long newCount;
 	public Integer getCountyId() {
 		return countyId;
 	}
@@ -17,13 +17,13 @@ public class CountyList {
 	public void setCountyName(String countyName) {
 		this.countyName = countyName;
 	}
-	public Integer getNewCount() {
+	public Long getNewCount() {
 		return newCount;
 	}
-	public void setNewCount(Integer newCount) {
+	public void setNewCount(Long newCount) {
 		this.newCount = newCount;
 	}
-	public CountyList(Integer countyId, String countyName, Integer newCount) {
+	public CountyList(Integer countyId, String countyName, Long newCount) {
 		super();
 		this.countyId = countyId;
 		this.countyName = countyName;

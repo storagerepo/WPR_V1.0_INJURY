@@ -30,6 +30,13 @@ public class UserLookupPreferencesController {
 		return "/returnPage";
 	}
 	
+    @RequestMapping(value={"Patient/getReportingAgencyUserLookupPreferences"},method=RequestMethod.GET)
+	public String getReportingAgencyUserLookupPreferences(@RequestParam("countyId") Integer countyId, ModelMap model)
+	{
+    	model.addAttribute("reportingAgencyPreferencesForm",userLookupPreferencesService.getReportingAgencyUserLookupPreferrenceForm(countyId));
+    	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
     
     @RequestMapping(value={"Patient/mergeUserLookupPreferences"},method=RequestMethod.POST)
    	public String mergeUserLookupPreferences(@RequestBody UserLookupPreferencesForm userLookupPreferencesForm,ModelMap model)
@@ -39,17 +46,13 @@ public class UserLookupPreferencesController {
    		return "/returnPage";
    	}
     
-    @RequestMapping(value="/saveUpdateUserLookupPreferences",method=RequestMethod.POST)
-   	public String saveUserLookupPreferences(@RequestBody UserLookupPreferencesForm userLookupPreferencesForm,ModelMap model)
+    @RequestMapping(value={"Patient/mergeReportingAgencyUserLookupPreferences"},method=RequestMethod.POST)
+   	public String mergeReportingAgencyUserLookupPreferences(@RequestBody UserLookupPreferenceMappedForm userLookupPreferenceMappedForm,ModelMap model)
    	{
-    	if(userLookupPreferencesForm.getUserId()!=null)
-    		userLookupPreferencesService.saveUserLookupPreferences(userLookupPreferencesForm);
-    	else
-    		userLookupPreferencesService.updateUserLookupPreferences(userLookupPreferencesForm);
+    	userLookupPreferencesService.mergeReportingAgencyUserLookupPreferences(userLookupPreferenceMappedForm);
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
-   
     
     @RequestMapping(value="/deleteUserLookupPreferences",method=RequestMethod.POST)
    	public String deleteUserLookupPreferences(@RequestParam("id") Integer id,ModelMap model)
@@ -80,6 +83,14 @@ public class UserLookupPreferencesController {
 	public String checkCountyListType(ModelMap model)
 	{
     	model.addAttribute("countyListType",userLookupPreferencesService.checkCountyListType());
+    	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
+    
+    @RequestMapping(value={"Patient/checkReportingAgencyListType"},method=RequestMethod.GET)
+	public String checkReportingAgencyListType(ModelMap model)
+	{
+    	model.addAttribute("reportingAgencyListType",userLookupPreferencesService.checkReportingAgencyListType());
     	model.addAttribute("requestSuccess",true);
 		return "/returnPage";
 	}

@@ -27,6 +27,7 @@ import com.deemsys.project.Export.PrintPDFFiles;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingService;
 import com.deemsys.project.Lawyers.LawyersService;
+import com.deemsys.project.UserLookupPreferences.UserLookupPreferencesService;
 import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.CallerAdmin;
 import com.deemsys.project.entity.Lawyer;
@@ -66,6 +67,9 @@ public class CommonController {
 	
 	@Autowired
 	CallerService callerService;
+	
+	@Autowired
+	UserLookupPreferencesService userLookupPreferencesService;
 	
 	@Autowired
 	InjuryProperties injuryProperties;
@@ -158,12 +162,14 @@ public class CommonController {
     	
     	Users users=loginService.getUserByProductToken(customerProductToken);
     	Integer roleId=users.getRoles().getRoleId();
+    	Integer userId=users.getUserId();
     	if(roleId.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)||roleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
-    		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(users.getUserId());
+    		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(userId);
     		callerAdminCountyMapService.deleteCallerAdminCountyMapByCountyAndCAdminId(countyId, callerAdmin.getCallerAdminId());
     	}else if(roleId.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
-    		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
+    		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(userId);
     		lawyerAdminCountyMappingService.deleteLawyerAdminCountyMapByCountyAndLAdminId(countyId, lawyerAdmin.getLawyerAdminId());
+    		userLookupPreferencesService.deleteReportingAgencyPreferences(userId, countyId);
     	}
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
@@ -176,12 +182,14 @@ public class CommonController {
     	
     	Users users=loginService.getUserByProductToken(customerProductToken);
     	Integer roleId=users.getRoles().getRoleId();
+    	Integer userId=users.getUserId();
     	if(roleId.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)||roleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
-    		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(users.getUserId());
+    		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(userId);
     		callerAdminCountyMapService.saveCallerAdminCountyMap(countyId, callerAdmin);
     	}else if(roleId.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
-    		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
+    		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(userId);
     		lawyerAdminCountyMappingService.saveLawyerAdminCountyMap(countyId, lawyerAdmin);
+    		userLookupPreferencesService.saveAndUpdateReportingAgencyUserLookupPreferencesByCounty(userId,countyId);
     	}
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
@@ -195,17 +203,19 @@ public class CommonController {
     	
     	Users users=loginService.getUserByProductToken(callerAdminForm.getProductToken());
     	Integer roleId=users.getRoles().getRoleId();
+    	Integer userId=users.getUserId();
     	if(roleId.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)||roleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
-    		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(users.getUserId());
+    		CallerAdmin callerAdmin = callerAdminService.getCallerAdminByUserId(userId);
     		callerAdminCountyMapService.deleteCallerAdminCountyMapByCAdminId(callerAdmin.getCallerAdminId());
     		for (Integer countyId : callerAdminForm.getCounty()) {
     			callerAdminCountyMapService.saveCallerAdminCountyMap(countyId, callerAdmin);
 			}
     	}else if(roleId.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
-    		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(users.getUserId());
+    		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(userId);
     		lawyerAdminCountyMappingService.deleteLawyerAdminCountyMapByLAdminId(lawyerAdmin.getLawyerAdminId());
     		for (Integer countyId : callerAdminForm.getCounty()) {
     			lawyerAdminCountyMappingService.saveLawyerAdminCountyMap(countyId, lawyerAdmin);
+    			userLookupPreferencesService.saveAndUpdateReportingAgencyUserLookupPreferencesByCounty(userId,countyId);
     		}
     		
     	}

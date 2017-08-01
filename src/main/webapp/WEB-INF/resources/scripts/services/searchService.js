@@ -26,6 +26,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var isRunnerReport=0;
 	var damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
 	var directReportStatus="-1";
+	var reportingAgencyListType="1";
 	
 	// Vehicle Search
 	var vehicleMake="";
@@ -253,6 +254,13 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		directReportStatus=directReportStatusInput;
 	};
 	
+	this.getReportingAgencyListType=function(){
+		return reportingAgencyListType;
+	};
+	this.setReportingAgencyListType=function(reportingAgencyListTypeInput){
+		reportingAgencyListType=reportingAgencyListTypeInput;
+	};
+	
 	// Vehicle Make
 	this.getVehicleMake=function(){
 		return vehicleMake;
@@ -311,6 +319,12 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		});
 	};
 	
+	// Check Reporting Agency List Type
+	this.checkReportingAgencyListType=function(){
+		return requestHandler.getRequest("Patient/checkReportingAgencyListType.json","").then(function(response){
+			 return response.data.reportingAgencyListType;
+		});
+	};
 	
 	// Get Reporting Agency List List
 	this.getReportingAgencyList=function(countyIds){
@@ -319,6 +333,16 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 			countySelection.push(value.id);
 		});
 		return requestHandler.getRequest("Patient/getReportingAgencyByCounties.json?countyIds="+countySelection,"").then(function(response){
+			 return response.data.reportingAgencyForms;
+		});
+	};
+	
+	this.getReportingAgencyListByPreference=function(countyIds,preferenceType){
+		var countySelection=[];
+		$.each(countyIds, function(index,value) {
+			countySelection.push(value.id);
+		});
+		return requestHandler.getRequest("Patient/getReportingAgencyByCountiesAndPreference.json?countyIds="+countySelection+"&agencyPreferenceType="+preferenceType,"").then(function(response){
 			 return response.data.reportingAgencyForms;
 		});
 	};

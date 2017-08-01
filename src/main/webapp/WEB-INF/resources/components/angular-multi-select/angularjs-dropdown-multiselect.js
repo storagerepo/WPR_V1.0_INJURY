@@ -24,7 +24,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                 template += '<button type="button" style="width:100%" class="dropdown-toggle"  ng-class="settings.buttonClasses" ng-click="toggleDropdown()" ng-disabled="settings.disable">{{getButtonText()}}&nbsp;<span class="caret"></span></button>';
                 template += '<ul class="dropdown-menu dropdown-menu-form col-md-12" ng-style="{display: open ? \'block\' : \'none\', height : settings.scrollable ? settings.scrollableHeight : \'auto\'}" style="overflow-y:auto;">';
                // template += '<li ng-hide="!settings.showPreferenceOption" style="padding:5px 5px 5px 5px;"><select class="form-control" ng-model="countyPreference" ng-value="settings.preferenceList" data-ng-change="countyPreferenceList()"><option value="1">Standard</option><option value="2">Custom</option></select></li>';
-                template += '<li ng-hide="!settings.showPreferenceOption" style="padding:5px 5px 5px 5px;"><label class="radio-inline"><input type="radio" value="1" name="countyPrefence" ng-model="countyPreference" data-ng-change="countyPreferenceList()"/><small>Subscribed</small></label><label class="radio-inline"><input type="radio" value="2" name="countyPrefence" ng-model="countyPreference" data-ng-change="countyPreferenceList()"/><small>Preferred</small></label></li>';
+                template += '<li ng-hide="!settings.showPreferenceOption" style="padding:5px 5px 5px 5px;"><label class="radio-inline"><input type="radio" value="1" name="{{settings.radioButtonName}}" ng-model="countyPreference" data-ng-change="countyPreferenceList()"/><small>Subscribed</small></label><label class="radio-inline"><input type="radio" value="2" name="{{settings.radioButtonName}}" ng-model="countyPreference" data-ng-change="countyPreferenceList()"/><small>Preferred</small></label></li>';
                 template += '<li class="divider" ng-hide="!settings.showPreferenceOption"></li><li ng-hide="!settings.showCheckAll || settings.selectionLimit > 0" style="padding:0px 5px 0px 5px;"><button class="btn btn-sm btn-default" data-ng-click="selectAll()">{{texts.checkAll}}</button>&nbsp;&nbsp;<button class="btn btn-sm btn-default" data-ng-click="deselectAll();">{{texts.uncheckAll}}</button></li>';
                 
                 template += '<li ng-hide="(!settings.showCheckAll || settings.selectionLimit > 0) && !settings.showUncheckAll" class="divider"></li>';
@@ -117,7 +117,8 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                     buttonDefaultText:"Select",
                     showPreferenceOption:false,
                     showLegend:false,
-                    disable:false
+                    disable:false,
+                    radioButtonName:''
                 };
 
                 $scope.texts = {

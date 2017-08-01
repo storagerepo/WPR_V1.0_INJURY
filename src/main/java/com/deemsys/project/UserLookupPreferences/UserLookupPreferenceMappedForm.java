@@ -4,6 +4,7 @@ import java.util.List;
 
 public class UserLookupPreferenceMappedForm {
 	private Integer type;
+	private Integer countyId;
 	private List<Integer> preferredId;
 	public Integer getType() {
 		return type;
@@ -11,10 +12,16 @@ public class UserLookupPreferenceMappedForm {
 	public void setType(Integer type) {
 		this.type = type;
 	}
-	public List<Integer> getpreferredId() {
+	public Integer getCountyId() {
+		return countyId;
+	}
+	public void setCountyId(Integer countyId) {
+		this.countyId = countyId;
+	}
+	public List<Integer> getPreferredId() {
 		return preferredId;
 	}
-	public void setpreferredId(List<Integer> preferredId) {
+	public void setPreferredId(List<Integer> preferredId) {
 		this.preferredId = preferredId;
 	}
 	public UserLookupPreferenceMappedForm() {

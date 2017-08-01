@@ -9,8 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.County.CountyList;
 import com.deemsys.project.County.CountyService;
+import com.deemsys.project.ReportingAgency.ReportingAgencyDAO;
 import com.deemsys.project.Users.UsersDAO;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.County;
+import com.deemsys.project.entity.ReportingAgency;
 import com.deemsys.project.entity.UserLookupPreferences;
 import com.deemsys.project.entity.UserLookupPreferencesId;
 import com.deemsys.project.entity.Users;
@@ -42,6 +45,9 @@ public class UserLookupPreferencesService {
 	
 	@Autowired
 	CountyService countyService;
+	
+	@Autowired
+	ReportingAgencyDAO reportingAgencyDAO;
 	
 	//Get All Entries
 	public List<UserLookupPreferencesForm> getUserLookupPreferencesList()
@@ -97,15 +103,15 @@ public class UserLookupPreferencesService {
 		UserLookupPreferenceMappedForm userLookupPreferenceMappedForm = new UserLookupPreferenceMappedForm();
 		
 		// County Preferences
-		userLookupPreferenceMappedForm = new UserLookupPreferenceMappedForm(1, countyPreference);
+		userLookupPreferenceMappedForm = new UserLookupPreferenceMappedForm(InjuryConstants.COUNTY_LOOKUP, countyPreference);
 		userLookupPreferenceMappedForms.add(userLookupPreferenceMappedForm);
 		
 		// tier Preferences
-		userLookupPreferenceMappedForm = new UserLookupPreferenceMappedForm(2, tierPreference);
+		userLookupPreferenceMappedForm = new UserLookupPreferenceMappedForm(InjuryConstants.TIER_LOOKUP, tierPreference);
 		userLookupPreferenceMappedForms.add(userLookupPreferenceMappedForm);
 		
 		// Age Preferences
-		userLookupPreferenceMappedForm = new UserLookupPreferenceMappedForm(3, agePreference);
+		userLookupPreferenceMappedForm = new UserLookupPreferenceMappedForm(InjuryConstants.AGE_LOOKUP, agePreference);
 		userLookupPreferenceMappedForms.add(userLookupPreferenceMappedForm);
 		
 		userLookupPreferencesForm=new UserLookupPreferencesForm(userId, userLookupPreferenceMappedForms);
@@ -114,20 +120,59 @@ public class UserLookupPreferencesService {
 		return userLookupPreferencesForm;
 	}
 	
+	
+	// Get Reporting Agency Mapped List
+	public UserLookupPreferenceMappedForm getReportingAgencyUserLookupPreferrenceForm(Integer countyId){
+		Integer userId=loginService.getPreferenceUserId();
+		List<Integer> countyIds=new ArrayList<Integer>();
+		countyIds.add(countyId);
+		List<UserLookupPreferences> userLookupPreferencess=userLookupPreferencesDAO.getReportingAgencyUserLookupPreferences(userId, countyIds);
+		
+		List<Integer> reportingAgencyPerferedId = new ArrayList<Integer>();
+		for (UserLookupPreferences userLookupPreferences : userLookupPreferencess) {
+			reportingAgencyPerferedId.add(userLookupPreferences.getId().getPreferedId());
+		}
+		// 4 - Look up preference type (Reporting Agency Look up Type)
+		UserLookupPreferenceMappedForm userLookupPreferenceMappedForms = new UserLookupPreferenceMappedForm(InjuryConstants.REPORTING_AGENCY_LOOKUP, reportingAgencyPerferedId);
+		userLookupPreferenceMappedForms.setCountyId(countyId);
+		return userLookupPreferenceMappedForms;
+	}
+	
+	// Get Reporting Agency List By List Of Counties
+	public UserLookupPreferenceMappedForm getReportingAgencyUserLookupPreferrenceByCountyList(List<Integer> countyIds){
+		Integer userId=loginService.getPreferenceUserId();
+	
+		List<UserLookupPreferences> userLookupPreferencess=userLookupPreferencesDAO.getReportingAgencyUserLookupPreferences(userId, countyIds);
+		
+		List<Integer> reportingAgencyPerferedId = new ArrayList<Integer>();
+		for (UserLookupPreferences userLookupPreferences : userLookupPreferencess) {
+			reportingAgencyPerferedId.add(userLookupPreferences.getId().getPreferedId());
+		}
+		// 4 - Look up preference type (Reporting Agency Look up Type)
+		UserLookupPreferenceMappedForm userLookupPreferenceMappedForms = new UserLookupPreferenceMappedForm(4, reportingAgencyPerferedId);
+		
+		return userLookupPreferenceMappedForms;
+	}
+	
 	//Merge an Entry (Save or Update)
 	public int mergeUserLookupPreferences(UserLookupPreferencesForm userLookupPreferencesForm)
 	{
 		//TODO: Convert Form to Entity Here
 		
 		//Logic Starts
+		// 4 - User Look Up Preference Type (Reporting Agency)
 		Integer userId=loginService.getCurrentUserID();
-		// Delete Previous Mapping
-		this.deleteUserLookupPreferences(userId);
+		
 		Users users = usersDAO.get(userId);
 		List<UserLookupPreferenceMappedForm> userLookupPreferenceMappedForms = userLookupPreferencesForm.getUserLookupPreferenceMappedForms();
 		for (UserLookupPreferenceMappedForm userLookupPreferenceMappedForm : userLookupPreferenceMappedForms) {
-			for (Integer mappedId : userLookupPreferenceMappedForm.getpreferredId()) {
-				UserLookupPreferencesId userLookupPreferencesId = new UserLookupPreferencesId(userId, userLookupPreferenceMappedForm.getType(), mappedId, 1);
+			// Delete Previous Mapping
+			if(userLookupPreferenceMappedForm.getType()!=InjuryConstants.REPORTING_AGENCY_LOOKUP){
+				this.deleteUserLookupPreferencesByType(userId, userLookupPreferenceMappedForm.getType());
+			}
+			
+			for (Integer mappedId : userLookupPreferenceMappedForm.getPreferredId()) {
+				UserLookupPreferencesId userLookupPreferencesId = new UserLookupPreferencesId(userId, userLookupPreferenceMappedForm.getType(), 0, mappedId, 1);
 				UserLookupPreferences userLookupPreferences=new UserLookupPreferences(userLookupPreferencesId,users);
 				userLookupPreferencesDAO.merge(userLookupPreferences);
 			}	
@@ -137,33 +182,53 @@ public class UserLookupPreferencesService {
 		return 1;
 	}
 	
-	//Save an Entry
-	public int saveUserLookupPreferences(UserLookupPreferencesForm userLookupPreferencesForm)
+	public int mergeReportingAgencyUserLookupPreferences(UserLookupPreferenceMappedForm userLookupPreferenceMappedForm)
 	{
-		//TODO: Convert Form to Entity Here	
+		//TODO: Convert Form to Entity Here
 		
 		//Logic Starts
+		// 4 - User Look Up Preference Type (Reporting Agency)
+		Integer userId=loginService.getCurrentUserID();
 		
-		UserLookupPreferences userLookupPreferences=new UserLookupPreferences();
+		Users users = usersDAO.get(userId);
+		// Delete Previous Mapping
+		this.deleteReportingAgencyPreferences(userId, userLookupPreferenceMappedForm.getCountyId());
+		
+		for (Integer mappedId : userLookupPreferenceMappedForm.getPreferredId()) {
+			UserLookupPreferencesId userLookupPreferencesId = new UserLookupPreferencesId(userId, userLookupPreferenceMappedForm.getType(), userLookupPreferenceMappedForm.getCountyId(), mappedId, 1);
+			UserLookupPreferences userLookupPreferences=new UserLookupPreferences(userLookupPreferencesId,users);
+			userLookupPreferencesDAO.merge(userLookupPreferences);
+		}	
 		
 		//Logic Ends
 		
-		userLookupPreferencesDAO.save(userLookupPreferences);
 		return 1;
 	}
 	
-	//Update an Entry
-	public int updateUserLookupPreferences(UserLookupPreferencesForm userLookupPreferencesForm)
+	// Update Reporting Agency Preference While Subscribe county
+	public int saveAndUpdateReportingAgencyUserLookupPreferencesByCounty(Integer userId,Integer countyId)
 	{
-		//TODO: Convert Form to Entity Here	
+		//TODO: Convert Form to Entity Here
 		
 		//Logic Starts
 		
-		UserLookupPreferences userLookupPreferences=new UserLookupPreferences();
+		Users users = usersDAO.get(userId);
+		// Delete Previous Mapping
+		this.deleteReportingAgencyPreferences(userId, countyId);
+		
+		// Get All Reporting Agency By countyId // Parameter is integer array
+		Integer[] countyIds=new Integer[]{1};
+		countyIds[0]=countyId;
+		List<ReportingAgency> reportingAgencies = reportingAgencyDAO.getReportingAgencyListByCounties(countyIds);
+		
+		for (ReportingAgency reportingAgency : reportingAgencies) {
+			UserLookupPreferencesId userLookupPreferencesId = new UserLookupPreferencesId(userId, InjuryConstants.REPORTING_AGENCY_LOOKUP, countyId, reportingAgency.getReportingAgencyId(), 1);
+			UserLookupPreferences userLookupPreferences=new UserLookupPreferences(userLookupPreferencesId,users);
+			userLookupPreferencesDAO.merge(userLookupPreferences);
+		}	
 		
 		//Logic Ends
 		
-		userLookupPreferencesDAO.update(userLookupPreferences);
 		return 1;
 	}
 	
@@ -174,6 +239,18 @@ public class UserLookupPreferencesService {
 		return 1;
 	}
 	
+	public int deleteUserLookupPreferencesByType(Integer userId,Integer type)
+	{
+		userLookupPreferencesDAO.deleteUserLookupPreferencesByUserIdAndType(userId, type);
+		return 1;
+	}
+	
+	public int deleteReportingAgencyPreferences(Integer userId,Integer countyId)
+	{
+		userLookupPreferencesDAO.deleteReportingAgencyPreferences(userId,countyId);
+		return 1;
+	}
+	
 	// get Mapped preference County List
 	public List<CountyList> getPreferenceCountyList(Integer countyListType) {
 		List<CountyList> countyLists = countyService.getMyCountyList();
@@ -181,8 +258,8 @@ public class UserLookupPreferencesService {
 		List<Integer> preferenceCounty= new ArrayList<Integer>();
 		UserLookupPreferencesForm userLookupPreferencesForm = this.getUserLookupPreferences();
 		for (UserLookupPreferenceMappedForm userLookupPreferenceMappedForm : userLookupPreferencesForm.getUserLookupPreferenceMappedForms()) {
-			if(userLookupPreferenceMappedForm.getType()==1){
-				preferenceCounty=userLookupPreferenceMappedForm.getpreferredId();
+			if(userLookupPreferenceMappedForm.getType()==InjuryConstants.COUNTY_LOOKUP){
+				preferenceCounty=userLookupPreferenceMappedForm.getPreferredId();
 			}
 		}
 		// Get Final County List
@@ -208,8 +285,8 @@ public class UserLookupPreferencesService {
 		List<Integer> preferenceCounty= new ArrayList<Integer>();
 		UserLookupPreferencesForm userLookupPreferencesForm = this.getUserLookupPreferences();
 		for (UserLookupPreferenceMappedForm userLookupPreferenceMappedForm : userLookupPreferencesForm.getUserLookupPreferenceMappedForms()) {
-			if(userLookupPreferenceMappedForm.getType()==1){
-				preferenceCounty=userLookupPreferenceMappedForm.getpreferredId();
+			if(userLookupPreferenceMappedForm.getType()==InjuryConstants.COUNTY_LOOKUP){
+				preferenceCounty=userLookupPreferenceMappedForm.getPreferredId();
 			}
 		}
 		// Get Final County List
@@ -220,4 +297,14 @@ public class UserLookupPreferencesService {
 		return countyListType;
 	}
 	
+	public Integer checkReportingAgencyListType() {
+		Integer countyListType=1;
+		List<UserLookupPreferences> userLookupPreferences = userLookupPreferencesDAO.getUserLookupPreferencesByUserIdAndType(loginService.getPreferenceUserId(), InjuryConstants.REPORTING_AGENCY_LOOKUP);
+		// Get Final County List
+		if(userLookupPreferences.size()>0){
+			countyListType=2;
+		}
+		
+		return countyListType;
+	}
 }

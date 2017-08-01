@@ -38,6 +38,12 @@ public class InjuryConstants {
 	public static String INJURY_AUTO_MANAGER_ROLE="ROLE_AUTO_MANAGER";
 	public static String INJURY_AUTO_DEALER_ROLE="ROLE_AUTO_DEALER";
 	
+	//Look up Preference Type
+	public static Integer COUNTY_LOOKUP=1;
+	public static Integer TIER_LOOKUP=2;
+	public static Integer AGE_LOOKUP=3;
+	public static Integer REPORTING_AGENCY_LOOKUP=4;
+	
 	// Convert Date To Year Format
 	public static Date convertYearFormat(String date)
 	{   SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -352,5 +358,30 @@ public class InjuryConstants {
 				convertedValue=new BigDecimal(value);
 			}
 			return convertedValue;
+		}
+		
+		// Split Name By comma
+		public static String[] splitNameByComma(String inputName){
+			String[] resultName = new String[]{"","",""};
+			if(inputName!=null){
+				String[] splittedName = inputName.split(",");
+				if(splittedName.length==2){
+					//Last Name
+					resultName[0]=splittedName[0].trim();
+					// First Name
+					resultName[1]=splittedName[1].trim();
+				}else if(splittedName.length==1){
+					// First Name
+					resultName[0]=splittedName[0].trim();
+				}else if(splittedName.length==3){
+					//Last Name
+					resultName[0]=splittedName[0].trim();
+					// First Name
+					resultName[1]=splittedName[1].trim();
+					// Middle Name
+					resultName[2]=splittedName[2].trim();
+				}
+			}
+			return resultName;
 		}
 }

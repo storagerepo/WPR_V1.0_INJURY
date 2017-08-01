@@ -1,12 +1,15 @@
 package com.deemsys.project.ReportingAgency;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.UserLookupPreferences.UserLookupPreferenceMappedForm;
+import com.deemsys.project.UserLookupPreferences.UserLookupPreferencesService;
 import com.deemsys.project.entity.ReportingAgency;
 /**
  * 
@@ -26,6 +29,9 @@ public class ReportingAgencyService {
 
 	@Autowired
 	ReportingAgencyDAO reportingAgencyDAO;
+	
+	@Autowired
+	UserLookupPreferencesService userLookupPreferencesService;
 	
 	//Get All Entries
 	public List<ReportingAgencyForm> getReportingAgencyList()
@@ -138,6 +144,40 @@ public class ReportingAgencyService {
 				countyId=null;
 			reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, reportingAgency.getReportingAgencyName(), reportingAgency.getCode(), reportingAgency.getStatus()));
 		}
+		
+		return reportingAgencyForms;
+		
+	}
+	
+	public List<ReportingAgencyForm> getReportingAgencyByCountiesAndPreference(Integer[] countyIds,Integer agencyPreferenceType){
+		List<ReportingAgencyForm> reportingAgencyForms=new ArrayList<ReportingAgencyForm>();
+		
+		List<ReportingAgency> reportingAgencys=new ArrayList<ReportingAgency>();
+		
+		reportingAgencys=reportingAgencyDAO.getReportingAgencyListByCounties(countyIds);
+		Integer countyId;
+		if(agencyPreferenceType==1){
+			for (ReportingAgency reportingAgency : reportingAgencys) {
+				//TODO: Fill the List
+				if(reportingAgency.getCounty()!=null)
+					countyId=reportingAgency.getCounty().getCountyId();
+				else
+					countyId=null;
+				reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, reportingAgency.getReportingAgencyName(), reportingAgency.getCode(), reportingAgency.getStatus()));
+			}
+		}else{
+			UserLookupPreferenceMappedForm userLookupPreferenceMappedForms = userLookupPreferencesService.getReportingAgencyUserLookupPreferrenceByCountyList(Arrays.asList(countyIds));
+			for (ReportingAgency reportingAgency : reportingAgencys) {
+				if(userLookupPreferenceMappedForms.getPreferredId().contains(reportingAgency.getReportingAgencyId())){
+					if(reportingAgency.getCounty()!=null)
+						countyId=reportingAgency.getCounty().getCountyId();
+					else
+						countyId=null;
+					reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, reportingAgency.getReportingAgencyName(), reportingAgency.getCode(), reportingAgency.getStatus()));
+				}
+			}
+		}
+		
 		
 		return reportingAgencyForms;
 		

@@ -487,4 +487,16 @@ public class PatientController {
     	
      return "";
     }
+    
+    @RequestMapping(value = "/debugParsingPdf", method = RequestMethod.GET)
+	public String debugParsePDF(@RequestParam("fileName") String fileName,
+			ModelMap model) {
+		try {
+			crashReportReader.parsePDFDocument(new File("C:\\wamp\\www\\InjuryCrashReports\\"+fileName+".pdf"), fileName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "/returnPage";
+	}
 }

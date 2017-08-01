@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -154,7 +155,7 @@ public class ReportingAgencyDAOImpl implements ReportingAgencyDAO{
 		if(countyIds.length>0)
 			countyCondition.add(Restrictions.in("county.countyId", countyIds));
 		
-		criteria.add(countyCondition);
+		criteria.addOrder(Order.asc("reportingAgencyId")).add(countyCondition);
 		
 		return criteria.list();
 	}

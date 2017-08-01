@@ -67,11 +67,14 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
   	// Save Preferences
   	$scope.prefenceTabActive=$stateParams.fid;
   	var userLookupPreferencesOriginal={};
+  	var reportingAgencyPreferencesOriginal={};
   	$scope.initUserLookupPreference=function(){
   	  	$scope.userLookupPreferences={};
   		$scope.userLookupPreferences.county=[];
   		$scope.countyform=[];
   		$scope.userLookupPreferences.userLookupPreferenceMappedForms=[];
+  		$scope.reportingAgencyPreference={};
+  		$scope.reportingAgencyPreference.userLookupPreferenceMappedForms=[];
   		$scope.getCountiesList();
   		$scope.getUserLookupPreference();
   	};
@@ -115,6 +118,24 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 		
 	};
 	
+	// Selected Reporting Agency
+	$scope.selectedReportingAgency=function(reportingAgencyId){
+		$scope.isReportingAgencyError=false;
+		var idx=$scope.reportingAgencyPreferencesForm.preferredId.indexOf(reportingAgencyId);
+		// Already Selected Items
+		if(idx>-1){
+			$scope.reportingAgencyPreferencesForm.preferredId.splice(idx,1);
+		}
+		// Add New Items
+		else{
+			$scope.reportingAgencyPreferencesForm.preferredId.push(reportingAgencyId);
+		}
+		
+		if($scope.reportingAgencyPreferencesForm.preferredId.length==0){
+			$scope.isReportingAgencyError=true;
+		}
+	};
+	
 	 $scope.isChecked=function(){
 			if($scope.countyform.length>0){
 				$.each($scope.countyform, function(index,value) {
@@ -138,6 +159,33 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 			}
 		};
 	
+	$scope.isCheckedReportingAgency=function(){
+		$scope.isReportingAgencyError=false;
+		if($scope.reportingAgencyForms.length>0){
+				if(document.getElementById('reportingAgencyCheckAll').checked==true){
+					$.each($scope.reportingAgencyForms, function(index,value) {
+						var idx=$scope.reportingAgencyPreferencesForm.preferredId.indexOf(value.reportingAgencyId);
+						// Already Selected Items
+						if(idx==-1){
+							$scope.reportingAgencyPreferencesForm.preferredId.push(value.reportingAgencyId);
+						}
+						
+						$("#"+value.reportingAgencyId).checked==true;
+						//$("#"+value.id).prop('checked',$(this).prop("checked"));
+					});
+				}
+				else if(document.getElementById('reportingAgencyCheckAll').checked==false){
+					$scope.reportingAgencyPreferencesForm.preferredId=[];
+					//$("#"+value.id).prop('checked', $(this).prop("checked"));
+					//$("#"+value.reportingAgencyId).checked==false;
+				}
+				
+			if($scope.reportingAgencyPreferencesForm.preferredId.length==0){
+				$scope.isReportingAgencyError=true;
+			}
+		}
+	};
+		
 	// Get County List
 	$scope.getCountiesList=function(){
 		requestHandler.getRequest("Patient/getMyCounties.json","").then(function(response){
@@ -153,6 +201,22 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 			userLookupPreferencesOriginal=angular.copy(response.data.userLookupPreferencesForm);
 		});
 	};
+	  
+	$scope.selectReportingAgency=function(countyId,countyName){
+		$scope.isReportingAgencyError=false;
+		$scope.reportingAgencyPreferencesForm={};
+		$scope.selectedCountyName=countyName;
+		var countyIdArray=[];
+		countyIdArray.push(countyId);
+		requestHandler.getRequest("Patient/getReportingAgencyByCounties.json?countyIds="+countyIdArray,"").then(function(response){
+			$scope.reportingAgencyForms=response.data.reportingAgencyForms;
+			requestHandler.getRequest("Patient/getReportingAgencyUserLookupPreferences.json?countyId="+countyId,"").then(function(response){
+				$scope.reportingAgencyPreferencesForm=response.data.reportingAgencyPreferencesForm;
+				reportingAgencyPreferencesOriginal=angular.copy(response.data.reportingAgencyPreferencesForm);
+				$("#reportingAgencyModal").modal('show');
+			});
+		});
+	};
 	
 	// Init Function
 	$scope.initUserLookupPreference();
@@ -162,7 +226,6 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	};
 	
 	 $scope.saveUserLookupPreferences=function(){
-			
 		 requestHandler.postRequest("/Patient/mergeUserLookupPreferences.json",$scope.userLookupPreferences).then(function(response){
 			  Flash.create('success', "You have Successfully Updated!");
 			  $scope.getUserLookupPreference();
@@ -194,11 +257,50 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 		
 	 };
 	 
+	 $scope.saveReportingAgencyPreference=function(){
+		 requestHandler.postRequest("/Patient/mergeReportingAgencyUserLookupPreferences.json",$scope.reportingAgencyPreferencesForm).then(function(response){
+			  Flash.create('success', "You have Successfully Updated!");
+			  $scope.getCountiesList();
+			  $scope.getUserLookupPreference();
+			  $("#reportingAgencyModal").modal('hide');
+			/* var countySelected=searchService.getCounty();
+			 var countyListType=searchService.getCountyListType();
+			 if(countySelected!='' && countyListType==2){
+				  angular.forEach($scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId,function(item,index){
+					  if(userLookupPreferencesOriginal.userLookupPreferenceMappedForms[0].preferredId.indexOf(item)>-1){
+						  // Do Nothing
+					  }else{
+						  countySelected.push({"id":item});
+					  }
+				  });
+				  var finalCountySelection=[];
+				  angular.forEach(countySelected,function(item1,index1){
+					  if($scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId.indexOf(item1.id)>-1){
+						  // Do Nothing
+						  finalCountySelection.push(item1);
+					  }else{
+						  // Do Nothing
+					  }
+				  });
+				  searchService.setCounty(finalCountySelection);
+			 }*/
+			 $(function(){
+					$("html,body").scrollTop(0);
+			  });
+		 });
+		
+	 };
+	 
 	 // Compare Objects
 	 $scope.isClean = function() {
 	    return angular.equals (userLookupPreferencesOriginal,$scope.userLookupPreferences);
 	 };
-	    
+	 
+	 // Compare Reporting Agency Objects
+	 $scope.reportingAgencyClean = function() {
+		return angular.equals (reportingAgencyPreferencesOriginal,$scope.reportingAgencyPreferencesForm);
+	};
+	 
 	 $scope.exportFieldsFormsOriginal="";
 	 $scope.exportFieldsFormsSelected="";
 	//Get Export Fields List

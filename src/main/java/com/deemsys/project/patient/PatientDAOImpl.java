@@ -554,7 +554,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	//Common Constrain Reporting Agency
 	if(callerPatientSearchForm.getIsRunnerReport()==0){
 		if(callerPatientSearchForm.getReportingAgency().length>0){
-			callerPatientSearchForm.setReportingAgency(this.manupulateReportingAgency(callerPatientSearchForm.getReportingAgency(),callerPatientSearchForm.getCountyId()));
+			//callerPatientSearchForm.setReportingAgency(this.manupulateReportingAgency(callerPatientSearchForm.getReportingAgency(),callerPatientSearchForm.getCountyId()));
 			Criterion reportingAgencyCriterion=Restrictions.in("t1.reportingAgencyNcic", callerPatientSearchForm.getReportingAgency());
 			criteria.add(reportingAgencyCriterion);
 		}		

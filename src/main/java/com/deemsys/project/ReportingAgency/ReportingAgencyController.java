@@ -73,4 +73,12 @@ public class ReportingAgencyController {
    		return "/returnPage";
    	}
 	
+    // Reporting Agency List By Preference Type
+    @RequestMapping(value="/getReportingAgencyByCountiesAndPreference",method=RequestMethod.GET)
+   	public String getReportingAgencyByCountiesAndPreference(@RequestParam("countyIds") Integer[] countyIds,@RequestParam("agencyPreferenceType") Integer agencyPreferenceType,ModelMap model)
+   	{
+    	model.addAttribute("reportingAgencyForms",reportingAgencyService.getReportingAgencyByCountiesAndPreference(countyIds, agencyPreferenceType));
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
 }

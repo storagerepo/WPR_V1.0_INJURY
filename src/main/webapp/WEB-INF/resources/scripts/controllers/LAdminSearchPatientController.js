@@ -17,6 +17,8 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	// Main Search Param
 	$scope.mainSearchParam={};
 	
+	$scope.reportingAgencyListType="1";
+	
 	 $scope.getLawyerList=function(){
 	    	requestHandler.getRequest("LAdmin/getLawyersByLawyerAdmin.json","").then(function(response){
 	    		$scope.lawyers=response.data.lawyersForms;
@@ -296,6 +298,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	searchService.setDamageScale(angular.copy($scope.patient.damageScale));
 	searchService.setDirectReportStatus($scope.patient.directReportStatus);
 	searchService.setReportingAgency($scope.patient.reportingAgency);
+	searchService.setReportingAgencyListType($scope.reportingAgencyListType);
 	};
 	
 	$scope.secoundarySearchPatient=function(){
@@ -340,7 +343,17 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 				$scope.searchCountyMinError=false;
 	    		$scope.loadingCounties=false;
 			});
-			return $scope.searchItems($scope.mainSearchParam);
+			
+			// Get Reporting Agency List
+			$scope.getReportingAgencyList();
+			
+			if($scope.mainSearchParam.reportingAgency.length>0){
+				return $scope.searchItems($scope.mainSearchParam);
+			}
+			else{
+				 $scope.disableSearch=true;
+				 $scope.searchReportingAgencyMinError=true;
+			 }
 		}
 		return null;
 	};
@@ -352,6 +365,19 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 			$scope.searchCountyMinError=false;
     		$scope.loadingCounties=false;
 		});
+	};
+	
+
+	//get Reporting Agency List
+	$scope.getReportingAgencyList=function(){
+		$scope.reportingAgencyListType=searchService.getReportingAgencyListType();
+		if($scope.mainSearchParam.countyId.length>0){
+			searchService.getReportingAgencyListByPreference($scope.mainSearchParam.countyId,$scope.reportingAgencyListType).then(function(response){
+				 //Load Reporting Agency List		   
+				 $scope.reportingAgencyList=response;
+				 $scope.reportingAgencyLoaded=true;
+			});
+		}
 	};
 	
 	$scope.itemsPerFilter=function(){
@@ -383,6 +409,10 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 				$scope.mycounties=response;
 				$scope.loadingCounties=false;
 			});
+			
+			// Get Reporting Agency List
+			$scope.getReportingAgencyList();
+			
 			var promise=$scope.searchItems($scope.mainSearchParam);
 			promise.then(function(reponse){
 				// After Search
@@ -761,7 +791,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 		$scope.patient.damageScale=[];
 		$scope.patient.isOwner=0;
 		$scope.patient.reportingAgency=[];
-		 $scope.reportingAgencyLoaded=false;
+		$scope.reportingAgencyLoaded=false;
 		angular.copy(searchService.getCounty(),$scope.patient.countyId);
 		angular.copy(searchService.getTier(),$scope.patient.tier);
 		angular.copy(searchService.getDamageScale(),$scope.patient.damageScale);
@@ -785,7 +815,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 		$scope.patient.directReportStatus=searchService.getDirectReportStatus();
 		angular.copy(searchService.getReportingAgency(),$scope.patient.reportingAgency);
 		$scope.isSelectedAddedFromDate=true;
-
+		$scope.reportingAgencyListType=searchService.getReportingAgencyListType();
 		// Report Type
 		$scope.patient.isRunnerReport=searchService.getIsRunnerReport();
 		
@@ -799,8 +829,14 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 					$scope.mycounties=response;
 					$scope.searchCountyMinError=false;
 		    		$scope.loadingCounties=false;
+		    		searchService.getReportingAgencyListByPreference($scope.patient.countyId,$scope.reportingAgencyListType).then(function(response){
+						 //Load Reporting Agency List		   
+						 $scope.reportingAgencyList=response;  
+						 $scope.reportingAgencyLoaded=true;
+						 $scope.searchItems($scope.patient);
+					});
 				});
-				$scope.searchItems($scope.patient);
+				
 			}else{
 				searchService.checkCoutyListType().then(function(response){
 					searchService.setCountyListType(response);
@@ -813,19 +849,33 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 					searchService.getInitPreferenceCoutyList($scope.countyListType).then(function(response){
 						angular.copy(response,$scope.patient.countyId);
 						$scope.mainSearchParam.countyId=angular.copy($scope.patient.countyId);
-						searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
-							 //Load Reporting Agency List		   
-							 $scope.reportingAgencyList=response;  
-							 $scope.reportingAgencyLoaded=true;
-							// pushing received reporting Agency List to $scope.patient.reportingAgency Array.
-							 $scope.patient.reportingAgency=[];
-							 $.each($scope.reportingAgencyList, function(index,value) {
-								 $scope.patient.reportingAgency.push({"id":value.code});
-								 searchService.setReportingAgency(angular.copy($scope.patient.reportingAgency));
-							 });
-							 $scope.mainSearchParam.reportingAgency=angular.copy($scope.patient.reportingAgency);
-							 $scope.searchItems($scope.patient);
-						  });
+						// Get Reporting Agency List Type
+						searchService.checkReportingAgencyListType().then(function(response){
+							searchService.setReportingAgencyListType(response);
+							$scope.reportingAgencyListType=response;
+							searchService.getReportingAgencyListByPreference($scope.patient.countyId,response).then(function(response){
+								 //Load Reporting Agency List		   
+								 $scope.reportingAgencyList=response; 
+								 
+								 $scope.reportingAgencyLoaded=true;
+								// pushing received reporting Agency List to $scope.patient.reportingAgency Array.
+								 $scope.patient.reportingAgency=[];
+								 if($scope.reportingAgencyList.length>0){
+									 $.each($scope.reportingAgencyList, function(index,value) {
+										 $scope.patient.reportingAgency.push({"id":value.code});
+									});
+									 searchService.setReportingAgency(angular.copy($scope.patient.reportingAgency));
+									 $scope.mainSearchParam.reportingAgency=angular.copy($scope.patient.reportingAgency);
+									 $scope.searchItems($scope.patient);
+								 }else{
+									 $scope.disableSearch=true;
+									 $scope.searchReportingAgencyMinError=true;
+								 }
+								 	
+								
+							  });
+						});
+						
 					});
 				});
 			}
@@ -1005,8 +1055,7 @@ $scope.archivedToDateRequired=false;
 	
 	$scope.$watch('patient.countyId' , function() {
 		//console.log("county hits"+$scope.patient.countyId.length);
-		       $scope.reportingAgencyLoaded=false;
-	            if(!$scope.loadingCounties){
+	    if(!$scope.loadingCounties){
 		   if($scope.patient.countyId.length==0){
 			   $scope.patient.reportingAgency=[];
 			   $scope.disableSearch=true;
@@ -1017,23 +1066,7 @@ $scope.archivedToDateRequired=false;
 				   $scope.disableSearch=false;			   
 		   }
 	   }
-	   
-	   $scope.searchReportingAgencyMinError=false;
-	   //Some change happened in county selection lets update reporting agency list too
-	   searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
-		   $scope.patient.reportingAgency=[];
-		 //Load Reporting Agency List		   
-		 $scope.reportingAgencyList=response;
-		 $scope.reportingAgencyLoaded=true;
-
-		 
-			// pushing received reporting Agency List to $scope.patient.reportingAgency Array.
-		 $.each($scope.reportingAgencyList, function(index,value) {
-			 $scope.patient.reportingAgency.push({"id":value.code});
-			 searchService.setReportingAgency($scope.patient.reportingAgency);
-		 });
-	   });
-		
+	
 	}, true );
 	
 
@@ -1042,28 +1075,68 @@ $scope.archivedToDateRequired=false;
 	//watch Reporting Agency Filter
 	$scope.$watch('patient.reportingAgency',function()
 			{
-		console.log("reporting agency hits"+$scope.patient.reportingAgency.length);
 		$scope.disableSearch=false;
 		if($scope.reportingAgencyLoaded)
+		{
+			if($scope.patient.reportingAgency.length==0)
 			{
-		if($scope.patient.reportingAgency.length==0)
+				$scope.disableSearch=true;
+				$scope.searchReportingAgencyMinError=true;
+			}
+			else
 			{
-			$scope.disableSearch=true;
-			$scope.searchReportingAgencyMinError=true;
+				$scope.disableSearch=false;
+				$scope.searchReportingAgencyMinError=false;
 			}
-		else
-			{
-			if(!$scope.searchCountyMinError)
-			$scope.disableSearch=false;
-			$scope.searchReportingAgencyMinError=false;
-			}
-			}
-			},true);
+		}
+	},true);
 	
 	// County Drop down events
 	$scope.countyEvents = {onInitDone: function(item) {},
-			onItemDeselect: function(item) {},
-			onItemSelect: function(item) {},
+			onItemDeselect: function(item) {
+				  $scope.searchReportingAgencyMinError=false;
+				   //Some change happened in county selection lets update reporting agency list too
+				   console.log($scope.patient.countyId);
+				  if($scope.patient.countyId.length>0){
+					   searchService.getReportingAgencyListByPreference($scope.patient.countyId,$scope.reportingAgencyListType).then(function(response){
+						   $scope.patient.reportingAgency=[];
+						 //Load Reporting Agency List		   
+						 $scope.reportingAgencyList=response;
+						 $scope.reportingAgencyLoaded=true;
+
+							// pushing received reporting Agency List to $scope.patient.reportingAgency Array.
+							$scope.patient.reportingAgency=[];
+							 if($scope.reportingAgencyList.length>0){
+								$.each($scope.reportingAgencyList, function(index,value) {
+									$scope.patient.reportingAgency.push({"id":value.code});
+								 });
+							 }
+						 
+					   });
+				   }
+			},
+			onItemSelect: function(item) {
+				  $scope.searchReportingAgencyMinError=false;
+				   //Some change happened in county selection lets update reporting agency list too
+				   console.log($scope.patient.countyId);
+				  if($scope.patient.countyId.length>0){
+					   searchService.getReportingAgencyListByPreference($scope.patient.countyId,$scope.reportingAgencyListType).then(function(response){
+						   $scope.patient.reportingAgency=[];
+						 //Load Reporting Agency List		   
+						 $scope.reportingAgencyList=response;
+						 $scope.reportingAgencyLoaded=true;
+
+							// pushing received reporting Agency List to $scope.patient.reportingAgency Array.
+							$scope.patient.reportingAgency=[];
+							 if($scope.reportingAgencyList.length>0){
+								$.each($scope.reportingAgencyList, function(index,value) {
+									$scope.patient.reportingAgency.push({"id":value.code});
+								 });
+							 }
+						 
+					   });
+				   }
+			},
 			onPreferenceChange: function(item) {
 				$scope.countyListType=item;
 				searchService.getPreferenceCoutyList(item).then(function(response){
@@ -1073,12 +1146,51 @@ $scope.archivedToDateRequired=false;
 						$.each(response, function(index,value) {
 							$scope.patient.countyId.push({"id":value.countyId});
 						});
+						// Get Reporting Agency List
+						 if($scope.patient.countyId.length>0){
+							   searchService.getReportingAgencyListByPreference($scope.patient.countyId,$scope.reportingAgencyListType).then(function(response){
+								   $scope.patient.reportingAgency=[];
+								 //Load Reporting Agency List		   
+								 $scope.reportingAgencyList=response;
+								 $scope.reportingAgencyLoaded=true;
+
+									// pushing received reporting Agency List to $scope.patient.reportingAgency Array.
+									$scope.patient.reportingAgency=[];
+									 if($scope.reportingAgencyList.length>0){
+										$.each($scope.reportingAgencyList, function(index,value) {
+											$scope.patient.reportingAgency.push({"id":value.code});
+										 });
+									 }
+								 
+							   });
+						   }
 					}else{
 						$location.path("dashboard/UserPreferrence/1");
 					}
 					
 				});
-			}};
+	}};
+	
+	$scope.reportingAgencyEvents = {onInitDone: function(item) {},
+			onItemDeselect: function(item) {},
+			onItemSelect: function(item) {},
+			onPreferenceChange: function(item) {
+				$scope.reportingAgencyListType=item;
+				searchService.getReportingAgencyListByPreference($scope.patient.countyId,item).then(function(response){
+					 //Load Reporting Agency List		   
+					 $scope.reportingAgencyList=response;  
+					 $scope.reportingAgencyLoaded=true;
+					// pushing received reporting Agency List to $scope.patient.reportingAgency Array.
+					 if($scope.reportingAgencyList.length>0){
+						 $scope.patient.reportingAgency=[];
+						 $.each($scope.reportingAgencyList, function(index,value) {
+							 $scope.patient.reportingAgency.push({"id":value.code});
+						 });
+					 }else{
+						 $location.path("dashboard/UserPreferrence/1");
+					 }
+				});
+	 }};
 	
 	//Watch Tier Filter
 	$scope.$watch('patient.tier' , function() {		

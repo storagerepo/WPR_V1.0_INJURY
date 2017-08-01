@@ -66,7 +66,7 @@ public class CallerAdminCountyMapService {
 					}
 					else{
 						callerAdminCountyMapDAO.deleteCallerAdminCountyMapByCallerAdminIdAndCountyId(callerAdminCountyMapForm.getCallerAdminId(), callerAdminCountyMapForm.getCountyId());
-						userLookupPreferencesDAO.deleteUserLookupPreferenceByUserAndPPreferedId(userId, callerAdminCountyMapForm.getCountyId());
+						userLookupPreferencesDAO.deleteUserLookupPreferenceByUserAndPPreferedId(userId, 1, callerAdminCountyMapForm.getCountyId());
 					}
 				}
 		}
