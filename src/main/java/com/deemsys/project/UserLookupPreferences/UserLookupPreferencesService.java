@@ -1,6 +1,7 @@
 package com.deemsys.project.UserLookupPreferences;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -232,6 +233,32 @@ public class UserLookupPreferencesService {
 		return 1;
 	}
 	
+	// Check and Update Reporting Agency Preference while charging bill
+	public int checkAndUpdateReportingAgencyUserLookupPreferencesByCounty(Integer userId,Integer countyId)
+	{
+		//TODO: Convert Form to Entity Here
+		
+		//Logic Starts
+		
+		Users users = usersDAO.get(userId);
+		
+		// Get All Reporting Agency By countyId // Parameter is integer array
+		Integer[] countyIds=new Integer[]{1};
+		countyIds[0]=countyId;
+		List<UserLookupPreferences> oldLookupPreferences = userLookupPreferencesDAO.getReportingAgencyUserLookupPreferences(userId, Arrays.asList(countyIds));
+		if(oldLookupPreferences.size()==0){
+			List<ReportingAgency> reportingAgencies = reportingAgencyDAO.getReportingAgencyListByCounties(countyIds);
+			for (ReportingAgency reportingAgency : reportingAgencies) {
+				UserLookupPreferencesId userLookupPreferencesId = new UserLookupPreferencesId(userId, InjuryConstants.REPORTING_AGENCY_LOOKUP, countyId, reportingAgency.getReportingAgencyId(), 1);
+				UserLookupPreferences userLookupPreferences=new UserLookupPreferences(userLookupPreferencesId,users);
+				userLookupPreferencesDAO.merge(userLookupPreferences);
+			}	
+		}
+		//Logic Ends
+		
+		return 1;
+	}
+	
 	//Delete an Entry
 	public int deleteUserLookupPreferences(Integer userId)
 	{
@@ -250,6 +277,13 @@ public class UserLookupPreferencesService {
 		userLookupPreferencesDAO.deleteReportingAgencyPreferences(userId,countyId);
 		return 1;
 	}
+
+	public int deleteReportingAgencyPreferencesNotInCountyList(Integer userId,List<Integer> countyIds)
+	{
+		userLookupPreferencesDAO.deleteUserLookupPreferencesNotInCountyList(userId, countyIds);
+		return 1;
+	}
+
 	
 	// get Mapped preference County List
 	public List<CountyList> getPreferenceCountyList(Integer countyListType) {

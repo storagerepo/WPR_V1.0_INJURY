@@ -213,9 +213,10 @@ public class CommonController {
     	}else if(roleId.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
     		LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(userId);
     		lawyerAdminCountyMappingService.deleteLawyerAdminCountyMapByLAdminId(lawyerAdmin.getLawyerAdminId());
+    		userLookupPreferencesService.deleteReportingAgencyPreferencesNotInCountyList(userId, callerAdminForm.getCounty());
     		for (Integer countyId : callerAdminForm.getCounty()) {
     			lawyerAdminCountyMappingService.saveLawyerAdminCountyMap(countyId, lawyerAdmin);
-    			userLookupPreferencesService.saveAndUpdateReportingAgencyUserLookupPreferencesByCounty(userId,countyId);
+    			userLookupPreferencesService.checkAndUpdateReportingAgencyUserLookupPreferencesByCounty(userId,countyId);
     		}
     		
     	}

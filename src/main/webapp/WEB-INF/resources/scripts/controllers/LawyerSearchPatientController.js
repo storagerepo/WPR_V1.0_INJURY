@@ -910,9 +910,12 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		},true);
 	// County Drop down events
 	$scope.countyEvents = {onInitDone: function(item) {},
-			onItemDeselect: function(item) {
+			onItemDeselect: function(item) {},
+			onItemSelect: function(item) {},
+			onSelectionChanged:function(){
 				$scope.searchReportingAgencyMinError=false;
 				   //Some change happened in county selection lets update reporting agency list too
+				 //  console.log($scope.patient.countyId);
 				  if($scope.patient.countyId.length>0){
 					   searchService.getReportingAgencyListByPreference($scope.patient.countyId,$scope.reportingAgencyListType).then(function(response){
 						   $scope.patient.reportingAgency=[];
@@ -929,27 +932,8 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 							 }
 						 
 					   });
-				   }
-			},
-			onItemSelect: function(item) {
-				$scope.searchReportingAgencyMinError=false;
-				   //Some change happened in county selection lets update reporting agency list too
-				  if($scope.patient.countyId.length>0){
-					   searchService.getReportingAgencyListByPreference($scope.patient.countyId,$scope.reportingAgencyListType).then(function(response){
-						   $scope.patient.reportingAgency=[];
-						 //Load Reporting Agency List		   
-						 $scope.reportingAgencyList=response;
-						 $scope.reportingAgencyLoaded=true;
-
-							// pushing received reporting Agency List to $scope.patient.reportingAgency Array.
-							$scope.patient.reportingAgency=[];
-							 if($scope.reportingAgencyList.length>0){
-								$.each($scope.reportingAgencyList, function(index,value) {
-									$scope.patient.reportingAgency.push({"id":value.code});
-								 });
-							 }
-						 
-					   });
+				   }else{
+					   $scope.reportingAgencyList="";
 				   }
 			},
 			onPreferenceChange: function(item) {

@@ -19,4 +19,6 @@ public interface UserLookupPreferencesDAO extends IGenericDAO<UserLookupPreferen
 	public List<CountyList> getReportingAgencyUserLookupPreferencesCount(Integer userId,List<Integer> countyId);
 	public void deleteReportingAgencyPreferences(Integer userId, Integer countyId);
 	public void deleteUserLookupPreferencesByUserIdAndType(Integer userId,Integer type);
+	public void deleteUserLookupPreferencesNotInCountyList(Integer userId,List<Integer> countyIds);
+	public List<UserLookupPreferences> getReportingAgencyUserLookupPreferencesNotInCountyList(Integer userId, List<Integer> countyId);
 }

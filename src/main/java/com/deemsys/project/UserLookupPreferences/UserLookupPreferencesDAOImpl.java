@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.County.CountyList;
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.UserLookupPreferences;
 import com.mysql.fabric.xmlrpc.base.Array;
 
@@ -179,10 +180,9 @@ public class UserLookupPreferencesDAOImpl implements UserLookupPreferencesDAO{
 			Integer userId, List<Integer> countyId) {
 		// TODO Auto-generated method stub
 		// Look Up Preference Type
-		Integer lookUpType=4;
 		Criterion userIdCriterion = Restrictions.and(Restrictions.eq("id.userId", userId),Restrictions.in("id.countyId", countyId));
 		List<UserLookupPreferences> userLookupPreferences = this.sessionFactory.getCurrentSession().createCriteria(UserLookupPreferences.class)
-						.add(Restrictions.and(Restrictions.eq("id.type", lookUpType), userIdCriterion)).list();
+						.add(Restrictions.and(Restrictions.eq("id.type", InjuryConstants.REPORTING_AGENCY_LOOKUP), userIdCriterion)).list();
 		return userLookupPreferences;
 	}
 
@@ -234,6 +234,27 @@ public class UserLookupPreferencesDAOImpl implements UserLookupPreferencesDAO{
 		for (UserLookupPreferences userLookupPreferences2 : userLookupPreferences) {
 			this.sessionFactory.getCurrentSession().delete(userLookupPreferences2);
 		}
+	}
+
+	@Override
+	public void deleteUserLookupPreferencesNotInCountyList(Integer userId,
+			List<Integer> countyIds) {
+		// TODO Auto-generated method stub
+		List<UserLookupPreferences> userLookupPreferences = this.getReportingAgencyUserLookupPreferencesNotInCountyList(userId, countyIds);
+		for (UserLookupPreferences userLookupPreferences2 : userLookupPreferences) {
+			this.sessionFactory.getCurrentSession().delete(userLookupPreferences2);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserLookupPreferences> getReportingAgencyUserLookupPreferencesNotInCountyList(
+			Integer userId, List<Integer> countyId) {
+		// TODO Auto-generated method stub
+		Criterion userIdCriterion = Restrictions.and(Restrictions.eq("id.userId", userId),Restrictions.in("id.countyId", countyId));
+		List<UserLookupPreferences> userLookupPreferences = this.sessionFactory.getCurrentSession().createCriteria(UserLookupPreferences.class)
+						.add(Restrictions.and(Restrictions.eq("id.type", InjuryConstants.REPORTING_AGENCY_LOOKUP), userIdCriterion)).list();
+		return userLookupPreferences;
 	}
 
 }

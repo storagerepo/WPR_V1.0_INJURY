@@ -38,7 +38,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                     template += '<li style="border-bottom:0.5px solid #999;cursor:pointer;" role="presentation" ng-repeat="option in options | filter: searchFilter">';
                 }
 
-                template += '<a ng-class="settings.optionClass" role="menuitem" tabindex="-1" ng-click="setSelectedItem(getPropertyForObject(option,settings.idProp))">';
+                template += '<a ng-class="settings.optionClass" role="menuitem" tabindex="-1" ng-click="setSelectedItem(getPropertyForObject(option,settings.idProp),false,true)">';
 
                 if (checkboxes) {
                     template += '<div class="checkbox"><label><input class="checkboxInput" type="checkbox" ng-click="checkboxClick($event, getPropertyForObject(option,settings.idProp))" ng-checked="isChecked(getPropertyForObject(option,settings.idProp))" /> {{getPropertyForObject(option, settings.displayProp)}}</label></div></a>';
@@ -80,7 +80,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                 };
 
                 $scope.checkboxClick = function ($event, id) {
-                    $scope.setSelectedItem(id);
+                    $scope.setSelectedItem(id,false,true);
                     $event.stopImmediatePropagation();
                 };
 
@@ -91,7 +91,8 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                     onDeselectAll: angular.noop,
                     onInitDone: angular.noop,
                     onMaxSelectionReached: angular.noop,
-                    onPreferenceChange:angular.noop
+                    onPreferenceChange:angular.noop,
+                    onSelectionChanged: angular.noop,
                 };
 
                 $scope.settings = {
@@ -257,18 +258,19 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                 };
 
                 $scope.selectAll = function () {
-                    $scope.deselectAll(false);
+                    $scope.deselectAll(true);
                     $scope.externalEvents.onSelectAll();
 
                     angular.forEach($scope.options, function (value) {
-                        $scope.setSelectedItem(value[$scope.settings.idProp], true);
+                        $scope.setSelectedItem(value[$scope.settings.idProp], true, false);
                     });
+                    $scope.externalEvents.onSelectionChanged();
                 };
 
                 $scope.deselectAll = function (sendEvent) {
-                    sendEvent = sendEvent || true;
+                    sendEvent = sendEvent || false;
 
-                    if (sendEvent) {
+                    if (!sendEvent) {
                         $scope.externalEvents.onDeselectAll();
                     }
 
@@ -277,13 +279,16 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                     } else {
                         $scope.selectedModel.splice(0, $scope.selectedModel.length);
                     }
+                    if (!sendEvent) {
+    					$scope.externalEvents.onSelectionChanged();
+    				}
                 };
 
                 $scope.countyPreferenceList=function(){
                 	$scope.externalEvents.onPreferenceChange($scope.countyPreference);
                 };
                 
-                $scope.setSelectedItem = function (id, dontRemove) {
+                $scope.setSelectedItem = function (id, dontRemove, fireSelectionChange) {
                     var findObj = getFindObj(id);
                     var finalObj = null;
 
@@ -314,6 +319,10 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                         $scope.externalEvents.onItemSelect(finalObj);
                     }
                     if ($scope.settings.closeOnSelect) $scope.open = false;
+                    
+                    if (fireSelectionChange) {
+    					$scope.externalEvents.onSelectionChanged();
+    				}
                 };
 
                 $scope.isChecked = function (id) {
