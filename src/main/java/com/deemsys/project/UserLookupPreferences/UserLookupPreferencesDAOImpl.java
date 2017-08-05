@@ -251,7 +251,7 @@ public class UserLookupPreferencesDAOImpl implements UserLookupPreferencesDAO{
 	public List<UserLookupPreferences> getReportingAgencyUserLookupPreferencesNotInCountyList(
 			Integer userId, List<Integer> countyId) {
 		// TODO Auto-generated method stub
-		Criterion userIdCriterion = Restrictions.and(Restrictions.eq("id.userId", userId),Restrictions.in("id.countyId", countyId));
+		Criterion userIdCriterion = Restrictions.and(Restrictions.eq("id.userId", userId),Restrictions.not(Restrictions.in("id.countyId", countyId)));
 		List<UserLookupPreferences> userLookupPreferences = this.sessionFactory.getCurrentSession().createCriteria(UserLookupPreferences.class)
 						.add(Restrictions.and(Restrictions.eq("id.type", InjuryConstants.REPORTING_AGENCY_LOOKUP), userIdCriterion)).list();
 		return userLookupPreferences;
