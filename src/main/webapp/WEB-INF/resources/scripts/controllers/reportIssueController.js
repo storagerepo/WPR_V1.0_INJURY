@@ -13,6 +13,10 @@ adminApp.controller('ReportIssueController',function($scope,$http,$location,$sta
 			"issueAddedFrom":2,
 	};
 	
+	// Scroll To Top
+	$(function(){
+		$("html,body").scrollTop(0);
+	});
 	
 	requestHandler.getRequest("getCurrentUserDetails.json","").then(function(response){
 			$scope.currentUserDetailsForm=response.data.currentUserDetailsForm;

@@ -2,6 +2,10 @@ var adminApp=angular.module('sbAdminApp',['requestModule','flash']);
 
 adminApp.controller('RateReviewController',function($scope,$http,requestHandler,Flash){
 	
+	// Scroll To Top
+	$(function(){
+		$("html,body").scrollTop(0);
+	});
 	 $scope.rating = 0;
 	 $scope.overallPercentage=50;
 	 $scope.isReadonly=true;

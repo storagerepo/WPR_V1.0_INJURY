@@ -9,6 +9,11 @@ adminApp.controller('RatingsReviewsController',function($scope,$http,requestHand
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
     };
     
+    // Scroll To Top
+	$(function(){
+		$("html,body").scrollTop(0);
+	});
+    
     // Default Sorting by ReviewDatTime
     $scope.sortKey ="reviewDateTime";
     $scope.reverse = !$scope.reverse;

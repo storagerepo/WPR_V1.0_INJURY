@@ -225,10 +225,12 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 		angular.copy(userLookupPreferencesOriginal,$scope.userLookupPreferences);
 	};
 	
-	 $scope.saveUserLookupPreferences=function(){
+	 $scope.saveUserLookupPreferences=function(fromLocation){
 		 requestHandler.postRequest("/Patient/mergeUserLookupPreferences.json",$scope.userLookupPreferences).then(function(response){
-			  Flash.create('success', "You have Successfully Updated!");
-			  $scope.getUserLookupPreference();
+			 if(fromLocation==1){
+				 Flash.create('success', "You have Successfully Updated!");
+				 $scope.getUserLookupPreference(); 
+			 }
 			 var countySelected=searchService.getCounty();
 			 var countyListType=searchService.getCountyListType();
 			 if(countySelected!='' && countyListType==2){
@@ -261,29 +263,9 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 		 requestHandler.postRequest("/Patient/mergeReportingAgencyUserLookupPreferences.json",$scope.reportingAgencyPreferencesForm).then(function(response){
 			  Flash.create('success', "You have Successfully Updated!");
 			  $scope.getCountiesList();
-			  $scope.getUserLookupPreference();
+			  //$scope.getUserLookupPreference();
 			  $("#reportingAgencyModal").modal('hide');
-			/* var countySelected=searchService.getCounty();
-			 var countyListType=searchService.getCountyListType();
-			 if(countySelected!='' && countyListType==2){
-				  angular.forEach($scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId,function(item,index){
-					  if(userLookupPreferencesOriginal.userLookupPreferenceMappedForms[0].preferredId.indexOf(item)>-1){
-						  // Do Nothing
-					  }else{
-						  countySelected.push({"id":item});
-					  }
-				  });
-				  var finalCountySelection=[];
-				  angular.forEach(countySelected,function(item1,index1){
-					  if($scope.userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId.indexOf(item1.id)>-1){
-						  // Do Nothing
-						  finalCountySelection.push(item1);
-					  }else{
-						  // Do Nothing
-					  }
-				  });
-				  searchService.setCounty(finalCountySelection);
-			 }*/
+			
 			 $(function(){
 					$("html,body").scrollTop(0);
 			  });
@@ -293,7 +275,12 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	 
 	 // Compare Objects
 	 $scope.isClean = function() {
+		 $rootScope.lookupPreferenceChanged=angular.equals (userLookupPreferencesOriginal,$scope.userLookupPreferences);
 	    return angular.equals (userLookupPreferencesOriginal,$scope.userLookupPreferences);
+	 };
+	 
+	 $rootScope.rootSaveUserLookupPreference=function(){
+		 $scope.saveUserLookupPreferences(2);
 	 };
 	 
 	 // Compare Reporting Agency Objects

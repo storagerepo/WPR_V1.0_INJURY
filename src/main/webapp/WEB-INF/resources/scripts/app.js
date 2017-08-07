@@ -1429,8 +1429,16 @@ sbAdminApp
 					        	$rootScope.nextState = to.name;
 					            $rootScope.previousState = from.name;
 					            if($rootScope.previousState=='dashboard.userPreferrence/:fid' && $rootScope.nextState!='dashboard.userPreferrence/:fid'){
+					            	if(!$rootScope.lookupPreferenceChanged){
+					            		if(confirm("Do you want to save the lookup preference?")){
+					            			$rootScope.rootSaveUserLookupPreference();
+					            		}else{
+					            			// nothing
+					            		}
+					            	}
+					            	
 					            	if(!$rootScope.exportPreferenceChanged){
-					            		if(confirm("Do you want to save the preference?")){
+					            		if(confirm("Do you want to save the export preference?")){
 					            			$rootScope.rootSaveUserExportPreference();
 					            		}else{
 					            			// nothing
