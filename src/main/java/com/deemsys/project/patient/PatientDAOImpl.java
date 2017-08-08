@@ -1,5 +1,6 @@
 package com.deemsys.project.patient;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -931,6 +932,18 @@ public List<Patient> getPatientsListByAddedOnDates(String fromDate,
 	criteria.add(Restrictions.or(Restrictions.or(Restrictions.eq("isRunnerReport", 0), Restrictions.eq("isRunnerReport", 2)), Restrictions.eq("isRunnerReport", 4)));
 	
 	return criteria.list();
+}
+
+@SuppressWarnings("unchecked")
+@Override
+public List<Patient> getPatientListForUpdateLatLong(String fromDate,
+		String toDate,Integer noOfRecords) {
+	// TODO Auto-generated method stub
+	Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Patient.class);
+	criteria.add(Restrictions.between("addedDate", InjuryConstants.convertYearFormat(fromDate), InjuryConstants.convertYearFormat(toDate)));
+	criteria.add(Restrictions.and(Restrictions.eq("latitude", BigDecimal.valueOf(0.00000000000)), Restrictions.eq("longitude", BigDecimal.valueOf(0.00000000000))));
+	criteria.add(Restrictions.isNotNull("address"));
+	return criteria.setFirstResult(0).setMaxResults(noOfRecords).list();
 }
 
 

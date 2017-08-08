@@ -488,6 +488,13 @@ public class PatientController {
      return "";
     }
     
+    @RequestMapping(value = { "updateLatLong"}, method = RequestMethod.GET)
+	public String updatePatientLatLong(@RequestParam("addedFromDate") String addedFromDate,@RequestParam("addedToDate") String addedToDate, @RequestParam("noOfRecords") Integer noOfRecords, ModelMap model) {
+		patientService.updateLatLong(addedFromDate, addedToDate, noOfRecords);
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+    
     @RequestMapping(value = "/debugParsingPdf", method = RequestMethod.GET)
 	public String debugParsePDF(@RequestParam("fileName") String fileName,
 			ModelMap model) {

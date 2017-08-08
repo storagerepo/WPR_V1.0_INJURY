@@ -62,7 +62,7 @@ public class GeoLocation {
 				JSONObject location = (JSONObject) geoMetry.get("location");
 				latLang = location.get("lat") + "," + location.get("lng");
 			} else {
-				latLang = "0.0,0.0";
+				latLang = "0.1,0.1";
 			}
 
 			return latLang;
