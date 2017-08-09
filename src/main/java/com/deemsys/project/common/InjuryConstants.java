@@ -44,6 +44,10 @@ public class InjuryConstants {
 	public static Integer AGE_LOOKUP=3;
 	public static Integer REPORTING_AGENCY_LOOKUP=4;
 	
+	// Reporting Agency Code Separator
+	public static String REPORTING_AGENCY_CODE_SEPARATOR="-";
+	public static String REPORTING_AGENCY_NAME_SEPARATOR=" - ";
+	
 	// Convert Date To Year Format
 	public static Date convertYearFormat(String date)
 	{   SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -384,4 +388,14 @@ public class InjuryConstants {
 			}
 			return resultName;
 		}
-}
+		
+		// Convert String Array to Integer Array
+		public static Integer[] convertStringArrayToIntegerArray(String[] inputArray){
+			Integer[] outputArray=new Integer[inputArray.length];
+			for (int i = 0; i < inputArray.length; i++) {
+				outputArray[i]=Integer.parseInt(inputArray[i]);
+			}
+			
+			return outputArray;
+		}
+ }

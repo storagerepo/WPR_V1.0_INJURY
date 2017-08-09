@@ -41,7 +41,7 @@
 					ng-show="searchCountyMinError"> Select at least one county</span>
 				<div ng-dropdown-multiselect="" preference-list="countyListType"
 					options="countylist" selected-model="patient.countyId"
-					extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true}"
+					extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true,radioButtonName:'countyPreference',preferenceAllText:'Subscribed',preferenceSetText:'Preferred'}"
 					events="countyEvents"></div>
 				<a href="#/dashboard/UserPreferrence/1"
 					style="text-decoration: underline;" ng-show="countyListType==2">Change
@@ -1096,7 +1096,7 @@
 				</div>
 				<div class="modal-body modal-min-height-120">
 					<div class="col-md-12">
-						<div class="col-md-4"><label>Preference :</label></div> 
+						<div class="col-md-4"><label>Report Layout :</label></div> 
 						<div class="col-md-8">
 						<span class="text-center"> <label class="radio-inline"><input
 								type="radio" value="1" name="exportFormat" ng-model="formatType"

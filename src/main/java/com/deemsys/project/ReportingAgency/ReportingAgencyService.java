@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.UserLookupPreferences.UserLookupPreferenceMappedForm;
 import com.deemsys.project.UserLookupPreferences.UserLookupPreferencesService;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.ReportingAgency;
 /**
  * 
@@ -142,7 +143,8 @@ public class ReportingAgencyService {
 				countyId=reportingAgency.getCounty().getCountyId();
 			else
 				countyId=null;
-			reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, reportingAgency.getReportingAgencyName(), reportingAgency.getCode(), reportingAgency.getStatus()));
+			String agencyName=countyId+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode();
+			reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, agencyName, reportingAgency.getCode(), reportingAgency.getStatus()));
 		}
 		
 		return reportingAgencyForms;
@@ -163,7 +165,10 @@ public class ReportingAgencyService {
 					countyId=reportingAgency.getCounty().getCountyId();
 				else
 					countyId=null;
-				reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, reportingAgency.getReportingAgencyName(), reportingAgency.getCode(), reportingAgency.getStatus()));
+				
+				String agencyCode=reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_CODE_SEPARATOR+countyId;
+				String agencyName=countyId+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode();
+				reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, agencyName, agencyCode, reportingAgency.getStatus()));
 			}
 		}else{
 			UserLookupPreferenceMappedForm userLookupPreferenceMappedForms = userLookupPreferencesService.getReportingAgencyUserLookupPreferrenceByCountyList(Arrays.asList(countyIds));
@@ -173,7 +178,9 @@ public class ReportingAgencyService {
 						countyId=reportingAgency.getCounty().getCountyId();
 					else
 						countyId=null;
-					reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, reportingAgency.getReportingAgencyName(), reportingAgency.getCode(), reportingAgency.getStatus()));
+					String agencyCode=reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_CODE_SEPARATOR+countyId;
+					String agencyName=countyId+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode();
+					reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, agencyName, agencyCode, reportingAgency.getStatus()));
 				}
 			}
 		}

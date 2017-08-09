@@ -555,8 +555,8 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	//Common Constrain Reporting Agency
 	if(callerPatientSearchForm.getIsRunnerReport()==0){
 		if(callerPatientSearchForm.getReportingAgency().length>0){
-			//callerPatientSearchForm.setReportingAgency(this.manupulateReportingAgency(callerPatientSearchForm.getReportingAgency(),callerPatientSearchForm.getCountyId()));
-			Criterion reportingAgencyCriterion=Restrictions.in("t1.reportingAgencyNcic", callerPatientSearchForm.getReportingAgency());
+			List<String[]> reportingAgencyAndCountyId=this.manupulateReportingAgency(callerPatientSearchForm.getReportingAgency());
+			Criterion reportingAgencyCriterion=Restrictions.and(Restrictions.in("t1.reportingAgencyNcic",reportingAgencyAndCountyId.get(0)),Restrictions.in("t1.county.countyId", InjuryConstants.convertStringArrayToIntegerArray(reportingAgencyAndCountyId.get(1))));
 			criteria.add(reportingAgencyCriterion);
 		}		
 	}
@@ -897,28 +897,25 @@ public List<Patient> getRunnerReportPatients(String crashId,
 	return patients;
 }
 
-public String[] manupulateReportingAgency(String[] reportingAgency,Integer[] countyId){
+public List<String[]> manupulateReportingAgency(String[] reportingAgency){
 	
 	List<String> reportingAgencyIds=new ArrayList<String>(Arrays.asList(reportingAgency));
 	
-	
-	
-	if(reportingAgencyIds.contains("OHP")){
-		reportingAgencyIds.remove("OHP");
-		for (Integer county : countyId) {
-			if(county<10){
-				reportingAgencyIds.add("OHP0"+county);
-			}else{
-				reportingAgencyIds.add("OHP"+county);
-			}
-		}
+	String[] reportingAgencyArray=new String[reportingAgencyIds.size()];
+	String[] countyIdArray=new String[reportingAgencyIds.size()];
+	int reportingAgencyIndex=0;
+	int countyIndex=0;
+	for (String reportingAgencyCode : reportingAgencyIds) {
+		String[] splittedCode=reportingAgencyCode.split("-");
+		reportingAgencyArray[reportingAgencyIndex++]=splittedCode[0];
+		countyIdArray[countyIndex++]=splittedCode[1];
+		
 	}
-	int index=0;
-	String[] reportingAgencyList = new String[reportingAgencyIds.size()];
-	for (String reportingAgencyId : reportingAgencyIds) {
-		reportingAgencyList[index++]=reportingAgencyId;
-	}
-	return reportingAgencyList;
+	
+	List<String[]> splittedResults=new ArrayList<String[]>();
+	splittedResults.add(reportingAgencyArray);
+	splittedResults.add(countyIdArray);
+	return splittedResults;
 }
 
 @SuppressWarnings("unchecked")

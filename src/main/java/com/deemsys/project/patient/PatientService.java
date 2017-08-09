@@ -31,6 +31,7 @@ import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.Caller;
+import com.deemsys.project.entity.ReportingAgency;
 import com.deemsys.project.entity.VehicleMakeAbbreviation;
 import com.deemsys.project.login.LoginService;
 
@@ -440,10 +441,18 @@ public class PatientService {
 		crashReport=crashReportDAO.getCrashReport(patientForm.getCrashId());
 	}
 	
+	// Vehicle Make Abbrevation
 	VehicleMakeAbbreviation vehicleMakeAbbreviation = vehicleMakeAbbreviationDAO.getVehicleMakeAbbreviationByMake(patientForm.getVehicleMake());
 	if(vehicleMakeAbbreviation==null&&patientForm.getVehicleMake()!=null){
 		vehicleMakeAbbreviation=new VehicleMakeAbbreviation(patientForm.getVehicleMake(), patientForm.getVehicleMake(), 1, null);
 		vehicleMakeAbbreviationDAO.save(vehicleMakeAbbreviation);
+	}
+	
+	// Reporting Agency Check And Update the Agency List
+	ReportingAgency reportingAgency = reportingAgencyDAO.getReportingAgencyByCodeAndCounty(patientForm.getCountyId(), patientForm.getReportingAgencyNcic());
+	if(reportingAgency==null){
+		reportingAgency = new ReportingAgency(county, patientForm.getReportingAgencyName(), patientForm.getReportingAgencyNcic(), 1);
+		reportingAgencyDAO.save(reportingAgency);
 	}
 	
 	//Date 

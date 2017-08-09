@@ -166,8 +166,17 @@ public class ReportingAgencyDAOImpl implements ReportingAgencyDAO{
 			Integer countyId, String agencyName) {
 		// TODO Auto-generated method stub
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(ReportingAgency.class);
-		criteria.add(Restrictions.and(Restrictions.eq("county.countyId", countyId), Restrictions.like("", agencyName, MatchMode.START)));
+		criteria.add(Restrictions.and(Restrictions.eq("county.countyId", countyId), Restrictions.like("reportingAgencyName", agencyName, MatchMode.START)));
 		return criteria.list();
+	}
+
+	@Override
+	public ReportingAgency getReportingAgencyByCodeAndCounty(Integer countyId,
+			String agencyCode) {
+		// TODO Auto-generated method stub
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(ReportingAgency.class);
+		criteria.add(Restrictions.and(Restrictions.eq("county.countyId", countyId), Restrictions.eq("code", agencyCode)));
+		return (ReportingAgency) criteria.uniqueResult();
 	}
 
 	
