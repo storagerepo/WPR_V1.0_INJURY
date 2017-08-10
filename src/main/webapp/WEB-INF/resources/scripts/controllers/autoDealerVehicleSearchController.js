@@ -875,10 +875,12 @@ $scope.archivedToDateRequired=false;
 		if($scope.totalRecords>searchService.getMaxRecordsDownload()){
 			$("#exportAlertModal").modal('show');
 		}else{
-			$scope.formatType=1;
-			$scope.exportType=2;
 			$scope.resetUserPreferenceError();
-			$("#exportOptionModal").modal('show');
+			$scope.exportType=searchService.checkResultsSelected($scope.autoDealerVehicleSearchData);
+			searchService.getExportPreferenceType().then(function(response){
+				$scope.formatType=response;
+				$("#exportOptionModal").modal('show');
+			});
 			$scope.exportExcelByType=function(){
 				$scope.exportButtonText="Exporting...";
 				$scope.exportButton=true;

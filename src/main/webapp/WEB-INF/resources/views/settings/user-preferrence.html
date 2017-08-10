@@ -19,10 +19,30 @@
 				</div>
 				<div id="collapse1" class="panel-collapse collapse" ng-class="{'in':prefenceTabActive==1}">
 					<div class="panel-body">
+					<div ng-show="$root.isAdmin!=3">
 					<p>There are 2 settings available for county look up preference:<br/> 
 					     <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Subscribed Counties (default) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Preferred Counties.</b><br/> </p>
 					    <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Subscribed Counties will list all the counties you have been subscribed to in CrashReportsOnline.<br/>
 					    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Preferred Counties will need to be set up here.This will list only those counties you usually prefer to access. </p>					
+						</div>
+						<div ng-show="$root.isAdmin==3">
+						<p>There are 2 steps to completing your County look up preferences:</p>
+						<p><b><u>Step 1: County Look Up Preferences</u></b></p>
+						<p>There are 2 settings available for county look up preference:<br/> 
+					     <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Subscribed Counties (default) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Preferred Counties.</b><br/> </p>
+					    <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Subscribed Counties will list all the counties you have been subscribed to in CrashReportsOnline.<br/>
+					    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Preferred Counties will need to be set up here.This will list only those counties you usually prefer to access. </p>					
+						<p><b><u>Step 2: Reporting Agency for County Look Up Preferences</u></b></p>
+						<p>For each county of your preference set up according to Step 1 above, you can further set up the Reporting Agency look up 
+    					preference as well. This are 2 available settings for this as well:<br/>
+    					 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>1. All Reporting Agencies (default)</b> - All Reporting Agencies will list all the reporting agencies within every county of 
+               			your preference.<br/>
+               			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>2. Preferred Reporting Agencies</b> - Preferred Reporting Agencies will need to be set up here. This will list only those 
+               			reporting agencies you usually prefer to access within the counties of your preference.<br/><br/>
+               			Once you have completed setting up your look up preferences here, it will be saved as your default settings. 
+    					</p>
+    					
+						</div>
 							<div class="col-md-12">
 							<fieldset>
 							<legend>Counties & Reporting Agencies</legend>

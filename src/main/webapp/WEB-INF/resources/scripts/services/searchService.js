@@ -347,6 +347,34 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		});
 	};
 	
+	// Check Whether results are selected
+	this.checkResultsSelected=function(searchData){
+		var selected=2;
+		$.each(searchData, function(index,value) {
+			$.each(value.searchResult, function(index1,value1) {
+				$.each(value1.patientSearchLists,function(index2,value2){
+					if(value2.selected==true){
+						selected=1;
+					}
+					});
+			});
+		});
+		
+		return selected;
+	};
+	
+	// Get Export Prefence Type
+	this.getExportPreferenceType=function(){
+		var exportLayout=1;
+		return requestHandler.getRequest("Patient/checkCustomExportPreferencess.json","").then( function(response) {
+			if(response.data.status!=0){
+		    	return exportLayout=2;
+		    }else{
+		    	return exportLayout;
+		    }
+		});
+	};
+	
 	// Reset Search Data
 	this.resetSearchData=function(){
 		countySession=[];

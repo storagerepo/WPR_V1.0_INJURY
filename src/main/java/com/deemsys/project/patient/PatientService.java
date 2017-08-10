@@ -449,7 +449,7 @@ public class PatientService {
 	}
 	
 	// Reporting Agency Check And Update the Agency List
-	ReportingAgency reportingAgency = reportingAgencyDAO.getReportingAgencyByCodeAndCounty(patientForm.getCountyId(), patientForm.getReportingAgencyNcic());
+	ReportingAgency reportingAgency = reportingAgencyDAO.getReportingAgencyByCodeAndCounty(county.getCountyId(), patientForm.getReportingAgencyNcic());
 	if(reportingAgency==null){
 		reportingAgency = new ReportingAgency(county, patientForm.getReportingAgencyName(), patientForm.getReportingAgencyNcic(), 1);
 		reportingAgencyDAO.save(reportingAgency);

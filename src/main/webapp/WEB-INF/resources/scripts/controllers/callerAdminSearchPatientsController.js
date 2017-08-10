@@ -660,6 +660,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 					});
 					
 				});
+				defer.resolve(response);
 				$scope.isCleanCheckboxDirectReport();
 			}
 			
@@ -811,6 +812,10 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		};
 	
 	$scope.$watch("patient.pageNumber",function(){
+		/*var isChanged=searchService.checkResultsSelected($scope.patientSearchData);
+		if(isChanged==1){
+			alert("Please note your current selection will be lost. Continue to next page?");
+		}*/
 		$scope.mainSearchParam.pageNumber=$scope.patient.pageNumber;
 
 		 searchService.setPageNumber($scope.patient.pageNumber);
@@ -829,7 +834,6 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 				 });
 			 }
 		}
-		 
 		
 	});
 		
@@ -921,10 +925,13 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		if($scope.totalRecords>searchService.getMaxRecordsDownload()){
 			$("#exportAlertModal").modal('show');
 		}else{
-			$scope.formatType=1;
-			$scope.exportType=2;
 			$scope.resetUserPreferenceError();
-			$("#exportOptionModal").modal('show');
+			$scope.exportType=searchService.checkResultsSelected($scope.patientSearchData);
+			searchService.getExportPreferenceType().then(function(response){
+				$scope.formatType=response;
+				$("#exportOptionModal").modal('show');
+			});
+			console.log(searchService.getExportPreferenceType());
 			$scope.exportExcelByType=function(){
 				$scope.exportButtonText="Exporting...";
 				$scope.exportButton=true;
@@ -969,9 +976,8 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		    if($scope.userPrefenceStatus==0){
 		    	$scope.userPrefenceError=true;
 		    	$scope.userPrefenceExportButton=true;
-		    
 		    }
-	 });
+		});
 	};
 	
 	// Goto Settings Function
