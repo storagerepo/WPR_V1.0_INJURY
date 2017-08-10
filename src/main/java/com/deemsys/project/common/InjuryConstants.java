@@ -46,7 +46,7 @@ public class InjuryConstants {
 	
 	// Reporting Agency Code Separator
 	public static String REPORTING_AGENCY_CODE_SEPARATOR="-";
-	public static String REPORTING_AGENCY_NAME_SEPARATOR=" - ";
+	public static String REPORTING_AGENCY_NAME_SEPARATOR="-";
 	
 	// Convert Date To Year Format
 	public static Date convertYearFormat(String date)

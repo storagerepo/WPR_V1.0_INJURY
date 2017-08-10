@@ -143,7 +143,7 @@ public class ReportingAgencyService {
 				countyId=reportingAgency.getCounty().getCountyId();
 			else
 				countyId=null;
-			String agencyName=countyId+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode();
+			String agencyName=reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+countyId;
 			reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, agencyName, reportingAgency.getCode(), reportingAgency.getStatus()));
 		}
 		
@@ -167,7 +167,7 @@ public class ReportingAgencyService {
 					countyId=null;
 				
 				String agencyCode=reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_CODE_SEPARATOR+countyId;
-				String agencyName=countyId+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode();
+				String agencyName=reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+countyId;
 				reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, agencyName, agencyCode, reportingAgency.getStatus()));
 			}
 		}else{
@@ -179,7 +179,7 @@ public class ReportingAgencyService {
 					else
 						countyId=null;
 					String agencyCode=reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_CODE_SEPARATOR+countyId;
-					String agencyName=countyId+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode();
+					String agencyName=reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+countyId;
 					reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, agencyName, agencyCode, reportingAgency.getStatus()));
 				}
 			}
