@@ -18,9 +18,12 @@ import com.deemsys.project.County.CountyService;
 import com.deemsys.project.CrashReport.CrashReportDAO;
 import com.deemsys.project.CrashReport.CrashReportService;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
+import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingDAO;
 import com.deemsys.project.Lawyers.LawyersService;
 import com.deemsys.project.Map.GeoLocation;
 import com.deemsys.project.ReportingAgency.ReportingAgencyDAO;
+import com.deemsys.project.UserLookupPreferences.UserLookupPreferenceMappedForm;
+import com.deemsys.project.UserLookupPreferences.UserLookupPreferencesService;
 import com.deemsys.project.VehicleMakeAbbreviation.VehicleMakeAbbreviationDAO;
 import com.deemsys.project.Caller.CallerDAO;
 import com.deemsys.project.Caller.CallerService;
@@ -31,6 +34,7 @@ import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.Caller;
+import com.deemsys.project.entity.LawyerAdminCountyMap;
 import com.deemsys.project.entity.ReportingAgency;
 import com.deemsys.project.entity.VehicleMakeAbbreviation;
 import com.deemsys.project.login.LoginService;
@@ -73,6 +77,9 @@ public class PatientService {
 	VehicleMakeAbbreviationDAO vehicleMakeAbbreviationDAO;
 	
 	@Autowired
+	LawyerAdminCountyMappingDAO lawyerAdminCountyMappingDAO;
+	
+	@Autowired
 	CrashReportService crashReportService;
 	
 	@Autowired
@@ -89,6 +96,9 @@ public class PatientService {
 	
 	@Autowired
 	CountyService countyService;
+	
+	@Autowired
+	UserLookupPreferencesService userLookupPreferencesService;
 	/*
 	 * @Autowired PatientFileRead patientFileRead;
 	 */
@@ -123,14 +133,7 @@ public class PatientService {
 	
 	// Get Particular Entry
 	public PatientForm getPatient(String patientId) {
-		Integer callerAdminId=0;
-		String role=loginService.getCurrentRole();
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
-			callerAdminId=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId();
-		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
-			Caller caller=callerDAO.getByUserId(loginService.getCurrentUserID());
-			callerAdminId=callerAdminService.getCallerAdmin(caller.getCallerAdmin().getCallerAdminId()).getCallerAdminId();
-		}
+		
 		Patient patient=patientDAO.getPatientByPatientId(patientId);
 		PatientForm patientForm=this.getPatientForm(patient);
 		
@@ -164,14 +167,15 @@ public class PatientService {
 		// TODO: Convert Form to Entity Here
 
 		// Logic Starts
-		String latLong = geoLocation.getLocation(patientForm.getAddress());
-		double longitude = 0.0;
-		double latitude = 0.0;
+		/*String latLong = geoLocation.getLocation(patientForm.getAddress());
 		if (!latLong.equals("NONE")) {
 			String[] latitudeLongitude = latLong.split(",");
 			latitude = Double.parseDouble(latitudeLongitude[0]);
 			longitude = Double.parseDouble(latitudeLongitude[1]);
-		}
+		}*/
+		double longitude = 0.0;
+		double latitude = 0.0;
+		
 		
 		patientForm.setLatitude(latitude);
 		patientForm.setLongitude(longitude);
@@ -187,15 +191,15 @@ public class PatientService {
 
 		// Logic Starts
 		try{
-			String latLong = geoLocation.getLocation(patientForm.getAddress());
-	
-			double longitude = 0.0;
-			double latitude = 0.0;
+			/*String latLong = geoLocation.getLocation(patientForm.getAddress());
 			if (!latLong.equals("NONE")) {
 				String[] latitudeLongitude = latLong.split(",");
 				latitude = Double.parseDouble(latitudeLongitude[0]);
 				longitude = Double.parseDouble(latitudeLongitude[1]);
-			}
+			}*/
+			double longitude = 0.0;
+			double latitude = 0.0;
+			
 	
 			patientForm.setLatitude(latitude);
 			patientForm.setLongitude(longitude);
@@ -449,10 +453,19 @@ public class PatientService {
 	}
 	
 	// Reporting Agency Check And Update the Agency List
-	ReportingAgency reportingAgency = reportingAgencyDAO.getReportingAgencyByCodeAndCounty(county.getCountyId(), patientForm.getReportingAgencyNcic());
+	Integer countyId=county.getCountyId();
+	ReportingAgency reportingAgency = reportingAgencyDAO.getReportingAgencyByCodeAndCounty(countyId, patientForm.getReportingAgencyNcic());
 	if(reportingAgency==null){
 		reportingAgency = new ReportingAgency(county, patientForm.getReportingAgencyName(), patientForm.getReportingAgencyNcic(), 1);
 		reportingAgencyDAO.save(reportingAgency);
+		List<LawyerAdminCountyMap> lawyerAdminCountyMaps=lawyerAdminCountyMappingDAO.getLawyerAdminCountyMappingsByCountyId(countyId);
+		List<Integer> preferredId=new ArrayList<Integer>();
+		preferredId.add(reportingAgency.getReportingAgencyId());
+		for (LawyerAdminCountyMap lawyerAdminCountyMap : lawyerAdminCountyMaps) {
+			UserLookupPreferenceMappedForm userLookupPreferenceMappedForm = new UserLookupPreferenceMappedForm(InjuryConstants.REPORTING_AGENCY_LOOKUP, preferredId);
+			userLookupPreferenceMappedForm.setCountyId(countyId);
+			userLookupPreferencesService.saveReportingAgencyPreference(lawyerAdminCountyMap.getLawyerAdmin().getUsers().getUserId(), userLookupPreferenceMappedForm);
+		}
 	}
 	
 	//Date 

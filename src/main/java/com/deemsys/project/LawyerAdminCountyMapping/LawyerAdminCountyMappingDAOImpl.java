@@ -190,5 +190,13 @@ public class LawyerAdminCountyMappingDAOImpl implements LawyerAdminCountyMapping
 		
 		
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<LawyerAdminCountyMap> getLawyerAdminCountyMappingsByCountyId(
+			Integer countyId) {
+		// TODO Auto-generated method stub
+		return this.sessionFactory.getCurrentSession().createCriteria(LawyerAdminCountyMap.class).add(Restrictions.eq("id.countyId", countyId)).list();
+	}
 	
 }

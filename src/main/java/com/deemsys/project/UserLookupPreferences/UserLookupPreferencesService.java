@@ -259,6 +259,22 @@ public class UserLookupPreferencesService {
 		return 1;
 	}
 	
+	// Save Single Reporting Agency
+	public int saveReportingAgencyPreference(Integer userId, UserLookupPreferenceMappedForm userLookupPreferenceMappedForm){
+		
+		Users users = usersDAO.get(userId);
+		
+		for (Integer mappedId : userLookupPreferenceMappedForm.getPreferredId()) {
+			UserLookupPreferencesId userLookupPreferencesId = new UserLookupPreferencesId(userId, userLookupPreferenceMappedForm.getType(), userLookupPreferenceMappedForm.getCountyId(), mappedId, 1);
+			UserLookupPreferences userLookupPreferences=new UserLookupPreferences(userLookupPreferencesId,users);
+			userLookupPreferencesDAO.merge(userLookupPreferences);
+		}	
+		
+		//Logic Ends
+		
+		return 1;
+	}
+	
 	//Delete an Entry
 	public int deleteUserLookupPreferences(Integer userId)
 	{

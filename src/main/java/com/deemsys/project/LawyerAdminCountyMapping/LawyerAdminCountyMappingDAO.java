@@ -13,4 +13,5 @@ public interface LawyerAdminCountyMappingDAO extends IGenericDAO<LawyerAdminCoun
 	public void deleteLawyerAdminCountyMappingsByLawyerAdminIdAndCountyId(Integer lawyerAdminId,Integer countyId);
 	public void deleteLawyerAdminCountyMappingsByLawyerAdminId(Integer lawyerAdminId);
 	public List<CountyList> getCountyListByLawyerAdminId(Integer lawyerAdminId);
+	public List<LawyerAdminCountyMap> getLawyerAdminCountyMappingsByCountyId(Integer countyId);
 }
