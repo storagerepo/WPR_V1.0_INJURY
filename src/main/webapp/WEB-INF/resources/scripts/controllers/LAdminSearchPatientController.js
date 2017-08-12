@@ -971,6 +971,7 @@ $scope.archivedToDateRequired=false;
 			$scope.resetUserPreferenceError();
 			$scope.formatType=1;
 			$scope.exportType=searchService.checkResultsSelected($scope.lAdminPatientSearchData);
+			$scope.checkExportSelectedPatients();
 			searchService.getExportPreferenceType().then(function(response){
 				$scope.formatType=response;
 				$("#exportOptionModal").modal('show');

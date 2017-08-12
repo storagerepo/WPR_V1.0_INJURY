@@ -927,11 +927,11 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		}else{
 			$scope.resetUserPreferenceError();
 			$scope.exportType=searchService.checkResultsSelected($scope.patientSearchData);
+			$scope.checkExportSelectedPatients();
 			searchService.getExportPreferenceType().then(function(response){
 				$scope.formatType=response;
 				$("#exportOptionModal").modal('show');
 			});
-			console.log(searchService.getExportPreferenceType());
 			$scope.exportExcelByType=function(){
 				$scope.exportButtonText="Exporting...";
 				$scope.exportButton=true;

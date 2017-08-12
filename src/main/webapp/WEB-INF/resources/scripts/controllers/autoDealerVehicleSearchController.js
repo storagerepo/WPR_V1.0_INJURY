@@ -877,6 +877,7 @@ $scope.archivedToDateRequired=false;
 		}else{
 			$scope.resetUserPreferenceError();
 			$scope.exportType=searchService.checkResultsSelected($scope.autoDealerVehicleSearchData);
+			$scope.checkExportSelectedPatients();
 			searchService.getExportPreferenceType().then(function(response){
 				$scope.formatType=response;
 				$("#exportOptionModal").modal('show');
