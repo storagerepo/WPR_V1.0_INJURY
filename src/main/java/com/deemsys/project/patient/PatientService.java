@@ -137,7 +137,9 @@ public class PatientService {
 		Patient patient=patientDAO.getPatientByPatientId(patientId);
 		PatientForm patientForm=this.getPatientForm(patient);
 		
-		if(patientForm.getLatitude().equals(0.0)&&patientForm.getLongitude().equals(0.0)){
+		/* Map Geo Location Will Updated in Clicking Near By Clinics Button
+		 * 
+		 * if(patientForm.getLatitude().equals(0.0)&&patientForm.getLongitude().equals(0.0)){
 			String latLong = geoLocation.getLocation(patientForm.getAddress());
 			BigDecimal longitude = new BigDecimal(0);
 			BigDecimal latitude = new BigDecimal(0);
@@ -157,7 +159,7 @@ public class PatientService {
 			patientForm.setLatitude(InjuryConstants.convertBigDecimaltoDouble(patient.getLatitude()));
 			patientForm.setLongitude(InjuryConstants.convertBigDecimaltoDouble(patient.getLongitude()));
 		}
-		
+		*/
 		return patientForm;
 		
 	}

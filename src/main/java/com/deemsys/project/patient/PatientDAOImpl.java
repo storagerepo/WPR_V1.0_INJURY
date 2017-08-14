@@ -98,10 +98,11 @@ public class PatientDAOImpl implements PatientDAO{
 		return this.sessionFactory.getCurrentSession().createCriteria(Patient.class).list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Patient> find(String paramName, String paramValue) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.eq(paramName, paramValue)).list();
 	}
 
 	@Override
@@ -941,6 +942,14 @@ public List<Patient> getPatientListForUpdateLatLong(String fromDate,
 	criteria.add(Restrictions.and(Restrictions.eq("latitude", BigDecimal.valueOf(0.00000000000)), Restrictions.eq("longitude", BigDecimal.valueOf(0.00000000000))));
 	criteria.add(Restrictions.isNotNull("address"));
 	return criteria.setFirstResult(0).setMaxResults(noOfRecords).list();
+}
+
+@SuppressWarnings("unchecked")
+@Override
+public List<Patient> getPatientListByAddressWithoutCurrentPatient(
+		String address, String patientId) {
+	// TODO Auto-generated method stub
+	return this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.and(Restrictions.eq("address", address), Restrictions.eq("isOwner", 0))).add(Restrictions.ne("patientId", patientId)).addOrder(Order.desc("latitude")).list();
 }
 
 

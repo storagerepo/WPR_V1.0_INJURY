@@ -78,4 +78,6 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 	public List<Patient> getPatientsListByAddedOnDates(String fromDate,String toDate);
 	
 	public List<Patient> getPatientListForUpdateLatLong(String fromDate,String toDate,Integer noOfRecords);
+	
+	public List<Patient> getPatientListByAddressWithoutCurrentPatient(String address,String patientId);
 }
