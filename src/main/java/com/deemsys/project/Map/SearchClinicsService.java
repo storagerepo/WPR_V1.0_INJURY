@@ -85,6 +85,17 @@ public class SearchClinicsService {
 					longitude = new BigDecimal(latitudeLongitude[1]);
 				}
 			}
+			
+			currentLat=InjuryConstants.convertBigDecimaltoDouble(latitude);
+			currentLong=InjuryConstants.convertBigDecimaltoDouble(longitude);
+			if(currentLat.equals(0.0)&&currentLong.equals(0.0)){
+				String latLong = geoLocation.getLocation(patient.getAddress());
+				if (!latLong.equals("NONE")) {
+					String[] latitudeLongitude = latLong.split(",");
+					latitude = new BigDecimal(latitudeLongitude[0]);
+					longitude = new BigDecimal(latitudeLongitude[1]);
+				}
+			}
 			patient.setLatitude(latitude);
 			patient.setLongitude(longitude);
 			
