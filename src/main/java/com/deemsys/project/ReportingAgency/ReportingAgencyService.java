@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.UserLookupPreferences.UserLookupPreferenceMappedForm;
 import com.deemsys.project.UserLookupPreferences.UserLookupPreferencesService;
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.ReportingAgency;
 /**
  * 
@@ -34,6 +36,8 @@ public class ReportingAgencyService {
 	@Autowired
 	UserLookupPreferencesService userLookupPreferencesService;
 	
+	@Autowired
+	CountyDAO countyDAO;
 	//Get All Entries
 	public List<ReportingAgencyForm> getReportingAgencyList()
 	{
@@ -49,7 +53,7 @@ public class ReportingAgencyService {
 				countyId=reportingAgency.getCounty().getCountyId();
 			else
 				countyId=null;
-			reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, reportingAgency.getReportingAgencyName(), reportingAgency.getCode(), reportingAgency.getStatus()));
+			reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId,reportingAgency.getCounty().getName(), reportingAgency.getReportingAgencyName(), reportingAgency.getCode(), reportingAgency.getStatus()));
 		}
 		
 		return reportingAgencyForms;
@@ -69,7 +73,7 @@ public class ReportingAgencyService {
 			countyId=reportingAgency.getCounty().getCountyId();
 		else
 			countyId=null;
-		ReportingAgencyForm reportingAgencyForm=new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, reportingAgency.getReportingAgencyName(), reportingAgency.getCode(), reportingAgency.getStatus());
+		ReportingAgencyForm reportingAgencyForm=new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId,reportingAgency.getCounty().getName(), reportingAgency.getReportingAgencyName(), reportingAgency.getCode(), reportingAgency.getStatus());
 
 		//End
 		
@@ -95,13 +99,8 @@ public class ReportingAgencyService {
 	//Save an Entry
 	public int saveReportingAgency(ReportingAgencyForm reportingAgencyForm)
 	{
-		//TODO: Convert Form to Entity Here	
-		
-		//Logic Starts
-		
-		ReportingAgency reportingAgency=new ReportingAgency();
-		
-		//Logic Ends
+	   County county=countyDAO.get(reportingAgencyForm.getCountyId());
+		ReportingAgency reportingAgency=new ReportingAgency(county, reportingAgencyForm.getReportingAgencyName(), reportingAgencyForm.getCode(),1);
 		
 		reportingAgencyDAO.save(reportingAgency);
 		return 1;
@@ -110,14 +109,11 @@ public class ReportingAgencyService {
 	//Update an Entry
 	public int updateReportingAgency(ReportingAgencyForm reportingAgencyForm)
 	{
-		//TODO: Convert Form to Entity Here	
-		
-		//Logic Starts
-		
-		ReportingAgency reportingAgency=new ReportingAgency();
-		
-		//Logic Ends
-		
+	
+		County county=countyDAO.get(reportingAgencyForm.getCountyId());
+	ReportingAgency reportingAgency=new ReportingAgency(reportingAgencyForm.getReportingAgencyId(),county, reportingAgencyForm.getReportingAgencyName(), reportingAgencyForm.getCode(),1);
+			
+	
 		reportingAgencyDAO.update(reportingAgency);
 		return 1;
 	}
@@ -144,7 +140,7 @@ public class ReportingAgencyService {
 			else
 				countyId=null;
 			String agencyName=reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+countyId;
-			reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, agencyName, reportingAgency.getCode(), reportingAgency.getStatus()));
+			reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId,reportingAgency.getCounty().getName(), agencyName, reportingAgency.getCode(), reportingAgency.getStatus()));
 		}
 		
 		return reportingAgencyForms;
@@ -168,7 +164,7 @@ public class ReportingAgencyService {
 				
 				String agencyCode=reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_CODE_SEPARATOR+countyId;
 				String agencyName=reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+countyId;
-				reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, agencyName, agencyCode, reportingAgency.getStatus()));
+				reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId,reportingAgency.getCounty().getName(), agencyName, agencyCode, reportingAgency.getStatus()));
 			}
 		}else{
 			UserLookupPreferenceMappedForm userLookupPreferenceMappedForms = userLookupPreferencesService.getReportingAgencyUserLookupPreferrenceByCountyList(Arrays.asList(countyIds));
@@ -180,7 +176,7 @@ public class ReportingAgencyService {
 						countyId=null;
 					String agencyCode=reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_CODE_SEPARATOR+countyId;
 					String agencyName=reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+countyId;
-					reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId, agencyName, agencyCode, reportingAgency.getStatus()));
+					reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId,reportingAgency.getCounty().getName(),agencyName, agencyCode, reportingAgency.getStatus()));
 				}
 			}
 		}
@@ -190,5 +186,20 @@ public class ReportingAgencyService {
 		
 	}
 	
-	
+	public ReportingAgencyList getReportingAgencyList2(SearchParamForm searchParamForm)
+	{
+		
+
+ReportingAgencyList reportingAgencyList=reportingAgencyDAO.getReportingAgencyList2(searchParamForm);
+		
+		
+		return reportingAgencyList;
 }
+	public Integer checkNcicCode(String ncicCode,Integer reportingAgencyId,Integer countyId)
+	{
+		return reportingAgencyDAO.checkNcicCode(ncicCode, reportingAgencyId,countyId);
+		
+		
+	}
+}
+

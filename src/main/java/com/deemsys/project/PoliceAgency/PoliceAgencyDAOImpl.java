@@ -1,16 +1,23 @@
 package com.deemsys.project.PoliceAgency;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.PoliceAgency;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 /**
  * 
@@ -27,7 +34,9 @@ public class PoliceAgencyDAOImpl implements PoliceAgencyDAO{
 	@Override
 	public void save(PoliceAgency entity) {
 		// TODO Auto-generated method stub
-		this.sessionFactory.getCurrentSession().save(entity);
+		Session session=this.sessionFactory.getCurrentSession();
+		session.save(entity);
+		session.flush();
 	}
 
 	@Override
@@ -45,7 +54,7 @@ public class PoliceAgencyDAOImpl implements PoliceAgencyDAO{
 	@Override
 	public PoliceAgency update(PoliceAgency entity) {
 		// TODO Auto-generated method stub
-		this.sessionFactory.getCurrentSession().merge(entity);
+		this.sessionFactory.getCurrentSession().update(entity);
 		return null;
 	}
 
@@ -156,6 +165,57 @@ public class PoliceAgencyDAOImpl implements PoliceAgencyDAO{
 		return this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class).add(Restrictions.eq("schedulerType", schedulerType)).list();
 	}
 
+	@Override
+	public List<PoliceAgency> searchPoliceDepartments(Integer countyParam, Integer reportPullingTypeParam) {
+		 
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class);
+		ArrayList<Integer> reportPullingArray=new ArrayList<Integer>();
+		if(countyParam!=0)
+		{
+			criteria.add(Restrictions.eq("county.countyId", countyParam));
+		}
+		
+		if(reportPullingTypeParam!=null)
+		{
+			if(reportPullingTypeParam==0)
+			{
+				reportPullingArray.add(2);
+				reportPullingArray.add(4);
+				}
+			else
+			{
+				reportPullingArray.add(reportPullingTypeParam);
+			}
+			criteria.add(Restrictions.in("schedulerType", reportPullingArray));
+		}
+		return criteria.list();
+	}
+
+	@Override
+	public Integer getMaximumMapId(Integer schedularType) {
+		
+		
+		return(Integer) this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class).setProjection( Projections.max("mapId")).add(Restrictions.eq("schedulerType",schedularType)).uniqueResult()+1;
+		
+	}
+
+	/*@Override
+	public PoliceAgency getPoliceAgencyByMapId(Integer mapId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	*/
 	
+	@Override
+	public void updateMapId(Integer oldMapId,Integer newMapId) {
+		
+		Session session=this.sessionFactory.getCurrentSession();
+		String hql="UPDATE PoliceAgency set mapId = :newMapId WHERE mapId = :oldMapId";
+		Query query=session.createQuery(hql);
+		query.setParameter("oldMapId",oldMapId);
+		query.setParameter("newMapId", newMapId);
+		query.executeUpdate();
+	}
 
 }

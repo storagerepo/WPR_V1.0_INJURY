@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +25,7 @@ public class ReportingAgencyController {
 	ReportingAgencyService reportingAgencyService;
 
     @RequestMapping(value="/getReportingAgency",method=RequestMethod.GET)
-	public String getReportingAgency(@RequestParam("id") Integer id,ModelMap model)
+	public String getReportingAgency(@RequestParam("reportingAgencyId") Integer id,ModelMap model)
 	{
     	model.addAttribute("reportingAgencyForm",reportingAgencyService.getReportingAgency(id));
     	model.addAttribute("requestSuccess",true);
@@ -40,9 +42,18 @@ public class ReportingAgencyController {
    	}
     
     @RequestMapping(value="/saveUpdateReportingAgency",method=RequestMethod.POST)
-   	public String saveReportingAgency(@ModelAttribute("reportingAgencyForm") ReportingAgencyForm reportingAgencyForm,ModelMap model)
+   	public String saveReportingAgency(@RequestBody ReportingAgencyForm reportingAgencyForm,ModelMap model)
    	{
-    	reportingAgencyService.saveReportingAgency(reportingAgencyForm);
+    	if(reportingAgencyForm.getReportingAgencyId()==0)
+    	{
+    		reportingAgencyService.saveReportingAgency(reportingAgencyForm);
+    	}
+    	else
+    	{
+    		reportingAgencyService.updateReportingAgency(reportingAgencyForm);
+
+    	}
+    	
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
@@ -81,4 +92,20 @@ public class ReportingAgencyController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
+    
+    @RequestMapping(value="/getReportingAgencyList2",method=RequestMethod.POST)
+    public String getReportingAgencyList2(@RequestBody SearchParamForm searchParamForm,ModelMap model)
+    {
+    	model.addAttribute("reportingAgencyList", reportingAgencyService.getReportingAgencyList2(searchParamForm));
+    	model.addAttribute("requestSuccess", true);
+    	return "/returnPage";
+    }
+    
+    @RequestMapping(value="/checkNcicCode",method=RequestMethod.POST)
+    public String checkNcicCode(@RequestParam("nciccode") String ncicCode,@RequestParam("id") Integer reportingAgencyId,@RequestParam("countyId") Integer countyId, ModelMap model)
+    {
+    	model.addAttribute("result", reportingAgencyService.checkNcicCode(ncicCode, reportingAgencyId,countyId));
+    	model.addAttribute("requestSuccess", true);
+    	return "/returnPage";
+    }
 }

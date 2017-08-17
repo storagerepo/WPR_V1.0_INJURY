@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.deemsys.project.common.IGenericDAO;
 import com.deemsys.project.entity.CrashReport;
+import com.deemsys.project.entity.PoliceAgency;
 /**
  * 
  * @author Deemsys
@@ -26,4 +27,8 @@ public interface CrashReportDAO extends IGenericDAO<CrashReport>{
 	public void updateCrashReportByQuery(String oldCrashId,String newCrashId,Integer crashReportErrorId,String filePath,Integer isRunnerReport);
 
 	public void updateCrashReportFileName(String CrashId, String filePath);
+	
+public List<CrashReport> checkPoliceAgencyMappedToReports(Integer mapId);
+	
+	public void updateMapId(PoliceAgency oldPoliceAgency,PoliceAgency newPoliceAgency);
 }

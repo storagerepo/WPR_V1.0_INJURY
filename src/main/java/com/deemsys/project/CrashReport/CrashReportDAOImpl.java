@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.struts.taglib.html.RewriteTag;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -27,6 +28,7 @@ import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.Patient;
+import com.deemsys.project.entity.PoliceAgency;
 import com.deemsys.project.login.LoginService;
 import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 @Repository
@@ -429,6 +431,28 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 	public void updateCrashReportFileName(String CrashId, String filePath) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().createQuery("update CrashReport set filePath='"+filePath+"' where crash_id='"+CrashId+"' ").executeUpdate();
+	}
+	
+	@Override
+	public List<CrashReport> checkPoliceAgencyMappedToReports(Integer mapId) {
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class);
+		criteria.add(Restrictions.eq("policeAgency.mapId", mapId)); 
+		
+		 List results = criteria.list(); 
+		 return results;
+		
+		
+	
+	}
+
+	@Override
+	public void updateMapId(PoliceAgency oldPoliceAgency,PoliceAgency newPoliceAgency) {
+		
+		String hql="UPDATE CrashReport set policeAgency = :newPoliceAgency WHERE policeAgency = :oldPoliceAgency";
+		Query query=this.sessionFactory.getCurrentSession().createQuery(hql);
+		query.setParameter("oldPoliceAgency",oldPoliceAgency);
+		query.setParameter("newPoliceAgency", newPoliceAgency);
+		query.executeUpdate();
 	}
 
 }

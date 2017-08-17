@@ -1,0 +1,171 @@
+<div class="row">
+	<div class="col-lg-12">
+		<a ui-sref="dashboard.add-reportingAgency"
+			class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-plus-circle fa-lg"></i> Add Reporting Agency</a>
+			
+		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
+		<h2 class="page-header">Reporting Agency</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<div class="row">
+		
+			<div class="col-md-12 no-padding">
+				<div class="col-md-5ths no-padding">
+					<div class="col-md-12">
+						<label>County</label><!-- <span class="error-class"
+							ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least
+							one county</span>
+				 -->	</div>
+					<div class="col-md-12">
+						<select class="form-control" ng-model="searchParamForm.countyId" ng-init="searchParamForm.countyId=0" ng-change="CountyFilterFunction(countyId)"  ng-options="county.id as county.name for county in countyform">
+                           <option value="">All</option>
+</select>
+					</div>
+				</div>
+				<div class="col-md-5ths no-padding">
+					<div class="col-md-12">
+						<label>NCIC Code </label><!-- <span class="error-class"
+							ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least
+							one county</span>
+				 -->	</div>
+					<div class="col-md-12">
+						<input type="text" class="form-control" placeholder="NCIC Code" ng-model="searchParamForm.ncicCode">
+					</div>
+				</div>
+				<div class="col-md-5ths no-padding">
+					<div class="col-md-12">
+						<label>Reporting Agency Name </label><!-- <span class="error-class"
+							ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least
+							one county</span>
+				 -->	</div>
+					<div class="col-md-12">
+						<input type="text" class="form-control" placeholder="Reporting Agency Name" ng-model="searchParamForm.reportingAgencyName">
+					</div>
+				</div>
+				
+				<div class="col-md-5ths no-padding">
+				<div class="col-md-12">
+						<label>&nbsp;</label>
+					</div>
+					<div class="col-md-12">
+						<a class="btn btn-success" ng-click="searchparam()">Search</a>
+						<a class="btn btn-danger" ng-click="reset()">Reset</a>
+				</div>
+				</div></div></div><br>
+
+<div class="row">
+	 		<!-- /.panel-heading -->
+			<div class="col-md-12">
+		
+
+					<table class="table table-hover table-striped table-bordered">
+
+						<thead>
+							<tr>
+								<th width="20%" ng-mousedown="sort('mapId')">NCIC Code&nbsp;&nbsp;<span
+									class="glyphicon sort-icon" ng-show="sortKey=='mapId'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+								<th width="30%" ng-mousedown="sort('name')">Reporting Agency Name&nbsp;&nbsp;<span
+									class="glyphicon sort-icon" ng-show="sortKey=='name'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+								<th width="20%">County</th>
+								<th width="17%">Status</th>
+
+								<th width="13%">Actions</th>
+						
+							</tr>
+
+						</thead>
+						<tbody >
+
+							<tr ng-show="reportingAgencyList.length>0"  dir-paginate="reportingAgency in reportingAgencyList|filter:search|orderBy:sortKey:reverse|itemsPerPage:searchParamForm.recordsPerPage" current-page="searchParamForm.pageNumber" total-items="totalRecords">
+								<td class="wrap" ng-cloak>{{reportingAgency.code}}</td>
+								<td class="wrap" ng-cloak>{{reportingAgency.reportingAgencyName}}</td>
+								<td class="wrap" ng-cloak>{{reportingAgency.countyName}}</td>
+								<td class="wrap" ng-cloak>
+								<span ng-show="{{reportingAgency.status}}==3">Active</span>
+								<span ng-show="{{reportingAgency.status}}!=3">InActive</span></td>
+								
+								<td>
+								<a href="#/dashboard/edit-reportingAgency/{{reportingAgency.reportingAgencyId}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Reporting Agency"><i
+								class="glyphicon glyphicon-edit"></i>
+						</a>
+						
+						
+							<!-- 	<a href="" ng-cloak class="btn btn-xs btn-info hint--top" ng-click="viewRating(lawyerAdmin.userId)" data-hint="View Rating & Review"><i
+								class="fa fa-star-o"></i>
+						</a>
+							<a href="" ng-cloak ng-show="lawyerAdmin.status==1" ng-click="enableOrDisableLawyerAdmin(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Lawyer Admin"><i
+								class="fa fa-unlock-alt"></i>
+						</a>
+								<a href="" ng-cloak ng-show="lawyerAdmin.status==0" ng-click="enableOrDisableLawyerAdmin(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Lawyer Admin"><i
+								class="fa fa-lock"></i>
+						</a>
+						<a href="" ng-cloak ng-click="resetPassword(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-primary hint--top" data-hint="Reset Password"><i
+								class="fa fa-key"></i>
+						</a> -->
+								
+							 </td>
+							</tr>
+							<tr ng-show="!reportingAgencyList.length"><td colspan="6" align="center">No Records Found</td></tr>
+						</tbody>
+						
+					</table>
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
+    					</dir-pagination-controls>
+    					 <div class="col-md-3 pull-right no-padding">
+<label>Number of Records</label>
+	<select
+		class="form-control" ng-model="searchParamForm.recordsPerPage" ng-change="itemsPerPage()" name="recordsPerPage"
+		id="noOfRows">
+		<option value="10">Show 10 Per Page</option>
+		<option value="25">Show 25 Per Page</option>
+		<option value="50">Show 50 Per Page</option>
+		<option value="100">Show 100 Per Page</option>
+		<option value="{{reportingAgencyList.length}}">Show All</option>
+	</select>    
+			</div>
+		<!-- /.panel -->
+		</div>
+	<!-- /.col-lg-12 -->
+</div>
+
+ <div class="modal fade" id="deletePoliceDepartmentModal" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{modalHeader}} </h4>
+        </div>
+        <div class="modal-body">{{modalContent}}
+              
+        </div>
+        <div class="modal-footer" >
+         <a type="submit" class="btn btn-danger closeButton"  data-dismiss="modal">{{modalButtonText}}</a>
+         <a type="submit" class="btn btn-success" ng-disabled='myForm.$invalid' ng-show="switchingmodalbutton" ng-click="confirmDeletePoliceDepartment()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+ 
+ <!-- <div class="modal fade" id="notify" role="dialog">
+    <div class="modal-dialog">    
+      Modal content
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{modalHeader}} </h4>
+        </div>
+        <div class="modal-body">{{modalContent}}
+              
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger closeButton" data-dismiss="modal">{{modalButtonText}}</button>
+        </div>
+      </div>
+      
+    </div>
+ </div> -->

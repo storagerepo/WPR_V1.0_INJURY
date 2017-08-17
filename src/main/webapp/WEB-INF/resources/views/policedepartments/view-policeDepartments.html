@@ -1,0 +1,198 @@
+<div class="row">
+	<div class="col-lg-12">
+		<a ui-sref="dashboard.add-policeDepartment"
+			class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-plus-circle fa-lg"></i> Add Police Department</a>
+			
+		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
+		<h2 class="page-header">Police Departments</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<div class="row">
+		
+			<div class="col-md-12 no-padding">
+				<div class="col-md-5ths no-padding">
+					<div class="col-md-12">
+						<label>County</label><!-- <span class="error-class"
+							ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least
+							one county</span>
+				 -->	</div>
+					<div class="col-md-12">
+						<select class="form-control" ng-model="selectedCounty" ng-init="selectedCounty=0" ng-change="CountyFilterFunction(selectedCounty)"  ng-options="county.id as county.name for county in countyform">
+                           <option value="">All</option>
+</select>
+					</div>
+				</div>
+				<div class="col-md-5ths no-padding">
+					<div class="col-md-12">
+						<label>Report Pulling Type</label><!-- <span class="error-class"
+							ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least
+							one county</span>
+				 -->	</div>
+					<div class="col-md-12">
+						<select class="form-control" ng-model="selectedReportPullingType" >
+						<option value="0"  selected>All</option>
+						<option value="2">Scheduler</option>
+						<option value="4">Automation</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-5ths no-padding">
+				<div class="col-md-12">
+						<label>&nbsp;</label>
+					</div>
+					<div class="col-md-12">
+						<a class="btn btn-success" ng-click="searchparam()">Search</a>
+				</div>
+				</div></div></div><br>
+
+<div class="row">
+	 		<!-- /.panel-heading -->
+			<div class="col-md-12">
+		
+
+					<table class="table table-hover table-striped table-bordered">
+
+						<thead>
+							<tr>
+								<th width="20%" ng-mousedown="sort('mapId')">Map Id&nbsp;&nbsp;<span
+									class="glyphicon sort-icon" ng-show="sortKey=='mapId'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+								<th width="20%" ng-mousedown="sort('name')">Agency Name&nbsp;&nbsp;<span
+									class="glyphicon sort-icon" ng-show="sortKey=='name'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+								<th width="15%">Agency Id</th>
+								<th width="15%">County</th>
+								<th width="17%">Status</th>
+
+								<th width="13%">Actions</th>
+						
+							</tr>
+
+							<tr>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon1"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.mapId" placeholder="Map id"></div></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon2"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.name" placeholder="Agency name"></div></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.agencyId" placeholder="Agency id"></div></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon4"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.countyName" placeholder="County"></div></th>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon5"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.status" placeholder="Status"></div></th>
+								<th></th>	
+								
+							</tr>
+						</thead>
+						<tbody >
+
+							<tr ng-show="policeDepartmentsForm.length>0"  dir-paginate="policeDepartment in policeDepartmentsForm|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows">
+								<td class="wrap" ng-cloak>{{policeDepartment.mapId}}</td>
+								<td class="wrap" ng-cloak>{{policeDepartment.name}}</td>
+								<td class="wrap" ng-cloak>
+								<span ng-show="{{policeDepartment.agencyId}}!=0">{{policeDepartment.agencyId}}</span>
+								<span ng-show="{{policeDepartment.agencyId}}==0">-</span></td>
+								<td class="wrap" ng-cloak>{{policeDepartment.countyName}}</td>
+								<td class="wrap" ng-cloak>
+								<span ng-show="{{policeDepartment.status}}==3">Active</span>
+								<span ng-show="{{policeDepartment.status}}!=3">InActive</span></td>
+								
+								<td>
+								<a href="#/dashboard/edit-policeDepartment/{{policeDepartment.mapId}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Police Department"><i
+								class="glyphicon glyphicon-edit"></i>
+						</a>
+						
+						<!-- <a  ng-cloak class="btn btn-xs btn-danger hint--top" data-hint="Delete Police Department" data-toggle="modal" data-target="#deletePoliceDepartmentModal" ng-click="deletePoliceDepartment(policeDepartment.mapId)"><i
+								class="glyphicon glyphicon-trash" ></i>
+						</a> -->
+							<!-- 	<a href="" ng-cloak class="btn btn-xs btn-info hint--top" ng-click="viewRating(lawyerAdmin.userId)" data-hint="View Rating & Review"><i
+								class="fa fa-star-o"></i>
+						</a>
+							<a href="" ng-cloak ng-show="lawyerAdmin.status==1" ng-click="enableOrDisableLawyerAdmin(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Lawyer Admin"><i
+								class="fa fa-unlock-alt"></i>
+						</a>
+								<a href="" ng-cloak ng-show="lawyerAdmin.status==0" ng-click="enableOrDisableLawyerAdmin(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Lawyer Admin"><i
+								class="fa fa-lock"></i>
+						</a>
+						<a href="" ng-cloak ng-click="resetPassword(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-primary hint--top" data-hint="Reset Password"><i
+								class="fa fa-key"></i>
+						</a> -->
+								
+							 </td>
+							</tr>
+							<tr ng-show="!policeDepartmentsForm.length"><td colspan="6" align="center">No Records Found</td></tr>
+						</tbody>
+						
+					</table>
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
+    					</dir-pagination-controls>
+    					 <div class="col-md-3 pull-right no-padding">
+<label>Number of Records</label>
+	<select
+		class="form-control" ng-model="noOfRows" name="noOfRows"
+		id="noOfRows">
+		<option value="10">Show 10 Per Page</option>
+		<option value="25">Show 25 Per Page</option>
+		<option value="50">Show 50 Per Page</option>
+		<option value="100">Show 100 Per Page</option>
+		<option value="{{policeDepartmentsForm.length}}">Show All</option>
+	</select>    
+			</div>
+		<!-- /.panel -->
+		</div>
+	<!-- /.col-lg-12 -->
+</div>
+
+ <div class="modal fade" id="deletePoliceDepartmentModal" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{modalHeader}} </h4>
+        </div>
+        <div class="modal-body">{{modalContent}}
+              
+        </div>
+        <div class="modal-footer" >
+         <a type="submit" class="btn btn-danger closeButton"  data-dismiss="modal">{{modalButtonText}}</a>
+         <a type="submit" class="btn btn-success" ng-disabled='myForm.$invalid' ng-show="switchingmodalbutton" ng-click="confirmDeletePoliceDepartment()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+ 
+ <!-- <div class="modal fade" id="notify" role="dialog">
+    <div class="modal-dialog">    
+      Modal content
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{modalHeader}} </h4>
+        </div>
+        <div class="modal-body">{{modalContent}}
+              
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger closeButton" data-dismiss="modal">{{modalButtonText}}</button>
+        </div>
+      </div>
+      
+    </div>
+ </div> -->

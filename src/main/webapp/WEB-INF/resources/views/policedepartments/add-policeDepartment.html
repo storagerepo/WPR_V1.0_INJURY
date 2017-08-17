@@ -1,0 +1,82 @@
+  <div class="row">
+    <div class="col-lg-12">
+        <a ui-sref="dashboard.policeDepartments" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to the Police Departments</a>
+        <h2 ng-cloak class="page-header">{{title}}<span ng-show="title=='Edit Police Department'">&nbsp;-&nbsp;{{policeAgencyForm.name}}</span></h2>
+    </div>
+    
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+     <form id="myForm" name="myForm" novalidate ng-cloak>
+   
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Enter Police Department Details
+                <span class="pull-right"><span class="redText">*</span> Required Fields</span>
+            </div>
+            
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    		<div class="col-md-12 no-padding">
+                                <div class="col-md-6">
+                                   <span class="redText">*</span> <label>Report Pulling Type</label>
+                                   <select class="form-control" ng-model="policeAgencyForm.schedulerType" name="reportpullingtype"  required>
+					<option value="">-- Select Pulling Type --</option>
+						<option value="2">Scheduler</option>
+						<option value="4">Automation</option>
+						</select>
+                                       <span class="error-container" ng-show="myForm.reportpullingtype.$dirty && myForm.reportpullingtype.$invalid">
+                              				<span ng-cloak style="color:red" ng-show="myForm.reportpullingtype.$error.required">Please Select Report Pulling Type</span>
+                                     </span><br/>
+                                  </div>
+                                  <div class="col-md-6" ng-show="policeAgencyForm.schedulerType!=4" >
+                                  <span class="redText">*</span>  <label>Agency Id</label>
+                                    <input type="text" class="form-control"  ng-model="policeAgencyForm.agencyId" ng-pattern="/^[0-9]{1,3}$/" name="agencyId" placeholder="Agency Id" ng-required="policeAgencyForm.schedulerType!=4">
+                                    <span class="error-container" ng-show="myForm.agencyId.$dirty && myForm.agencyId.$invalid">
+                                      <span ng-cloak style="color:red" ng-show="myForm.agencyId.$error.required">Please Enter Agency Id</span>
+                                     <span ng-cloak style="color:red" ng-show="myForm.agencyId.$error.pattern">Please Enter valid Agency Id</span>
+                                       
+                                     </span><br/>
+                                   </div>
+                                 </div>
+                                  <div class="col-md-12 no-padding">
+                                
+                                  <div class="col-md-6">
+                                  <span class="redText">*</span>  <label>Agency Name</label>
+                                    <input type="text" class="form-control"  ng-model="policeAgencyForm.name" name="agencyName" placeholder="Agency Name" maxlength="45" required>
+                                    <span class="error-container" ng-show="myForm.agencyName.$dirty && myForm.agencyName.$invalid">
+                                      <span ng-cloak style="color:red" ng-show="myForm.agencyName.$error.required">Please Enter Agency Name</span>
+                                      
+                                     </span><br/>
+                                   </div><div class="col-md-6">
+                                   <span class="redText">*</span>  <label>County</label>
+                                   <select class="form-control" ng-model="policeAgencyForm.countyId" name="county"  ng-options="county.id as county.name for county in countyform" required>
+                           <option value="">-- select --</option>
+</select>
+                                   <span class="error-container" ng-show="myForm.county.$dirty && myForm.county.$invalid">
+                                    <span ng-cloak style="color:red" ng-show="myForm.county.$error.required">Please Select County</span>
+                                     </span><br/> 
+                                  </div>
+                                   
+                                 </div>
+                                
+                                 
+                                
+                            
+                </div>
+            </div>
+            <div class="text-right" style="margin-right:30px;">
+                <a class="btn btn-success" ng-show='options' ng-disabled='myForm.$invalid' ng-click="savePoliceDepartment()" >Save</a>
+             	 <a class="btn btn-success" ng-show='!options' ng-disabled='isClean() || myForm.$invalid' ng-click="updatePoliceDepartment()">Update</a>
+              <a ui-sref="dashboard.policeDepartments"  class="btn btn-danger" >Cancel</a><br/><br/>
+           </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+         </form>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

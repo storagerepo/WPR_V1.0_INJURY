@@ -16,12 +16,14 @@ public class ReportingAgencyForm {
 	private String reportingAgencyName;
 	private String code;
 	private Integer status;
+	private String countyName;
 	
-	public ReportingAgencyForm(Integer reportingAgencyId, Integer countyId,
+	public ReportingAgencyForm(Integer reportingAgencyId, Integer countyId,String countyName,
 			String reportingAgencyName, String code, Integer status) {
 		super();
 		this.reportingAgencyId = reportingAgencyId;
 		this.countyId = countyId;
+		this.countyName=countyName;
 		this.reportingAgencyName = reportingAgencyName;
 		this.code = code;
 		this.status = status;
@@ -65,6 +67,15 @@ public class ReportingAgencyForm {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+
+	public String getCountyName() {
+		return countyName;
+	}
+
+	public void setCountyName(String countyName) {
+		this.countyName = countyName;
 	}
 
 	public ReportingAgencyForm() {

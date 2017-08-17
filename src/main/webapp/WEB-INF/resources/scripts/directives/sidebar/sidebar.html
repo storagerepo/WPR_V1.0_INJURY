@@ -26,6 +26,13 @@
             </li>
            <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}"><a ui-sref="dashboard.ratings-reviews"><i ng-cloak class="fa fa-star-o fa-fw"></i> <small>Ratings & Reviews</small></a></li>
            
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
+                <a ui-sref="dashboard.policeDepartments"><i ng-cloak class="fa fa-institution fa-fw"></i> <small>Police Departments</small></a>
+            </li>
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
+                <a ui-sref="dashboard.reportingAgency"><i ng-cloak class="fa fa-id-badge fa-fw"></i> <small>Reporting Agency</small></a>
+            </li>
+            
            <!--  Manual Import Of Crash Report By Id-->
            <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.ImportReports"><i ng-cloak class="fa fa-file fa-fw"></i> <small>Import Reports</small></a>

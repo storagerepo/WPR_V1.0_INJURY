@@ -12,6 +12,7 @@ public class PoliceAgencyForm {
 
 	private Integer mapId;
 	private Integer countyId;
+	private String countyName;
 	private Integer agencyId;
 	private String name;
 	private Integer schedulerType;
@@ -28,6 +29,13 @@ public class PoliceAgencyForm {
 	}
 	public void setCountyId(Integer countyId) {
 		this.countyId = countyId;
+	}
+	
+	public String getCountyName() {
+		return countyName;
+	}
+	public void setCountyName(String countyName) {
+		this.countyName = countyName;
 	}
 	public Integer getAgencyId() {
 		return agencyId;
@@ -54,11 +62,12 @@ public class PoliceAgencyForm {
 		this.status = status;
 	}
 
-	public PoliceAgencyForm(Integer mapId, Integer countyId, Integer agencyId,
+	public PoliceAgencyForm(Integer mapId, Integer countyId,String countyName, Integer agencyId,
 			String name, Integer schedulerType, Integer status) {
 		super();
 		this.mapId = mapId;
 		this.countyId = countyId;
+		this.countyName=countyName;
 		this.agencyId = agencyId;
 		this.name = name;
 		this.schedulerType = schedulerType;

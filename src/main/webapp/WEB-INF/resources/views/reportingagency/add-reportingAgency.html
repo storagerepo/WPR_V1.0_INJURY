@@ -1,0 +1,74 @@
+  <div class="row">
+    <div class="col-lg-12">
+        <a ui-sref="dashboard.reportingAgency" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to the Reporting Agency</a>
+        <h2 ng-cloak class="page-header">{{title}}</h2>
+    </div>
+    
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+     <form id="myForm" name="myForm" novalidate ng-cloak>
+   
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Enter Reporting Agency Details
+                <span class="pull-right"><span class="redText">*</span> Required Fields</span>
+            </div>
+            
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    		<div class="col-md-12 no-padding">
+                                <div class="col-md-6">
+                                   <span class="redText">*</span> <label>County</label>
+                                     <select class="form-control" ng-model="reportingAgencyForm.countyId" name="county" ng-change="showNcicError=false"  ng-options="county.id as county.name for county in countyform" required>
+                           <option value="">-- Select --</option>
+</select>
+                                        <span class="error-container" ng-show="myForm.county.$dirty && myForm.county.$invalid">
+                                    <span ng-cloak style="color:red" ng-show="myForm.county.$error.required">Please Select County</span>
+                                     </span><br/> 
+                                  </div>
+                                   <div class="col-md-6">
+                                  <span class="redText">*</span>  <label>Reporting Agency Name</label>
+                                    <input type="text" class="form-control"  ng-model="reportingAgencyForm.reportingAgencyName" name="agencyName" placeholder="Reporting Agency Name" maxlength="45" required>
+                                    <span class="error-container" ng-show="myForm.agencyName.$dirty && myForm.agencyName.$invalid">
+                                      <span ng-cloak style="color:red" ng-show="myForm.agencyName.$error.required">Please Enter Reporting Agency Name</span>
+                                      
+                                     </span><br/>
+                                   </div>
+                                 </div>
+                                  <div class="col-md-12 no-padding">
+                                
+                                 <div class="col-md-6">
+                                      <span class="redText">*</span>  <label>NCIC Code</label>
+                                    <input type="text" class="form-control"  ng-model="reportingAgencyForm.code" name="code" ng-change="showNcicError=false" placeholder="NCIC Code" maxlength="45" required ng-disabled="disableNcic">
+                                    <span class="error-container" ng-show="myForm.code.$dirty && myForm.code.$invalid">
+                                      <span ng-cloak style="color:red" ng-show="myForm.code.$error.required">Please Enter NCIC Code</span>                                      
+                                     </span>
+                                     <span ng-cloak style="color:red" ng-show="!myForm.code.$error.required&&showNcicError">NCIC code already mapped with selected county</span>
+                                     <br/>
+                                     
+                                  </div>
+                                   <div class="col-md-6">
+                                   <label>&nbsp;</label>
+                                   <div>
+                <a class="btn btn-success" ng-show='options' ng-disabled='showNcicError||myForm.$invalid' ng-click="saveReportingAgency()" >Save</a>
+             	 <a class="btn btn-success" ng-show='!options' ng-disabled='showNcicError||isClean() || myForm.$invalid' ng-click="updateReportingAgency()">Update</a>
+              <a ui-sref="dashboard.reportingAgency"  class="btn btn-danger">Cancel</a><br/><br/>
+         </div>
+           </div>  </div>
+                                
+                                 
+                                
+                            
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+         </form>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

@@ -118,6 +118,7 @@ adminApp.controller('searchCrashReportController', ['$scope','requestHandler','$
 	};
 	
 	$scope.itemsPerFilter=function(){
+		console.log($scope.crashreport.recordsPerPage);
 		$scope.setScrollDown=true;
 		var promise=$scope.secoundarySearchCrashReport();
 		if(promise!=null)

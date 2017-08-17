@@ -35,6 +35,14 @@ public class ReportingAgency implements java.io.Serializable {
 		this.code = code;
 		this.status = status;
 	}
+	public ReportingAgency(Integer reportingAgencyId, County county, String reportingAgencyName,
+			String code, Integer status) {
+		this.reportingAgencyId=reportingAgencyId;
+		this.county = county;
+		this.reportingAgencyName = reportingAgencyName;
+		this.code = code;
+		this.status = status;
+	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)

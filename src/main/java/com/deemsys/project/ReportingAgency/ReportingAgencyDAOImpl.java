@@ -1,15 +1,20 @@
 package com.deemsys.project.ReportingAgency;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.xmlbeans.impl.xb.xsdschema.RestrictionDocument.Restriction;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -49,7 +54,7 @@ public class ReportingAgencyDAOImpl implements ReportingAgencyDAO{
 	@Override
 	public ReportingAgency update(ReportingAgency entity) {
 		// TODO Auto-generated method stub
-		this.sessionFactory.getCurrentSession().merge(entity);
+		this.sessionFactory.getCurrentSession().update(entity);
 		return null;
 	}
 
@@ -178,6 +183,69 @@ public class ReportingAgencyDAOImpl implements ReportingAgencyDAO{
 		criteria.add(Restrictions.and(Restrictions.eq("county.countyId", countyId), Restrictions.eq("code", agencyCode)));
 		return (ReportingAgency) criteria.uniqueResult();
 	}
+
+	@Override
+	public ReportingAgencyList getReportingAgencyList2(SearchParamForm searchParamForm) {
+		
+		List<ReportingAgencyForm> reportingAgencyForms=new ArrayList<ReportingAgencyForm>();
+		Session session=this.sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(ReportingAgency.class);
+		
+		criteria.createAlias("county", "c1");
+		
+		if(searchParamForm.getCountyId()!=0)
+			criteria.add(Restrictions.eq("county.countyId", searchParamForm.getCountyId()));
+		if(!searchParamForm.getNcicCode().equals(""))
+		criteria.add(Restrictions.like("code", searchParamForm.getNcicCode(),MatchMode.ANYWHERE));
+		if(!searchParamForm.getReportingAgencyName().equals(""))
+			criteria.add(Restrictions.like("reportingAgencyName", searchParamForm.getReportingAgencyName(),MatchMode.ANYWHERE));
+		
+		ProjectionList projectionList=Projections.projectionList();
+		
+		projectionList.add(Projections.alias(Projections.property("reportingAgencyId"), "reportingAgencyId"));
+		projectionList.add(Projections.alias(Projections.property("c1.countyId"), "countyId"));
+		projectionList.add(Projections.alias(Projections.property("c1.name"), "countyName"));
+		projectionList.add(Projections.alias(Projections.property("reportingAgencyName"), "reportingAgencyName"));
+		projectionList.add(Projections.alias(Projections.property("code"), "code"));
+		projectionList.add(Projections.alias(Projections.property("status"), "status"));
+		
+		Long totalRecords=(Long) criteria.setProjection(Projections.count("reportingAgencyId")).uniqueResult();
+		criteria.setProjection(projectionList);
+		
+		reportingAgencyForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(ReportingAgencyForm.class)).setFirstResult((searchParamForm.getPageNumber()-1)*searchParamForm.getRecordsPerPage()).setMaxResults(searchParamForm.getRecordsPerPage()).list();
+
+		ReportingAgencyList reportingAgencyList=new ReportingAgencyList(totalRecords, reportingAgencyForms);
+		return reportingAgencyList;
+	
+	}
+
+	@Override
+	public Integer checkNcicCode(String ncicCode,Integer reportingAgencyId,Integer countyId) {
+		// TODO Auto-generated method stub
+		
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(ReportingAgency.class);
+		
+		//Check User name
+		criteria.add(Restrictions.eq("code", ncicCode));
+		criteria.add(Restrictions.eq("county.countyId", countyId));
+		
+		//Skip for Add Edit
+		if(reportingAgencyId!=null)
+			criteria.add(Restrictions.ne("reportingAgencyId",reportingAgencyId));
+		
+		ReportingAgency reportingAgency=(ReportingAgency) criteria.uniqueResult();
+		
+		if(reportingAgency!=null){
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+
+	
+
+
+	
 
 	
 

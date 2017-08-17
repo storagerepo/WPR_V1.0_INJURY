@@ -843,6 +843,129 @@ sbAdminApp
 												roleId:2,
 
 											})
+							                .state('dashboard.policeDepartments',
+											{
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/policeDepartmentsController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'ShowPoliceDepartmentsController',
+												templateUrl : 'views/policedepartments/view-policeDepartments.html',
+												url : '/policeDepartments'
+												
+
+											})
+											.state(
+											'dashboard.add-policeDepartment',
+											{
+
+												resolve : {
+													loadMyFiles : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/policeDepartmentsController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'SavePoliceDepartmentController',
+												templateUrl : 'views/policedepartments/add-policeDepartment.html',
+												url : '/add-policeDepartment',
+												title : 'Add Police Department'
+											})
+											.state(
+											'dashboard.edit-policeDepartment/:mapId',
+											{
+
+												resolve : {
+													loadMyFiles : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/policeDepartmentsController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'EditPoliceDepartmentController',
+												templateUrl : 'views/policedepartments/add-policeDepartment.html',
+												url : '/edit-policeDepartment/:mapId',
+												title : 'Edit Police Department'
+											})
+											
+											.state('dashboard.reportingAgency',
+											{
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/reportingAgencyController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'ShowReportingAgencyController',
+												templateUrl : 'views/reportingagency/view-reportingAgency.html',
+												url : '/reportingAgency'
+												
+
+											})
+											.state('dashboard.add-reportingAgency',
+											{
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/reportingAgencyController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'AddReportingAgencyController',
+												templateUrl : 'views/reportingagency/add-reportingAgency.html',
+												url : '/add-reportingAgency'
+												
+
+											})
+											.state('dashboard.edit-reportingAgency/:reportingAgencyId',
+											{
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/reportingAgencyController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'EditReportingAgencyController',
+												templateUrl : 'views/reportingagency/add-reportingAgency.html',
+												url : '/edit-reportingAgency/:reportingAgencyId'
+												
+
+											})
 											.state(
 											'dashboard.patientResponse',
 											{
