@@ -865,39 +865,60 @@ $scope.archivedToDateRequired=false;
 	// Reset user prefernce Error Msg
 	$scope.userPrefenceExportButton=false;
 	$scope.userPrefenceError=false;
+	$scope.maxRecordsExceed=false;
 	$scope.resetUserPreferenceError=function(){
 		$scope.userPrefenceExportButton=false;
 		$scope.userPrefenceError=false;
+		$scope.maxRecordsExceed=false;
+
 	};
+	
 	//Export Excel
 	$scope.exportToExcel=function(){
 		$scope.isExportVehicleSelected=true;
-		if($scope.totalRecords>searchService.getMaxRecordsDownload()){
-			$("#exportAlertModal").modal('show');
-		}else{
-			$scope.resetUserPreferenceError();
-			$scope.exportType=searchService.checkResultsSelected($scope.autoDealerVehicleSearchData);
-			$scope.checkExportSelectedPatients();
+		$scope.resetUserPreferenceError();
+		$scope.exportType=searchService.checkResultsSelected($scope.autoDealerVehicleSearchData);
+		if($scope.exportType==2){
+			if($scope.totalRecords>searchService.getMaxRecordsDownload()){
+				$("#exportAlertModal").modal('show');
+			}else{
+				searchService.getExportPreferenceType().then(function(response){
+					$scope.formatType=response;
+					$("#exportOptionModal").modal('show');
+				});
+			}
+		}
+		else{
+			$scope.checkExportSelectedVehicles();
 			searchService.getExportPreferenceType().then(function(response){
 				$scope.formatType=response;
 				$("#exportOptionModal").modal('show');
 			});
-			$scope.exportExcelByType=function(){
-				$scope.exportButtonText="Exporting...";
-				$scope.exportButton=true;
-				$scope.searchParam.formatType=$scope.formatType;
-				$scope.searchParam.exportType=$scope.exportType;
-				$scope.searchParam.exportPatientIds=$scope.exportPatientIds;
-				requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.searchParam).success(function(responseData){
-					 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-					 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
-					 $scope.exportButtonText="Export to Excel";
-					 $scope.exportButton=false;
-				});
-			};
 		}
 	};
 	
+	$scope.$watch('exportType',function(){
+			$scope.maxRecordsExceed=false;
+			if($scope.exportType==2){
+				if($scope.totalRecords>searchService.getMaxRecordsDownload()){
+					$scope.maxRecordsExceed=true;
+				}
+			}
+		});
+	
+	$scope.exportExcelByType=function(){
+		$scope.exportButtonText="Exporting...";
+		$scope.exportButton=true;
+		$scope.searchParam.formatType=$scope.formatType;
+		$scope.searchParam.exportType=$scope.exportType;
+		$scope.searchParam.exportPatientIds=$scope.exportPatientIds;
+		requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.searchParam).success(function(responseData){
+			 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+			 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
+			 $scope.exportButtonText="Export to Excel";
+			 $scope.exportButton=false;
+		});
+	};
 	// get Selected Vehicles
 	$scope.checkExportSelectedVehicles=function(){
 		$scope.exportPatientIds=[];

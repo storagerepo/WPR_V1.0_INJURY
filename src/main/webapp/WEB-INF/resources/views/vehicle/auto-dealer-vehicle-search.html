@@ -761,12 +761,14 @@
 							 />Export All</label>
 					</span><br/> <div class="error-message"><span ng-show="!isExportVehicleSelected"> Select atleast one vehicle</span></div>
 					</div>
+					<div class="error-message"><span ng-show="maxRecordsExceed"> Please do filter by Added on From &
+					To date. System recommends to download 3 months of data.</span></div>
 					</div> 
 					</div>
 					<div class="modal-footer">
 						<button type="close" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 						<a href="" type="submit" class="btn btn-success"
-							data-dismiss="modal" ng-disabled="userPrefenceExportButton || !isExportVehicleSelected"
+							data-dismiss="modal" ng-disabled="userPrefenceExportButton || !isExportVehicleSelected || maxRecordsExceed"
 							ng-click="exportExcelByType()">Export</a>
 					</div>
 				</form>

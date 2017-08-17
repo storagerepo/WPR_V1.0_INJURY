@@ -203,10 +203,9 @@ public class UserLookupPreferencesDAOImpl implements UserLookupPreferencesDAO{
 	public List<CountyList> getReportingAgencyUserLookupPreferencesCount(
 			Integer userId, List<Integer> countyId) {
 		// TODO Auto-generated method stub
-		Integer lookUpType=4;
 		Criterion userIdCriterion = Restrictions.and(Restrictions.eq("id.userId", userId),Restrictions.in("id.countyId", countyId));
 		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(UserLookupPreferences.class)
-						.add(Restrictions.and(Restrictions.eq("id.type", lookUpType), userIdCriterion));
+						.add(Restrictions.and(Restrictions.eq("id.type", InjuryConstants.REPORTING_AGENCY_LOOKUP), userIdCriterion));
 		ProjectionList projectionList=Projections.projectionList();
 		projectionList.add(Projections.property("id.countyId"),"countyId");
 		projectionList.add(Projections.count("id.countyId"),"newCount");

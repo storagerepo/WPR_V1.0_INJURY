@@ -4,7 +4,8 @@ public class CountyList {
 
 	private Integer countyId;
 	private String countyName;
-	private Long newCount;
+	private Long newCount=new Long(0);
+	private Long reportingAgencyCount;
 	public Integer getCountyId() {
 		return countyId;
 	}
@@ -23,11 +24,18 @@ public class CountyList {
 	public void setNewCount(Long newCount) {
 		this.newCount = newCount;
 	}
-	public CountyList(Integer countyId, String countyName, Long newCount) {
+	public Long getReportingAgencyCount() {
+		return reportingAgencyCount;
+	}
+	public void setReportingAgencyCount(Long reportingAgencyCount) {
+		this.reportingAgencyCount = reportingAgencyCount;
+	}
+	public CountyList(Integer countyId, String countyName, Long newCount, Long reportingAgencyCount) {
 		super();
 		this.countyId = countyId;
 		this.countyName = countyName;
 		this.newCount = newCount;
+		this.reportingAgencyCount = reportingAgencyCount;
 	}
 	public CountyList() {
 		super();

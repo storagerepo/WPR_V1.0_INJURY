@@ -776,6 +776,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		
 		// Watch Report Type
 		$scope.$watch("patient.isRunnerReport",function(){
+			$scope.totalRecords=0;
 			$scope.mainSearchParam.pageNumber=1;
 			$scope.mainSearchParam.isRunnerReport=$scope.patient.isRunnerReport;
 			searchService.setIsRunnerReport($scope.patient.isRunnerReport);
@@ -915,37 +916,57 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	// Reset user prefernce Error Msg
 	$scope.userPrefenceExportButton=false;
 	$scope.userPrefenceError=false;
+	$scope.maxRecordsExceed=false;
 	$scope.resetUserPreferenceError=function(){
 		$scope.userPrefenceExportButton=false;
 		$scope.userPrefenceError=false;
+		$scope.maxRecordsExceed=false;
 	};
 	//Export Excel
 	$scope.exportToExcel=function(){
 		$scope.isExportPatientSelected=true;
-		if($scope.totalRecords>searchService.getMaxRecordsDownload()){
-			$("#exportAlertModal").modal('show');
-		}else{
-			$scope.resetUserPreferenceError();
-			$scope.exportType=searchService.checkResultsSelected($scope.patientSearchData);
+		$scope.resetUserPreferenceError();
+		$scope.exportType=searchService.checkResultsSelected($scope.patientSearchData);
+		if($scope.exportType==2){
+			if($scope.totalRecords>searchService.getMaxRecordsDownload()){
+				$("#exportAlertModal").modal('show');
+			}else{
+				searchService.getExportPreferenceType().then(function(response){
+					$scope.formatType=response;
+					$("#exportOptionModal").modal('show');
+				});
+			}
+		}
+		else{
 			$scope.checkExportSelectedPatients();
 			searchService.getExportPreferenceType().then(function(response){
 				$scope.formatType=response;
 				$("#exportOptionModal").modal('show');
 			});
-			$scope.exportExcelByType=function(){
-				$scope.exportButtonText="Exporting...";
-				$scope.exportButton=true;
-				$scope.searchParam.formatType=$scope.formatType;
-				$scope.searchParam.exportType=$scope.exportType;
-				$scope.searchParam.exportPatientIds=$scope.exportPatientIds;
-				requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.searchParam).success(function(responseData){
-					 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-					 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
-					 $scope.exportButtonText="Export to Excel";
-					 $scope.exportButton=false;
-				});
-			};
 		}
+	};
+	
+	$scope.$watch('exportType',function(){
+		$scope.maxRecordsExceed=false;
+		if($scope.exportType==2){
+			if($scope.totalRecords>searchService.getMaxRecordsDownload()){
+				$scope.maxRecordsExceed=true;
+			}
+		}
+	});
+	
+	$scope.exportExcelByType=function(){
+		$scope.exportButtonText="Exporting...";
+		$scope.exportButton=true;
+		$scope.searchParam.formatType=$scope.formatType;
+		$scope.searchParam.exportType=$scope.exportType;
+		$scope.searchParam.exportPatientIds=$scope.exportPatientIds;
+		requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.searchParam).success(function(responseData){
+			 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+			 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");
+			 $scope.exportButtonText="Export to Excel";
+			 $scope.exportButton=false;
+		});
 	};
 	
 	// get Selected Patients
@@ -1262,12 +1283,14 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 				   $scope.disableSearch=false;			   
 		   }
 	   }
-	   $scope.patient.reportingAgency=[];
+	   
 	   //Some change happened in county selection lets update reporting agency list too
-	   searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
+	  /*
+	   * $scope.patient.reportingAgency=[];
+	      searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
 		 //Load Reporting Agency List		   
 		 $scope.reportingAgencyList=response;  
-	   });
+	   });*/
 	   
 	}, true );
 	

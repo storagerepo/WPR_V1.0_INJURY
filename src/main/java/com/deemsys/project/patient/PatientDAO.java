@@ -1,5 +1,6 @@
 package com.deemsys.project.patient;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -79,5 +80,5 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 	
 	public List<Patient> getPatientListForUpdateLatLong(String fromDate,String toDate,Integer noOfRecords);
 	
-	public List<Patient> getPatientListByAddressWithoutCurrentPatient(String address,String patientId);
+	public void updateLatLongByAddress(BigDecimal latitude,BigDecimal longitude,String address);
 }

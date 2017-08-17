@@ -941,15 +941,15 @@ public List<Patient> getPatientListForUpdateLatLong(String fromDate,
 	criteria.add(Restrictions.between("addedDate", InjuryConstants.convertYearFormat(fromDate), InjuryConstants.convertYearFormat(toDate)));
 	criteria.add(Restrictions.and(Restrictions.eq("latitude", BigDecimal.valueOf(0.00000000000)), Restrictions.eq("longitude", BigDecimal.valueOf(0.00000000000))));
 	criteria.add(Restrictions.isNotNull("address"));
+	criteria.add(Restrictions.eq("isOwner", 0));
 	return criteria.setFirstResult(0).setMaxResults(noOfRecords).list();
 }
 
-@SuppressWarnings("unchecked")
 @Override
-public List<Patient> getPatientListByAddressWithoutCurrentPatient(
-		String address, String patientId) {
+public void updateLatLongByAddress(BigDecimal latitude, BigDecimal longitude,
+		String address) {
 	// TODO Auto-generated method stub
-	return this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.and(Restrictions.eq("address", address), Restrictions.eq("isOwner", 0))).add(Restrictions.ne("patientId", patientId)).addOrder(Order.desc("latitude")).list();
+	this.sessionFactory.getCurrentSession().createQuery("Update Patient set latitude='"+latitude+"',longitude='"+longitude+"' where address='"+address+"'").executeUpdate();
 }
 
 

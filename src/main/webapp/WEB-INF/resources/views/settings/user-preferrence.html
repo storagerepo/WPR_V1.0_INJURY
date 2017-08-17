@@ -54,10 +54,10 @@
 									</div>
 								</div>
 								<div class="col-md-12">
-									<div ng-class="$root.isAdmin==3?'col-md-3':'col-md-2'" ng-repeat="county in countyform">
+									<div ng-class="$root.isAdmin==3?'col-md-3':'col-md-2'" ng-repeat="county in countyform" style="padding: 0px;">
 								      <label class="checkbox" for="{{county.countyId}}"> </label>
 								        <input type="checkbox" value="{{county.countyId}}" name="countygroup" id="{{county.countyId}}" ng-checked="userLookupPreferences.userLookupPreferenceMappedForms[0].preferredId.indexOf(county.countyId)>-1" ng-click="selectedCounties(county.countyId)"/>
-								        <label>{{county.countyName}}</label> &nbsp; <span ng-show="$root.isAdmin==3"><a href="" ng-click="selectReportingAgency(county.countyId,county.countyName)" style="text-decoration: underline;"><small>Reporting Agency</small> <span class="badge">{{county.newCount}}</span></a></span>
+								        <label>{{county.countyName}}</label>&nbsp;&nbsp;<span ng-show="$root.isAdmin==3"><a href="" ng-click="selectReportingAgency(county.countyId,county.countyName)" style="text-decoration: underline;"><small>Reporting Agency</small> <span class="badge"><small>{{county.newCount}} / {{county.reportingAgencyCount}}</small></span></a></span>
 								    </div>
 								</div>
 								</fieldset>

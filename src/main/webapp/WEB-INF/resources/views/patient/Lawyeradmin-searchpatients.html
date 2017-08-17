@@ -814,12 +814,14 @@
 							 />Export All</label>
 					</span><br/> <div class="error-message"><span ng-show="!isExportPatientSelected"> Select atleast one client</span></div>
 					</div>
+					<div class="error-message"><span ng-show="maxRecordsExceed"> Please do filter by Added on From &
+					To date. System recommends to download 3 months of data.</span></div>
 					</div> 					
 				</div>
 				<div class="modal-footer">
 					<button type="close" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 					<a href="" type="submit" class="btn btn-success"
-						data-dismiss="modal" ng-disabled="userPrefenceExportButton || !isExportPatientSelected"
+						data-dismiss="modal" ng-disabled="userPrefenceExportButton || !isExportPatientSelected || maxRecordsExceed"
 						ng-click="exportExcelByType()">Export</a>
 				</div>
 			</form>

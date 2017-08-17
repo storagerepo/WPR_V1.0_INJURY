@@ -64,43 +64,15 @@ public class SearchClinicsService {
 		Double currentLat=InjuryConstants.convertBigDecimaltoDouble(patient.getLatitude());
 		Double currentLong=InjuryConstants.convertBigDecimaltoDouble(patient.getLongitude());
 		if(currentLat.equals(0.0)&&currentLong.equals(0.0)){
-			List<Patient> patients=patientDAO.getPatientListByAddressWithoutCurrentPatient(patient.getAddress(),patientId);
 			BigDecimal longitude = new BigDecimal(0);
 			BigDecimal latitude = new BigDecimal(0);
-			if(patients.size()>0){
-				for (Patient oldPatient : patients) {
-					Double oldLat=InjuryConstants.convertBigDecimaltoDouble(oldPatient.getLatitude());
-					Double oldLong=InjuryConstants.convertBigDecimaltoDouble(oldPatient.getLongitude());
-					if(!oldLat.equals(0.0)&&!oldLong.equals(0.0)){
-						latitude=oldPatient.getLatitude();
-						longitude=oldPatient.getLongitude();
-						break;
-					}
-				}
-			}else{
-				String latLong = geoLocation.getLocation(patient.getAddress());
-				if (!latLong.equals("NONE")) {
-					String[] latitudeLongitude = latLong.split(",");
-					latitude = new BigDecimal(latitudeLongitude[0]);
-					longitude = new BigDecimal(latitudeLongitude[1]);
-				}
+			String latLong = geoLocation.getLocation(patient.getAddress());
+			if (!latLong.equals("NONE")) {
+				String[] latitudeLongitude = latLong.split(",");
+				latitude = new BigDecimal(latitudeLongitude[0]);
+				longitude = new BigDecimal(latitudeLongitude[1]);
 			}
-			
-			currentLat=InjuryConstants.convertBigDecimaltoDouble(latitude);
-			currentLong=InjuryConstants.convertBigDecimaltoDouble(longitude);
-			if(currentLat.equals(0.0)&&currentLong.equals(0.0)){
-				String latLong = geoLocation.getLocation(patient.getAddress());
-				if (!latLong.equals("NONE")) {
-					String[] latitudeLongitude = latLong.split(",");
-					latitude = new BigDecimal(latitudeLongitude[0]);
-					longitude = new BigDecimal(latitudeLongitude[1]);
-				}
-			}
-			patient.setLatitude(latitude);
-			patient.setLongitude(longitude);
-			
-			// Update Patient With Latitude Longitude
-			patientDAO.update(patient);
+			patientDAO.updateLatLongByAddress(latitude, longitude, patient.getAddress());
 		}
 		List<Clinic> clinics = new ArrayList<Clinic>();
 		String role=loginService.getCurrentRole();

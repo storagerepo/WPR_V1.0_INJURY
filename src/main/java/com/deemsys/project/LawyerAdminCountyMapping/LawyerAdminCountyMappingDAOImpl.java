@@ -174,12 +174,16 @@ public class LawyerAdminCountyMappingDAOImpl implements LawyerAdminCountyMapping
 		
 		Criteria criteria=session.createCriteria(LawyerAdminCountyMap.class);		
 		criteria.createAlias("county", "c1");
+		// Reporting Agency Count List
+		criteria.createAlias("c1.reportingAgencies", "r1");
 		
 		criteria.add(Restrictions.eq("id.lawyerAdminId", lawyerAdminId));
 		
 		ProjectionList projectionList=Projections.projectionList();
 		projectionList.add(Projections.property("c1.countyId"),"countyId");
 		projectionList.add(Projections.property("c1.name"),"countyName");
+		projectionList.add(Projections.count("r1.reportingAgencyId"),"reportingAgencyCount");
+		projectionList.add(Projections.groupProperty("r1.county.countyId"));
 		
 		criteria.setProjection(projectionList);
 		
