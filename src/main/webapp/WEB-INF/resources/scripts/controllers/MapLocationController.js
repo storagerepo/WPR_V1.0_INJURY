@@ -5,7 +5,6 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 	$scope.init=function(){
 		$scope.searchRange=50;
 		$scope.clinicsForms="";
-		$scope.getPatient();
 		$scope.getNearByClinics();
 	};
 	
@@ -38,6 +37,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 	$scope.getNearByClinics=function(){
     	
     	requestHandler.getRequest("Caller/getNearByClincs.json.json?patientId="+$stateParams.id+"&searchRange="+$scope.searchRange,"").then( function(response) {
+    		$scope.getPatient();
     		$scope.clinicLocationForm= response.data.clinicLocationForm;
     		$scope.clinicsForms = response.data.clinicLocationForm.clinicsForms;
     		console.log(response.data.clinicLocationForm);

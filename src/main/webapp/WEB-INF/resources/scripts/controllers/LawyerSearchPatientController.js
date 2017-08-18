@@ -117,6 +117,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 				$scope.isLoading=false;
 				if($scope.searchParam.isRunnerReport!=3){
 					$scope.totalRecords=0;
+					$scope.directRunnerReportSearchData={};
 					$scope.totalRecords=response.data.patientGroupedSearchResult.totalNoOfRecord;
 					$scope.lawyerPatientSearchData=response.data.patientGroupedSearchResult.patientSearchResults;
 					$.each($scope.lawyerPatientSearchData, function(index,value) {
@@ -199,6 +200,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 					$scope.isCheckedIndividual();
 				}else{
 					$scope.lawyerPatientSearchData={};
+					$scope.totalRecords=0;
 					$scope.totalRecords=response.data.directReportGroupResult.totalNoOfRecords;
 					$scope.directRunnerReportSearchData=response.data.directReportGroupResult.directReportGroupListByArchives;
 					$.each($scope.directRunnerReportSearchData,function(key,value){
@@ -360,6 +362,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	
 	// Watch Report Type
 	$scope.$watch("patient.isRunnerReport",function(){
+		$scope.totalRecords=0;
 		$scope.mainSearchParam.pageNumber=1;
 		$scope.mainSearchParam.isRunnerReport=$scope.patient.isRunnerReport;
 		searchService.setIsRunnerReport($scope.patient.isRunnerReport);
@@ -374,7 +377,9 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 				$scope.mycounties=response;
 				$scope.loadingCounties=false;
 			});
-			$scope.getReportingAgencyList();
+			if($scope.patient.isRunnerReport==0)
+				$scope.getReportingAgencyList();
+			
 			var promise=$scope.searchItems($scope.mainSearchParam);
 			promise.then(function(reponse){
 				// After Search
@@ -916,7 +921,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 				$scope.searchReportingAgencyMinError=false;
 				   //Some change happened in county selection lets update reporting agency list too
 				 //  console.log($scope.patient.countyId);
-				  if($scope.patient.countyId.length>0){
+				  if($scope.patient.countyId.length>0&&$scope.patient.isRunnerReport==0){
 					   searchService.getReportingAgencyListByPreference($scope.patient.countyId,$scope.reportingAgencyListType).then(function(response){
 						   $scope.patient.reportingAgency=[];
 						 //Load Reporting Agency List		   
@@ -946,7 +951,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 							$scope.patient.countyId.push({"id":value.countyId});
 						});
 						// Get Reporting Agency List
-						 if($scope.patient.countyId.length>0){
+						 if($scope.patient.countyId.length>0&&$scope.patient.isRunnerReport==0){
 							   searchService.getReportingAgencyListByPreference($scope.patient.countyId,$scope.reportingAgencyListType).then(function(response){
 								   $scope.patient.reportingAgency=[];
 								 //Load Reporting Agency List		   

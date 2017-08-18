@@ -73,7 +73,10 @@ public class SearchClinicsService {
 				longitude = new BigDecimal(latitudeLongitude[1]);
 			}
 			patientDAO.updateLatLongByAddress(latitude, longitude, patient.getAddress());
+			patient.setLatitude(latitude);
+			patient.setLongitude(longitude);
 		}
+		
 		List<Clinic> clinics = new ArrayList<Clinic>();
 		String role=loginService.getCurrentRole();
 		Integer callerAdminId=0;

@@ -1099,12 +1099,12 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 					   $scope.disableSearch=false;			   
 			   }
 		   }
-		   $scope.patient.reportingAgency=[];
+		   /*$scope.patient.reportingAgency=[];
 		   //Some change happened in county selection lets update reporting agency list too
 		   searchService.getReportingAgencyList($scope.patient.countyId).then(function(response){
 			 //Load Reporting Agency List		   
 			 $scope.reportingAgencyList=response;  
-		   });
+		   });*/
 		}, true );
 		
 		// County Drop down Events
