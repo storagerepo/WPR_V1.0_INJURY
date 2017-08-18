@@ -34,6 +34,7 @@
 						<option value="0"  selected>All</option>
 						<option value="2">Scheduler</option>
 						<option value="4">Automation</option>
+						<option value="1">Manual</option>
 						</select>
 					</div>
 				</div>
@@ -58,13 +59,12 @@
 								<th width="20%" ng-mousedown="sort('mapId')">Map Id&nbsp;&nbsp;<span
 									class="glyphicon sort-icon" ng-show="sortKey=='mapId'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-								<th width="20%" ng-mousedown="sort('name')">Agency Name&nbsp;&nbsp;<span
+								<th width="25%" ng-mousedown="sort('name')">Agency Name&nbsp;&nbsp;<span
 									class="glyphicon sort-icon" ng-show="sortKey=='name'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-								<th width="15%">Agency Id</th>
-								<th width="15%">County</th>
-								<th width="17%">Status</th>
-
+								<th width="20%">Agency Id</th>
+								<th width="22%">County</th>
+								
 								<th width="13%">Actions</th>
 						
 							</tr>
@@ -90,30 +90,24 @@
   								<span class="input-group-addon search" id="basic-addon4"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
 									ng-model="search.countyName" placeholder="County"></div></th>
-								<th>
-								<div class="input-group">
-  								<span class="input-group-addon search" id="basic-addon5"><i class="fa fa-search"></i></span>
-								<input class="form-control" type="text"
-									ng-model="search.status" placeholder="Status"></div></th>
+								
 								<th></th>	
 								
 							</tr>
 						</thead>
 						<tbody >
 
-							<tr ng-show="policeDepartmentsForm.length>0"  dir-paginate="policeDepartment in policeDepartmentsForm|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows">
+							<tr ng-show="policeDepartmentsForm.length>0"  dir-paginate="policeDepartment in policeDepartmentsForm|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows" pagination-id="policePaginationId">
 								<td class="wrap" ng-cloak>{{policeDepartment.mapId}}</td>
 								<td class="wrap" ng-cloak>{{policeDepartment.name}}</td>
 								<td class="wrap" ng-cloak>
 								<span ng-show="{{policeDepartment.agencyId}}!=0">{{policeDepartment.agencyId}}</span>
 								<span ng-show="{{policeDepartment.agencyId}}==0">-</span></td>
 								<td class="wrap" ng-cloak>{{policeDepartment.countyName}}</td>
-								<td class="wrap" ng-cloak>
-								<span ng-show="{{policeDepartment.status}}==3">Active</span>
-								<span ng-show="{{policeDepartment.status}}!=3">InActive</span></td>
+								
 								
 								<td>
-								<a href="#/dashboard/edit-policeDepartment/{{policeDepartment.mapId}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Police Department"><i
+								<a ng-hide="policeDepartment.schedulerType==1" href="#/dashboard/edit-policeDepartment/{{policeDepartment.mapId}}" ng-cloak  class="btn btn-xs btn-warning hint--top" data-hint="Edit Police Department"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
 						
@@ -136,10 +130,11 @@
 							 </td>
 							</tr>
 							<tr ng-show="!policeDepartmentsForm.length"><td colspan="6" align="center">No Records Found</td></tr>
+							<tr ng-show="(policeDepartmentsForm|filter:search).length==0" ><td colspan="6" align="center">No Records Found</td></tr> 
 						</tbody>
 						
 					</table>
-					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="policePaginationId">
     					</dir-pagination-controls>
     					 <div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>

@@ -201,5 +201,20 @@ ReportingAgencyList reportingAgencyList=reportingAgencyDAO.getReportingAgencyLis
 		
 		
 	}
+	
+	public Integer enableDisableReportingAgency(Integer reportingAgencyId)
+	{
+		ReportingAgency reportingAgency=reportingAgencyDAO.get(reportingAgencyId);
+		if(reportingAgency.getStatus()==1)
+		{
+			reportingAgency.setStatus(0);
+		}
+		else
+		{
+			reportingAgency.setStatus(1);
+		}
+		reportingAgencyDAO.update(reportingAgency);
+		return 1;
+	}
 }
 

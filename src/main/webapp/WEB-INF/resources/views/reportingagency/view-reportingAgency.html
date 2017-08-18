@@ -49,7 +49,7 @@
 						<label>&nbsp;</label>
 					</div>
 					<div class="col-md-12">
-						<a class="btn btn-success" ng-click="searchparam()">Search</a>
+						<a class="btn btn-success" ng-click="searchReportingAgency()">Search</a>
 						<a class="btn btn-danger" ng-click="reset()">Reset</a>
 				</div>
 				</div></div></div><br>
@@ -71,7 +71,6 @@
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 								<th width="20%">County</th>
 								<th width="17%">Status</th>
-
 								<th width="13%">Actions</th>
 						
 							</tr>
@@ -79,19 +78,24 @@
 						</thead>
 						<tbody >
 
-							<tr ng-show="reportingAgencyList.length>0"  dir-paginate="reportingAgency in reportingAgencyList|filter:search|orderBy:sortKey:reverse|itemsPerPage:searchParamForm.recordsPerPage" current-page="searchParamForm.pageNumber" total-items="totalRecords">
+							<tr ng-show="reportingAgencyList.length>0"  dir-paginate="reportingAgency in reportingAgencyList|filter:search|orderBy:sortKey:reverse|itemsPerPage:searchParamForm.recordsPerPage" current-page="searchParamForm.pageNumber" total-items="totalRecords" pagination-id="reportingAgencyPagination">
 								<td class="wrap" ng-cloak>{{reportingAgency.code}}</td>
 								<td class="wrap" ng-cloak>{{reportingAgency.reportingAgencyName}}</td>
 								<td class="wrap" ng-cloak>{{reportingAgency.countyName}}</td>
 								<td class="wrap" ng-cloak>
-								<span ng-show="{{reportingAgency.status}}==3">Active</span>
-								<span ng-show="{{reportingAgency.status}}!=3">InActive</span></td>
+								<span ng-show="{{reportingAgency.status}}==1">Active</span>
+								<span ng-show="{{reportingAgency.status}}==0">InActive</span></td>
 								
 								<td>
 								<a href="#/dashboard/edit-reportingAgency/{{reportingAgency.reportingAgencyId}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Reporting Agency"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
-						
+						<a href="" ng-cloak ng-show="reportingAgency.status==1" ng-click="enableOrDisableReportingAgency(reportingAgency.reportingAgencyId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Reporting Agency"><i
+								class="fa fa-unlock-alt"></i>
+						</a>
+								<a href="" ng-cloak ng-show="reportingAgency.status==0" ng-click="enableOrDisableReportingAgency(reportingAgency.reportingAgencyId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Reporting Agency"><i
+								class="fa fa-lock"></i>
+						</a>
 						
 							<!-- 	<a href="" ng-cloak class="btn btn-xs btn-info hint--top" ng-click="viewRating(lawyerAdmin.userId)" data-hint="View Rating & Review"><i
 								class="fa fa-star-o"></i>
@@ -112,7 +116,7 @@
 						</tbody>
 						
 					</table>
-					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="reportingAgencyPagination" >
     					</dir-pagination-controls>
     					 <div class="col-md-3 pull-right no-padding">
 <label>Number of Records</label>
@@ -130,42 +134,3 @@
 		</div>
 	<!-- /.col-lg-12 -->
 </div>
-
- <div class="modal fade" id="deletePoliceDepartmentModal" role="dialog">
-    <div class="modal-dialog">    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">{{modalHeader}} </h4>
-        </div>
-        <div class="modal-body">{{modalContent}}
-              
-        </div>
-        <div class="modal-footer" >
-         <a type="submit" class="btn btn-danger closeButton"  data-dismiss="modal">{{modalButtonText}}</a>
-         <a type="submit" class="btn btn-success" ng-disabled='myForm.$invalid' ng-show="switchingmodalbutton" ng-click="confirmDeletePoliceDepartment()">Yes</a>
-        </div>
-      </div>
-      
-    </div>
- </div>
- 
- <!-- <div class="modal fade" id="notify" role="dialog">
-    <div class="modal-dialog">    
-      Modal content
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">{{modalHeader}} </h4>
-        </div>
-        <div class="modal-body">{{modalContent}}
-              
-        </div>
-        <div class="modal-footer" >
-         <button type="close" class="btn btn-danger closeButton" data-dismiss="modal">{{modalButtonText}}</button>
-        </div>
-      </div>
-      
-    </div>
- </div> -->

@@ -27,20 +27,7 @@ adminApp.controller('ShowReportingAgencyController',function($http,$state,$scope
 		});
 	}
 	$scope.getCountyList();
-	
-	$scope.getReportingAgency=function()
-	{
-		requestHandler.postRequest("Patient/getReportingAgencyList2.json",$scope.searchParamForm).then(function(response)
-				{
-			$scope.reportingAgencyList=response.data.reportingAgencyList.reportingAgencyForms;
-			$scope.totalRecords=response.data.reportingAgencyList.totalRecords;
-			
-				})
-		
-	}
-	
-	$scope.getReportingAgency();
-	
+
 		//Filter County
 		$scope.CountyFilterFunction=function(selectedCounty)
 		{
@@ -49,12 +36,24 @@ adminApp.controller('ShowReportingAgencyController',function($http,$state,$scope
 				$scope.selectedCounty=0;
 				}
 		}
+		
+		//Enable Disable Reporting Agency
+		
+		$scope.enableOrDisableReportingAgency=function(reportingAgencyId)
+		{
+			requestHandler.getRequest("Patient/enableDisableReportingAgency.json?reportingAgencyId="+reportingAgencyId,"").then(function(response){
+				
+				$scope.searchReportingAgency();
+			})
+		}
+		
+		
 		    //Getting New Records From Back-end 
 		 
 		$scope.itemsPerPage=function()
 		{
 			$scope.setScrollDown=true;
-			var promise=$scope.getReportingAgency();
+			var promise=$scope.searchReportingAgency();
 			if(promise!=null)
 			promise.then(function(reponse){
 				setTimeout(function(){
@@ -66,7 +65,7 @@ adminApp.controller('ShowReportingAgencyController',function($http,$state,$scope
 	//Watch Page Number And fetching new Records From Back-end
 		
 		$scope.$watch("searchParamForm.pageNumber",function(){
-			var promise=$scope.getReportingAgency();
+			var promise=$scope.searchReportingAgency();
 			if($scope.setScrollDown){
 				promise.then(function(reponse){
 				 $scope.setScrollDown=false;
@@ -79,10 +78,17 @@ adminApp.controller('ShowReportingAgencyController',function($http,$state,$scope
 		});
 		
 		//Search Based On KeyWord
-		$scope.searchparam=function()
+		$scope.searchReportingAgency=function()
         {
-			$scope.getReportingAgency();
+			requestHandler.postRequest("Patient/getReportingAgencyList2.json",$scope.searchParamForm).then(function(response)
+					{
+				$scope.reportingAgencyList=response.data.reportingAgencyList.reportingAgencyForms;
+				$scope.totalRecords=response.data.reportingAgencyList.totalRecords;
+				
+					});
 		}
+		
+		$scope.searchReportingAgency();
 		
 		//Reset Search Param
 		
@@ -95,7 +101,7 @@ adminApp.controller('ShowReportingAgencyController',function($http,$state,$scope
 					"pageNumber":1,
 					"recordsPerPage":"25"
 				};
-			$scope.getReportingAgency();
+			$scope.searchReportingAgency();
 		}
 		
 });
@@ -103,7 +109,7 @@ adminApp.controller('ShowReportingAgencyController',function($http,$state,$scope
 adminApp.controller('AddReportingAgencyController',function($http,$state,$scope,$location,requestHandler,Flash){
 	$scope.title="Add Reporting Agency";
 	 $scope.options=true;
-	 $scope.disableNcic=false;
+	 $scope.disableNcicField=false;
 	 $scope.showNcicError=false;
 	 $scope.reportingAgencyForm={};
 	 $scope.reportingAgencyForm.reportingAgencyId=0;
@@ -119,7 +125,6 @@ adminApp.controller('AddReportingAgencyController',function($http,$state,$scope,
 	$scope.getCountyList();
 	
 	//Save Reporting Agency
-	var reportingAgencyOriginal="";
 	$scope.saveReportingAgency=function()
 	{
        requestHandler.postRequest("Patient/checkNcicCode.json?nciccode="+$scope.reportingAgencyForm.code+"&id="+$scope.reportingAgencyForm.reportingAgencyId+"&countyId="+$scope.reportingAgencyForm.countyId,0).then(function(response){
@@ -144,7 +149,7 @@ adminApp.controller('AddReportingAgencyController',function($http,$state,$scope,
 
 adminApp.controller('EditReportingAgencyController',function($http,$state,$scope,$stateParams,$location,requestHandler,Flash){
 	$scope.title="Edit Reporting Agency";
-$scope.disableNcic=true;
+$scope.disableNcicField=true;
 $scope.options=false;
 
 //getting County List

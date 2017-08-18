@@ -108,4 +108,12 @@ public class ReportingAgencyController {
     	model.addAttribute("requestSuccess", true);
     	return "/returnPage";
     }
+    
+    @RequestMapping(value="/enableDisableReportingAgency",method=RequestMethod.GET)
+    public String enableDisableReportingAgency(@RequestParam("reportingAgencyId") Integer reportingAgencyId,ModelMap model)
+    {
+    	model.addAttribute("result", reportingAgencyService.enableDisableReportingAgency(reportingAgencyId));
+    	model.addAttribute("requestSuccess", true);
+    	return "/returnPage";
+    }
 }

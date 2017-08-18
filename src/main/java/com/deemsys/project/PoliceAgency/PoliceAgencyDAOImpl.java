@@ -169,25 +169,19 @@ public class PoliceAgencyDAOImpl implements PoliceAgencyDAO{
 	public List<PoliceAgency> searchPoliceDepartments(Integer countyParam, Integer reportPullingTypeParam) {
 		 
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class);
-		ArrayList<Integer> reportPullingArray=new ArrayList<Integer>();
 		if(countyParam!=0)
 		{
 			criteria.add(Restrictions.eq("county.countyId", countyParam));
 		}
 		
-		if(reportPullingTypeParam!=null)
+		if(reportPullingTypeParam!=0)
 		{
-			if(reportPullingTypeParam==0)
-			{
-				reportPullingArray.add(2);
-				reportPullingArray.add(4);
-				}
-			else
-			{
-				reportPullingArray.add(reportPullingTypeParam);
-			}
-			criteria.add(Restrictions.in("schedulerType", reportPullingArray));
+			criteria.add(Restrictions.eq("schedulerType", reportPullingTypeParam));
+		}else
+		{
+			criteria.add(Restrictions.ne("schedulerType", 0));
 		}
+		
 		return criteria.list();
 	}
 
