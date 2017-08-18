@@ -119,9 +119,9 @@ public class ReportingAgencyService {
 	}
 	
 	//Delete an Entry
-	public int deleteReportingAgency(Integer id)
+	public int deleteReportingAgency(Integer reportingAgencyId)
 	{
-		reportingAgencyDAO.delete(id);
+		reportingAgencyDAO.delete(reportingAgencyId);
 		return 1;
 	}
 	

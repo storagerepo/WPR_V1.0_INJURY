@@ -59,9 +59,9 @@ public class ReportingAgencyDAOImpl implements ReportingAgencyDAO{
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void delete(Integer reportingAgencyId) {
 		// TODO Auto-generated method stub
-		this.sessionFactory.getCurrentSession().delete(this.get(id));
+		this.sessionFactory.getCurrentSession().delete(this.get(reportingAgencyId));
 		
 	}
 
@@ -192,9 +192,8 @@ public class ReportingAgencyDAOImpl implements ReportingAgencyDAO{
 		Criteria criteria=session.createCriteria(ReportingAgency.class);
 		
 		criteria.createAlias("county", "c1");
-		
 		if(searchParamForm.getCountyId()!=0)
-			criteria.add(Restrictions.eq("county.countyId", searchParamForm.getCountyId()));
+			criteria.add(Restrictions.eq("c1.countyId", searchParamForm.getCountyId()));
 		if(!searchParamForm.getNcicCode().equals(""))
 		criteria.add(Restrictions.like("code", searchParamForm.getNcicCode(),MatchMode.ANYWHERE));
 		if(!searchParamForm.getReportingAgencyName().equals(""))
@@ -212,7 +211,7 @@ public class ReportingAgencyDAOImpl implements ReportingAgencyDAO{
 		Long totalRecords=(Long) criteria.setProjection(Projections.count("reportingAgencyId")).uniqueResult();
 		criteria.setProjection(projectionList);
 		
-		reportingAgencyForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(ReportingAgencyForm.class)).setFirstResult((searchParamForm.getPageNumber()-1)*searchParamForm.getRecordsPerPage()).setMaxResults(searchParamForm.getRecordsPerPage()).list();
+		reportingAgencyForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(ReportingAgencyForm.class)).addOrder(Order.asc("countyName")).setFirstResult((searchParamForm.getPageNumber()-1)*searchParamForm.getRecordsPerPage()).setMaxResults(searchParamForm.getRecordsPerPage()).list();
 
 		ReportingAgencyList reportingAgencyList=new ReportingAgencyList(totalRecords, reportingAgencyForms);
 		return reportingAgencyList;

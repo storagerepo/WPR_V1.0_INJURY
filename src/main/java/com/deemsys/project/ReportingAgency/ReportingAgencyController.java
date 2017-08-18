@@ -59,12 +59,13 @@ public class ReportingAgencyController {
    	}
    
     
-    @RequestMapping(value="/deleteReportingAgency",method=RequestMethod.POST)
-   	public String deleteReportingAgency(@RequestParam("id") Integer id,ModelMap model)
+    @RequestMapping(value="/deleteReportingAgency",method=RequestMethod.GET)
+   	public String deleteReportingAgency(@RequestParam("reportingAgencyId") Integer reportingAgencyId,ModelMap model)
    	{
     	
-    	reportingAgencyService.deleteReportingAgency(id);
+    	
     	model.addAttribute("requestSuccess",true);
+    	model.addAttribute("status",reportingAgencyService.deleteReportingAgency(reportingAgencyId));
    		return "/returnPage";
    	}
     

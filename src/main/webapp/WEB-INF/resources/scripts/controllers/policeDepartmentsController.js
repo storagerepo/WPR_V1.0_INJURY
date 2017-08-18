@@ -6,7 +6,7 @@ adminApp
 				'ShowPoliceDepartmentsController',
 				function($http, $state, $scope, $location, requestHandler,
 						Flash) {
-
+$scope.reverse=true;	
 					$scope.noOfRows = "25";
 					$scope.selectedReportPullingType = "0";
 					$scope.selectedCounty = 0;
@@ -17,6 +17,7 @@ adminApp
 															// false and vice
 															// versa
 					};
+					$scope.sort('mapId');
 
 					// Getting CountyList
 					requestHandler.getRequest("Admin/getAllCountys.json", "")

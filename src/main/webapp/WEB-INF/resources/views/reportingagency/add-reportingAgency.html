@@ -32,9 +32,10 @@
                                   </div>
                                    <div class="col-md-6">
                                   <span class="redText">*</span>  <label>Reporting Agency Name</label>
-                                    <input type="text" class="form-control"  ng-model="reportingAgencyForm.reportingAgencyName" name="agencyName" placeholder="Reporting Agency Name" maxlength="45" required>
+                                    <input type="text" class="form-control"  ng-model="reportingAgencyForm.reportingAgencyName" ng-pattern="/^[\w -]*$/" name="agencyName" placeholder="Reporting Agency Name" maxlength="45" required>
                                     <span class="error-container" ng-show="myForm.agencyName.$dirty && myForm.agencyName.$invalid">
                                       <span ng-cloak style="color:red" ng-show="myForm.agencyName.$error.required">Please Enter Reporting Agency Name</span>
+                                     <span ng-cloak style="color:red" ng-show="myForm.agencyName.$error.pattern">Reporting Agency Name must contain only alphanumeric characters</span>
                                       
                                      </span><br/>
                                    </div>
@@ -43,9 +44,11 @@
                                 
                                  <div class="col-md-6">
                                       <span class="redText">*</span>  <label>NCIC Code</label>
-                                    <input type="text" class="form-control"  ng-model="reportingAgencyForm.code" name="code" ng-change="showNcicError=false" placeholder="NCIC Code" maxlength="45" required ng-disabled="disableNcicField">
+                                    <input type="text" class="form-control"  ng-model="reportingAgencyForm.code" name="code" ng-pattern="/^[a-zA-Z0-9]*$/" ng-change="showNcicError=false" placeholder="NCIC Code" maxlength="45" required ng-disabled="disableNcicField">
                                     <span class="error-container" ng-show="myForm.code.$dirty && myForm.code.$invalid">
-                                      <span ng-cloak style="color:red" ng-show="myForm.code.$error.required">Please Enter NCIC Code</span>                                      
+                                      <span ng-cloak style="color:red" ng-show="myForm.code.$error.required">Please Enter NCIC Code</span> 
+                                      <span ng-cloak style="color:red" ng-show="myForm.code.$error.pattern">NCIC Code must contain only alphanumeric characters</span>
+                                                                           
                                      </span>
                                      <span ng-cloak style="color:red" ng-show="!myForm.code.$error.required&&showNcicError">NCIC code already mapped with selected county</span>
                                      <br/>

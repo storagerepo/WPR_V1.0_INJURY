@@ -34,10 +34,11 @@
                                   </div>
                                   <div class="col-md-6" ng-show="policeAgencyForm.schedulerType!=4" >
                                   <span class="redText">*</span>  <label>Agency Id</label>
-                                    <input type="text" class="form-control"  ng-model="policeAgencyForm.agencyId" ng-pattern="/^[0-9]{1,3}$/" name="agencyId" placeholder="Agency Id" ng-required="policeAgencyForm.schedulerType!=4">
+                                    <input type="text" class="form-control"  ng-model="policeAgencyForm.agencyId" ng-pattern="/^[0-9]*$/" ng-maxlength="3" name="agencyId" placeholder="Agency Id" ng-required="policeAgencyForm.schedulerType!=4">
                                     <span class="error-container" ng-show="myForm.agencyId.$dirty && myForm.agencyId.$invalid">
                                       <span ng-cloak style="color:red" ng-show="myForm.agencyId.$error.required">Please Enter Agency Id</span>
-                                     <span ng-cloak style="color:red" ng-show="myForm.agencyId.$error.pattern">Please Enter valid Agency Id</span>
+                                     <span ng-cloak style="color:red" ng-show="myForm.agencyId.$error.pattern">Police Agency Id must contain Numeric characters only </span>
+                                      <span ng-cloak style="color:red" ng-show="myForm.agencyId.$error.maxlength">Police Agency Id must not exceed 3 characters</span>
                                        
                                      </span><br/>
                                    </div>
@@ -46,10 +47,10 @@
                                 
                                   <div class="col-md-6">
                                   <span class="redText">*</span>  <label>Agency Name</label>
-                                    <input type="text" class="form-control"  ng-model="policeAgencyForm.name" name="agencyName" placeholder="Agency Name" maxlength="45" required>
+                                    <input type="text" class="form-control"  ng-model="policeAgencyForm.name" ng-pattern="/^[\w -]*$/" name="agencyName" placeholder="Agency Name" maxlength="45" required>
                                     <span class="error-container" ng-show="myForm.agencyName.$dirty && myForm.agencyName.$invalid">
                                       <span ng-cloak style="color:red" ng-show="myForm.agencyName.$error.required">Please Enter Agency Name</span>
-                                      
+                             <span ng-cloak style="color:red" ng-show="myForm.agencyName.$error.pattern">Police Department Name must contain only alphanumeric characters</span>    
                                      </span><br/>
                                    </div><div class="col-md-6">
                                    <span class="redText">*</span>  <label>County</label>

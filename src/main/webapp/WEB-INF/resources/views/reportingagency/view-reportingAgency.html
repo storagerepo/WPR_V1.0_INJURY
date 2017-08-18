@@ -30,7 +30,7 @@
 							one county</span>
 				 -->	</div>
 					<div class="col-md-12">
-						<input type="text" class="form-control" placeholder="NCIC Code" ng-model="searchParamForm.ncicCode">
+						<input type="text" class="form-control" placeholder="NCIC Code"  ng-model="searchParamForm.ncicCode">
 					</div>
 				</div>
 				<div class="col-md-5ths no-padding">
@@ -40,7 +40,7 @@
 							one county</span>
 				 -->	</div>
 					<div class="col-md-12">
-						<input type="text" class="form-control" placeholder="Reporting Agency Name" ng-model="searchParamForm.reportingAgencyName">
+						<input type="text" class="form-control" placeholder="Reporting Agency Name"  ng-model="searchParamForm.reportingAgencyName">
 					</div>
 				</div>
 				
@@ -63,11 +63,11 @@
 
 						<thead>
 							<tr>
-								<th width="20%" ng-mousedown="sort('mapId')">NCIC Code&nbsp;&nbsp;<span
-									class="glyphicon sort-icon" ng-show="sortKey=='mapId'"
+								<th width="20%" ng-mousedown="sort('code')">NCIC Code&nbsp;&nbsp;<span
+									class="glyphicon sort-icon" ng-show="sortKey=='code'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-								<th width="30%" ng-mousedown="sort('name')">Reporting Agency Name&nbsp;&nbsp;<span
-									class="glyphicon sort-icon" ng-show="sortKey=='name'"
+								<th width="30%" ng-mousedown="sort('reportingAgencyName')">Reporting Agency Name&nbsp;&nbsp;<span
+									class="glyphicon sort-icon" ng-show="sortKey=='reportingAgencyName'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 								<th width="20%">County</th>
 								<th width="17%">Status</th>
@@ -87,28 +87,19 @@
 								<span ng-show="{{reportingAgency.status}}==0">InActive</span></td>
 								
 								<td>
-								<a href="#/dashboard/edit-reportingAgency/{{reportingAgency.reportingAgencyId}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Reporting Agency"><i
+							<!-- 	<a href="#/dashboard/edit-reportingAgency/{{reportingAgency.reportingAgencyId}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Reporting Agency"><i
 								class="glyphicon glyphicon-edit"></i>
-						</a>
-						<a href="" ng-cloak ng-show="reportingAgency.status==1" ng-click="enableOrDisableReportingAgency(reportingAgency.reportingAgencyId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Reporting Agency"><i
+						</a> -->
+						<!-- <a href="" ng-cloak ng-show="reportingAgency.status==1" ng-click="enableOrDisableReportingAgency(reportingAgency.reportingAgencyId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Reporting Agency"><i
 								class="fa fa-unlock-alt"></i>
 						</a>
 								<a href="" ng-cloak ng-show="reportingAgency.status==0" ng-click="enableOrDisableReportingAgency(reportingAgency.reportingAgencyId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Reporting Agency"><i
 								class="fa fa-lock"></i>
-						</a>
-						
-							<!-- 	<a href="" ng-cloak class="btn btn-xs btn-info hint--top" ng-click="viewRating(lawyerAdmin.userId)" data-hint="View Rating & Review"><i
-								class="fa fa-star-o"></i>
-						</a>
-							<a href="" ng-cloak ng-show="lawyerAdmin.status==1" ng-click="enableOrDisableLawyerAdmin(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Lawyer Admin"><i
-								class="fa fa-unlock-alt"></i>
-						</a>
-								<a href="" ng-cloak ng-show="lawyerAdmin.status==0" ng-click="enableOrDisableLawyerAdmin(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Lawyer Admin"><i
-								class="fa fa-lock"></i>
-						</a>
-						<a href="" ng-cloak ng-click="resetPassword(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-primary hint--top" data-hint="Reset Password"><i
-								class="fa fa-key"></i>
 						</a> -->
+							<a  ng-cloak class="btn btn-xs btn-danger hint--top" data-hint="Delete Reporting Agency" data-toggle="modal" data-target="#deleteReportingAgencyModal" ng-click="deleteReportingAgency(reportingAgency.reportingAgencyId)"><i
+								class="glyphicon glyphicon-trash" ></i>
+						</a>
+							
 								
 							 </td>
 							</tr>
@@ -134,3 +125,23 @@
 		</div>
 	<!-- /.col-lg-12 -->
 </div>
+
+<div class="modal fade" id="deleteReportingAgencyModal" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{modalHeader}} </h4>
+        </div>
+        <div class="modal-body">{{modalContent}}
+              
+        </div>
+        <div class="modal-footer" >
+         <a type="submit" class="btn btn-danger closeButton"  data-dismiss="modal">No</a>
+         <a type="submit" class="btn btn-success" ng-click="confirmDeleteReportingAgency()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>

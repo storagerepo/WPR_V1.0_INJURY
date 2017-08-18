@@ -1,7 +1,6 @@
 var adminApp=angular.module('sbAdminApp',['requestModule','flash','ngAnimate']);
-
-adminApp.controller('ShowReportingAgencyController',function($http,$state,$scope,$location,requestHandler,Flash){
-	
+adminApp.controller('ShowReportingAgencyController',function($http,$state,$scope,$location,requestHandler,Flash,$q){
+	$scope.reverse=true;
 	$scope.setScrollDown=false;
 	$scope.searchParamForm={
 		"countyId":0,
@@ -16,6 +15,7 @@ adminApp.controller('ShowReportingAgencyController',function($http,$state,$scope
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
     };
     
+    $scope.sort('countyName');
   //getting county List
 	$scope.getCountyList=function()
 	{
@@ -42,12 +42,30 @@ adminApp.controller('ShowReportingAgencyController',function($http,$state,$scope
 		$scope.enableOrDisableReportingAgency=function(reportingAgencyId)
 		{
 			requestHandler.getRequest("Patient/enableDisableReportingAgency.json?reportingAgencyId="+reportingAgencyId,"").then(function(response){
-				
 				$scope.searchReportingAgency();
+				Flash.create('success','Changes made successfully');
 			})
 		}
 		
-		
+		// delete function
+		$scope.deleteReportingAgency = function(reportingAgencyId) {
+			$scope.modalHeader = "Confirmation";
+			$scope.modalContent = "Do you want to delete this Reporting Agency?";
+			$scope.confirmDeleteReportingAgency = function() {
+				$('#deleteReportingAgencyModal').modal('hide');
+				requestHandler
+						.getRequest(
+								"Patient/deleteReportingAgency.json?reportingAgencyId="
+										+ reportingAgencyId)
+						.then(
+								function(response) {
+									$scope.status = response.data.status;
+									Flash.create('success',"Action completed successfully");
+                                    $scope.searchReportingAgency();
+								});
+			}
+
+		}
 		    //Getting New Records From Back-end 
 		 
 		$scope.itemsPerPage=function()
@@ -80,12 +98,14 @@ adminApp.controller('ShowReportingAgencyController',function($http,$state,$scope
 		//Search Based On KeyWord
 		$scope.searchReportingAgency=function()
         {
+			var defer=$q.defer();
 			requestHandler.postRequest("Patient/getReportingAgencyList2.json",$scope.searchParamForm).then(function(response)
 					{
 				$scope.reportingAgencyList=response.data.reportingAgencyList.reportingAgencyForms;
 				$scope.totalRecords=response.data.reportingAgencyList.totalRecords;
-				
+				defer.resolve(response);
 					});
+			return defer.promise;
 		}
 		
 		$scope.searchReportingAgency();
@@ -137,8 +157,8 @@ adminApp.controller('AddReportingAgencyController',function($http,$state,$scope,
         	   {
         	   requestHandler.postRequest("Patient/saveUpdateReportingAgency.json",$scope.reportingAgencyForm).then(function(response)
        				{
+         			 Flash.create('success', "New Reporting Agency Added Successfully");
        			 $location.path('dashboard/reportingAgency');
-       			 Flash.create('success', "New Reporting Agency Added Successfully");
        				});
         	   }
        });
@@ -185,9 +205,8 @@ requestHandler.getRequest("Patient/getReportingAgency.json?reportingAgencyId="+$
 		        	   {
 	requestHandler.postRequest("Patient/saveUpdateReportingAgency.json",$scope.reportingAgencyForm).then(function(response)
 			{
+		 Flash.create('success', "Reporting Agency updated successfully");
 		 $location.path('dashboard/reportingAgency');
-		 Flash.create('success', "You Have Successfully Updated");
-
 			});
 		}
 		       });
