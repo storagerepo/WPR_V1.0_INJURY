@@ -1,31 +1,22 @@
 package com.deemsys.project.Appointments;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.deemsys.project.entity.Patient;
 import com.deemsys.project.CallLogs.CallLogsDAO;
 import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.Doctors.DoctorsDAO;
 import com.deemsys.project.Caller.CallerDAO;
 import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
-import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
-import com.deemsys.project.entity.CallerAdmin;
-import com.deemsys.project.entity.Clinic;
-import com.deemsys.project.entity.Doctor;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientDAO;
-import com.deemsys.project.patient.PatientForm;
 
 /**
  * 
@@ -70,38 +61,15 @@ public class AppointmentsService {
 	// Get All Entries
 	public List<AppointmentsForm> getAppointmentsList() {
 		List<AppointmentsForm> appointmentsForms = new ArrayList<AppointmentsForm>();
-
-		List<Appointments> appointmentss = new ArrayList<Appointments>();
-
-		appointmentss = appointmentsDAO.getAll();
-
-		for (Appointments appointments : appointmentss) {
-			// TODO: Fill the List
-		/*	AppointmentsForm appointmentsForm = new AppointmentsForm(
-					appointments.getAppointmentId(), appointments.getPatient().getId(),
-					appointments.getPatient().getName(),
-					InjuryConstants.convertMonthFormat(appointments
-							.getScheduledDate()), appointments.getNotes(),
-					appointments.getStatus());
-			appointmentsForms.add(appointmentsForm);*/
-		}
-
 		return appointmentsForms;
 	}
 
 	// Get Particular Entry
 	public AppointmentsForm getAppointments(Long appointmentId) {
-		Appointments appointments = new Appointments();
-
-		appointments = appointmentsDAO.getAppointmentsByAppintementId(appointmentId);
-
 		// TODO: Convert Entity to Form
 		// Start
 		AppointmentsForm appointmentsForm = new AppointmentsForm();
-		
-
 		// End
-
 		return appointmentsForm;
 	}
 
@@ -111,7 +79,6 @@ public class AppointmentsService {
 
 		// Logic Starts
 
-		Patient patient = new Patient();
 		Appointments appointments = new Appointments();
 		/*patient.setId(appointmentsForm.getPatientId());
 

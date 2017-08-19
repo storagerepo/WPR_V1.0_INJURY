@@ -1,9 +1,6 @@
 package com.deemsys.project.ReportingAgency;
 
 
-import javax.xml.bind.annotation.XmlElement;
-
-import com.deemsys.project.entity.County;
 
 /**
  * 

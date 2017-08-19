@@ -31,33 +31,16 @@ public class VehicleMakeAbbreviationService {
 	public List<VehicleMakeAbbreviationForm> getVehicleMakeAbbreviationList()
 	{
 		List<VehicleMakeAbbreviationForm> vehicleMakeAbbreviationForms=new ArrayList<VehicleMakeAbbreviationForm>();
-		
-		List<VehicleMakeAbbreviation> vehicleMakeAbbreviations=new ArrayList<VehicleMakeAbbreviation>();
-		
-		vehicleMakeAbbreviations=vehicleMakeAbbreviationDAO.getAll();
-		
-		for (VehicleMakeAbbreviation vehicleMakeAbbreviation : vehicleMakeAbbreviations) {
-			//TODO: Fill the List
-			
-		}
-		
 		return vehicleMakeAbbreviationForms;
 	}
 	
 	//Get Particular Entry
 	public VehicleMakeAbbreviationForm getVehicleMakeAbbreviation(Integer getId)
 	{
-		VehicleMakeAbbreviation vehicleMakeAbbreviation=new VehicleMakeAbbreviation();
-		
-		vehicleMakeAbbreviation=vehicleMakeAbbreviationDAO.get(getId);
-		
 		//TODO: Convert Entity to Form
 		//Start
-		
 		VehicleMakeAbbreviationForm vehicleMakeAbbreviationForm=new VehicleMakeAbbreviationForm();
-		
 		//End
-		
 		return vehicleMakeAbbreviationForm;
 	}
 	

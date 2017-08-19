@@ -13,7 +13,6 @@ import com.deemsys.project.County.CountyService;
 import com.deemsys.project.ReportingAgency.ReportingAgencyDAO;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
-import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.ReportingAgency;
 import com.deemsys.project.entity.UserLookupPreferences;
 import com.deemsys.project.entity.UserLookupPreferencesId;
@@ -54,16 +53,6 @@ public class UserLookupPreferencesService {
 	public List<UserLookupPreferencesForm> getUserLookupPreferencesList()
 	{
 		List<UserLookupPreferencesForm> userLookupPreferencesForms=new ArrayList<UserLookupPreferencesForm>();
-		
-		List<UserLookupPreferences> userLookupPreferencess=new ArrayList<UserLookupPreferences>();
-		
-		userLookupPreferencess=userLookupPreferencesDAO.getAll();
-		
-		for (UserLookupPreferences userLookupPreferences : userLookupPreferencess) {
-			//TODO: Fill the List
-			
-		}
-		
 		return userLookupPreferencesForms;
 	}
 	

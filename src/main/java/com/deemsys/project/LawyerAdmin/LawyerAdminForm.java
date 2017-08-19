@@ -3,7 +3,6 @@ package com.deemsys.project.LawyerAdmin;
 import java.util.List;
 
 import com.deemsys.project.County.CountyForm;
-import com.deemsys.project.entity.Users;
 
 
 public class LawyerAdminForm {

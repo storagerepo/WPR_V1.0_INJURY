@@ -110,8 +110,8 @@ public class PoliceAgencyService {
 		
 		if(policeAgency.getSchedulerType()!=policeAgencyForm.getSchedulerType())
 		{
-/*			List<CrashReport> crashReports=new ArrayList<CrashReport>();
-*/			Integer mapId=policeAgencyDAO.getMaximumMapId(policeAgencyForm.getSchedulerType());
+			//List<CrashReport> crashReports=new ArrayList<CrashReport>();
+			Integer mapId=policeAgencyDAO.getMaximumMapId(policeAgencyForm.getSchedulerType());
 			
 			PoliceAgency policeAgency2=new PoliceAgency(mapId,countyDAO.get(policeAgencyForm.getCountyId()) ,policeAgencyForm.getAgencyId(),policeAgencyForm.getName(),policeAgencyForm.getSchedulerType(),policeAgencyForm.getStatus(),null);
 			
@@ -133,11 +133,6 @@ public class PoliceAgencyService {
 			
 			policeAgencyDAO.update(policeAgency);
 		}
-		
-		
-		
-		
-		
 		return 1;
 	}
 	

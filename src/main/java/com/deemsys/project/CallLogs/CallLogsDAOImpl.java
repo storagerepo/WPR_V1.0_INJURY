@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -175,6 +173,7 @@ public class CallLogsDAOImpl implements CallLogsDAO{
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CallLogsForm> getCallLogsByPatientIdAndCallerAdminIdAndCallerId(String patientId,
 			Integer callerAdminId,Integer callerId) {

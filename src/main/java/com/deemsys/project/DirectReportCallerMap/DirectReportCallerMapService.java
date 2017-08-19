@@ -1,28 +1,18 @@
 package com.deemsys.project.DirectReportCallerMap;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.deemsys.project.Caller.AssignCallerForm;
 import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.common.InjuryConstants;
-import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.CallerAdmin;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.DirectReportCallerAdminMap;
 import com.deemsys.project.entity.DirectReportCallerAdminMapId;
-import com.deemsys.project.entity.LawyerAdmin;
-import com.deemsys.project.entity.Patient;
-import com.deemsys.project.entity.PatientCallerAdminMap;
-import com.deemsys.project.entity.PatientCallerAdminMapId;
-import com.deemsys.project.entity.PatientLawyerAdminMap;
-import com.deemsys.project.entity.PatientLawyerAdminMapId;
 import com.deemsys.project.login.LoginService;
 /**
  * 

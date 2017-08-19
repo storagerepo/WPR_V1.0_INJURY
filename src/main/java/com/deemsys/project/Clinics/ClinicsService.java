@@ -21,8 +21,6 @@ import com.deemsys.project.entity.CallerAdmin;
 import com.deemsys.project.entity.ClinicTimings;
 import com.deemsys.project.entity.ClinicTimingsId;
 import com.deemsys.project.entity.Clinic;
-import com.deemsys.project.entity.Patient;
-import com.deemsys.project.entity.Users;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientDAO;
 
@@ -415,11 +413,11 @@ public class ClinicsService {
 	public Integer removeAssignedClinic(Integer clinicId) {
 		Integer status = 0;
 		try {
-			List<Patient> patient = patientDAO
+			/*List<Patient> patient = patientDAO
 					.getpatientByClinicId(clinicId);
 			for (Patient patient2 : patient) {
 				//patientDAO.removeAssignedClinic(patient2.getPatientId());
-			}
+			}*/
 			status = 1;
 		} catch (Exception e) {
 			System.out.println(e.toString());

@@ -1,7 +1,6 @@
 package com.deemsys.project.VehicleMakeAbbreviation;
 
 
-import javax.xml.bind.annotation.XmlElement;
 
 /**
  * 

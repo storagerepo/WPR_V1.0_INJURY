@@ -1,7 +1,5 @@
 package com.deemsys.project.Appointments;
 
-import java.util.Date;
-import java.util.List;
 import com.deemsys.project.common.IGenericDAO;
 import com.deemsys.project.entity.Appointments;
 

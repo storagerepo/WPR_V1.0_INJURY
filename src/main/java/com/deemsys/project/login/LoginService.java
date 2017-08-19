@@ -12,7 +12,6 @@ import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersService;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
-import com.deemsys.project.entity.LawyerAdmin;
 import com.deemsys.project.entity.Users;
 
 @Service

@@ -1,10 +1,8 @@
 package com.deemsys.project.patient;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
-import com.deemsys.project.Patients;
 import com.deemsys.project.Appointments.AppointmentsForm;
 import com.deemsys.project.common.IGenericDAO;
 import com.deemsys.project.entity.Appointments;

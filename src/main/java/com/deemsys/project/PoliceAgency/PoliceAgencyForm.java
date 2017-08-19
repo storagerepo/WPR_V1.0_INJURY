@@ -1,6 +1,5 @@
 package com.deemsys.project.PoliceAgency;
 
-import com.deemsys.project.entity.County;
 
 
 /**

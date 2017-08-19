@@ -7,12 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingForm;
 import com.deemsys.project.common.InjuryConstants;
-import com.deemsys.project.entity.LawyerAdminCountyMap;
-import com.deemsys.project.entity.LawyerAdminCountyMapId;
 import com.deemsys.project.entity.LawyerCountyMap;
-import com.deemsys.project.entity.County;
 
 @Service
 @Transactional

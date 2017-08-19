@@ -15,7 +15,6 @@ import com.deemsys.project.DirectReportCallerMap.DirectReportCallerMapService;
 import com.deemsys.project.PatientCallerMap.PatientCallerService;
 import com.deemsys.project.patient.CallerPatientSearchForm;
 import com.deemsys.project.patient.PatientGroupedSearchResult;
-import com.deemsys.project.patient.PatientSearchResult;
 import com.deemsys.project.patient.PatientService;
 
 

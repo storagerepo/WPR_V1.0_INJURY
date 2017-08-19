@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.Caller.CallerDAO;
-import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdminCountyMapping.CallerAdminCountyMapDAO;
 import com.deemsys.project.CallerAdminCountyMapping.CallerAdminCountyMapService;
 import com.deemsys.project.County.CountyDAO;
@@ -70,15 +69,6 @@ public class CallerAdminService {
 		List<CallerAdminForm> callerAdminForms=new ArrayList<CallerAdminForm>();
 		
 		callerAdminForms=callerAdminDAO.getCallerAdminListByRoleId(roleId);
-		
-		/*for (CallerAdmin callerAdmin : callerAdmins) {
-			//TODO: Fill the List
-			CallerAdminForm callerAdminForm=new CallerAdminForm(callerAdmin.getCallerAdminId(), callerAdmin.getUsers().getUserId(), callerAdmin.getUsers().getUsername(), callerAdmin.getFirstName(), callerAdmin.getLastName(),
-					callerAdmin.getStreet(), callerAdmin.getCity(), callerAdmin.getState(), callerAdmin.getZipcode(), callerAdmin.getEmailAddress(), callerAdmin.getPhoneNumber(), 
-					callerAdmin.getNotes(), callerAdmin.getUsers().getIsPrivilegedUser(), callerAdmin.getStatus());
-			callerAdminForm.setProductToken(callerAdmin.getUsers().getProductToken());
-			callerAdminForms.add(callerAdminForm);
-		}*/
 		
 		return callerAdminForms;
 	}

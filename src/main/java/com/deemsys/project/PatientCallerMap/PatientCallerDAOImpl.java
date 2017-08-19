@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.PatientCallerAdminMap;
-import com.deemsys.project.entity.PatientCallerAdminMapId;
 
 @Repository
 public class PatientCallerDAOImpl implements PatientCallerDAO{
@@ -153,6 +152,7 @@ public class PatientCallerDAOImpl implements PatientCallerDAO{
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<PatientCallerAdminMap> getAssignedPatientsByCallerId(Integer callerId) {
 		// TODO Auto-generated method stub

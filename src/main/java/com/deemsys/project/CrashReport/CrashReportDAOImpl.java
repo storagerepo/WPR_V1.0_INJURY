@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.struts.taglib.html.RewriteTag;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -12,25 +11,19 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.mapping.Array;
-import org.hibernate.transform.AliasToBeanConstructorResultTransformer;
 import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.CrashReport;
-import com.deemsys.project.entity.Patient;
 import com.deemsys.project.entity.PoliceAgency;
 import com.deemsys.project.login.LoginService;
-import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 @Repository
 public class CrashReportDAOImpl implements CrashReportDAO{
 
@@ -77,6 +70,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CrashReport> getAll() {
 		// TODO Auto-generated method stub
@@ -391,6 +385,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		return localReportNumberCount;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CrashReport> getSixMonthOldCrashReports() {
 		// TODO Auto-generated method stub
@@ -433,16 +428,12 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		this.sessionFactory.getCurrentSession().createQuery("update CrashReport set filePath='"+filePath+"' where crash_id='"+CrashId+"' ").executeUpdate();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CrashReport> checkPoliceAgencyMappedToReports(Integer mapId) {
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class);
 		criteria.add(Restrictions.eq("policeAgency.mapId", mapId)); 
-		
-		 List results = criteria.list(); 
-		 return results;
-		
-		
-	
+		return criteria.list();
 	}
 
 	@Override

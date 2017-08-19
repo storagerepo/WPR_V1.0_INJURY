@@ -189,12 +189,9 @@ public class ReportingAgencyService {
 	public ReportingAgencyList getReportingAgencyList2(SearchParamForm searchParamForm)
 	{
 		
-
-ReportingAgencyList reportingAgencyList=reportingAgencyDAO.getReportingAgencyList2(searchParamForm);
-		
-		
+		ReportingAgencyList reportingAgencyList=reportingAgencyDAO.getReportingAgencyList2(searchParamForm);
 		return reportingAgencyList;
-}
+	}
 	public Integer checkNcicCode(String ncicCode,Integer reportingAgencyId,Integer countyId)
 	{
 		return reportingAgencyDAO.checkNcicCode(ncicCode, reportingAgencyId,countyId);

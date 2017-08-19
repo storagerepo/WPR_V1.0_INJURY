@@ -134,6 +134,7 @@ public class LawyerCountyMapDAOImpl implements LawyerCountyMapDAO{
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<LawyerCountyMap> getLawyerCountyMapByLawyerId(Integer lawyerId) {
 		// TODO Auto-generated method stub
@@ -152,6 +153,7 @@ public class LawyerCountyMapDAOImpl implements LawyerCountyMapDAO{
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteLawyerCountyMapByLawyerId(Integer lawyerId) {
 		// TODO Auto-generated method stub

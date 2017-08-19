@@ -2,11 +2,6 @@ package com.deemsys.project.RatingReviews;
 
 
 import java.math.BigDecimal;
-import java.util.Date;
-
-import javax.xml.bind.annotation.XmlElement;
-
-import com.deemsys.project.entity.Users;
 
 /**
  * 

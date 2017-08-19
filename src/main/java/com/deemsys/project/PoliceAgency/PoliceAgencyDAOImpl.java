@@ -8,16 +8,13 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.PoliceAgency;
-import com.mysql.fabric.xmlrpc.base.Array;
 
 /**
  * 
@@ -165,6 +162,7 @@ public class PoliceAgencyDAOImpl implements PoliceAgencyDAO{
 		return this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class).add(Restrictions.eq("schedulerType", schedulerType)).list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<PoliceAgency> searchPoliceDepartments(Integer countyParam, Integer reportPullingTypeParam) {
 		 
@@ -193,14 +191,6 @@ public class PoliceAgencyDAOImpl implements PoliceAgencyDAO{
 		
 	}
 
-	/*@Override
-	public PoliceAgency getPoliceAgencyByMapId(Integer mapId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	*/
-	
 	@Override
 	public void updateMapId(Integer oldMapId,Integer newMapId) {
 		

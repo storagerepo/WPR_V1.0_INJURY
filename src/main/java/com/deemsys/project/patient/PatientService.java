@@ -6,13 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.deemsys.project.entity.Patient;
+
+import com.deemsys.project.Caller.CallerDAO;
+import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.County.CountyService;
 import com.deemsys.project.CrashReport.CrashReportDAO;
@@ -25,16 +29,13 @@ import com.deemsys.project.ReportingAgency.ReportingAgencyDAO;
 import com.deemsys.project.UserLookupPreferences.UserLookupPreferenceMappedForm;
 import com.deemsys.project.UserLookupPreferences.UserLookupPreferencesService;
 import com.deemsys.project.VehicleMakeAbbreviation.VehicleMakeAbbreviationDAO;
-import com.deemsys.project.Caller.CallerDAO;
-import com.deemsys.project.Caller.CallerService;
-import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.CrashReport;
-import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.LawyerAdminCountyMap;
+import com.deemsys.project.entity.Patient;
 import com.deemsys.project.entity.ReportingAgency;
 import com.deemsys.project.entity.VehicleMakeAbbreviation;
 import com.deemsys.project.login.LoginService;
@@ -252,13 +253,13 @@ public class PatientService {
 	}
 
 	public Integer releasePatientFromCaller(Integer id) {
-		List<Patient> patient = patientDAO.getPatientListByCallerId(id);
+		/*List<Patient> patient = patientDAO.getPatientListByCallerId(id);
 		for (Patient patients : patient) {
-		/*	int patientId = patients.getId();
+			int patientId = patients.getId();
 			System.out.println("patientid:" + patientId);
-			patientDAO.releasePatientFromCaller(patientId);*/
+			patientDAO.releasePatientFromCaller(patientId);
 
-		}
+		}*/
 		return 1;
 
 	}
@@ -321,8 +322,6 @@ public class PatientService {
 	public Integer getTotalPatient(String localReportNumber,Integer county, 
 			String crashDate,Integer days,String recordedFromDate,String recordedToDate, String name,String customDate) {
 		Integer count = 0;
-		String toDate="";
-		
 		String crashToDate="";
 		if(crashDate!=""){
 			DateTime crashStartDate=DateTime.parse(crashDate,DateTimeFormat.forPattern("MM/dd/yyyy"));

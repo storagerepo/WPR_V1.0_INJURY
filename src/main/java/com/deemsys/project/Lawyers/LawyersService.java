@@ -8,20 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.deemsys.project.common.InjuryConstants;
-import com.deemsys.project.entity.County;
-import com.deemsys.project.entity.LawyerAdmin;
-import com.deemsys.project.entity.LawyerAdminCountyMapId;
-import com.deemsys.project.entity.LawyerCountyMap;
-import com.deemsys.project.entity.Lawyer;
-import com.deemsys.project.entity.LawyerCountyMapId;
-import com.deemsys.project.entity.Roles;
-import com.deemsys.project.entity.Users;
-import com.deemsys.project.login.LoginService;
-import com.deemsys.project.login.loginDAO;
-import com.deemsys.project.patient.PatientForm;
-import com.deemsys.project.patient.PatientService;
-import com.deemsys.project.patientLawyerMap.PatientLawyerDAO;
+import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.County.CountyForm;
 import com.deemsys.project.County.CountyService;
@@ -29,11 +16,20 @@ import com.deemsys.project.LawyerAdmin.LawyerAdminDAO;
 import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingDAO;
 import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingForm;
 import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingService;
-import com.deemsys.project.Lawyers.LawyersDAO;
-import com.deemsys.project.Lawyers.LawyersForm;
 import com.deemsys.project.Role.RoleDAO;
-import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.Users.UsersDAO;
+import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.County;
+import com.deemsys.project.entity.Lawyer;
+import com.deemsys.project.entity.LawyerAdmin;
+import com.deemsys.project.entity.LawyerCountyMap;
+import com.deemsys.project.entity.LawyerCountyMapId;
+import com.deemsys.project.entity.Roles;
+import com.deemsys.project.entity.Users;
+import com.deemsys.project.login.LoginService;
+import com.deemsys.project.patient.PatientForm;
+import com.deemsys.project.patient.PatientService;
+import com.deemsys.project.patientLawyerMap.PatientLawyerDAO;
 
 @Service
 @Transactional

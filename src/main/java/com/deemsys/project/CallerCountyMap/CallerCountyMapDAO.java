@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.deemsys.project.County.CountyList;
 import com.deemsys.project.common.IGenericDAO;
-import com.deemsys.project.entity.CallerAdminCountyMap;
 import com.deemsys.project.entity.CallerCountyMap;
 
 public interface CallerCountyMapDAO extends IGenericDAO<CallerCountyMap>{

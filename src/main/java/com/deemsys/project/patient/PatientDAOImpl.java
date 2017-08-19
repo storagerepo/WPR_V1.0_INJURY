@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,7 +17,6 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -37,7 +35,6 @@ import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
 import com.deemsys.project.entity.Patient;
 import com.deemsys.project.login.LoginService;
-import com.mysql.fabric.xmlrpc.base.Array;
 
 /**
  * 
@@ -412,6 +409,7 @@ public List<Patient> searchPatients(Integer pageNumber, Integer itemsPerPage,Str
 		return patient;
 }
 
+@SuppressWarnings("unused")
 private Object value(String string, String localReportNumber, MatchMode anywhere) {
 	// TODO Auto-generated method stub
 	return null;

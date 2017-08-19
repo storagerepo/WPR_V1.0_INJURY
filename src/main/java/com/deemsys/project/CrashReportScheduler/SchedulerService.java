@@ -1,10 +1,7 @@
 package com.deemsys.project.CrashReportScheduler;
 
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -20,7 +17,6 @@ import com.deemsys.project.PoliceAgency.PoliceAgencyForm;
 import com.deemsys.project.PoliceAgency.PoliceAgencyService;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
-import com.deemsys.project.pdfcrashreport.PDFReadAndInsertService;
 
 /**
  * Scheduler for handling jobs

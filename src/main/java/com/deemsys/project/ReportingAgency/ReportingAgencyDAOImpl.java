@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.xmlbeans.impl.xb.xsdschema.RestrictionDocument.Restriction;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -184,6 +183,7 @@ public class ReportingAgencyDAOImpl implements ReportingAgencyDAO{
 		return (ReportingAgency) criteria.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ReportingAgencyList getReportingAgencyList2(SearchParamForm searchParamForm) {
 		

@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.deemsys.project.Caller.CallerService;
-import com.deemsys.project.common.InjuryConstants;
-import com.deemsys.project.entity.Caller;
 import com.deemsys.project.login.LoginService;
 
 /**

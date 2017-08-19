@@ -1,13 +1,9 @@
 package com.deemsys.project.patient;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,26 +15,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.deemsys.project.common.InjuryProperties;
-import com.deemsys.project.exportFields.ExportFieldsService;
-import com.deemsys.project.login.LoginService;
-import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
-import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
-import com.deemsys.project.userExportPreferences.UserExportPreferencesService;
-import com.deemsys.project.LawyerAdmin.LawyerAdminForm;
-import com.deemsys.project.LawyerAdmin.LawyerAdminService;
-import com.deemsys.project.Lawyers.LawyersService;
-import com.deemsys.project.Map.ClinicLocationForm;
-import com.deemsys.project.Map.SearchClinicsService;
 import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
-import com.deemsys.project.CrashReport.CrashReportList;
 import com.deemsys.project.CrashReport.CrashReportSearchForm;
 import com.deemsys.project.CrashReport.CrashReportService;
 import com.deemsys.project.CrashReport.DirectReportGroupResult;
 import com.deemsys.project.CrashReport.DirectRunnerReport;
 import com.deemsys.project.CrashReport.ImportCrashReportStatus;
 import com.deemsys.project.CrashReport.RunnerCrashReportForm;
+import com.deemsys.project.LawyerAdmin.LawyerAdminService;
+import com.deemsys.project.Lawyers.LawyersService;
+import com.deemsys.project.Map.ClinicLocationForm;
+import com.deemsys.project.Map.SearchClinicsService;
+import com.deemsys.project.common.InjuryProperties;
+import com.deemsys.project.exportFields.ExportFieldsService;
+import com.deemsys.project.login.LoginService;
+import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
+import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
+import com.deemsys.project.userExportPreferences.UserExportPreferencesService;
 
 /**
  * 

@@ -1,6 +1,5 @@
 package com.deemsys.project.CallLogs;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,6 @@ import com.deemsys.project.entity.Patient;
 import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.PatientCallerAdminMap;
 import com.deemsys.project.entity.PatientCallerAdminMapId;
-import com.deemsys.project.entity.Users;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientDAO;
 
@@ -75,21 +73,6 @@ public class CallLogsService {
 	// Get All Entries
 	public List<CallLogsForm> getCallLogsList() {
 		List<CallLogsForm> callLogsForms = new ArrayList<CallLogsForm>();
-
-		List<CallLog> callLogss = new ArrayList<CallLog>();
-
-		callLogss = callLogsDAO.getAll();
-
-		for (CallLog callLogs : callLogss) {
-			/*// TODO: Fill the List
-			CallLogsForm callLogsForm = new CallLogsForm(callLogs.getId(),
-					callLogs.getPatient().getId(),
-					InjuryConstants.convertUSAFormatWithTime(callLogs
-							.getTimeStamp()), callLogs.getResponse(),
-					callLogs.getNotes());
-			callLogsForms.add(callLogsForm);*/
-		}
-
 		return callLogsForms;
 	}
 
@@ -119,24 +102,22 @@ public class CallLogsService {
 
 	// Get Call Logs Only
 	// Get Particular Entry
-		public CallLogsForm getCallLogs(Long callLogId) {
-			CallLog callLogs = new CallLog();
+	public CallLogsForm getCallLogs(Long callLogId) {
+		CallLog callLogs = new CallLog();
 
-			callLogs = callLogsDAO.getCallLogsByCallLogId(callLogId);
-			AppointmentsForm appointmentsForm=new AppointmentsForm();
-			CallLogsForm callLogsForm = new CallLogsForm();
-			// TODO: Convert Entity to Form
-			// Start
-			try {
-				callLogsForm = new CallLogsForm(callLogs.getCallLogId(),callLogs.getPatientCallerAdminMap().getId().getPatientId(), callLogs.getPatientCallerAdminMap().getCallerAdmin().getCallerAdminId(), callLogs.getTimeStamp(), callLogs.getResponse(), callLogs.getNotes(), callLogs.getStatus(), appointmentsForm, "", "");
-						
-			
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			return callLogsForm;
+		callLogs = callLogsDAO.getCallLogsByCallLogId(callLogId);
+		AppointmentsForm appointmentsForm=new AppointmentsForm();
+		CallLogsForm callLogsForm = new CallLogsForm();
+		// TODO: Convert Entity to Form
+		// Start
+		try {
+			callLogsForm = new CallLogsForm(callLogs.getCallLogId(),callLogs.getPatientCallerAdminMap().getId().getPatientId(), callLogs.getPatientCallerAdminMap().getCallerAdmin().getCallerAdminId(), callLogs.getTimeStamp(), callLogs.getResponse(), callLogs.getNotes(), callLogs.getStatus(), appointmentsForm, "", "");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
+		return callLogsForm;
+	}
 	
 	public List<CallLogsForm> getCallLogsFormsByUser(String patientId){
 		
@@ -168,9 +149,6 @@ public class CallLogsService {
 		// Logic Starts
 
 		Patient patient = new Patient();
-
-		
-		Users users = usersDAO.get(callerService.getCurrentUserId());
 		// Caller Admin
 		CallerAdmin callerAdmin = new CallerAdmin();
 		// Caller
@@ -346,8 +324,6 @@ public class CallLogsService {
 	public CallLogsForm getCallLogsByAppointment(Integer appointmentId) {
 
 		CallLogsForm callLogsForm = new CallLogsForm();
-		CallLog callLogs = callLogsDAO.getCallLogsByAppointment(appointmentId);
-		
 		// Call Logs Form Need to add
 
 		return callLogsForm;
@@ -356,14 +332,6 @@ public class CallLogsService {
 	public List<CallLogsForm> getCallLogsByPatientId(Integer patientId) {
 
 		List<CallLogsForm> callLogsForm = new ArrayList<CallLogsForm>();
-		List<CallLog> callLogs = new ArrayList<CallLog>();
-		callLogs = callLogsDAO.getCallLogsByPatientsId(patientId);
-		CallLogsForm callLogsForms = new CallLogsForm();
-		for (CallLog callLogss : callLogs) {
-			
-			callLogsForm.add(callLogsForms);
-
-		}
 		return callLogsForm;
 
 	}

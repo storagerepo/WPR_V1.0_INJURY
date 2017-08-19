@@ -134,6 +134,7 @@ public class CallerCountyMapDAOImpl implements CallerCountyMapDAO{
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CallerCountyMap> getCallerCountyMapByCallerId(Integer callerId) {
 		// TODO Auto-generated method stub
@@ -152,6 +153,7 @@ public class CallerCountyMapDAOImpl implements CallerCountyMapDAO{
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteCallerCountyMapByCallerId(Integer callerId) {
 		// TODO Auto-generated method stub

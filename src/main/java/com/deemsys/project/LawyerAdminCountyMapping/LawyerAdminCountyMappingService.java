@@ -9,15 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.County.CountyDAO;
-import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingDAO;
-import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingForm;
 import com.deemsys.project.UserLookupPreferences.UserLookupPreferencesDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.County;
 import com.deemsys.project.entity.LawyerAdmin;
 import com.deemsys.project.entity.LawyerAdminCountyMap;
 import com.deemsys.project.entity.LawyerAdminCountyMapId;
-import com.deemsys.project.entity.LawyerCountyMap;
 @Service
 @Transactional
 public class LawyerAdminCountyMappingService {

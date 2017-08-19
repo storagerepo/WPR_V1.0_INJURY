@@ -1,6 +1,5 @@
 package com.deemsys.project.userExportPreferences;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.Users.UsersDAO;
-import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.UserExportPreferences;
 import com.deemsys.project.entity.UserExportPreferencesId;
 import com.deemsys.project.entity.Users;

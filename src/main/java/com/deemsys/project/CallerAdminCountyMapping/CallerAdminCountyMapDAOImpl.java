@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
 import com.deemsys.project.County.CountyList;
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.CallerAdminCountyMap;
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 
 @Repository
 public class CallerAdminCountyMapDAOImpl implements CallerAdminCountyMapDAO{
@@ -136,6 +135,7 @@ public class CallerAdminCountyMapDAOImpl implements CallerAdminCountyMapDAO{
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CallerAdminCountyMap> getCallerAdminCountyMapByCallerAdminId(
 			Integer callerAdminId) {
@@ -179,6 +179,7 @@ public class CallerAdminCountyMapDAOImpl implements CallerAdminCountyMapDAO{
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteCallerAdminCountyMapByCallerAdminId(Integer callerAdminId) {
 		// TODO Auto-generated method stub

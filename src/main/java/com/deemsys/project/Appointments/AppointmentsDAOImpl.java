@@ -1,10 +1,8 @@
 package com.deemsys.project.Appointments;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sf.cglib.core.Local;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -19,8 +17,6 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.amazonaws.services.opsworks.model.App;
-import com.deemsys.project.CallLogs.CallLogsForm;
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
@@ -164,6 +160,7 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public AppointmentsSearchResult searchAppointments(AppointmentSearchForm appointmentSearchForm) {
 		// TODO Auto-generated method stub
@@ -260,6 +257,7 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		return appointmentsSearchResult;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Integer getAppointmentsCount(Integer callerAdminId) {
 		// TODO Auto-generated method stub

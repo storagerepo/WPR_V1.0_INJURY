@@ -8,20 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.deemsys.project.Caller.CallerService;
+import com.deemsys.project.DirectReportLawyerMap.DirectReportLaywerMapForm;
+import com.deemsys.project.DirectReportLawyerMap.DirectReportLaywerMapService;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
-import com.deemsys.project.Lawyers.LawyersForm;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.CallerPatientSearchForm;
 import com.deemsys.project.patient.PatientGroupedSearchResult;
-import com.deemsys.project.patient.PatientSearchResult;
 import com.deemsys.project.patient.PatientService;
 import com.deemsys.project.patientLawyerMap.PatientLawyerService;
-import com.deemsys.project.Caller.AssignCallerForm;
-import com.deemsys.project.Caller.CallerForm;
-import com.deemsys.project.Caller.CallerService;
-import com.deemsys.project.DirectReportCallerMap.DirectReportCallerMapForm;
-import com.deemsys.project.DirectReportLawyerMap.DirectReportLaywerMapForm;
-import com.deemsys.project.DirectReportLawyerMap.DirectReportLaywerMapService;
 
 @Controller
 public class LawyersController {

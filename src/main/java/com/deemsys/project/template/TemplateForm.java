@@ -1,7 +1,6 @@
 package com.deemsys.project.template;
 
 
-import javax.xml.bind.annotation.XmlElement;
 
 /**
  * 
@@ -23,7 +22,6 @@ public class TemplateForm {
 		return blogId;
 	}
 
-	@XmlElement
 	public void setBlogId(String blogId) {
 		this.blogId = blogId;
 	}
@@ -32,7 +30,6 @@ public class TemplateForm {
 		return postedBy;
 	}
 
-	@XmlElement
 	public void setPostedBy(String postedBy) {
 		this.postedBy = postedBy;
 	}

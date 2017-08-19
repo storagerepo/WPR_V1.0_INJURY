@@ -152,6 +152,7 @@ public class PatientLawyerDAOImpl implements PatientLawyerDAO{
 		return (PatientLawyerAdminMap) criteria.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<PatientLawyerAdminMap> getLawyerAdminMapsByLawyerId(
 			Integer lawyerId) {

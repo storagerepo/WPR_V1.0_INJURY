@@ -1,7 +1,6 @@
 package com.deemsys.project.DirectReportLawyerMap;
 
 
-import javax.xml.bind.annotation.XmlElement;
 
 /**
  * 

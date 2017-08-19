@@ -63,6 +63,7 @@ public class CallerAdminDAOImpl implements CallerAdminDAO{
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CallerAdmin> getAll() {
 		// TODO Auto-generated method stub
@@ -118,9 +119,8 @@ public class CallerAdminDAOImpl implements CallerAdminDAO{
 		// TODO Auto-generated method stub
 		Query query=this.sessionFactory.getCurrentSession().createQuery("update CallerAdmin set status=0 where callerAdminId="+id+"");
 		query.executeUpdate();
-		
-		@SuppressWarnings("unchecked")
-		List<Caller> callers=this.sessionFactory.getCurrentSession().createCriteria(Caller.class).add(Restrictions.eq("callerAdmin.callerAdminId", id)).list();
+			
+		this.sessionFactory.getCurrentSession().createCriteria(Caller.class).add(Restrictions.eq("callerAdmin.callerAdminId", id)).list();
 		
 		
 		return true;

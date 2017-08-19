@@ -164,7 +164,6 @@ public class DoctorsService {
 	// Delete an Entry
 	public int deleteDoctors(Integer id) {
 		int status = 0;
-		List<Patient> patientss = new ArrayList<Patient>();
 		doctorsDAO.delete(id);
 		/*patientss = patientsDAO.getpatientByDoctorId(id);
 		if (patientss.size() == 0) {
@@ -219,15 +218,7 @@ public class DoctorsService {
 
 	// Remove Assigned Doctor
 	public Integer removeAssignedDoctor(Integer doctorId) {
-
 		Integer status = 0;
-		List<Patient> patients = patientsDAO.getpatientByDoctorId(doctorId);
-		for (Patient patients2 : patients) {
-			//patientsDAO.removeAssignedDoctor(patients2.getPatientId());
-			// Need to change remove Assigned Doctor Function
-			status = 1;
-		}
-
 		return status;
 	}
 

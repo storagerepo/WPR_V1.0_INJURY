@@ -154,6 +154,7 @@ public class LawyerAdminCountyMappingDAOImpl implements LawyerAdminCountyMapping
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteLawyerAdminCountyMappingsByLawyerAdminId(
 			Integer lawyerAdminId) {

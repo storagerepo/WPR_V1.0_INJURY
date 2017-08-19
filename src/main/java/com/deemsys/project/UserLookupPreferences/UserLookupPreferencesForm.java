@@ -3,8 +3,6 @@ package com.deemsys.project.UserLookupPreferences;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-
 /**
  * 
  * @author Deemsys

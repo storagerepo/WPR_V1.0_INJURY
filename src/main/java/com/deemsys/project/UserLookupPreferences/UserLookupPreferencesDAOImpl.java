@@ -18,7 +18,6 @@ import com.deemsys.project.County.CountyList;
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.UserLookupPreferences;
-import com.mysql.fabric.xmlrpc.base.Array;
 
 /**
  * 

@@ -8,13 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.common.InjuryConstants;
-import com.deemsys.project.entity.CallerAdminCountyMap;
-import com.deemsys.project.entity.CallerCountyMap;
 import com.deemsys.project.entity.County;
-import com.deemsys.project.entity.LawyerAdminCountyMap;
 import com.deemsys.project.login.LoginService;
-import com.deemsys.project.patient.CallerPatientSearchForm;
-import com.deemsys.project.patient.PatientDAO;
 import com.deemsys.project.patient.PatientService;
 import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminService;

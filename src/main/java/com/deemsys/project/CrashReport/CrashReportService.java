@@ -1,16 +1,10 @@
 package com.deemsys.project.CrashReport;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
-import org.joda.time.LocalDate;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -37,7 +31,6 @@ import com.deemsys.project.patient.PatientForm;
 import com.deemsys.project.patient.PatientService;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 import com.deemsys.project.pdfcrashreport.ReportFirstPageForm;
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 /**
  * 
  * @author Deemsys
@@ -94,33 +87,16 @@ public class CrashReportService {
 	public List<CrashReportForm> getCrashReportList()
 	{
 		List<CrashReportForm> crashReportForms=new ArrayList<CrashReportForm>();
-		
-		List<CrashReport> crashReports=new ArrayList<CrashReport>();
-		
-		crashReports=crashReportDAO.getAll();
-		
-		for (CrashReport crashReport : crashReports) {
-			//TODO: Fill the List
-			
-		}
-		
 		return crashReportForms;
 	}
 	
 	//Get Particular Entry
 	public CrashReportForm getCrashReport(Integer getId)
 	{
-		CrashReport crashReport=new CrashReport();
-		
-		crashReport=crashReportDAO.get(getId);
-		
 		//TODO: Convert Entity to Form
 		//Start
-		
 		CrashReportForm crashReportForm=new CrashReportForm();
-		
 		//End
-		
 		return crashReportForm;
 	}
 	
@@ -128,14 +104,9 @@ public class CrashReportService {
 	public int mergeCrashReport(CrashReportForm crashReportForm)
 	{
 		//TODO: Convert Form to Entity Here
-		
 		//Logic Starts
-		
 		CrashReport crashReport=new CrashReport();
-		
 		//Logic Ends
-		
-		
 		crashReportDAO.merge(crashReport);
 		return 1;
 	}
@@ -144,7 +115,6 @@ public class CrashReportService {
 	public int saveCrashReport(CrashReportForm crashReportForm)
 	{
 		//TODO: Convert Form to Entity Here	
-		
 		//Logic Starts
 		County county= countyDAO.getCountyByName(this.splitCountyName(crashReportForm.getCounty()));
 		CrashReportError crashReportError=crashReportErrorDAO.get(Integer.parseInt(crashReportForm.getCrashReportError()));
@@ -160,10 +130,7 @@ public class CrashReportService {
 		CrashReport crashReport=new CrashReport(crashReportForm.getCrashId(), crashReportError, policeAgency, county, localReportNumber,  InjuryConstants.convertYearFormat(crashReportForm.getCrashDate()), 
 					 InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getNumberOfPatients(), crashReportForm.getVehicleCount(), crashReportForm.getFilePath(), null, crashReportForm.getIsRunnerReport(),  null, 1, null, null, null);
 		
-	
-		
 		//Logic Ends
-		
 		crashReportDAO.save(crashReport);
 		return 1;
 	}
@@ -172,13 +139,9 @@ public class CrashReportService {
 	public int updateCrashReport(CrashReportForm crashReportForm)
 	{
 		//TODO: Convert Form to Entity Here	
-		
 		//Logic Starts
-		
 		CrashReport crashReport=new CrashReport();
-		
 		//Logic Ends
-		
 		crashReportDAO.update(crashReport);
 		return 1;
 	}

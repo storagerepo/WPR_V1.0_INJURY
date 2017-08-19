@@ -1,35 +1,18 @@
 package com.deemsys.project.Export;
 
-import java.awt.print.Pageable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
 
-import javax.print.Doc;
 import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
 import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
-import javax.print.SimpleDoc;
-import javax.print.attribute.Attribute;
 import javax.print.attribute.AttributeSet;
 import javax.print.attribute.HashPrintJobAttributeSet;
-import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintJobAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.PrinterIsAcceptingJobs;
-import javax.print.attribute.standard.PrinterState;
-import javax.print.attribute.standard.PrinterStateReason;
-import javax.print.event.PrintJobAdapter;
-import javax.print.event.PrintJobEvent;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,9 +78,9 @@ public class PrintPDFFiles {
 		String printJobResponse="";
 		String printerName=injuryProperties.getProperty("MICROSOFT_DEFAULT_VIEWER");
 		// Default Printer Look up
-		PrintService printServices = PrintServiceLookup.lookupDefaultPrintService();
+		//PrintService printServices = PrintServiceLookup.lookupDefaultPrintService();
 		// Set Attribute to printing job
-		PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
+		//PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
 		PrintJobAttributeSet printJobAttributeSet = new HashPrintJobAttributeSet();
 		// List Of Printer Look up
 	    PrintService[] printServiceses = PrintServiceLookup.lookupPrintServices(null, printJobAttributeSet);
