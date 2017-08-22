@@ -1,0 +1,66 @@
+  <div class="row">
+    <div class="col-lg-12">
+        <a ui-sref="dashboard.vehicleMakeAbbreviation" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to the Vehicles Make</a>
+        <h2 ng-cloak class="page-header">{{title}}<span ng-show="title=='Edit Vehicle'">&nbsp;-&nbsp;{{vehicleMakeAbbreviationForm.make}}</span></h2>
+    </div>
+    
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+     <form id="myForm" name="myForm" novalidate ng-cloak>
+   
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Enter Vehicle Details
+                <span class="pull-right"><span class="redText">*</span> Required Fields</span>
+            </div>
+            
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    		<div class="col-md-12 no-padding">
+                                
+                                   <div class="col-md-6">
+                                  <span class="redText">*</span>  <label>Vehicle Make</label>
+                                    <input type="text" class="form-control"  ng-model="vehicleMakeAbbreviationForm.make" ng-pattern="/^[\w -]*$/" ng-change="showVehicleMakeAlreadyExistsError=false" name="make" ng-disabled="disableVehicleMakeInput" placeholder="Vehicle Make" maxlength="45" required>
+                                    <span class="error-container" ng-show="myForm.make.$dirty && myForm.make.$invalid">
+                                      <span ng-cloak style="color:red" ng-show="myForm.make.$error.required">Please Enter Vehicle Make Name</span>
+                                     <span ng-cloak style="color:red" ng-show="myForm.make.$error.pattern">Vehicle Make Name must contain only alphanumeric characters</span>
+                                      
+                                     </span>
+                        <span ng-cloak style="color:red" ng-show="!myForm.make.$error.required&&showVehicleMakeAlreadyExistsError">Vehicle Make Name Already Exist.</span>
+                                     <br/>
+                                   </div>
+                                   
+                                 <div class="col-md-6">
+                                      <span class="redText">*</span>  <label>Vehicle Abbreviation</label>
+                                    <input type="text" class="form-control"  ng-model="vehicleMakeAbbreviationForm.abbreviation" name="abbreviation"  placeholder="Vehicle Abbreviation" maxlength="45" required >
+                                    <span class="error-container" ng-show="myForm.abbreviation.$dirty && myForm.abbreviation.$invalid">
+                                      <span ng-cloak style="color:red" ng-show="myForm.abbreviation.$error.required">Please Enter Vehicle Abbreviation</span> 
+                                     </span>
+                                     <br/>
+                                     
+                                  </div>
+                                 </div>
+                                  <div class="col-md-12 no-padding">
+                                <div class="col-md-6"></div>
+                                   <div class="col-md-6">
+                                   <label>&nbsp;</label>
+                                   <div class="pull-right">
+                <a class="btn btn-success" ng-show='options' ng-disabled='showVehicleMakeAlreadyExistsError||myForm.$invalid' ng-click="saveVehicleMakeAbbreviation()" >Save</a>
+             	 <a class="btn btn-success" ng-show='!options' ng-disabled='showVehicleMakeAlreadyExistsError||isClean() || myForm.$invalid' ng-click="updateVehicleMakeAbbreviation()">Update</a>
+              <a ui-sref="dashboard.vehicleMakeAbbreviation"  class="btn btn-danger">Cancel</a><br/><br/>
+         </div>
+           </div>  </div>
+                              
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+         </form>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

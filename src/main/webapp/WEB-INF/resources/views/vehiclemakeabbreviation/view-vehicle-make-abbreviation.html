@@ -1,0 +1,130 @@
+<div class="row">
+	<div class="col-lg-12">
+		<a ui-sref="dashboard.add-vehicleMakeAbbreviation"
+			class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-plus-circle fa-lg"></i> Add New Vehicle</a>
+			
+		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
+		<h2 class="page-header">Vehicles Make</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<div class="row">
+		
+			<div class="col-md-12 no-padding">
+				
+				<div class="col-md-5ths no-padding">
+					<div class="col-md-12">
+						<label>Vehicle Make </label><!-- <span class="error-class"
+							ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least
+							one county</span>
+				 -->	</div>
+					<div class="col-md-12">
+						<input type="text" class="form-control" placeholder="Vehicle Make"  ng-model="searchVehicleMakeAbbrevationForm.make">
+					</div>
+				</div>
+				<div class="col-md-5ths no-padding">
+					<div class="col-md-12">
+						<label>Vehicle Abbreviation </label><!-- <span class="error-class"
+							ng-show="searchCountyMinError">&nbsp;&nbsp;Select at least
+							one county</span>
+				 -->	</div>
+					<div class="col-md-12">
+						<input type="text" class="form-control" placeholder="Vehicle Abbreviation"  ng-model="searchVehicleMakeAbbrevationForm.abbreviation">
+					</div>
+				</div>
+				
+				<div class="col-md-5ths no-padding">
+				<div class="col-md-12">
+						<label>&nbsp;</label>
+					</div>
+					<div class="col-md-12">
+						<a class="btn btn-success" ng-click="searchVehicleMakeAbbreviation()">Search</a>
+						<a class="btn btn-danger" ng-click="reset()">Reset</a>
+				</div>
+				</div></div></div><br>
+
+<div class="row">
+	 		<!-- /.panel-heading -->
+			<div class="col-md-12">
+		
+
+					<table class="table table-hover table-striped table-bordered">
+
+						<thead>
+							<tr>
+								<th width="40%" ng-mousedown="sort('make')">Vehicle Make&nbsp;&nbsp;<span
+									class="glyphicon sort-icon" ng-show="sortKey=='make'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+								<th width="40%" ng-mousedown="sort('abbreviation')">Vehicle Abbreviation&nbsp;&nbsp;<span
+									class="glyphicon sort-icon" ng-show="sortKey=='abbreviation'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+								<th width="20%">Actions</th>
+						
+							</tr>
+
+						</thead>
+						<tbody >
+
+							<tr ng-show="vehicleMakeAbbreviationList.length>0"  dir-paginate="vehicleMakeAbbreviation in vehicleMakeAbbreviationList|orderBy:sortKey:reverse|itemsPerPage:searchVehicleMakeAbbrevationForm.recordsPerPage" current-page="searchVehicleMakeAbbrevationForm.pageNumber" total-items="totalRecords" pagination-id="vehicleMakeAbbrevationPagination">
+								<td class="wrap" ng-cloak>{{vehicleMakeAbbreviation.make}}</td>
+								<td class="wrap" ng-cloak>{{vehicleMakeAbbreviation.abbreviation}}</td>
+								<td>
+							 	<a href="#/dashboard/edit-vehicleMakeAbbreviation/{{vehicleMakeAbbreviation.make}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Reporting Agency"><i
+								class="glyphicon glyphicon-edit"></i>
+						</a> 
+						<!-- <a href="" ng-cloak ng-show="reportingAgency.status==1" ng-click="enableOrDisableReportingAgency(reportingAgency.reportingAgencyId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Reporting Agency"><i
+								class="fa fa-unlock-alt"></i>
+						</a>
+								<a href="" ng-cloak ng-show="reportingAgency.status==0" ng-click="enableOrDisableReportingAgency(reportingAgency.reportingAgencyId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Reporting Agency"><i
+								class="fa fa-lock"></i>
+						</a> -->
+							  <a  ng-cloak class="btn btn-xs btn-danger hint--top" data-hint="Delete Vehicle Make" data-toggle="modal" data-target="#deleteVehicleMakeModal" ng-click="deleteVehicleMake(vehicleMakeAbbreviation.make)"><i
+								class="glyphicon glyphicon-trash" ></i>
+						</a>  
+							
+								
+							 </td>
+							</tr>
+ 							<tr ng-show="!vehicleMakeAbbreviationList.length"><td colspan="3" align="center">No Records Found</td></tr>
+						</tbody>
+						
+					</table>
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="vehicleMakeAbbrevationPagination" >
+    					</dir-pagination-controls>
+    					 <div class="col-md-3 pull-right no-padding">
+<label>Number of Records</label>
+	<select
+		class="form-control" ng-model="searchVehicleMakeAbbrevationForm.recordsPerPage" ng-change="itemsPerPage()" name="recordsPerPage"
+		id="noOfRows">
+		<option value="10">Show 10 Per Page</option>
+		<option value="25">Show 25 Per Page</option>
+		<option value="50">Show 50 Per Page</option>
+		<option value="100">Show 100 Per Page</option>
+		<option value="{{vehicleMakeAbbreviationList.length}}">Show All</option>
+	</select>    
+			</div>
+		<!-- /.panel -->
+		</div>
+	<!-- /.col-lg-12 -->
+</div>
+
+ <div class="modal fade" id="deleteVehicleMakeModal" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{modalHeader}} </h4>
+        </div>
+        <div class="modal-body">{{modalContent}}
+              
+        </div>
+        <div class="modal-footer" >
+         <a type="submit" class="btn btn-danger closeButton"  data-dismiss="modal">{{modalButtonText}}</a>
+         <a type="submit" class="btn btn-success"  ng-show="switchingmodalbutton" ng-click="confirmDeleteVehicleMake()">Yes</a>
+        </div>
+      </div>
+      
+    </div>
+ </div>
+ 
