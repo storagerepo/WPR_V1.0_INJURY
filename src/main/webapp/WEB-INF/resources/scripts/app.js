@@ -966,6 +966,66 @@ sbAdminApp
 												
 
 											})
+											.state('dashboard.vehicleMakeAbbreviation',
+											{
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/vehicleMakeAbbreviationController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'ShowVehicleMakeAbbreviationController',
+												templateUrl : 'views/vehiclemakeabbreviation/view-vehicle-make-abbreviation.html',
+												url : '/vehicleMakeAbbreviation'
+												
+
+											})
+											.state('dashboard.add-vehicleMakeAbbreviation',
+											{
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/vehicleMakeAbbreviationController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'AddVehicleMakeAbbreviationController',
+												templateUrl : 'views/vehiclemakeabbreviation/add-vehicle-make-abbreviation.html',
+												url : '/add-vehicleMakeAbbreviation'
+												
+
+											})
+											.state('dashboard.edit-vehicleMakeAbbreviation/:vehiclemake',
+											{
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/vehicleMakeAbbreviationController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'EditVehicleMakeAbbreviationController',
+												templateUrl : 'views/vehiclemakeabbreviation/add-vehicle-make-abbreviation.html',
+												url : '/edit-vehicleMakeAbbreviation/:vehiclemake'
+												
+
+											})
 											.state(
 											'dashboard.patientResponse',
 											{

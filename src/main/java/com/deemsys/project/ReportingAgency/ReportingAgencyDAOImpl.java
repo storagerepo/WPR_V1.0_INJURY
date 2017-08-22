@@ -185,19 +185,19 @@ public class ReportingAgencyDAOImpl implements ReportingAgencyDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ReportingAgencyList getReportingAgencyList2(SearchParamForm searchParamForm) {
+	public ReportingAgencyList getReportingAgencyList2(ReportingAgencySearchParamForm reportingAgencySearchParamForm) {
 		
 		List<ReportingAgencyForm> reportingAgencyForms=new ArrayList<ReportingAgencyForm>();
 		Session session=this.sessionFactory.getCurrentSession();
 		Criteria criteria=session.createCriteria(ReportingAgency.class);
 		
 		criteria.createAlias("county", "c1");
-		if(searchParamForm.getCountyId()!=0)
-			criteria.add(Restrictions.eq("c1.countyId", searchParamForm.getCountyId()));
-		if(!searchParamForm.getNcicCode().equals(""))
-		criteria.add(Restrictions.like("code", searchParamForm.getNcicCode(),MatchMode.ANYWHERE));
-		if(!searchParamForm.getReportingAgencyName().equals(""))
-			criteria.add(Restrictions.like("reportingAgencyName", searchParamForm.getReportingAgencyName(),MatchMode.ANYWHERE));
+		if(reportingAgencySearchParamForm.getCountyId()!=0)
+			criteria.add(Restrictions.eq("c1.countyId", reportingAgencySearchParamForm.getCountyId()));
+		if(!reportingAgencySearchParamForm.getNcicCode().equals(""))
+		criteria.add(Restrictions.like("code", reportingAgencySearchParamForm.getNcicCode(),MatchMode.ANYWHERE));
+		if(!reportingAgencySearchParamForm.getReportingAgencyName().equals(""))
+			criteria.add(Restrictions.like("reportingAgencyName", reportingAgencySearchParamForm.getReportingAgencyName(),MatchMode.ANYWHERE));
 		
 		ProjectionList projectionList=Projections.projectionList();
 		
@@ -211,7 +211,7 @@ public class ReportingAgencyDAOImpl implements ReportingAgencyDAO{
 		Long totalRecords=(Long) criteria.setProjection(Projections.count("reportingAgencyId")).uniqueResult();
 		criteria.setProjection(projectionList);
 		
-		reportingAgencyForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(ReportingAgencyForm.class)).addOrder(Order.asc("countyName")).setFirstResult((searchParamForm.getPageNumber()-1)*searchParamForm.getRecordsPerPage()).setMaxResults(searchParamForm.getRecordsPerPage()).list();
+		reportingAgencyForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(ReportingAgencyForm.class)).addOrder(Order.asc("countyName")).setFirstResult((reportingAgencySearchParamForm.getPageNumber()-1)*reportingAgencySearchParamForm.getRecordsPerPage()).setMaxResults(reportingAgencySearchParamForm.getRecordsPerPage()).list();
 
 		ReportingAgencyList reportingAgencyList=new ReportingAgencyList(totalRecords, reportingAgencyForms);
 		return reportingAgencyList;

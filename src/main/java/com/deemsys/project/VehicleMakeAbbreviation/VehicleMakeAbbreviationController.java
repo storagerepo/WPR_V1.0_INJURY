@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,15 +34,15 @@ public class VehicleMakeAbbreviationController {
     @RequestMapping(value="/mergeVehicleMakeAbbreviation",method=RequestMethod.POST)
    	public String mergeVehicleMakeAbbreviation(@ModelAttribute("vehicleMakeAbbreviationForm") VehicleMakeAbbreviationForm vehicleMakeAbbreviationForm,ModelMap model)
    	{
-    	vehicleMakeAbbreviationService.mergeVehicleMakeAbbreviation(vehicleMakeAbbreviationForm);
+		vehicleMakeAbbreviationService.saveVehicleMakeAbbreviation(vehicleMakeAbbreviationForm);
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
     
     @RequestMapping(value="/saveUpdateVehicleMakeAbbreviation",method=RequestMethod.POST)
-   	public String saveVehicleMakeAbbreviation(@ModelAttribute("vehicleMakeAbbreviationForm") VehicleMakeAbbreviationForm vehicleMakeAbbreviationForm,ModelMap model)
+   	public String saveVehicleMakeAbbreviation(@RequestParam("RequestType")Integer requestType,@RequestBody VehicleMakeAbbreviationForm vehicleMakeAbbreviationForm,ModelMap model)
    	{
-    	if(vehicleMakeAbbreviationForm.getMake().equals(""))
+    	if(requestType==0)
     		vehicleMakeAbbreviationService.saveVehicleMakeAbbreviation(vehicleMakeAbbreviationForm);
     	else
     		vehicleMakeAbbreviationService.updateVehicleMakeAbbreviation(vehicleMakeAbbreviationForm);
@@ -66,5 +67,34 @@ public class VehicleMakeAbbreviationController {
     	model.addAttribute("requestSuccess",true);
    		return "/returnPage";
    	}
-	
+    
+    @RequestMapping(value="/getVehicleMakeAbbreviationByMake",method=RequestMethod.POST)
+	public String getVehicleMakeAbbreviationByMake(@RequestParam("make") String make,ModelMap model)
+	{
+    	model.addAttribute("vehicleMakeAbbreviationForm",vehicleMakeAbbreviationService.getVehicleMakeAbbreviationByMake(make));
+    	model.addAttribute("requestSuccess",true);
+		return "/returnPage";
+	}
+    
+    @RequestMapping(value="/checkVehicleMakeAbbreviationByMake",method=RequestMethod.POST)
+   	public String checkVehicleMakeAbbreviationByMake(@RequestParam("make") String make,ModelMap model)
+   	{
+       	model.addAttribute("isExists",vehicleMakeAbbreviationService.checkVehicleMakeAbbreviationByMake(make));
+       	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+    @RequestMapping(value="/deleteVehicleMakeAbbreviationByMake",method=RequestMethod.GET)
+   	public String deleteVehicleMakeAbbreviationByMake(@RequestParam("make") String make,ModelMap model)
+   	{
+       	model.addAttribute("isDeleted",vehicleMakeAbbreviationService.deleteVehicleMakeAbbreviationByMake(make));
+       	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
+    @RequestMapping(value="/getVehicleMakeAbbrevationsBySearch",method=RequestMethod.POST)
+    public String getVehicleMakeAbbrevationsBySearch(@RequestBody SearchVehicleMakeAbbrevationForm searchVehicleMakeAbbrevationForm,ModelMap model)
+    {
+    	model.addAttribute("vehicleMakeAbbreviationList",vehicleMakeAbbreviationService.getVehicleMakeAbbrevationsBySearch(searchVehicleMakeAbbrevationForm));
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+    }
 }

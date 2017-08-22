@@ -186,10 +186,10 @@ public class ReportingAgencyService {
 		
 	}
 	
-	public ReportingAgencyList getReportingAgencyList2(SearchParamForm searchParamForm)
+	public ReportingAgencyList getReportingAgencyList2(ReportingAgencySearchParamForm reportingAgencySearchParamForm)
 	{
 		
-		ReportingAgencyList reportingAgencyList=reportingAgencyDAO.getReportingAgencyList2(searchParamForm);
+		ReportingAgencyList reportingAgencyList=reportingAgencyDAO.getReportingAgencyList2(reportingAgencySearchParamForm);
 		return reportingAgencyList;
 	}
 	public Integer checkNcicCode(String ncicCode,Integer reportingAgencyId,Integer countyId)

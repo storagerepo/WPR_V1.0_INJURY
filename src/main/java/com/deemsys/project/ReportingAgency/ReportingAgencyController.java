@@ -94,9 +94,9 @@ public class ReportingAgencyController {
    	}
     
     @RequestMapping(value="/getReportingAgencyList2",method=RequestMethod.POST)
-    public String getReportingAgencyList2(@RequestBody SearchParamForm searchParamForm,ModelMap model)
+    public String getReportingAgencyList2(@RequestBody ReportingAgencySearchParamForm reportingAgencySearchParamForm,ModelMap model)
     {
-    	model.addAttribute("reportingAgencyList", reportingAgencyService.getReportingAgencyList2(searchParamForm));
+    	model.addAttribute("reportingAgencyList", reportingAgencyService.getReportingAgencyList2(reportingAgencySearchParamForm));
     	model.addAttribute("requestSuccess", true);
     	return "/returnPage";
     }

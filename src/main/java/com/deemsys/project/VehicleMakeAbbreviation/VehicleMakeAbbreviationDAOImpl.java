@@ -1,13 +1,22 @@
 package com.deemsys.project.VehicleMakeAbbreviation;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.deemsys.project.ReportingAgency.ReportingAgencyForm;
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.entity.VehicleMakeAbbreviation;
 
@@ -44,7 +53,7 @@ public class VehicleMakeAbbreviationDAOImpl implements VehicleMakeAbbreviationDA
 	@Override
 	public VehicleMakeAbbreviation update(VehicleMakeAbbreviation entity) {
 		// TODO Auto-generated method stub
-		this.sessionFactory.getCurrentSession().merge(entity);
+		this.sessionFactory.getCurrentSession().update(entity);
 		return null;
 	}
 
@@ -140,6 +149,44 @@ public class VehicleMakeAbbreviationDAOImpl implements VehicleMakeAbbreviationDA
 			String vehicleMake) {
 		// TODO Auto-generated method stub
 		return (VehicleMakeAbbreviation) this.sessionFactory.getCurrentSession().createCriteria(VehicleMakeAbbreviation.class).add(Restrictions.eq("make", vehicleMake)).uniqueResult();
+	}
+
+	@Override
+	public VehicleMakeAbbreviationList getVehicleMakeAbbrevationsBySearch(
+			SearchVehicleMakeAbbrevationForm searchVehicleMakeAbbrevationForm) {
+		
+		List<VehicleMakeAbbreviationForm> vehicleMakeAbbreviationForms=new ArrayList<VehicleMakeAbbreviationForm>();
+		Session session=this.sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(VehicleMakeAbbreviation.class);
+		criteria.add(Restrictions.ne("make", ""));
+		
+		if(!searchVehicleMakeAbbrevationForm.getMake().equals(""))
+		criteria.add(Restrictions.like("make", searchVehicleMakeAbbrevationForm.getMake(),MatchMode.ANYWHERE));
+		if(!searchVehicleMakeAbbrevationForm.getAbbreviation().equals(""))
+			criteria.add(Restrictions.like("abbreviation", searchVehicleMakeAbbrevationForm.getAbbreviation(),MatchMode.ANYWHERE));
+		
+		ProjectionList projectionList=Projections.projectionList();
+		projectionList.add(Projections.alias(Projections.property("make"), "make"));
+		projectionList.add(Projections.alias(Projections.property("abbreviation"), "abbreviation"));
+		projectionList.add(Projections.alias(Projections.property("status"), "status"));
+		
+		Long totalRecords=(Long) criteria.setProjection(Projections.count("make")).uniqueResult();
+		criteria.setProjection(projectionList);
+
+      vehicleMakeAbbreviationForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(VehicleMakeAbbreviationForm.class)).addOrder(Order.asc("make")).setFirstResult((searchVehicleMakeAbbrevationForm.getPageNumber()-1)*searchVehicleMakeAbbrevationForm.getRecordsPerPage()).setMaxResults(searchVehicleMakeAbbrevationForm.getRecordsPerPage()).list();
+
+      VehicleMakeAbbreviationList vehicleMakeAbbreviationList=new VehicleMakeAbbreviationList(totalRecords, vehicleMakeAbbreviationForms);
+
+
+		return vehicleMakeAbbreviationList;
+	}
+
+	@Override
+	public Integer deleteVehicleMakeAbbreviationByMake(String make) {
+		
+		this.sessionFactory.getCurrentSession().delete(this.getVehicleMakeAbbreviationByMake(make));
+		return 1;
+
 	}
 
 	

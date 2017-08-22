@@ -33,6 +33,10 @@
                 <a ui-sref="dashboard.reportingAgency"><i ng-cloak class="fa fa-id-badge fa-fw"></i> <small>Reporting Agency</small></a>
             </li>
             
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
+                <a ui-sref="dashboard.vehicleMakeAbbreviation"><span ng-cloak class="vehicle-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <small>Vehicles Make</small></a>
+            </li>
+            
            <!--  Manual Import Of Crash Report By Id-->
            <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.ImportReports"><i ng-cloak class="fa fa-file fa-fw"></i> <small>Import Reports</small></a>

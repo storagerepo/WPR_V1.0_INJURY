@@ -79,4 +79,6 @@ public interface PatientDAO extends IGenericDAO<Patient> {
 	public List<Patient> getPatientListForUpdateLatLong(String fromDate,String toDate,Integer noOfRecords);
 	
 	public void updateLatLongByAddress(BigDecimal latitude,BigDecimal longitude,String address);
+	
+	public Integer checkVehicleMakeMappedToPatients(String make);
 }

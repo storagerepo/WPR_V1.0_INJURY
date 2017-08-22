@@ -950,5 +950,21 @@ public void updateLatLongByAddress(BigDecimal latitude, BigDecimal longitude,
 	this.sessionFactory.getCurrentSession().createQuery("Update Patient set latitude='"+latitude+"',longitude='"+longitude+"' where address='"+address+"'").executeUpdate();
 }
 
+@Override
+public Integer checkVehicleMakeMappedToPatients(String make) {
+	
+	List<Patient> patients=new ArrayList<Patient>();
+	patients= this.sessionFactory.getCurrentSession().createCriteria(Patient.class).add(Restrictions.eq("vehicleMakeAbbreviation.make", make)).list();
+	
+	if(patients.isEmpty())
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
+
 
 }
