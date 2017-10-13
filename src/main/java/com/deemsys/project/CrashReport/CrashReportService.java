@@ -398,4 +398,10 @@ public class CrashReportService {
 		return pdfCrashReportReader.saveDirectRunnerCrashReport(new RunnerCrashReportForm(UUID.randomUUID().toString().replaceAll("-", ""), null,departmentRunnerDirectReports.getLocalReportNumber(), departmentRunnerDirectReports.getCrashDate(), departmentRunnerDirectReports.getCountyId().toString(), departmentRunnerDirectReports.getPdfUrl(), departmentRunnerDirectReports.getMapId(), null, null),1);
 	}
 	
+	public void backupSixMonthOldReportsDataByStoredProcedure(String date){
+		crashReportDAO.backupSixMonthOldDataByStoredProcedure(date);
+	}
+
+
+	
 }

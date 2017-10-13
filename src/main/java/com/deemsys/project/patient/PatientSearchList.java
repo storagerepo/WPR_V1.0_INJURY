@@ -69,6 +69,13 @@ public class PatientSearchList extends InjuryProperties{
 	private Integer isOwner;
 	private Integer vehicleCount;
 	
+	//Initialize Properties
+	private String runnerBucketURL="https://cdn.crashreportsonline.com/runner-reports/";
+	private String policeDepartmentBucketURL="https://cdn.trafficcrashreports.org/runner-reports/";
+	private String policeDepartmentFolder="/reports/";
+	private String reportFromDeemsys="1";
+	private String bucketURL="https://cdn.crashreportsonline.com/crashreports/";
+	
 	public String getPatientId() {
 		return patientId;
 	}
@@ -116,13 +123,13 @@ public class PatientSearchList extends InjuryProperties{
 	}
 	public void setCrashReportFileName(String crashReportFileName) {
 		if(this.isRunnerReport==1){
-			if(this.reportFrom==Integer.parseInt(getProperty("reportFromDeemsys"))){
-				this.crashReportFileName = getProperty("runnerBucketURL")+crashReportFileName;
+			if(this.reportFrom==Integer.parseInt(this.reportFromDeemsys)){
+				this.crashReportFileName = this.runnerBucketURL+crashReportFileName;
 			}else{
-				this.crashReportFileName = getProperty("policeDepartmentBucketURL")+this.reportFrom+getProperty("policeDepartmentFolder")+crashReportFileName;
+				this.crashReportFileName = this.policeDepartmentBucketURL+this.reportFrom+this.policeDepartmentFolder+crashReportFileName;
 			}
 		}else{
-			this.crashReportFileName = getProperty("bucketURL")+crashReportFileName;
+			this.crashReportFileName = this.bucketURL+crashReportFileName;
 		}
 	}
 	public Integer getCallerAdminId() {
@@ -204,8 +211,7 @@ public class PatientSearchList extends InjuryProperties{
 		this.victimInsuranceCompany = victimInsuranceCompany;
 	}
 	public PatientSearchList() {
-		super();
-		// TODO Auto-generated constructor stub
+		super();		
 	}
 	public boolean isSelected() {
 		return isSelected;
@@ -393,13 +399,13 @@ public class PatientSearchList extends InjuryProperties{
 	public void setOldFilePath(String oldFilePath) {
 		if(oldFilePath!= null){
 			if(this.isRunnerReport==2){
-				if(this.reportFrom==Integer.parseInt(getProperty("reportFromDeemsys"))){
-					this.oldFilePath = getProperty("runnerBucketURL")+oldFilePath;
+				if(this.reportFrom==Integer.parseInt(this.reportFromDeemsys)){
+					this.oldFilePath = this.runnerBucketURL+oldFilePath;
 				}else{
-					this.oldFilePath = getProperty("policeDepartmentBucketURL")+this.reportFrom+getProperty("policeDepartmentFolder")+oldFilePath;
+					this.oldFilePath = this.policeDepartmentBucketURL+this.reportFrom+this.policeDepartmentFolder+oldFilePath;
 				}
 			}else{
-				this.oldFilePath = getProperty("bucketURL")+oldFilePath;
+				this.oldFilePath = this.bucketURL+oldFilePath;
 			}
 		}else{
 			this.oldFilePath=oldFilePath;

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.struts.taglib.html.RewriteTag;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -430,6 +431,15 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 	public void updateCrashReportFileName(String CrashId, String filePath) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().createQuery("update CrashReport set filePath='"+filePath+"' where crash_id='"+CrashId+"' ").executeUpdate();
+	}
+
+	@Override
+	public void backupSixMonthOldDataByStoredProcedure(String date) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createSQLQuery("CALL start_purge_test(:oldDate)");
+		query.setParameter("oldDate", date);
+		query.executeUpdate();
 	}
 
 }

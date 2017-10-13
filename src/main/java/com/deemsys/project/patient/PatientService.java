@@ -441,7 +441,7 @@ public class PatientService {
 	
 	VehicleMakeAbbreviation vehicleMakeAbbreviation = vehicleMakeAbbreviationDAO.getVehicleMakeAbbreviationByMake(patientForm.getVehicleMake());
 	if(vehicleMakeAbbreviation==null&&patientForm.getVehicleMake()!=null){
-		vehicleMakeAbbreviation=new VehicleMakeAbbreviation(patientForm.getVehicleMake(), patientForm.getVehicleMake(), 1, null, null);
+		vehicleMakeAbbreviation=new VehicleMakeAbbreviation(patientForm.getVehicleMake(), patientForm.getVehicleMake(), 1,null);
 		vehicleMakeAbbreviationDAO.save(vehicleMakeAbbreviation);
 	}
 	

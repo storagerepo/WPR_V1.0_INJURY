@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.deemsys.project.BackupReportsAndPatients.BackupReportsAndPatientsService;
 import com.deemsys.project.CrashReport.CrashReportService;
 import com.deemsys.project.PoliceAgency.PoliceAgencyForm;
 import com.deemsys.project.PoliceAgency.PoliceAgencyService;
@@ -35,10 +34,7 @@ public class SchedulerService {
 	
 	@Autowired
 	InjuryProperties injuryProperties;
-	
-	@Autowired
-	BackupReportsAndPatientsService backupReportsAndPatientsService;
-	
+		
 	@Autowired
 	CrashReportService crashReportService;
 	
@@ -102,7 +98,7 @@ public class SchedulerService {
 						LocalDate localDate1=new LocalDate().minusMonths(6);
 						String date=localDate1.toString("yyyy-MM-dd");
 						System.out.println("Previous 6 Month Date ......"+date);
-						backupReportsAndPatientsService.backupSixMonthOldReportsDataByStoredProcedure(date);
+						crashReportService.backupSixMonthOldReportsDataByStoredProcedure(date);
 						System.out.println("Moving and Deleting End...........");
 					}else{
 						System.out.println("Scheduled Date and Time Not Matched");
