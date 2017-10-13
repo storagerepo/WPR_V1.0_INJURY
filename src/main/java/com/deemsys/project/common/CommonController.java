@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.deemsys.project.BackupReportsAndPatients.BackupReportsAndPatientsService;
 import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminForm;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
@@ -72,6 +73,9 @@ public class CommonController {
 	
 	@Autowired
 	PrintPDFFiles printPDFFiles;
+	
+	@Autowired
+	BackupReportsAndPatientsService backupReportsAndPatientsService;
 	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String getInit(ModelMap model)
@@ -265,6 +269,14 @@ public class CommonController {
    		return "/returnPage";
    	}
     
+    // Back Up Old Reports By Limit
+    @RequestMapping(value="/backupOldReportsData",method=RequestMethod.POST)
+   	public String backupOldReportsData(@RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate,@RequestParam("noOfRecords") Integer noOfRecords, @RequestParam("crashId") String crashId,ModelMap model)
+   	{
+    	backupReportsAndPatientsService.backupSixMonthOldReportsDataByStoredProcedure(fromDate, toDate);
+    	model.addAttribute("requestSuccess",true);
+   		return "/returnPage";
+   	}
     
     
 }

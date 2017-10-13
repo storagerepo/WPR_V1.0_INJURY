@@ -1,5 +1,6 @@
 package com.deemsys.project.patient;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -656,7 +657,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		
 		if(callerPatientSearchForm.getIsRunnerReport()!=-1){
 			if(callerPatientSearchForm.getIsRunnerReport()==0){
-				criteria.createAlias("cr.directReportCallerAdminMaps", "drc1",Criteria.LEFT_JOIN);
+				criteria.createAlias("cr.directReportCallerAdminMaps", "drc1",Criteria.LEFT_JOIN,Restrictions.eq("drc1.id.callerAdminId", callerPatientSearchForm.getCallerAdminId()));
 			}
 		}
 		
@@ -711,7 +712,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		
 		if(callerPatientSearchForm.getIsRunnerReport()!=-1){
 			if(callerPatientSearchForm.getIsRunnerReport()==0){
-				criteria.createAlias("cr.directReportLawyerAdminMaps", "drc1", Criteria.LEFT_JOIN);
+				criteria.createAlias("cr.directReportLawyerAdminMaps", "drc1", Criteria.LEFT_JOIN,Restrictions.eq("drc1.id.lawyerAdminId", callerPatientSearchForm.getLawyerAdminId()));
 			}
 		}
 	}
@@ -933,5 +934,17 @@ public List<Patient> getPatientsListByAddedOnDates(String fromDate,
 	return criteria.list();
 }
 
+@SuppressWarnings("unchecked")
+@Override
+public List<Patient> getPatientListForUpdateLatLong(String fromDate,
+		String toDate,Integer noOfRecords) {
+	// TODO Auto-generated method stub
+	Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Patient.class);
+	criteria.add(Restrictions.between("addedDate", InjuryConstants.convertYearFormat(fromDate), InjuryConstants.convertYearFormat(toDate)));
+	criteria.add(Restrictions.and(Restrictions.eq("latitude", BigDecimal.valueOf(0.00000000000)), Restrictions.eq("longitude", BigDecimal.valueOf(0.00000000000))));
+	criteria.add(Restrictions.isNotNull("address"));
+	criteria.add(Restrictions.eq("isOwner", 0));
+	return criteria.setFirstResult(0).setMaxResults(noOfRecords).list();
+}
 
 }

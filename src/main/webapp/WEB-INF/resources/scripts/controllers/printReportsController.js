@@ -111,7 +111,7 @@ $scope.submitNotSubmittedJobs=function(){
 					}
 				});
 			}
-			return $timeout(5000);
+			return $timeout(15000);
 		});
 		
 	});
@@ -155,8 +155,8 @@ $scope.submitNotSubmittedJobs=function(){
 	// Call at initially
 	$scope.addPrintJob();
 	
-	$interval($scope.getJobStatus,20000);
-	$interval($scope.submitNotSubmittedJobs,20000);
+	$interval($scope.getJobStatus,30000);
+	$interval($scope.submitNotSubmittedJobs,30000);
 	$interval($scope.stopStatusChange,1000);
 	
 	$scope.removeReports=function(idx){

@@ -1794,6 +1794,7 @@ public class PDFCrashReportReader {
 	
 	public void savePatientList(List<PatientForm> patientsForms,String crashId,CrashReport runnerReportCrashId) throws Exception{
 		Integer patientCount=0;
+		Integer vehicleCount=0;
 		for (PatientForm patientsForm : patientsForms) {
 			//patientsForm.setCrashReportFileName(uuid+"_"+crashId+".pdf");
 			patientsForm.setCrashReportFileName(crashId+".pdf");
@@ -1801,6 +1802,7 @@ public class PDFCrashReportReader {
 			try {
 				if(patientsForm.getIsOwner()==1){
 					patientsService.savePatient(patientsForm);
+					vehicleCount++;
 					System.out.println("Save Vehicle And Owner Details");
 				}else{
 					if(runnerReportCrashId!=null){
@@ -1837,6 +1839,7 @@ public class PDFCrashReportReader {
 			CrashReport crashReport = crashReportDAO.getCrashReport(crashId);
 			Integer oldPatientsCount=crashReport.getNumberOfPatients();
 			crashReport.setNumberOfPatients(oldPatientsCount+patientCount);
+			crashReport.setVehicleCount(vehicleCount);
 			LocalDate addedDate = new LocalDate();
 			crashReport.setAddedDate(addedDate.toDate());
 			crashReportDAO.update(crashReport);

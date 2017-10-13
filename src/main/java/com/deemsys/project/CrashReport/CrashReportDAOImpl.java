@@ -390,12 +390,13 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 	}
 
 	@Override
-	public List<CrashReport> getSixMonthOldCrashReports() {
+	public List<CrashReport> getSixMonthOldCrashReports(String fromDate, String toDate, Integer noOfRecords) {
 		// TODO Auto-generated method stub
 		LocalDate localDate1=new LocalDate().minusMonths(6);
 		String date=localDate1.toString("yyyy-MM-dd");
 		System.out.println("Previous 6 Month Date 1......"+date);
-		List<CrashReport> crashReports=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).add(Restrictions.le("addedDate", date)).list();
+		// add(Restrictions.le("addedDate", date)).list()
+		List<CrashReport> crashReports=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).add(Restrictions.between("addedDate", InjuryConstants.convertYearFormat(fromDate), InjuryConstants.convertYearFormat(toDate))).setFirstResult(0).setMaxResults(noOfRecords).list();
 		return crashReports;
 	}
 

@@ -441,7 +441,7 @@ public class PatientService {
 	
 	VehicleMakeAbbreviation vehicleMakeAbbreviation = vehicleMakeAbbreviationDAO.getVehicleMakeAbbreviationByMake(patientForm.getVehicleMake());
 	if(vehicleMakeAbbreviation==null&&patientForm.getVehicleMake()!=null){
-		vehicleMakeAbbreviation=new VehicleMakeAbbreviation(patientForm.getVehicleMake(), patientForm.getVehicleMake(), 1, null);
+		vehicleMakeAbbreviation=new VehicleMakeAbbreviation(patientForm.getVehicleMake(), patientForm.getVehicleMake(), 1, null, null);
 		vehicleMakeAbbreviationDAO.save(vehicleMakeAbbreviation);
 	}
 	
@@ -602,5 +602,37 @@ public class PatientService {
 		
 		return patientSearchResultGroupByArchivedList;
 	}
+	
+	//  Update Lat and Long
+	public void updateLatLong(String addedFromDate,String addedToDate,Integer noOfRecords){
+		
+		List<Patient> patients =patientDAO.getPatientListForUpdateLatLong(addedFromDate, addedToDate,noOfRecords);
+	
+		for (Patient patient : patients) {
+			if(!patient.getAddress().equals("")){
+				Double conlat=InjuryConstants.convertBigDecimaltoDouble(patient.getLatitude());
+				Double conlong=InjuryConstants.convertBigDecimaltoDouble(patient.getLongitude());
+				if(conlat.equals(0.0)&&conlong.equals(0.0)){
+					String latLong = geoLocation.getLocationFromAlternateAPIKey(patient.getAddress());
+					BigDecimal longitude = new BigDecimal(0);
+					BigDecimal latitude = new BigDecimal(0);
+					if (!latLong.equals("NONE")) {
+						String[] latitudeLongitude = latLong.split(",");
+						latitude = new BigDecimal(latitudeLongitude[0]);
+						longitude = new BigDecimal(latitudeLongitude[1]);
+					}
+					
+					patient.setLatitude(latitude);
+					patient.setLongitude(longitude);
+					
+					// Update Patient With Latitude Longitude
+					patientDAO.update(patient);
+				}
+				
+			}
+		}
+	}
+	
+	
 	
 }
