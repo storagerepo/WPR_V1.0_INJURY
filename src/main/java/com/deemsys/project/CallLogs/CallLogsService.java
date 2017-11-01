@@ -155,7 +155,7 @@ public class CallLogsService {
 		Caller caller=new Caller();
 				
 		PatientCallerAdminMapId patientCallerAdminMapId=new PatientCallerAdminMapId();
-		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap(patientCallerAdminMapId, callerAdmin, caller, patient, "", 0, null, "", 1, null, null);
+		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap(patientCallerAdminMapId, callerAdmin, caller, patient, "", "", null, null, 0, null, "", 1, null, null);
 		
 		CallLog callLogs = new CallLog(patientCallerAdminMap, caller,
 				callLogsForm.getTimeStamp(), callLogsForm.getResponse(),
@@ -211,7 +211,7 @@ public class CallLogsService {
 			PatientCallerAdminMapId patientCallerAdminMapId = new PatientCallerAdminMapId(
 					patientId, callerAdmin.getCallerAdminId());
 			patientCallerAdminMap = new PatientCallerAdminMap(
-					patientCallerAdminMapId, callerAdmin, null, patient, "", 0, null, "",
+					patientCallerAdminMapId, callerAdmin, null, patient, "", "", null, null, 0, null, "",
 					callLogsForm.getResponse(), null, null);
 		} else {
 			patientCallerAdminMap.setPatientStatus(callLogsForm.getResponse());
@@ -282,7 +282,7 @@ public class CallLogsService {
 			PatientCallerAdminMapId patientCallerAdminMapId = new PatientCallerAdminMapId(
 					patientId, callerAdmin.getCallerAdminId());
 			patientCallerAdminMap = new PatientCallerAdminMap(
-					patientCallerAdminMapId, callerAdmin, null, patient, "", 0, null, "",
+					patientCallerAdminMapId, callerAdmin, null, patient, "", "", null, null, 0, null, "",
 					callLogsForm.getResponse(), null, null);
 		} else {
 			patientCallerAdminMap.setPatientStatus(callLogsForm.getResponse());

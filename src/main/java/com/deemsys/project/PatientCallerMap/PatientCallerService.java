@@ -1,5 +1,6 @@
 package com.deemsys.project.PatientCallerMap;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class PatientCallerService {
 			//Generate Patient
 			Patient patient=new Patient(patientId);
 			
-			patientCallerAdminMap=new PatientCallerAdminMap(new PatientCallerAdminMapId(patientId,callerAdmin.getCallerAdminId()),callerAdmin,caller, patient, "", 0, null, "", 1, null, null);
+			patientCallerAdminMap=new PatientCallerAdminMap(new PatientCallerAdminMapId(patientId,callerAdmin.getCallerAdminId()),callerAdmin,caller, patient, "", "", null, null, 0, null, "", 1, null, null);
 			patientCallerDAO.merge(patientCallerAdminMap);
 			
 		}else{
@@ -101,33 +102,73 @@ public class PatientCallerService {
 
 	public boolean moveToArchive(AssignCallerForm assignCallerForm,Integer archiveStatus){	
 	
-	String role=loginService.getCurrentRole();
-	CallerAdmin callerAdmin = null;
-	if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
-		callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
-	}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
-		callerAdmin=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin();
+		String role=loginService.getCurrentRole();
+		CallerAdmin callerAdmin = null;
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+			callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+			callerAdmin=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin();
+		}
+		
+		for (String patientId : assignCallerForm.getPatientId()) {
+			PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap();
+			patientCallerAdminMap=patientCallerDAO.getPatientMapsByCallerAdminId(patientId, callerAdmin.getCallerAdminId());
+			if(patientCallerAdminMap==null){
+				patientCallerAdminMap=new PatientCallerAdminMap(new PatientCallerAdminMapId(patientId, callerAdmin.getCallerAdminId()), callerAdmin, new Patient(patientId));
+			}
+			patientCallerAdminMap.setIsArchived(archiveStatus);
+			if(archiveStatus==1){
+				patientCallerAdminMap.setArchivedDate(new Date());
+				patientCallerAdminMap.setArchivedDateTime(InjuryConstants.convertUSAFormatWithTime(new Date()));
+			}else{
+				patientCallerAdminMap.setArchivedDate(null);
+				patientCallerAdminMap.setArchivedDateTime(null);
+			}
+			patientCallerDAO.merge(patientCallerAdminMap);			
+			
+		}
+	
+		return true;
 	}
 	
-	for (String patientId : assignCallerForm.getPatientId()) {
+	// Updated Corrected Address
+	public boolean updateCorrectedAddress(String patientId,String address,BigDecimal latitude,BigDecimal longitude){	
+		
+		String role=loginService.getCurrentRole();
+		CallerAdmin callerAdmin = null;
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+			callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+			callerAdmin=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin();
+		}
+		
 		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap();
 		patientCallerAdminMap=patientCallerDAO.getPatientMapsByCallerAdminId(patientId, callerAdmin.getCallerAdminId());
 		if(patientCallerAdminMap==null){
 			patientCallerAdminMap=new PatientCallerAdminMap(new PatientCallerAdminMapId(patientId, callerAdmin.getCallerAdminId()), callerAdmin, new Patient(patientId));
 		}
-		patientCallerAdminMap.setIsArchived(archiveStatus);
-		if(archiveStatus==1){
-			patientCallerAdminMap.setArchivedDate(new Date());
-			patientCallerAdminMap.setArchivedDateTime(InjuryConstants.convertUSAFormatWithTime(new Date()));
-		}else{
-			patientCallerAdminMap.setArchivedDate(null);
-			patientCallerAdminMap.setArchivedDateTime(null);
-		}
-		patientCallerDAO.merge(patientCallerAdminMap);			
+		patientCallerAdminMap.setAddress(address);
+		patientCallerAdminMap.setLatitude(latitude);
+		patientCallerAdminMap.setLongitude(longitude);
 		
+		patientCallerDAO.merge(patientCallerAdminMap);	
+	
+		return true;
 	}
 	
-	return true;
-}
-	
+	// Get Patient Caller Admin Map
+	public PatientCallerAdminMap getPatientCallerAdminMap(String patientId){	
+		
+		String role=loginService.getCurrentRole();
+		CallerAdmin callerAdmin = null;
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+			callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+			callerAdmin=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin();
+		}
+		
+		PatientCallerAdminMap patientCallerAdminMap=patientCallerDAO.getPatientMapsByCallerAdminId(patientId, callerAdmin.getCallerAdminId());
+		
+		return patientCallerAdminMap;
+	}
 }

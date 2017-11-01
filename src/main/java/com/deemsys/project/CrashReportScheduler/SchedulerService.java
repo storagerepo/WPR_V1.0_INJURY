@@ -4,6 +4,7 @@ package com.deemsys.project.CrashReportScheduler;
 import java.util.List;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.deemsys.project.ArchivedPatient.ArchivedPatientService;
 import com.deemsys.project.CrashReport.CrashReportService;
 import com.deemsys.project.PoliceAgency.PoliceAgencyForm;
 import com.deemsys.project.PoliceAgency.PoliceAgencyService;
@@ -36,8 +36,6 @@ public class SchedulerService {
 	@Autowired
 	InjuryProperties injuryProperties;
 	
-	@Autowired
-	ArchivedPatientService archivedPatientService;
 	
 	@Autowired
 	CrashReportService crashReportService;
@@ -86,8 +84,8 @@ public class SchedulerService {
 			
 	}
 	
-	// Schedule At Every Day Mid Night 12 AM For Delete Six Month Old Data
-	@Scheduled(cron="0 0 0 * * ?")
+	// Scheduler will run every one hour
+	@Scheduled(cron="0 0 0/1 * * ?")
 	public void doScheduleForDeleteOldData() {
 		worker.work();
 			try
@@ -95,7 +93,18 @@ public class SchedulerService {
 				System.out.println("Start Delete Old Data");
 				if(injuryProperties.getProperty("sixMonthOldDataDelete").equals("on")){
 					System.out.println("Auto Delete ON");
-					archivedPatientService.getSixMonthOldPatientsAndDelete();
+					LocalDateTime todayDateTime = new LocalDateTime();
+					int currentTime = todayDateTime.getHourOfDay();
+					if(currentTime==Integer.parseInt(injuryProperties.getProperty("oldDataDeleteTime"))){
+						System.out.println("Moving and Deleting Start...........");
+						LocalDate localDate1=new LocalDate().minusMonths(6);
+						String date=localDate1.toString("yyyy-MM-dd");
+						System.out.println("Previous 6 Month Date ......"+date);
+						crashReportService.backupSixMonthOldReportsDataByStoredProcedure(date);
+						System.out.println("Moving and Deleting End...........");
+					}else{
+						System.out.println("Scheduled Date and Time Not Matched");
+					}
 				}else{
 					System.out.println("Auto Delete Off");
 				}

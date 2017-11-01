@@ -9,6 +9,7 @@ public class ClinicLocationForm {
 	private Double centerLatitude;
 	private Double centerLongitude;
 	private Double searchRadius;
+	private String correctedAddress;
 	private List<ClinicsForm> clinicsForms;
 	
 	public Double getCenterLatitude() {
@@ -35,6 +36,14 @@ public class ClinicLocationForm {
 		this.searchRadius = searchRadius;
 	}
 
+	public String getCorrectedAddress() {
+		return correctedAddress;
+	}
+
+	public void setCorrectedAddress(String correctedAddress) {
+		this.correctedAddress = correctedAddress;
+	}
+
 	public List<ClinicsForm> getClinicsForms() {
 		return clinicsForms;
 	}
@@ -45,11 +54,12 @@ public class ClinicLocationForm {
 
 	
 	public ClinicLocationForm(Double centerLatitude, Double centerLongitude,
-			Double searchRadius, List<ClinicsForm> clinicsForms) {
+			Double searchRadius, String correctedAddress, List<ClinicsForm> clinicsForms) {
 		super();
 		this.centerLatitude = centerLatitude;
 		this.centerLongitude = centerLongitude;
 		this.searchRadius = searchRadius;
+		this.correctedAddress = correctedAddress;
 		this.clinicsForms = clinicsForms;
 	}
 

@@ -420,7 +420,7 @@ private Object value(String string, String localReportNumber, MatchMode anywhere
 public PatientSearchResultSet searchPatientsByCAdmin(
 		CallerPatientSearchForm callerPatientSearchForm,boolean isExport) {
 	// TODO Auto-generated method stub
-		
+	Long totalNoOfRecords=new Long(0);
 	Session session=this.sessionFactory.getCurrentSession();
 	
 	//Patient Table Must be included
@@ -597,7 +597,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	criteria.createAlias("county", "c1");
 	
 	if(role.equals("ROLE_SUPER_ADMIN")){
-		
+		totalNoOfRecords=(Long) criteria.setProjection(Projections.count("t1.patientId")).uniqueResult();
 	}else if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
 		
 		criteria.createAlias("patientCallerAdminMaps", "t2", Criteria.LEFT_JOIN,Restrictions.eq("t2.id.callerAdminId",callerPatientSearchForm.getCallerAdminId()));
@@ -641,6 +641,8 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 			
 		}
 		
+		totalNoOfRecords=(Long) criteria.setProjection(Projections.count("t1.patientId")).uniqueResult();
+		
 		criteria.createAlias("t2.caller", "c2",Criteria.LEFT_JOIN);
 		
 		criteria.createAlias("c1.callerAdminCountyMaps","cmap",Criteria.INNER_JOIN,Restrictions.eq("callerAdmin.callerAdminId",callerPatientSearchForm.getCallerAdminId()));		
@@ -656,7 +658,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		
 		if(callerPatientSearchForm.getIsRunnerReport()!=-1){
 			if(callerPatientSearchForm.getIsRunnerReport()==0){
-				criteria.createAlias("cr.directReportCallerAdminMaps", "drc1",Criteria.LEFT_JOIN);
+				criteria.createAlias("cr.directReportCallerAdminMaps", "drc1",Criteria.LEFT_JOIN,Restrictions.eq("drc1.id.callerAdminId", callerPatientSearchForm.getCallerAdminId()));
 			}
 		}
 		
@@ -705,13 +707,15 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 			
 		}
 		
+		totalNoOfRecords=(Long) criteria.setProjection(Projections.count("t1.patientId")).uniqueResult();
+		
 		criteria.createAlias("t2.lawyer", "l1",Criteria.LEFT_JOIN);
 		
 		criteria.createAlias("c1.lawyerAdminCountyMaps","lmap",Criteria.INNER_JOIN,Restrictions.eq("lawyerAdmin.lawyerAdminId",callerPatientSearchForm.getLawyerAdminId()));
 		
 		if(callerPatientSearchForm.getIsRunnerReport()!=-1){
 			if(callerPatientSearchForm.getIsRunnerReport()==0){
-				criteria.createAlias("cr.directReportLawyerAdminMaps", "drc1", Criteria.LEFT_JOIN);
+				criteria.createAlias("cr.directReportLawyerAdminMaps", "drc1", Criteria.LEFT_JOIN,Restrictions.eq("drc1.id.lawyerAdminId", callerPatientSearchForm.getLawyerAdminId()));
 			}
 		}
 	}
@@ -808,20 +812,18 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 			}
 		}
 	}
-
 	
-	Long totalNoOfRecords=(Long) criteria.setProjection(Projections.count("t1.patientId")).uniqueResult();
-	
+	//totalNoOfRecords=(Long) criteria.setProjection(Projections.count("t1.patientId")).uniqueResult();
 	criteria.setProjection(projectionList);
 	
 	// Add Order
 	if(callerPatientSearchForm.getIsArchived()==1){
 		criteria.addOrder(Order.desc("t2.archivedDateTime"));
 	}else{
-		criteria.addOrder(Order.desc("t1.addedDate"));
+		criteria.addOrder(Order.desc("cr.addedDate"));
 	}
 	criteria.addOrder(Order.desc("cr.localReportNumber"));
-	criteria.addOrder(Order.desc("t1.patientId"));
+	//criteria.addOrder(Order.desc("t1.patientId"));
 	
 	List<PatientSearchList> patientSearchLists=new ArrayList<PatientSearchList>();
 	if(isExport){

@@ -387,14 +387,15 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CrashReport> getSixMonthOldCrashReports() {
-		// TODO Auto-generated method stub
-		LocalDate localDate1=new LocalDate().minusMonths(6);
-		String date=localDate1.toString("yyyy-MM-dd");
-		System.out.println("Previous 6 Month Date 1......"+date);
-		List<CrashReport> crashReports=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).add(Restrictions.le("addedDate", date)).list();
-		return crashReports;
-	}
+	public List<CrashReport> getSixMonthOldCrashReports(String fromDate, String toDate, Integer noOfRecords) {
+ 		// TODO Auto-generated method stub
+ 		LocalDate localDate1=new LocalDate().minusMonths(6);
+ 		String date=localDate1.toString("yyyy-MM-dd");
+ 		System.out.println("Previous 6 Month Date 1......"+date);
+ 		// add(Restrictions.le("addedDate", date)).list()
+		List<CrashReport> crashReports=this.sessionFactory.getCurrentSession().createCriteria(CrashReport.class).add(Restrictions.between("addedDate", InjuryConstants.convertYearFormat(fromDate), InjuryConstants.convertYearFormat(toDate))).setFirstResult(0).setMaxResults(noOfRecords).list();
+ 		return crashReports;
+ 	}
 
 	@Override
 	public CrashReport getCrashReportForChecking(String localReportNumber,
@@ -443,6 +444,15 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		Query query=this.sessionFactory.getCurrentSession().createQuery(hql);
 		query.setParameter("oldPoliceAgency",oldPoliceAgency);
 		query.setParameter("newPoliceAgency", newPoliceAgency);
+		query.executeUpdate();
+	}
+	
+	@Override
+	public void backupSixMonthOldDataByStoredProcedure(String date) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createSQLQuery("CALL start_purge_test(:oldDate)");
+		query.setParameter("oldDate", date);
 		query.executeUpdate();
 	}
 

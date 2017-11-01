@@ -1,6 +1,6 @@
 package com.deemsys.project.entity;
 
-// Generated 7 Jul, 2017 3:20:55 PM by Hibernate Tools 3.4.0.CR1
+// Generated 19 Aug, 2017 10:03:05 AM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -59,7 +59,7 @@ public class UserLookupPreferencesId implements java.io.Serializable {
 	public void setCountyId(Integer countyId) {
 		this.countyId = countyId;
 	}
-	
+
 	@Column(name = "prefered_id")
 	public Integer getPreferedId() {
 		return this.preferedId;
@@ -91,6 +91,10 @@ public class UserLookupPreferencesId implements java.io.Serializable {
 				&& ((this.getType() == castOther.getType()) || (this.getType() != null
 						&& castOther.getType() != null && this.getType()
 						.equals(castOther.getType())))
+				&& ((this.getCountyId() == castOther.getCountyId()) || (this
+						.getCountyId() != null
+						&& castOther.getCountyId() != null && this
+						.getCountyId().equals(castOther.getCountyId())))
 				&& ((this.getPreferedId() == castOther.getPreferedId()) || (this
 						.getPreferedId() != null
 						&& castOther.getPreferedId() != null && this
@@ -106,6 +110,8 @@ public class UserLookupPreferencesId implements java.io.Serializable {
 		result = 37 * result + this.getUserId();
 		result = 37 * result
 				+ (getType() == null ? 0 : this.getType().hashCode());
+		result = 37 * result
+				+ (getCountyId() == null ? 0 : this.getCountyId().hashCode());
 		result = 37
 				* result
 				+ (getPreferedId() == null ? 0 : this.getPreferedId()

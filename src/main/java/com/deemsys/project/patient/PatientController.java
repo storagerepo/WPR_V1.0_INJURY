@@ -26,6 +26,7 @@ import com.deemsys.project.CrashReport.RunnerCrashReportForm;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersService;
 import com.deemsys.project.Map.ClinicLocationForm;
+import com.deemsys.project.Map.NearByClinicSearchForm;
 import com.deemsys.project.Map.SearchClinicsService;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.exportFields.ExportFieldsService;
@@ -216,13 +217,11 @@ public class PatientController {
 	  
 	
 	// get Near By clinics
-	@RequestMapping(value = "/Caller/getNearByClincs", method = RequestMethod.GET)
-	public String searchNearByClinics(
-			@RequestParam("patientId") String patientId,
-			@RequestParam("searchRange") Integer searchRange, ModelMap model) {
+	@RequestMapping(value = "/Caller/getNearByClincs", method = RequestMethod.POST)
+	public String searchNearByClinics(@RequestBody NearByClinicSearchForm nearByClinicSearchForm, ModelMap model) {
 
 		ClinicLocationForm clinicLocationForms = searchClinicsService
-				.getNearByClinics(patientId, searchRange);
+				.getNearByClinics(nearByClinicSearchForm);
 		model.addAttribute("clinicLocationForm", clinicLocationForms);
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
@@ -500,4 +499,5 @@ public class PatientController {
 		}
 		return "/returnPage";
 	}
+    
 }

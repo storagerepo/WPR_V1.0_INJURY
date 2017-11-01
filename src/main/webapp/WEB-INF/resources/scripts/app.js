@@ -18,15 +18,17 @@ sbAdminApp
 						'$urlRouterProvider',
 						'$ocLazyLoadProvider',
 						"$httpProvider",
+						"uiGmapGoogleMapApiProvider",
 						function($stateProvider, $urlRouterProvider,
-								$ocLazyLoadProvider, $httpProvider) {
-
-							/*
-							 * uiGmapGoogleMapApiProvider.configure({ key:
-							 * 'AIzaSyCSrffdwIzj8p4RZgvglbhQEEjgEx7ZUKQ', v:
-							 * '3.20', //defaults to latest 3.X anyhow
-							 * libraries: 'weather,geometry,visualization' });
-							 */
+								$ocLazyLoadProvider, $httpProvider,uiGmapGoogleMapApiProvider) {
+							
+							/* Google Map API Key*/
+							/*uiGmapGoogleMapApiProvider.configure({ 
+								 key:'AIzaSyCSrffdwIzj8p4RZgvglbhQEEjgEx7ZUKQ',
+								 v:'3.20', //defaults to latest 3.X anyhow
+								 libraries: 'weather,geometry,visualization' 
+							 });*/
+							 
 							$httpProvider.defaults.withCredentials = true;
 
 							$httpProvider.interceptors
@@ -51,16 +53,16 @@ sbAdminApp
 															break;
 														}
 														case 401: {
-															window.location.href = window.location.origin+"/Injury/logout?sessionout";
+															//window.location.href = window.location.origin+"/Injury/logout?sessionout";
 
 														}
 														case 403: {
-															window.location.href = window.location.origin+"/Injury/logout?sessionout";
+															//window.location.href = window.location.origin+"/Injury/logout?sessionout";
 															break;
 														}
 														case 500: {
 															alert("Please try again!");
-														    window.location.href = window.location.origin+"/Injury/logout";
+														    //window.location.href = window.location.origin+"/Injury/logout";
 															break;
 														}
 														default: {

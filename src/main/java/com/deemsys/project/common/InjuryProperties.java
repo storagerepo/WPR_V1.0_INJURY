@@ -18,7 +18,9 @@ public class InjuryProperties {
 			InputStream input=null;	
 			input=this.getClass().getResourceAsStream("/application.properties");
 			prop.load(input);
-			propertyValue=prop.getProperty(propertyName);			
+			propertyValue=prop.getProperty(propertyName);
+			//  tooclose Input Stream Propeties file, 
+            input.close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}

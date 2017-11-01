@@ -20,7 +20,7 @@ public interface CrashReportDAO extends IGenericDAO<CrashReport>{
 	public Long getLocalReportNumberCount(String localReportNumber);
 	public Long getCrashReportCountByLocalReportNumber(String localReportNumber);
 	
-	public List<CrashReport> getSixMonthOldCrashReports();
+	public List<CrashReport> getSixMonthOldCrashReports(String fromDate,String toDate, Integer noOfRecords);
 	
 	public CrashReport getCrashReportForChecking(String localReportNumber,String crashDate,Integer countyId, Integer isCheckAll);
 	
@@ -28,7 +28,9 @@ public interface CrashReportDAO extends IGenericDAO<CrashReport>{
 
 	public void updateCrashReportFileName(String CrashId, String filePath);
 	
-public List<CrashReport> checkPoliceAgencyMappedToReports(Integer mapId);
+	public List<CrashReport> checkPoliceAgencyMappedToReports(Integer mapId);
 	
 	public void updateMapId(PoliceAgency oldPoliceAgency,PoliceAgency newPoliceAgency);
+	
+	public void backupSixMonthOldDataByStoredProcedure(String date);
 }

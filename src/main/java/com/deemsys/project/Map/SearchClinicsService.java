@@ -1,6 +1,7 @@
 package com.deemsys.project.Map;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,11 @@ import com.deemsys.project.ClinicTimings.ClinicTimingList;
 import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.Clinics.ClinicsForm;
 import com.deemsys.project.Clinics.ClinicsService;
+import com.deemsys.project.PatientCallerMap.PatientCallerService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Clinic;
 import com.deemsys.project.entity.Patient;
+import com.deemsys.project.entity.PatientCallerAdminMap;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientDAO;
 
@@ -44,10 +47,12 @@ public class SearchClinicsService {
 	
 	@Autowired
 	CallerAdminService callerAdminService;
+	
+	@Autowired
+	PatientCallerService patientCallerService;
 
 	@SuppressWarnings("static-access")
-	public ClinicLocationForm getNearByClinics(String patientId,
-			Integer searchRange) {
+	public ClinicLocationForm getNearByClinics(NearByClinicSearchForm nearByClinicSearchForm) {
 
 		List<ClinicsForm> clinicsForms = new ArrayList<ClinicsForm>();
 		List<ClinicTimingList> clinicTimingLists = new ArrayList<ClinicTimingList>();
@@ -55,25 +60,51 @@ public class SearchClinicsService {
 
 		// Convert to Miles to KiloMeter
 		Double convertedRange = geoLocation
-				.convertMilesToKiloMeter(searchRange);
+				.convertMilesToKiloMeter(nearByClinicSearchForm.getSearchRange());
 		// Convert Miles to Meter for Circle in Map
-		Double radius = geoLocation.convertMilesToMeter(searchRange);
-
-		Patient patient = patientDAO.getPatientByPatientId(patientId);
-		Double currentLat=InjuryConstants.convertBigDecimaltoDouble(patient.getLatitude());
-		Double currentLong=InjuryConstants.convertBigDecimaltoDouble(patient.getLongitude());
-		if(currentLat.equals(0.0)&&currentLong.equals(0.0)){
-			BigDecimal longitude = new BigDecimal(0);
-			BigDecimal latitude = new BigDecimal(0);
-			String latLong = geoLocation.getLocation(patient.getAddress());
-			if (!latLong.equals("NONE")) {
-				String[] latitudeLongitude = latLong.split(",");
-				latitude = new BigDecimal(latitudeLongitude[0]);
-				longitude = new BigDecimal(latitudeLongitude[1]);
+		Double radius = geoLocation.convertMilesToMeter(nearByClinicSearchForm.getSearchRange());
+		
+		// Final Correct Lat, Long
+		BigDecimal correctedLatBigDecimal = new BigDecimal(0);
+		BigDecimal correctedLongBigDecimal = new BigDecimal(0);
+		String correctedAddress = nearByClinicSearchForm.getCorrectedAddress();
+		
+		// Check Whether Address Corrected and Search By User
+		if(nearByClinicSearchForm.getSearchBy()==1){
+			PatientCallerAdminMap patientCallerAdminMap = patientCallerService.getPatientCallerAdminMap(nearByClinicSearchForm.getPatientId());
+			if(patientCallerAdminMap!=null && patientCallerAdminMap.getLatitude()!=null && patientCallerAdminMap.getLongitude()!=null){
+				correctedLatBigDecimal = patientCallerAdminMap.getLatitude();
+				correctedLongBigDecimal = patientCallerAdminMap.getLongitude();
+				correctedAddress = patientCallerAdminMap.getAddress();
+			}else{
+				Patient patient = patientDAO.getPatientByPatientId(nearByClinicSearchForm.getPatientId());
+				Double currentLat=InjuryConstants.convertBigDecimaltoDouble(patient.getLatitude());
+				Double currentLong=InjuryConstants.convertBigDecimaltoDouble(patient.getLongitude());
+				if(currentLat.equals(0.0)&&currentLong.equals(0.0)){
+					// Get Lat Long First Time (Address From Report)
+					BigDecimal longitude = new BigDecimal(0);
+					BigDecimal latitude = new BigDecimal(0);
+					String latLong = geoLocation.getLocation(patient.getAddress());
+					if (!latLong.equals("NONE")) {
+						String[] latitudeLongitude = latLong.split(",");
+						latitude = new BigDecimal(latitudeLongitude[0]);
+						longitude = new BigDecimal(latitudeLongitude[1]);
+					}
+					patientDAO.updateLatLongByAddress(latitude, longitude, patient.getAddress());
+					correctedLatBigDecimal = latitude;
+					correctedLongBigDecimal = longitude;
+				}else{
+					// Correct Address From Report with Lat, Long
+					correctedLatBigDecimal = patient.getLatitude();
+					correctedLongBigDecimal = patient.getLongitude();
+				}
 			}
-			patientDAO.updateLatLongByAddress(latitude, longitude, patient.getAddress());
-			patient.setLatitude(latitude);
-			patient.setLongitude(longitude);
+		}else{
+			// Address Corrected with Lat, Long By User Entry
+			correctedLatBigDecimal = new BigDecimal(nearByClinicSearchForm.getCorrectedLat()).setScale(11,RoundingMode.UP);
+			correctedLongBigDecimal = new BigDecimal(nearByClinicSearchForm.getCorrectedLong()).setScale(11,RoundingMode.UP);
+			// Update in Patient Mapped Tables
+			patientCallerService.updateCorrectedAddress(nearByClinicSearchForm.getPatientId(), correctedAddress, correctedLatBigDecimal, correctedLongBigDecimal);
 		}
 		
 		List<Clinic> clinics = new ArrayList<Clinic>();
@@ -88,8 +119,8 @@ public class SearchClinicsService {
 
 		for (Clinic clinics2 : clinics) {
 			
-			Double distance = geoLocation.distance(InjuryConstants.convertBigDecimaltoDouble(patient.getLatitude()),
-					InjuryConstants.convertBigDecimaltoDouble(clinics2.getLatitude()), InjuryConstants.convertBigDecimaltoDouble(patient.getLongitude()),
+			Double distance = geoLocation.distance(InjuryConstants.convertBigDecimaltoDouble(correctedLatBigDecimal),
+					InjuryConstants.convertBigDecimaltoDouble(clinics2.getLatitude()), InjuryConstants.convertBigDecimaltoDouble(correctedLongBigDecimal),
 					InjuryConstants.convertBigDecimaltoDouble(clinics2.getLongitude()));
 			if (distance < convertedRange) {
 				clinicTimingLists = clinicsService
@@ -109,8 +140,8 @@ public class SearchClinicsService {
 			}
 		}
 
-		clinicLocationForm = new ClinicLocationForm(InjuryConstants.convertBigDecimaltoDouble(patient.getLatitude()),
-				InjuryConstants.convertBigDecimaltoDouble(patient.getLongitude()), radius, clinicsForms);
+		clinicLocationForm = new ClinicLocationForm(InjuryConstants.convertBigDecimaltoDouble(correctedLatBigDecimal),
+				InjuryConstants.convertBigDecimaltoDouble(correctedLongBigDecimal), radius, correctedAddress, clinicsForms);
 
 		return clinicLocationForm;
 

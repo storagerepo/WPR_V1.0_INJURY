@@ -111,8 +111,8 @@ public class ReportingAgencyService {
 	{
 	
 		County county=countyDAO.get(reportingAgencyForm.getCountyId());
-	ReportingAgency reportingAgency=new ReportingAgency(reportingAgencyForm.getReportingAgencyId(),county, reportingAgencyForm.getReportingAgencyName(), reportingAgencyForm.getCode(),1);
-			
+		ReportingAgency reportingAgency=new ReportingAgency(county, reportingAgencyForm.getReportingAgencyName(), reportingAgencyForm.getCode(),1);
+		reportingAgency.setReportingAgencyId(reportingAgencyForm.getReportingAgencyId());
 	
 		reportingAgencyDAO.update(reportingAgency);
 		return 1;
@@ -139,8 +139,10 @@ public class ReportingAgencyService {
 				countyId=reportingAgency.getCounty().getCountyId();
 			else
 				countyId=null;
+			
+			String agencyCode=reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_CODE_SEPARATOR+countyId;
 			String agencyName=reportingAgency.getReportingAgencyName()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+reportingAgency.getCode()+InjuryConstants.REPORTING_AGENCY_NAME_SEPARATOR+countyId;
-			reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId,reportingAgency.getCounty().getName(), agencyName, reportingAgency.getCode(), reportingAgency.getStatus()));
+			reportingAgencyForms.add(new ReportingAgencyForm(reportingAgency.getReportingAgencyId(),countyId,reportingAgency.getCounty().getName(), agencyName, agencyCode, reportingAgency.getStatus()));
 		}
 		
 		return reportingAgencyForms;

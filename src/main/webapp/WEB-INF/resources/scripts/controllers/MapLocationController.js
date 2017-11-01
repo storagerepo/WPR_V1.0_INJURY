@@ -1,11 +1,37 @@
-var adminApp=angular.module('sbAdminApp',['requestModule','searchModule','uiGmapgoogle-maps']);
+var adminApp=angular.module('sbAdminApp',['requestModule','searchModule','uiGmapgoogle-maps','gm']);
 
 adminApp.controller('showNearByClinicController',function($scope,$log,$stateParams,requestHandler,searchService,$compile,$q){
 	
 	$scope.init=function(){
 		$scope.searchRange=50;
 		$scope.clinicsForms="";
-		$scope.getNearByClinics();
+		$scope.lat="";
+		$scope.lng="";
+		$scope.correctedAddress="";
+		$scope.getNearByClinics(1);
+	};
+	$scope.originalCorrectedAddress="";
+	$scope.$on('gmPlacesAutocomplete::placeChanged', function(){
+	      var location = $scope.autocomplete.getPlace().geometry.location;
+	      console.log($scope.autocomplete.getPlace());
+	      $scope.lat = location.lat();
+	      $scope.lng = location.lng();
+	      $scope.correctedAddress=$scope.autocomplete.getPlace().formatted_address;
+	      $scope.$apply();
+	    //  alert("Lat:"+$scope.lat+"-->Long"+$scope.lng);
+	});
+	
+	// Options For Auto Complete Search
+	$scope.autocompleteOptions={
+			componentRestrictions:{
+				country: "us"
+			}
+	};
+	
+	$scope.resetLatLng=function(){
+		$scope.lat="";
+		$scope.lng="";
+		$scope.correctedAddress="";
 	};
 	
 	// Get Patient Id
@@ -13,33 +39,38 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 		requestHandler.getRequest("Patient/getPatient.json?patientId="+$stateParams.id,"").then( function(response) {
 			console.log(response.data.patientForm);
 			$scope.patient= response.data.patientForm;
-			/*$scope.map = {center: {latitude: $scope.patient.latitude, longitude: $scope.patient.longitude }, zoom: 8, markers:[] };
-		    $scope.options = {scrollwheel: true};
-		    $scope.clinicMarkers = [];
-		    var markers = [];
-			var idKey="id";
-			var marker = {
-			        latitude: $scope.patient.latitude,
-			        longitude: $scope.patient.longitude,
-			        title: $scope.patient.address,
-			        show:false,
-			        icon:'resources/images/map/map_icon_green.png'
-			    };
-			marker[idKey]=0;
-			markers.push(marker);
-			$scope.clinicMarkers = markers;*/
 		});
 	};
 	
-	
-	
 	// Search Near By Clinics
-	$scope.getNearByClinics=function(){
-    	
-    	requestHandler.getRequest("Caller/getNearByClincs.json.json?patientId="+$stateParams.id+"&searchRange="+$scope.searchRange,"").then( function(response) {
+	$scope.getNearByClinics=function(searchFrom){
+		if(searchFrom==2){
+			if($scope.lat==''&&$scope.lng==''){
+				alert("Please enter correct address & select from list");
+			}else{
+				$scope.getLocationWithDetails(searchFrom);
+			}
+		}else{
+			$scope.getLocationWithDetails(searchFrom);
+		}
+    };
+    
+    $scope.getLocationWithDetails=function(searchFrom){
+    	$scope.clinicSearchForm={
+    			patientId:$stateParams.id,
+    			searchRange:$scope.searchRange,
+    			correctedAddress:$scope.correctedAddress,
+    			correctedLat:$scope.lat,
+    			correctedLong:$scope.lng,
+    			searchBy:searchFrom
+    	};
+    	requestHandler.postRequest("Caller/getNearByClincs.json.json",$scope.clinicSearchForm).then( function(response) {
     		$scope.getPatient();
+    		$scope.autocomplete="";
     		$scope.clinicLocationForm= response.data.clinicLocationForm;
     		$scope.clinicsForms = response.data.clinicLocationForm.clinicsForms;
+    		$scope.originalCorrectedAddress=response.data.clinicLocationForm.correctedAddress;
+    		$scope.updateAddressForm.$setPristine();
     		console.log(response.data.clinicLocationForm);
     		var clinicLocationForm= response.data.clinicLocationForm;
     		var clinicsForms =response.data.clinicLocationForm.clinicsForms;
@@ -102,6 +133,10 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     	                        }
     	                    ];
     	});
+    };
+    
+    $scope.isClean = function() {
+        return angular.equals($scope.originalCorrectedAddress, $scope.autocomplete);
     };
     
     // Open a Info Window while clicking on marker

@@ -96,6 +96,10 @@
 	<!-- Google Authentication  -->
 	<script src="https://apis.google.com/js/client.js"></script>
 	
+	<!-- Google Map Js and Search Address Auto Complete -->
+	<script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <script src="resources/components/angular-map-rawgit/google-auto-complete.js"></script>
+	
     <!-- Controllers -->
 
    <!--  <script>

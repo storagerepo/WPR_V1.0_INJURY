@@ -10,11 +10,17 @@ import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.deemsys.project.common.InjuryProperties;
 
 @Service
 public class GeoLocation {
 
+	@Autowired
+	InjuryProperties injuryProperties;
+	
 	// Get Lat long of Particular Address
 	public String getLocation(String address) {
 		String outputJSON = null;
@@ -28,7 +34,7 @@ public class GeoLocation {
 					gURL
 							+ "?address="
 							+ URLEncoder.encode(address, "UTF-8")
-							+ "&sensor=false&key=AIzaSyCSrffdwIzj8p4RZgvglbhQEEjgEx7ZUKQ");
+							+ "&sensor=false&key="+injuryProperties.getProperty("reportDownloadAPIKey"));
 
 			// Open the Connection
 			URLConnection conn = url.openConnection();
@@ -72,6 +78,62 @@ public class GeoLocation {
 		return outputJSON;
 	}
 
+	public String getLocationFromAlternateAPIKey(String address) {
+		String outputJSON = null;
+		String latLang = null;
+		System.out.println(address);
+		// Google Map
+		String gURL = "https://maps.googleapis.com/maps/api/geocode/json";
+		try {
+
+			URL url = new URL(
+					gURL
+							+ "?address="
+							+ URLEncoder.encode(address, "UTF-8")
+							+ "&sensor=false&key="+injuryProperties.getProperty("updateLatLongAPIKey"));
+
+			// Open the Connection
+			URLConnection conn = url.openConnection();
+
+			// This is Simple a byte array output stream that we will use to
+			// keep the output data from google.
+			ByteArrayOutputStream output = new ByteArrayOutputStream(1024);
+
+			// copying the output data from Google which will be either in JSON
+			// or XML depending on your request URL that in which format you
+			// have requested.
+			IOUtils.copy(conn.getInputStream(), output);
+
+			// close the byte array output stream now.
+			output.close();
+			outputJSON = output.toString();
+			// Parse the Output to Json
+			JSONParser jsonparser = new JSONParser();
+			JSONObject jsonObject = (JSONObject) jsonparser.parse(outputJSON);
+			// Google Map Status As of handled only one, In future we will handle the further staus
+			// OVER_QUERY_LIMIT
+			// REQUEST_DENIED
+			// INVALID_REQUEST
+			// UNKNOWN_ERROR
+			String status = (String) jsonObject.get("status");
+			if (!status.equals("ZERO_RESULTS")) {
+				// Convert to JSON Object
+				JSONArray results = (JSONArray) jsonObject.get("results");
+				JSONObject mainJson = (JSONObject) results.get(0);
+				JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
+				JSONObject location = (JSONObject) geoMetry.get("location");
+				latLang = location.get("lat") + "," + location.get("lng");
+			} else {
+				latLang = "0.1,0.1";
+			}
+
+			return latLang;
+		} catch (Exception ex) {
+			outputJSON = "0.0,0.0";
+		}
+		return outputJSON;
+	}
+	
 	/*
 	 * Calculate the distance between two latitude/longs
 	 */
