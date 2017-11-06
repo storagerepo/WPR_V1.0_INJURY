@@ -12,7 +12,7 @@ adminApp.controller('changePasswordController', function($scope,$state,requestHa
 	$scope.save=function()
 	{
 		
-		requestHandler.postRequest("changePassword.json?newPassword="+$scope.staff.confirmpassword,"").then(function(response){
+		requestHandler.postRequest("changePassword.json?newPassword="+encodeURIComponent($scope.staff.confirmpassword),"").then(function(response){
 			 $scope.value=response.data.requestSuccess;
 			  
 			  if($scope.value==true)
@@ -43,10 +43,12 @@ adminApp.directive("password", function ($q, $timeout,requestHandler) {
         require: "ngModel",
         link: function (scope, element, attributes, ngModel) {
             ngModel.$asyncValidators.password = function (modelValue) {
-                var defer = $q.defer();
+            	alert(encodeURIComponent(modelValue));
+            	var defer = $q.defer();
                 $timeout(function () {
+                	
                     var isNew;
-                    var sendRequest=requestHandler.postRequest("checkPassword.json?oldPassword="+modelValue,0).then(function(results){
+                    var sendRequest=requestHandler.postRequest("checkPassword.json?oldPassword="+encodeURIComponent(modelValue),0).then(function(results){
                         isNew=results.data.requestSuccess;
                     });
 
@@ -69,3 +71,20 @@ adminApp.directive("password", function ($q, $timeout,requestHandler) {
 
 });
 
+adminApp.directive("compareTo",function(){
+	return {
+		require: "ngModel",
+		scope : {
+			otherModelValue:"=compareTo",
+		},
+		link:function(scope, elem, attr, ngModel){
+			ngModel.$validators.compareTo=function(modelValue){
+				return modelValue == scope.otherModelValue;
+			};
+			
+			scope.$watch('otherModelValue',function(){
+				ngModel.$validate();
+			});
+		}
+	}
+});

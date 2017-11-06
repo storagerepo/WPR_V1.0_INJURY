@@ -37,13 +37,13 @@
 	<div class="col-md-6">
 	<b>Patient Name :</b><span ng-cloak> {{patient.name}}</span><br/>
 	<b>Address:</b><span ng-cloak> {{patient.address}}
-	<span ng-show="(patient.latitude==0.1||patient.latitude==0.0)&&(patient.longitude==0.1||patient.longitude==0.0)"><span class="error-class">(Incorrect Address)</span> <br/> 
+	<span class="error-class" ng-show="(patient.latitude==0.1||patient.latitude==0.0)&&(patient.longitude==0.1||patient.longitude==0.0)">(Incorrect Address)</span> <br/>
 	<b>Corrected Address:</b> {{originalCorrectedAddress}}<br/> <div class="col-md-10 padding-top-10"><input type="text" class="form-control" gm-places-autocomplete="autocompleteOptions" gm-options='autocompleteOptions' ng-model="autocomplete" name="correctedAddress" ng-change="resetLatLng()" required/>
 	<span class="error-class" ng-show="updateAddressForm.correctedAddress.$dirty && updateAddressForm.correctedAddress.$invalid">
         <span ng-cloak ng-show="updateAddressForm.correctedAddress.$error.required">Please Enter Address</span>
     </span>
 	</div>
-	<div class="col-md-2 padding-top-10"><a class="btn btn-sm btn-primary" ng-click="getNearByClinics(2)" ng-disabled="updateAddressForm.$invalid">Update & Search</a></div></span></span>
+	<div class="col-md-2 padding-top-10"><a class="btn btn-sm btn-primary" ng-click="getNearByClinics(2)" ng-disabled="updateAddressForm.$invalid">Update & Search</a></div></span>
 	</div>
 	</form> 
 	<form name="searchClinic" novalidate>

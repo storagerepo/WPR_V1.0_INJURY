@@ -1899,7 +1899,7 @@ sbAdminApp.directive("password", function ($q, $timeout,requestHandler) {
                 var defer = $q.defer();
                 $timeout(function () {
                     var isNew;
-                    var sendRequest=requestHandler.postRequest("checkPassword.json?oldPassword="+modelValue,0).then(function(results){
+                    var sendRequest=requestHandler.postRequest("checkPassword.json?oldPassword="+encodeURIComponent(modelValue),0).then(function(results){
                         isNew=results.data.requestSuccess;
                     });
 
