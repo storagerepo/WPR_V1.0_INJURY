@@ -118,12 +118,10 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 		
 		//Reset Check Box - Scanned
 		$scope.isCheckedAllDirectReport=false;
-		
 		var defer=$q.defer();
 			requestHandler.postRequest("Patient/searchPatients.json",$scope.searchParam).then(function(response){
 				$scope.isLoading=false;
 				if($scope.searchParam.isRunnerReport!=3){
-					$scope.totalRecords=0;
 					$scope.totalRecords=response.data.patientGroupedSearchResult.totalNoOfRecord;
 					$scope.callerPatientSearchData=response.data.patientGroupedSearchResult.patientSearchResults;
 					
@@ -208,7 +206,6 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 					$scope.callerPatientSearchDataOrginal=angular.copy($scope.callerPatientSearchData);
 					$scope.isCheckedIndividual();
 				}else{
-					$scope.totalRecords=0;
 					$scope.callerPatientSearchData={};
 					$scope.totalRecords=response.data.directReportGroupResult.totalNoOfRecords;
 					$scope.directRunnerReportSearchData=response.data.directReportGroupResult.directReportGroupListByArchives;
@@ -352,6 +349,7 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 	
 	// Watch Report Type
 	$scope.$watch("patient.isRunnerReport",function(){
+		$scope.resetResultData();
 		$scope.mainSearchParam.pageNumber=1;
 		$scope.mainSearchParam.isRunnerReport=$scope.patient.isRunnerReport;
 		searchService.setIsRunnerReport($scope.patient.isRunnerReport);
@@ -1155,7 +1153,7 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 		// While Change to Open to Archive vice versa
 		$scope.resetResultData=function(){
 			$scope.callerPatientSearchData="";
-			$scope.totalRecords="";
+			$scope.totalRecords=0;
 			$scope.directRunnerReportSearchData="";
 		};
 		

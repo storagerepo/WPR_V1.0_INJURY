@@ -124,8 +124,6 @@ public class CallerController {
 	@RequestMapping(value = "/getCurrentRole", method = RequestMethod.POST)
 	public String getCurrentRole(ModelMap model, Principal principal) {
 
-		String role = callerService.getCurrentRole();
-		model.addAttribute("role", role);
 		model.addAttribute("username", principal.getName());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";

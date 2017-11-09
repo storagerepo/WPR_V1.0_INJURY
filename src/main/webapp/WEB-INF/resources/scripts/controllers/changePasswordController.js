@@ -71,20 +71,3 @@ adminApp.directive("password", function ($q, $timeout,requestHandler) {
 
 });
 
-adminApp.directive("compareTo",function(){
-	return {
-		require: "ngModel",
-		scope : {
-			otherModelValue:"=compareTo",
-		},
-		link:function(scope, elem, attr, ngModel){
-			ngModel.$validators.compareTo=function(modelValue){
-				return modelValue == scope.otherModelValue;
-			};
-			
-			scope.$watch('otherModelValue',function(){
-				ngModel.$validate();
-			});
-		}
-	}
-});

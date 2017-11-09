@@ -40,7 +40,7 @@
 						options="mycounties" selected-model="vehicle.countyId"
 						extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true,radioButtonName:'countyPreference',preferenceAllText:'Subscribed',preferenceSetText:'Preferred'}"
 						events="countyEvents"></div>
-					<a href="#/dashboard/UserPreferrence/1"
+					<a ui-sref="dashboard.userPreferrence({fid:1})"
 						style="text-decoration: underline;" ng-show="countyListType==2&&$root.isAdmin==6">Change
 						Lookup Preference</a>
 				</div>

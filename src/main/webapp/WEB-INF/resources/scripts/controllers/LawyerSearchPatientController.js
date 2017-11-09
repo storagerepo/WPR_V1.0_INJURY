@@ -362,7 +362,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	
 	// Watch Report Type
 	$scope.$watch("patient.isRunnerReport",function(){
-		$scope.totalRecords=0;
+		$scope.resetResultData();
 		$scope.mainSearchParam.pageNumber=1;
 		$scope.mainSearchParam.isRunnerReport=$scope.patient.isRunnerReport;
 		searchService.setIsRunnerReport($scope.patient.isRunnerReport);
@@ -992,7 +992,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 							 $scope.patient.reportingAgency.push({"id":value.code});
 						 });
 					 }else{
-						 $location.path("dashboard/UserPreferrence/1");
+						 $state.go('dashboard.userPreferrence',{fid:1});
 					 }
 				});
 	 }};
@@ -1024,7 +1024,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	// While Change to Open to Archive vice versa
 	$scope.resetResultData=function(){
 		$scope.lawyerPatientSearchData="";
-		$scope.totalRecords="";
+		$scope.totalRecords=0;
 		$scope.directRunnerReportSearchData="";
 	};
 	

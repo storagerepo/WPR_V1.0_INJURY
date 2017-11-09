@@ -1341,13 +1341,27 @@ public class PDFCrashReportReader {
 				if(motoristPageForm.getUnitNumber()!=null){
 					patientsForm.setUnitNumber(motoristPageForm.getUnitNumber()
 							.trim());
-					patientsForm.setVictimInsuranceCompany(reportUnitPageForms.get(Integer.parseInt(motoristPageForm.getUnitNumber().trim())-1).getInsuranceCompany());
-					patientsForm.setVictimPolicyNumber(reportUnitPageForms.get(Integer.parseInt(motoristPageForm.getUnitNumber().trim())-1).getPolicyNumber());
-					String damageScale=reportUnitPageForms.get(Integer.parseInt(motoristPageForm.getUnitNumber().trim())-1).getDamageScale();
-					if(damageScale!=null&&!damageScale.equals("")){
-						patientsForm.setDamageScale(Integer.parseInt(damageScale));
-					}else{
-						patientsForm.setDamageScale(null);
+					/*if(Integer.parseInt(firstPageForm.getNumberOfUnits())>=Integer.parseInt(motoristPageForm.getUnitNumber())){
+						patientsForm.setVictimInsuranceCompany(reportUnitPageForms.get(Integer.parseInt(motoristPageForm.getUnitNumber().trim())-1).getInsuranceCompany());
+						patientsForm.setVictimPolicyNumber(reportUnitPageForms.get(Integer.parseInt(motoristPageForm.getUnitNumber().trim())-1).getPolicyNumber());
+						String damageScale=reportUnitPageForms.get(Integer.parseInt(motoristPageForm.getUnitNumber().trim())-1).getDamageScale();
+						if(damageScale!=null&&!damageScale.equals("")){
+							patientsForm.setDamageScale(Integer.parseInt(damageScale));
+						}else{
+							patientsForm.setDamageScale(null);
+						}
+					}*/
+					for (ReportUnitPageForm reportUnitPageForm : reportUnitPageForms) {
+						if(Integer.parseInt(reportUnitPageForm.getUnitNumber())==Integer.parseInt(motoristPageForm.getUnitNumber())){
+							patientsForm.setVictimInsuranceCompany(reportUnitPageForm.getInsuranceCompany());
+							patientsForm.setVictimPolicyNumber(reportUnitPageForm.getPolicyNumber());
+							String damageScale=reportUnitPageForm.getDamageScale();
+							if(damageScale!=null&&!damageScale.equals("")){
+								patientsForm.setDamageScale(Integer.parseInt(damageScale));
+							}else{
+								patientsForm.setDamageScale(null);
+							}
+						}
 					}
 				}
 				
@@ -1514,7 +1528,7 @@ public class PDFCrashReportReader {
 				
 				Integer patientsCount=0;
 				List<PatientForm> patientsForms = new ArrayList<PatientForm>();
-				List<PatientForm> filteredPatientsForms=new ArrayList<PatientForm>();
+ 				List<PatientForm> filteredPatientsForms=new ArrayList<PatientForm>();
 				//Check for report status
 				Integer tierType = this.getReportType(pdfCrashReportJson);
 				patientsForms=this.getTierPatientForm(pdfCrashReportJson, tierType);

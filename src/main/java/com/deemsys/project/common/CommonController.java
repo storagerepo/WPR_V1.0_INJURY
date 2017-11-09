@@ -86,6 +86,7 @@ public class CommonController {
 	public String getDashboard(ModelMap model)
 	{
     	Integer disclaimerStatus=loginService.checkDisclaimerAcceptedStatus();
+    	model.addAttribute("currentRole",loginService.getCurrentRoleId());
     	model.addAttribute("Success",true);
     	if(disclaimerStatus==0){
     		return "/disclaimer";

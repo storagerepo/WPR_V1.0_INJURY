@@ -1,6 +1,6 @@
-var adminApp=angular.module('sbAdminApp',['requestModule','searchModule','uiGmapgoogle-maps','gm']);
+var adminApp=angular.module('sbAdminApp',['requestModule','searchModule','uiGmapgoogle-maps','gm','flash']);
 
-adminApp.controller('showNearByClinicController',function($scope,$log,$stateParams,requestHandler,searchService,$compile,$q){
+adminApp.controller('showNearByClinicController',function($scope,$log,$stateParams,requestHandler,searchService,$compile,$q,$timeout,Flash){
 	
 	$scope.init=function(){
 		$scope.searchRange=50;
@@ -71,7 +71,12 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     		$scope.clinicsForms = response.data.clinicLocationForm.clinicsForms;
     		$scope.originalCorrectedAddress=response.data.clinicLocationForm.correctedAddress;
     		$scope.updateAddressForm.$setPristine();
-    		console.log(response.data.clinicLocationForm);
+    		// Change Address Block Display
+    		if($scope.originalCorrectedAddress==null||$scope.originalCorrectedAddress==''){
+    			$scope.showAddress=0;
+    		}else{
+    			$scope.showAddress=1;
+    		}
     		var clinicLocationForm= response.data.clinicLocationForm;
     		var clinicsForms =response.data.clinicLocationForm.clinicsForms;
     		$scope.map = {center: {latitude: clinicLocationForm.centerLatitude, longitude: clinicLocationForm.centerLongitude }, zoom: 8 };
@@ -168,7 +173,19 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 		 	 $("#viewClinicDetails").modal('show');
 		  });
 	};
-    
+	
+	$scope.removeCorrectedAddress=function(){
+		if(confirm("Do you sure want to remove the corrected address?")){
+			requestHandler.postRequest("Caller/removeCorrectedAddress.json?patientId="+$stateParams.id,"").then(function(results){
+				Flash.create('success', "You have Successfully Removed!");
+				$scope.showAddress=0;
+				$scope.resetLatLng();
+				$scope.getNearByClinics(1);
+				
+			});
+		}
+	};
+	
 	// Initialized Function
 	$scope.init();
 });

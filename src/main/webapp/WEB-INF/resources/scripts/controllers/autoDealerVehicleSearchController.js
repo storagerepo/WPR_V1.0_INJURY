@@ -963,8 +963,8 @@ $scope.archivedToDateRequired=false;
 	  $('body').removeClass('modal-open');
 	  $('.modal-backdrop').hide();
  	  $rootScope.userPrefenceTabStatus=2;
- 	 $location.path("dashboard/UserPreferrence/2");
-	};
+ 	  $state.go('dashboard.userPreferrence',{fid:2});
+ 	};
 	
 	//Watch Age Filter
 	$scope.$watch('patient.age' , function() {	
@@ -1018,7 +1018,7 @@ $scope.archivedToDateRequired=false;
 						});
 					}else{
 						if($rootScope.isAdmin==6){
-							$location.path("dashboard/UserPreferrence/1");
+							$state.go('dashboard.userPreferrence',{fid:1});
 						}else{
 							alert("Not done with Preference, Please Contact Manager to set up.");
 						}

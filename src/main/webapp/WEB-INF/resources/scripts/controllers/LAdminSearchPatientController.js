@@ -396,7 +396,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	
 	// Watch Report Type
 	$scope.$watch("patient.isRunnerReport",function(){
-		$scope.totalRecords=0;
+		$scope.resetResultData();
 		$scope.mainSearchParam.pageNumber=1;
 		$scope.mainSearchParam.isRunnerReport=$scope.patient.isRunnerReport;
 		searchService.setIsRunnerReport($scope.patient.isRunnerReport);
@@ -1059,7 +1059,7 @@ $scope.archivedToDateRequired=false;
 	  $('body').removeClass('modal-open');
 	  $('.modal-backdrop').hide();
  	  $rootScope.userPrefenceTabStatus=2;
- 	 $location.path("dashboard/UserPreferrence/2");
+ 	 $state.go('dashboard.userPreferrence',{fid:2});
 	};
 	
 	//Watch Age Filter
@@ -1174,7 +1174,7 @@ $scope.archivedToDateRequired=false;
 							   });
 						   }
 					}else{
-						$location.path("dashboard/UserPreferrence/1");
+						$state.go('dashboard.userPreferrence',{fid:1});
 					}
 					
 				});
@@ -1196,7 +1196,7 @@ $scope.archivedToDateRequired=false;
 							 $scope.patient.reportingAgency.push({"id":value.code});
 						 });
 					 }else{
-						 $location.path("dashboard/UserPreferrence/1");
+						 $state.go('dashboard.userPreferrence',{fid:1});
 					 }
 				});
 	 }};
@@ -1228,7 +1228,7 @@ $scope.archivedToDateRequired=false;
 	// While Change to Open to Archive vice versa
 	$scope.resetResultData=function(){
 		$scope.lAdminPatientSearchData="";
-		$scope.totalRecords="";
+		$scope.totalRecords=0;
 		$scope.directRunnerReportSearchData="";
 	};
 	

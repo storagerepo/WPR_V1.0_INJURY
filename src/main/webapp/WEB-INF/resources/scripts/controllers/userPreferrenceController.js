@@ -65,6 +65,7 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
   
   
   	// Save Preferences
+  	$rootScope.userPrefenceTabStatus=$stateParams.fid;
   	$scope.prefenceTabActive=$stateParams.fid;
   	var userLookupPreferencesOriginal={};
   	var reportingAgencyPreferencesOriginal={};

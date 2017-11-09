@@ -1048,7 +1048,7 @@ sbAdminApp
 
 											})
 											.state(
-													'dashboard.userPreferrence/:fid',
+													'dashboard.userPreferrence',
 													{
 														resolve : {
 															loadMyFile : function(
@@ -1063,7 +1063,7 @@ sbAdminApp
 														},
 														controller : 'sortableController',
 														templateUrl : 'views/settings/user-preferrence.html',
-														url : '/UserPreferrence/:fid'
+														url : '/UserPreferrence?fid'
 
 													})
 											.state(
@@ -1603,6 +1603,7 @@ sbAdminApp
 																			});
 
 						} ]).run( [ '$rootScope', function ($rootScope,$state, $stateParams) {
+							$rootScope.userPrefenceTabStatus=1;
 							$rootScope.$state = $state;
 				            $rootScope.$stateParams = $stateParams;
 					        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
@@ -1613,7 +1614,7 @@ sbAdminApp
 					        	}
 					        	$rootScope.nextState = to.name;
 					            $rootScope.previousState = from.name;
-					            if($rootScope.previousState=='dashboard.userPreferrence/:fid' && $rootScope.nextState!='dashboard.userPreferrence/:fid'){
+					            if($rootScope.previousState=='dashboard.userPreferrence' && $rootScope.nextState!='dashboard.userPreferrence'){
 					            	if(!$rootScope.lookupPreferenceChanged){
 					            		if(confirm("Do you want to save the lookup preference?")){
 					            			$rootScope.rootSaveUserLookupPreference();
@@ -1629,7 +1630,9 @@ sbAdminApp
 					            			// nothing
 					            		}
 					            	}
+					            	$rootScope.userPrefenceTabStatus=1;
 					            }
+					            
 					         });
 					      }]).controller('authenticationController', function($rootScope, $scope, $http, $location, requestHandler) {
 					    	  var getProductToken=function(){
@@ -1651,35 +1654,9 @@ sbAdminApp
 								.postRequest("getCurrentRole.json", "")
 								.then(
 										function(response) {
-											if (response.data.role == "ROLE_SUPER_ADMIN") {
-												$rootScope.authenticated = true;
-												$rootScope.isAdmin = 1;
-												$rootScope.username = response.data.username;
-											} else if (response.data.role == "ROLE_CALLER_ADMIN") {
-												$rootScope.authenticated = true;
-												$rootScope.isAdmin = 2;
-												$rootScope.username = response.data.username;
-											} else if (response.data.role == "ROLE_LAWYER_ADMIN") {
-												$rootScope.authenticated = true;
-												$rootScope.isAdmin = 3;
-												$rootScope.username = response.data.username;
-											} else if (response.data.role == "ROLE_CALLER") {
-												$rootScope.authenticated = true;
-												$rootScope.isAdmin = 4;
-												$rootScope.username = response.data.username;
-											} else if (response.data.role == "ROLE_LAWYER") {
-												$rootScope.authenticated = true;
-												$rootScope.isAdmin = 5;
-												$rootScope.username = response.data.username;
-											} else if (response.data.role == "ROLE_AUTO_MANAGER") {
-												$rootScope.authenticated = true;
-												$rootScope.isAdmin = 6;
-												$rootScope.username = response.data.username;
-											} else if (response.data.role == "ROLE_AUTO_DEALER") {
-												$rootScope.authenticated = true;
-												$rootScope.isAdmin = 7;
-												$rootScope.username = response.data.username;
-											}
+											$rootScope.authenticated = true;
+											$rootScope.username = response.data.username;
+											
 										});
 					};
 
@@ -1840,6 +1817,37 @@ sbAdminApp.directive('validateCitytownship', function() {
 			};
 		}
 	};
+});
+
+sbAdminApp.directive('validatePassword',function(){
+	var passwordExp=/^ *([a-zA-Z0-9!@#$`~%^&*()-=_+[\]{}":;|<>,.?\/]+?)+ *$/;
+	return {
+		require:'ngModel',
+		restrict:'',
+		link:function(scope,attr,elem,ngModel){
+			ngModel.$validators.validatePassword=function(modelValue){
+				return passwordExp.test(modelValue);
+			};
+		}
+	};
+});
+
+sbAdminApp.directive("compareTo",function(){
+	return {
+		require: "ngModel",
+		scope : {
+			otherModelValue:"=compareTo",
+		},
+		link:function(scope, elem, attr, ngModel){
+			ngModel.$validators.compareTo=function(modelValue){
+				return modelValue == scope.otherModelValue;
+			};
+			
+			scope.$watch('otherModelValue',function(){
+				ngModel.$validate();
+			});
+		}
+	}
 });
 
 sbAdminApp.directive('usernameexists',['$q','$timeout','requestHandler',function($q, $timeout, requestHandler) {

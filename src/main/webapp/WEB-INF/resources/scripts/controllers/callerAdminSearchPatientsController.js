@@ -776,7 +776,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		
 		// Watch Report Type
 		$scope.$watch("patient.isRunnerReport",function(){
-			$scope.totalRecords=0;
+			$scope.resetResultData();
 			$scope.mainSearchParam.pageNumber=1;
 			$scope.mainSearchParam.isRunnerReport=$scope.patient.isRunnerReport;
 			searchService.setIsRunnerReport($scope.patient.isRunnerReport);
@@ -1012,7 +1012,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	  $('body').removeClass('modal-open');
 	  $('.modal-backdrop').hide();
  	  $rootScope.userPrefenceTabStatus=2;
- 	  $location.path("dashboard/UserPreferrence/2");
+ 	 $state.go('dashboard.userPreferrence',{fid:2});
 	};
 	
 
@@ -1335,7 +1335,8 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 								//searchService.getReportingAgencyList($scope.patient.countyId);//Load Reporting Agency List
 						});
 					}else{
-						$location.path("dashboard/UserPreferrence/1");
+						$state.go("dashboard.userPreferrence",{fid:1});
+						//$location.path("dashboard.userPreferrence({fid:1})");
 					}
 					
 				});
@@ -1353,7 +1354,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	// While Change to Open to Archive vice versa
 	$scope.resetResultData=function(){
 		$scope.patientSearchData="";
-		$scope.totalRecords="";
+		$scope.totalRecords=0;
 		$scope.directRunnerReportSearchData="";
 	};
 	

@@ -387,7 +387,7 @@
 			<dir-pagination-controls ng-show="totalRecords>0" max-size="5"
 				direction-links="true" boundary-links="true"
 				pagination-id="superAdminPatientPageId"> </dir-pagination-controls>
-			<div class="col-md-3 pull-right no-padding">
+			<div class="col-md-3 pull-right no-padding" ng-show="totalRecords>0">
 				<label>Number of Records</label> <select class="form-control"
 					ng-model="patient.itemsPerPage" ng-change="itemsPerFilter()"
 					name="noOfRows" id="noOfRows">
@@ -440,7 +440,7 @@
                     </table>
                     <dir-pagination-controls ng-show="totalRecords>0" max-size="5"  direction-links="true" boundary-links="true" pagination-id="directRunnerReportPageId">
     					</dir-pagination-controls> 
-    						<div class="col-md-3 pull-right no-padding">
+    						<div class="col-md-3 pull-right no-padding" ng-show="totalRecords>0">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="patient.itemsPerPage" ng-change="itemsPerFilter()"

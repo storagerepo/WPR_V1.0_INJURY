@@ -28,6 +28,7 @@ import com.deemsys.project.Lawyers.LawyersService;
 import com.deemsys.project.Map.ClinicLocationForm;
 import com.deemsys.project.Map.NearByClinicSearchForm;
 import com.deemsys.project.Map.SearchClinicsService;
+import com.deemsys.project.PatientCallerMap.PatientCallerService;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.exportFields.ExportFieldsService;
 import com.deemsys.project.login.LoginService;
@@ -78,6 +79,9 @@ public class PatientController {
 	
 	@Autowired
 	CrashReportService crashReportService;
+	
+	@Autowired
+	PatientCallerService patientCallerService;
 
 	@RequestMapping(value = { "/Patient/getAllPatients",
 			"/Caller/getAllPatients" }, method = RequestMethod.GET)
@@ -484,6 +488,15 @@ public class PatientController {
     @RequestMapping(value = { "updateLatLong"}, method = RequestMethod.GET)
 	public String updatePatientLatLong(@RequestParam("addedFromDate") String addedFromDate,@RequestParam("addedToDate") String addedToDate, @RequestParam("noOfRecords") Integer noOfRecords, ModelMap model) {
 		patientService.updateLatLong(addedFromDate, addedToDate, noOfRecords);
+		model.addAttribute("requestSuccess", true);
+		return "/returnPage";
+	}
+   
+    // Remove Corrected Address of Patient
+    @RequestMapping(value = "/Caller/removeCorrectedAddress", method = RequestMethod.POST)
+	public String removeCorrectedAddress(@RequestParam("patientId") String patientId, ModelMap model) {
+
+		patientCallerService.removeCorrectedAddress(patientId);
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

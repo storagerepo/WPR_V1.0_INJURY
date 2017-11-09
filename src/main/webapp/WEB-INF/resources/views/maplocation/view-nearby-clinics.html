@@ -22,30 +22,31 @@
         .text-top{
         margin-top: 5px !important;
         }
+        .update-address-div{
+        border:2px solid #D8D8D8;
+        background-color:#F9F9F9; 
+        padding-bottom:10px !important;
+        margin:5px !important;
+        }
+        .a-underline{
+        text-decoration: underline !important;
+        }
     </style>
 <div class="row">
 	<div class="col-lg-12">
 		<!-- <a href="#/dashboard/Calllogs/{{patient.patientId}}"
 			class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to Call Logs</a> -->
+			<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
 		<h2 class="page-header">View Near By Clinics</h2>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
 <div class="row">
-	<form name="updateAddressForm" novalidate>
 	<div class="col-md-6">
 	<b>Patient Name :</b><span ng-cloak> {{patient.name}}</span><br/>
-	<b>Address:</b><span ng-cloak> {{patient.address}}
-	<span class="error-class" ng-show="(patient.latitude==0.1||patient.latitude==0.0)&&(patient.longitude==0.1||patient.longitude==0.0)">(Incorrect Address)</span> <br/>
-	<b>Corrected Address:</b> {{originalCorrectedAddress}}<br/> <div class="col-md-10 padding-top-10"><input type="text" class="form-control" gm-places-autocomplete="autocompleteOptions" gm-options='autocompleteOptions' ng-model="autocomplete" name="correctedAddress" ng-change="resetLatLng()" required/>
-	<span class="error-class" ng-show="updateAddressForm.correctedAddress.$dirty && updateAddressForm.correctedAddress.$invalid">
-        <span ng-cloak ng-show="updateAddressForm.correctedAddress.$error.required">Please Enter Address</span>
-    </span>
+	<b>Address:</b><span ng-cloak> {{patient.address}} <span class="error-class" ng-show="(patient.latitude==0.1||patient.latitude==0.0)&&(patient.longitude==0.1||patient.longitude==0.0)">(Incorrect Address)</span>&nbsp;&nbsp;<span ng-cloak><a href='' ng-click="showAddress=1" ng-show="showAddress==0" class="a-underline"><i class="fa fa-pencil"></i> Change Address</a></span>
 	</div>
-	<div class="col-md-2 padding-top-10"><a class="btn btn-sm btn-primary" ng-click="getNearByClinics(2)" ng-disabled="updateAddressForm.$invalid">Update & Search</a></div></span>
-	</div>
-	</form> 
 	<form name="searchClinic" novalidate>
 	<div class="col-md-2 no-padding text-top text-right">
 	<b>Range (Miles) :</b>
@@ -61,6 +62,22 @@
 	<span class="btn btn-warning" ng-click="getNearByClinics(1)" ng-class="{'button-disable':searchClinic.$invalid}" ng-disabled='searchClinic.$invalid'><i class="glyphicon glyphicon-search"></i> Search By Range</span>
 	</div>
 </form>
+</div>
+
+<div class="row update-address-div" ng-show="showAddress==1">
+<form name="updateAddressForm" novalidate>
+<div class="col-md-12 padding-top-10">
+   <div class="col-md-5 padding-top-10"><input type="text" class="form-control" gm-places-autocomplete="autocompleteOptions" gm-options='autocompleteOptions' ng-model="autocomplete" name="correctedAddress" ng-change="resetLatLng()" required/>
+	<span class="error-class" ng-show="updateAddressForm.correctedAddress.$dirty && updateAddressForm.correctedAddress.$invalid">
+        <span ng-cloak ng-show="updateAddressForm.correctedAddress.$error.required">Please Enter Address</span>
+    </span>
+	</div>
+	<div class="col-md-3 padding-top-10"><a class="btn btn-sm btn-primary" ng-click="getNearByClinics(2)" ng-disabled="updateAddressForm.$invalid">Update & Search</a>&nbsp;<a class="btn btn-sm btn-danger" ng-show="showAddress==1&&(originalCorrectedAddress==null||originalCorrectedAddress=='')" ng-click="showAddress=0">Cancel</a></div>
+	<div class="col-md-4 no-padding text-top text-right" ng-show="showAddress==1 && (originalCorrectedAddress!=null&&originalCorrectedAddress!='')"><a href='' ng-click="removeCorrectedAddress()" class="a-underline"><i class="fa fa-trash"></i>&nbsp;Remove</a></div>
+</div></form> 
+<div class="col-md-12 padding-top-10">
+<b>Corrected Address:</b> <span ng-show="originalCorrectedAddress!=null&&originalCorrectedAddress!=''">{{originalCorrectedAddress}}</span><span ng-show="originalCorrectedAddress==null||originalCorrectedAddress==''">--</span>
+</div>
 </div>
  <div id="map_canvas">
     <ui-gmap-google-map center="map.center" zoom="map.zoom" options="options">

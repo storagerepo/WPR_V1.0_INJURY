@@ -134,7 +134,6 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		
 		//Reset Check Box - Scanned
 		$scope.isCheckedAllDirectReport=false;
-		
 		requestHandler.postRequest("/Patient/searchPatients.json",$scope.searchParam).then(function(response){
 			$scope.isLoading=false;
 			if($scope.searchParam.isRunnerReport!=3){
@@ -220,7 +219,6 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 					});
 				});
 			}else{
-				$scope.patientSearchData={};
 				$scope.totalRecords=response.data.directReportGroupResult.totalNoOfRecords;
 				$scope.directRunnerReportSearchData=response.data.directReportGroupResult.directReportGroupListByArchives;
 			}
@@ -262,16 +260,11 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 	};
 	
 	// Watch Report Type
-	/*$scope.$watch('patient.isRunnerReport',function(){
-		if($scope.patient.countyId!=''){
-			$scope.patient.pageNumber=1;
-			var promise=$scope.searchItems($scope.patient);
-			if(promise!=null)
-			promise.then(function(reponse){
-				console.log(reponse);
-			});	
-		}
-	});*/
+	$scope.$watch('patient.isRunnerReport',function(){
+		// Reset Total Records Count
+		$scope.patientSearchData={};
+		$scope.totalRecords=0;
+	});
 	
 	$scope.itemsPerFilter=function(){
 		$scope.setScrollDown=true;
@@ -298,7 +291,6 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 			});
 		 }
 	});
-	
 	
 	$scope.viewPatientModal=function(patientId){
 		$("#myModal").modal("show");

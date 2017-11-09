@@ -154,4 +154,34 @@ public class LoginService {
 		users.setIsPrivilegedUser(privilegedStatus);
 		usersDAO.update(users);
 	}
+	
+  // Get Current Role Id
+	public Integer getCurrentRoleId(){
+		
+		String currentRole=this.getCurrentRole();
+		
+		if(currentRole.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+			return InjuryConstants.INJURY_SUPER_ADMIN_ROLE_ID;
+		}
+		else if(currentRole.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+			return InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID;
+		}
+		else if(currentRole.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+			return InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID;
+		}
+		else if(currentRole.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+			return InjuryConstants.INJURY_CALLER_ROLE_ID;
+		}
+		else if(currentRole.equals(InjuryConstants.INJURY_LAWYER_ROLE)){			
+			return InjuryConstants.INJURY_LAWYER_ROLE_ID;
+		}else if(currentRole.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+			return InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID;
+		}else if(currentRole.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+			return InjuryConstants.INJURY_AUTO_DEALER_ROLE_ID;
+		}
+		else{
+			return 1;
+		}
+	}
+	
 }

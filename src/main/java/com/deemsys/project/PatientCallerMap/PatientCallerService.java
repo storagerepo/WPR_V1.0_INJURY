@@ -156,6 +156,28 @@ public class PatientCallerService {
 		return true;
 	}
 	
+	// Remove Corrected Address 
+	public boolean removeCorrectedAddress(String patientId){	
+		
+		String role=loginService.getCurrentRole();
+		CallerAdmin callerAdmin = null;
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+			callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+			callerAdmin=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin();
+		}
+		
+		PatientCallerAdminMap patientCallerAdminMap=new PatientCallerAdminMap();
+		patientCallerAdminMap=patientCallerDAO.getPatientMapsByCallerAdminId(patientId, callerAdmin.getCallerAdminId());
+		patientCallerAdminMap.setAddress(null);
+		patientCallerAdminMap.setLatitude(null);
+		patientCallerAdminMap.setLongitude(null);
+		
+		patientCallerDAO.merge(patientCallerAdminMap);	
+	
+		return true;
+	}
+	
 	// Get Patient Caller Admin Map
 	public PatientCallerAdminMap getPatientCallerAdminMap(String patientId){	
 		

@@ -43,7 +43,7 @@
 					options="countylist" selected-model="patient.countyId"
 					extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true,radioButtonName:'countyPreference',preferenceAllText:'Subscribed',preferenceSetText:'Preferred'}"
 					events="countyEvents"></div>
-				<a href="#/dashboard/UserPreferrence/1"
+				<a ui-sref="dashboard.userPreferrence({fid:1})"
 					style="text-decoration: underline;" ng-show="countyListType==2">Change
 					Lookup Preference</a>
 			</div>
@@ -553,7 +553,7 @@
 			pagination-id="callerAdminPatientPageId">
 		</dir-pagination-controls>
 		<!-- <div class="col-md-4 margin-top-30" ng-show="patientSearchData.length>0">Showing {{(patient.pageNumber-1)*patient.itemsPerPage+1}}-{{patient.pageNumber*patient.itemsPerPage}} of {{totalRecords}} Records</div> -->
-		<div class="col-md-3 pull-right no-padding">
+		<div class="col-md-3 pull-right no-padding" ng-show="totalRecords>0">
 			<label>Number of Records</label> <select
 				class="form-control input-sm" ng-model="patient.itemsPerPage"
 				ng-change=itemsPerFilter() name="noOfRows" id="noOfRows">
@@ -627,7 +627,7 @@
                     </table>
                     <dir-pagination-controls max-size="5"  direction-links="true" boundary-links="true" pagination-id="directRunnerReportPageId" ng-show="totalRecords>0">
     					</dir-pagination-controls> 
-    						<div class="col-md-3 pull-right no-padding">
+    						<div class="col-md-3 pull-right no-padding" ng-show="totalRecords>0">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="patient.itemsPerPage" ng-change="itemsPerFilter()"
