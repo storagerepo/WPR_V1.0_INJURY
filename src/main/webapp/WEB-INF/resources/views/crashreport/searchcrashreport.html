@@ -168,9 +168,9 @@
                             </tr>
                         </tbody>
                     </table>
-                    <dir-pagination-controls max-size="5"  direction-links="true" boundary-links="true" pagination-id="crashReportPageId" ng-show="crashSearchData.length>0">
+                    <dir-pagination-controls max-size="5"  direction-links="true" boundary-links="true" pagination-id="crashReportPageId" ng-show="totalRecords>0">
     					</dir-pagination-controls> 
-    						<div class="col-md-3 pull-right no-padding">
+    						<div class="col-md-3 pull-right no-padding" ng-show="totalRecords>0">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="crashreport.recordsPerPage" ng-change="itemsPerFilter()" name="recordsPerPage"
@@ -222,7 +222,7 @@ $('#AddedToDate').datetimepicker({
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover({
     	container: 'body',
-    	content: "<p><table class='table table-bordered'><tr><td width='20%'>RR</td><td width='40%'>Deemsys</td></tr><tr><td>RR_BM</td><td>Boardman</td></tr><tr><td>RR_FB</td><td>Fairborn</td></tr></table></p>",
+    	content: "<p><table class='table table-bordered'><tr><td width='20%'>RR</td><td width='40%'>Deemsys</td></tr><tr><td>RR_BM</td><td>Boardman</td></tr><tr><td>RR_FB</td><td>Fairborn</td></tr><tr><td>RR_BC</td><td>Beavercreek</td></tr><tr><td>RR_HL</td><td>Hilliard</td></tr></table></p>",
     	html: true, 
     	placement: "right"
     	

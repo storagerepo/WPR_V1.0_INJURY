@@ -344,6 +344,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 	
 	// Watch Report Type
 	$scope.$watch("vehicle.isRunnerReport",function(){
+		$scope.resetResultData();
 		$scope.mainSearchParam.pageNumber=1;
 		$scope.mainSearchParam.isRunnerReport=$scope.vehicle.isRunnerReport;
 		searchService.setIsRunnerReport($scope.vehicle.isRunnerReport);
@@ -1049,7 +1050,7 @@ $scope.archivedToDateRequired=false;
 	// While Change to Open to Archive vice versa
 	$scope.resetResultData=function(){
 		$scope.autoDealerVehicleSearchData="";
-		$scope.totalRecords="";
+		$scope.totalRecords=0;
 		$scope.directRunnerReportSearchData="";
 	};
 	

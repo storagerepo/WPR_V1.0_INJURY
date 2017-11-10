@@ -61,7 +61,7 @@
 						</thead>
 						<tbody>
 
-							<tr  ng-show="callers.length>0"  dir-paginate="caller in callers|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows" pagination-id="callerPageId">
+							<tr  ng-show="callerFilter.length>0"  dir-paginate="caller in callerFilter=(callers|filter:search|orderBy:sortKey:reverse) |itemsPerPage:noOfRows" pagination-id="callerPageId">
 								<td class="wrap" ng-cloak>{{caller.username}}</td>
 								<td class="wrap" ng-cloak>{{caller.firstName}}</td>
 								<td class="wrap" ng-cloak>{{caller.lastName}}</td>
@@ -89,15 +89,15 @@
 								
 							 </td>
 							</tr>
-							<tr ng-show="!callers.length">
+							<tr ng-show="!callerFilter.length">
 				<td colspan="6" align="center">No Records Found</td>
 				</tr>
 						</tbody>
 						
 					</table>
-					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="callerPageId">
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="callerPageId" ng-show="callerFilter.length>0">
     					</dir-pagination-controls>
-				<div class="col-md-3 pull-right no-padding margin-bottom-10">
+				<div class="col-md-3 pull-right no-padding margin-bottom-10" ng-show="callerFilter.length>0">
 				<label>Number of Records</label>
 					<select
 						class="form-control" ng-model="noOfRows" name="noOfRows"

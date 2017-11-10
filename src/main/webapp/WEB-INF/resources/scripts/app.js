@@ -1063,7 +1063,7 @@ sbAdminApp
 														},
 														controller : 'sortableController',
 														templateUrl : 'views/settings/user-preferrence.html',
-														url : '/UserPreferrence?fid'
+														url : '/UserPreferrence/:fid'
 
 													})
 											.state(
@@ -1602,11 +1602,11 @@ sbAdminApp
 
 																			});
 
-						} ]).run( [ '$rootScope', function ($rootScope,$state, $stateParams) {
+						} ]).run( [ '$rootScope','$state','$stateParams', function ($rootScope,$state, $stateParams) {
 							$rootScope.userPrefenceTabStatus=1;
 							$rootScope.$state = $state;
 				            $rootScope.$stateParams = $stateParams;
-					        $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+				            $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
 					        	if(to.name=='dashboard.viewlocations/:id' || to.name=='dashboard.printreports/'){
 					        		$rootScope.hideMenu=true;
 					        	}else{

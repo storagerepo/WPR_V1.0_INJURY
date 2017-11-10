@@ -513,7 +513,7 @@
 				pagination-id="lawyerAdminPatientPageId">
 			</dir-pagination-controls>
 
-			<div class="col-md-3 pull-right no-padding">
+			<div class="col-md-3 pull-right no-padding" ng-show="totalRecords>0">
 				<label>Number of Records</label> <select class="form-control"
 					ng-model="vehicle.itemsPerPage" ng-change="itemsPerFilter()"
 					name="itemsPerPage" id="noOfRows">
@@ -594,7 +594,7 @@
 			<dir-pagination-controls max-size="5" direction-links="true" ng-show="totalRecords>0"
 				boundary-links="true" pagination-id="directRunnerReportPageId">
 			</dir-pagination-controls>
-			<div class="col-md-3 pull-right no-padding">
+			<div class="col-md-3 pull-right no-padding" ng-show="totalRecords>0">
 				<label>Number of Records</label> <select class="form-control"
 					ng-model="vehicle.itemsPerPage" ng-change="itemsPerFilter()"
 					name="noOfRows" id="noOfRows">

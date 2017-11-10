@@ -86,8 +86,8 @@
   
 		</table>
 
-		<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
-		 <div class="col-md-3 pull-right no-padding">
+		<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" ng-show="clinicFilter.length>0"></dir-pagination-controls>
+		 <div class="col-md-3 pull-right no-padding" ng-show="clinicFilter.length>0">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="noOfRows" name="noOfRows"

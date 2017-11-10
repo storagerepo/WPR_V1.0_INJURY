@@ -64,7 +64,7 @@
 						</thead>
 						<tbody >
 
-							<tr ng-show="lawyerAdmins.length>0"  dir-paginate="lawyerAdmin in lawyerAdmins|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows">
+							<tr ng-show="lawyerAdminFilter.length>0"  dir-paginate="lawyerAdmin in lawyerAdminFilter=(lawyerAdmins|filter:search|orderBy:sortKey:reverse)|itemsPerPage:noOfRows" pagination-id="lawyeradminpageId">
 								<td class="wrap" ng-cloak>{{lawyerAdmin.username}}</td>
 								<td class="wrap" ng-cloak>{{lawyerAdmin.firstName}}</td>
 								<td class="wrap" ng-cloak>{{lawyerAdmin.lastName}}</td>
@@ -91,13 +91,13 @@
 								
 							 </td>
 							</tr>
-							<tr ng-show="!lawyerAdmins.length"><td colspan="6" align="center">No Records Found</td></tr>
+							<tr ng-show="!lawyerAdminFilter.length"><td colspan="6" align="center">No Records Found</td></tr>
 						</tbody>
 						
 					</table>
-					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" ng-show="lawyerAdminFilter.length>0" pagination-id="lawyeradminpageId">
     					</dir-pagination-controls>
-    					 <div class="col-md-3 pull-right no-padding">
+    					 <div class="col-md-3 pull-right no-padding" ng-show="lawyerAdminFilter.length>0">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="noOfRows" name="noOfRows"
