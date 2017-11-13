@@ -207,8 +207,8 @@
                                 
                                  <span class="error-container" ng-show="changePasswordModalForm.password.$dirty && changePasswordModalForm.password.$invalid">
                                 <span ng-cloak style="color:red" ng-show="changePasswordModalForm.password.$error.required">Please Enter the Current Password</span>
-                               	 <span ng-cloak style="color:red" ng-show="!changePasswordModalForm.password.$error.required&&changePasswordModalForm.password.$error.validatePassword">Accept Only Alpha Numeric and !@#$%^&*()_+-=[]{};":|.,/<>?</span>
-                               <span ng-cloak style="color:red" ng-show="!changePasswordModalForm.password.$error.validatePassword&&changePasswordModalForm.password.$error.password">Invalid Current Password
+                               	<!--  <span ng-cloak style="color:red" ng-show="!changePasswordModalForm.password.$error.required&&changePasswordModalForm.password.$error.validatePassword">Accept Only Alpha Numeric and !@#$%^&*()_+-=[]{};":|.,/<>?</span> -->
+                               <span ng-cloak style="color:red" ng-show="!changePasswordModalForm.password.$error.required&&(changePasswordModalForm.password.$error.validatePassword||changePasswordModalForm.password.$error.password)">Invalid Current Password
     							</span>
                               	</span>
                                     <br/>
@@ -226,8 +226,8 @@
                                    
                                     <span class="error-container" ng-show="changePasswordModalForm.confirmpassword.$dirty && changePasswordModalForm.confirmpassword.$invalid">
                                <span ng-cloak style="color:red" ng-show="changePasswordModalForm.confirmpassword.$error.required">Please Enter the Confirm Password</span>
-                               <span ng-cloak style="color:red" ng-show="!changePasswordModalForm.confirmpassword.$error.required&&changePasswordModalForm.confirmpassword.$error.validatePassword">Accept Only Alpha Numeric and !@#$%^&*()_+-=[]{};":|.,/<>?</span>
-                               <span ng-cloak style="color:red" ng-show="!changePasswordModalForm.confirmpassword.$error.validatePassword&&changePasswordModalForm.confirmpassword.$error.compareTo">Please Enter the Confirm Password</span>
+                  <!--              <span ng-cloak style="color:red" ng-show="!changePasswordModalForm.confirmpassword.$error.required&&changePasswordModalForm.confirmpassword.$error.validatePassword">Accept Only Alpha Numeric and !@#$%^&*()_+-=[]{};":|.,/<>?</span> -->
+                               <span ng-cloak style="color:red" ng-show="!changePasswordModalForm.confirmpassword.$error.required&&(changePasswordModalForm.confirmpassword.$error.validatePassword||changePasswordModalForm.confirmpassword.$error.compareTo)">Please Enter the Confirm Password</span>
                               </span>
                                    <br/>
         </div>
