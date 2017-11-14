@@ -78,7 +78,7 @@
 						</thead>
 						<tbody >
 
-							<tr ng-show="reportingAgencyList.length>0"  dir-paginate="reportingAgency in reportingAgencyList|filter:search|orderBy:sortKey:reverse|itemsPerPage:reportingAgencySearchParamForm.recordsPerPage" current-page="reportingAgencySearchParamForm.pageNumber" total-items="totalRecords" pagination-id="reportingAgencyPagination">
+							<tr ng-show="reportingAgencyList.length>0"  dir-paginate="reportingAgency in reportingAgencyFilter=(reportingAgencyList|filter:search|orderBy:sortKey:reverse)|itemsPerPage:reportingAgencySearchParamForm.recordsPerPage" current-page="reportingAgencySearchParamForm.pageNumber" total-items="totalRecords" pagination-id="reportingAgencyPagination">
 								<td class="wrap" ng-cloak>{{reportingAgency.code}}</td>
 								<td class="wrap" ng-cloak>{{reportingAgency.reportingAgencyName}}</td>
 								<td class="wrap" ng-cloak>{{reportingAgency.countyName}}</td>
@@ -103,13 +103,13 @@
 								
 							 </td>
 							</tr>
-							<tr ng-show="!reportingAgencyList.length"><td colspan="6" align="center">No Records Found</td></tr>
+							<tr ng-show="!reportingAgencyFilter.length"><td colspan="6" align="center">No Records Found</td></tr>
 						</tbody>
 						
 					</table>
-					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="reportingAgencyPagination" >
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="reportingAgencyPagination" ng-show="reportingAgencyFilter.length>0">
     					</dir-pagination-controls>
-    					 <div class="col-md-3 pull-right no-padding">
+    					 <div class="col-md-3 pull-right no-padding" ng-show="reportingAgencyFilter.length>0">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="reportingAgencySearchParamForm.recordsPerPage" ng-change="itemsPerPage()" name="recordsPerPage"

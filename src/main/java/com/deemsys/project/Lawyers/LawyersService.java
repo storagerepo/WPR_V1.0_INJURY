@@ -13,6 +13,7 @@ import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.County.CountyForm;
 import com.deemsys.project.County.CountyService;
 import com.deemsys.project.LawyerAdmin.LawyerAdminDAO;
+import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingDAO;
 import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingForm;
 import com.deemsys.project.LawyerCountyMapping.LawyerCountyMappingService;
@@ -70,6 +71,9 @@ public class LawyersService {
 	
 	@Autowired
 	PatientLawyerDAO patientLawyerDAO;
+	
+	@Autowired
+	LawyerAdminService lawyerAdminService;
 
 	// Get All Entries
 	public List<LawyersForm> getLawyersList() {
@@ -322,8 +326,10 @@ public class LawyersService {
 	}
 
 	// Get Number of Lawyers Under Lawyer Admin
-	public Integer getNumberOfLawyers(Integer lawyerAdminId) {
+	public Integer getNumberOfLawyers() {
 		Integer numberOfLawyers = 0;
+		Integer currentUserId = callerService.getCurrentUserId();
+		Integer lawyerAdminId=lawyerAdminService.getLawyerAdminIdByUserId(currentUserId).getLawyerAdminId();
 		numberOfLawyers = lawyersDAO.getLawyersByLawyerAdmin(lawyerAdminId).size();
 		return numberOfLawyers;
 	}

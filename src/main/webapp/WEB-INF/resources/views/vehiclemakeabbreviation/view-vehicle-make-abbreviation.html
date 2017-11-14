@@ -65,7 +65,7 @@
 						</thead>
 						<tbody >
 
-							<tr ng-show="vehicleMakeAbbreviationList.length>0"  dir-paginate="vehicleMakeAbbreviation in vehicleMakeAbbreviationList|orderBy:sortKey:reverse|itemsPerPage:searchVehicleMakeAbbrevationForm.recordsPerPage" current-page="searchVehicleMakeAbbrevationForm.pageNumber" total-items="totalRecords" pagination-id="vehicleMakeAbbrevationPagination">
+							<tr ng-show="vehicleMakeAbbreviationList.length>0"  dir-paginate="vehicleMakeAbbreviation in vehicleMakeAbbreviationFilter=(vehicleMakeAbbreviationList|orderBy:sortKey:reverse)|itemsPerPage:searchVehicleMakeAbbrevationForm.recordsPerPage" current-page="searchVehicleMakeAbbrevationForm.pageNumber" total-items="totalRecords" pagination-id="vehicleMakeAbbrevationPagination">
 								<td class="wrap" ng-cloak>{{vehicleMakeAbbreviation.make}}</td>
 								<td class="wrap" ng-cloak>{{vehicleMakeAbbreviation.abbreviation}}</td>
 								<td>
@@ -85,13 +85,13 @@
 								
 							 </td>
 							</tr>
- 							<tr ng-show="!vehicleMakeAbbreviationList.length"><td colspan="3" align="center">No Records Found</td></tr>
+ 							<tr ng-show="!vehicleMakeAbbreviationFilter.length"><td colspan="3" align="center">No Records Found</td></tr>
 						</tbody>
 						
 					</table>
-					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="vehicleMakeAbbrevationPagination" >
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="vehicleMakeAbbrevationPagination" ng-show="vehicleMakeAbbreviationFilter.length>0">
     					</dir-pagination-controls>
-    					 <div class="col-md-3 pull-right no-padding">
+    					 <div class="col-md-3 pull-right no-padding" ng-show="vehicleMakeAbbreviationFilter.length>0">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="searchVehicleMakeAbbrevationForm.recordsPerPage" ng-change="itemsPerPage()" name="recordsPerPage"

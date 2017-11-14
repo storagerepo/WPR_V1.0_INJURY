@@ -105,16 +105,16 @@
  </tr>
 </tbody>
 
-<tbody ng-show="appointments.length==0">
+<tbody ng-show="totalRecords==0">
 				<tr>
 				<td colspan="7" align="center">No Record Found</td>
 				</tr>
 				</tbody>
 
               </table>
-              <dir-pagination-controls on-page-change="searchAppointmentByPage(newPageNumber)" max-size="5" direction-links="true" boundary-links="true" pagination-id="appointmentPageId">
+              <dir-pagination-controls on-page-change="searchAppointmentByPage(newPageNumber)" max-size="5" direction-links="true" boundary-links="true" pagination-id="appointmentPageId" ng-show="totalRecords>0">
     					</dir-pagination-controls>
-    					<div class="col-md-3 pull-right">
+    					<div class="col-md-3 pull-right" ng-show="totalRecords>0">
         <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="searchAppointment.itemsPerPage" name="itemsPerPage"

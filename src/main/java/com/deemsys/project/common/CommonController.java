@@ -2,6 +2,9 @@
 package com.deemsys.project.common;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.deemsys.project.Appointments.AppointmentsService;
 import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminForm;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.CallerAdminCountyMapping.CallerAdminCountyMapService;
+import com.deemsys.project.Clinics.ClinicsService;
+import com.deemsys.project.CrashReport.CrashReportSearchForm;
+import com.deemsys.project.CrashReport.CrashReportService;
 import com.deemsys.project.Export.PrintPDFFiles;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingService;
@@ -25,6 +32,11 @@ import com.deemsys.project.entity.Lawyer;
 import com.deemsys.project.entity.LawyerAdmin;
 import com.deemsys.project.entity.Users;
 import com.deemsys.project.login.LoginService;
+import com.deemsys.project.patient.CallerPatientSearchForm;
+import com.deemsys.project.patient.PatientController;
+import com.deemsys.project.patient.PatientGroupedSearchResult;
+import com.deemsys.project.patient.PatientService;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 
 /**
@@ -37,6 +49,9 @@ import com.deemsys.project.login.LoginService;
 @Controller
 public class CommonController {
 
+	
+	@Autowired
+	PatientController patientController;
 	
 	@Autowired
 	LoginService loginService;
@@ -67,6 +82,18 @@ public class CommonController {
 	
 	@Autowired
 	PrintPDFFiles printPDFFiles;
+	
+	@Autowired
+	PatientService patientService;
+	
+	@Autowired
+	AppointmentsService appointmentsService;
+	
+	@Autowired
+	CrashReportService crashReportService;
+	
+	@Autowired
+	ClinicsService clinicsService;
 	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String getInit(ModelMap model)
@@ -268,6 +295,51 @@ public class CommonController {
    		return "/returnPage";
    	}
     
+    @RequestMapping(value="dashboardCount",method=RequestMethod.GET)
+    public String getDashboardCount(ModelMap model){
+    	Integer currentRoleId=loginService.getCurrentRoleId();
+    	List<Integer> dashboardCount = new ArrayList<Integer>();
+    	CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "",new String[]{},"", new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{},-1,"","",0);
+		if(currentRoleId.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE_ID)){
+			dashboardCount.add(callerAdminService.getNumberOfCallerAdmins());
+	    	dashboardCount.add(lawyerAdminService.getNumberOfLawyerAdmin());
+	    	CrashReportSearchForm crashReportSearchForm=new CrashReportSearchForm("", "", "", "",new Integer[]{}, "", "", "", 1, 10,-1,null,null,null,null,0,"","",-1,null);
+	    	dashboardCount.add(crashReportService.searchCrashReports(crashReportSearchForm).getTotalNoOfRecords().intValue());
+	    	PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
+			dashboardCount.add(callerAdminService.getNumberOfManagers());
+	    }else if(currentRoleId.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
+			dashboardCount.add(callerService.getNoOfCallers());
+			dashboardCount.add(clinicsService.getNoOfClinics());
+	    	dashboardCount.add(appointmentsService.getNoOfAppointments());
+	    	PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
+		}else if(currentRoleId.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
+			dashboardCount.add(lawyersService.getNumberOfLawyers());
+			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
+		}else if(currentRoleId.equals(InjuryConstants.INJURY_CALLER_ROLE_ID)){
+			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
+			dashboardCount.add(clinicsService.getNoOfClinics());
+		}else if(currentRoleId.equals(InjuryConstants.INJURY_LAWYER_ROLE_ID)){
+			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
+		}else if(currentRoleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
+			dashboardCount.add(callerService.getNoOfCallers());
+			callerPatientSearchForm.setIsOwner(1);
+			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+			dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
+		}else if(currentRoleId.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE_ID)){
+			callerPatientSearchForm.setIsOwner(1);
+			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
+		}
+		
+		model.addAttribute("dashboardCount",dashboardCount);
+    	model.addAttribute("requestSuccess",true);
+    	return "";
+    }
     
     
 }

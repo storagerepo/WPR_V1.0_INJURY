@@ -97,7 +97,7 @@
 						</thead>
 						<tbody >
 
-							<tr ng-show="policeDepartmentsForm.length>0"  dir-paginate="policeDepartment in policeDepartmentsForm|filter:search|orderBy:sortKey:reverse|itemsPerPage:noOfRows" pagination-id="policePaginationId">
+							<tr ng-show="policeDepartmentsForm.length>0"  dir-paginate="policeDepartment in policeDepartmentsFilter=(policeDepartmentsForm|filter:search|orderBy:sortKey:reverse)|itemsPerPage:noOfRows" pagination-id="policePaginationId">
 								<td class="wrap" ng-cloak>{{policeDepartment.mapId}}</td>
 								<td class="wrap" ng-cloak>{{policeDepartment.name}}</td>
 								<td class="wrap" ng-cloak>
@@ -129,14 +129,14 @@
 								
 							 </td>
 							</tr>
-							<tr ng-show="!policeDepartmentsForm.length"><td colspan="6" align="center">No Records Found</td></tr>
-							<tr ng-show="(policeDepartmentsForm|filter:search).length==0" ><td colspan="6" align="center">No Records Found</td></tr> 
+							<tr ng-show="!policeDepartmentsFilter.length"><td colspan="6" align="center">No Records Found</td></tr><!-- 
+							<tr ng-show="(policeDepartmentsForm|filter:search).length==0" ><td colspan="6" align="center">No Records Found</td></tr>  -->
 						</tbody>
 						
 					</table>
-					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="policePaginationId">
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="policePaginationId" ng-show="policeDepartmentsFilter.length>0">
     					</dir-pagination-controls>
-    					 <div class="col-md-3 pull-right no-padding">
+    					 <div class="col-md-3 pull-right no-padding" ng-show="policeDepartmentsFilter.length>0">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="noOfRows" name="noOfRows"

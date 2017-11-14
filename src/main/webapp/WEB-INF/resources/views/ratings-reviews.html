@@ -154,9 +154,9 @@
 						</tbody>
 						
 					</table>
-					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" >
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" ng-show="ratingFilter.lenth>0">
     					</dir-pagination-controls>   
-    					<div class="col-md-3 no-padding pull-right">
+    					<div class="col-md-3 no-padding pull-right" ng-show="ratingFilter.lenth>0">
 <label>Number of Records</label>
 	<select
 		class="form-control" ng-model="noOfRows" name="noOfRows"

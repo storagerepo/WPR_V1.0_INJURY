@@ -105,8 +105,7 @@ public class LawyersController {
 
 	@RequestMapping(value = "/LAdmin/getNumberOfLawyers", method = RequestMethod.GET)
 	public String getNoOfLawyerAdmin(ModelMap model) {
-		Integer currentUserId = callerService.getCurrentUserId();
-		model.addAttribute("noOfLawyers",lawyersService.getNumberOfLawyers(lawyerAdminService.getLawyerAdminIdByUserId(currentUserId).getLawyerAdminId()));
+		model.addAttribute("noOfLawyers",lawyersService.getNumberOfLawyers());
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}
