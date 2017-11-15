@@ -101,6 +101,7 @@ adminApp.controller('SaveCallerAdminController', function($http,$state,$scope,$l
 	$scope.isAdd=true;
 
 	$scope.callerAdmin={};
+	$scope.callerAdmin.isDrivingDistance=0;
 	$scope.callerAdmin.county=[];
 	$scope.callerAdmin.countyForms=[];
 	$scope.requiredValue= false;

@@ -3,11 +3,12 @@ var adminApp=angular.module('sbAdminApp',['requestModule','searchModule','uiGmap
 adminApp.controller('showNearByClinicController',function($scope,$log,$stateParams,requestHandler,searchService,$compile,$q,$timeout,Flash){
 	
 	$scope.init=function(){
-		$scope.searchRange=50;
+		$scope.searchRange=25;
 		$scope.clinicsForms="";
 		$scope.lat="";
 		$scope.lng="";
 		$scope.correctedAddress="";
+		$scope.isDrivingDistance=0;
 		$scope.getNearByClinics(1);
 	};
 	$scope.originalCorrectedAddress="";
@@ -97,14 +98,28 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     		markers.push(marker);
     		for ( var int = 0; int < clinicsForms.length; int++) {
 				var clinicForm = clinicsForms[int];
-				var windowContent="<b>"+clinicForm.clinicName+",</b><br/>"+clinicForm.address+",</br>"+clinicForm.city+",</br><b>"+clinicForm.farAway+" miles</b> far away ";
-				var marker = {
+				var windowContent="<b>"+clinicForm.clinicName+",</b><br/>"+clinicForm.address+",</br>"+clinicForm.city+",</br><b>"+clinicForm.farAway+" miles</b> far away";
+				var marker = {};
+				if(clinicForm.isDrivingDistance==1){
+					$scope.isDrivingDistance=1;
+					windowContent="<b>"+clinicForm.clinicName+",</b><br/>"+clinicForm.address+",</br>"+clinicForm.city+",</br><b>"+clinicForm.farAway+" miles</b> far away  <b> / "+clinicForm.travellingTime+"</b>";
+					marker = {
+			    	        latitude: clinicForm.latitude,
+			    	        longitude: clinicForm.longitude,
+			    	        title: windowContent,
+			    	        icon:'resources/images/map/map_icon_yellow_clinic.png',
+			    	        text:clinicForm.clinicId,
+			   	           	show:false
+			   	         };
+				}else{
+					marker = {
 			    	        latitude: clinicForm.latitude,
 			    	        longitude: clinicForm.longitude,
 			    	        title: windowContent,
 			    	        text:clinicForm.clinicId,
 			   	           	show:false
 			   	         };
+				}
 				marker[idKey]=i;
 				markers.push(marker);
 				
@@ -188,4 +203,22 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 	
 	// Initialized Function
 	$scope.init();
+});
+
+adminApp.directive('searchRangeValidation',function(){
+	return{
+		require:'ngModel',
+		restrict:'',
+		link:function(scope,attr,elem,ngModel){
+			ngModel.$validators.searchRangeValidation=function(modelValue){
+				if(modelValue!=''){
+					return modelValue>0 && modelValue<=100;
+				}else{
+					return true;
+				}
+				
+			};
+		}
+	}
+	
 });

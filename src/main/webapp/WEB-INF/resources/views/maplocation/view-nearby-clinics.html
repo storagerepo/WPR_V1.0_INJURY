@@ -52,10 +52,11 @@
 	<b>Range (Miles) :</b>
 	</div>
 	<div class="col-md-2">
-	<input type="text" name="range" class="form-control" ng-model="searchRange" ng-pattern="/^\d+$/" required>
+	<input type="text" name="range" class="form-control" ng-model="searchRange" ng-pattern="/^\d+$/" search-range-validation required>
 	<span class="error-container" ng-show="searchClinic.range.$dirty && searchClinic.range.$invalid">
         <span ng-cloak style="color:red" ng-show="searchClinic.range.$error.required">Please Enter Range</span>
         <span ng-cloak style="color:red" ng-show="searchClinic.range.$error.pattern">Invalid Format</span>
+        <span ng-cloak style="color:red" ng-show="!searchClinic.range.$error.pattern&&searchClinic.range.$error.searchRangeValidation">Range between 0 to 100</span>
     </span>
 	</div>
 	<div class="col-md-2">
@@ -98,10 +99,10 @@
 <div class="row">
 <table class="table">
 <thead>
-<tr><th>Clinic Name</th><th>Service Area</th><th>Address</th><th>City</th><th>Office Number</th><th>Distance (Miles)</th><th>Action</th></tr>
+<tr><th>Clinic Name</th><th>Service Area</th><th>Address</th><th>City</th><th>Office Number</th><th>Dist.(Miles) <span ng-show="isDrivingDistance==1">/ Travel Time</span></th><th>Action</th></tr>
 </thead>
 <tbody ng-repeat="clinic in clinicsForms |orderBy:'farAway'">
-<tr id="text"><td>{{clinic.clinicName}}</td><td>{{clinic.serviceArea}}</td><td>{{clinic.address}}</td><td>{{clinic.city}}</td><td>{{clinic.officeNumber}}</td><td>{{clinic.farAway}}</td><td> <a href="" ng-click="viewClinicDetails(clinic.clinicId)" class="btn btn-xs btn-primary hint--top" data-hint="View More Details"><i
+<tr id="text"><td>{{clinic.clinicName}}</td><td>{{clinic.serviceArea}}</td><td>{{clinic.address}}</td><td>{{clinic.city}}</td><td>{{clinic.officeNumber}}</td><td>{{clinic.farAway}}<span ng-show="clinic.isDrivingDistance==1">&nbsp; / &nbsp;{{clinic.travellingTime}}</span></td><td> <a href="" ng-click="viewClinicDetails(clinic.clinicId)" class="btn btn-xs btn-primary hint--top" data-hint="View More Details"><i
 								class="glyphicon glyphicon-eye-open"></i></a></td></tr>
 </tbody>
 <tbody ng-show="clinicsForms.length==0">

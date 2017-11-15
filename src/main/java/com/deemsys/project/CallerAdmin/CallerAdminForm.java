@@ -23,6 +23,7 @@ public class CallerAdminForm {
 	private String emailAddress;
 	private String phoneNumber;
 	private String notes;
+	private Byte isDrivingDistance;
 	private Integer isPrivilegedUser;
 	private Integer status;
 	List<Integer> county;
@@ -102,6 +103,12 @@ public class CallerAdminForm {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+	public Byte getIsDrivingDistance() {
+		return isDrivingDistance;
+	}
+	public void setIsDrivingDistance(Byte isDrivingDistance) {
+		this.isDrivingDistance = isDrivingDistance;
+	}
 	public Integer getIsPrivilegedUser() {
 		return isPrivilegedUser;
 	}
@@ -141,7 +148,7 @@ public class CallerAdminForm {
 	public CallerAdminForm(Integer callerAdminId, Integer userId,
 			String firstName, String lastName, String street, String city,
 			String state, String zipcode, String emailAddress,
-			String phoneNumber, String notes, Integer isPrivilegedUser, Integer status) {
+			String phoneNumber, String notes, Byte isDrivingDistance, Integer isPrivilegedUser, Integer status) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.userId = userId;
@@ -154,6 +161,7 @@ public class CallerAdminForm {
 		this.emailAddress = emailAddress;
 		this.phoneNumber = phoneNumber;
 		this.notes = notes;
+		this.isDrivingDistance = isDrivingDistance;
 		this.isPrivilegedUser = isPrivilegedUser;
 		this.status = status;
 	}
@@ -161,7 +169,7 @@ public class CallerAdminForm {
 	public CallerAdminForm(Integer callerAdminId, Integer userId,
 			String username, String firstName, String lastName, String street,
 			String city, String state, String zipcode, String emailAddress,
-			String phoneNumber, String notes, Integer isPrivilegedUser, Integer status) {
+			String phoneNumber, String notes, Byte isDrivingDistance, Integer isPrivilegedUser, Integer status) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.userId = userId;
@@ -175,6 +183,7 @@ public class CallerAdminForm {
 		this.emailAddress = emailAddress;
 		this.phoneNumber = phoneNumber;
 		this.notes = notes;
+		this.isDrivingDistance = isDrivingDistance;
 		this.isPrivilegedUser = isPrivilegedUser;
 		this.status = status;
 	}

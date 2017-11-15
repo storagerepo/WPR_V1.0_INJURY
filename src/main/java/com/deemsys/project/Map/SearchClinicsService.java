@@ -3,6 +3,7 @@ package com.deemsys.project.Map;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,14 @@ import com.deemsys.project.Clinics.ClinicsDAO;
 import com.deemsys.project.Clinics.ClinicsForm;
 import com.deemsys.project.Clinics.ClinicsService;
 import com.deemsys.project.PatientCallerMap.PatientCallerService;
+import com.deemsys.project.PatientNearbyClinicSearchResult.PatientNearbyClinicSearchResultDAO;
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.CallerAdmin;
 import com.deemsys.project.entity.Clinic;
 import com.deemsys.project.entity.Patient;
 import com.deemsys.project.entity.PatientCallerAdminMap;
+import com.deemsys.project.entity.PatientNearbyClinicSearchResult;
+import com.deemsys.project.entity.PatientNearbyClinicSearchResultId;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientDAO;
 
@@ -50,14 +55,17 @@ public class SearchClinicsService {
 	
 	@Autowired
 	PatientCallerService patientCallerService;
+	
+	@Autowired
+	PatientNearbyClinicSearchResultDAO patientNearbyClinicSearchResultDAO;
 
 	@SuppressWarnings("static-access")
 	public ClinicLocationForm getNearByClinics(NearByClinicSearchForm nearByClinicSearchForm) {
 
 		List<ClinicsForm> clinicsForms = new ArrayList<ClinicsForm>();
-		List<ClinicTimingList> clinicTimingLists = new ArrayList<ClinicTimingList>();
 		ClinicLocationForm clinicLocationForm = new ClinicLocationForm();
-
+		List<ClinicsForm> drivingDistanceFilteredClinics = new ArrayList<ClinicsForm>();
+		
 		// Convert to Miles to KiloMeter
 		Double convertedRange = geoLocation
 				.convertMilesToKiloMeter(nearByClinicSearchForm.getSearchRange());
@@ -109,18 +117,75 @@ public class SearchClinicsService {
 		
 		List<Clinic> clinics = new ArrayList<Clinic>();
 		String role=loginService.getCurrentRole();
-		Integer callerAdminId=0;
+		CallerAdmin callerAdmin=new CallerAdmin();
 		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
-			callerAdminId=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId();
+			callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
 		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
-			callerAdminId=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId();
+			callerAdmin=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin();
 		}
-		clinics = clinicsDAO.getEnabledClinicsListsByCallerAdmin(callerAdminId);
+		clinics = clinicsDAO.getEnabledClinicsListsByCallerAdmin(callerAdmin.getCallerAdminId());
 
+		// Get Clinics List For Normal Distance Calculation User
+		clinicsForms=this.getFilteredClinicByNormalDistanceCalculation(clinics, convertedRange, correctedLatBigDecimal, correctedLongBigDecimal);
+		
+		// Check Whether Driving Distance Enabled
+		if(callerAdmin.getIsDrivingDistance()==1){
+			List<PatientNearbyClinicSearchResult> patientNearbyClinicSearchResults=patientNearbyClinicSearchResultDAO.getSearchResultByPatientId(nearByClinicSearchForm.getPatientId());
+			// Origins
+			String origin = correctedLatBigDecimal+","+correctedLongBigDecimal;
+			for (ClinicsForm clinic : clinicsForms) {
+				// Mention Driving Distance Status
+				clinic.setIsDrivingDistance(1);
+				// Destinations
+				String destination = clinic.getLatitude()+","+clinic.getLongitude();
+				PatientNearbyClinicSearchResult matchedPatientNearbyClinicSearchResult = this.checkingWithOldSearchList(patientNearbyClinicSearchResults, clinic);
+					if(matchedPatientNearbyClinicSearchResult!=null){
+						if(matchedPatientNearbyClinicSearchResult.getStatus()==1){
+							clinic.setFarAway(InjuryConstants.convertBigDecimaltoDouble(matchedPatientNearbyClinicSearchResult.getDistance()));
+							clinic.setTravellingTime(matchedPatientNearbyClinicSearchResult.getTravellingTime());
+						}else{
+							List<String> distanceResult=geoLocation.getDrivingDistance(origin, destination);
+							clinic.setFarAway(InjuryConstants.convertBigDecimaltoDouble(this.splitDistanceWithoutMetric(distanceResult.get(0))));
+							clinic.setTravellingTime(distanceResult.get(1));
+							matchedPatientNearbyClinicSearchResult.setLatitude(new BigDecimal(clinic.getLatitude()));
+							matchedPatientNearbyClinicSearchResult.setLongitude(new BigDecimal(clinic.getLongitude()));
+							matchedPatientNearbyClinicSearchResult.setDistance(this.splitDistanceWithoutMetric(distanceResult.get(0)));
+							matchedPatientNearbyClinicSearchResult.setTravellingTime(distanceResult.get(1));
+							matchedPatientNearbyClinicSearchResult.setUpdatedDateTime(new Date());
+							matchedPatientNearbyClinicSearchResult.setStatus(1);
+							patientNearbyClinicSearchResultDAO.merge(matchedPatientNearbyClinicSearchResult);
+						}
+					}else{
+						// Use Google Map Driving Distance API
+						List<String> distanceResult=geoLocation.getDrivingDistance(origin, destination);
+						clinic.setFarAway(InjuryConstants.convertBigDecimaltoDouble(this.splitDistanceWithoutMetric(distanceResult.get(0))));
+						clinic.setTravellingTime(distanceResult.get(1));
+						matchedPatientNearbyClinicSearchResult = new PatientNearbyClinicSearchResult(new PatientNearbyClinicSearchResultId(nearByClinicSearchForm.getPatientId(), clinic.getClinicId()), 
+								InjuryConstants.convertDoubleBigDecimal(clinic.getLatitude()), InjuryConstants.convertDoubleBigDecimal(clinic.getLongitude()), this.splitDistanceWithoutMetric(distanceResult.get(0)), distanceResult.get(1), 
+										new Date(), 1);
+						patientNearbyClinicSearchResultDAO.merge(matchedPatientNearbyClinicSearchResult);
+					}
+			}
+			drivingDistanceFilteredClinics = this.getFinalResultAfterDrivingDistance(clinicsForms, nearByClinicSearchForm.getSearchRange().doubleValue());
+			clinicLocationForm = new ClinicLocationForm(InjuryConstants.convertBigDecimaltoDouble(correctedLatBigDecimal),
+					InjuryConstants.convertBigDecimaltoDouble(correctedLongBigDecimal), radius, correctedAddress, drivingDistanceFilteredClinics);
+		}else{
+			clinicLocationForm = new ClinicLocationForm(InjuryConstants.convertBigDecimaltoDouble(correctedLatBigDecimal),
+					InjuryConstants.convertBigDecimaltoDouble(correctedLongBigDecimal), radius, correctedAddress, clinicsForms);
+		}
+		
+		return clinicLocationForm;
+
+	}
+
+	// Filter the Clinic List By Normal Distance
+	public List<ClinicsForm> getFilteredClinicByNormalDistanceCalculation(List<Clinic> clinics, Double convertedRange, BigDecimal centerLatitude, BigDecimal centerLongitude){
+		List<ClinicsForm> filteredClinicsForms=new ArrayList<ClinicsForm>();
+		List<ClinicTimingList> clinicTimingLists = new ArrayList<ClinicTimingList>();
+		
 		for (Clinic clinics2 : clinics) {
-			
-			Double distance = geoLocation.distance(InjuryConstants.convertBigDecimaltoDouble(correctedLatBigDecimal),
-					InjuryConstants.convertBigDecimaltoDouble(clinics2.getLatitude()), InjuryConstants.convertBigDecimaltoDouble(correctedLongBigDecimal),
+			Double distance = geoLocation.distance(InjuryConstants.convertBigDecimaltoDouble(centerLatitude),
+					InjuryConstants.convertBigDecimaltoDouble(clinics2.getLatitude()), InjuryConstants.convertBigDecimaltoDouble(centerLongitude),
 					InjuryConstants.convertBigDecimaltoDouble(clinics2.getLongitude()));
 			if (distance < convertedRange) {
 				clinicTimingLists = clinicsService
@@ -135,16 +200,71 @@ public class SearchClinicsService {
 						clinics2.getServiceArea(), clinics2.getDirections(),
 						clinics2.getNotes(), clinics2.getStatus(),
 						geoLocation.convertKiloMeterToMiles(distance),
+						"", 0,
 						clinicTimingLists);
-				clinicsForms.add(clinicsForm);
+				filteredClinicsForms.add(clinicsForm);
 			}
 		}
-
-		clinicLocationForm = new ClinicLocationForm(InjuryConstants.convertBigDecimaltoDouble(correctedLatBigDecimal),
-				InjuryConstants.convertBigDecimaltoDouble(correctedLongBigDecimal), radius, correctedAddress, clinicsForms);
-
-		return clinicLocationForm;
-
+		return filteredClinicsForms;
 	}
-
+	
+	// Check whether clinic matched with Old Search List
+	public PatientNearbyClinicSearchResult checkingWithOldSearchList(List<PatientNearbyClinicSearchResult> patientNearbyClinicSearchResults,ClinicsForm clinic){
+		PatientNearbyClinicSearchResult matchedNearbyClinicSearchResult = null;
+		for (PatientNearbyClinicSearchResult patientNearbyClinicSearchResult : patientNearbyClinicSearchResults) {
+			if(clinic.getClinicId()==patientNearbyClinicSearchResult.getId().getClinicId()){
+				if(clinic.getLatitude()==InjuryConstants.convertBigDecimaltoDouble(patientNearbyClinicSearchResult.getLatitude())
+						&&clinic.getLongitude()==InjuryConstants.convertBigDecimaltoDouble(patientNearbyClinicSearchResult.getLongitude())){
+					matchedNearbyClinicSearchResult=patientNearbyClinicSearchResult;
+					break;
+				}else{
+					patientNearbyClinicSearchResult.setStatus(0);
+					matchedNearbyClinicSearchResult=patientNearbyClinicSearchResult;
+					break;
+				}
+			}
+		}
+		
+		return matchedNearbyClinicSearchResult;
+	}
+	
+	// Split the Distance without metric from Response
+	public BigDecimal splitDistanceWithoutMetric(String distance){
+		String[] splittedValue=distance.split(" ");
+		return new BigDecimal(splittedValue[0]);
+	}
+	
+	// Filter Clinic After Google Driving Distance
+	public List<ClinicsForm> getFinalResultAfterDrivingDistance(List<ClinicsForm> clinicsForms, Double searchRange){
+		List<ClinicsForm> filterClinicsForms = new ArrayList<ClinicsForm>();
+		for (ClinicsForm clinicsForm : clinicsForms) {
+			if(clinicsForm.getFarAway()<searchRange){
+				filterClinicsForms.add(clinicsForm);
+			}
+		}
+		return filterClinicsForms;
+	}
+	
+	// Convert Mins to Hr and Mins
+	public String convertMinToHrMin(String travelTime){
+		String[] splittedValue=travelTime.split(" ");
+		String convertedValue=travelTime;
+		Integer intTime=Integer.parseInt(splittedValue[0]);
+		if(intTime>=60){
+			Integer hours = intTime/60;
+			Integer mins = intTime%60;
+			if(mins>0){
+				convertedValue=mins+" mins";
+			}
+			if(hours>0){
+				convertedValue=convertedValue+" hr "+mins+" mins";
+			}
+		}
+		return convertedValue;
+	}
+	
+	// Delete Old Search Results
+	public void deleteOldSearchResults(String date){
+		patientNearbyClinicSearchResultDAO.deleteOldSearchResults(date);
+	}
 }

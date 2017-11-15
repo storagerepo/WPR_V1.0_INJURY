@@ -85,7 +85,7 @@ public class CallerAdminService {
 		
 		CallerAdminForm callerAdminForm=new CallerAdminForm(callerAdmin.getCallerAdminId(), callerAdmin.getUsers().getUserId(), callerAdmin.getUsers().getUsername(), callerAdmin.getFirstName(), callerAdmin.getLastName(),
 				callerAdmin.getStreet(), callerAdmin.getCity(), callerAdmin.getState(), callerAdmin.getZipcode(), callerAdmin.getEmailAddress(), callerAdmin.getPhoneNumber(), 
-				callerAdmin.getNotes(), callerAdmin.getUsers().getIsPrivilegedUser(), callerAdmin.getStatus());
+				callerAdmin.getNotes(), callerAdmin.getIsDrivingDistance(), callerAdmin.getUsers().getIsPrivilegedUser(), callerAdmin.getStatus());
 		
 		callerAdminForm.setProductToken(callerAdmin.getUsers().getProductToken());
 		// County List
@@ -146,7 +146,7 @@ public class CallerAdminService {
 		
 		CallerAdmin callerAdmin=new CallerAdmin(users, callerAdminForm.getFirstName(), callerAdminForm.getLastName(), 
 												callerAdminForm.getStreet(), callerAdminForm.getCity(), callerAdminForm.getState(), callerAdminForm.getZipcode(), callerAdminForm.getEmailAddress(), 
-												callerAdminForm.getPhoneNumber(), callerAdminForm.getNotes(), 1, null, null, null, null, null);
+												callerAdminForm.getPhoneNumber(), callerAdminForm.getNotes(), callerAdminForm.getIsDrivingDistance(), 1, null, null, null, null, null);
 		callerAdminDAO.save(callerAdmin);
 		
 		List<Integer> mappedCounty=callerAdminForm.getCounty();
@@ -177,7 +177,7 @@ public class CallerAdminService {
 		usersDAO.update(users);
 		callerAdmin=new CallerAdmin(users, callerAdminForm.getFirstName(), callerAdminForm.getLastName(), 
 				callerAdminForm.getStreet(), callerAdminForm.getCity(), callerAdminForm.getState(), callerAdminForm.getZipcode(), callerAdminForm.getEmailAddress(), 
-				callerAdminForm.getPhoneNumber(), callerAdminForm.getNotes(), 1, null, null, null, null, null);
+				callerAdminForm.getPhoneNumber(), callerAdminForm.getNotes(), callerAdminForm.getIsDrivingDistance(), callerAdminForm.getStatus(), null, null, null, null, null);
 		callerAdmin.setCallerAdminId(callerAdminForm.getCallerAdminId());
 		callerAdminDAO.update(callerAdmin);
 		

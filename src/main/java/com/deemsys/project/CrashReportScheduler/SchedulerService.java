@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.deemsys.project.CrashReport.CrashReportService;
+import com.deemsys.project.Map.SearchClinicsService;
 import com.deemsys.project.PoliceAgency.PoliceAgencyForm;
 import com.deemsys.project.PoliceAgency.PoliceAgencyService;
 import com.deemsys.project.common.InjuryProperties;
@@ -42,6 +43,9 @@ public class SchedulerService {
 	
 	@Autowired
 	PoliceAgencyService policeAgencyService;
+	
+	@Autowired
+	SearchClinicsService searchClinicsService;
 	
 	/**
 	 * You can opt for cron expression or fixedRate or fixedDelay
@@ -91,10 +95,10 @@ public class SchedulerService {
 			try
 			{
 				System.out.println("Start Delete Old Data");
+				LocalDateTime todayDateTime = new LocalDateTime();
+				int currentTime = todayDateTime.getHourOfDay();
 				if(injuryProperties.getProperty("sixMonthOldDataDelete").equals("on")){
 					System.out.println("Auto Delete ON");
-					LocalDateTime todayDateTime = new LocalDateTime();
-					int currentTime = todayDateTime.getHourOfDay();
 					if(currentTime==Integer.parseInt(injuryProperties.getProperty("oldDataDeleteTime"))){
 						System.out.println("Moving and Deleting Start...........");
 						LocalDate localDate1=new LocalDate().minusMonths(6);
@@ -109,9 +113,24 @@ public class SchedulerService {
 					System.out.println("Auto Delete Off");
 				}
 				System.out.println("End Delete Old Data");
+				System.out.println("Map Search Result Delete Start");
+				if(injuryProperties.getProperty("mapSearchResultOldDataDelete").equals("on")){
+					System.out.println("Map Search Result Auto Delete On");
+					if(currentTime==Integer.parseInt(injuryProperties.getProperty("mapSearchResultDeleteTime"))){
+						System.out.println("Map Search Result Delete Start.....");
+						LocalDate localDate1=new LocalDate().minusMonths(1);
+						String date=localDate1.toString("yyyy-MM-dd");
+						searchClinicsService.deleteOldSearchResults("2017-10-15");
+						System.out.println("Map Search Result Delete End.....");
+					}
+				}else{
+					System.out.println("Map Search Result Auto Delete Off");
+				}
+				System.out.println("Map Search Result Delete End");
 			}
 			catch(Exception ex)
 			{
+				ex.printStackTrace();
 				System.out.println(ex.toString());
 			}
 			

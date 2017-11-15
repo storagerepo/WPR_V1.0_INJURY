@@ -4,13 +4,13 @@
 "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+       <!--  <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">admin@123</property>
-        <property name="hibernate.connection.url">jdbc:mysql://192.168.1.140:3306/injurytest</property>
+        <property name="hibernate.connection.url">jdbc:mysql://192.168.1.122:3306/injuryreportsdbprotest?useSSL=true</property>
         <property name="hibernate.connection.username">admin</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.search.autoregister_listeners">false</property>
+        <property name="hibernate.search.autoregister_listeners">false</property> -->
         <mapping class="com.deemsys.project.entity.Caller" />
         <mapping class="com.deemsys.project.entity.CallerCountyMap" />
         <mapping class="com.deemsys.project.entity.CallerAdmin" />
@@ -43,5 +43,6 @@
         <mapping class="com.deemsys.project.entity.PoliceAgency" />
         <mapping class="com.deemsys.project.entity.ReportingAgency" />
         <mapping class="com.deemsys.project.entity.VehicleMakeAbbreviation" />
+        <mapping class="com.deemsys.project.entity.PatientNearbyClinicSearchResult" />
     </session-factory>
 </hibernate-configuration>

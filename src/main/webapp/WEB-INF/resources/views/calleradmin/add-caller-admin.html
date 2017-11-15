@@ -84,7 +84,7 @@
                                  <div class="col-md-12 no-padding">
                                   <div class="col-md-6">
                                   <span class="redText">*</span> <label>Username</label>
-                                    <input  type="text" class="form-control inputclass" ng-show='options' ng-pattern="/^ *([a-zA-Z0-9]+?)+ *$/" ng-model="callerAdmin.username" name="username" id="username" data-mask="usernameinput" placeholder="Username" maxlength="45" usernameexists  required>
+                                    <input  type="text" class="form-control inputclass" ng-show='options' ng-pattern="/^ *([a-zA-Z0-9@.]+?)+ *$/" ng-model="callerAdmin.username" name="username" id="username" data-mask="usernameinput" placeholder="Username" maxlength="45" usernameexists  required>
     								<input  type="text" readonly="readonly" class="form-control" ng-show='!options' ng-model="callerAdmin.username" placeholder="Enter Username" maxlength="45">
                                     <span style="color:red" id="username_exists"></span>
                                     <span class="error-container" ng-show="myForm.username.$dirty && myForm.username.$invalid">
@@ -122,6 +122,20 @@
                                     <br/>
                                     </div> 
                                    </div>
+                              <div class="col-md-12">
+                         	<div class="col-md-2 no-padding" style="margin-top:5px;"><label>Is Driving Distance?:</label></div>
+                         	<div class="col-md-3">
+                         		<div class="form-group passenger-type">
+								<div class="btn-group">
+									<label class="btn btn-default" btn-radio="1"
+										ng-model="callerAdmin.isDrivingDistance"> Yes 
+									</label> <label class="btn btn-default" btn-radio="0"
+										ng-model="callerAdmin.isDrivingDistance"> No
+									</label>
+								</div>
+								</div>
+							 </div>
+                         	</div>     
                             <div class="col-md-12 no-padding">
                                 <div class="col-md-12">
                                     <label>Notes</label>
@@ -150,7 +164,7 @@
 							    </div>
                              </div>
                          	</div>
-                </div>
+                  </div>
             </div>
             <div class="text-right" style="margin-right:30px;">
                 <a class="btn btn-success" ng-show='options' ng-class="{'button-disable':myForm.$invalid}"  ng-disabled='isClean() || myForm.$invalid || !requiredValue'  ng-click="saveCallerAdmin()">Save</a>

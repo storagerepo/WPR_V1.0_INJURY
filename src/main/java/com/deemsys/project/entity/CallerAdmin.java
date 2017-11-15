@@ -33,6 +33,7 @@ public class CallerAdmin implements java.io.Serializable {
 	private String emailAddress;
 	private String phoneNumber;
 	private String notes;
+	private Byte isDrivingDistance;
 	private Integer status;
 	private Set<CallerAdminCountyMap> callerAdminCountyMaps = new HashSet<CallerAdminCountyMap>(
 			0);
@@ -48,7 +49,7 @@ public class CallerAdmin implements java.io.Serializable {
 
 	public CallerAdmin(Users users, String firstName, String lastName,
 			String street, String city, String state, String zipcode,
-			String emailAddress, String phoneNumber, String notes,
+			String emailAddress, String phoneNumber, String notes, Byte isDrivingDistance,
 			Integer status, Set<CallerAdminCountyMap> callerAdminCountyMaps,
 			Set<PatientCallerAdminMap> patientCallerAdminMaps,
 			Set<DirectReportCallerAdminMap> directReportCallerAdminMaps,
@@ -63,6 +64,7 @@ public class CallerAdmin implements java.io.Serializable {
 		this.emailAddress = emailAddress;
 		this.phoneNumber = phoneNumber;
 		this.notes = notes;
+		this.isDrivingDistance = isDrivingDistance;
 		this.status = status;
 		this.callerAdminCountyMaps = callerAdminCountyMaps;
 		this.patientCallerAdminMaps = patientCallerAdminMaps;
@@ -172,7 +174,16 @@ public class CallerAdmin implements java.io.Serializable {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+	
+	@Column(name = "is_driving_distance")
+	public Byte getIsDrivingDistance() {
+		return this.isDrivingDistance;
+	}
 
+	public void setIsDrivingDistance(Byte isDrivingDistance) {
+		this.isDrivingDistance = isDrivingDistance;
+	}
+	
 	@Column(name = "status")
 	public Integer getStatus() {
 		return this.status;

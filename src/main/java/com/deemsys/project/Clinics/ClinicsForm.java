@@ -24,6 +24,8 @@ public class ClinicsForm {
 	private String notes;
 	private Integer status;
 	private Double farAway;
+	private String travellingTime;
+	private Integer isDrivingDistance;
 	private List<ClinicTimingList> clinicTimingList;
 	private List<DoctorsForm> doctorsForms;
 
@@ -171,6 +173,22 @@ public class ClinicsForm {
 		this.farAway = farAway;
 	}
 
+	public String getTravellingTime() {
+		return travellingTime;
+	}
+
+	public void setTravellingTime(String travellingTime) {
+		this.travellingTime = travellingTime;
+	}
+
+	public Integer getIsDrivingDistance() {
+		return isDrivingDistance;
+	}
+
+	public void setIsDrivingDistance(Integer isDrivingDistance) {
+		this.isDrivingDistance = isDrivingDistance;
+	}
+
 	public List<ClinicTimingList> getClinicTimingList() {
 		return clinicTimingList;
 	}
@@ -191,7 +209,8 @@ public class ClinicsForm {
 			String city, String state, String county, String country,
 			String zipcode, Double latitude, Double longitude,
 			String officeNumber, String faxNumber, String serviceArea,
-			String directions, String notes,Integer status, Double farAway,
+			String directions, String notes,Integer status, Double farAway, String travellingTime,
+			Integer isDrivingDistance,
 			List<ClinicTimingList> clinicTimingList) {
 		super();
 		this.clinicId = clinicId;
@@ -211,6 +230,8 @@ public class ClinicsForm {
 		this.notes = notes;
 		this.status=status;
 		this.farAway = farAway;
+		this.travellingTime = travellingTime;
+		this.isDrivingDistance = isDrivingDistance;
 		this.clinicTimingList = clinicTimingList;
 	}
 
