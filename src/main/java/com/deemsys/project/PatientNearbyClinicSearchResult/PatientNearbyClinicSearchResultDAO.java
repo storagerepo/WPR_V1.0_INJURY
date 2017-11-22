@@ -1,5 +1,7 @@
 package com.deemsys.project.PatientNearbyClinicSearchResult;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import com.deemsys.project.common.IGenericDAO;
@@ -11,6 +13,7 @@ import com.deemsys.project.entity.Template;
  *
  */
 public interface PatientNearbyClinicSearchResultDAO extends IGenericDAO<PatientNearbyClinicSearchResult>{
-	public List<PatientNearbyClinicSearchResult> getSearchResultByPatientId(String patientId);
-	public void deleteOldSearchResults(String date);
+	public List<PatientNearbyClinicSearchResult> getSearchResultByPatientId(BigDecimal originLatitude, BigDecimal originLongitude);
+	public void deleteOldSearchResults(Date date);
+	public List<PatientNearbyClinicSearchResult> getSearchresultByDate(Date date);
 }

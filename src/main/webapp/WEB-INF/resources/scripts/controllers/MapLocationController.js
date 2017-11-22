@@ -19,7 +19,6 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 	      $scope.lng = location.lng();
 	      $scope.correctedAddress=$scope.autocomplete.getPlace().formatted_address;
 	      $scope.$apply();
-	    //  alert("Lat:"+$scope.lat+"-->Long"+$scope.lng);
 	});
 	
 	// Options For Auto Complete Search
@@ -80,20 +79,26 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     		}
     		var clinicLocationForm= response.data.clinicLocationForm;
     		var clinicsForms =response.data.clinicLocationForm.clinicsForms;
-    		$scope.map = {center: {latitude: clinicLocationForm.centerLatitude, longitude: clinicLocationForm.centerLongitude }, zoom: 8 };
+    		$scope.map = {center: {latitude: clinicLocationForm.centerLatitude, longitude: clinicLocationForm.centerLongitude }, zoom: 9 };
     		$scope.options = {scrollwheel: true};
     		$scope.clinicMarkers = [];
     		$scope.circles = [];
     		var markers = [];
     		var idKey="id";
     		var i=1;
-    		var marker = {
+    		var marker={};
+    		marker = {
 	    	        latitude: clinicLocationForm.centerLatitude,
 	    	        longitude: clinicLocationForm.centerLongitude,
 	    	        title: "Patient Location",
-	   	           	icon:'resources/images/map/map_icon_green_search.png',
+	   	           	icon:'resources/images/map/map_icon_yellow.png',
 	   	           	show:false
 	   	          };
+    		marker.onClick = function() {
+                 console.log("Clicked!");
+                 marker.show = !marker.show;
+                 $scope.$apply();
+             };
     		marker[idKey]=0;
     		markers.push(marker);
     		for ( var int = 0; int < clinicsForms.length; int++) {
@@ -107,10 +112,14 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 			    	        latitude: clinicForm.latitude,
 			    	        longitude: clinicForm.longitude,
 			    	        title: windowContent,
-			    	        icon:'resources/images/map/map_icon_yellow_clinic.png',
+			    	        icon:'resources/images/map/map_icon_green_plus_white_border.png',
 			    	        text:clinicForm.clinicId,
 			   	           	show:false
 			   	         };
+					marker.onClick = function() {
+		                 marker.show = !marker.show;
+		                 $scope.$apply();
+		             };
 				}else{
 					marker = {
 			    	        latitude: clinicForm.latitude,
@@ -119,6 +128,10 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 			    	        text:clinicForm.clinicId,
 			   	           	show:false
 			   	         };
+					marker.onClick = function() {
+		                 marker.show = !marker.show;
+		                 $scope.$apply();
+		             };
 				}
 				marker[idKey]=i;
 				markers.push(marker);
@@ -136,13 +149,13 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     	                            },
     	                            radius: clinicLocationForm.searchRadius,
     	                            stroke: {
-    	                                color: '#08B21F',
+    	                                color: '#52E770',
     	                                weight: 2,
     	                                opacity: 1
     	                            },
     	                            fill: {
-    	                                color: '#08B21F',
-    	                                opacity: 0.5
+    	                                color: '#52E770',
+    	                                opacity: 0.1
     	                            },
     	                            geodesic: true, // optional: defaults to false
     	                            draggable: false, // optional: defaults to false
@@ -160,11 +173,11 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     };
     
     // Open a Info Window while clicking on marker
-    $scope.onClick = function(model) {
+    /*$scope.onClick = function(model) {
         
         model.show = !model.model.show;
     };
-
+*/
     // Marker Events
     $scope.markersEvents = {
     			mouseover: function (gMarker, eventName, model) {

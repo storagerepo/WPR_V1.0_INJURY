@@ -1,8 +1,10 @@
 package com.deemsys.project.CrashReportScheduler;
 
 
+import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -120,7 +122,8 @@ public class SchedulerService {
 						System.out.println("Map Search Result Delete Start.....");
 						LocalDate localDate1=new LocalDate().minusMonths(1);
 						String date=localDate1.toString("yyyy-MM-dd");
-						searchClinicsService.deleteOldSearchResults("2017-10-15");
+						Date oldDate = new DateTime(date).plusDays(1).minusSeconds(1).toDate();
+						searchClinicsService.deleteOldSearchResults(oldDate);
 						System.out.println("Map Search Result Delete End.....");
 					}
 				}else{

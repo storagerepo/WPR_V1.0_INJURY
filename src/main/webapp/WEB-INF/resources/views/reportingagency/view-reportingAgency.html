@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-lg-12">
-		<a ui-sref="dashboard.add-reportingAgency"
-			class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-plus-circle fa-lg"></i> Add Reporting Agency</a>
+		<!-- <a ui-sref="dashboard.add-reportingAgency"
+			class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-plus-circle fa-lg"></i> Add Reporting Agency</a> -->
 			
 		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
 		<h2 class="page-header">Reporting Agency</h2>
@@ -66,12 +66,12 @@
 								<th width="20%" ng-mousedown="sort('code')">NCIC Code&nbsp;&nbsp;<span
 									class="glyphicon sort-icon" ng-show="sortKey=='code'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-								<th width="30%" ng-mousedown="sort('reportingAgencyName')">Reporting Agency Name&nbsp;&nbsp;<span
+								<th width="35%" ng-mousedown="sort('reportingAgencyName')">Reporting Agency Name&nbsp;&nbsp;<span
 									class="glyphicon sort-icon" ng-show="sortKey=='reportingAgencyName'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-								<th width="20%">County</th>
-								<th width="17%">Status</th>
-								<th width="13%">Actions</th>
+								<th width="25%">County</th>
+								<th width="20%">Status</th>
+								<!-- <th width="13%">Actions</th> -->
 						
 							</tr>
 
@@ -86,8 +86,8 @@
 								<span ng-show="{{reportingAgency.status}}==1">Active</span>
 								<span ng-show="{{reportingAgency.status}}==0">InActive</span></td>
 								
-								<td>
-							<!-- 	<a href="#/dashboard/edit-reportingAgency/{{reportingAgency.reportingAgencyId}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Reporting Agency"><i
+							<!-- 	<td>
+								<a href="#/dashboard/edit-reportingAgency/{{reportingAgency.reportingAgencyId}}" ng-cloak class="btn btn-xs btn-warning hint--top" data-hint="Edit Reporting Agency"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a> -->
 						<!-- <a href="" ng-cloak ng-show="reportingAgency.status==1" ng-click="enableOrDisableReportingAgency(reportingAgency.reportingAgencyId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Reporting Agency"><i
@@ -95,15 +95,15 @@
 						</a>
 								<a href="" ng-cloak ng-show="reportingAgency.status==0" ng-click="enableOrDisableReportingAgency(reportingAgency.reportingAgencyId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable Reporting Agency"><i
 								class="fa fa-lock"></i>
-						</a> -->
+						</a> 
 							<a  ng-cloak class="btn btn-xs btn-danger hint--top" data-hint="Delete Reporting Agency" data-toggle="modal" data-target="#deleteReportingAgencyModal" ng-click="deleteReportingAgency(reportingAgency.reportingAgencyId)"><i
 								class="glyphicon glyphicon-trash" ></i>
 						</a>
 							
 								
-							 </td>
+							 </td>-->
 							</tr>
-							<tr ng-show="!reportingAgencyFilter.length"><td colspan="6" align="center">No Records Found</td></tr>
+							<tr ng-show="!reportingAgencyFilter.length"><td colspan="5" align="center">No Records Found</td></tr>
 						</tbody>
 						
 					</table>

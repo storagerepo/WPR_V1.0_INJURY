@@ -56,7 +56,7 @@
 	<span class="error-container" ng-show="searchClinic.range.$dirty && searchClinic.range.$invalid">
         <span ng-cloak style="color:red" ng-show="searchClinic.range.$error.required">Please Enter Range</span>
         <span ng-cloak style="color:red" ng-show="searchClinic.range.$error.pattern">Invalid Format</span>
-        <span ng-cloak style="color:red" ng-show="!searchClinic.range.$error.pattern&&searchClinic.range.$error.searchRangeValidation">Range between 0 to 100</span>
+        <span ng-cloak style="color:red" ng-show="!searchClinic.range.$error.pattern&&searchClinic.range.$error.searchRangeValidation">Range between 1 to 100</span>
     </span>
 	</div>
 	<div class="col-md-2">
@@ -89,8 +89,8 @@
                 <div>{{marker.title}}</div>
             </ui-gmap-window>
         </ui-gmap-marker> -->
-        <ui-gmap-markers models="clinicMarkers" coords="'self'" icon="'icon'" click="onClick" events="markersEvents">
-            <ui-gmap-windows show="show">
+        <ui-gmap-markers models="clinicMarkers" coords="'self'" icon="'icon'" click="'onClick'" events="markersEvents">
+            <ui-gmap-windows show="'show'" >
                 <div ng-non-bindable>{{title}}</div>
             </ui-gmap-windows>
         </ui-gmap-markers>

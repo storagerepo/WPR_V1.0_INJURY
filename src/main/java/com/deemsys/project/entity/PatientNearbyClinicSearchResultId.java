@@ -1,7 +1,8 @@
 package com.deemsys.project.entity;
 
-// Generated 14 Nov, 2017 6:37:39 PM by Hibernate Tools 3.4.0.CR1
+// Generated 21 Nov, 2017 4:13:25 PM by Hibernate Tools 3.4.0.CR1
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -11,33 +12,57 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class PatientNearbyClinicSearchResultId implements java.io.Serializable {
 
-	private String patientId;
-	private int clinicId;
+	private BigDecimal originLongitude;
+	private BigDecimal originLatitude;
+	private BigDecimal destinationLatitude;
+	private BigDecimal destinationLongitude;
 
 	public PatientNearbyClinicSearchResultId() {
 	}
 
-	public PatientNearbyClinicSearchResultId(String patientId, int clinicId) {
-		this.patientId = patientId;
-		this.clinicId = clinicId;
+	public PatientNearbyClinicSearchResultId(BigDecimal originLongitude,
+			BigDecimal originLatitude, BigDecimal destinationLatitude,
+			BigDecimal destinationLongitude) {
+		this.originLongitude = originLongitude;
+		this.originLatitude = originLatitude;
+		this.destinationLatitude = destinationLatitude;
+		this.destinationLongitude = destinationLongitude;
 	}
 
-	@Column(name = "patient_id", nullable = false, length = 32)
-	public String getPatientId() {
-		return this.patientId;
+	@Column(name = "origin_longitude", nullable = false, precision = 16, scale = 11)
+	public BigDecimal getOriginLongitude() {
+		return this.originLongitude;
 	}
 
-	public void setPatientId(String patientId) {
-		this.patientId = patientId;
+	public void setOriginLongitude(BigDecimal originLongitude) {
+		this.originLongitude = originLongitude;
 	}
 
-	@Column(name = "clinic_id", nullable = false)
-	public int getClinicId() {
-		return this.clinicId;
+	@Column(name = "origin_latitude", nullable = false, precision = 16, scale = 11)
+	public BigDecimal getOriginLatitude() {
+		return this.originLatitude;
 	}
 
-	public void setClinicId(int clinicId) {
-		this.clinicId = clinicId;
+	public void setOriginLatitude(BigDecimal originLatitude) {
+		this.originLatitude = originLatitude;
+	}
+
+	@Column(name = "destination_latitude", nullable = false, precision = 16, scale = 11)
+	public BigDecimal getDestinationLatitude() {
+		return this.destinationLatitude;
+	}
+
+	public void setDestinationLatitude(BigDecimal destinationLatitude) {
+		this.destinationLatitude = destinationLatitude;
+	}
+
+	@Column(name = "destination_longitude", nullable = false, precision = 16, scale = 11)
+	public BigDecimal getDestinationLongitude() {
+		return this.destinationLongitude;
+	}
+
+	public void setDestinationLongitude(BigDecimal destinationLongitude) {
+		this.destinationLongitude = destinationLongitude;
 	}
 
 	public boolean equals(Object other) {
@@ -49,18 +74,48 @@ public class PatientNearbyClinicSearchResultId implements java.io.Serializable {
 			return false;
 		PatientNearbyClinicSearchResultId castOther = (PatientNearbyClinicSearchResultId) other;
 
-		return ((this.getPatientId() == castOther.getPatientId()) || (this
-				.getPatientId() != null && castOther.getPatientId() != null && this
-				.getPatientId().equals(castOther.getPatientId())))
-				&& (this.getClinicId() == castOther.getClinicId());
+		return ((this.getOriginLongitude() == castOther.getOriginLongitude()) || (this
+				.getOriginLongitude() != null
+				&& castOther.getOriginLongitude() != null && this
+				.getOriginLongitude().equals(castOther.getOriginLongitude())))
+				&& ((this.getOriginLatitude() == castOther.getOriginLatitude()) || (this
+						.getOriginLatitude() != null
+						&& castOther.getOriginLatitude() != null && this
+						.getOriginLatitude().equals(
+								castOther.getOriginLatitude())))
+				&& ((this.getDestinationLatitude() == castOther
+						.getDestinationLatitude()) || (this
+						.getDestinationLatitude() != null
+						&& castOther.getDestinationLatitude() != null && this
+						.getDestinationLatitude().equals(
+								castOther.getDestinationLatitude())))
+				&& ((this.getDestinationLongitude() == castOther
+						.getDestinationLongitude()) || (this
+						.getDestinationLongitude() != null
+						&& castOther.getDestinationLongitude() != null && this
+						.getDestinationLongitude().equals(
+								castOther.getDestinationLongitude())));
 	}
 
 	public int hashCode() {
 		int result = 17;
 
-		result = 37 * result
-				+ (getPatientId() == null ? 0 : this.getPatientId().hashCode());
-		result = 37 * result + this.getClinicId();
+		result = 37
+				* result
+				+ (getOriginLongitude() == null ? 0 : this.getOriginLongitude()
+						.hashCode());
+		result = 37
+				* result
+				+ (getOriginLatitude() == null ? 0 : this.getOriginLatitude()
+						.hashCode());
+		result = 37
+				* result
+				+ (getDestinationLatitude() == null ? 0 : this
+						.getDestinationLatitude().hashCode());
+		result = 37
+				* result
+				+ (getDestinationLongitude() == null ? 0 : this
+						.getDestinationLongitude().hashCode());
 		return result;
 	}
 

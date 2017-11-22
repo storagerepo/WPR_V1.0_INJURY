@@ -2,9 +2,11 @@
 package com.deemsys.project.common;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,6 +27,7 @@ import com.deemsys.project.Export.PrintPDFFiles;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingService;
 import com.deemsys.project.Lawyers.LawyersService;
+import com.deemsys.project.Map.SearchClinicsService;
 import com.deemsys.project.UserLookupPreferences.UserLookupPreferencesService;
 import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.CallerAdmin;
@@ -94,6 +97,9 @@ public class CommonController {
 	
 	@Autowired
 	ClinicsService clinicsService;
+	
+	@Autowired
+	SearchClinicsService searchClinicsService;
 	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String getInit(ModelMap model)
@@ -340,6 +346,19 @@ public class CommonController {
     	model.addAttribute("requestSuccess",true);
     	return "";
     }
+    
+    @RequestMapping(value = "/deleteOldMapSearchResults", method = RequestMethod.GET)
+	public String debugParsePDF(@RequestParam("oldDate") String date,
+			ModelMap model) {
+		try {
+			System.out.println("Delete Date---->>"+new DateTime(date).plusDays(1).minusSeconds(1).toDate());
+			searchClinicsService.deleteOldSearchResults(new DateTime(date).plusDays(1).minusSeconds(1).toDate());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "/returnPage";
+	}
     
     
 }

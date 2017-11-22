@@ -68,8 +68,14 @@ public class LoginService {
 	
 	//Get User Id
 	public Integer getCurrentUserID(){
-		User user = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		User user = null;
+		try{
+			user = (User) SecurityContextHolder.getContext()
+					.getAuthentication().getPrincipal();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		return usersDAO.getByUserName(user.getUsername()).getUserId();
 	}
 	

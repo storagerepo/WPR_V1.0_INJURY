@@ -1,16 +1,19 @@
 package com.deemsys.project.PatientNearbyClinicSearchResult;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.PatientNearbyClinicSearchResult;
 
 /**
@@ -140,18 +143,26 @@ public class PatientNearbyClinicSearchResultDAOImpl implements PatientNearbyClin
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PatientNearbyClinicSearchResult> getSearchResultByPatientId(
-			String patientId) {
+			BigDecimal originLatitude, BigDecimal originLongitude) {
 		// TODO Auto-generated method stub
-		return this.sessionFactory.getCurrentSession().createCriteria(PatientNearbyClinicSearchResult.class).add(Restrictions.eq("id.patientId", patientId)).list();
+		return this.sessionFactory.getCurrentSession().createQuery("from PatientNearbyClinicSearchResult where id.originLatitude like '"+InjuryConstants.subStringLatandLang(originLatitude)+"%' and id.originLongitude like'"+InjuryConstants.subStringLatandLang(originLongitude)+"%'").list();
 	}
 
 	@Override
-	public void deleteOldSearchResults(String date) {
+	public void deleteOldSearchResults(Date date) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
 		Query query = session.createSQLQuery("CALL start_purge_map_search_results(:oldDate)");
 		query.setParameter("oldDate", date);
 		query.executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PatientNearbyClinicSearchResult> getSearchresultByDate(
+			Date date) {
+		// TODO Auto-generated method stub
+		return this.sessionFactory.getCurrentSession().createCriteria(PatientNearbyClinicSearchResult.class).add(Restrictions.le("updatedDateTime", date)).list();
 	}
 
 }

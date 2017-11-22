@@ -385,4 +385,18 @@ public class InjuryConstants {
 
 		return outputArray;
 	}
+	
+	// Substring Lat and Long
+	public static String subStringLatandLang(BigDecimal inputValue){
+		if(inputValue!=null){
+			String subStringValue=inputValue.toString();
+			if(subStringValue.length()>=8){
+				return subStringValue.substring(0, subStringValue.indexOf(".")+6);
+			}else{
+				return subStringValue;
+			}
+		}else{
+			return "";
+		}
+	}
 }
