@@ -9,7 +9,13 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <div ng-cloak class="huge">{{number}}</div>
+                    <div ng-cloak class="huge">{{number}}
+                    <div id="squaresWaveG" ng-if="number==''">
+							<div id="squaresWaveG_1" class="squaresWaveG"></div>
+							<div id="squaresWaveG_2" class="squaresWaveG"></div>
+							<div id="squaresWaveG_3" class="squaresWaveG"></div>
+					</div>
+					</div>
                     <div ng-cloak>{{comments}}</div>
                 </div>
             </div>
