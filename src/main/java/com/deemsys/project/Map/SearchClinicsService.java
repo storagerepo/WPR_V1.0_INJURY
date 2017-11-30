@@ -97,7 +97,7 @@ public class SearchClinicsService {
 					BigDecimal longitude = new BigDecimal(0);
 					BigDecimal latitude = new BigDecimal(0);
 					String latLong = geoLocation.getLocation(patient.getAddress());
-					if (!latLong.equals("NONE")) {
+					if (latLong!=null) {
 						String[] latitudeLongitude = latLong.split(",");
 						latitude = new BigDecimal(latitudeLongitude[0]);
 						longitude = new BigDecimal(latitudeLongitude[1]);

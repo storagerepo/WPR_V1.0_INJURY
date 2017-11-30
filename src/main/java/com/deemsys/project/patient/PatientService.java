@@ -454,18 +454,20 @@ public class PatientService {
 	}
 	
 	// Reporting Agency Check And Update the Agency List
-	Integer countyId=county.getCountyId();
-	ReportingAgency reportingAgency = reportingAgencyDAO.getReportingAgencyByCodeAndCounty(countyId, patientForm.getReportingAgencyNcic());
-	if(reportingAgency==null){
-		reportingAgency = new ReportingAgency(county, patientForm.getReportingAgencyName(), patientForm.getReportingAgencyNcic(), 1);
-		reportingAgencyDAO.save(reportingAgency);
-		List<LawyerAdminCountyMap> lawyerAdminCountyMaps=lawyerAdminCountyMappingDAO.getLawyerAdminCountyMappingsByCountyId(countyId);
-		List<Integer> preferredId=new ArrayList<Integer>();
-		preferredId.add(reportingAgency.getReportingAgencyId());
-		for (LawyerAdminCountyMap lawyerAdminCountyMap : lawyerAdminCountyMaps) {
-			UserLookupPreferenceMappedForm userLookupPreferenceMappedForm = new UserLookupPreferenceMappedForm(InjuryConstants.REPORTING_AGENCY_LOOKUP, preferredId);
-			userLookupPreferenceMappedForm.setCountyId(countyId);
-			userLookupPreferencesService.saveReportingAgencyPreference(lawyerAdminCountyMap.getLawyerAdmin().getUsers().getUserId(), userLookupPreferenceMappedForm);
+	if(patientForm.getReportingAgencyNcic()!=null&&!patientForm.getReportingAgencyNcic().equals("")){
+		Integer countyId=county.getCountyId();
+		ReportingAgency reportingAgency = reportingAgencyDAO.getReportingAgencyByCodeAndCounty(countyId, patientForm.getReportingAgencyNcic());
+		if(reportingAgency==null){
+			reportingAgency = new ReportingAgency(county, patientForm.getReportingAgencyName(), patientForm.getReportingAgencyNcic(), 1);
+			reportingAgencyDAO.save(reportingAgency);
+			List<LawyerAdminCountyMap> lawyerAdminCountyMaps=lawyerAdminCountyMappingDAO.getLawyerAdminCountyMappingsByCountyId(countyId);
+			List<Integer> preferredId=new ArrayList<Integer>();
+			preferredId.add(reportingAgency.getReportingAgencyId());
+			for (LawyerAdminCountyMap lawyerAdminCountyMap : lawyerAdminCountyMaps) {
+				UserLookupPreferenceMappedForm userLookupPreferenceMappedForm = new UserLookupPreferenceMappedForm(InjuryConstants.REPORTING_AGENCY_LOOKUP, preferredId);
+				userLookupPreferenceMappedForm.setCountyId(countyId);
+				userLookupPreferencesService.saveReportingAgencyPreference(lawyerAdminCountyMap.getLawyerAdmin().getUsers().getUserId(), userLookupPreferenceMappedForm);
+			}
 		}
 	}
 	
@@ -640,7 +642,7 @@ public class PatientService {
 					String latLong = geoLocation.getLocation(patient.getAddress());
 					BigDecimal longitude = new BigDecimal(0);
 					BigDecimal latitude = new BigDecimal(0);
-					if (!latLong.equals("NONE")) {
+					if (latLong!=null) {
 						String[] latitudeLongitude = latLong.split(",");
 						latitude = new BigDecimal(latitudeLongitude[0]);
 						longitude = new BigDecimal(latitudeLongitude[1]);

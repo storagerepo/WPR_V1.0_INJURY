@@ -265,28 +265,28 @@ public class CrashReportService {
 					 new Date(), numberOfPatients, vehicleCount, runnerCrashReportForm.getFilePath(), null, isRunnerReport, new Date(), 1,null,null,null);
 		
 		
-		/*String odpsCrashId=this.checkRunnerReportWithODPSReport(runnerCrashReportForm);
-		 * if(odpsCrashId==null){
+		CrashReport crashReportExist=this.checkRunnerReportWithODPSReport(runnerCrashReportForm);
+		if(crashReportExist==null){
 			crashReportDAO.save(crashReport);
-		}*/
-		crashReportDAO.save(crashReport);
 		
-		for (PatientForm patientForm : runnerCrashReportForm.getPatientForms()) {
-			try {
-				patientForm.setCrashId(crashId);
-				patientForm.setAge(null);
-				patientForm.setTier(null);
-				patientForm.setCallerId(null);
-				patientForm.setLatitude(null);
-				patientForm.setLongitude(null);
-				patientForm.setIsOwner(0);
-				patientForm.setCountyId(Integer.parseInt(runnerCrashReportForm.getCounty()));
-				patientService.savePatient(patientForm);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			for (PatientForm patientForm : runnerCrashReportForm.getPatientForms()) {
+				try {
+					patientForm.setCrashId(crashId);
+					patientForm.setAge(null);
+					patientForm.setTier(null);
+					patientForm.setCallerId(null);
+					patientForm.setLatitude(null);
+					patientForm.setLongitude(null);
+					patientForm.setIsOwner(0);
+					patientForm.setCountyId(Integer.parseInt(runnerCrashReportForm.getCounty()));
+					patientService.savePatient(patientForm);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
+		
 		
 		//Logic Ends
 		

@@ -121,8 +121,8 @@ public class CallerController {
 		return "/returnPage";
 	}
 
-	@RequestMapping(value = "/getCurrentRole", method = RequestMethod.POST)
-	public String getCurrentRole(ModelMap model, Principal principal) {
+	@RequestMapping(value = "/getCurrentUserName", method = RequestMethod.POST)
+	public String getCurrentUserName(ModelMap model, Principal principal) {
 
 		model.addAttribute("username", principal.getName());
 		model.addAttribute("requestSuccess", true);

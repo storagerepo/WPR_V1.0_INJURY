@@ -259,7 +259,6 @@ public class CallerService {
 		caller.setPhoneNumber(callerForm.getPhoneNumber());
 		caller.setEmailAddress(callerForm.getEmailAddress());
 		caller.setNotes(callerForm.getNotes());
-		caller.setStatus(1);
 		caller.setCallerId(callerForm.getCallerId());
 
 		callerDAO.update(caller);

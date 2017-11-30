@@ -18,6 +18,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.common.InjuryProperties;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -41,7 +42,7 @@ public class GeoLocation {
 					gURL
 							+ "?address="
 							+ URLEncoder.encode(address, "UTF-8")
-							+ "&sensor=false&key="+injuryProperties.getProperty("reportDownloadAPIKey"));
+							+ "&sensor=false&key="+injuryProperties.getProperty("googleMapAPIKey"));
 
 			// Open the Connection
 			URLConnection conn = url.openConnection();
@@ -71,9 +72,29 @@ public class GeoLocation {
 				// Convert to JSON Object
 				JSONArray results = (JSONArray) jsonObject.get("results");
 				JSONObject mainJson = (JSONObject) results.get(0);
-				JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
-				JSONObject location = (JSONObject) geoMetry.get("location");
-				latLang = location.get("lat") + "," + location.get("lng");
+				if(mainJson.get("partial_match")!=null&&(Boolean) mainJson.get("partial_match")){
+					latLang = "0.1,0.1";
+					JSONArray addressComponents = (JSONArray) mainJson.get("address_components");
+					for (Object object : addressComponents) {
+						JSONObject typesJson=(JSONObject) object;
+						JSONArray types = (JSONArray) typesJson.get("types");
+						boolean isContain=types.contains("postal_code");
+						if(isContain){
+							String zipcode=(String) typesJson.get("long_name");
+							String[] splittedAddress=InjuryConstants.splitAddress(address);
+							if(splittedAddress[3]!=null&&splittedAddress[3].equals(zipcode)){
+								JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
+								JSONObject location = (JSONObject) geoMetry.get("location");
+								latLang = location.get("lat") + "," + location.get("lng");
+								break;
+							}
+						}
+					}
+				}else{
+					JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
+					JSONObject location = (JSONObject) geoMetry.get("location");
+					latLang = location.get("lat") + "," + location.get("lng");
+				}
 			} else {
 				latLang = "0.1,0.1";
 			}
@@ -97,7 +118,7 @@ public class GeoLocation {
 					gURL
 							+ "?address="
 							+ URLEncoder.encode(address, "UTF-8")
-							+ "&sensor=false&key="+injuryProperties.getProperty("updateLatLongAPIKey"));
+							+ "&sensor=false&key="+injuryProperties.getProperty("googleMapAPIKey"));
 
 			// Open the Connection
 			URLConnection conn = url.openConnection();
@@ -127,9 +148,29 @@ public class GeoLocation {
 				// Convert to JSON Object
 				JSONArray results = (JSONArray) jsonObject.get("results");
 				JSONObject mainJson = (JSONObject) results.get(0);
-				JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
-				JSONObject location = (JSONObject) geoMetry.get("location");
-				latLang = location.get("lat") + "," + location.get("lng");
+				if(mainJson.get("partial_match")!=null&&(Boolean) mainJson.get("partial_match")){
+					latLang = "0.1,0.1";
+					JSONArray addressComponents = (JSONArray) mainJson.get("address_components");
+					for (Object object : addressComponents) {
+						JSONObject typesJson=(JSONObject) object;
+						JSONArray types = (JSONArray) typesJson.get("types");
+						boolean isContain=types.contains("postal_code");
+						if(isContain){
+							String zipcode=(String) typesJson.get("long_name");
+							String[] splittedAddress=InjuryConstants.splitAddress(address);
+							if(splittedAddress[3]!=null&&splittedAddress[3].equals(zipcode)){
+								JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
+								JSONObject location = (JSONObject) geoMetry.get("location");
+								latLang = location.get("lat") + "," + location.get("lng");
+								break;
+							}
+						}
+					}
+				}else{
+					JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
+					JSONObject location = (JSONObject) geoMetry.get("location");
+					latLang = location.get("lat") + "," + location.get("lng");
+				}
 			} else {
 				latLang = "0.1,0.1";
 			}
@@ -147,7 +188,7 @@ public class GeoLocation {
 		System.out.println(origin+"---->"+destination);
 		String distanceMatrixURL="https://maps.googleapis.com/maps/api/distancematrix/json";
 		try {
-			URL distanceAPIUrl = new URL(distanceMatrixURL+"?origins="+origin+"&destinations="+destination+"&key="+injuryProperties.getProperty("updateLatLongAPIKey")+"&units=imperial");
+			URL distanceAPIUrl = new URL(distanceMatrixURL+"?origins="+origin+"&destinations="+destination+"&key="+injuryProperties.getProperty("googleMapAPIKey")+"&units=imperial");
 			
 			// Open Connection
 			URLConnection conn = distanceAPIUrl.openConnection();

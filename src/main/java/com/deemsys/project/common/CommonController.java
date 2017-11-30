@@ -27,6 +27,7 @@ import com.deemsys.project.Export.PrintPDFFiles;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.LawyerAdminCountyMapping.LawyerAdminCountyMappingService;
 import com.deemsys.project.Lawyers.LawyersService;
+import com.deemsys.project.Map.GeoLocation;
 import com.deemsys.project.Map.SearchClinicsService;
 import com.deemsys.project.UserLookupPreferences.UserLookupPreferencesService;
 import com.deemsys.project.entity.Caller;
@@ -101,6 +102,9 @@ public class CommonController {
 	@Autowired
 	SearchClinicsService searchClinicsService;
 	
+	@Autowired
+	GeoLocation geoLocation;
+	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String getInit(ModelMap model)
 	{
@@ -120,6 +124,8 @@ public class CommonController {
 	{
     	Integer disclaimerStatus=loginService.checkDisclaimerAcceptedStatus();
     	model.addAttribute("currentRole",loginService.getCurrentRoleId());
+    	model.addAttribute("googleAPIKey",injuryProperties.getProperty("googleMapAPIKey"));
+    	model.addAttribute("passwordChangedStatus",loginService.checkPasswordChangedStatus());
     	model.addAttribute("Success",true);
     	if(disclaimerStatus==0){
     		return "/disclaimer";
@@ -359,6 +365,6 @@ public class CommonController {
 		}
 		return "/returnPage";
 	}
-    
+
     
 }
