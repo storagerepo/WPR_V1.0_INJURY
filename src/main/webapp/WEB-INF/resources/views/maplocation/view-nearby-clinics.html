@@ -31,6 +31,9 @@
         .a-underline{
         text-decoration: underline !important;
         }
+        .strike-text{
+        text-decoration: line-through;
+        }
     </style>
 <div class="row">
 	<div class="col-lg-12">
@@ -45,7 +48,7 @@
 <div class="row">
 	<div class="col-md-6">
 	<b>Patient Name :</b><span ng-cloak> {{patient.name}}</span><br/>
-	<b>Address:</b><span ng-cloak> {{patient.address}} <span class="error-class" ng-show="(patient.latitude==0.1||patient.latitude==0.0)&&(patient.longitude==0.1||patient.longitude==0.0)">(Incorrect Address)</span>&nbsp;&nbsp;<span ng-cloak><a href='' ng-click="showAddress=1" ng-show="showAddress==0" class="a-underline"><i class="fa fa-pencil"></i> Change Address</a></span>
+	<b>Address:</b><span ng-cloak> <span ng-class="showAddress==1 && (originalCorrectedAddress!=null&&originalCorrectedAddress!='')?'strike-text':''">{{patient.address}}</span> <span class="error-class" ng-show="(patient.latitude==0.1||patient.latitude==0.0)&&(patient.longitude==0.1||patient.longitude==0.0)">(Incorrect Address)</span>&nbsp;&nbsp;<span ng-cloak><a href='' ng-click="showAddress=1" ng-show="showAddress==0" class="a-underline"><i class="fa fa-pencil"></i> Change Address</a></span>
 	</div>
 	<form name="searchClinic" novalidate>
 	<div class="col-md-2 no-padding text-top text-right">
@@ -60,7 +63,7 @@
     </span>
 	</div>
 	<div class="col-md-2">
-	<span class="btn btn-warning" ng-click="getNearByClinics(1)" ng-class="{'button-disable':searchClinic.$invalid}" ng-disabled='searchClinic.$invalid'><i class="glyphicon glyphicon-search"></i> Search By Range</span>
+	<span class="btn btn-warning" ng-click="getNearByClinics(1)" ng-class="{'button-disable':searchClinic.$invalid}" ng-disabled='searchClinic.$invalid || isUpdated==0'><i class="glyphicon glyphicon-search"></i> Search By Range</span>
 	</div>
 </form>
 </div>
@@ -73,7 +76,7 @@
         <span ng-cloak ng-show="updateAddressForm.correctedAddress.$error.required">Please Enter Address</span>
     </span>
 	</div>
-	<div class="col-md-3 padding-top-10"><a class="btn btn-sm btn-primary" ng-click="getNearByClinics(2)" ng-disabled="updateAddressForm.$invalid">Update & Search</a>&nbsp;<a class="btn btn-sm btn-danger" ng-show="showAddress==1&&(originalCorrectedAddress==null||originalCorrectedAddress=='')" ng-click="showAddress=0">Cancel</a></div>
+	<div class="col-md-3 padding-top-10"><a class="btn btn-sm btn-primary" ng-click="getNearByClinics(2)" ng-disabled="updateAddressForm.$invalid">Update & Search</a>&nbsp;<a class="btn btn-sm btn-danger" ng-show="showAddress==1&&(originalCorrectedAddress==null||originalCorrectedAddress=='')" ng-click="showAddress=0;isUpdated=1;resetLatLng();">Cancel</a></div>
 	<div class="col-md-4 no-padding text-top text-right" ng-show="showAddress==1 && (originalCorrectedAddress!=null&&originalCorrectedAddress!='')"><a href='' ng-click="removeCorrectedAddress()" class="a-underline"><i class="fa fa-trash"></i>&nbsp;Remove</a></div>
 </div></form> 
 <div class="col-md-12 padding-top-10">
@@ -89,7 +92,7 @@
                 <div>{{marker.title}}</div>
             </ui-gmap-window>
         </ui-gmap-marker> -->
-        <ui-gmap-markers models="clinicMarkers" coords="'self'" icon="'icon'" click="'onClick'" events="markersEvents">
+        <ui-gmap-markers models="clinicMarkers" idkey="clinicMarkers.id" coords="'self'" icon="'icon'" click="'onClick'" events="markersEvents">
             <ui-gmap-windows show="'show'" >
                 <div ng-non-bindable>{{title}}</div>
             </ui-gmap-windows>

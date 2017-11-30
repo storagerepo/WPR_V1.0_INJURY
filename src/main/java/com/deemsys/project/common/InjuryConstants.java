@@ -399,4 +399,78 @@ public class InjuryConstants {
 			return "";
 		}
 	}
+
+	// Split Address
+	public static String[] splitAddress(String address){
+		String resultAddress[]=new String[10];
+		if(address!=null){
+			String[] splittedAddress=address.split(",");
+			if(splittedAddress.length==1){
+				resultAddress[0]=splittedAddress[0].trim();
+			}
+			else if(splittedAddress.length==2){
+				
+				if(isZipcode(splittedAddress[1].trim())){
+					resultAddress[0]=splittedAddress[0].trim();
+					resultAddress[3]=splittedAddress[1].trim();
+				}else if(isState(splittedAddress[1].trim())){
+					resultAddress[0]=splittedAddress[0].trim();
+					resultAddress[2]=splittedAddress[1].trim();
+				}else{
+					resultAddress[0]=splittedAddress[0].trim();
+					resultAddress[1]=splittedAddress[1].trim();
+				}			
+
+			}else if(splittedAddress.length==3){
+				if(isZipcode(splittedAddress[2].trim())){
+					resultAddress[0]=splittedAddress[0].trim();
+					resultAddress[1]=splittedAddress[1].trim();
+					resultAddress[3]=splittedAddress[2].trim();
+				}else{
+				resultAddress[0]=splittedAddress[0].trim();
+				resultAddress[1]=splittedAddress[1].trim();
+				resultAddress[2]=splittedAddress[2].trim();
+				}
+			}else if(splittedAddress.length==4){
+				resultAddress[0]=splittedAddress[0].trim();
+				resultAddress[1]=splittedAddress[1].trim();
+				resultAddress[2]=splittedAddress[2].trim();
+				resultAddress[3]=splittedAddress[3].trim();
+			}else if(splittedAddress.length>4){
+				
+				resultAddress[3]=splittedAddress[splittedAddress.length-1].trim();
+				resultAddress[2]=splittedAddress[splittedAddress.length-2].trim();
+				resultAddress[1]=splittedAddress[splittedAddress.length-3].trim();
+				resultAddress[0]="";
+				for(int i=0;i<=splittedAddress.length-4;i++){
+					if(i!=0){
+						resultAddress[0]+=",";
+					}
+					resultAddress[0]+=splittedAddress[i].trim();
+				}
+				
+			}
+			
+		}
+		
+		return resultAddress;
+	}
+	
+	//Check for Zipcode
+	public static boolean isZipcode(String checkStr){
+		if(checkStr.matches("\\d+")&&checkStr.length()==5){
+			return true;
+		}else{
+			return false;
+		}		
+	}
+	
+	//Check for State
+	public static boolean isState(String checkStr){
+		if(checkStr.matches("[a-zA-Z]+")&&checkStr.length()==2){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }

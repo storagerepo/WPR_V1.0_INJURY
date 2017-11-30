@@ -7,6 +7,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 		$scope.clinicsForms="";
 		$scope.lat="";
 		$scope.lng="";
+		$scope.isUpdated=1;
 		$scope.correctedAddress="";
 		$scope.isDrivingDistance=0;
 		$scope.getNearByClinics(1);
@@ -14,9 +15,9 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 	$scope.originalCorrectedAddress="";
 	$scope.$on('gmPlacesAutocomplete::placeChanged', function(){
 	      var location = $scope.autocomplete.getPlace().geometry.location;
-	      console.log($scope.autocomplete.getPlace());
 	      $scope.lat = location.lat();
 	      $scope.lng = location.lng();
+	      $scope.isUpdated=0;
 	      $scope.correctedAddress=$scope.autocomplete.getPlace().formatted_address;
 	      $scope.$apply();
 	});
@@ -32,12 +33,12 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 		$scope.lat="";
 		$scope.lng="";
 		$scope.correctedAddress="";
+		$scope.isUpdated=1;
 	};
 	
 	// Get Patient Id
 	$scope.getPatient=function(){
 		requestHandler.getRequest("Patient/getPatient.json?patientId="+$stateParams.id,"").then( function(response) {
-			console.log(response.data.patientForm);
 			$scope.patient= response.data.patientForm;
 		});
 	};
@@ -48,6 +49,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 			if($scope.lat==''&&$scope.lng==''){
 				alert("Please enter correct address & select from list");
 			}else{
+				$scope.searchRange=25;
 				$scope.getLocationWithDetails(searchFrom);
 			}
 		}else{
@@ -65,6 +67,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     			searchBy:searchFrom
     	};
     	requestHandler.postRequest("Caller/getNearByClincs.json.json",$scope.clinicSearchForm).then( function(response) {
+    		$scope.isUpdated=1;
     		$scope.getPatient();
     		$scope.autocomplete="";
     		$scope.clinicLocationForm= response.data.clinicLocationForm;
@@ -86,29 +89,28 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     		var markers = [];
     		var idKey="id";
     		var i=1;
-    		var marker={};
-    		marker = {
+    		var patientMarker={};
+    		patientMarker = {
 	    	        latitude: clinicLocationForm.centerLatitude,
 	    	        longitude: clinicLocationForm.centerLongitude,
 	    	        title: "Patient Location",
 	   	           	icon:'resources/images/map/map_icon_yellow.png',
 	   	           	show:false
 	   	          };
-    		marker.onClick = function() {
-                 console.log("Clicked!");
-                 marker.show = !marker.show;
+    		patientMarker.onClick = function() {
+                 patientMarker.show = !patientMarker.show;
                  $scope.$apply();
              };
-    		marker[idKey]=0;
-    		markers.push(marker);
+            patientMarker[idKey]=0;
+    		markers.push(patientMarker);
     		for ( var int = 0; int < clinicsForms.length; int++) {
 				var clinicForm = clinicsForms[int];
 				var windowContent="<b>"+clinicForm.clinicName+",</b><br/>"+clinicForm.address+",</br>"+clinicForm.city+",</br><b>"+clinicForm.farAway+" miles</b> far away";
-				var marker = {};
+				var clinicMarker = {};
 				if(clinicForm.isDrivingDistance==1){
 					$scope.isDrivingDistance=1;
 					windowContent="<b>"+clinicForm.clinicName+",</b><br/>"+clinicForm.address+",</br>"+clinicForm.city+",</br><b>"+clinicForm.farAway+" miles</b> far away  <b> / "+clinicForm.travellingTime+"</b>";
-					marker = {
+					clinicMarker = {
 			    	        latitude: clinicForm.latitude,
 			    	        longitude: clinicForm.longitude,
 			    	        title: windowContent,
@@ -116,29 +118,28 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 			    	        text:clinicForm.clinicId,
 			   	           	show:false
 			   	         };
-					marker.onClick = function() {
-		                 marker.show = !marker.show;
+					clinicMarker.onClick = function(googleMarker, eventType, dataModelItem) {
+						dataModelItem.show = !dataModelItem.show;
 		                 $scope.$apply();
 		             };
 				}else{
-					marker = {
+					clinicMarker = {
 			    	        latitude: clinicForm.latitude,
 			    	        longitude: clinicForm.longitude,
 			    	        title: windowContent,
 			    	        text:clinicForm.clinicId,
 			   	           	show:false
 			   	         };
-					marker.onClick = function() {
-		                 marker.show = !marker.show;
+					clinicMarker.onClick = function(googleMarker, eventType, dataModelItem) {
+						dataModelItem.show = !dataModelItem.show;
 		                 $scope.$apply();
 		             };
 				}
-				marker[idKey]=i;
-				markers.push(marker);
+				clinicMarker[idKey]=i;
+				markers.push(clinicMarker);
 				
 				i=i+1;
 			}
-    		console.log(markers);
     		$scope.clinicMarkers=markers;
     		$scope.circles = [
     	                        {
@@ -149,13 +150,13 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     	                            },
     	                            radius: clinicLocationForm.searchRadius,
     	                            stroke: {
-    	                                color: '#52E770',
+    	                                color: '#1A4D81',
     	                                weight: 2,
     	                                opacity: 1
     	                            },
     	                            fill: {
-    	                                color: '#52E770',
-    	                                opacity: 0.1
+    	                                color: '#1A4D81',
+    	                                opacity: 0.2
     	                            },
     	                            geodesic: true, // optional: defaults to false
     	                            draggable: false, // optional: defaults to false
@@ -191,7 +192,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
         };
     
     $scope.closeClick = function() {
-        $scope.windowOptions.visible = false;
+        $scope.show = false;
     };
     
     // Get More Details About Clinic
@@ -208,6 +209,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
 				Flash.create('success', "You have Successfully Removed!");
 				$scope.showAddress=0;
 				$scope.resetLatLng();
+				$scope.searchRange=25;
 				$scope.getNearByClinics(1);
 				
 			});
