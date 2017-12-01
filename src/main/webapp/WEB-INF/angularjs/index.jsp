@@ -97,7 +97,8 @@
 	<script src="https://apis.google.com/js/client.js"></script>
 	
 	<!-- Google Map Js and Search Address Auto Complete -->
-	<script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+	<!-- API Key getting from server application properties-->
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=<c:out value="${googleAPIKey}"/>"></script>
     <script src="resources/components/angular-map-rawgit/google-auto-complete.js"></script>
 	
     <!-- Controllers -->
@@ -121,6 +122,7 @@
     </head>
     <body ng-app="sbAdminApp">
 	<input type="hidden" ng-init="$root.isAdmin='<%= request.getAttribute("currentRole")%>'" ng-model="$root.isAdmin"/>
+	<input type="hidden" ng-init="$root.passwordChangedStatus='<%= request.getAttribute("passwordChangedStatus")%>'" ng-model="$root.passwordChangedStatus"/>
     <div class="margin-top-30">
 
         <div ui-view></div>

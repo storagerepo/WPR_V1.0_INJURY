@@ -10,12 +10,16 @@ var adminApp=angular.module('sbAdminApp',['requestModule','flash']);
 adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHandler,$rootScope,Flash) {
 	
 	// For Password Change Modal
-	requestHandler.getRequest("checkPasswordChangedStatus.json","").then( function(response) {
+/*	requestHandler.getRequest("checkPasswordChangedStatus.json","").then( function(response) {
 	      var status=response.data.status;
 	      if(status!=undefined && status!=1){
 	    	$("#changePasswordModal").modal('show',{backdrop: 'static', keyboard: true});
 	      }
-	   });
+	   });*/
+	
+	if($rootScope.passwordChangedStatus!=1){
+		$("#changePasswordModal").modal('show',{backdrop: 'static', keyboard: true});
+	}
 	
 	if($rootScope.isAdmin==1){
 		

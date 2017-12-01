@@ -285,7 +285,6 @@ public class LawyersService {
 		lawyers.setEmailAddress(lawyersForm.getEmailAddress());
 		lawyers.setPhoneNumber(lawyersForm.getPhoneNumber());
 		lawyers.setNotes(lawyersForm.getNotes());
-		lawyers.setStatus(1);
 		lawyers.setLawyerAdmin(lawyerAdmin);
 		lawyers.setUsers(users);
 		lawyers.setLawyerId(lawyersForm.getLawyerId());

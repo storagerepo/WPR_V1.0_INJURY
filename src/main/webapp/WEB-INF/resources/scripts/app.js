@@ -1651,7 +1651,7 @@ sbAdminApp
 					    	  };
 					    	  var authenticate = function() {
 						requestHandler
-								.postRequest("getCurrentRole.json", "")
+								.postRequest("getCurrentUserName.json", "")
 								.then(
 										function(response) {
 											$rootScope.authenticated = true;

@@ -265,7 +265,7 @@ public class ClinicsService {
 				clinicsForm.getCountry(), clinicsForm.getZipcode(),
 				clinicsForm.getOfficeNumber(), clinicsForm.getFaxNumber(),
 				clinicsForm.getServiceArea(), clinicsForm.getDirections(),
-				clinicsForm.getNotes(), 1,null, null);
+				clinicsForm.getNotes(), clinicsForm.getStatus(),null, null);
 		clinics.setClinicId(clinicsForm.getClinicId());
 		clinicsDAO.update(clinics);
 

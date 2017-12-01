@@ -152,7 +152,6 @@
                 </div>
             </div>
             <div class="text-right" style="margin-right:30px;">
-            {{isClean()}} -- {{myForm.$invalid}} -- {{!requiredValue}}
                 <a class="btn btn-success" ng-show='options' ng-class="{'button-disable':myForm.$invalid}" ng-disabled='myForm.$invalid || !requiredValue' ng-click="saveLawyerAdmin()">Save</a>
             	 <a class="btn btn-success" ng-show='!options' ng-class="{'button-disable':myForm.$invalid || isClean()}" ng-disabled='isClean() || myForm.$invalid || !requiredValue' ng-click="updateLawyerAdmin()">Update</a>
               <a ui-sref="dashboard.LawyerAdmin"  class="btn btn-danger" >Cancel</a><br/><br/>

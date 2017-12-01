@@ -132,6 +132,9 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 			$scope.reportingAgencyPreferencesForm.preferredId.push(reportingAgencyId);
 		}
 		
+		// Sorting the Array
+		$scope.reportingAgencyPreferencesForm.preferredId.sort(function(a, b){return a-b});
+		
 		if($scope.reportingAgencyPreferencesForm.preferredId.length==0){
 			$scope.isReportingAgencyError=true;
 		}
@@ -180,7 +183,9 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 					//$("#"+value.id).prop('checked', $(this).prop("checked"));
 					//$("#"+value.reportingAgencyId).checked==false;
 				}
-				
+			
+			// Sorting the Array
+			$scope.reportingAgencyPreferencesForm.preferredId.sort(function(a, b){return a-b});
 			if($scope.reportingAgencyPreferencesForm.preferredId.length==0){
 				$scope.isReportingAgencyError=true;
 			}
@@ -204,6 +209,8 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	};
 	  
 	$scope.selectReportingAgency=function(countyId,countyName){
+		$scope.raSaveButtonText="Save";
+		$scope.isSubmitted=false;
 		$scope.isReportingAgencyError=false;
 		$scope.reportingAgencyPreferencesForm={};
 		$scope.selectedCountyName=countyName;
@@ -261,12 +268,13 @@ myapp.controller('sortableController', function ($rootScope,$scope,$state,$state
 	 };
 	 
 	 $scope.saveReportingAgencyPreference=function(){
+		 $scope.raSaveButtonText="Saving...";
+		 $scope.isSubmitted=true;
 		 requestHandler.postRequest("/Patient/mergeReportingAgencyUserLookupPreferences.json",$scope.reportingAgencyPreferencesForm).then(function(response){
 			  Flash.create('success', "You have Successfully Updated!");
 			  $scope.getCountiesList();
 			  //$scope.getUserLookupPreference();
 			  $("#reportingAgencyModal").modal('hide');
-			
 			 $(function(){
 					$("html,body").scrollTop(0);
 			  });

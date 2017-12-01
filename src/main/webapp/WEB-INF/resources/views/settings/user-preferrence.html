@@ -357,7 +357,7 @@
 			 </div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" ng-click="saveReportingAgencyPreference()" ng-disabled="reportingAgencyClean()||isReportingAgencyError">Save</button>
+				<button type="button" class="btn btn-success" ng-click="saveReportingAgencyPreference()" ng-disabled="reportingAgencyClean()||isReportingAgencyError||isSubmitted">{{raSaveButtonText}}</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 			</div>
 		</div>

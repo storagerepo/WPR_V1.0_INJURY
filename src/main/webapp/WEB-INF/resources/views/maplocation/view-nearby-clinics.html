@@ -34,6 +34,9 @@
         .strike-text{
         text-decoration: line-through;
         }
+        .corrected-address{
+        background-color: #24ce44;color:#fff;border:1px solid #046616;padding:2px;
+        }
     </style>
 <div class="row">
 	<div class="col-lg-12">
@@ -80,7 +83,7 @@
 	<div class="col-md-4 no-padding text-top text-right" ng-show="showAddress==1 && (originalCorrectedAddress!=null&&originalCorrectedAddress!='')"><a href='' ng-click="removeCorrectedAddress()" class="a-underline"><i class="fa fa-trash"></i>&nbsp;Remove</a></div>
 </div></form> 
 <div class="col-md-12 padding-top-10">
-<b>Corrected Address:</b> <span ng-show="originalCorrectedAddress!=null&&originalCorrectedAddress!=''">{{originalCorrectedAddress}}</span><span ng-show="originalCorrectedAddress==null||originalCorrectedAddress==''">--</span>
+<span class="corrected-address"><b>Corrected Address:</b></span> <span ng-show="originalCorrectedAddress!=null&&originalCorrectedAddress!=''">{{originalCorrectedAddress}}</span><span ng-show="originalCorrectedAddress==null||originalCorrectedAddress==''">--</span>
 </div>
 </div>
  <div id="map_canvas">
