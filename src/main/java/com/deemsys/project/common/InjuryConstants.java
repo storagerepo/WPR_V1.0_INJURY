@@ -402,6 +402,7 @@ public class InjuryConstants {
 
 	// Split Address
 	public static String[] splitAddress(String address){
+		// Index Position of Address 0 - Street Address, 1- City, 2 - State, 3 - ZipCode
 		String resultAddress[]=new String[10];
 		if(address!=null){
 			String[] splittedAddress=address.split(",");

@@ -73,98 +73,39 @@ public class GeoLocation {
 				JSONArray results = (JSONArray) jsonObject.get("results");
 				JSONObject mainJson = (JSONObject) results.get(0);
 				if(mainJson.get("partial_match")!=null&&(Boolean) mainJson.get("partial_match")){
+					String resultZipcode="";
+					String resultCityLongName="";
+					String resultCityShortName="";
 					latLang = "0.1,0.1";
 					JSONArray addressComponents = (JSONArray) mainJson.get("address_components");
 					for (Object object : addressComponents) {
 						JSONObject typesJson=(JSONObject) object;
 						JSONArray types = (JSONArray) typesJson.get("types");
-						boolean isContain=types.contains("postal_code");
-						if(isContain){
-							String zipcode=(String) typesJson.get("long_name");
-							String[] splittedAddress=InjuryConstants.splitAddress(address);
-							if(splittedAddress[3]!=null&&splittedAddress[3].equals(zipcode)){
-								JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
-								JSONObject location = (JSONObject) geoMetry.get("location");
-								latLang = location.get("lat") + "," + location.get("lng");
-								break;
-							}
+						boolean isContainZipcode=types.contains("postal_code");
+						boolean isContainCity=types.contains("locality");
+						// Check Zipcode Type Available
+						if(isContainZipcode){
+							resultZipcode=(String) typesJson.get("long_name");
+						}
+						// Check City Type Available
+						if(isContainCity){
+							resultCityLongName=(String) typesJson.get("long_name");
+							resultCityShortName=(String) typesJson.get("short_name");
 						}
 					}
-				}else{
-					JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
-					JSONObject location = (JSONObject) geoMetry.get("location");
-					latLang = location.get("lat") + "," + location.get("lng");
-				}
-			} else {
-				latLang = "0.1,0.1";
-			}
-
-			return latLang;
-		} catch (Exception ex) {
-			outputJSON = "0.0,0.0";
-		}
-		return outputJSON;
-	}
-
-	public String getLocationFromAlternateAPIKey(String address) {
-		String outputJSON = null;
-		String latLang = null;
-		System.out.println(address);
-		// Google Map
-		String gURL = "https://maps.googleapis.com/maps/api/geocode/json";
-		try {
-
-			URL url = new URL(
-					gURL
-							+ "?address="
-							+ URLEncoder.encode(address, "UTF-8")
-							+ "&sensor=false&key="+injuryProperties.getProperty("googleMapAPIKey"));
-
-			// Open the Connection
-			URLConnection conn = url.openConnection();
-
-			// This is Simple a byte array output stream that we will use to
-			// keep the output data from google.
-			ByteArrayOutputStream output = new ByteArrayOutputStream(1024);
-
-			// copying the output data from Google which will be either in JSON
-			// or XML depending on your request URL that in which format you
-			// have requested.
-			IOUtils.copy(conn.getInputStream(), output);
-
-			// close the byte array output stream now.
-			output.close();
-			outputJSON = output.toString();
-			// Parse the Output to Json
-			JSONParser jsonparser = new JSONParser();
-			JSONObject jsonObject = (JSONObject) jsonparser.parse(outputJSON);
-			// Google Map Status As of handled only one, In future we will handle the further staus
-			// OVER_QUERY_LIMIT
-			// REQUEST_DENIED
-			// INVALID_REQUEST
-			// UNKNOWN_ERROR
-			String status = (String) jsonObject.get("status");
-			if (!status.equals("ZERO_RESULTS")) {
-				// Convert to JSON Object
-				JSONArray results = (JSONArray) jsonObject.get("results");
-				JSONObject mainJson = (JSONObject) results.get(0);
-				if(mainJson.get("partial_match")!=null&&(Boolean) mainJson.get("partial_match")){
-					latLang = "0.1,0.1";
-					JSONArray addressComponents = (JSONArray) mainJson.get("address_components");
-					for (Object object : addressComponents) {
-						JSONObject typesJson=(JSONObject) object;
-						JSONArray types = (JSONArray) typesJson.get("types");
-						boolean isContain=types.contains("postal_code");
-						if(isContain){
-							String zipcode=(String) typesJson.get("long_name");
-							String[] splittedAddress=InjuryConstants.splitAddress(address);
-							if(splittedAddress[3]!=null&&splittedAddress[3].equals(zipcode)){
-								JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
-								JSONObject location = (JSONObject) geoMetry.get("location");
-								latLang = location.get("lat") + "," + location.get("lng");
-								break;
-							}
-						}
+					
+					// Parse Input Address and Check With Geo-Coding Result Address
+					address=address.toLowerCase();
+					String[] splittedAddress=InjuryConstants.splitAddress(address);
+					if((splittedAddress[3]!=null&&splittedAddress[3].equals(resultZipcode))||
+							(splittedAddress[1]!=null&&(splittedAddress[1].equalsIgnoreCase(resultCityLongName)||splittedAddress[1].equalsIgnoreCase(resultCityShortName)))){
+						JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
+						JSONObject location = (JSONObject) geoMetry.get("location");
+						latLang = location.get("lat") + "," + location.get("lng");
+					}else if(address.contains(resultZipcode)||(address.contains(resultCityLongName.toLowerCase())||(address.contains(resultCityShortName.toLowerCase())))){
+						JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
+						JSONObject location = (JSONObject) geoMetry.get("location");
+						latLang = location.get("lat") + "," + location.get("lng");
 					}
 				}else{
 					JSONObject geoMetry = (JSONObject) mainJson.get("geometry");
