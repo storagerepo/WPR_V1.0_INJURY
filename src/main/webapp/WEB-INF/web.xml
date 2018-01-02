@@ -3,6 +3,17 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+ <listener>
+   <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+  </listener> 
+  <listener>
+  	<listener-class>com.deemsys.project.common.SessionListenerImpl</listener-class>
+  </listener>
+  <listener>
+    <listener-class>
+        org.springframework.web.context.request.RequestContextListener
+    </listener-class>
+</listener>
   <servlet>
     <servlet-name>dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -14,6 +25,7 @@
   </servlet-mapping>
   <session-config>
     <session-timeout>30</session-timeout>
+    <tracking-mode>COOKIE</tracking-mode>
   </session-config>
   <context-param>
     <param-name>contextConfigLocation</param-name>

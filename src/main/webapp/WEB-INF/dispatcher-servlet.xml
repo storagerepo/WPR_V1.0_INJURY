@@ -29,6 +29,13 @@
 	<mvc:resources mapping="/views/**" location="/WEB-INF/resources/views/" />
 	<!-- End Angular Configuration -->
 	
+	<!-- Configuring interceptors  Handler Interceptor  -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.deemsys.project.common.RequestHandlerInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	
 	<context:component-scan base-package="com.deemsys.project" />
 	
@@ -84,7 +91,6 @@
 	</bean>
 	<!-- Ends Content View Resolver -->
 	
-	
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="classpath:messages" />
@@ -98,8 +104,8 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
 		p:url="${jdbc.databaseurl}" p:username="${jdbc.username}" p:password="${jdbc.password}"
-		p:testWhileIdle="true" p:validationQuery="SELECT count(*) FROM injurytest.users"
-		p:testOnBorrow="true" p:removeAbandoned="true" p:minIdle="0" p:maxIdle="8" p:maxActive="-1" p:initialSize="5"
+		p:testWhileIdle="true" p:validationQuery="SELECT 1"
+		p:testOnBorrow="true" p:removeAbandoned="true" p:minIdle="0" p:maxIdle="8" p:maxActive="40" p:initialSize="5"
 		p:removeAbandonedTimeout="10" p:defaultAutoCommit="true"/>
 
 
@@ -116,6 +122,11 @@
 			<props>
 				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
 				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">false</prop>
+			<!-- 	<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				 <prop key="net.sf.ehcache.configurationResourceName">ehcache.xml</prop>
+				<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop> -->
 			</props>
 		</property>
 	</bean>

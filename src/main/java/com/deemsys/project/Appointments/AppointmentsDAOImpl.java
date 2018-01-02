@@ -1,5 +1,6 @@
 package com.deemsys.project.Appointments;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Repository;
 import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 /**
  * 
@@ -249,8 +251,18 @@ public class AppointmentsDAOImpl implements AppointmentsDAO{
 		}
 		
 		criteria.add(Restrictions.eq("c1.patientCallerAdminMap.id.callerAdminId", appointmentSearchForm.getCallerAdminId()));
-		Integer totalRecords=criteria.setResultTransformer(new AliasToBeanResultTransformer(AppointmentsForm.class)).list().size();
-		List<AppointmentsForm> appointmentsForms=criteria.setFirstResult((appointmentSearchForm.getPageNumber()-1)*appointmentSearchForm.getItemsPerPage()).setMaxResults(appointmentSearchForm.getItemsPerPage()).setResultTransformer(new AliasToBeanResultTransformer(AppointmentsForm.class)).list();
+		Integer totalRecords=criteria.list().size();
+		List<AppointmentsForm> appointmentsForms = new ArrayList<AppointmentsForm>();
+		
+		appointmentsForms=criteria.setResultTransformer(new AliasToBeanResultTransformer(AppointmentsForm.class)).setFirstResult((appointmentSearchForm.getPageNumber()-1)*appointmentSearchForm.getItemsPerPage()).setMaxResults(appointmentSearchForm.getItemsPerPage()).list();
+		
+		/*String[] aliases=projectionList.getAliases();
+		for(int i=0;i<resultSet.length;i++){
+			AliasToBeanResultTransformer aliasToBean = new AliasToBeanResultTransformer(AppointmentsForm.class);
+			AppointmentsForm appointmentsForm = (AppointmentsForm) aliasToBean.transformTuple((Object[]) resultSet[i], aliases);
+			appointmentsForms.add(appointmentsForm);
+		}*/
+		
 		AppointmentsSearchResult appointmentsSearchResult=new AppointmentsSearchResult();
 		appointmentsSearchResult.setTotalRecords(totalRecords);
 		appointmentsSearchResult.setAppointmentsForms(appointmentsForms);

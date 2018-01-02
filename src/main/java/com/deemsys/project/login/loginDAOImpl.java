@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -14,6 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +35,9 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 	
 	@Autowired
 	UsersDAO usersDAO;
+	
+	@Autowired
+	HttpServletRequest request;
 	
 	@Override
 	public void save(Users entity) {
@@ -145,8 +151,17 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 	//OAUTH
 		//Function that overrides the default spring security
 		@Override
-		public User loadUserByUsername(String userName){
+		public User loadUserByUsername(String userName) throws UsernameNotFoundException{
 			
+			 /*String ipFromHeader = request.getHeader("X-FORWARDED-FOR");
+			  if (ipFromHeader != null && ipFromHeader.length() > 0) {
+			      System.out.println("ip from proxy - X-FORWARDED-FOR : " + ipFromHeader);
+			  }
+			  ipFromHeader=request.getRemoteAddr();
+			  System.out.println("ip from Remote Addr : " + ipFromHeader);
+			  if(ipFromHeader.equals("192.168.1.122")){
+				  throw new RuntimeException("Can't Access");
+			  }*/
 			//Load User Who having the User name
 			Users userLoginDetails=this.getByUserName(userName);
 			/*if(userName.equals(userLoginDetails.getUsername())){

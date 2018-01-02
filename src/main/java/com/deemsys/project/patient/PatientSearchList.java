@@ -2,9 +2,9 @@ package com.deemsys.project.patient;
 
 import java.util.Date;
 
+
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.common.InjuryProperties;
-
 
 public class PatientSearchList extends InjuryProperties{
 	private String patientId;

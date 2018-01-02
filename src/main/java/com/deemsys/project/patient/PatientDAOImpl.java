@@ -785,7 +785,6 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	projectionList.add(Projections.property("cr.vehicleCount"),"vehicleCount");
 	
 	if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
-	
 		projectionList.add(Projections.property("t2.callerAdmin.callerAdminId"),"callerAdminId");
 		projectionList.add(Projections.property("t2.caller.callerId"),"callerId");
 		projectionList.add(Projections.property("c2.firstName"),"callerFirstName");
@@ -793,7 +792,6 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		projectionList.add(Projections.property("cl1.timeStamp"),"lastCallLogTimeStamp");
 				
 	}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
-		
 		projectionList.add(Projections.property("t2.lawyerAdmin.lawyerAdminId"),"lawyerAdminId");
 		projectionList.add(Projections.property("t2.lawyer.lawyerId"),"lawyerId");
 		projectionList.add(Projections.property("l1.firstName"),"lawyerFirstName");
@@ -802,7 +800,6 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	}
 	
 	if(!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
-		
 		projectionList.add(Projections.property("t2.notes"),"notes");
 		projectionList.add(Projections.property("t2.isArchived"),"isArchived");
 		projectionList.add(Projections.property("t2.archivedDate"),"archivedDate");
@@ -828,12 +825,23 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	criteria.addOrder(Order.desc("cr.localReportNumber"));
 	criteria.addOrder(Order.desc("t1.patientId"));
 	
+	//criteria.setCacheable(true);
+	//Object[] resultList = null;
+	
 	List<PatientSearchList> patientSearchLists=new ArrayList<PatientSearchList>();
 	if(isExport){
 		patientSearchLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).list();
 	}else{
 		patientSearchLists=criteria.setResultTransformer(new AliasToBeanResultTransformer(PatientSearchList.class)).setFirstResult((callerPatientSearchForm.getPageNumber()-1)*callerPatientSearchForm.getItemsPerPage()).setMaxResults(callerPatientSearchForm.getItemsPerPage()).list();
 	}
+	/*AliasToBeanResultTransformer aliasToBean = new AliasToBeanResultTransformer(PatientSearchList.class);
+	
+	String[] aliases=projectionList.getAliases();
+	for(int i=0;i<resultList.length;i++){
+		PatientSearchList patientSearchList = new PatientSearchList();
+		patientSearchList=(PatientSearchList) aliasToBean.transformTuple((Object[]) resultList[i], aliases);
+		patientSearchLists.add(patientSearchList);
+	}*/
 	
 	PatientSearchResultSet patientSearchResultSet=new PatientSearchResultSet(totalNoOfRecords, patientSearchLists);
 	

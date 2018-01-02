@@ -1,5 +1,7 @@
 package com.deemsys.project.login;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -10,8 +12,10 @@ import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersService;
+import com.deemsys.project.Logging.LogSampleDAO;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.LogSample;
 import com.deemsys.project.entity.Users;
 
 @Service
@@ -32,6 +36,9 @@ public class LoginService {
 	
 	@Autowired
 	CallerService callerService;
+	
+	@Autowired
+	LogSampleDAO logSampleDAO;
 	
 	// Get Current User Role
 	public String getCurrentRole() {
@@ -188,6 +195,11 @@ public class LoginService {
 		else{
 			return 1;
 		}
+	}
+
+	public List<LogSample> getLogSample() {
+		// TODO Auto-generated method stub
+		return logSampleDAO.getAll();
 	}
 	
 }

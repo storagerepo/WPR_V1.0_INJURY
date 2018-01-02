@@ -101,12 +101,28 @@
 			authentication-failure-url="/login-failed?error=1"
 			username-parameter="username"
 			password-parameter="password" 
-			always-use-default-target="true" />
-		<session-management invalid-session-url="/logout" />
+			always-use-default-target="true" 
+			authentication-success-handler-ref="customAuthenticationSuccessHandler"/>
+		<session-management invalid-session-url="/logout">
+		</session-management>
 		<logout logout-success-url="/logout" delete-cookies="JSESSIONID" invalidate-session="true"/>
 	</http>
+	<beans:bean id="customAuthenticationSuccessHandler" class="com.deemsys.project.common.CustomAuthenticationSuccessHandler"></beans:bean>
+<!-- 	<beans:bean id="sessionConcurrent"
+		class="com.deemsys.project.login.ConcurrentSessionImpl">
+	</beans:bean> -->
+	
+	<!-- <beans:bean id="sas" 
+        class="com.deemsys.project.login.ConcurrentSessionImpl">
+        <beans:constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+        <beans:property name="maximumSessions"
+            value="1" />
+        <beans:property name="exceptionIfMaximumExceeded" value="true" />
+    </beans:bean> -->
 
-
+    <beans:bean id="sessionRegistry"
+        class="org.springframework.security.core.session.SessionRegistryImpl" />
+	
 
 	<beans:bean id="oauthAuthenticationEntryPoint"
 		class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">
