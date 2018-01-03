@@ -36,8 +36,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		System.out.println("username---"+authUser.getUsername());
 		System.out.println("Session Id---"+request.getSession().getId()+"-Creation Time--"+request.getSession().getCreationTime()+"--Ip Address-->"+request.getRemoteAddr());
 		
-		LogSample logSample = new LogSample(request.getSession().getId());
-		logSampleDAO.merge(logSample);
+		/*LogSample logSample = new LogSample(request.getSession().getId());
+		logSampleDAO.merge(logSample);*/
 		//set our response to OK status
         response.setStatus(HttpServletResponse.SC_OK);
  

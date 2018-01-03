@@ -128,7 +128,8 @@ public class CrashReportService {
 		PoliceAgency policeAgency = policeAgencyDAO.get(crashReportForm.getReportFrom());
 		
 		CrashReport crashReport=new CrashReport(crashReportForm.getCrashId(), crashReportError, policeAgency, county, localReportNumber,  InjuryConstants.convertYearFormat(crashReportForm.getCrashDate()), 
-					 InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getNumberOfPatients(), crashReportForm.getVehicleCount(), crashReportForm.getFilePath(), null, crashReportForm.getIsRunnerReport(),  null, 1, null, null, null);
+					 InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getNumberOfPatients(), crashReportForm.getVehicleCount(), crashReportForm.getFilePath(), null, crashReportForm.getIsRunnerReport(),  null, 1, 
+					 crashReportForm.getAddedDateTime(), crashReportForm.getRunnerReportAddedDateTime() ,null, null, null);
 		
 		//Logic Ends
 		crashReportDAO.save(crashReport);
@@ -157,7 +158,7 @@ public class CrashReportService {
 	public CrashReportForm getCrashReportFormDetails(PatientForm patientForm,Integer crashId,String filePath,Integer crashReportErrorId){
 		Integer reportFrom=0;
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), patientForm.getLocalReportNumber(), crashId.toString(), patientForm.getCrashDate(), patientForm.getCounty(),
-				InjuryConstants.convertMonthFormat(new Date()), filePath, 0, 0 , 0, InjuryConstants.convertMonthFormat(new Date()),1,reportFrom);
+				InjuryConstants.convertMonthFormat(new Date()), filePath, 0, 0 , 0, InjuryConstants.convertMonthFormat(new Date()),1,reportFrom, null, null);
 		return crashReportForm;
 	}
 	
@@ -166,7 +167,7 @@ public class CrashReportService {
 		Integer isRunnerReport=0;
 		Integer reportFrom=0;
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), reportFirstPageForm.getLocalReportNumber(), crashId.toString(), reportFirstPageForm.getCrashDate(), reportFirstPageForm.getCounty(),
-				InjuryConstants.convertMonthFormat(new Date()), filePath,numberOfPatients, vehicleCount, isRunnerReport, null, 1, reportFrom);
+				InjuryConstants.convertMonthFormat(new Date()), filePath,numberOfPatients, vehicleCount, isRunnerReport, null, 1, reportFrom, new Date(), null);
 		return crashReportForm;
 	}
 	
@@ -261,8 +262,11 @@ public class CrashReportService {
 		}
 		// Police Agency
 		PoliceAgency policeAgency = policeAgencyDAO.get(runnerCrashReportForm.getReportFrom());
+		// Update Last Updated Date
+		policeAgency.setLastUpdatedDate(new Date());
+		policeAgencyDAO.update(policeAgency);
 		CrashReport crashReport=new CrashReport(crashId, crashReportError, policeAgency, county, localReportNumber,  InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-					 new Date(), numberOfPatients, vehicleCount, runnerCrashReportForm.getFilePath(), null, isRunnerReport, new Date(), 1,null,null,null);
+					 new Date(), numberOfPatients, vehicleCount, runnerCrashReportForm.getFilePath(), null, isRunnerReport, new Date(), 1, null, new Date(), null,null,null);
 		
 		
 		CrashReport crashReportExist=this.checkRunnerReportWithODPSReport(runnerCrashReportForm);

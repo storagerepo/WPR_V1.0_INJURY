@@ -38,6 +38,8 @@ public class CrashReportForm extends InjuryProperties{
 	private Integer directReportStatus;
 	private String oldFilePath;
 	private String reportFromDepartment;
+	private Date addedDateTime;
+	private Date runnerReportAddedDateTime;
 	public Long getCrashReportId() {
 		return crashReportId;
 	}
@@ -203,6 +205,18 @@ public class CrashReportForm extends InjuryProperties{
 	public void setReportFromDepartment(String reportFromDepartment) {
 		this.reportFromDepartment = reportFromDepartment;
 	}
+	public Date getAddedDateTime() {
+		return addedDateTime;
+	}
+	public void setAddedDateTime(Date addedDateTime) {
+		this.addedDateTime = addedDateTime;
+	}
+	public Date getRunnerReportAddedDateTime() {
+		return runnerReportAddedDateTime;
+	}
+	public void setRunnerReportAddedDateTime(Date runnerReportAddedDateTime) {
+		this.runnerReportAddedDateTime = runnerReportAddedDateTime;
+	}
 	public CrashReportForm(Long crashReportId, String crashReportError,
 			String localReportNumber, String crashId, String crashDate,
 			String county, String addedDate, String filePath,Integer numberOfPatients, Integer isRunnerReport, String runnerReportAddedDate,Integer status) {
@@ -222,7 +236,8 @@ public class CrashReportForm extends InjuryProperties{
 	}
 	public CrashReportForm(String crashReportError,
 			String localReportNumber, String crashId, String crashDate,
-			String county, String addedDate, String filePath,Integer numberOfPatients, Integer vehicleCount, Integer isRunnerReport, String runnerReportAddedDate,Integer status,Integer reportFrom) {
+			String county, String addedDate, String filePath,Integer numberOfPatients, Integer vehicleCount, Integer isRunnerReport, String runnerReportAddedDate,Integer status,
+			Integer reportFrom,Date addedDateTime, Date runnerReportAddedDateTime) {
 		super();
 		this.crashReportError = crashReportError;
 		this.localReportNumber = localReportNumber;
@@ -237,6 +252,8 @@ public class CrashReportForm extends InjuryProperties{
 		this.runnerReportAddedDate = runnerReportAddedDate;
 		this.status = status;
 		this.reportFrom = reportFrom;
+		this.addedDateTime = addedDateTime;
+		this.runnerReportAddedDateTime = runnerReportAddedDateTime;
 	}
 	public CrashReportForm() {
 		super();

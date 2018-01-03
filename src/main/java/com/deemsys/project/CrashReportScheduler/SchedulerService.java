@@ -115,6 +115,7 @@ public class SchedulerService {
 					System.out.println("Auto Delete Off");
 				}
 				System.out.println("End Delete Old Data");
+				// Delete Map Search Results
 				System.out.println("Map Search Result Delete Start");
 				if(injuryProperties.getProperty("mapSearchResultOldDataDelete").equals("on")){
 					System.out.println("Map Search Result Auto Delete On");
@@ -130,6 +131,15 @@ public class SchedulerService {
 					System.out.println("Map Search Result Auto Delete Off");
 				}
 				System.out.println("Map Search Result Delete End");
+				// Check and Update status of Police Department Report pulling
+				System.out.println("Check Status of Police Department Report Pulling Start");
+				if(injuryProperties.getProperty("statusCheckingForPoliceDepartment").equals("on")){
+					System.out.println("Check Status of Police Department Report Pulling On");
+					policeAgencyService.updateStatusOfReports();
+				}else{
+					System.out.println("Check Status of Police Department Report Pulling Off");
+				}
+				System.out.println("Check Status of Police Department Report Pulling End");
 			}
 			catch(Exception ex)
 			{

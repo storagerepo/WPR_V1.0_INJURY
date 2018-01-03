@@ -73,9 +73,9 @@ public class PoliceAgencyController {
 
 	@RequestMapping(value = "/searchPoliceDepartments", method = RequestMethod.GET)
 	public String searchPoliceDepartments(@RequestParam("countyParam") Integer countyParam,
-			@RequestParam("reportPullingTypeParam") Integer reportPullingTypeParam, ModelMap model) {
+			@RequestParam("reportPullingTypeParam") Integer reportPullingTypeParam,@RequestParam("reportStatus") Integer reportStatus, ModelMap model) {
 		model.addAttribute("policeAgencyForms",
-				policeAgencyService.searchPoliceDepartments(countyParam, reportPullingTypeParam));
+				policeAgencyService.searchPoliceDepartments(countyParam, reportPullingTypeParam,reportStatus));
 		model.addAttribute("requestSuccess", true);
 		return "/returnPage";
 	}

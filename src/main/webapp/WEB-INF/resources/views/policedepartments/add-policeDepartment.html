@@ -23,7 +23,7 @@
                     		<div class="col-md-12 no-padding">
                                 <div class="col-md-6">
                                    <span class="redText">*</span> <label>Report Pulling Type</label>
-                                   <select class="form-control" ng-model="policeAgencyForm.schedulerType" name="reportpullingtype"  required>
+                                   <select class="form-control" ng-model="policeAgencyForm.schedulerType" name="reportpullingtype"  required ng-change="agencyChange()">
 					<option value="">-- Select Pulling Type --</option>
 						<option value="2">Scheduler</option>
 						<option value="4">Automation</option>
@@ -38,7 +38,7 @@
                                     <span class="error-container" ng-show="myForm.agencyId.$dirty && myForm.agencyId.$invalid">
                                       <span ng-cloak style="color:red" ng-show="myForm.agencyId.$error.required">Please Enter Agency Id</span>
                                      <span ng-cloak style="color:red" ng-show="myForm.agencyId.$error.pattern">Police Agency Id must contain Numeric characters only </span>
-                                      <span ng-cloak style="color:red" ng-show="myForm.agencyId.$error.maxlength">Police Agency Id must not exceed 3 characters</span>
+                                      <span ng-cloak style="color:red" ng-show="!myForm.agencyId.$error.pattern&&myForm.agencyId.$error.maxlength">Police Agency Id must not exceed 3 characters</span>
                                        
                                      </span><br/>
                                    </div>

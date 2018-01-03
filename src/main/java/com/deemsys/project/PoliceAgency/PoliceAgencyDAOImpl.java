@@ -136,10 +136,11 @@ public class PoliceAgencyDAOImpl implements PoliceAgencyDAO{
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<PoliceAgency> getActiveList() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class).add(Restrictions.eq("reportStatus", 1)).list();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -164,7 +165,7 @@ public class PoliceAgencyDAOImpl implements PoliceAgencyDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PoliceAgency> searchPoliceDepartments(Integer countyParam, Integer reportPullingTypeParam) {
+	public List<PoliceAgency> searchPoliceDepartments(Integer countyParam, Integer reportPullingTypeParam, Integer reportStatus) {
 		 
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class);
 		if(countyParam!=0)
@@ -178,6 +179,10 @@ public class PoliceAgencyDAOImpl implements PoliceAgencyDAO{
 		}else
 		{
 			criteria.add(Restrictions.ne("schedulerType", 0));
+		}
+		
+		if(reportStatus!=-1){
+			criteria.add(Restrictions.eq("reportStatus", reportStatus));
 		}
 		
 		return criteria.list();

@@ -292,10 +292,10 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		
 		criteria.setProjection(projectionList);
 		if(!role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
-			criteria.addOrder(Order.desc("addedDate"));
+			criteria.addOrder(Order.desc("addedDateTime"));
 			criteria.addOrder(Order.desc("dcl1.archivedDateTime"));
 		}else{
-			criteria.addOrder(Order.desc("addedDate"));
+			criteria.addOrder(Order.desc("addedDateTime"));
 		}
 		criteria.addOrder(Order.desc("localReportNumber"));
 		

@@ -10,6 +10,7 @@ $scope.reverse=true;
 					$scope.noOfRows = "25";
 					$scope.selectedReportPullingType = "0";
 					$scope.selectedCounty = 0;
+					$scope.selectedReportStatus = "-1";
 					$scope.sort = function(keyname) {
 						$scope.sortKey = keyname; // set the sortKey to the
 													// param passed
@@ -39,7 +40,8 @@ $scope.reverse=true;
 										"Admin/searchPoliceDepartments.json?countyParam="
 												+ $scope.selectedCounty
 												+ "&reportPullingTypeParam="
-												+ $scope.selectedReportPullingType)
+												+ $scope.selectedReportPullingType
+												+"&reportStatus="+$scope.selectedReportStatus)
 								.then(
 										function(response) {
 											$scope.policeDepartmentsForm = response.data.policeAgencyForms;
@@ -51,6 +53,24 @@ $scope.reverse=true;
 					// calling Search function while initializing controller
 					$scope.searchparam();
 
+					// View 
+					$scope.viewPoliceDepartment=function(mapId){
+						requestHandler
+						.getRequest(
+								"Admin/getPoliceAgency.json?mapId="
+										+ mapId, "")
+						.then(
+								function(response) {
+
+									$scope.policeAgencyForm = response.data.policeAgencyForm;
+									if ($scope.policeAgencyForm.agencyId == 0) {
+										$scope.policeAgencyForm.agencyId = "";
+									}
+									
+									$("#viewPoliceDepartment").modal('show');
+								});
+					}
+					
 					// delete function
 					$scope.deletePoliceDepartment = function(mapId) {
 						$scope.modalHeader = "Confirmation";
@@ -99,7 +119,14 @@ adminApp.controller('SavePoliceDepartmentController', function($http, $state,
 		$scope, $location, requestHandler, Flash) {
 	$scope.title = $state.current.title;
 	$scope.options = true;
-
+	
+	// Reset Agency Id Value
+	$scope.agencyChange=function(){
+		if($scope.policeAgencyForm.schedulerType==4){
+			$scope.policeAgencyForm.agencyId="";
+		}
+	};
+	
 	// getting county List
 	$scope.getCountyList = function() {
 		requestHandler.getRequest("Admin/getAllCountys.json", "").then(
@@ -134,6 +161,13 @@ adminApp
 					$scope.options = false;
 					$scope.title = $state.current.title;
 
+					// Reset Agency Id Value
+					$scope.agencyChange=function(){
+						if($scope.policeAgencyForm.schedulerType==4){
+							$scope.policeAgencyForm.agencyId="";
+						}
+					};
+					
 					// getting county List
 					$scope.getCountyList = function() {
 						requestHandler.getRequest("Admin/getAllCountys.json",

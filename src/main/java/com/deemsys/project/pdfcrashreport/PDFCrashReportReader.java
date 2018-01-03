@@ -221,7 +221,7 @@ public class PDFCrashReportReader {
 					// Commented for Manual Upload
 					//this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
 					CrashReportError crashReportError=crashReportErrorDAO.get(12);
-					crashReportDAO.save(new CrashReport(crashId, crashReportError, null, null, "",   null, new Date() ,  0, 0, "", "", 0, null, 0, null, null, null));
+					crashReportDAO.save(new CrashReport(crashId, crashReportError, null, null, "",   null, new Date() ,  0, 0, "", "", 0, null, 0, null, null, null, null, null));
 					System.out.println("Failed"+e.toString());
 				}
 		return true;
@@ -2012,13 +2012,16 @@ public class PDFCrashReportReader {
 					}
 					
 					PoliceAgency policeAgency = policeAgencyDAO.get(reportFromMapId);
+					policeAgency.setLastUpdatedDate(new Date());
 					Integer numberOfPatients=0;
 					Integer vehicleCount=0;
 					CrashReport crashReport=new CrashReport(runnerCrashReportForm.getDocNumber(), crashReportError, policeAgency, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-								 new Date(), numberOfPatients, vehicleCount, fileName, null, isRunnerReport, new Date(), 1, null, null, null);
+								 new Date(), numberOfPatients, vehicleCount, fileName, null, isRunnerReport, new Date(), 1, null, new Date(), null, null, null);
 					
 					
-					  crashReportDAO.save(crashReport);
+					crashReportDAO.save(crashReport);
+					// Update Last Updated Date
+					policeAgencyDAO.update(policeAgency);
 				}else{
 					isFileAvailable=0;
 				}
@@ -2053,6 +2056,7 @@ public class PDFCrashReportReader {
 			String fileName="";
 			// Police Agency
 			PoliceAgency policeAgency = policeAgencyDAO.get(runnerCrashReportForm.getReportFrom());
+			policeAgency.setLastUpdatedDate(new Date());
 			County county= countyDAO.get(policeAgency.getCounty().getCountyId());
 			CrashReportError crashReportError=crashReportErrorDAO.get(crashReportErrorId);
 			
@@ -2139,9 +2143,12 @@ public class PDFCrashReportReader {
 				Integer numberOfPatients=0;
 				Integer vehicleCount=0;
 				CrashReport crashReport=new CrashReport(crashId, crashReportError, policeAgency, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-							 new Date(), numberOfPatients, vehicleCount, fileName, null, isRunnerReport, new Date(), 1, null, null, null);
+							 new Date(), numberOfPatients, vehicleCount, fileName, null, isRunnerReport, new Date(), 1, null, new Date(), null, null, null);
 				
 				crashReportDAO.save(crashReport);
+				
+				// Update Last Updated Date
+				policeAgencyDAO.update(policeAgency);
 			}
 			
 		}catch(Exception e){

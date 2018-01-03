@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="resources/components/datetime/datetimepicker.css"></link>
+            <script src="resources/components/datetime/moment.js"></script>
+             <script src="resources/components/datetime/datetimepicker.js"></script>
 <div class="row">
 	<div class="col-lg-12">
 		<a ui-sref="dashboard.add-policeDepartment"
@@ -40,6 +43,17 @@
 				</div>
 				<div class="col-md-5ths no-padding">
 				<div class="col-md-12">
+						<label>Status</label>
+				</div>
+				<div class="col-md-12">
+						<select class="form-control" ng-model="selectedReportStatus" >
+						<option value="-1"  selected>All</option>
+						<option value="1">Active</option>
+						<option value="0">Inactive</option>
+						</select>
+				</div></div>
+				<div class="col-md-5ths no-padding">
+				<div class="col-md-12">
 						<label>&nbsp;</label>
 					</div>
 					<div class="col-md-12">
@@ -56,14 +70,16 @@
 
 						<thead>
 							<tr>
-								<th width="20%" ng-mousedown="sort('mapId')">Map Id&nbsp;&nbsp;<span
+								<th width="12%" ng-mousedown="sort('mapId')">Map Id&nbsp;&nbsp;<span
 									class="glyphicon sort-icon" ng-show="sortKey=='mapId'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-								<th width="25%" ng-mousedown="sort('name')">Agency Name&nbsp;&nbsp;<span
+								<th width="20%" ng-mousedown="sort('name')">Agency Name&nbsp;&nbsp;<span
 									class="glyphicon sort-icon" ng-show="sortKey=='name'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-								<th width="20%">Agency Id</th>
-								<th width="22%">County</th>
+								<th width="16%">County</th>
+								<th width="9%">Pulling Type</th>
+								<th width="18%">Updated Date</th>
+								<th width="12%">Status</th>
 								
 								<th width="13%">Actions</th>
 						
@@ -74,23 +90,26 @@
 								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon1"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
-									ng-model="search.mapId" placeholder="Map id"></div></th>
+									ng-model="search.mapId" placeholder="Map Id"></div></th>
 								<th>
 								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon2"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
 									ng-model="search.name" placeholder="Agency name"></div></th>
-								<th>
-								<div class="input-group">
-  								<span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span>
-								<input class="form-control" type="text"
-									ng-model="search.agencyId" placeholder="Agency id"></div></th>
-								<th>
+									<th>
 								<div class="input-group">
   								<span class="input-group-addon search" id="basic-addon4"><i class="fa fa-search"></i></span>
 								<input class="form-control" type="text"
 									ng-model="search.countyName" placeholder="County"></div></th>
-								
+								<th></th>
+								<th>
+								<div class="input-group">
+  								<!-- <span class="input-group-addon search" id="basic-addon3"><i class="fa fa-search"></i></span> -->
+								<input class="form-control" type="text" id="updatedDate"
+									ng-model="search.lastUpdatedDate" placeholder="Updated Date">
+								<span class="input-group-addon"><i class="fa fa-calendar"></i></span>	
+								</div></th>
+								<th></th>
 								<th></th>	
 								
 							</tr>
@@ -100,23 +119,29 @@
 							<tr ng-show="policeDepartmentsForm.length>0"  dir-paginate="policeDepartment in policeDepartmentsFilter=(policeDepartmentsForm|filter:search|orderBy:sortKey:reverse)|itemsPerPage:noOfRows" pagination-id="policePaginationId">
 								<td class="wrap" ng-cloak>{{policeDepartment.mapId}}</td>
 								<td class="wrap" ng-cloak>{{policeDepartment.name}}</td>
-								<td class="wrap" ng-cloak>
-								<span ng-show="{{policeDepartment.agencyId}}!=0">{{policeDepartment.agencyId}}</span>
-								<span ng-show="{{policeDepartment.agencyId}}==0">-</span></td>
 								<td class="wrap" ng-cloak>{{policeDepartment.countyName}}</td>
+								<td class="wrap" ng-cloak>
+								<span ng-show="policeDepartment.schedulerType==2">Scheduler</span>
+								<span ng-show="policeDepartment.schedulerType==4">Automation</span>
+								<span ng-show="policeDepartment.schedulerType==1">Manual</span>
+								</td>
+								<td class="wrap" ng-cloak>
+								{{policeDepartment.lastUpdatedDate}}</td>
+								<td class="wrap" ng-cloak>
+								<span ng-show="policeDepartment.reportStatus==0" class="label label-danger">Inactive</span>
+								<span ng-show="policeDepartment.reportStatus==1" class="label label-success">Active</span></td>
 								
 								
 								<td>
 								<a ng-hide="policeDepartment.schedulerType==1" href="#/dashboard/edit-policeDepartment/{{policeDepartment.mapId}}" ng-cloak  class="btn btn-xs btn-warning hint--top" data-hint="Edit Police Department"><i
 								class="glyphicon glyphicon-edit"></i>
 						</a>
-						
+						<a href="" ng-cloak class="btn btn-xs btn-info hint--top" ng-click="viewPoliceDepartment(policeDepartment.mapId)" data-hint="View Police Department"><i
+								class="fa fa-eye"></i>
+						</a>
 						<!-- <a  ng-cloak class="btn btn-xs btn-danger hint--top" data-hint="Delete Police Department" data-toggle="modal" data-target="#deletePoliceDepartmentModal" ng-click="deletePoliceDepartment(policeDepartment.mapId)"><i
 								class="glyphicon glyphicon-trash" ></i>
-						</a> -->
-							<!-- 	<a href="" ng-cloak class="btn btn-xs btn-info hint--top" ng-click="viewRating(lawyerAdmin.userId)" data-hint="View Rating & Review"><i
-								class="fa fa-star-o"></i>
-						</a>
+						</a> 
 							<a href="" ng-cloak ng-show="lawyerAdmin.status==1" ng-click="enableOrDisableLawyerAdmin(lawyerAdmin.lawyerAdminId)" class="btn btn-xs btn-success hint--top" data-hint="Disable Lawyer Admin"><i
 								class="fa fa-unlock-alt"></i>
 						</a>
@@ -129,7 +154,7 @@
 								
 							 </td>
 							</tr>
-							<tr ng-show="!policeDepartmentsFilter.length"><td colspan="6" align="center">No Records Found</td></tr><!-- 
+							<tr ng-show="!policeDepartmentsFilter.length"><td colspan="7" align="center">No Records Found</td></tr><!-- 
 							<tr ng-show="(policeDepartmentsForm|filter:search).length==0" ><td colspan="6" align="center">No Records Found</td></tr>  -->
 						</tbody>
 						
@@ -173,21 +198,48 @@
     </div>
  </div>
  
- <!-- <div class="modal fade" id="notify" role="dialog">
+<div class="modal fade" id="viewPoliceDepartment" role="dialog">
     <div class="modal-dialog">    
-      Modal content
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">{{modalHeader}} </h4>
+          <h4 class="modal-title">View Police Department </h4>
         </div>
-        <div class="modal-body">{{modalContent}}
-              
+        <div class="modal-body">
+              <table class="table table-bordered table-striped">
+              <tr>
+              <td class="wrap"><b>Map Id</b></td><td>{{policeAgencyForm.mapId}}</td>
+              <td class="wrap"><b>Agency Name</b></td><td>{{policeAgencyForm.name}}</td>
+              </tr>
+              <tr>
+              <td class="wrap"><b>Agency Id</b></td><td>{{policeAgencyForm.agencyId}}</td>
+              <td class="wrap"><b>County</b></td><td>{{policeAgencyForm.countyName}}</td>
+              </tr>
+               <tr>
+              <td class="wrap"><b>Pulling Type</b></td><td><span ng-show="policeAgencyForm.schedulerType==2">Scheduler</span>
+								<span ng-show="policeAgencyForm.schedulerType==4">Automation</span>
+								<span ng-show="policeAgencyForm.schedulerType==1">Manual</span></td>
+              <td class="wrap"><b>Updated Date</b></td><td>{{policeAgencyForm.lastUpdatedDate}}</td>
+              </tr>
+              <tr>
+              <td class="wrap"><b>Status</b></td><td colspan="3"><span ng-show="policeAgencyForm.reportStatus==0" class="label label-danger">Inactive</span>
+								<span ng-show="policeAgencyForm.reportStatus==1" class="label label-success">Active</span></td>
+              </tr>
+              </table>
         </div>
         <div class="modal-footer" >
-         <button type="close" class="btn btn-danger closeButton" data-dismiss="modal">{{modalButtonText}}</button>
+         <button type="close" class="btn btn-danger closeButton" data-dismiss="modal">close</button>
         </div>
       </div>
       
     </div>
- </div> -->
+ </div> 
+ <script>
+ $('#updatedDate').datetimepicker(
+ 		{
+ 			pickTime : false,
+ 			format:'MM/DD/YYYY',
+ 			defaultDate:new Date()
+ 			
+ 		});
+ </script>

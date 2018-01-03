@@ -820,7 +820,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	if(callerPatientSearchForm.getIsArchived()==1){
 		criteria.addOrder(Order.desc("t2.archivedDateTime"));
 	}else{
-		criteria.addOrder(Order.desc("cr.addedDate"));
+		criteria.addOrder(Order.desc("cr.addedDateTime"));
 	}
 	criteria.addOrder(Order.desc("cr.localReportNumber"));
 	criteria.addOrder(Order.desc("t1.patientId"));

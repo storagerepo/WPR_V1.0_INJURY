@@ -16,6 +16,8 @@ public class PoliceAgencyForm {
 	private String name;
 	private Integer schedulerType;
 	private Integer status;
+	private String lastUpdatedDate;
+	private Integer reportStatus;
 	
 	public Integer getMapId() {
 		return mapId;
@@ -60,9 +62,20 @@ public class PoliceAgencyForm {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-
+	public String getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+	public void setLastUpdatedDate(String lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
+	}
+	public Integer getReportStatus() {
+		return reportStatus;
+	}
+	public void setReportStatus(Integer reportStatus) {
+		this.reportStatus = reportStatus;
+	}
 	public PoliceAgencyForm(Integer mapId, Integer countyId,String countyName, Integer agencyId,
-			String name, Integer schedulerType, Integer status) {
+			String name, Integer schedulerType, Integer status, String lastUpdatedDate, Integer reportStatus) {
 		super();
 		this.mapId = mapId;
 		this.countyId = countyId;
@@ -71,6 +84,8 @@ public class PoliceAgencyForm {
 		this.name = name;
 		this.schedulerType = schedulerType;
 		this.status = status;
+		this.lastUpdatedDate = lastUpdatedDate;
+		this.reportStatus = reportStatus;
 	}
 	public PoliceAgencyForm() {
 		super();
