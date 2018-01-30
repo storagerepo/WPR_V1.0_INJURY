@@ -21,8 +21,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deemsys.project.IPAddresses.IPAddressesDAO;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.entity.BlockedIp;
+import com.deemsys.project.entity.IpAddress;
+import com.deemsys.project.entity.IpAddresses;
 import com.deemsys.project.entity.Users;
 
 @Repository
@@ -38,6 +43,12 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 	
 	@Autowired
 	HttpServletRequest request;
+	
+	@Autowired
+	IPAddressesDAO ipAddressesDAO;
+	
+	@Autowired
+	LoginService loginService;
 	
 	@Override
 	public void save(Users entity) {
@@ -153,17 +164,18 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 		@Override
 		public User loadUserByUsername(String userName) throws UsernameNotFoundException{
 			
-			 /*String ipFromHeader = request.getHeader("X-FORWARDED-FOR");
-			  if (ipFromHeader != null && ipFromHeader.length() > 0) {
-			      System.out.println("ip from proxy - X-FORWARDED-FOR : " + ipFromHeader);
-			  }
-			  ipFromHeader=request.getRemoteAddr();
+			  String ipFromHeader = InjuryConstants.getRemoteAddr(request);
 			  System.out.println("ip from Remote Addr : " + ipFromHeader);
-			  if(ipFromHeader.equals("192.168.1.122")){
-				  throw new RuntimeException("Can't Access");
-			  }*/
 			//Load User Who having the User name
 			Users userLoginDetails=this.getByUserName(userName);
+			Integer primaryLoginId=loginService.getUserIdOfAdmin(userLoginDetails.getRoles().getRole(), userLoginDetails.getUserId());
+			if(primaryLoginId==null){
+				primaryLoginId=userLoginDetails.getUserId();
+			}
+			if(checkIPBlockedOrNot(ipFromHeader)){
+				throw new RuntimeException("Unauthorized Access. Please Contact support@crashreportsonline.com");
+			}
+			
 			/*if(userName.equals(userLoginDetails.getUsername())){
 				userName=userLoginDetails.getUsername();
 			}
@@ -216,6 +228,15 @@ public class loginDAOImpl implements loginDAO,UserDetailsService{
 		public Users getByUserName(String username) {
 			// TODO Auto-generated method stub
 			return (Users) this.sessionFactory.getCurrentSession().createCriteria(Users.class).add(Restrictions.eq("username", username)).uniqueResult();
+		}
+		
+		// Check whether IP is Blocked or Not
+		public boolean checkIPBlockedOrNot(String ipAddress){
+			IpAddress ipAddresses = ipAddressesDAO.getByIpAddress(ipAddress);
+			 if(ipAddresses!=null&&ipAddresses.getBlockStatus()==1){
+				 return true;
+			  }
+			  return false;
 		}
 
 		

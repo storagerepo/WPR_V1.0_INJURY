@@ -1,5 +1,6 @@
 package com.deemsys.project.login;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,11 @@ import com.deemsys.project.Caller.CallerService;
 import com.deemsys.project.CallerAdmin.CallerAdminService;
 import com.deemsys.project.LawyerAdmin.LawyerAdminService;
 import com.deemsys.project.Lawyers.LawyersService;
-import com.deemsys.project.Logging.LogSampleDAO;
+import com.deemsys.project.Role.RoleDAO;
+import com.deemsys.project.Role.RoleForm;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
-import com.deemsys.project.entity.LogSample;
+import com.deemsys.project.entity.Roles;
 import com.deemsys.project.entity.Users;
 
 @Service
@@ -38,7 +40,7 @@ public class LoginService {
 	CallerService callerService;
 	
 	@Autowired
-	LogSampleDAO logSampleDAO;
+	RoleDAO roleDAO;
 	
 	// Get Current User Role
 	public String getCurrentRole() {
@@ -197,9 +199,37 @@ public class LoginService {
 		}
 	}
 
-	public List<LogSample> getLogSample() {
-		// TODO Auto-generated method stub
-		return logSampleDAO.getAll();
+	// Get User Id of Admins By Role and Logged In user Id
+	public Integer getUserIdOfAdmin(String loginRole,Integer userId){
+		
+		if(loginRole.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+			return null;
+		}
+		else if(loginRole.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||loginRole.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+			return null;
+		}
+		else if(loginRole.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+			return null;
+		}
+		else if(loginRole.equals(InjuryConstants.INJURY_CALLER_ROLE)||loginRole.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+			return callerService.getCallerByUserId(userId).getCallerAdmin().getUsers().getUserId();
+		}
+		else if(loginRole.equals(InjuryConstants.INJURY_LAWYER_ROLE)){			
+			return lawyersService.getLawyerIdByUserId(userId).getLawyerAdmin().getUsers().getUserId();
+		}else{
+			return null;
+		}
+	}
+	
+	// Get Roles
+	public List<RoleForm> getRoles(){
+		List<Roles> roles=roleDAO.getAll();
+		List<RoleForm> roleForms=new ArrayList<RoleForm>();
+		for (Roles role : roles) {
+			RoleForm roleForm = new RoleForm(role.getRoleId(), InjuryConstants.getRoleAsText(role.getRole()), role.getStatus());
+			roleForms.add(roleForm);
+		}
+		return roleForms;
 	}
 	
 }

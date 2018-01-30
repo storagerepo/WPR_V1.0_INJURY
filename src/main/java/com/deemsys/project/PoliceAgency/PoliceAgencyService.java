@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.deemsys.project.County.CountyDAO;
 import com.deemsys.project.CrashReport.CrashReportDAO;
 import com.deemsys.project.common.InjuryConstants;
+import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.entity.CrashReport;
 import com.deemsys.project.entity.PoliceAgency;
 /**
@@ -38,6 +39,9 @@ public class PoliceAgencyService {
 	
 	@Autowired
 	CrashReportDAO crashReportDAO;
+	
+	@Autowired
+	InjuryProperties injuryProperties;
 	
 	//Get All Entries
 	public List<PoliceAgencyForm> getPoliceAgencyList()
@@ -199,7 +203,7 @@ public class PoliceAgencyService {
 	
 	public void updateStatusOfReports(){
 		List<PoliceAgency> policeAgencies = policeAgencyDAO.getActiveList();
-		Date previousDate = new LocalDate().minusDays(7).toDate();
+		Date previousDate = new LocalDate().minusDays(Integer.parseInt(injuryProperties.getProperty("checkingNumberOfDaysBefore"))).toDate();
 		System.out.println("Previous Date--->"+previousDate);
 		for (PoliceAgency policeAgency : policeAgencies) {
 			if(policeAgency.getLastUpdatedDate().compareTo(previousDate)<0){

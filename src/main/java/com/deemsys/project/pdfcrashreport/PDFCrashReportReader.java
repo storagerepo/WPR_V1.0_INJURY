@@ -590,7 +590,9 @@ public class PDFCrashReportReader {
 				// Unit Page Content
 				List<String> unitPage = content.get(i);
 
-				String ownerPhoneNumber = "", ownerAddress="", occupants="", damageScale = "", insuranceCompany = "", policyNumber = "", vehicleMake = "", vehicleYear = "", VIN = "", licensePlateNumber="";
+				String ownerPhoneNumber = "", ownerAddress="", occupants="", damageScale = "", insuranceCompany = "", 
+										policyNumber = "", vehicleMake = "", vehicleYear = "", VIN = "", licensePlateNumber="",
+										typeOfUse="0";
 
 				ownerPhoneNumber = unitPage
 						.get(unitPage
@@ -676,6 +678,9 @@ public class PDFCrashReportReader {
 				// License Plate Number
 				licensePlateNumber=unitPage.indexOf("LICENSE PLATE NUMBER")==-1?"":unitPage.get(unitPage.indexOf("LICENSE PLATE NUMBER")+1);
 				
+				// Type of Use
+				typeOfUse=unitPage.indexOf("TYPE OF USE")==-1?"0":unitPage.get(unitPage.indexOf("TYPE OF USE")-1);
+				
 				ReportUnitPageForm reportUnitPageForm = new ReportUnitPageForm(
 						unitPage.get(unitPage.indexOf("UNIT NUMBER") + 1).trim(),
 						unitPage.get(unitPage
@@ -683,7 +688,7 @@ public class PDFCrashReportReader {
 						ownerPhoneNumber,
 						ownerAddress,
 						occupants,
-						insuranceCompany, policyNumber, damageScale,vehicleMake,vehicleYear,VIN,licensePlateNumber);
+						insuranceCompany, policyNumber, damageScale,vehicleMake,vehicleYear,VIN,licensePlateNumber,typeOfUse);
 
 				reportUnitPageForms.add(reportUnitPageForm);
 			}
@@ -1361,6 +1366,7 @@ public class PDFCrashReportReader {
 							}else{
 								patientsForm.setDamageScale(null);
 							}
+							patientsForm.setTypeOfUse(Integer.parseInt(reportUnitPageForm.getTypeOfUse()));
 						}
 					}
 				}

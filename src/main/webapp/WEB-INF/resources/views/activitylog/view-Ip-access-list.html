@@ -1,0 +1,233 @@
+<link rel="stylesheet" href="resources/components/datetime/datetimepicker.css"></link>
+            <script src="resources/components/datetime/moment.js"></script>
+             <script src="resources/components/datetime/datetimepicker.js"></script>
+<div class="row">
+	<div class="col-lg-12">
+	<a ui-sref="dashboard.viewBlockedIP"
+			class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-eye fa-lg"></i> View Blocked IP</a>
+		<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
+		<h2 class="page-header">IP Access List</h2>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<div class="row">
+		
+			<div class="col-md-12 no-padding">
+			 	<div class="col-md-5ths no-padding">
+					<div class="col-md-12">
+						<label>IP Address</label>	</div>
+					<div class="col-md-12">
+						<input type="text" class="form-control" ng-model="ipAddressSearchForm.ipAddress">
+					</div>
+				</div>
+				<div class="col-md-5ths no-padding">
+				<div class="col-md-12">
+						<label>Primary ID</label>
+				</div>
+				<div class="col-md-12">
+						<input type="text" class="form-control" ng-model="ipAddressSearchForm.primaryUsername">
+				</div></div>
+				<div class="col-md-5ths no-padding">
+				<div class="col-md-12">
+						<label>Status</label>
+				</div>
+				<div class="col-md-12">
+				<select class="form-control" ng-model="ipAddressSearchForm.blockStatus">
+					<option value="">All</option>
+					<option value="0">Unblocked</option>
+					<option value="1">Blocked</option>
+				</select>
+				</div></div>
+				<div class="col-md-5ths no-padding">
+				<div class="col-md-12">
+						<label>Date</label>
+				</div>
+				<div class="col-md-12">
+				<div class="input-group">
+						<input type="text" class="form-control" ng-model="ipAddressSearchForm.date" id="date">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+				</div>
+				</div></div>
+				<div class="col-md-5ths no-padding">
+				<div class="col-md-12">
+						<label>&nbsp;</label>
+					</div>
+					<div class="col-md-12">
+						<a class="btn btn-success" ng-click="searchIpAddressList()">Search</a>&nbsp;&nbsp;
+						<a class="btn btn-danger" ng-click="init()">Reset</a>
+				</div>
+				</div>
+				</div>
+				</div><br> 
+
+<div class="row">
+	 		<!-- /.panel-heading -->
+			<div class="col-md-12">
+		
+
+					<table class="table table-hover table-striped table-bordered">
+
+						<thead>
+							<tr>
+								<th width="40%">IP Address</th>
+								<th width="30%">Access Count</th>
+								<th width="30%">Actions</th>
+							</tr>
+<!-- 
+							<tr>
+								<th>
+								<div class="input-group">
+  								<span class="input-group-addon search" id="basic-addon1"><i class="fa fa-search"></i></span>
+								<input class="form-control" type="text"
+									ng-model="search.ipAddress" placeholder="IP Address"></div></th>
+								<th></th>
+								<th></th>
+							</tr> -->
+						</thead>
+						<tbody >
+							<tr ng-repeat-start="ipAddressList in ipAddressResult" class="group-header-back-ip">
+								<td colspan="4">{{ipAddressList.primaryUsername}}</td>
+							</tr>
+							<tr ng-show="ipAddressResult.length>0" dir-paginate="ipAddress in ipAddressList.ipAddressesForms|itemsPerPage:ipAddressSearchForm.itemsPerPage" current-page="ipAddressSearchForm.pageNumber" total-items="totalRecords" pagination-id="ipAccessListPaginationId">
+								<td><a href="" ng-click="updateIPGeoLocation(ipAddress.ipAddress)">{{ipAddress.ipAddress}}</a></td>
+								<td>{{ipAddress.accessCount}}</td>
+								<td><a href="#/dashboard/viewActivityLogs/{{ipAddress.ipAddress}}/{{ipAddressList.primaryUsername}}" class="btn btn-primary btn-xs hint--top" data-hint="View Logs"><i class="fa fa-eye"></i></a>
+								&nbsp;&nbsp;<span ng-show="{{ipAddress.isNew==1}}"><label class="label label-success">New IP</label></span>
+								&nbsp;&nbsp;<span ng-show="{{ipAddress.blockedStatus==0}}"><label class="label label-danger">Blocked</label></span></td>
+							</tr>
+							<tr ng-repeat-end=""></tr>
+							<tr ng-show="!ipAddressResult.length"><td colspan="4" align="center">No Records Found</td></tr>
+						</tbody>
+						
+					</table>
+					<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="ipAccessListPaginationId" ng-show="ipAddressResult.length>0">
+    					</dir-pagination-controls>
+    					 <div class="col-md-3 pull-right no-padding" ng-show="ipAddressResult.length>0">
+<label>Number of Records</label>
+	<select
+		class="form-control" ng-model="ipAddressSearchForm.itemsPerPage" name="noOfRows"
+		id="noOfRows" ng-change="itemsPerFilter()">
+		<option value="10">Show 10 Per Page</option>
+		<option value="25">Show 25 Per Page</option>
+		<option value="50">Show 50 Per Page</option>
+		<option value="100">Show 100 Per Page</option>
+	</select>    
+			</div>
+		<!-- /.panel -->
+		</div>
+	<!-- /.col-lg-12 -->
+</div>
+ 
+<div class="modal fade" id="blockIPModal" role="dialog">
+    <div class="modal-dialog">    
+      <div class="modal-content">
+      <form name="blockIPFormName" no-validate>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Block IP </h4>
+        </div>
+        <div class="modal-body">
+              <div class="row">
+              	<div class="col-md-12">
+              		<div class="col-md-3">IP Address</div>
+              		<div class="col-md-6"><input type="text" name="ipAddress" ng-model="blockIPForm.ipAddress" class="form-control" required validate-ip-address ng-change="isExist=false">
+              		<span class="error-container" ng-show="blockIPFormName.ipAddress.$dirty && blockIPFormName.ipAddress.$invalid">
+              			<span style="color:red;" ng-show="blockIPFormName.ipAddress.$error.required">Please Enter IP Address</span>
+              			<span style="color:red;" ng-show="!blockIPFormName.ipAddress.$error.required&&blockIPFormName.ipAddress.$error.validateIpAddress">Please Enter Valid IP Address</span>
+              		</span>
+              		<span style="color:red;" ng-show="isExist">Already Exist</span>
+              		</div>
+              	</div>
+              </div>
+        </div>
+        <div class="modal-footer" >
+        <button type="button" class="btn btn-success" ng-disabled="blockIPFormName.$invalid" ng-click="blockIP()">Block</button>
+         <button type="close" class="btn btn-danger closeButton" data-dismiss="modal">Cancel</button>
+        </div>
+       </form>
+      </div>
+      
+    </div>
+ </div> 
+ 
+ <!-- Remove Confirmation Modal -->
+<div class="modal fade" id="unblockIPModal" role="dialog">
+    <div class="modal-dialog">    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmation </h4>
+        </div>
+        <div class="modal-body">
+              <div class="row">
+              	<div class="col-md-12">
+              		Are you sure want to unblock IP?
+              	</div>
+              </div>
+        </div>
+        <div class="modal-footer" >
+        <button type="button" class="btn btn-success" ng-click="unBlockIP()">Unblock</button>
+         <button type="close" class="btn btn-danger closeButton" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+ </div> 
+ <div class="modal fade" id="viewIPDetailsModal" role="dialog">
+    <div class="modal-dialog modal-lg">    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">IP Details </h4>
+        </div>
+        <div class="modal-body">
+              <div class="row">
+              	<div class="col-md-12">
+              		<table class="table table-hover table-striped table-bordered">
+              		 <tr>
+              		 <td class="col-md-3">IP Address</td>
+              		 <td class="col-md-3">{{ipAddress.ipAddress}}</td>
+              		 <td class="col-md-3">City</td>
+              		 <td class="col-md-3">{{ipAddress.city}}</td>
+              		 </tr>
+              		 <tr>
+              		 <td>Region</td>
+              		 <td>{{ipAddress.region}}</td>
+              		 <td>Postal</td>
+              		 <td>{{ipAddress.postal}}</td>
+              		 </tr>
+              		 <tr>
+              		 <td>Country Name</td>
+              		 <td>{{ipAddress.countryName}}</td>
+              		 <td>Country Code</td>
+              		 <td>{{ipAddress.countryCode}}</td>
+              		 </tr>
+              		  <tr>
+              		 <td>Continent Name</td>
+              		 <td>{{ipAddress.continentName}}</td>
+              		 <td>Continent Code</td>
+              		 <td>{{ipAddress.continentCode}}</td>
+              		 </tr>
+              		 <tr>
+              		 <td>Time Zone</td>
+              		 <td>{{ipAddress.timeZone}}</td>
+              		 <td>Flag</td>
+              		 <td><img ng-src="{{ipAddress.flag}}"></td>
+              		 </tr>
+              		</table>
+              	</div>
+              </div>
+        </div>
+        <div class="modal-footer" >
+         <button type="close" class="btn btn-danger closeButton" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+ </div> 
+ 
+<script>
+ $('#date').datetimepicker({
+ 	format:'MM/DD/YYYY',
+ 	defaultDate:new Date(),
+ 	pickTime:false
+});
+</script>

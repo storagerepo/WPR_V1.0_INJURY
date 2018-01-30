@@ -220,7 +220,7 @@ public class CallerController {
 	@RequestMapping(value = "/Caller/getNumberOfAssignedPatients", method = RequestMethod.GET)
 	public String getNoOfAssignedPatients(ModelMap model) {
 		// -1 is Runner Report Condition, Direct Report Status
-		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "",new String[]{},"", new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{},-1,"","",0);
+		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "",new String[]{},"", new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{},-1,"","",0,null,null);
 		PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 		model.addAttribute("numberOfAssignedPatients", patientSearchResult.getTotalNoOfRecord());
 		model.addAttribute("requestSuccess", true);
@@ -230,7 +230,7 @@ public class CallerController {
 	@RequestMapping(value = "/Caller/getNumberOfAssignedVehicles", method = RequestMethod.GET)
 	public String getNoOfAssignedVehicles(ModelMap model) {
 		// -1 is Runner Report Condition, Direct Report Status
-		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "",new String[]{},"", new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{},-1,"","",1);
+		CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "",new String[]{},"", new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{},-1,"","",1,null,null);
 		PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 		model.addAttribute("numberOfAssignedVehicles", patientSearchResult.getTotalNoOfRecord());
 		model.addAttribute("requestSuccess", true);

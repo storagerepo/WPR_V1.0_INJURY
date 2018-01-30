@@ -1,24 +1,27 @@
 package com.deemsys.project.common;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
-import org.apache.xalan.xsltc.compiler.sym;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.access.event.AuthorizationFailureEvent;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionDestroyedEvent;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.ServletRequestHandledEvent;
 
+import com.deemsys.project.Logging.ActivityLogsForm;
+import com.deemsys.project.Logging.ActivityLogsService;
 
+@Component
 public class ApplicationSecurityListener implements ApplicationListener<ApplicationEvent>{
 
+	@Autowired
+	ActivityLogsService activityLogsService;
+	
 	public ApplicationSecurityListener() {
 		// TODO Auto-generated constructor stub
 	}
@@ -27,27 +30,26 @@ public class ApplicationSecurityListener implements ApplicationListener<Applicat
 	public void onApplicationEvent(ApplicationEvent event) {
 		// TODO Auto-generated method stub
 		if(event instanceof AuthorizationFailureEvent){
-			AuthorizationFailureEvent authorizationFailureEvent = (AuthorizationFailureEvent) event;
-			System.out.println("Not Authorized--"+authorizationFailureEvent);
+			/*AuthorizationFailureEvent authorizationFailureEvent = (AuthorizationFailureEvent) event;
+			System.out.println("Not Authorized--"+authorizationFailureEvent);*/
 		}else if(event instanceof AuthenticationFailureBadCredentialsEvent){
-			AuthenticationFailureBadCredentialsEvent badCredentialsEvent = (AuthenticationFailureBadCredentialsEvent) event;
-			System.out.println("Bad Credentials--"+badCredentialsEvent);
+			/*AuthenticationFailureBadCredentialsEvent badCredentialsEvent = (AuthenticationFailureBadCredentialsEvent) event;
+			System.out.println("Bad Credentials--"+badCredentialsEvent);*/
 		}else if(event instanceof AuthenticationSuccessEvent) {
-			AuthenticationSuccessEvent authenticationSuccessEvent = (AuthenticationSuccessEvent) event;
+			
+			/*
+			 * AuthenticationSuccessEvent authenticationSuccessEvent = (AuthenticationSuccessEvent) event;
 			User authUser = (User) authenticationSuccessEvent.getAuthentication().getPrincipal();
 			System.out.println("Authentication Success Event"+authenticationSuccessEvent.getAuthentication().getDetails());
 			WebAuthenticationDetails webauth=(WebAuthenticationDetails) authenticationSuccessEvent.getAuthentication().getDetails();
 			System.out.println("Session Id while create----->"+webauth.getSessionId());
 			System.out.println("username---"+authUser.getUsername());
-			System.out.println("Authentication Success Event"+authenticationSuccessEvent.getSource());
+			System.out.println("Authentication Success Event"+authenticationSuccessEvent.getSource());*/
 		}else if(event instanceof SessionDestroyedEvent){
 			SessionDestroyedEvent sessionDestroyedEvent = (SessionDestroyedEvent) event;
-			System.out.println("Session Destroyed event Id"+sessionDestroyedEvent.getId());
-			/*if(sessionDestroyedEvent.getSecurityContexts()!=null){
-				System.err.println("Session Name"+sessionDestroyedEvent.getSecurityContexts().get(0).getAuthentication().getDetails());
-				WebAuthenticationDetails webauth=(WebAuthenticationDetails) sessionDestroyedEvent.getSecurityContexts().get(0).getAuthentication().getDetails();
-				System.out.println("Session Id while destroy----->"+webauth.getSessionId());
-			}*/
+			System.out.println("Session Destroyed event Id-->"+sessionDestroyedEvent.getId());
+			ActivityLogsForm activityLogsForm = new ActivityLogsForm(sessionDestroyedEvent.getId(), "", null, "", null, "", 1, "", null, null, "", null, null, InjuryConstants.convertUSAFormatWithTime(new Date()), 1);
+			activityLogsService.updateActivityLogsBySessionId(activityLogsForm);
 		}else if(event instanceof ServletRequestHandledEvent){
 			ServletRequestHandledEvent servletRequestHandledEvent = (ServletRequestHandledEvent) event;
 			String requestedURI =servletRequestHandledEvent.getRequestUrl();

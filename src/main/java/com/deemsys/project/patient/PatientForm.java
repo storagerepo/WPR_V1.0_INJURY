@@ -46,6 +46,7 @@ public class PatientForm {
 	private String vehicleYear;
 	private String vin;
 	private String licensePlateNumber;
+	private Integer typeOfUse;
 	private Integer isOwner;
 	private Integer patientStatus;
 	private String crashReportFileName;
@@ -278,6 +279,12 @@ public class PatientForm {
 	public void setLicensePlateNumber(String licensePlateNumber) {
 		this.licensePlateNumber = licensePlateNumber;
 	}
+	public Integer getTypeOfUse() {
+		return typeOfUse;
+	}
+	public void setTypeOfUse(Integer typeOfUse) {
+		this.typeOfUse = typeOfUse;
+	}
 	public Integer getIsOwner() {
 		return isOwner;
 	}
@@ -339,7 +346,7 @@ public class PatientForm {
 			String medicalFacility, String atFaultInsuranceCompany,
 			String atFaultPolicyNumber, String victimInsuranceCompany,
 			String victimPolicyNumber,Integer tier, String vehicleMake, String vehicleYear,
-			String VIN, String licensePlateNumber, Integer isOwner,
+			String VIN, String licensePlateNumber, Integer typeOfUse, Integer isOwner,
 			Integer patientStatus,
 			String crashReportFileName, Integer status,String seatingPosition, Integer damageScale,Integer isRunnerReport) {
 		super();
@@ -376,6 +383,7 @@ public class PatientForm {
 		this.vehicleYear = vehicleYear;
 		this.vin = VIN;
 		this.licensePlateNumber = licensePlateNumber;
+		this.typeOfUse = typeOfUse;
 		this.isOwner = isOwner;
 		this.patientStatus = patientStatus;
 		this.crashReportFileName = crashReportFileName;

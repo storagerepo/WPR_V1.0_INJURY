@@ -504,7 +504,20 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		criteria.add(result);
 	}
 	
-	
+	// Common Constraints For Seating Position/Passengers Type
+	if(callerPatientSearchForm.getSeatingPosition()!=null&&callerPatientSearchForm.getSeatingPosition().length>0&&callerPatientSearchForm.getIsRunnerReport()!=-1&&callerPatientSearchForm.getIsRunnerReport()==0){
+		Disjunction seatingPositionDisjunction = Restrictions.disjunction();
+		if(ArrayUtils.contains(callerPatientSearchForm.getSeatingPosition(), 1)){
+			seatingPositionDisjunction.add(Restrictions.eq("t1.seatingPosition","1"));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getSeatingPosition(), 2)){
+			seatingPositionDisjunction.add(Restrictions.and(Restrictions.gt("t1.seatingPosition", "1"), Restrictions.lt("t1.seatingPosition", "99")));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getSeatingPosition(), 99)){
+			seatingPositionDisjunction.add(Restrictions.or(Restrictions.eq("t1.seatingPosition","99"), Restrictions.isNull("t1.seatingPosition")));
+		}
+		criteria.add(seatingPositionDisjunction);
+	}
 	
 	//Common Constrains - Crash Date
 	callerPatientSearchForm.setNumberOfDays(0);
@@ -665,6 +678,23 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		
 	}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ROLE)){
 		
+		if(callerPatientSearchForm.getTypeOfUse()!=null&&!callerPatientSearchForm.getTypeOfUse().equals("")&&callerPatientSearchForm.getIsRunnerReport()!=-1&&callerPatientSearchForm.getIsRunnerReport()==0){
+			Disjunction typeOfUseDisjunction = Restrictions.disjunction();
+			if(ArrayUtils.contains(callerPatientSearchForm.getTypeOfUse(), 1)){
+				typeOfUseDisjunction.add(Restrictions.eq("t1.typeOfUse", 1));
+			}
+			if(ArrayUtils.contains(callerPatientSearchForm.getTypeOfUse(), 2)){
+				typeOfUseDisjunction.add(Restrictions.eq("t1.typeOfUse", 2));
+			}
+			if(ArrayUtils.contains(callerPatientSearchForm.getTypeOfUse(), 3)){
+				typeOfUseDisjunction.add(Restrictions.eq("t1.typeOfUse", 3));
+			}
+			if(ArrayUtils.contains(callerPatientSearchForm.getTypeOfUse(), 0)){
+				typeOfUseDisjunction.add(Restrictions.or(Restrictions.eq("t1.typeOfUse", 0),Restrictions.isNull("t1.typeOfUse")));
+			}
+			criteria.add(typeOfUseDisjunction);
+		}
+		
 		criteria.createAlias("patientLawyerAdminMaps", "t2", Criteria.LEFT_JOIN,Restrictions.eq("t2.id.lawyerAdminId", callerPatientSearchForm.getLawyerAdminId()));		
 				
 		
@@ -783,6 +813,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	projectionList.add(Projections.property("t1.vin"),"VIN");
 	projectionList.add(Projections.property("t1.isOwner"),"isOwner");
 	projectionList.add(Projections.property("cr.vehicleCount"),"vehicleCount");
+	projectionList.add(Projections.property("t1.typeOfUse"),"typeOfUse");
 	
 	if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
 		projectionList.add(Projections.property("t2.callerAdmin.callerAdminId"),"callerAdminId");

@@ -107,6 +107,16 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 			$scope.searchParam.reportingAgency[index]=value.id;
 		});
 		
+		//Manipulate Type of Use Array
+		$.each($scope.searchParam.typeOfUse,function(index,value){
+			$scope.searchParam.typeOfUse[index]=value.id;
+		});
+		
+		// Manipulate Seating Position
+		$.each($scope.searchParam.seatingPosition, function(index,value){
+			$scope.searchParam.seatingPosition[index]=value.id;
+		});
+		
 		//Reset Check Box - Scanned
 		$scope.isCheckedAllDirectReport=false;
 		
@@ -192,6 +202,22 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 							    default:
 							        break;
 								};
+								switch(value2.typeOfUse) {
+							    case "1":
+							    	value2.typeOfUseName="Personal";
+							        break;
+							    case "2":
+							    	value2.typeOfUseName="Commercial";
+							        break;
+							    case "3":
+							    	value2.typeOfUseName="Government";
+							        break;
+							    case "0":
+							    	value2.typeOfUseName="Unknown";
+							        break;
+							    default:
+							        break;
+								};
 							});
 						});
 						defer.resolve(response);
@@ -272,6 +298,8 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 	searchService.setDirectReportStatus($scope.patient.directReportStatus);
 	searchService.setReportingAgency(angular.copy($scope.patient.reportingAgency));
 	searchService.setReportingAgencyListType($scope.reportingAgencyListType);
+	searchService.setTypeOfUse(angular.copy($scope.patient.typeOfUse));
+	searchService.setSeatingPosition($scope.patient.seatingPostion);
 	};
 	
 	$scope.secoundarySearchPatient=function(){
@@ -686,19 +714,24 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"},{id: 5, label: "Undetermined"},{id: 0, label: "Others"}];	
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
-		
+		$scope.defaultTypeofUse=[{id:1, label: "Personal"},{id:2, label: "Commercial"},{id:3, label: "Government"},{id:0, label: "Unknown"}];
+		$scope.defaultSeatingPosition=[{id:1, label:"Drivers"},{id:2, label:"Passengers"},{id:99, label:"Unkonwn"}];
 		$scope.patient={};
 		$scope.totalRecords=0;
 		$scope.lAdminPatientSearchData="";
 		$scope.patient.countyId=[];
 		$scope.patient.tier=[];
 		$scope.patient.damageScale=[];
-		$scope.patient.reportingAgency=[];	
+		$scope.patient.reportingAgency=[];
+		$scope.patient.typeOfUse=[];
+		$scope.patient.seatingPosition=[];
 		$scope.patient.isOwner=0;
 		$scope.reportingAgencyLoaded=false;
 		angular.copy(searchService.getCounty(),$scope.patient.countyId);
 		angular.copy(searchService.getTier(),$scope.patient.tier);
 		angular.copy(searchService.getDamageScale(),$scope.patient.damageScale);
+		angular.copy(searchService.getTypeOfUse(),$scope.patient.typeOfUse);
+		angular.copy(searchService.getSeatingPosition(),$scope.patient.seatingPosition);
 		$scope.patient.crashFromDate=searchService.getCrashFromDate();
 		$scope.patient.crashToDate=searchService.getCrashToDate();
 		$scope.patient.localReportNumber=searchService.getLocalReportNumber();
@@ -1008,7 +1041,28 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 				   $scope.disableSearch=false;	
 		   }
 		}, true );
-	
+	// Watch Type of Use
+	$scope.$watch('patient.typeOfUse' , function() {		
+		   if($scope.patient.typeOfUse.length==0){
+			   $scope.disableSearch=true;
+			   $scope.searchTypeOfUseMinError=true;
+		   }else{
+			   $scope.searchTypeOfUseMinError=false;
+			   if(!$scope.searchCountyMinError)
+				   $scope.disableSearch=false;	
+		   }
+		}, true );
+	//Watch Seating Position
+	$scope.$watch('patient.seatingPosition' , function() {		
+		   if($scope.patient.seatingPosition.length==0){
+			   $scope.disableSearch=true;
+			   $scope.searchSeatingPositionMinError=true;
+		   }else{
+			   $scope.searchSeatingPositionMinError=false;
+			   if(!$scope.searchCountyMinError)
+				   $scope.disableSearch=false;	
+		   }
+		}, true );
 	// Watch Damage Scale Filter
 	$scope.$watch('patient.damageScale' , function() {		
 		   if($scope.patient.damageScale.length==0){

@@ -15,6 +15,7 @@ public class ReportUnitPageForm {
     private String vehicleYear;
     private String VIN;
     private String licensePlatNumber;
+    private String typeOfUse;
 	public String getUnitNumber() {
 		return unitNumber;
 	}
@@ -87,9 +88,16 @@ public class ReportUnitPageForm {
 	public void setLicensePlatNumber(String licensePlatNumber) {
 		this.licensePlatNumber = licensePlatNumber;
 	}
+	public String getTypeOfUse() {
+		return typeOfUse;
+	}
+	public void setTypeOfUse(String typeOfUse) {
+		this.typeOfUse = typeOfUse;
+	}
 	public ReportUnitPageForm(String unitNumber, String ownerName,
 			String ownerPhoneNumber, String ownerAddress, String occupants,
-			String insuranceCompany, String policyNumber, String damageScale, String vehicleMake, String vehicleYear, String VIN, String licensePlatNumber) {
+			String insuranceCompany, String policyNumber, String damageScale, String vehicleMake, String vehicleYear, 
+			String VIN, String licensePlatNumber, String typeOfUse) {
 		super();
 		this.unitNumber = unitNumber;
 		this.ownerName = ownerName;
@@ -103,6 +111,7 @@ public class ReportUnitPageForm {
 		this.vehicleYear = vehicleYear;
 		this.VIN = VIN;
 		this.licensePlatNumber = licensePlatNumber;
+		this.typeOfUse = typeOfUse;
 	}
     
 		public static Comparator<ReportUnitPageForm> ReportUnitPageComparitor 

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.joda.time.LocalDate;
 
@@ -473,5 +475,27 @@ public class InjuryConstants {
 		}else{
 			return false;
 		}
+	}
+	
+	// Get IP Address From Request
+	public static String getRemoteAddr(HttpServletRequest request) {
+		/*final String[] IP_HEADER_CANDIDATES = { 
+		    "X-Forwarded-For",
+		    "Proxy-Client-IP",
+		    "WL-Proxy-Client-IP",
+		    "HTTP_X_FORWARDED_FOR",
+		    "HTTP_X_FORWARDED",
+		    "HTTP_X_CLUSTER_CLIENT_IP",
+		    "HTTP_CLIENT_IP",
+		    "HTTP_FORWARDED_FOR",
+		    "HTTP_FORWARDED",
+		    "HTTP_VIA",
+		    "REMOTE_ADDR" };"unknown".equalsIgnoreCase(ip)*/
+	    String ipFromHeader = request.getHeader("X-FORWARDED-FOR");
+	    if (ipFromHeader != null && ipFromHeader.length() > 0) {
+	        System.out.println("ip from proxy - X-FORWARDED-FOR : " + ipFromHeader);
+	        return ipFromHeader;
+	    }
+	    return request.getRemoteAddr();
 	}
 }

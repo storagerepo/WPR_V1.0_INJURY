@@ -1,14 +1,15 @@
-package com.deemsys.project.Logging;
+package com.deemsys.project.IPGeoLocation;
 
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
-import com.deemsys.project.entity.LogSample;
+import com.deemsys.project.entity.IpGeoLocation;
 
 /**
  * 
@@ -16,32 +17,32 @@ import com.deemsys.project.entity.LogSample;
  *
  */
 @Repository
-public class LogSampleDAOImpl implements LogSampleDAO{
+public class IPGeoLocationDAOImpl implements IPGeoLocationDAO{
 	
 	
 	@Autowired
 	SessionFactory sessionFactory;
 
 	@Override
-	public void save(LogSample entity) {
+	public void save(IpGeoLocation entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().save(entity);
 	}
 
 	@Override
-	public void merge(LogSample entity) {
+	public void merge(IpGeoLocation entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().merge(entity);
 	}	
 	
 	@Override
-	public LogSample get(Integer id) {
+	public IpGeoLocation get(Integer id) {
 		// TODO Auto-generated method stub
-		return (LogSample) this.sessionFactory.getCurrentSession().get(LogSample.class, id);
+		return (IpGeoLocation) this.sessionFactory.getCurrentSession().get(IpGeoLocation.class, id);
 	}
 
 	@Override
-	public LogSample update(LogSample entity) {
+	public IpGeoLocation update(IpGeoLocation entity) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().merge(entity);
 		return null;
@@ -56,50 +57,50 @@ public class LogSampleDAOImpl implements LogSampleDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<LogSample> getAll() {
+	public List<IpGeoLocation> getAll() {
 		// TODO Auto-generated method stub
-		return this.sessionFactory.getCurrentSession().createCriteria(LogSample.class).list();
+		return this.sessionFactory.getCurrentSession().createCriteria(IpGeoLocation.class).list();
 	}
 
 	@Override
-	public List<LogSample> find(String paramName, String paramValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<LogSample> find(String paramName, Long paramValue) {
+	public List<IpGeoLocation> find(String paramName, String paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LogSample> find(String paramName, Integer paramValue) {
+	public List<IpGeoLocation> find(String paramName, Long paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LogSample> find(BasicQuery query) {
+	public List<IpGeoLocation> find(String paramName, Integer paramValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LogSample> find(String queryString, String[] paramNames,
+	public List<IpGeoLocation> find(BasicQuery query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IpGeoLocation> find(String queryString, String[] paramNames,
 			String[] paramValues) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LogSample> find(String ParamName, Date date1, Date date2) {
+	public List<IpGeoLocation> find(String ParamName, Date date1, Date date2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<LogSample> find(String ParamName, Date date) {
+	public List<IpGeoLocation> find(String ParamName, Date date) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -129,9 +130,15 @@ public class LogSampleDAOImpl implements LogSampleDAO{
 	}
 
 	@Override
-	public List<LogSample> getActiveList() {
+	public List<IpGeoLocation> getActiveList() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public IpGeoLocation getIPGeoLocationByIP(String ipAddress) {
+		// TODO Auto-generated method stub
+		return (IpGeoLocation) this.sessionFactory.getCurrentSession().createCriteria(IpGeoLocation.class).add(Restrictions.eq("ipAddress", ipAddress));
 	}
 
 	

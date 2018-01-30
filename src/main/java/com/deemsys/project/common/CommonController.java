@@ -2,12 +2,15 @@
 package com.deemsys.project.common;
 
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,13 +37,13 @@ import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.CallerAdmin;
 import com.deemsys.project.entity.Lawyer;
 import com.deemsys.project.entity.LawyerAdmin;
+import com.deemsys.project.entity.LogSample;
 import com.deemsys.project.entity.Users;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.CallerPatientSearchForm;
 import com.deemsys.project.patient.PatientController;
 import com.deemsys.project.patient.PatientGroupedSearchResult;
 import com.deemsys.project.patient.PatientService;
-import com.mysql.fabric.xmlrpc.base.Array;
 
 
 /**
@@ -105,6 +108,10 @@ public class CommonController {
 	@Autowired
 	GeoLocation geoLocation;
 	
+	@Autowired
+	@Qualifier("sessionRegistry")
+	private SessionRegistry sessionRegistry;
+	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String getInit(ModelMap model)
 	{
@@ -145,6 +152,26 @@ public class CommonController {
    	public String logout(ModelMap model)
    	{
        	model.addAttribute("Success",true);
+       	
+       /*	List<Object> principals = sessionRegistry.getAllPrincipals();
+    	
+
+    	List<String> usersNamesList = new ArrayList<String>();
+    	List<SessionInformation> sessionInformations = new ArrayList<SessionInformation>();
+    	for (Object principal: principals) {
+    		if (principal instanceof User) {
+    			if(((User) principal).getUsername().equals("superadmin")){
+    				sessionInformations=sessionRegistry.getAllSessions(principal, true);
+    			}
+    	        usersNamesList.add(((User) principal).getUsername());
+    	    }
+    	}
+    	for (SessionInformation sessionInformation : sessionInformations) {
+    		System.out.print("Sessions Available-->"+sessionInformation.getSessionId()+" Is Expired-->"+sessionInformation.isExpired());
+    		System.out.println(" Sessions Last Request -->"+sessionInformation.getLastRequest());
+			//sessionInformation.expireNow();
+		}
+    	System.out.println("Users List----->>"+usersNamesList);*/
    		return "/login";
    	}
     
@@ -311,7 +338,7 @@ public class CommonController {
     public String getDashboardCount(ModelMap model){
     	Integer currentRoleId=loginService.getCurrentRoleId();
     	List<Integer> dashboardCount = new ArrayList<Integer>();
-    	CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "",new String[]{},"", new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{},-1,"","",0);
+    	CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "",new String[]{},"", new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{},-1,"","",0,null,null);
 		if(currentRoleId.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE_ID)){
 			dashboardCount.add(callerAdminService.getNumberOfCallerAdmins());
 	    	dashboardCount.add(lawyerAdminService.getNumberOfLawyerAdmin());
@@ -365,6 +392,26 @@ public class CommonController {
 		}
 		return "/returnPage";
 	}
+    
+    @RequestMapping(value="/getRoles",method=RequestMethod.GET)
+  	public String getRoles(ModelMap model)
+  	{
+    	model.addAttribute("rolesForm",loginService.getRoles());
+      	model.addAttribute("requestSuccess",true);
+  		return "/returnPage";
+  	}
+    
+    @RequestMapping(value = "/updateLatLangTest", method = RequestMethod.GET)
+   	public String latLangUpdateTest(@RequestParam("address") String address,
+   			ModelMap model) {
+   		try {
+   			geoLocation.getLocation(address);
+   		} catch (Exception e) {
+   			// TODO Auto-generated catch block
+   			e.printStackTrace();
+   		}
+   		return "/returnPage";
+   	}
 
     
 }

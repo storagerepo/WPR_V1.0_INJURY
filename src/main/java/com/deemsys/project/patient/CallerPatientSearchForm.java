@@ -28,11 +28,13 @@ public class CallerPatientSearchForm {
 	private Integer isRunnerReport;
 	private Integer[] damageScale; 
 	private Integer directReportStatus;
+	private Integer[] seatingPosition;
 	
 	// Vehicle Search
 	private String vehicleMake;
 	private String vehicleYear;
 	private Integer isOwner;
+	private Integer[] typeOfUse;
 	
 	// Export Excel
 	private Integer exportType;
@@ -220,7 +222,18 @@ public class CallerPatientSearchForm {
 	public void setIsOwner(Integer isOwner) {
 		this.isOwner = isOwner;
 	}
-	
+	public Integer[] getTypeOfUse() {
+		return typeOfUse;
+	}
+	public void setTypeOfUse(Integer[] typeOfUse) {
+		this.typeOfUse = typeOfUse;
+	}
+	public Integer[] getSeatingPosition() {
+		return seatingPosition;
+	}
+	public void setSeatingPosition(Integer[] seatingPosition) {
+		this.seatingPosition = seatingPosition;
+	}
 	public Integer getExportType() {
 		return exportType;
 	}
@@ -237,7 +250,8 @@ public class CallerPatientSearchForm {
 	public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 			Integer tier[], Integer patientStatus, String crashFromDate,Integer numberOfDays,
 			String crashToDate, String localReportNumber,String[] reportingAgency,String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived,String archivedFromDate, String archivedToDate,
-			Integer isRunnerReport,Integer[] damageScale,Integer directReportStatus,String vehicleMake, String vehicleYear, Integer isOwner) {
+			Integer isRunnerReport,Integer[] damageScale,Integer directReportStatus,String vehicleMake, String vehicleYear, Integer isOwner, 
+			Integer[] typeOfUse, Integer[] seatingPostion) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.countyId = countyId;
@@ -267,6 +281,8 @@ public class CallerPatientSearchForm {
 		this.vehicleMake = vehicleMake;
 		this.vehicleYear = vehicleYear;
 		this.isOwner = isOwner;
+		this.typeOfUse = typeOfUse;
+		this.seatingPosition = seatingPostion;
 	}
 	public CallerPatientSearchForm() {
 		super();

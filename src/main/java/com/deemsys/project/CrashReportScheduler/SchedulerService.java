@@ -131,15 +131,7 @@ public class SchedulerService {
 					System.out.println("Map Search Result Auto Delete Off");
 				}
 				System.out.println("Map Search Result Delete End");
-				// Check and Update status of Police Department Report pulling
-				System.out.println("Check Status of Police Department Report Pulling Start");
-				if(injuryProperties.getProperty("statusCheckingForPoliceDepartment").equals("on")){
-					System.out.println("Check Status of Police Department Report Pulling On");
-					policeAgencyService.updateStatusOfReports();
-				}else{
-					System.out.println("Check Status of Police Department Report Pulling Off");
-				}
-				System.out.println("Check Status of Police Department Report Pulling End");
+				
 			}
 			catch(Exception ex)
 			{
@@ -149,19 +141,21 @@ public class SchedulerService {
 			
 	}
 	
-	/*// Schedule At Every One Hour
-	@Scheduled(cron="0 0 0/1 * * ?")
+	// Schedule At Everyday start
+	@Scheduled(cron="0 0 0 * * ?")
 	public void doScheduleForMissingReports() {
 		worker.work();
 		try
 			{
-				System.out.println("Start Second Scheduler for Missing Reports");
-				if(injuryProperties.getProperty("autoDownloadCrash").equals("on")){
-					archivedPatientService.saveArchivedPatientAndDeleteOldData();
+				// Check and Update status of Police Department Report pulling
+				System.out.println("Check Status of Police Department Report Pulling Start");
+				if(injuryProperties.getProperty("statusCheckingForPoliceDepartment").equals("on")){
+					System.out.println("Check Status of Police Department Report Pulling On");
+					policeAgencyService.updateStatusOfReports();
 				}else{
-					System.out.println("Second Scheduler is Off");
+					System.out.println("Check Status of Police Department Report Pulling Off");
 				}
-				System.out.println("End Second Scheduler");
+				System.out.println("Check Status of Police Department Report Pulling End");
 			 }
 			catch(Exception ex)
 			{
@@ -169,6 +163,6 @@ public class SchedulerService {
 			}
 				
 	}
-	*/
+	
 
 }

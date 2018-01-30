@@ -1600,6 +1600,51 @@ sbAdminApp
 																						}
 																					}
 
+																			}).state('dashboard.viewActivityLogs/:ipAddress/:loginId',{
+																				templateUrl:'views/activitylog/view-activitylogs.html',
+																				url:'/viewActivityLogs/:ipAddress/:loginId',
+																				controller:"ActivityLogsController",
+																				resolve:{
+																					loadMyFile:function($ocLazyLoad){
+																						return $ocLazyLoad.load({
+																							name:'sbAdminApp',
+																							files:['scripts/controllers/activityLogsController.js',
+																							       'components/datetime/datetimepicker.css',
+																									'components/datetime/moment.js',
+																									'components/datetime/datetimepicker.js']
+																						});
+																					}
+																				}
+																			}).state('dashboard.viewIpAccessList',{
+																				templateUrl:'views/activitylog/view-Ip-access-list.html',
+																				url:'/viewIpAccessList',
+																				controller:"IpAccessListController",
+																				resolve:{
+																					loadMyFile:function($ocLazyLoad){
+																						return $ocLazyLoad.load({
+																							name:'sbAdminApp',
+																							files:['scripts/controllers/activityLogsController.js',
+																							       'components/datetime/datetimepicker.css',
+																									'components/datetime/moment.js',
+																									'components/datetime/datetimepicker.js']
+																						});
+																					}
+																				}
+																			}).state('dashboard.viewBlockedIP',{
+																				templateUrl:'views/activitylog/view-blockedIP.html',
+																				url:'/viewBlockedIP',
+																				controller:"BlockedIPController",
+																				resolve:{
+																					loadMyFile:function($ocLazyLoad){
+																						return $ocLazyLoad.load({
+																							name:'sbAdminApp',
+																							files:['scripts/controllers/activityLogsController.js',
+																							       'components/datetime/datetimepicker.css',
+																									'components/datetime/moment.js',
+																									'components/datetime/datetimepicker.js']
+																						});
+																					}
+																				}
 																			});
 
 						} ]).run( [ '$rootScope','$state','$stateParams', function ($rootScope,$state, $stateParams) {
@@ -1968,4 +2013,21 @@ sbAdminApp.directive('summernoteRequired', function () {
             };
         }
     };
+});
+
+sbAdminApp.directive('validateIpAddress', function(){
+	var ipRegex=/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
+	return {
+		require: 'ngModel',
+		restrict: '',
+		link: function(scope,elem,attrs, ngModel){
+			ngModel.$validators.validateIpAddress=function(modelValue){
+				if (modelValue=="" || modelValue == undefined) {
+					return true;
+				}else{
+					return ipRegex.test(modelValue);
+				}
+			}
+		}
+	};
 });

@@ -5,11 +5,8 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.joda.time.DateTime;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -24,17 +21,17 @@ public class RequestHandlerInterceptor extends HandlerInterceptorAdapter{
 		String requestedURI =request.getRequestURI();
 		if(!requestedURI.contains("resources")&&!requestedURI.contains("styles")
 				&&!requestedURI.contains("scripts")&&!requestedURI.contains("views")){
-			System.out.println("Enter Time---->>"+new DateTime());
+			/*System.out.println("Enter Time---->>"+new DateTime());
 			System.out.println("Request method---->>"+request.getMethod());
 			System.out.println("Request Session Id---->>"+request.getRequestedSessionId());
 			System.out.println("Request Url---->>"+request.getRequestURL());
-			System.out.println("Request URI---->>"+request.getRequestURI());
+			System.out.println("Request URI---->>"+request.getRequestURI());*/
 			if(SecurityContextHolder.getContext().getAuthentication()!=null&&SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
 					&&!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)){
-				User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-				System.out.println("User Name---->"+user.getUsername());
+				/*User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				System.out.println("User Name---->"+user.getUsername());*/
 			}
-			System.out.println("Request Paameter Names---->>"+getParameters(request));
+			//System.out.println("Request Paameter Names---->>"+getParameters(request));
 		}
 		return true;
 	}

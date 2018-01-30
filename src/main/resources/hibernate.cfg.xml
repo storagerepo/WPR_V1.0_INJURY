@@ -44,6 +44,9 @@
         <mapping class="com.deemsys.project.entity.ReportingAgency" />
         <mapping class="com.deemsys.project.entity.VehicleMakeAbbreviation" />
         <mapping class="com.deemsys.project.entity.PatientNearbyClinicSearchResult" />
-        <mapping class="com.deemsys.project.entity.LogSample" />
+        <mapping class="com.deemsys.project.entity.ActivityLogs" />
+        <mapping class="com.deemsys.project.entity.Activity" />
+        <mapping class="com.deemsys.project.entity.IpAccessList" />
+         <mapping class="com.deemsys.project.entity.IpAddress" />
     </session-factory>
 </hibernate-configuration>

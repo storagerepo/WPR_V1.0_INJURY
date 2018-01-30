@@ -189,6 +189,7 @@
 	<div id="footer">
 		<!-- Footer start -->
 		<p>Copyright &copy; 2017 &middot; All Rights Reserved &middot; <a class="tag-color-white" target="#blank" href="http://www.deemsysinc.com/" >Deemsys Inc</a></p>
+		<div style="margin-top: -10px !important;font-size: 16px !important;" class="pull-right">Register at <a href="https://www.crashreportsonline.com" target="_blank">https://www.crashreportsonline.com</a></div>
 		<!-- Footer end -->
 	</div>
 </div>

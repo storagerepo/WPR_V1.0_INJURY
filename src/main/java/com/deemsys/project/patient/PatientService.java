@@ -412,8 +412,8 @@ public class PatientService {
 				patient.getVictimInsuranceCompany(),
 				patient.getVictimPolicyNumber(),patient.getTier(),
 				abbreviation,patient.getVehicleYear(),
-				patient.getVin(),patient.getLicensePlateNumber(),patient.getIsOwner(),
-				patient.getPatientStatus(),
+				patient.getVin(),patient.getLicensePlateNumber(), patient.getTypeOfUse(),
+				patient.getIsOwner(), patient.getPatientStatus(),
 				patient.getCrashReport().getFilePath(), patient.getStatus(),patient.getSeatingPosition(),patient.getDamageScale(),patient.getIsRunnerReport());
 
 		// Null Exception Check
@@ -495,7 +495,7 @@ public class PatientService {
 			patientForm.getVictimInsuranceCompany(),
 			patientForm.getVictimPolicyNumber(), patientForm.getSeatingPosition(), patientForm.getDamageScale(),patientForm.getTier(),
 			patientForm.getVehicleYear(),patientForm.getVin(),
-			patientForm.getLicensePlateNumber(), patientForm.getIsOwner(),
+			patientForm.getLicensePlateNumber(), patientForm.getTypeOfUse(),patientForm.getIsOwner(),
 			patientForm.getPatientStatus(),
 			patientForm.getCrashReportFileName(), patientForm.getIsRunnerReport(), patientForm.getStatus(),
 			null, null);

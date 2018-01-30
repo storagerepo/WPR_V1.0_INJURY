@@ -611,6 +611,11 @@ input[type=text]::-ms-clear { display: none; }
 .group-header-back-convert{
 	background-color:rgba(240, 173, 78, 0.15) !important;
 }
+
+.group-header-back-ip{
+	background-color:rgba(13, 37, 214, 0.33)!important;
+}
+
 .patient-count-circle{
 	height:20px;
 	border-radius:3px;
@@ -1047,6 +1052,12 @@ ul.rating {
 .dashboard-panel-lg-2{
 	width: 20% !important;	
 }
+
+.search-show-hide{
+	margin-top: -55px;
+    margin-left: 210px;
+}
+
 #squaresWaveG{
 	position:relative;
 	width:40px;

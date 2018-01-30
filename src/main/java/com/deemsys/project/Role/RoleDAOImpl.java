@@ -47,10 +47,11 @@ public class RoleDAOImpl implements RoleDAO {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Roles> getAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.sessionFactory.getCurrentSession().createCriteria(Roles.class).list();
 	}
 
 	@Override

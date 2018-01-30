@@ -68,6 +68,7 @@ public class PatientSearchList extends InjuryProperties{
 	private String VIN;
 	private Integer isOwner;
 	private Integer vehicleCount;
+	private Integer typeOfUse;
 	
 	//Initialize Properties
 	private String runnerBucketURL="https://cdn.crashreportsonline.com/runner-reports/";
@@ -453,6 +454,12 @@ public class PatientSearchList extends InjuryProperties{
 	}
 	public void setVehicleCount(Integer vehicleCount) {
 		this.vehicleCount = vehicleCount;
+	}
+	public Integer getTypeOfUse() {
+		return typeOfUse;
+	}
+	public void setTypeOfUse(Integer typeOfUse) {
+		this.typeOfUse = typeOfUse;
 	}
 	public PatientSearchList(String patientId, String localReportNumber,
 			Integer numberOfPatients, String crashDate, String addedDate,

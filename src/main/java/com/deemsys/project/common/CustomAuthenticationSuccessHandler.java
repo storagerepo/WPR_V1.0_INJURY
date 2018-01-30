@@ -1,11 +1,11 @@
 package com.deemsys.project.common;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,15 +13,24 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
 
-import com.deemsys.project.Logging.LogSampleDAO;
-import com.deemsys.project.entity.LogSample;
-
+import com.deemsys.project.IPAccessList.IPAccessListForm;
+import com.deemsys.project.IPAccessList.IPAccessListService;
+import com.deemsys.project.IPAddresses.IPAddressesForm;
+import com.deemsys.project.IPAddresses.IPAddressesService;
+import com.deemsys.project.Logging.ActivityLogsForm;
+import com.deemsys.project.Logging.ActivityLogsService;
+import com.deemsys.project.entity.IpAddresses;
 @Service
-@org.springframework.transaction.annotation.Transactional
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler{
 
 	@Autowired
-	LogSampleDAO logSampleDAO;
+	ActivityLogsService activityLogsService;
+	
+	@Autowired
+	IPAddressesService ipAddressesService;
+	
+	@Autowired
+	IPAccessListService ipAccessListService;
 	
 	public CustomAuthenticationSuccessHandler() {
 		// TODO Auto-generated constructor stub
@@ -34,10 +43,24 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		// TODO Auto-generated method stub
 		User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		System.out.println("username---"+authUser.getUsername());
-		System.out.println("Session Id---"+request.getSession().getId()+"-Creation Time--"+request.getSession().getCreationTime()+"--Ip Address-->"+request.getRemoteAddr());
+		// Get IP Address
+		String IPAddress=InjuryConstants.getRemoteAddr(request);
+		System.out.println("Session Id---"+request.getSession().getId()+"--Ip Address-->"+IPAddress);
 		
-		/*LogSample logSample = new LogSample(request.getSession().getId());
-		logSampleDAO.merge(logSample);*/
+		// Check IPAddress Available System
+		if(!ipAddressesService.checkIPAlreadyExistOrNot(IPAddress)){
+			// Save Into IPAddress List
+			IPAddressesForm ipAddressesForm = new IPAddressesForm(IPAddress, null, authUser.getUsername(), "", "", 
+														"", "", "", "", "", "", "", "", "", 0, InjuryConstants.convertMonthFormat(new Date()));
+			ipAddressesService.saveIpAddresses(ipAddressesForm);
+		}
+		if(!ipAccessListService.checkIPAlreadyExistOrNot(IPAddress, authUser.getUsername())){
+			IPAccessListForm ipAccessListForm = new IPAccessListForm(IPAddress, null, authUser.getUsername(), "", new Date(), 1);
+			ipAccessListService.saveIpAccessList(ipAccessListForm);
+		}
+		
+		ActivityLogsForm activityLogsForm = new ActivityLogsForm(request.getSession().getId(), "", null, authUser.getUsername(), null, "", 1, "", null, IPAddress, "", InjuryConstants.convertMonthFormat(new Date()), InjuryConstants.convertUSAFormatWithTime(new Date()), null, 1);
+		activityLogsService.saveActivityLogs(activityLogsForm);
 		//set our response to OK status
         response.setStatus(HttpServletResponse.SC_OK);
  

@@ -31,6 +31,8 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	// Vehicle Search
 	var vehicleMake="";
 	var vehicleYear="";
+	var typeOfUse=[{id:1},{id:2},{id:3},{id:0}];
+	var seatingPosition=[{id:1},{id:2},{id:99}];
 	
 	// Constant
 	var maxRecordsDownload=100000;
@@ -275,6 +277,20 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	};
 	this.setVehicleYear=function(vehicleYearInput){
 		vehicleYear=vehicleYearInput;
+	};
+	//Type Of Use
+	this.getTypeOfUse=function(){
+		return typeOfUse;
+	};
+	this.setTypeOfUse=function(typeOfUseInput){
+		typeOfUse=typeOfUseInput;
+	};
+	// Seating Position Passengers/Driver
+	this.getSeatingPosition=function(){
+		return seatingPosition;
+	};
+	this.setSeatingPosition=function(seatingPositionInput){
+		seatingPosition=seatingPositionInput;
 	};
 	// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
 	this.spiltAndSwapName=function(patientName){
