@@ -173,7 +173,7 @@ public class IPAddressesDAOImpl implements IPAddressesDAO{
 		criteria.createAlias("ipa1.users", "u1");
 		criteria.createAlias("ipa1.activityLogses", "ac1");
 		if(ipAddressSearchForm.getDate()!=null&&!ipAddressSearchForm.getDate().equals("")){
-			criteria.add(Restrictions.eq("ac1.accessDate", InjuryConstants.convertYearFormat(ipAddressSearchForm.getDate())));
+			criteria.add(Restrictions.eq("ac1.id.accessDate", InjuryConstants.convertYearFormat(ipAddressSearchForm.getDate())));
 		}
 		if(ipAddressSearchForm.getPrimaryUsername()!=null&&!ipAddressSearchForm.getPrimaryUsername().equals("")){
 			criteria.add(Restrictions.like("u1.username", ipAddressSearchForm.getPrimaryUsername(),MatchMode.ANYWHERE));
@@ -184,11 +184,15 @@ public class IPAddressesDAOImpl implements IPAddressesDAO{
 		if(ipAddressSearchForm.getBlockStatus()!=null&&!ipAddressSearchForm.getBlockStatus().equals("")){
 			criteria.add(Restrictions.eq("ip1.blockStatus", ipAddressSearchForm.getBlockStatus()));
 		}
+		// Common Constraints
+		criteria.add(Restrictions.eq("ac1.id.activityId", 1));
+		
 		ProjectionList projectionList = Projections.projectionList();
 		projectionList.add(Projections.property("ipa1.id.ipAddress"),"ipAddress");
 		projectionList.add(Projections.property("u1.userId"),"primaryLoginId");
 		projectionList.add(Projections.property("u1.username"),"primaryUsername");
 		projectionList.add(Projections.property("ipa1.addedDate"),"addedDateYearFormat");
+		projectionList.add(Projections.property("ip1.blockStatus"),"blockStatus");
 		projectionList.add(Projections.count("ipa1.id.ipAddress"),"accessCount");
 		projectionList.add(Projections.groupProperty("ipa1.id.ipAddress"));
 		projectionList.add(Projections.groupProperty("ipa1.id.primaryLoginId"));

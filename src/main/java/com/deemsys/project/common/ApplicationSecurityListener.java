@@ -48,19 +48,19 @@ public class ApplicationSecurityListener implements ApplicationListener<Applicat
 		}else if(event instanceof SessionDestroyedEvent){
 			SessionDestroyedEvent sessionDestroyedEvent = (SessionDestroyedEvent) event;
 			System.out.println("Session Destroyed event Id-->"+sessionDestroyedEvent.getId());
-			ActivityLogsForm activityLogsForm = new ActivityLogsForm(sessionDestroyedEvent.getId(), "", null, "", null, "", 1, "", null, null, "", null, null, InjuryConstants.convertUSAFormatWithTime(new Date()), 1);
+			ActivityLogsForm activityLogsForm = new ActivityLogsForm(sessionDestroyedEvent.getId(), "", null, "", null, "", 1, "", null, null, "", null, null, InjuryConstants.convertUSAFormatWithTime(new Date()), "", 1);
 			activityLogsService.updateActivityLogsBySessionId(activityLogsForm);
 		}else if(event instanceof ServletRequestHandledEvent){
 			ServletRequestHandledEvent servletRequestHandledEvent = (ServletRequestHandledEvent) event;
 			String requestedURI =servletRequestHandledEvent.getRequestUrl();
 			if(!requestedURI.contains("resources")&&!requestedURI.contains("styles")
 					&&!requestedURI.contains("scripts")&&!requestedURI.contains("views")){
-				System.out.println("Http Servlet Event Session Id--"+servletRequestHandledEvent.getSessionId());
+				/*System.out.println("Http Servlet Event Session Id--"+servletRequestHandledEvent.getSessionId());
 				System.out.println("Http Servlet Event User Name--"+servletRequestHandledEvent.getUserName());
 				System.out.println("Http Servlet Event IP--"+servletRequestHandledEvent.getClientAddress());
 				System.out.println("Http Servlet Event Method--"+servletRequestHandledEvent.getMethod());
 				System.out.println("Http Servlet Event Processing Time--"+servletRequestHandledEvent.getProcessingTimeMillis());
-				System.out.println("Http Servlet Event Request URL--"+servletRequestHandledEvent.getRequestUrl());
+				System.out.println("Http Servlet Event Request URL--"+servletRequestHandledEvent.getRequestUrl());*/
 			}
 		}
 	}

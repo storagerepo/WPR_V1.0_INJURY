@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -141,7 +142,7 @@ public class ActivityLogsDAOImpl implements ActivityLogsDAO{
 	@Override
 	public ActivityLogs getActivityLogsBySessionId(String sessionId) {
 		// TODO Auto-generated method stub
-		return (ActivityLogs) this.sessionFactory.getCurrentSession().createCriteria(ActivityLogs.class).add(Restrictions.eq("sessionId", sessionId)).uniqueResult();
+		return (ActivityLogs) this.sessionFactory.getCurrentSession().createCriteria(ActivityLogs.class).add(Restrictions.eq("id.sessionId", sessionId)).uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -173,13 +174,17 @@ public class ActivityLogsDAOImpl implements ActivityLogsDAO{
 		}
 		
 		if(!activityLogsSearchForm.getFromDateTime().equals("")&&!activityLogsSearchForm.getToDateTime().equals("")){
-			criteria.add(Restrictions.between("accessInTime", activityLogsSearchForm.getFromDateTime(), activityLogsSearchForm.getToDateTime()));
+			criteria.add(Restrictions.between("a1.id.accessInTime", activityLogsSearchForm.getFromDateTime(), activityLogsSearchForm.getToDateTime()));
 		}
 		
-		Long totalRecords = (Long) criteria.setProjection(Projections.count("a1.sessionId")).uniqueResult();
+		if(activityLogsSearchForm.getActivityId()!=null&&!activityLogsSearchForm.getActivityId().equals("")){
+			criteria.add(Restrictions.eq("ac1.id", activityLogsSearchForm.getActivityId()));
+		}
+		
+		Long totalRecords = (Long) criteria.setProjection(Projections.count("a1.id.sessionId")).uniqueResult();
 		
 		ProjectionList projectionList = Projections.projectionList();
-		projectionList.add(Projections.property("a1.sessionId"),"sessionId");
+		projectionList.add(Projections.property("a1.id.sessionId"),"sessionId");
 		projectionList.add(Projections.property("r1.roleId"),"roleId");
 		projectionList.add(Projections.property("r1.role"),"role");
 		projectionList.add(Projections.property("u1.username"),"loginUsername");
@@ -189,10 +194,11 @@ public class ActivityLogsDAOImpl implements ActivityLogsDAO{
 		projectionList.add(Projections.property("u2.username"),"primaryUsername");
 		projectionList.add(Projections.property("u2.userId"),"primaryId");
 		projectionList.add(Projections.property("ia1.id.ipAddress"),"ipAddress");
-		projectionList.add(Projections.property("a1.accessInTime"),"accessInTime");
-		projectionList.add(Projections.property("a1.accessOutTime"),"accessOutTime");
-		projectionList.add(Projections.property("a1.status"),"status");
-		
+		projectionList.add(Projections.property("a1.id.accessInTime"),"accessInTime");
+		projectionList.add(Projections.property("a1.id.accessOutTime"),"accessOutTime");
+		projectionList.add(Projections.property("a1.id.description"),"description");
+		projectionList.add(Projections.property("a1.id.status"),"status");
+		criteria.addOrder(Order.desc("a1.id.accessInTime"));
 		criteria.setProjection(projectionList);
 		List<ActivityLogsForm> activityLogsForms = criteria.setResultTransformer(new AliasToBeanResultTransformer(ActivityLogsForm.class)).setFirstResult((activityLogsSearchForm.getPageNumber()-1)*activityLogsSearchForm.getItemsPerPage()).setMaxResults(activityLogsSearchForm.getItemsPerPage()).list();
 		ActivityLogsSearchResult activityLogsSearchResult = new ActivityLogsSearchResult(activityLogsForms, totalRecords);
@@ -215,6 +221,29 @@ public class ActivityLogsDAOImpl implements ActivityLogsDAO{
 												    .setMaxResults(activityLogsSearchForm.getItemsPerPage()).list();
 		ActivityLogsSearchResult activityLogsSearchResult = new ActivityLogsSearchResult(activityLogsForms, totalRecords);
 		return activityLogsSearchResult;
+	}
+
+	@Override
+	public ActivityLogs getActivityLogsBySessionIdAndActivityId(
+			String sessionId, Integer activityId) {
+		// TODO Auto-generated method stub
+		ActivityLogs activityLogs = (ActivityLogs) this.sessionFactory.getCurrentSession().createCriteria(ActivityLogs.class).add(Restrictions.and(Restrictions.eq("id.sessionId", sessionId), Restrictions.eq("id.activityId", activityId))).uniqueResult();
+		return activityLogs;
+	}
+
+	@Override
+	public void updateActivityLogsBySessionIdAndActivityId(ActivityLogsForm activityLogsForm) {
+		// TODO Auto-generated method stub
+		this.sessionFactory.getCurrentSession().createQuery("Update ActivityLogs set id.accessOutTime='"+activityLogsForm.getAccessOutTime()+"' where id.sessionId='"+activityLogsForm.getSessionId()+"' and id.activityId='"+activityLogsForm.getActivityId()+"'").executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ActivityLogs> getActivityLogsByIpAddressAndDate(
+			String ipAddress, Date accessDate) {
+		// TODO Auto-generated method stub
+		List<ActivityLogs> activityLogs = this.sessionFactory.getCurrentSession().createCriteria(ActivityLogs.class).add(Restrictions.and(Restrictions.eq("id.ipAddress", ipAddress),Restrictions.eq("id.accessDate", accessDate))).list();
+		return activityLogs;
 	}
 
 

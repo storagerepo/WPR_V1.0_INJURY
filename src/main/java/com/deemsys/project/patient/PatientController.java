@@ -397,8 +397,9 @@ public class PatientController {
 		}else{
 			model.addAttribute("userExportPrefenceHeaders",exportFieldsService.getStandardExportFieldsList());
 		}
-	
-		model.addAttribute("patientSearchResultSet",patientService.getExportPatient(callerPatientSearchForm));
+		PatientSearchResultSet patientSearchResultSet = patientService.getExportPatient(callerPatientSearchForm);
+		System.out.println("total Records--->"+patientSearchResultSet.getTotalNoOfRecords());
+		model.addAttribute("patientSearchResultSet",patientSearchResultSet);
 		return "ok";
 		
 	}

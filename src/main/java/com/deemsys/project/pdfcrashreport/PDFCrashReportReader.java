@@ -679,7 +679,11 @@ public class PDFCrashReportReader {
 				licensePlateNumber=unitPage.indexOf("LICENSE PLATE NUMBER")==-1?"":unitPage.get(unitPage.indexOf("LICENSE PLATE NUMBER")+1);
 				
 				// Type of Use
-				typeOfUse=unitPage.indexOf("TYPE OF USE")==-1?"0":unitPage.get(unitPage.indexOf("TYPE OF USE")-1);
+				if(unitPage.indexOf("TYPE OF USE")!=-1){
+					if(!unitPage.get(unitPage.indexOf("TYPE OF USE")-1).equals("RESPONSE")){
+						typeOfUse=unitPage.get(unitPage.indexOf("TYPE OF USE")-1);
+					}
+				}
 				
 				ReportUnitPageForm reportUnitPageForm = new ReportUnitPageForm(
 						unitPage.get(unitPage.indexOf("UNIT NUMBER") + 1).trim(),
@@ -771,6 +775,8 @@ public class PDFCrashReportReader {
 									motoristPageForm.setSeatingPosition(motoristPage.get(index - 8).trim());
 								}else if(motoristPage.get(index - 8>0?index-8:0).equals("SEATING  POSITION")){
 									motoristPageForm.setSeatingPosition(motoristPage.get(index - 7).trim());
+								}else if(motoristPage.get(index - 7>0?index-7:0).equals("SEATING  POSITION")){
+									motoristPageForm.setSeatingPosition(motoristPage.get(index - 6).trim());
 								}else if(motoristPage.get(index - 6>0?index-6:0).equals("SEATING  POSITION")){
 									motoristPageForm.setSeatingPosition(motoristPage.get(index - 5).trim());
 								}

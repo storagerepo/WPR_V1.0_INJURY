@@ -99,10 +99,17 @@ public class IPAccessListService {
 		//TODO: Convert Form to Entity Here	
 		
 		//Logic Starts
-		Users users = usersDAO.getByUserName(ipAccessListForm.getPrimaryUsername());
+		Users usersLoginId = usersDAO.getByUserName(ipAccessListForm.getPrimaryUsername());
+		String loginRole = usersLoginId.getRoles().getRole();
+		Integer primaryLoginId=loginService.getUserIdOfAdmin(loginRole, usersLoginId.getUserId());
+		if(primaryLoginId==null){
+			primaryLoginId=usersLoginId.getUserId();
+		}else{
+			usersLoginId=usersDAO.get(primaryLoginId);
+		}
 		IpAddress ipAddress = ipAddressesDAO.getByIpAddress(ipAccessListForm.getIpAddress());
-		IpAccessListId ipAccessListId = new IpAccessListId(ipAccessListForm.getIpAddress(), users.getUserId());
-		IpAccessList ipAccessList=new IpAccessList(ipAccessListId, ipAddress, users, ipAccessListForm.getAddedDateYearFormat(), ipAccessListForm.getStatus(), null);
+		IpAccessListId ipAccessListId = new IpAccessListId(ipAccessListForm.getIpAddress(), primaryLoginId);
+		IpAccessList ipAccessList=new IpAccessList(ipAccessListId, ipAddress, usersLoginId, ipAccessListForm.getAddedDateYearFormat(), ipAccessListForm.getStatus(), null);
 		
 		//Logic Ends
 		

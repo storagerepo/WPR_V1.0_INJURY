@@ -230,16 +230,16 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 							        break;
 								};
 								switch(value2.typeOfUse) {
-							    case "1":
-							    	value2.typeOfUseName="Personal";
+							    case 1:
+							    	value2.typeOfUseName="1 - Personal";
 							        break;
-							    case "2":
-							    	value2.typeOfUseName="Commercial";
+							    case 2:
+							    	value2.typeOfUseName="2 - Commercial";
 							        break;
-							    case "3":
-							    	value2.typeOfUseName="Government";
+							    case 3:
+							    	value2.typeOfUseName="3 - Government";
 							        break;
-							    case "0":
+							    case 0:
 							    	value2.typeOfUseName="Unknown";
 							        break;
 							    default:
@@ -326,7 +326,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	searchService.setReportingAgency($scope.patient.reportingAgency);
 	searchService.setReportingAgencyListType($scope.reportingAgencyListType);
 	searchService.setTypeOfUse(angular.copy($scope.patient.typeOfUse));
-	searchService.setSeatingPosition($scope.patient.seatingPostion);
+	searchService.setSeatingPosition(angular.copy($scope.patient.seatingPosition));
 	};
 	
 	$scope.secoundarySearchPatient=function(){
@@ -814,7 +814,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 		$scope.defaultTypeofUse=[{id:1, label: "1 - Personal"},{id:2, label: "2 - Commercial"},{id:3, label: "3 - Government"},{id:0, label: "Unknown"}];
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
-		$scope.defaultSeatingPosition=[{id:1, label:"Drivers"},{id:2, label:"Passengers"},{id:99, label:"Unkonwn"}];
+		$scope.defaultSeatingPosition=[{id:1, label:"Drivers"},{id:2, label:"Passengers"},{id:99, label:"Unknown"}];
 		$scope.reportingAgencyList=[];
 		
 		$scope.patient={};

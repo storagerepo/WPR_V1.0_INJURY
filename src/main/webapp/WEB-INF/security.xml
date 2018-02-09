@@ -104,6 +104,7 @@
 			always-use-default-target="true" 
 			authentication-success-handler-ref="customAuthenticationSuccessHandler"/>
 		<session-management invalid-session-url="/logout">
+		 	<concurrency-control max-sessions="1000" session-registry-ref="sessionRegistry" expired-url="/logout" />
 		</session-management>
 		<logout logout-success-url="/logout" delete-cookies="JSESSIONID" invalidate-session="true"/>
 	</http>

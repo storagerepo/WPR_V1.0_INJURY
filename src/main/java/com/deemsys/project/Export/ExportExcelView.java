@@ -1,5 +1,6 @@
 package com.deemsys.project.Export;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,13 +14,27 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.deemsys.project.Logging.ActivityLogsForm;
+import com.deemsys.project.Logging.ActivityLogsService;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.exportFields.ExportFieldsForm;
+import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientSearchList;
 import com.deemsys.project.patient.PatientSearchResultSet;
 
 public class ExportExcelView extends AbstractExcelView {
 
+	@Autowired
+	HttpServletRequest request;
+	
+	@Autowired
+	ActivityLogsService activityLogsService;
+	
+	@Autowired
+	LoginService loginService;
+	
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model,
 			Workbook workbook, HttpServletRequest request,
@@ -27,6 +42,12 @@ public class ExportExcelView extends AbstractExcelView {
 		// TODO Auto-generated method stub
 		
 		PatientSearchResultSet patientSearchResultSet=(PatientSearchResultSet)model.get("patientSearchResultSet");
+		System.out.println("Export Excel Total Records--->"+patientSearchResultSet.getPatientSearchLists().size());
+		System.out.println("Session Id---->>"+request.getSession().getId());
+		// Activity Of Export Excel
+		Integer activityId=2;
+		ActivityLogsForm activityLogsForm = new ActivityLogsForm(request.getSession().getId(), "", null, loginService.getCurrentUsername(), null, "", activityId, "", null, InjuryConstants.getRemoteAddr(request), "", InjuryConstants.convertMonthFormat(new Date()), InjuryConstants.convertUSAFormatWithTime(new Date()), "", patientSearchResultSet.getPatientSearchLists().size()+" Records Exported", 1);
+		activityLogsService.saveActivityLogs(activityLogsForm);
 		List<PatientSearchList> patientSearchLists=patientSearchResultSet.getPatientSearchLists();
 		@SuppressWarnings("unchecked")
 		List<ExportFieldsForm> exportFieldsForms = (List<ExportFieldsForm>) model.get("userExportPrefenceHeaders");

@@ -505,16 +505,18 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	}
 	
 	// Common Constraints For Seating Position/Passengers Type
-	if(callerPatientSearchForm.getSeatingPosition()!=null&&callerPatientSearchForm.getSeatingPosition().length>0&&callerPatientSearchForm.getIsRunnerReport()!=-1&&callerPatientSearchForm.getIsRunnerReport()==0){
+	if(callerPatientSearchForm.getSeatingPosition()!=null&&callerPatientSearchForm.getSeatingPosition().length>0&&callerPatientSearchForm.getIsRunnerReport()!=-1&&(callerPatientSearchForm.getIsRunnerReport()==0||callerPatientSearchForm.getIsRunnerReport()==1)){
 		Disjunction seatingPositionDisjunction = Restrictions.disjunction();
 		if(ArrayUtils.contains(callerPatientSearchForm.getSeatingPosition(), 1)){
 			seatingPositionDisjunction.add(Restrictions.eq("t1.seatingPosition","1"));
 		}
 		if(ArrayUtils.contains(callerPatientSearchForm.getSeatingPosition(), 2)){
-			seatingPositionDisjunction.add(Restrictions.and(Restrictions.gt("t1.seatingPosition", "1"), Restrictions.lt("t1.seatingPosition", "99")));
+			seatingPositionDisjunction.add(Restrictions.and(Restrictions.and(Restrictions.gt("t1.seatingPosition", "1"), Restrictions.lt("t1.seatingPosition", "99")),Restrictions.ne("t1.seatingPosition", "18")));
 		}
 		if(ArrayUtils.contains(callerPatientSearchForm.getSeatingPosition(), 99)){
-			seatingPositionDisjunction.add(Restrictions.or(Restrictions.eq("t1.seatingPosition","99"), Restrictions.isNull("t1.seatingPosition")));
+			Criterion seatingPositionCriterion = Restrictions.or(Restrictions.eq("t1.seatingPosition","99"), Restrictions.isNull("t1.seatingPosition"));
+			Criterion seatingPositionNotAvailableCriterion = Restrictions.or(Restrictions.eq("t1.seatingPosition","18"), Restrictions.eq("t1.seatingPosition", ""));
+			seatingPositionDisjunction.add(Restrictions.or(seatingPositionCriterion,seatingPositionNotAvailableCriterion));
 		}
 		criteria.add(seatingPositionDisjunction);
 	}

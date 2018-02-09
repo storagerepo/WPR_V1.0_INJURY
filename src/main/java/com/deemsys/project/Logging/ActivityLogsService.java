@@ -15,6 +15,7 @@ import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Activity;
 import com.deemsys.project.entity.ActivityLogs;
+import com.deemsys.project.entity.ActivityLogsId;
 import com.deemsys.project.entity.IpAccessList;
 import com.deemsys.project.entity.IpAddresses;
 import com.deemsys.project.entity.IpAddressesId;
@@ -62,7 +63,9 @@ public class ActivityLogsService {
 		activity.setId(activityLogsForm.getActivityId());
 		// IP Addresses 
 		IpAccessList ipAccessList = ipAccessListDAO.getByIpAddressAndLoginId(activityLogsForm.getIpAddress(), primaryLoginId);
-		ActivityLogs activityLogs = new ActivityLogs(activityLogsForm.getSessionId(), ipAccessList, usersLoginId, activity, usersPrimaryId, InjuryConstants.convertYearFormat(activityLogsForm.getAccessDate()), activityLogsForm.getAccessInTime(), activityLogsForm.getAccessOutTime(), activityLogsForm.getStatus());
+		ActivityLogsId activityLogsId = new ActivityLogsId(activityLogsForm.getSessionId(), usersLoginId.getUserId(), primaryLoginId, activityLogsForm.getActivityId(), activityLogsForm.getIpAddress(), InjuryConstants.convertYearFormat(activityLogsForm.getAccessDate()), activityLogsForm.getAccessInTime(), activityLogsForm.getAccessOutTime(), activityLogsForm.getDescription(), activityLogsForm.getStatus());
+		ActivityLogs activityLogs = new ActivityLogs(activityLogsId, ipAccessList, usersLoginId, activity, usersPrimaryId);
+		
 		// Logic Ends
 
 		activityLogsDAO.merge(activityLogs);
@@ -88,7 +91,9 @@ public class ActivityLogsService {
 		activity.setId(activityLogsForm.getActivityId());
 		// IP Address
 		IpAccessList ipAccessList = ipAccessListDAO.getByIpAddressAndLoginId(activityLogsForm.getIpAddress(), primaryLoginId);
-		ActivityLogs activityLogs = new ActivityLogs(activityLogsForm.getSessionId(), ipAccessList, usersLoginId, activity, usersPrimaryId, InjuryConstants.convertYearFormat(activityLogsForm.getAccessDate()), activityLogsForm.getAccessInTime(), activityLogsForm.getAccessOutTime(), activityLogsForm.getStatus());
+		ActivityLogsId activityLogsId = new ActivityLogsId(activityLogsForm.getSessionId(), usersLoginId.getUserId(), primaryLoginId, activityLogsForm.getActivityId(), activityLogsForm.getIpAddress(), InjuryConstants.convertYearFormat(activityLogsForm.getAccessDate()), activityLogsForm.getAccessInTime(), activityLogsForm.getAccessOutTime(), activityLogsForm.getDescription(), activityLogsForm.getStatus());
+		ActivityLogs activityLogs = new ActivityLogs(activityLogsId, ipAccessList, usersLoginId, activity, usersPrimaryId);
+		
 		// Logic Ends
 		activityLogsDAO.save(activityLogs);
 		return 1;
@@ -107,7 +112,9 @@ public class ActivityLogsService {
 		activity.setId(activityLogsForm.getActivityId());
 		// IP Address
 		IpAccessList ipAccessList = ipAccessListDAO.getByIpAddressAndLoginId(activityLogsForm.getIpAddress(), activityLogsForm.getPrimaryId());
-		ActivityLogs activityLogs = new ActivityLogs(activityLogsForm.getSessionId(), ipAccessList, usersLoginId, activity, usersPrimaryId, InjuryConstants.convertYearFormat(activityLogsForm.getAccessDate()), activityLogsForm.getAccessInTime(), activityLogsForm.getAccessOutTime(), activityLogsForm.getStatus());
+		ActivityLogsId activityLogsId = new ActivityLogsId(activityLogsForm.getSessionId(), usersLoginId.getUserId(), activityLogsForm.getPrimaryId(), activityLogsForm.getActivityId(), activityLogsForm.getIpAddress(), InjuryConstants.convertYearFormat(activityLogsForm.getAccessDate()), activityLogsForm.getAccessInTime(), activityLogsForm.getAccessOutTime(), activityLogsForm.getDescription(), activityLogsForm.getStatus());
+		ActivityLogs activityLogs = new ActivityLogs(activityLogsId, ipAccessList, usersLoginId, activity, usersPrimaryId);
+		
 		// Logic Ends
 
 		activityLogsDAO.update(activityLogs);
@@ -116,11 +123,9 @@ public class ActivityLogsService {
 	
 	// Update Logs by Session Id
 	public void updateActivityLogsBySessionId(ActivityLogsForm activityLogsForm){
-		ActivityLogs activityLogs = activityLogsDAO.getActivityLogsBySessionId(activityLogsForm.getSessionId());
-		if(activityLogs!=null){
-			activityLogs.setAccessOutTime(activityLogsForm.getAccessOutTime());
-			activityLogsDAO.update(activityLogs);
-		}
+		
+		activityLogsDAO.updateActivityLogsBySessionIdAndActivityId(activityLogsForm);
+
 	}
 	
 	// Search Activity Logs
@@ -138,7 +143,7 @@ public class ActivityLogsService {
 		// TODO Auto-generated method stub
 		ActivityLogs activityLogs = activityLogsDAO.getActivityLogsBySessionId(sessionId);
 		ActivityLogsForm activityLogsForm = new ActivityLogsForm(sessionId, "", null, "", activityLogs.getUsersByLoginId().getUserId(), activityLogs.getActivity().getName(), activityLogs.getActivity().getId(), "", activityLogs.getUsersByPrimaryId().getUserId(), 
-											activityLogs.getIpAccessList().getId().getIpAddress(), "", InjuryConstants.convertMonthFormat(activityLogs.getAccessDate()), activityLogs.getAccessInTime(), activityLogs.getAccessOutTime(), activityLogs.getStatus());
+											activityLogs.getIpAccessList().getId().getIpAddress(), "", InjuryConstants.convertMonthFormat(activityLogs.getId().getAccessDate()), activityLogs.getId().getAccessInTime(), activityLogs.getId().getAccessOutTime(), activityLogs.getId().getDescription(), activityLogs.getId().getStatus());
 		return activityLogsForm;
 	}
 	

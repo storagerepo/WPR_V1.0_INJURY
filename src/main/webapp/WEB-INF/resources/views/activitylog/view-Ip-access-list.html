@@ -89,11 +89,12 @@
 								<td colspan="4">{{ipAddressList.primaryUsername}}</td>
 							</tr>
 							<tr ng-show="ipAddressResult.length>0" dir-paginate="ipAddress in ipAddressList.ipAddressesForms|itemsPerPage:ipAddressSearchForm.itemsPerPage" current-page="ipAddressSearchForm.pageNumber" total-items="totalRecords" pagination-id="ipAccessListPaginationId">
-								<td><a href="" ng-click="updateIPGeoLocation(ipAddress.ipAddress)">{{ipAddress.ipAddress}}</a></td>
+								<td><a href="" ng-click="updateIPGeoLocation(ipAddress.ipAddress)">{{ipAddress.ipAddress}}</a>
+								&nbsp;<span ng-show="{{ipAddress.isNew==1}}"><label class="badge badge-success">New</label></span>
+								&nbsp;<span ng-show="{{ipAddress.blockStatus==1}}"><label class="badge badge-danger">Blocked</label></span></td>
 								<td>{{ipAddress.accessCount}}</td>
 								<td><a href="#/dashboard/viewActivityLogs/{{ipAddress.ipAddress}}/{{ipAddressList.primaryUsername}}" class="btn btn-primary btn-xs hint--top" data-hint="View Logs"><i class="fa fa-eye"></i></a>
-								&nbsp;&nbsp;<span ng-show="{{ipAddress.isNew==1}}"><label class="label label-success">New IP</label></span>
-								&nbsp;&nbsp;<span ng-show="{{ipAddress.blockedStatus==0}}"><label class="label label-danger">Blocked</label></span></td>
+								</td>
 							</tr>
 							<tr ng-repeat-end=""></tr>
 							<tr ng-show="!ipAddressResult.length"><td colspan="4" align="center">No Records Found</td></tr>

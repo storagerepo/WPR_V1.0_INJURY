@@ -3,10 +3,10 @@
 <script src="resources/components/datetime/datetimepicker.js"></script>
 <script src="resources/components/datetime/moment.js"></script>
 <div ng-cloak>
-	<div class="row">
+	<div class="row" ng-init="showSearch=1">
 		<div class="col-lg-12">
 			<div class="form-group passenger-type pull-right margin-top35">
-				<label>Report Type:</label>
+			<label>Report Type:</label>
 				<div class="btn-group">
 					<label class="btn btn-default" btn-radio="0"
 						ng-model="patient.isRunnerReport" ng-disabled="isLoading"> Normal <span
@@ -21,13 +21,16 @@
 				</label>
 				</div>
 			</div>
-			<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
+			<div flash-message="2000" class="col-md-4 pull-right margin-top35"></div>
 			<h2 class="page-header">Search Clients</h2>
+			<div class="col-md-2 no-padding search-show-hide"><span ng-show="showSearch==0" ng-click="showSearch=1"><a href="" class="btn btn-xs btn-primary"><i class="fa fa-chevron-circle-down"></i> Show Search</a> </span>
+			<span ng-show="showSearch==1" ng-click="showSearch=0"><a href="" class="btn btn-xs btn-primary"><i class="fa fa-chevron-circle-up"></i> Hide Search</a> </span></div>
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
 	<!-- /.row -->
 	<div class="row">
+		<div class="col-md-12" style="background-color: rgb(229, 240, 250); margin-bottom: 5px; padding:5px;border:1px solid rgb(140, 136, 136);" ng-show="showSearch==1">
 		<form name="patientSearchForm" novalidate ng-cloak>
 			<div class="col-md-12 no-padding">
 				<div class="col-md-5ths">
@@ -117,7 +120,7 @@
 			</div>
 
 			<div class="col-md-12 no-padding">
-			<div ng-class="patient.isRunnerReport!=3?'col-md-3ths':'col-md-5ths'" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
+			<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
 				<label>Reporting Agency</label> <div ng-dropdown-multiselect="" preference-list="reportingAgencyListType"
 					options="reportingAgencyList"   selected-model="patient.reportingAgency" 
 					extra-settings="{idProp:'code',displayProp:'reportingAgencyName',smartButtonMaxItems:'0',enableSearch:true,optionClass:'multidrop-option-class',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Reporting Agency',showPreferenceOption:true,radioButtonName:'reportingAgencyPreference',preferenceAllText:'All',preferenceSetText:'Preferred',disable:patient.isRunnerReport==1||patient.isRunnerReport==3}"
@@ -130,7 +133,7 @@
 						style="text-decoration: underline;" ng-show="reportingAgencyListType==2">Change
 						Lookup Preference</a>
 			</div>	
-				<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
+				<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
 					<label>Tier</label>&nbsp;&nbsp;<a href="" data-placement="right"
 						data-toggle="popover"
 						title="Tier Details (Deceased victims not listed)"><i
@@ -142,7 +145,7 @@
 						extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1||patient.isRunnerReport==3}"></div>
 
 				</div>
-				<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
+				<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
 					<label>Damage Scale</label>&nbsp;<a href=""
 						class="some-popover-link" data-placement="right"
 						data-original-title="" data-toggle="popover" title="Damage Scale"
@@ -154,7 +157,7 @@
 					<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select
 						at least one Damage Scale</span>
 				</div>
-				<div ng-class="patient.isRunnerReport!=3?'col-md-3ths':'col-md-5ths'">
+				<div class="col-md-5ths">
 					<label>Local Report Number</label> <input type="text"
 						name="localReportNumber" class="form-control input-sm"
 						ng-model="patient.localReportNumber"
@@ -162,7 +165,7 @@
 
 				</div>
 				
-				<div class="col-md-3ths" ng-show="patient.isRunnerReport!=3">
+				<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3">
 					<label>Lawyers</label> <select class="form-control input-sm"
 						ng-model="patient.lawyerId" ng-disabled="patient.isRunnerReport==3">
 						<option value="0">All</option>
@@ -171,22 +174,40 @@
 							ng-selected="{{lawyer.lawyerId == patient.lawyerId}}">{{lawyer.firstName}}&nbsp;{{lawyer.lastName}}</option>
 					</select>
 				</div>
-				<div class="col-md-2ths">
+				
+			</div>
+			<div class="col-md-12">
+				<br />
+			</div>
+			<div class="col-md-12 no-padding" style="margin-bottom: 5px;">
+				<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
+					<label>Type of Use</label><span class="error-class"
+						ng-show="searchTypeOfUseMinError">&nbsp;&nbsp;Select at least
+						one</span>
+					<div ng-dropdown-multiselect="" options="defaultTypeofUse" 
+						selected-model="patient.typeOfUse"
+						extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==1||patient.isRunnerReport==3}"></div>
+				</div>
+				<div ng-show="patient.isRunnerReport!=3" ng-class="patient.isRunnerReport==0?'col-md-5ths':'custom-alignment-seating-position'">
+					<label>Passenger Type</label><span class="error-class"
+						ng-show="searchSeatingPositionMinError">&nbsp;&nbsp;Select one</span>
+					<div ng-dropdown-multiselect="" options="defaultSeatingPosition" 
+						selected-model="patient.seatingPosition"
+						extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==3}"></div>
+				</div>
+				<div class="col-md-3ths pull-right">
 					<label>&nbsp;</label>
 					<div>
 						<a class="btn btn-success hint--top"
 							ng-class="{'button-disable':patientSearchForm.$invalid}"
 							ng-disabled='patientSearchForm.$invalid||disableSearch'
-							ng-click="searchPatients()" data-hint="search"><i
-							class="fa fa-search"></i></a> <a class="btn btn-danger hint--top"
-							ng-click="resetSearchData()" data-hint="Reset"><i
-							class="fa fa-undo"></i></a>
+							ng-click="searchPatients()" data-hint="search">Search</a> <a class="btn btn-danger hint--top"
+							ng-click="resetSearchData()" data-hint="Reset">Reset</a>
 					</div>
 				</div>
 			</div>
-
+			</div>
 			<div class="col-md-12">
-				<div class="col-md-12 no-padding hr-tag-alter"></div>
 				<div class="col-md-6 no-padding">
 					<a href="" ng-disabled="isCleanCheckbox()||patient.isArchived==1"
 						ng-click="assignlawyerPopup()" class="btn btn-sm btn-success" ng-show="patient.isRunnerReport!=3">Assign
@@ -658,18 +679,26 @@
 					<div class="form-group passenger-type pull-right">
 						<div class="btn-group" data-toggle="buttons">
 							<label class="btn btn-default unit-toggle-label"
-								ng-class="{active:patientDetails.seatingPosition!='1' || patientDetails.seatingPosition==null}"
-								ng-disabled="patientDetails.seatingPosition=='1'"> <input
+								ng-class="{active:patientDetails.seatingPosition!='1' && patientDetails.seatingPosition!=null && patientDetails.seatingPosition!='99' && patientDetails.seatingPosition!=''}"
+								ng-disabled="patientDetails.seatingPosition=='1' || patientDetails.seatingPosition==null || patientDetails.seatingPosition=='99' || patientDetails.seatingPosition==''"> <input
 								type="radio" name="unit"
 								ng-model="patientDetails.seatingPosition" id="option1"
 								autocomplete="off"> Passenger
 							</label> <label class="btn btn-default unit-toggle-label"
 								ng-class="{active:patientDetails.seatingPosition=='1'}"
-								ng-disabled="patientDetails.seatingPosition!='1' || patientDetails.seatingPosition==null">
+								ng-disabled="patientDetails.seatingPosition!='1'">
 								<input type="radio" name="unit"
 								ng-model="patientDetails.seatingPosition"
 								ng-selected="patientDetails.seatingPosition=='1'" id="option2"
 								autocomplete="off"> &nbsp;&nbsp;Driver&nbsp;&nbsp;
+							</label>
+							<label class="btn btn-default unit-toggle-label"
+								ng-class="{active:patientDetails.seatingPosition=='99' || patientDetails.seatingPosition=='' || patientDetails.seatingPosition==null}"
+								ng-disabled="patientDetails.seatingPosition!='99' && patientDetails.seatingPosition!=null && patientDetails.seatingPosition!=''">
+								<input type="radio" name="unit"
+								ng-model="patientDetails.seatingPosition"
+								ng-selected="patientDetails.seatingPosition=='1'" id="option3"
+								autocomplete="off"> &nbsp;&nbsp;Unknown&nbsp;&nbsp;
 							</label>
 						</div>
 					</div>
@@ -700,13 +729,17 @@
 						<tr>
 							<td class="col-md-3"><b>Unit Number</b></td>
 							<td class="col-md-3">{{patientDetails.unitNumber}}</td>
-							<td class="col-md-3"><b>Number of Units</b></td>
-							<td class="col-md-3">{{patientDetails.numberOfUnits}}</td>
-
+							<td class="col-md-3"><b>Type of Use</b></td>
+							<td class="col-md-3">{{patientDetails.typeOfUseName}}</td>
 						</tr>
 						<tr>
+							<td class="col-md-3"><b>Number of Units</b></td>
+							<td class="col-md-3">{{patientDetails.numberOfUnits}}</td>
 							<td class="col-md-3"><b>Units in Error</b></td>
 							<td class="col-md-3">{{patientDetails.unitInError}}</td>
+							
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>Damage Scale</b></td>
 							<td class="col-md-3">{{patientDetails.damageScale==1?"1 -
 								None":patientDetails.damageScale==2?"2 -
@@ -714,58 +747,53 @@
 								Functional":patientDetails.damageScale==4?"4 -
 								Disabling":patientDetails.damageScale==9?"9 - Unknown":"Not
 								Available"}}</td>
-
-
-
-						</tr>
-						<tr>
-
 							<td class="col-md-3"><b>Local Report Number</b></td>
 							<td class="col-md-3">{{patientDetails.localReportNumber}}</td>
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>Injuries</b></td>
 							<td class="col-md-3">{{patientDetails.injuriesName}}</td>
-						</tr>
-						<tr>
-
 							<td class="col-md-3"><b>Crash Severity</b></td>
 							<td class="col-md-3">{{patientDetails.crashSeverityName}}</td>
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>Crash Date</b></td>
 							<td class="col-md-3">{{patientDetails.crashDate}}</td>
-
-						</tr>
-						<tr>
-
 							<td class="col-md-3"><b>Time of Crash</b></td>
 							<td class="col-md-3">{{patientDetails.timeOfCrash}}</td>
+							
+						</tr>
+
+						<tr>
 							<td class="col-md-3"><b>EMS Agency</b></td>
 							<td class="col-md-3">{{patientDetails.emsAgency}}</td>
-						</tr>
-
-						<tr>
-
 							<td class="col-md-3"><b>Report Agency Name</b></td>
 							<td class="col-md-3">{{patientDetails.reportingAgencyName}}</td>
+							
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>County</b></td>
 							<td class="col-md-3">{{patientDetails.county}}</td>
-						</tr>
-						<tr>
-
 							<td class="col-md-3"><b>City Village Township</b></td>
 							<td class="col-md-3">{{patientDetails.cityVillageTownship}}</td>
+							
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>Medical Facility</b></td>
 							<td class="col-md-3">{{patientDetails.medicalFacility}}</td>
-						</tr>
-						<tr>
 							<td class="col-md-3"><b>At Fault INS. Company</b></td>
 							<td class="col-md-3">{{patientDetails.atFaultInsuranceCompany}}</td>
-							<td class="col-md-3"><b>At Fault Policy Number</b></td>
-							<td class="col-md-3">{{patientDetails.atFaultPolicyNumber}}</td>
+							
 						</tr>
 						<tr>
+							<td class="col-md-3"><b>At Fault Policy Number</b></td>
+							<td class="col-md-3">{{patientDetails.atFaultPolicyNumber}}</td>
 							<td class="col-md-3"><b>Victim INS. Company</b></td>
 							<td class="col-md-3">{{patientDetails.victimInsuranceCompany}}</td>
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>Victim Policy Number</b></td>
-							<td class="col-md-3">{{patientDetails.victimPolicyNumber}}</td>
+							<td class="col-md-3" colspan="3">{{patientDetails.victimPolicyNumber}}</td>
 						</tr>
 					</table>
 				</div>

@@ -7,15 +7,21 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.deemsys.project.IPGeoLocation.IPGeoLocationForm;
 import com.deemsys.project.IPGeoLocation.IPGeoLocationService;
+import com.deemsys.project.Logging.ActivityLogsDAO;
 import com.deemsys.project.Logging.IPGeoLocationServiceImpl;
 import com.deemsys.project.Users.UsersDAO;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.common.InjuryProperties;
+import com.deemsys.project.entity.ActivityLogs;
 import com.deemsys.project.entity.BlockedIp;
 import com.deemsys.project.entity.IpAddress;
 import com.deemsys.project.entity.IpAddresses;
@@ -55,6 +61,13 @@ public class IPAddressesService {
 	
 	@Autowired
 	IPGeoLocationServiceImpl ipGeoLocationServiceImpl;
+	
+	@Autowired
+	ActivityLogsDAO activityLogsDAO;
+	
+	@Autowired
+	@Qualifier("sessionRegistry")
+	private SessionRegistry sessionRegistry;
 	
 	//Get All Entries
 	public IPAddressesGrouppedResult searchIpAddressesList(IPAddressesSearchForm ipAddressesSearchForm)
@@ -230,6 +243,14 @@ public class IPAddressesService {
 	public void blockOrUnblockIpAddress(String ipAddress,Integer status){
 		if(status==1){
 			ipAddressesDAO.blockIpAddress(ipAddress);
+			List<ActivityLogs> activityLogs = activityLogsDAO.getActivityLogsByIpAddressAndDate(ipAddress, InjuryConstants.convertYearFormat(InjuryConstants.convertMonthFormat(new Date())));
+			List<Object> principals = sessionRegistry.getAllPrincipals();
+			for (ActivityLogs activityLog : activityLogs) {
+				SessionInformation sessionInformation = sessionRegistry.getSessionInformation(activityLog.getId().getSessionId());
+		    	if(sessionInformation!=null&&!sessionInformation.isExpired()){
+		    		sessionInformation.expireNow();
+		    	}
+		    }
 		}else{
 			ipAddressesDAO.unblockIpAddress(ipAddress);
 		}	

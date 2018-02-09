@@ -8,6 +8,12 @@ adminApp.controller('ActivityLogsController',['$scope','requestHandler','Flash',
 		});
 	};
 	
+	$scope.getActivies=function(){
+		requestHandler.getRequest('Admin/getAllActivitys.json','').then(function(response){
+			$scope.activityList=response.data.activityForms;
+		});
+	};
+	
 	$scope.searchActivityLogs=function(){
 		requestHandler.postRequest('Admin/searchActivityLogs.json',$scope.activityLogsSearchForm).then(function(response){
 			$scope.activityLogsForms=response.data.activityLogsForms.activityLogsForms;
@@ -42,15 +48,17 @@ adminApp.controller('ActivityLogsController',['$scope','requestHandler','Flash',
 	
 	$scope.init=function(){
 		$scope.getRoles();
+		$scope.getActivies();
 		$scope.activityLogsSearchForm={
 				"pageNumber":1,
-				"itemsPerPage":"10",
+				"itemsPerPage":"25",
 				"roleId":"",
 				"loginId":"",
 				"primaryLoginId":$stateParams.loginId,
 				"ipAddress":$stateParams.ipAddress,
 				"fromDateTime":"",
 				"toDateTime":"",
+				"activityId":""
 		};
 		$scope.searchActivityLogs();
 	};
@@ -91,7 +99,7 @@ adminApp.controller('IpAccessListController',['$scope','requestHandler','Flash',
   			 $('html,body').animate({scrollTop: $('#noOfRows').offset().top},'slow');
   		 },100);
 	};
-	$scope.$watch('activityLogsSearchForm.pageNumber',function(){
+	$scope.$watch('ipAddressSearchForm.pageNumber',function(){
 		$scope.searchIPList();
 	});
 	$scope.addBlockIPModal=function(){
@@ -103,6 +111,7 @@ adminApp.controller('IpAccessListController',['$scope','requestHandler','Flash',
 	};
 	
 	$scope.updateIPGeoLocation=function(ipAddress){
+		$scope.ipAddress={};
 		requestHandler.postRequest("Admin/updateIPGeoLocation.json?ipAddress="+ipAddress,"").then(function(response){
 			requestHandler.getRequest("Admin/getIpAddresses.json?ipAddress="+ipAddress,"").then(function(response){
 				$scope.ipAddress=response.data.ipAddressesForm;

@@ -11,6 +11,7 @@ public class ActivityLogsSearchForm {
 	private String ipAddress;
 	private String fromDateTime;
 	private String toDateTime;
+	private Integer activityId;
 	private Integer pageNumber;
 	private Integer itemsPerPage;
 	public Integer getRoleId() {
@@ -49,6 +50,12 @@ public class ActivityLogsSearchForm {
 	public void setToDateTime(String toDateTime) {
 		this.toDateTime = toDateTime;
 	}
+	public Integer getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
 	public Integer getPageNumber() {
 		return pageNumber;
 	}
@@ -63,7 +70,7 @@ public class ActivityLogsSearchForm {
 	}
 	public ActivityLogsSearchForm(Integer roleId, String loginId,
 			String primaryLoginId, String ipAddress, String fromDateTime,
-			String toDateTime, Integer pageNumber, Integer itemsPerPage) {
+			String toDateTime, Integer activityId, Integer pageNumber, Integer itemsPerPage) {
 		super();
 		this.roleId = roleId;
 		this.loginId = loginId;
@@ -71,6 +78,7 @@ public class ActivityLogsSearchForm {
 		this.ipAddress = ipAddress;
 		this.fromDateTime = fromDateTime;
 		this.toDateTime = toDateTime;
+		this.activityId = activityId;
 		this.pageNumber = pageNumber;
 		this.itemsPerPage = itemsPerPage;
 	}

@@ -58,8 +58,8 @@ public class IPGeoLocationServiceImpl {
 					(String) jsonObject.get("continent_name"),
 					(String) jsonObject.get("continent_code"),
 					(String) jsonObject.get("postal"),
-					(String) jsonObject.get("latitude"),
-					(String) jsonObject.get("longitude"),
+					((Double) jsonObject.get("latitude")).toString(),
+					((Double) jsonObject.get("longitude")).toString(),
 					(String) jsonObject.get("time_zone"),
 					(String) jsonObject.get("flag"), statusCode);
 		} else {

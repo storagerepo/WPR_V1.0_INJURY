@@ -73,6 +73,15 @@
 				</div></div>
 				<div class="col-md-5ths no-padding">
 				<div class="col-md-12">
+						<label>Activity</label>
+				</div>
+				<div class="col-md-12">
+					<select class="form-control" ng-model="activityLogsSearchForm.activityId" ng-options="activity.id as activity.name for activity in activityList">
+						<option value="">All</option>
+					</select>
+				</div></div>
+				<div class="col-md-5ths no-padding">
+				<div class="col-md-12">
 						<label>&nbsp;</label>
 					</div>
 					<div class="col-md-12">
@@ -95,15 +104,16 @@
 								<th width="10%" ng-mousedown="sort('mapId')">Login ID&nbsp;&nbsp;<span
 									class="glyphicon sort-icon" ng-show="sortKey=='mapId'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-								<th width="16%" ng-mousedown="sort('name')">Role&nbsp;&nbsp;<span
+								<th width="14%" ng-mousedown="sort('name')">Role&nbsp;&nbsp;<span
 									class="glyphicon sort-icon" ng-show="sortKey=='name'"
 									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-								<th width="16%">IP Address</th>
+								<th width="14%">IP Address</th>
 								<th width="14%">Activity</th>
-								<th width="18%">Access In Time</th>
-								<th width="18%">Access Out Time</th>
+								<th width="12%">Description</th>
+								<th width="15%">Access In Time</th>
+								<th width="15%">Access Out Time</th>
 								
-								<th width="8%">Actions</th>
+								<th width="6%">Actions</th>
 						
 							</tr>
 <!-- 
@@ -143,6 +153,7 @@
 								<td class="wrap" ng-cloak>{{activityLogs.role}}</td>
 								<td class="wrap" ng-cloak>{{activityLogs.ipAddress}}</td>
 								<td class="wrap" ng-cloak>{{activityLogs.activity}}</td>
+								<td class="wrap" ng-cloak>{{activityLogs.description}}</td>
 								<td class="wrap" ng-cloak>{{activityLogs.accessInTime}}</td>
 								<td class="wrap" ng-cloak>{{activityLogs.accessOutTime}}</td>
 								<td>
@@ -150,7 +161,7 @@
 										class="fa fa-eye"></i></a>
 								</td>
 							</tr>
-							<tr ng-show="!activityLogsForms.length"><td colspan="7" align="center">No Records Found</td></tr><!-- 
+							<tr ng-show="!activityLogsForms.length"><td colspan="8" align="center">No Records Found</td></tr><!-- 
 							<tr ng-show="(policeDepartmentsForm|filter:search).length==0" ><td colspan="6" align="center">No Records Found</td></tr>  -->
 						</tbody>
 						
@@ -230,10 +241,10 @@
 						<td class="col-md-3">{{activityLog.ipAddress}}</td>
 					</tr>
 					<tr>
-						<td class="col-md-3"><b>IP Location</b></td>
+						<!-- <td class="col-md-3"><b>IP Location</b></td>
 						<td class="col-md-3">{{activityLog.ipLocation}}</td>
-						<td class="col-md-3"><b>Activity</b></td>
-						<td class="col-md-3">{{activityLog.activity}}</td>
+						 --><td class="col-md-3"><b>Activity</b></td>
+						<td class="col-md-3" colspan="3">{{activityLog.activity}}</td>
 					</tr>
 					<tr>
 						<td class="col-md-3"><b>Access In Time</b></td>

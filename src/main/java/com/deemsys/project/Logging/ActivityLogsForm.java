@@ -24,6 +24,7 @@ public class ActivityLogsForm {
 	private String accessDate;
 	private String accessInTime;
 	private String accessOutTime;
+	private String description;
 	private Integer status;
 	private Long accessCount;
 	
@@ -111,6 +112,12 @@ public class ActivityLogsForm {
 	public void setAccessOutTime(String accessOutTime) {
 		this.accessOutTime = accessOutTime;
 	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public Integer getStatus() {
 		return status;
 	}
@@ -127,7 +134,7 @@ public class ActivityLogsForm {
 			String loginUsername, Integer loginId, String activity, Integer activityId,
 			String primaryUsername, Integer primaryId, String ipAddress,
 			String ipLocation, String accessDate, String accessInTime, String accessOutTime,
-			Integer status) {
+			String description, Integer status) {
 		super();
 		this.sessionId = sessionId;
 		this.role = role;
@@ -143,6 +150,7 @@ public class ActivityLogsForm {
 		this.accessDate = accessDate;
 		this.accessInTime = accessInTime;
 		this.accessOutTime = accessOutTime;
+		this.description = description;
 		this.status = status;
 	}
 	public ActivityLogsForm() {

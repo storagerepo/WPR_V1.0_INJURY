@@ -59,7 +59,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			ipAccessListService.saveIpAccessList(ipAccessListForm);
 		}
 		
-		ActivityLogsForm activityLogsForm = new ActivityLogsForm(request.getSession().getId(), "", null, authUser.getUsername(), null, "", 1, "", null, IPAddress, "", InjuryConstants.convertMonthFormat(new Date()), InjuryConstants.convertUSAFormatWithTime(new Date()), null, 1);
+		ActivityLogsForm activityLogsForm = new ActivityLogsForm(request.getSession().getId(), "", null, authUser.getUsername(), null, "", 1, "", null, IPAddress, "", InjuryConstants.convertMonthFormat(new Date()), InjuryConstants.convertUSAFormatWithTime(new Date()), "", "", 1);
 		activityLogsService.saveActivityLogs(activityLogsForm);
 		//set our response to OK status
         response.setStatus(HttpServletResponse.SC_OK);

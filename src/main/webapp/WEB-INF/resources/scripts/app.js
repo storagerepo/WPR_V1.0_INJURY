@@ -53,16 +53,16 @@ sbAdminApp
 															break;
 														}
 														case 401: {
-															//window.location.href = window.location.origin+"/Injury/logout?sessionout";
-
+															window.location.href = window.location.origin+"/Injury/logout?sessionout";
+															break;
 														}
 														case 403: {
-															//window.location.href = window.location.origin+"/Injury/logout?sessionout";
+															window.location.href = window.location.origin+"/Injury/logout?sessionout";
 															break;
 														}
 														case 500: {
 															alert("Please try again!");
-														    //window.location.href = window.location.origin+"/Injury/logout";
+														    window.location.href = window.location.origin+"/Injury/logout";
 															break;
 														}
 														default: {

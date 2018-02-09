@@ -88,6 +88,12 @@ public class LoginService {
 		return usersDAO.getByUserName(user.getUsername()).getUserId();
 	}
 	
+	// Get Username
+	public String getCurrentUsername(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return user.getUsername();
+	}
+	
 	//Check UserName Exist
 	public Integer checkUsernameExist(String username) {
 		Users users = new Users();

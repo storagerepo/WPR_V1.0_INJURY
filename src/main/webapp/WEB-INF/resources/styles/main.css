@@ -1058,6 +1058,20 @@ ul.rating {
     margin-left: 210px;
 }
 
+.custom-alignment-seating-position{
+	margin-top: -76px;
+    margin-left: 41.1%;
+    width:19%;
+    float:left;
+}
+
+.custom-alignment-seating-position-l{
+	margin-top: -76px;
+    margin-left: 21%;
+    width:18%;
+    float:left;
+}
+
 #squaresWaveG{
 	position:relative;
 	width:40px;
