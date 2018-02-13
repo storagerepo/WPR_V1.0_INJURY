@@ -591,7 +591,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	criteria.createAlias("t1.vehicleMakeAbbreviation", "vma1",Criteria.LEFT_JOIN);
 	
 	// Vehicle Constraints
-	if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+	if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
 		
 		if(callerPatientSearchForm.getVehicleMake()!=null&&!callerPatientSearchForm.getVehicleMake().equals("")){
 			Criterion vehicleMakeCriterion=Restrictions.like("vma1.abbreviation", callerPatientSearchForm.getVehicleMake(),MatchMode.ANYWHERE);
@@ -613,7 +613,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	
 	if(role.equals("ROLE_SUPER_ADMIN")){
 		totalNoOfRecords=(Long) criteria.setProjection(Projections.count("t1.patientId")).uniqueResult();
-	}else if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+	}else if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)){
 		
 		criteria.createAlias("patientCallerAdminMaps", "t2", Criteria.LEFT_JOIN,Restrictions.eq("t2.id.callerAdminId",callerPatientSearchForm.getCallerAdminId()));
 		
@@ -817,7 +817,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	projectionList.add(Projections.property("cr.vehicleCount"),"vehicleCount");
 	projectionList.add(Projections.property("t1.typeOfUse"),"typeOfUse");
 	
-	if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+	if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)){
 		projectionList.add(Projections.property("t2.callerAdmin.callerAdminId"),"callerAdminId");
 		projectionList.add(Projections.property("t2.caller.callerId"),"callerId");
 		projectionList.add(Projections.property("c2.firstName"),"callerFirstName");

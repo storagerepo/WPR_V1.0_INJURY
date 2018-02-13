@@ -28,7 +28,7 @@
 		access-decision-manager-ref="accessDecisionManager"
 		xmlns="http://www.springframework.org/schema/security">
 		<anonymous enabled="false" />
-		<intercept-url pattern="/CAdmin/**" access="hasAnyRole('ROLE_CALLER_ADMIN','ROLE_SUPER_ADMIN','ROLE_AUTO_MANAGER')" />
+		<intercept-url pattern="/CAdmin/**" access="hasAnyRole('ROLE_CALLER_ADMIN','ROLE_SUPER_ADMIN','ROLE_AUTO_MANAGER','ROLE_BODY_SHOP_OWNER')" />
 		
 		<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 		<session-management invalid-session-url="/logout" />
@@ -40,7 +40,7 @@
 		access-decision-manager-ref="accessDecisionManager"
 		xmlns="http://www.springframework.org/schema/security">
 		<anonymous enabled="false" />
-		<intercept-url pattern="/Caller/**" access="hasAnyRole('ROLE_CALLER_ADMIN','ROLE_CALLER','ROLE_AUTO_MANAGER','ROLE_AUTO_DEALER')" />
+		<intercept-url pattern="/Caller/**" access="hasAnyRole('ROLE_CALLER_ADMIN','ROLE_CALLER','ROLE_AUTO_MANAGER','ROLE_AUTO_DEALER','ROLE_BODY_SHOP_OWNER','ROLE_SHOP')" />
 		
 		<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 		<session-management invalid-session-url="/logout" />
@@ -83,7 +83,7 @@
 		access-decision-manager-ref="accessDecisionManager"
 		xmlns="http://www.springframework.org/schema/security">
 		<anonymous enabled="false" />
-		<intercept-url pattern="/Patient/**" access="hasAnyRole('ROLE_LAWYER_ADMIN','ROLE_SUPER_ADMIN','ROLE_LAWYER','ROLE_CALLER_ADMIN','ROLE_CALLER','ROLE_AUTO_MANAGER','ROLE_AUTO_DEALER')" />
+		<intercept-url pattern="/Patient/**" access="hasAnyRole('ROLE_LAWYER_ADMIN','ROLE_SUPER_ADMIN','ROLE_LAWYER','ROLE_CALLER_ADMIN','ROLE_CALLER','ROLE_AUTO_MANAGER','ROLE_BODY_SHOP_OWNER','ROLE_SHOP')" />
 		
 		<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 		<session-management invalid-session-url="/logout" />

@@ -105,12 +105,12 @@
       
       
        <!-- Auto Dealer Manager Dashboard Starts-->
-    <div class="col-lg-12" style="height:470px;" ng-show="{{isAdmin==6}}">
+    <div class="col-lg-12" style="height:470px;" ng-show="{{isAdmin==6 || isAdmin==8}}">
     <div class="col-lg-12" style="margin-top:60px;">
     <div class="col-lg-2 col-md-6"></div>
     <div class="col-lg-3 col-md-6">
     <div ng-cloak class="panel panel-primary" style="min-height:300px;">
-     <a ng-cloak ui-sref="dashboard.autoDealer">
+     <a ng-cloak ui-sref="{{isAdmin==6?'dashboard.autoDealer':'dashboard.shops'}}">
         <div class="panel-heading" style="min-height:300px;">
             <div class="row">
                 <div class="col-xs-12 text-center dealer-icon" style="min-height:180px;">
@@ -120,12 +120,12 @@
             <div class="row">
                 <div class="col-xs-12 text-center">
                     <div ng-cloak class="huge">{{numberOfDealers}}
-                    <div id="squaresWaveG" ng-if="numberOfDealers==''||numberOfDealers==undefined">
+                    <div id="squaresWaveG" ng-if="numberOfDealers!=0&&(numberOfDealers==''||numberOfDealers==undefined)">
 							<div id="squaresWaveG_1" class="squaresWaveG"></div>
 							<div id="squaresWaveG_2" class="squaresWaveG"></div>
 							<div id="squaresWaveG_3" class="squaresWaveG"></div>
 					</div></div>
-                    <div ng-cloak>Dealers</div>
+                    <div ng-cloak><span ng-show="{{isAdmin==6}}">Dealers</span><span ng-show="{{isAdmin==8}}">Shops</span></div>
                 </div>
             </div>
         </div>
@@ -171,7 +171,7 @@
  </div>  
   
  <!--  Auto Dealer Dashboard Starts -->
-  <stats ng-cloak number="{{numberOfVehicles}}" comments="Vehicles" colour="primary" type="vehicle-icon" goto="dashboard.autoDealerVehicleSearch" ng-show="{{isAdmin==7}}"></stats>
+  <stats ng-cloak number="{{numberOfVehicles}}" comments="Vehicles" colour="primary" type="vehicle-icon" goto="dashboard.autoDealerVehicleSearch" ng-show="{{isAdmin==7||isAdmin==9}}"></stats>
  <!--  Auto Dealer Dashboard Ends -->
 </div>
       

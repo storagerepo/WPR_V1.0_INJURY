@@ -126,13 +126,8 @@ public class CallerAdminService {
 		
 		//Logic Starts
 		Users users = new Users();
-		Roles roles = new Roles();
-		if(callerAdminForm.getRoleId()==2){
-			roles=roleDAO.get(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID);
-		}else{
-			roles=roleDAO.get(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID);
-		}
-				
+		Roles roles = roleDAO.get(callerAdminForm.getRoleId());
+			
 		users.setUsername(callerAdminForm.getUsername());
 		users.setPassword(callerAdminForm.getUsername());
 		users.setIsEnable(1);

@@ -23,6 +23,8 @@ public class InjuryConstants {
 	public static Integer INJURY_LAWYER_ROLE_ID=5;
 	public static Integer INJURY_AUTO_MANAGER_ROLE_ID=6;
 	public static Integer INJURY_AUTO_DEALER_ROLE_ID=7;
+	public static Integer INJURY_BODY_SHOP_OWNER_ROLE_ID=8;
+	public static Integer INJURY_SHOP_ROLE_ID=9;
 	
 	public static String INJURY_SUPER_ADMIN_ROLE="ROLE_SUPER_ADMIN";
 	public static String INJURY_CALLER_ADMIN_ROLE="ROLE_CALLER_ADMIN";
@@ -31,6 +33,8 @@ public class InjuryConstants {
 	public static String INJURY_LAWYER_ROLE="ROLE_LAWYER";
 	public static String INJURY_AUTO_MANAGER_ROLE="ROLE_AUTO_MANAGER";
 	public static String INJURY_AUTO_DEALER_ROLE="ROLE_AUTO_DEALER";
+	public static String INJURY_BODY_SHOP_OWNER_ROLE="ROLE_BODY_SHOP_OWNER";
+	public static String INJURY_SHOP_ROLE="ROLE_SHOP";
 	
 	//Look up Preference Type
 	public static Integer COUNTY_LOOKUP=1;
@@ -331,7 +335,12 @@ public class InjuryConstants {
 			roleText = "Dealer Manager";
 		} else if (currentRole.equals(INJURY_AUTO_DEALER_ROLE)) {
 			roleText = "Dealer";
+		} else if (currentRole.equals(INJURY_BODY_SHOP_OWNER_ROLE)) {
+			roleText = "Body Shop Owner";
+		} else if (currentRole.equals(INJURY_SHOP_ROLE)) {
+			roleText = "Shop";
 		}
+		
 		return roleText;
 	}
 

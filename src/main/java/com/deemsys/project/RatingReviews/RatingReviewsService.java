@@ -142,14 +142,17 @@ public class RatingReviewsService {
 		Double callerAdminAverageRating=0.00;
 		Double lawyerAdminAverageRating=0.00;
 		Double dealerManagerAverageRating=0.00;
+		Double shopOwnerAverageRating=0.00;
 		
 		BigDecimal callerAdminRating=new BigDecimal(0);
 		BigDecimal lawyerAdminRating=new BigDecimal(0);
 		BigDecimal dealerManagerRating=new BigDecimal(0);
+		BigDecimal shopOwnerRating=new BigDecimal(0);
 		// Total Rating Count
 		Integer callerAdminReviewCount=0;
 		Integer lawyerAdminReviewCount=0;
 		Integer dealerManagerReviewCount=0;
+		Integer shopOwnerReviewCount=0;
 		List<RatingReviews> ratingReviewss=new ArrayList<RatingReviews>();
 		ratingReviewss=ratingReviewsDAO.getAll();
 		for (RatingReviews ratingReviews : ratingReviewss) {
@@ -166,12 +169,18 @@ public class RatingReviewsService {
 			}else if(roleId.equals(InjuryConstants.INJURY_LAWYER_ROLE_ID)){
 				lawyerAdminRating=lawyerAdminRating.add(ratingReviews.getOverallRating());
 				lawyerAdminReviewCount++;
-			}if(roleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
+			}else if(roleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
 				dealerManagerRating=dealerManagerRating.add(ratingReviews.getOverallRating());
 				dealerManagerReviewCount++;
 			}else if(roleId.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE_ID)){
 				dealerManagerRating=dealerManagerRating.add(ratingReviews.getOverallRating());
 				dealerManagerReviewCount++;
+			}else if(roleId.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE_ID)){
+				shopOwnerRating=dealerManagerRating.add(ratingReviews.getOverallRating());
+				shopOwnerReviewCount++;
+			}else if(roleId.equals(InjuryConstants.INJURY_SHOP_ROLE_ID)){
+				shopOwnerRating=dealerManagerRating.add(ratingReviews.getOverallRating());
+				shopOwnerReviewCount++;
 			}
 		}
 		
@@ -184,8 +193,14 @@ public class RatingReviewsService {
 		if(dealerManagerReviewCount>0){
 			dealerManagerAverageRating=dealerManagerRating.doubleValue()/dealerManagerReviewCount.doubleValue();
 		}
+		if(shopOwnerReviewCount>0){
+			shopOwnerAverageRating=shopOwnerRating.doubleValue()/shopOwnerReviewCount.doubleValue();
+		}
 	
-		ratingViewForm=new RatingViewForm(String.format( "%.1f", callerAdminAverageRating), String.format( "%.1f", lawyerAdminAverageRating), String.format( "%.1f", dealerManagerAverageRating), callerAdminReviewCount, lawyerAdminReviewCount, dealerManagerReviewCount, (callerAdminReviewCount+lawyerAdminReviewCount+dealerManagerReviewCount));
+		ratingViewForm=new RatingViewForm(String.format( "%.1f", callerAdminAverageRating), String.format( "%.1f", lawyerAdminAverageRating), 
+				String.format( "%.1f", dealerManagerAverageRating), String.format( "%.1f", shopOwnerAverageRating),
+				callerAdminReviewCount, lawyerAdminReviewCount, dealerManagerReviewCount, shopOwnerReviewCount,
+				(callerAdminReviewCount+lawyerAdminReviewCount+dealerManagerReviewCount+shopOwnerReviewCount));
 		return ratingViewForm;
 	}
 

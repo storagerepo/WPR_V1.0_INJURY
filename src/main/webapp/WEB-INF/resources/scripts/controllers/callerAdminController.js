@@ -17,12 +17,18 @@ adminApp.controller('ShowCallerAdminController',function($http,$state,$scope,$lo
     	$scope.headingText="Call Center Admin";
     	$scope.addButtonText="Add Call Center Admin";
     	$scope.hintText="Caller Admin";
-    }else{
+    }else if($scope.roleId==6){
     	$scope.addLink="dashboard.add-automanager";
     	$scope.editLink="edit-automanager";
     	$scope.headingText="Dealer Manager";
     	$scope.addButtonText="Add Dealer Manager";
     	$scope.hintText="Dealer Manager";
+    }else if($scope.roleId==8){
+    	$scope.addLink="dashboard.add-bodyshopowner";
+    	$scope.editLink="edit-bodyshopowner";
+    	$scope.headingText="Body Shop Owners";
+    	$scope.addButtonText="Add Body Shop Owners";
+    	$scope.hintText="Body Shop Owners";
     }
 	
     requestHandler.getRequest("Admin/getAllCallerAdmins.json?roleId="+$scope.roleId,"").then(function(response){
@@ -110,9 +116,12 @@ adminApp.controller('SaveCallerAdminController', function($http,$state,$scope,$l
     if($scope.roleId==2){
     	$scope.backLink="dashboard.calleradmin";
     	$scope.detailsText="Enter Call Center Admin Details";
-    }else{
+    }else if($scope.roleId==6){
     	$scope.backLink="dashboard.automanager";
     	$scope.detailsText="Enter Dealer Manager Details";
+    }else if($scope.roleId==8){
+    	$scope.backLink="dashboard.bodyshopowner";
+    	$scope.detailsText="Enter Body Shop Owner Details";
     }
 	
 	$scope.selectedCounties=function(countyId){
@@ -171,8 +180,10 @@ adminApp.controller('SaveCallerAdminController', function($http,$state,$scope,$l
 				  Flash.create('success', "You have Successfully Added!");
 				  if($scope.roleId==2){
 					  $location.path('dashboard/calleradmin');
-				  }else{
+				  }else if($scope.roleId==6){
 					  $location.path('dashboard/automanager');
+				  }else if($scope.roleId==8){
+					  $location.path('dashboard/bodyshopowner');
 				  }
 		});
 			
@@ -193,9 +204,12 @@ adminApp.controller('EditCallerAdminController', function($http,$state,$location
     if($scope.roleId==2){
     	$scope.backLink="dashboard.calleradmin";
     	$scope.detailsText="Enter Call Center Admin Details";
-    }else{
+    }else if($scope.roleId==6){
     	$scope.backLink="dashboard.automanager";
     	$scope.detailsText="Enter Dealer Manager Details";
+    }else if($scope.roleId==8){
+    	$scope.backLink="dashboard.bodyshopowner";
+    	$scope.detailsText="Enter Body Shop Owner Details";
     }
     
 	var callerAdminOriginal="";
@@ -216,8 +230,10 @@ adminApp.controller('EditCallerAdminController', function($http,$state,$location
 			  Flash.create('success', "You have Successfully Updated!");
 			  if($scope.roleId==2){
 				  $location.path('dashboard/calleradmin');
-			  }else{
+			  }else if($scope.roleId==6){
 				  $location.path('dashboard/automanager');
+			  }else if($scope.roleId==8){
+				  $location.path('dashboard/bodyshopowner');
 			  }
 		});
 	};

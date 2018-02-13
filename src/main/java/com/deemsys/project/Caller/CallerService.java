@@ -216,11 +216,7 @@ public class CallerService {
 		users.setStatus(1);
 		users.setIsPasswordChanged(0);
 		users.setIsDisclaimerAccepted(1);
-		if(callerForm.getRoleId()==4){
-			role = roleDAO.get(InjuryConstants.INJURY_CALLER_ROLE_ID);
-		}else{
-			role = roleDAO.get(InjuryConstants.INJURY_AUTO_DEALER_ROLE_ID);
-		}
+		role = roleDAO.get(callerForm.getRoleId());
 		
 		users.setRoles(role);
 		usersDAO.save(users);

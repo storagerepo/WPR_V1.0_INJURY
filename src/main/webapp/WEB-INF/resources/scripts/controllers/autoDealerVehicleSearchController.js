@@ -21,9 +21,9 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 		 	requestHandler.getRequest("CAdmin/getCallersByCallerAdmin.json","").then(function(response){
 				$scope.dealerList=response.data.callerForms;
 			});
-	    };
+	  };
 	    
-	    if($rootScope.isAdmin==6){
+	    if($rootScope.isAdmin==6||$rootScope.isAdmin==8){
 	    	 $scope.getDealerList(); 
 	    }
 	   

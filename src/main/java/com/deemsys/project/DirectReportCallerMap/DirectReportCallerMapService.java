@@ -48,9 +48,9 @@ public class DirectReportCallerMapService {
 		try{
 			String role=loginService.getCurrentRole();
 			CallerAdmin callerAdmin = null;
-			if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+			if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)){
 				callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
-			}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+			}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)){
 				callerAdmin=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin();
 			}
 			
@@ -95,9 +95,9 @@ public class DirectReportCallerMapService {
 		
 		String role=loginService.getCurrentRole();
 		CallerAdmin callerAdmin = null;
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)){
 			callerAdmin=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID());
-		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)){
 			callerAdmin=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin();
 		}
 		

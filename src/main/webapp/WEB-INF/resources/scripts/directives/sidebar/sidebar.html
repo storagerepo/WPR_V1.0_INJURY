@@ -15,6 +15,9 @@
              <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.automanager"><i ng-cloak class="fa fa-user-circle-o fa-fw"></i> <small>Dealer Manager</small></a>
             </li>
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
+                <a ui-sref="dashboard.bodyshopowner"><i ng-cloak class="fa fa-user-circle-o fa-fw"></i> <small>Body Shop Owners</small></a>
+            </li>
               <li ui-sref-active="active" ng-show="{{$root.isAdmin==1}}">
                 <a ui-sref="dashboard.SearchCrashreport"><i ng-cloak class="fa fa-file-excel-o fa-fw"></i> <small>Crash Report</small></a>
             </li>
@@ -103,10 +106,16 @@
              <li ui-sref-active="active" ng-show="{{$root.isAdmin==6}}">
                 <a ui-sref="dashboard.autoDealer"><span ng-cloak class="dealer-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Dealer</a>
             </li>
-            <li ui-sref-active="active" ng-show="{{$root.isAdmin==6||$root.isAdmin==7}}">
+             <!-- Shop Body Owners -->
+             <li ui-sref-active="active" ng-show="{{$root.isAdmin==8}}">
+                <a ui-sref="dashboard.shops"><span ng-cloak class="dealer-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Shops</a>
+            </li>
+            <!-- Common for Auto Dealer and Body Shop Owners -->
+            <li ui-sref-active="active" ng-show="{{$root.isAdmin==6||$root.isAdmin==7||$root.isAdmin==8||$root.isAdmin==9}}">
                 <a ui-sref="dashboard.autoDealerVehicleSearch"><span ng-cloak class="vehicle-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Vehicles<span></span></a>
             </li>
             
+        
             <!-- Common To all -->
              <li ui-sref-active="active" ng-show="{{($root.isAdmin==2||$root.isAdmin==3||$root.isAdmin==6) && $root.productToken!=''}}">
                 <a ui-sref="dashboard.payment"><i ng-cloak class="fa fa-money fa-fw"></i> Payment<span></span></a>

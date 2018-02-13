@@ -41,7 +41,7 @@
 						extra-settings="{idProp:'countyId',displayProp:'countyName',smartButtonMaxItems:'0',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Counties',showPreferenceOption:true,radioButtonName:'countyPreference',preferenceAllText:'Subscribed',preferenceSetText:'Preferred'}"
 						events="countyEvents"></div>
 					<a ui-sref="dashboard.userPreferrence({fid:1})"
-						style="text-decoration: underline;" ng-show="countyListType==2&&$root.isAdmin==6">Change
+						style="text-decoration: underline;" ng-show="countyListType==2&&($root.isAdmin==6||$root.isAdmin==8)">Change
 						Lookup Preference</a>
 				</div>
 				<div class="col-md-5ths">
@@ -157,8 +157,8 @@
 					<span class="error-class" ng-show="searchDamageScaleMinError">&nbsp;&nbsp;Select
 						at least one Damage Scale</span>
 				</div>
-				<div class="col-md-5ths" ng-show="vehicle.isRunnerReport!=3&&$root.isAdmin==6">
-					<label>Dealers</label> <select class="form-control input-sm"
+				<div class="col-md-5ths" ng-show="vehicle.isRunnerReport!=3&&($root.isAdmin==6||$root.isAdmin==8)">
+					<label><span ng-show="$root.isAdmin==6">Dealers</span><span ng-show="$root.isAdmin==8">Shops</span></label> <select class="form-control input-sm"
 						ng-model="vehicle.callerId" ng-disabled="vehicle.isRunnerReport==3">
 						<option value="0">All</option>
 						<option value="-1">N/A</option>
@@ -186,11 +186,12 @@
 				<div class="col-md-12 no-padding hr-tag-alter"></div>
 				<div class="col-md-6 no-padding">
 					<a href="" ng-disabled="isCleanCheckbox()||vehicle.isArchived==1"
-						ng-click="assignDealerPopup()" class="btn btn-sm btn-success" ng-show="vehicle.isRunnerReport!=3&&$root.isAdmin==6">Assign
-						Dealer</a> <a href=""
+						ng-click="assignDealerPopup()" class="btn btn-sm btn-success" ng-show="vehicle.isRunnerReport!=3&&($root.isAdmin==6||$root.isAdmin==8)"><span ng-show="$root.isAdmin==6">Assign
+						Dealer</span><span ng-show="$root.isAdmin==8">Assign Shop</span></a> <a href=""
 						ng-disabled="isCleanCheckbox()||vehicle.isArchived==1"
 						ng-click="releaseDealer()" class="btn btn-sm btn-danger" ng-show="vehicle.isRunnerReport!=3"><span ng-show="$root.isAdmin==6">Release
-						From Dealer</span><span ng-show="$root.isAdmin==7">Release Clients</span></a> <a href=""
+						From Dealer</span><span ng-show="$root.isAdmin==7 || $root.isAdmin==9">Release Clients</span><span ng-show="$root.isAdmin==8">Release
+						From Shop</span></a> <a href=""
 						ng-disabled="isCleanCheckbox()||vehicle.isArchived==1||isDisableButtons"
 						ng-click="moveArchive(vehicle.isRunnerReport)" class="btn btn-sm btn-warning">Archive
 						all</a> <a href=""
@@ -213,9 +214,9 @@
 							<option value="1">Archived</option>
 						</select>
 					</div>
-					<div class="col-md-3 margin-top-5 text-right no-padding" ng-show="vehicle.isRunnerReport!=3&&$root.isAdmin==6">Filter
+					<div class="col-md-3 margin-top-5 text-right no-padding" ng-show="vehicle.isRunnerReport!=3&&($root.isAdmin==6||$root.isAdmin==8)">Filter
 						Status by&nbsp;&nbsp;</div>
-					<div class="col-md-3 no-padding" ng-show="vehicle.isRunnerReport!=3&&$root.isAdmin==6">
+					<div class="col-md-3 no-padding" ng-show="vehicle.isRunnerReport!=3&&($root.isAdmin==6||$root.isAdmin==8)">
 						<select class="form-control input-sm"
 							ng-change="secoundarySearchPatient()"
 							ng-model="vehicle.patientStatus">
@@ -300,7 +301,7 @@
 						<th width="6%">Age</th>
 						<th width="6%">Unit / Damage</th>
 						<th width="7%">County</th>
-						<th width="8%" ng-show="$root.isAdmin==6">Dealer</th>
+						<th width="8%" ng-show="$root.isAdmin==6||$root.isAdmin==8"><span ng-show="$root.isAdmin==6">Dealer</span><span ng-show="$root.isAdmin==8">Shop</span></th>
 						<th width="15%">Address</th>
 						<th width="6%">Make</th>
 						<th width="6%">Year</th>
@@ -327,7 +328,7 @@
 						</th>
 						<th></th>
 						<th></th>
-						<th ng-show="$root.isAdmin==6"></th>
+						<th ng-show="$root.isAdmin==6||$root.isAdmin==8"></th>
 						<th></th>
 						<th></th>
 						<th></th>
@@ -335,7 +336,7 @@
 						<th ng-show="vehicle.isArchived==1"></th>
 						<th><a href="" ng-click="exportToExcel()"
 							class="btn btn-sm btn-export"
-							ng-disabled="exportButton || totalRecords==0" ng-show="$root.isAdmin==6"><span
+							ng-disabled="exportButton || totalRecords==0" ng-show="$root.isAdmin==6||$root.isAdmin==8"><span
 								ng-show="exportButton"><i
 									class="glyphicon glyphicon-refresh spinning"></i>&nbsp;</span>{{exportButtonText}}</a></th>
 
@@ -454,7 +455,7 @@
 						</span> <span
 							ng-show="autoDealerData.unitNumber=='' || autoDealerData.unitNumber==null">-</span></td>
 						<td title="County">{{autoDealerData.county}}</td>
-						<td title="Dealer Name" ng-show="$root.isAdmin==6"><span
+						<td title="Dealer Name" ng-show="$root.isAdmin==6||$root.isAdmin==8"><span
 							ng-if="autoDealerData.callerLasttName==null && autoDealerData.callerLastName==null">N/A</span>{{autoDealerData.callerFirstName}}&nbsp;{{autoDealerData.callerLastName}}</td>
 
 						<td title="Address"><span
@@ -483,12 +484,12 @@
 							ng-show={{autoDealerData.isArchived==0||autoDealerData.isArchived==null}}>
 								<a href="" ng-cloak ng-hide={{autoDealerData.callerId!=null}}
 								class="btn btn-xs btn-danger hint--top"
-								data-hint="Assign Dealer"
+								data-hint="{{$root.isAdmin==6?'Assign Dealer':'Assign Shop'}}"
 								ng-click="assignSingleDealerPopup(autoDealerData.patientId,autoDealerData.name,autoDealerData.callerId)"><i
 									class="fa fa-external-link-square"></i></a> <a href="" ng-cloak
-								ng-show="{{autoDealerData.callerId!=null&&$root.isAdmin==6}}"
+								ng-show="{{autoDealerData.callerId!=null&&($root.isAdmin==6||$root.isAdmin==8)}}"
 								class="btn btn-xs btn-success hint--top"
-								data-hint="Change Dealer"
+								data-hint="{{$root.isAdmin==6?'Change Dealer':'Change Shop'}}"
 								ng-click="assignSingleDealerPopup(autoDealerData.patientId,autoDealerData.name,autoDealerData.callerId)"><i
 									class="fa fa-external-link-square"></i></a> <a href="" ng-cloak
 								ng-click="moveSingleFileToArchive(autoDealerData.patientId)"

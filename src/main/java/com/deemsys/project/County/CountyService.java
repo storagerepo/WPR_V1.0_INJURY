@@ -158,9 +158,9 @@ public class CountyService {
 		String role=loginService.getCurrentRole();
 		List<CountyList> countyLists=new ArrayList<CountyList>();
 		
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)){
 			countyLists=callerAdminCountyMapDAO.getCountyListByCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
-		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)){
 			//countyLists=callerCountyMapDAO.getCountyListByCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
 			countyLists=callerAdminCountyMapDAO.getCountyListByCallerAdminId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId());
 		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){

@@ -216,6 +216,7 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 							    	value2.typeOfUseName="Unknown";
 							        break;
 							    default:
+							    	value2.typeOfUseName="Unknown";
 							        break;
 								};
 							});

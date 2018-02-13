@@ -243,6 +243,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 							    	value2.typeOfUseName="Unknown";
 							        break;
 							    default:
+							    	value2.typeOfUseName="Unknown";
 							        break;
 								};
 							});

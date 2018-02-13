@@ -370,9 +370,9 @@ public class PatientService {
 		PatientGroupedSearchResult patientGroupedSearchResult = new PatientGroupedSearchResult();
 		
 		String role=loginService.getCurrentRole();
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)){
 			callerPatientSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
-		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)){
 			callerPatientSearchForm.setCallerAdminId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId());
 			callerPatientSearchForm.setCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
 		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
@@ -589,9 +589,9 @@ public class PatientService {
 	public PatientSearchResultSet getExportPatient(CallerPatientSearchForm callerPatientSearchForm){
 		
 		String role=loginService.getCurrentRole();
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)){
 			callerPatientSearchForm.setCallerAdminId(callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId());
-		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)){
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)){
 			callerPatientSearchForm.setCallerAdminId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId());
 			callerPatientSearchForm.setCallerId(callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerId());
 		}else if(role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){

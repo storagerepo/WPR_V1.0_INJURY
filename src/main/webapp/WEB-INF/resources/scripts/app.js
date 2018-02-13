@@ -1217,6 +1217,70 @@ sbAdminApp
 																}
 
 												})// Auto Manager Ends
+												// Body Shop Owner Starts
+											.state(
+													'dashboard.bodyshopowner',
+													{
+														resolve : {
+															loadMyFile : function(
+																	$ocLazyLoad) {
+																return $ocLazyLoad
+																		.load({
+																			name : 'sbAdminApp',
+																			files : [
+																					'scripts/controllers/callerAdminController.js',
+																					'js/mask.js' ]
+																		});
+															}
+														},
+														controller : 'ShowCallerAdminController',
+														templateUrl : 'views/calleradmin/view-caller-admin.html',
+														url : '/bodyshopowner',
+														roleId:8,
+
+													}).state(
+													'dashboard.add-bodyshopowner',
+													{
+
+														resolve : {
+															loadMyFiles : function(
+																	$ocLazyLoad) {
+																return $ocLazyLoad
+																		.load({
+																			name : 'sbAdminApp',
+																			files : [
+																					'scripts/controllers/callerAdminController.js',
+																					'js/mask.js' ]
+																		});
+															}
+														},
+														controller : 'SaveCallerAdminController',
+														templateUrl : 'views/calleradmin/add-caller-admin.html',
+														url : '/add-bodyshopowner',
+														title : 'Add Body Shops Owners',
+														roleId:8,
+													})
+											.state(
+													'dashboard.edit-bodyshopowner/:callerAdminId',
+													{
+
+														resolve : {
+															loadMyFile : function(
+																	$ocLazyLoad) {
+
+																return $ocLazyLoad
+																		.load({
+																			name : 'sbAdminApp',
+																			files : [ 'scripts/controllers/callerAdminController.js' ]
+																		});
+															}
+														},
+														controller : 'EditCallerAdminController',
+														templateUrl : 'views/calleradmin/add-caller-admin.html',
+														url : '/edit-bodyshopowner/:callerAdminId',
+														title : 'Edit Body Shops Owners',
+														roleId:8,
+													})
 												// Lawyers starts
 										    .state(
 											'dashboard.Lawyer',
@@ -1413,6 +1477,72 @@ sbAdminApp
 												roleId:7,
 											})
 									// Auto Dealer Ends
+									// Shops Starts
+									.state(
+											'dashboard.shops',
+											{
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/callersController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'ShowCallersController',
+												templateUrl : 'views/caller/view-callers.html',
+												url : '/shops',
+												roleId:9,
+
+											})
+									.state(
+											'dashboard.add-shop',
+											{
+
+												resolve : {
+													loadMyFiles : function(
+															$ocLazyLoad) {
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [
+																			'scripts/controllers/callersController.js',
+																			'js/mask.js' ]
+																});
+													}
+												},
+												controller : 'SaveCallerController',
+												templateUrl : 'views/caller/add-caller.html',
+												url : '/add-shop',
+												title : 'Add Shop',
+												roleId:9,
+											})
+									.state(
+											'dashboard.edit-shop/:callerId',
+											{
+
+												resolve : {
+													loadMyFile : function(
+															$ocLazyLoad) {
+
+														return $ocLazyLoad
+																.load({
+																	name : 'sbAdminApp',
+																	files : [ 'scripts/controllers/callersController.js' ]
+																});
+													}
+												},
+												controller : 'EditCallerController',
+												templateUrl : 'views/caller/add-caller.html',
+												url : '/edit-shop/:callerId',
+												title : 'Edit Shop',
+												roleId:9,
+											})
+									// Shops Ends
 									.state(
 											'dashboard.Changepassword',
 											{
