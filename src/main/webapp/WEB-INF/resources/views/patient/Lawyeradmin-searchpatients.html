@@ -679,8 +679,8 @@
 					<div class="form-group passenger-type pull-right">
 						<div class="btn-group" data-toggle="buttons">
 							<label class="btn btn-default unit-toggle-label"
-								ng-class="{active:patientDetails.seatingPosition!='1' && patientDetails.seatingPosition!=null && patientDetails.seatingPosition!='99' && patientDetails.seatingPosition!=''}"
-								ng-disabled="patientDetails.seatingPosition=='1' || patientDetails.seatingPosition==null || patientDetails.seatingPosition=='99' || patientDetails.seatingPosition==''"> <input
+								ng-class="{active:patientDetails.seatingPosition!='1' && patientDetails.seatingPosition!=null && patientDetails.seatingPosition!='99' && patientDetails.seatingPosition!='18' && patientDetails.seatingPosition!=''}"
+								ng-disabled="patientDetails.seatingPosition=='1' || patientDetails.seatingPosition==null || patientDetails.seatingPosition=='99' || patientDetails.seatingPosition=='18' || patientDetails.seatingPosition==''"> <input
 								type="radio" name="unit"
 								ng-model="patientDetails.seatingPosition" id="option1"
 								autocomplete="off"> Passenger
@@ -693,8 +693,8 @@
 								autocomplete="off"> &nbsp;&nbsp;Driver&nbsp;&nbsp;
 							</label>
 							<label class="btn btn-default unit-toggle-label"
-								ng-class="{active:patientDetails.seatingPosition=='99' || patientDetails.seatingPosition=='' || patientDetails.seatingPosition==null}"
-								ng-disabled="patientDetails.seatingPosition!='99' && patientDetails.seatingPosition!=null && patientDetails.seatingPosition!=''">
+								ng-class="{active:patientDetails.seatingPosition=='99' || patientDetails.seatingPosition=='18' || patientDetails.seatingPosition=='' || patientDetails.seatingPosition==null}"
+								ng-disabled="patientDetails.seatingPosition!='99' && patientDetails.seatingPosition!='18' && patientDetails.seatingPosition!=null && patientDetails.seatingPosition!=''">
 								<input type="radio" name="unit"
 								ng-model="patientDetails.seatingPosition"
 								ng-selected="patientDetails.seatingPosition=='1'" id="option3"
