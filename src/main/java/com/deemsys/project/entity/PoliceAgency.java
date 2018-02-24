@@ -31,6 +31,7 @@ public class PoliceAgency implements java.io.Serializable {
 	private Integer status;
 	private Date lastUpdatedDate;
 	private Integer reportStatus;
+	private String agencyUrl;
 	private Set<CrashReport> crashReports = new HashSet<CrashReport>(0);
 
 	public PoliceAgency() {
@@ -41,9 +42,10 @@ public class PoliceAgency implements java.io.Serializable {
 	}
 
 	public PoliceAgency(int mapId, County county, Integer agencyId,
-			String name, Integer schedulerType, Integer status, Date lastUpdatedDate,
-			Integer reportStatus,
+			String name, Integer schedulerType, Integer status,
+			Date lastUpdatedDate, Integer reportStatus, String agencyUrl,
 			Set<CrashReport> crashReports) {
+		super();
 		this.mapId = mapId;
 		this.county = county;
 		this.agencyId = agencyId;
@@ -52,6 +54,7 @@ public class PoliceAgency implements java.io.Serializable {
 		this.status = status;
 		this.lastUpdatedDate = lastUpdatedDate;
 		this.reportStatus = reportStatus;
+		this.agencyUrl = agencyUrl;
 		this.crashReports = crashReports;
 	}
 
@@ -137,6 +140,15 @@ public class PoliceAgency implements java.io.Serializable {
 
 	public void setCrashReports(Set<CrashReport> crashReports) {
 		this.crashReports = crashReports;
+	}
+	
+    @Column(name="agency_url")
+	public String getAgencyUrl() {
+		return agencyUrl;
+	}
+
+	public void setAgencyUrl(String agencyUrl) {
+		this.agencyUrl = agencyUrl;
 	}
 
 }

@@ -18,6 +18,7 @@ public class PoliceAgencyForm {
 	private Integer status;
 	private String lastUpdatedDate;
 	private Integer reportStatus;
+	private String agencyUrl;
 	
 	public Integer getMapId() {
 		return mapId;
@@ -74,8 +75,14 @@ public class PoliceAgencyForm {
 	public void setReportStatus(Integer reportStatus) {
 		this.reportStatus = reportStatus;
 	}
+	public String getAgencyUrl() {
+		return agencyUrl;
+	}
+	public void setAgencyUrl(String agencyUrl) {
+		this.agencyUrl = agencyUrl;
+	}
 	public PoliceAgencyForm(Integer mapId, Integer countyId,String countyName, Integer agencyId,
-			String name, Integer schedulerType, Integer status, String lastUpdatedDate, Integer reportStatus) {
+			String name, Integer schedulerType, Integer status, String lastUpdatedDate, Integer reportStatus, String agencyUrl) {
 		super();
 		this.mapId = mapId;
 		this.countyId = countyId;
@@ -86,7 +93,9 @@ public class PoliceAgencyForm {
 		this.status = status;
 		this.lastUpdatedDate = lastUpdatedDate;
 		this.reportStatus = reportStatus;
+		this.agencyUrl = agencyUrl;
 	}
+	
 	public PoliceAgencyForm() {
 		super();
 		// TODO Auto-generated constructor stub

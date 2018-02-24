@@ -2161,3 +2161,17 @@ sbAdminApp.directive('validateIpAddress', function(){
 		}
 	};
 });
+
+sbAdminApp.directive('validateWebsite', function() {
+    var WEBSITE_WITH_HTTP = /^http(s)?:\/\/(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+    var WEBSITE_NO_HTTP = /^(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+    return {
+        require: 'ngModel',
+        restrict: '',
+        link: function(scope, elm, attrs, ngModel) {
+            ngModel.$validators.validateWebsite = function(modelValue) {
+                return  WEBSITE_WITH_HTTP.test(modelValue);
+            };
+        }
+    };
+});

@@ -62,7 +62,19 @@
                                      </span><br/> 
                                   </div>
                                    
+                                 </div><div class="col-md-12 no-padding">
+                                
+                                  <div class="col-md-6">
+                                  <span class="redText">*</span>  <label>Agency URL</label>
+                                    <input type="text" class="form-control"  ng-model="policeAgencyForm.agencyUrl" name="agencyUrl" placeholder="Agency Url" required validate-website>
+                                    <span class="error-container" ng-show="myForm.agencyUrl.$dirty && myForm.agencyUrl.$invalid">
+                                      <span ng-cloak style="color:red" ng-show="myForm.agencyUrl.$error.required">Please Enter Agency URL</span>
+                             <span ng-cloak style="color:red" ng-show="!myForm.agencyUrl.$error.required&&myForm.agencyUrl.$error.validateWebsite">Please Enter Police Department Valid URL</span>    
+                                     </span><br/>
+                                   </div>
+                                   
                                  </div>
+                                 
                                 
                                  
                                 
