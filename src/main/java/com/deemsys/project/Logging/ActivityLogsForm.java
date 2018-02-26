@@ -1,5 +1,7 @@
 package com.deemsys.project.Logging;
 
+import java.util.Date;
+
 import com.deemsys.project.common.InjuryConstants;
 
 
@@ -24,9 +26,11 @@ public class ActivityLogsForm {
 	private String accessDate;
 	private String accessInTime;
 	private String accessOutTime;
+	private Integer recordsCount;
 	private String description;
 	private Integer status;
 	private Long accessCount;
+	private String accessDateMonthFormat;
 	
 	public String getSessionId() {
 		return sessionId;
@@ -112,6 +116,12 @@ public class ActivityLogsForm {
 	public void setAccessOutTime(String accessOutTime) {
 		this.accessOutTime = accessOutTime;
 	}
+	public Integer getRecordsCount() {
+		return recordsCount;
+	}
+	public void setRecordsCount(Integer recordsCount) {
+		this.recordsCount = recordsCount;
+	}
 	public String getDescription() {
 		return description;
 	}
@@ -130,11 +140,17 @@ public class ActivityLogsForm {
 	public void setAccessCount(Long accessCount) {
 		this.accessCount = accessCount;
 	}
+	public String getAccessDateMonthFormat() {
+		return accessDateMonthFormat;
+	}
+	public void setAccessDateMonthFormat(Date accessDateMonthFormat) {
+		this.accessDateMonthFormat = InjuryConstants.convertMonthFormat(accessDateMonthFormat);
+	}
 	public ActivityLogsForm(String sessionId, String role, Integer roleId,
 			String loginUsername, Integer loginId, String activity, Integer activityId,
 			String primaryUsername, Integer primaryId, String ipAddress,
 			String ipLocation, String accessDate, String accessInTime, String accessOutTime,
-			String description, Integer status) {
+			Integer recordsCount, String description, Integer status) {
 		super();
 		this.sessionId = sessionId;
 		this.role = role;
@@ -150,6 +166,7 @@ public class ActivityLogsForm {
 		this.accessDate = accessDate;
 		this.accessInTime = accessInTime;
 		this.accessOutTime = accessOutTime;
+		this.recordsCount = recordsCount;
 		this.description = description;
 		this.status = status;
 	}

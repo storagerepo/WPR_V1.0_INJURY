@@ -17,4 +17,5 @@ public interface ActivityLogsDAO extends IGenericDAO<ActivityLogs>{
 	public ActivityLogs getActivityLogsBySessionIdAndActivityId(String sessionId, Integer activityId);
 	public void updateActivityLogsBySessionIdAndActivityId(ActivityLogsForm activityLogsForm);
 	public List<ActivityLogs> getActivityLogsByIpAddressAndDate(String ipAddress,Date accessDate);
+	public List<ActivityExportDataCount> exportActivityLogs(ActivityLogsSearchForm activityLogsSearchForm);
 }

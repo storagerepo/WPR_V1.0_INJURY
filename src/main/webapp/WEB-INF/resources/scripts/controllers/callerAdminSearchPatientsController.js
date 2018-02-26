@@ -1476,6 +1476,8 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 				}
 			});	
 		}*/
+		// Add Print Activity
+		searchService.addPrintActivityLog($scope.sendingReportsList.length);
 		var randomnumber = Math.floor((Math.random()*100)+1);
 		window.$windowScope = $scope;
 		var $popup=$window.open('#/dashboard/printreports/','_blank','Crash Reports Online',randomnumber,'width=1200,height=600,scrollbars=1');

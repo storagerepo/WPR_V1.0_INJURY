@@ -1,6 +1,6 @@
-var adminApp=angular.module('sbAdminApp',['requestModule','flash']);
+var adminApp=angular.module('sbAdminApp',['requestModule','flash','ngFileSaver']);
 
-adminApp.controller('ActivityLogsController',['$scope','requestHandler','Flash','$stateParams',function($scope,requestHandler,Flash,$stateParams){
+adminApp.controller('ActivityLogsController',['$scope','requestHandler','Flash','FileSaver','$stateParams',function($scope,requestHandler,Flash,FileSaver,$stateParams){
 	
 	$scope.getRoles=function(){
 		requestHandler.getRequest('/getRoles.json','').then(function(response){
@@ -15,6 +15,7 @@ adminApp.controller('ActivityLogsController',['$scope','requestHandler','Flash',
 	};
 	
 	$scope.searchActivityLogs=function(){
+		$scope.activityOriginalSearchForm=angular.copy($scope.activityLogsSearchForm);
 		requestHandler.postRequest('Admin/searchActivityLogs.json',$scope.activityLogsSearchForm).then(function(response){
 			$scope.activityLogsForms=response.data.activityLogsForms.activityLogsForms;
 			$scope.totalRecords=response.data.activityLogsForms.totalRecords;
@@ -46,9 +47,30 @@ adminApp.controller('ActivityLogsController',['$scope','requestHandler','Flash',
 		$("#viewActivityLogModal").modal('show');
 	};
 	
+	$scope.exportExcelModal=function(){
+		$scope.formatType="1";
+		$("#exportExcelModal").modal('show');
+	};
+	
+	$scope.exportExcel=function(){
+		$scope.exportButtonText="Exporting...";
+		$scope.isExporting=true;
+		$scope.activityOriginalSearchForm.exportFormat=$scope.formatType;
+		$scope.activityOriginalSearchForm.isSkipMyIp=$scope.isSkipMyIp;
+		requestHandler.postExportRequest('Admin/exportActivityLog.xlsx',$scope.activityOriginalSearchForm).success(function(responseData){
+			 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+			 FileSaver.saveAs(blob,"Export_Activity_"+moment().format('YYYY-MM-DD')+".xlsx");
+			 $scope.exportButtonText="Export Excel";
+			 $scope.isExporting=false;
+		});
+	};
+	
 	$scope.init=function(){
+		$scope.isExporting=false;
+		$scope.exportButtonText="Export Excel";
 		$scope.getRoles();
 		$scope.getActivies();
+		$scope.activityOriginalSearchForm={};
 		$scope.activityLogsSearchForm={
 				"pageNumber":1,
 				"itemsPerPage":"25",
@@ -60,10 +82,16 @@ adminApp.controller('ActivityLogsController',['$scope','requestHandler','Flash',
 				"toDateTime":"",
 				"activityId":""
 		};
+		$scope.activityOriginalSearchForm=angular.copy($scope.activityLogsSearchForm);
 		$scope.searchActivityLogs();
 	};
 	
 	$scope.init();
+	
+	$scope.resetExport=function(){
+		$scope.formatType="1";
+		$scope.isSkipMyIp=false;
+	};
 
 }]);
 

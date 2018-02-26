@@ -363,6 +363,12 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		});
 	};
 	
+	this.addPrintActivityLog=function(totalRecords){
+		return requestHandler.postRequest("/Patient/addPrintActivity.json?activityId=3&totalRecords="+totalRecords,"").then(function(response){
+			return response.data;
+		});	
+	};
+	
 	// Check Whether results are selected
 	this.checkResultsSelected=function(searchData){
 		var selected=2;

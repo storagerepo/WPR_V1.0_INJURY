@@ -1353,6 +1353,8 @@ $scope.archivedToDateRequired=false;
 			});
 		}
 		
+		// Add Print Activity
+		searchService.addPrintActivityLog($scope.sendingReportsList.length);
 		
 		var randomnumber = Math.floor((Math.random()*100)+1);
 		window.$windowScope = $scope;

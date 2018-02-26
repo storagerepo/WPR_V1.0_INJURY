@@ -86,9 +86,20 @@
 					</div>
 					<div class="col-md-12">
 						<a class="btn btn-success" ng-click="searchActivityLogs()">Search</a>&nbsp;&nbsp;
-						<a class="btn btn-danger" ng-click="init()">Reset</a>
+						<a class="btn btn-danger" ng-click="init()">Reset</a>&nbsp;&nbsp;
 				</div>
 				</div>
+				<div class="col-md-5ths no-padding">
+				<div class="col-md-12">
+						<label>&nbsp;</label>
+					</div>
+					<div class="col-md-12">
+					<a class="btn btn-primary" ng-click="exportExcelModal()" ng-disabled="isExporting"> 
+					<span ng-show="isExporting"><i
+									class="glyphicon glyphicon-refresh spinning"></i>&nbsp;</span>{{exportButtonText}}</a>
+				</div>
+				</div>
+				
 				</div>
 				</div><br>
 
@@ -263,6 +274,49 @@
       
     </div>
  </div> 
+ 
+ <!-- Export Excel -->
+ <div class="modal fade" id="exportExcelModal" role="dialog"
+	data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<form name="exportExcelModalForm" novalidate>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Export Options</h4>
+				</div>
+				<div class="modal-body modal-min-height-120">
+					<div class="col-md-12">
+						<div class="col-md-4"><label>Report Layout :</label></div> 
+						<div class="col-md-8">
+						<span class="text-center"> <label class="radio-inline"><input
+								type="radio" value="1" name="exportFormat" ng-model="formatType"
+							 />Consolidated</label>
+							&nbsp;&nbsp;&nbsp;&nbsp; <label class="radio-inline"><input
+								type="radio" value="2" name="exportFormat" ng-model="formatType"
+								 />Complete</label>
+						</span><br />
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="col-md-4"><label>Skip My IP :</label> </div>
+						<div class="col-md-8">
+						<input type="checkbox" ng-model="isSkipMyIp">
+					</div>
+					</div> 					
+				</div>
+				<div class="modal-footer">
+					<button type="close" class="btn btn-danger" data-dismiss="modal" ng-click="resetExport()">Cancel</button>
+					<a href="" type="submit" class="btn btn-success"
+						data-dismiss="modal"
+						ng-click="exportExcel()">Export</a>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>
  <script>
  $('#fromDateTime').datetimepicker({
  	format:'MM/DD/YYYY HH:mm:ss',

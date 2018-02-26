@@ -46,6 +46,10 @@ public class InjuryConstants {
 	public static String REPORTING_AGENCY_CODE_SEPARATOR="-";
 	public static String REPORTING_AGENCY_NAME_SEPARATOR="-";
 	
+	// Export Excel Type
+	public static Integer PATIENT_EXPORT=1;
+	public static Integer ACTVITY_LOG_EXPORT=2;
+	
 	// Convert Date To Year Format
 	public static Date convertYearFormat(String date)
 	{   SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");

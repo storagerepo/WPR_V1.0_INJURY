@@ -48,7 +48,7 @@ public class ApplicationSecurityListener implements ApplicationListener<Applicat
 		}else if(event instanceof SessionDestroyedEvent){
 			SessionDestroyedEvent sessionDestroyedEvent = (SessionDestroyedEvent) event;
 			System.out.println("Session Destroyed event Id-->"+sessionDestroyedEvent.getId());
-			ActivityLogsForm activityLogsForm = new ActivityLogsForm(sessionDestroyedEvent.getId(), "", null, "", null, "", 1, "", null, null, "", null, null, InjuryConstants.convertUSAFormatWithTime(new Date()), "", 1);
+			ActivityLogsForm activityLogsForm = new ActivityLogsForm(sessionDestroyedEvent.getId(), "", null, "", null, "", 1, "", null, null, "", null, null, InjuryConstants.convertUSAFormatWithTime(new Date()), null,  "", 1);
 			activityLogsService.updateActivityLogsBySessionId(activityLogsForm);
 		}else if(event instanceof ServletRequestHandledEvent){
 			ServletRequestHandledEvent servletRequestHandledEvent = (ServletRequestHandledEvent) event;

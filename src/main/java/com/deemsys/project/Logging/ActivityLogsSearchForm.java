@@ -14,6 +14,9 @@ public class ActivityLogsSearchForm {
 	private Integer activityId;
 	private Integer pageNumber;
 	private Integer itemsPerPage;
+	private Integer exportFormat;
+	private boolean isSkipMyIp;
+	private String skipMyIpAddress;
 	public Integer getRoleId() {
 		return roleId;
 	}
@@ -68,9 +71,28 @@ public class ActivityLogsSearchForm {
 	public void setItemsPerPage(Integer itemsPerPage) {
 		this.itemsPerPage = itemsPerPage;
 	}
+	public Integer getExportFormat() {
+		return exportFormat;
+	}
+	public void setExportFormat(Integer exportFormat) {
+		this.exportFormat = exportFormat;
+	}
+	public boolean getIsSkipMyIp() {
+		return isSkipMyIp;
+	}
+	public void setIsSkipMyIp(boolean isSkipMyIp) {
+		this.isSkipMyIp = isSkipMyIp;
+	}
+	public String getSkipMyIpAddress() {
+		return skipMyIpAddress;
+	}
+	public void setSkipMyIpAddress(String skipMyIpAddress) {
+		this.skipMyIpAddress = skipMyIpAddress;
+	}
 	public ActivityLogsSearchForm(Integer roleId, String loginId,
 			String primaryLoginId, String ipAddress, String fromDateTime,
-			String toDateTime, Integer activityId, Integer pageNumber, Integer itemsPerPage) {
+			String toDateTime, Integer activityId, Integer pageNumber, Integer itemsPerPage,
+			Integer exportFormat, boolean isSkipMyIp) {
 		super();
 		this.roleId = roleId;
 		this.loginId = loginId;
@@ -81,6 +103,8 @@ public class ActivityLogsSearchForm {
 		this.activityId = activityId;
 		this.pageNumber = pageNumber;
 		this.itemsPerPage = itemsPerPage;
+		this.exportFormat = exportFormat;
+		this.isSkipMyIp = isSkipMyIp;
 	}
 	
 	

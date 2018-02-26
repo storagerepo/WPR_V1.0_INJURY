@@ -20,6 +20,7 @@ public class ActivityLogsId implements java.io.Serializable {
 	private Date accessDate;
 	private String accessInTime;
 	private String accessOutTime;
+	private Integer recordsCount;
 	private String description;
 	private Integer status;
 
@@ -28,8 +29,8 @@ public class ActivityLogsId implements java.io.Serializable {
 
 	public ActivityLogsId(String sessionId, Integer loginId, Integer primaryId,
 			Integer activityId, String ipAddress, Date accessDate,
-			String accessInTime, String accessOutTime, String description,
-			Integer status) {
+			String accessInTime, String accessOutTime, Integer recordsCount, 
+			String description, Integer status) {
 		this.sessionId = sessionId;
 		this.loginId = loginId;
 		this.primaryId = primaryId;
@@ -38,6 +39,7 @@ public class ActivityLogsId implements java.io.Serializable {
 		this.accessDate = accessDate;
 		this.accessInTime = accessInTime;
 		this.accessOutTime = accessOutTime;
+		this.recordsCount = recordsCount;
 		this.description = description;
 		this.status = status;
 	}
@@ -114,6 +116,15 @@ public class ActivityLogsId implements java.io.Serializable {
 		this.accessOutTime = accessOutTime;
 	}
 
+	@Column(name="records_count")
+	public Integer getRecordsCount() {
+		return recordsCount;
+	}
+
+	public void setRecordsCount(Integer recordsCount) {
+		this.recordsCount = recordsCount;
+	}
+
 	@Column(name = "description", length = 60)
 	public String getDescription() {
 		return this.description;
@@ -172,6 +183,10 @@ public class ActivityLogsId implements java.io.Serializable {
 						&& castOther.getAccessOutTime() != null && this
 						.getAccessOutTime()
 						.equals(castOther.getAccessOutTime())))
+				&& ((this.getRecordsCount() == castOther.getRecordsCount()) || (this
+						.getRecordsCount() != null
+						&& castOther.getRecordsCount() != null && this
+						.getRecordsCount().equals(castOther.getRecordsCount())))
 				&& ((this.getDescription() == castOther.getDescription()) || (this
 						.getDescription() != null
 						&& castOther.getDescription() != null && this
@@ -208,6 +223,10 @@ public class ActivityLogsId implements java.io.Serializable {
 				* result
 				+ (getAccessOutTime() == null ? 0 : this.getAccessOutTime()
 						.hashCode());
+		result = 37
+					* result
+					+ (getRecordsCount() == null ? 0 : this.getRecordsCount()
+							.hashCode());
 		result = 37
 				* result
 				+ (getDescription() == null ? 0 : this.getDescription()

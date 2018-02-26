@@ -29,6 +29,7 @@ import com.deemsys.project.Map.ClinicLocationForm;
 import com.deemsys.project.Map.NearByClinicSearchForm;
 import com.deemsys.project.Map.SearchClinicsService;
 import com.deemsys.project.PatientCallerMap.PatientCallerService;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.common.InjuryProperties;
 import com.deemsys.project.exportFields.ExportFieldsService;
 import com.deemsys.project.login.LoginService;
@@ -400,6 +401,7 @@ public class PatientController {
 		PatientSearchResultSet patientSearchResultSet = patientService.getExportPatient(callerPatientSearchForm);
 		System.out.println("total Records--->"+patientSearchResultSet.getTotalNoOfRecords());
 		model.addAttribute("patientSearchResultSet",patientSearchResultSet);
+		model.addAttribute("exportType",InjuryConstants.PATIENT_EXPORT);
 		return "ok";
 		
 	}

@@ -1,5 +1,6 @@
 package com.deemsys.project.Logging;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.ActivityLogs;
 
 /**
@@ -181,6 +183,11 @@ public class ActivityLogsDAOImpl implements ActivityLogsDAO{
 			criteria.add(Restrictions.eq("ac1.id", activityLogsSearchForm.getActivityId()));
 		}
 		
+		// For Export Excel
+		if(activityLogsSearchForm.getIsSkipMyIp()&&!activityLogsSearchForm.getSkipMyIpAddress().equals("")){
+			criteria.add(Restrictions.ne("ia1.id.ipAddress", activityLogsSearchForm.getSkipMyIpAddress()));
+		}
+		
 		Long totalRecords = (Long) criteria.setProjection(Projections.count("a1.id.sessionId")).uniqueResult();
 		
 		ProjectionList projectionList = Projections.projectionList();
@@ -194,13 +201,19 @@ public class ActivityLogsDAOImpl implements ActivityLogsDAO{
 		projectionList.add(Projections.property("u2.username"),"primaryUsername");
 		projectionList.add(Projections.property("u2.userId"),"primaryId");
 		projectionList.add(Projections.property("ia1.id.ipAddress"),"ipAddress");
+		projectionList.add(Projections.property("a1.id.accessDate"),"accessDateMonthFormat");
 		projectionList.add(Projections.property("a1.id.accessInTime"),"accessInTime");
 		projectionList.add(Projections.property("a1.id.accessOutTime"),"accessOutTime");
 		projectionList.add(Projections.property("a1.id.description"),"description");
 		projectionList.add(Projections.property("a1.id.status"),"status");
 		criteria.addOrder(Order.desc("a1.id.accessInTime"));
 		criteria.setProjection(projectionList);
-		List<ActivityLogsForm> activityLogsForms = criteria.setResultTransformer(new AliasToBeanResultTransformer(ActivityLogsForm.class)).setFirstResult((activityLogsSearchForm.getPageNumber()-1)*activityLogsSearchForm.getItemsPerPage()).setMaxResults(activityLogsSearchForm.getItemsPerPage()).list();
+		List<ActivityLogsForm> activityLogsForms = new ArrayList<ActivityLogsForm>();
+		if(activityLogsSearchForm.getExportFormat()!=null&&!activityLogsSearchForm.getExportFormat().equals("")){
+			activityLogsForms = criteria.setResultTransformer(new AliasToBeanResultTransformer(ActivityLogsForm.class)).list();
+		}else{
+			activityLogsForms = criteria.setResultTransformer(new AliasToBeanResultTransformer(ActivityLogsForm.class)).setFirstResult((activityLogsSearchForm.getPageNumber()-1)*activityLogsSearchForm.getItemsPerPage()).setMaxResults(activityLogsSearchForm.getItemsPerPage()).list();
+		}
 		ActivityLogsSearchResult activityLogsSearchResult = new ActivityLogsSearchResult(activityLogsForms, totalRecords);
 		return activityLogsSearchResult;
 	}
@@ -244,6 +257,72 @@ public class ActivityLogsDAOImpl implements ActivityLogsDAO{
 		// TODO Auto-generated method stub
 		List<ActivityLogs> activityLogs = this.sessionFactory.getCurrentSession().createCriteria(ActivityLogs.class).add(Restrictions.and(Restrictions.eq("id.ipAddress", ipAddress),Restrictions.eq("id.accessDate", accessDate))).list();
 		return activityLogs;
+	}
+
+	@Override
+	public List<ActivityExportDataCount> exportActivityLogs(
+			ActivityLogsSearchForm activityLogsSearchForm) {
+		// TODO Auto-generated method stub
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ActivityLogs.class,"a1");
+		
+		criteria.createAlias("a1.usersByLoginId", "u1");
+		criteria.createAlias("u1.roles", "r1");
+		criteria.createAlias("a1.usersByPrimaryId", "u2");
+		criteria.createAlias("u2.roles", "r2");
+		criteria.createAlias("a1.activity", "ac1");
+		criteria.createAlias("a1.ipAccessList", "ia1");
+		criteria.createAlias("ia1.ipAddress", "ip1");
+		if(activityLogsSearchForm.getRoleId()!=null&&!activityLogsSearchForm.getRoleId().equals("")){
+			criteria.add(Restrictions.eq("r1.roleId", activityLogsSearchForm.getRoleId()));
+		}
+		
+		if(activityLogsSearchForm.getLoginId()!=null&&!activityLogsSearchForm.getLoginId().equals("")){
+			criteria.add(Restrictions.like("u1.username", activityLogsSearchForm.getLoginId(),MatchMode.ANYWHERE));
+		}
+		
+		if(activityLogsSearchForm.getPrimaryLoginId()!=null&&!activityLogsSearchForm.getPrimaryLoginId().equals("")){
+			criteria.add(Restrictions.like("u2.username", activityLogsSearchForm.getPrimaryLoginId(),MatchMode.ANYWHERE));
+		}
+		
+		if(activityLogsSearchForm.getIpAddress()!=null&&!activityLogsSearchForm.getIpAddress().equals("")){
+			criteria.add(Restrictions.like("ia1.id.ipAddress", activityLogsSearchForm.getIpAddress(),MatchMode.ANYWHERE));
+		}
+		
+		if(activityLogsSearchForm.getFromDateTime()!=null&&!activityLogsSearchForm.getFromDateTime().equals("")&&!activityLogsSearchForm.getToDateTime().equals("")){
+			criteria.add(Restrictions.between("a1.id.accessInTime", activityLogsSearchForm.getFromDateTime(), activityLogsSearchForm.getToDateTime()));
+		}
+		
+		if(activityLogsSearchForm.getActivityId()!=null&&!activityLogsSearchForm.getActivityId().equals("")){
+			criteria.add(Restrictions.eq("ac1.id", activityLogsSearchForm.getActivityId()));
+		}
+		
+		if(activityLogsSearchForm.getIsSkipMyIp()&&activityLogsSearchForm.getSkipMyIpAddress()!=null){
+			criteria.add(Restrictions.ne("ia1.id.ipAddress", activityLogsSearchForm.getSkipMyIpAddress()));
+		}
+		
+		ProjectionList projectionList = Projections.projectionList();
+	
+		projectionList.add(Projections.property("ac1.name"),"activity");
+		projectionList.add(Projections.property("ac1.id"),"activityId");
+		projectionList.add(Projections.property("a1.id.accessDate"),"accessDate");
+		projectionList.add(Projections.property("u2.username"),"username");
+		projectionList.add(Projections.property("a1.id.ipAddress"),"ipAddress");
+		projectionList.add(Projections.property("ip1.city"),"ipCity");
+		projectionList.add(Projections.property("ip1.region"),"ipRegion");
+		projectionList.add(Projections.property("ip1.countryName"),"ipCountry");
+		projectionList.add(Projections.count("a1.id.activityId"),"accessCount");
+		projectionList.add(Projections.sum("a1.id.recordsCount"),"noOfRecordsExported");
+		projectionList.add(Projections.groupProperty("a1.id.activityId"));
+		projectionList.add(Projections.groupProperty("a1.id.ipAddress"));
+		projectionList.add(Projections.groupProperty("a1.id.accessDate"));
+		projectionList.add(Projections.groupProperty("u2.userId"));
+		criteria.addOrder(Order.asc("u2.userId"));
+		//criteria.addOrder(Order.asc("a1.id.activityId"));
+		criteria.addOrder(Order.desc("a1.id.accessDate"));
+		criteria.setProjection(projectionList);
+		List<ActivityExportDataCount> activityExportDataCounts = criteria.setResultTransformer(new AliasToBeanResultTransformer(ActivityExportDataCount.class)).list();
+		
+		return activityExportDataCounts;
 	}
 
 

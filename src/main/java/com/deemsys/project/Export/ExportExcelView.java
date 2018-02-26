@@ -1,5 +1,6 @@
 package com.deemsys.project.Export;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -16,13 +17,19 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.deemsys.project.Logging.ActivityDataCount;
+import com.deemsys.project.Logging.ActivityDate;
+import com.deemsys.project.Logging.ActivityExportData;
+import com.deemsys.project.Logging.ActivityIPAddress;
 import com.deemsys.project.Logging.ActivityLogsForm;
+import com.deemsys.project.Logging.ActivityLogsSearchResult;
 import com.deemsys.project.Logging.ActivityLogsService;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.exportFields.ExportFieldsForm;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.patient.PatientSearchList;
 import com.deemsys.project.patient.PatientSearchResultSet;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 public class ExportExcelView extends AbstractExcelView {
 
@@ -41,148 +48,280 @@ public class ExportExcelView extends AbstractExcelView {
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		
-		PatientSearchResultSet patientSearchResultSet=(PatientSearchResultSet)model.get("patientSearchResultSet");
-		System.out.println("Export Excel Total Records--->"+patientSearchResultSet.getPatientSearchLists().size());
-		System.out.println("Session Id---->>"+request.getSession().getId());
-		// Activity Of Export Excel
-		Integer activityId=2;
-		ActivityLogsForm activityLogsForm = new ActivityLogsForm(request.getSession().getId(), "", null, loginService.getCurrentUsername(), null, "", activityId, "", null, InjuryConstants.getRemoteAddr(request), "", InjuryConstants.convertMonthFormat(new Date()), InjuryConstants.convertUSAFormatWithTime(new Date()), "", patientSearchResultSet.getPatientSearchLists().size()+" Records Exported", 1);
-		activityLogsService.saveActivityLogs(activityLogsForm);
-		List<PatientSearchList> patientSearchLists=patientSearchResultSet.getPatientSearchLists();
-		@SuppressWarnings("unchecked")
-		List<ExportFieldsForm> exportFieldsForms = (List<ExportFieldsForm>) model.get("userExportPrefenceHeaders");
-		Sheet sheet = workbook.createSheet("Patients List");
-		
-		/*//Header List
-		List<String> headers=new ArrayList<String>();
-		if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
-			headers.add("FIRST NAME LAST NAME");
-			headers.add("STREET ADDRESS");
-			headers.add("CITY");
-			headers.add("STATE");
-			headers.add("ZIP");
-		}
-		
-		headers.add("LOCAL REPORT NUMBER");
-		headers.add("CRASH SEVERITY");
-		headers.add("REPORTING AGENCY NAME");
-		headers.add("NUMBER OF UNITS");
-		headers.add("UNIT IN ERROR");
-		headers.add("COUNTY");
-		headers.add("CITY VILLAGE TOWNSHIP");
-		headers.add("CRASH DATE");
-		headers.add("TIME OF CRASH");
-		headers.add("UNIT NUMBER");
-		
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
-			headers.add("NAME:LAST FIRST MIDDLE");
-		}
-		
-		headers.add("DATE OF BIRTH");
-		headers.add("AGE");
-		headers.add("GENDER");
-		
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
-			headers.add("ADDRESS CITY STATE ZIP");
-		}
-		
-		headers.add("CONTACT PHONE - INCLUDE AREA CODE");
-		headers.add("INJURIES");
-		headers.add("EMS AGENCY");
-		headers.add("MEDICAL FACILITY");
-		headers.add("ATFAULT INSURANCE COMPANY");
-		headers.add("ATFAULT POLICY NUMBER");
-		headers.add("VICTIM INSURANCE COMPANY");
-		headers.add("VICTIM POLICY NUMBER");
-		headers.add("TIER");*/
-		
-		Row row = null;
-		Cell cell = null;
-		int r = 0;
-		int c = 0;
-		
-		//Style for header cell
-		CellStyle style = workbook.createCellStyle();
-		style.setFillForegroundColor(IndexedColors.DARK_BLUE.index);
-		
-		Font font=workbook.createFont();
-		font.setColor(IndexedColors.WHITE.index);
-		
-		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
-		style.setAlignment(CellStyle.ALIGN_CENTER);
-		style.setFont(font);
-		
-		//Create header cells
-		row = sheet.createRow(r++);
-		
-		for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
-			cell = row.createCell(c++);
-			cell.setCellStyle(style);
-			if(exportFieldsForm.getFieldId()==12){
-				if(exportFieldsForm.getFormat()==1){
-					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": FIRST LAST");
-				}else if(exportFieldsForm.getFormat()==2){
-					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": FIRST MIDDLE LAST");
-				}else if(exportFieldsForm.getFormat()==3){
-					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": LAST FIRST");
-				}else{
-					exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": LAST FIRST MIDDLE");
+		Integer exportType=(Integer) model.get("exportType");
+		if(exportType==InjuryConstants.PATIENT_EXPORT){
+			PatientSearchResultSet patientSearchResultSet=(PatientSearchResultSet)model.get("patientSearchResultSet");
+			System.out.println("Export Excel Total Records--->"+patientSearchResultSet.getPatientSearchLists().size());
+			System.out.println("Session Id---->>"+request.getSession().getId());
+			// Activity Of Export Excel
+			Integer activityId=2;
+			ActivityLogsForm activityLogsForm = new ActivityLogsForm(request.getSession().getId(), "", null, loginService.getCurrentUsername(), null, "", activityId, "", null, InjuryConstants.getRemoteAddr(request), "", InjuryConstants.convertMonthFormat(new Date()), InjuryConstants.convertUSAFormatWithTime(new Date()), "", patientSearchResultSet.getPatientSearchLists().size(), patientSearchResultSet.getPatientSearchLists().size()+" Records Exported", 1);
+			activityLogsService.saveActivityLogs(activityLogsForm);
+			List<PatientSearchList> patientSearchLists=patientSearchResultSet.getPatientSearchLists();
+			@SuppressWarnings("unchecked")
+			List<ExportFieldsForm> exportFieldsForms = (List<ExportFieldsForm>) model.get("userExportPrefenceHeaders");
+			Sheet sheet = workbook.createSheet("Patients List");
+			
+			/*//Header List
+			List<String> headers=new ArrayList<String>();
+			if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+				headers.add("FIRST NAME LAST NAME");
+				headers.add("STREET ADDRESS");
+				headers.add("CITY");
+				headers.add("STATE");
+				headers.add("ZIP");
+			}
+			
+			headers.add("LOCAL REPORT NUMBER");
+			headers.add("CRASH SEVERITY");
+			headers.add("REPORTING AGENCY NAME");
+			headers.add("NUMBER OF UNITS");
+			headers.add("UNIT IN ERROR");
+			headers.add("COUNTY");
+			headers.add("CITY VILLAGE TOWNSHIP");
+			headers.add("CRASH DATE");
+			headers.add("TIME OF CRASH");
+			headers.add("UNIT NUMBER");
+			
+			if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+				headers.add("NAME:LAST FIRST MIDDLE");
+			}
+			
+			headers.add("DATE OF BIRTH");
+			headers.add("AGE");
+			headers.add("GENDER");
+			
+			if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
+				headers.add("ADDRESS CITY STATE ZIP");
+			}
+			
+			headers.add("CONTACT PHONE - INCLUDE AREA CODE");
+			headers.add("INJURIES");
+			headers.add("EMS AGENCY");
+			headers.add("MEDICAL FACILITY");
+			headers.add("ATFAULT INSURANCE COMPANY");
+			headers.add("ATFAULT POLICY NUMBER");
+			headers.add("VICTIM INSURANCE COMPANY");
+			headers.add("VICTIM POLICY NUMBER");
+			headers.add("TIER");*/
+			
+			Row row = null;
+			Cell cell = null;
+			int r = 0;
+			int c = 0;
+			
+			//Style for header cell
+			CellStyle style = workbook.createCellStyle();
+			style.setFillForegroundColor(IndexedColors.DARK_BLUE.index);
+			
+			Font font=workbook.createFont();
+			font.setColor(IndexedColors.WHITE.index);
+			
+			style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+			style.setAlignment(CellStyle.ALIGN_CENTER);
+			style.setFont(font);
+			
+			//Create header cells
+			row = sheet.createRow(r++);
+			
+			for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
+				cell = row.createCell(c++);
+				cell.setCellStyle(style);
+				if(exportFieldsForm.getFieldId()==12){
+					if(exportFieldsForm.getFormat()==1){
+						exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": FIRST LAST");
+					}else if(exportFieldsForm.getFormat()==2){
+						exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": FIRST MIDDLE LAST");
+					}else if(exportFieldsForm.getFormat()==3){
+						exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": LAST FIRST");
+					}else{
+						exportFieldsForm.setFieldName(exportFieldsForm.getFieldName()+": LAST FIRST MIDDLE");
+					}
+					
+				}
+				cell.setCellValue(exportFieldsForm.getFieldName());
+			}
+			
+			for(int i = 0 ; i < exportFieldsForms.size(); i++)
+			  sheet.autoSizeColumn(i, true);
+			
+			//Create data cell
+			for(PatientSearchList patient:patientSearchLists){
+				
+				row = sheet.createRow(r++);
+				c = 0;
+				for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
+					String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue(),exportFieldsForm.getFormat());
+					row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
 				}
 				
-			}
-			cell.setCellValue(exportFieldsForm.getFieldName());
-		}
-		
-		for(int i = 0 ; i < exportFieldsForms.size(); i++)
-		  sheet.autoSizeColumn(i, true);
-		
-		//Create data cell
-		for(PatientSearchList patient:patientSearchLists){
-			
-			row = sheet.createRow(r++);
-			c = 0;
-			for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
-				String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue(),exportFieldsForm.getFormat());
-				row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
-			}
-			
-		/*	if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+			/*	if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
 
-			String[] address=this.splitAddress(patient.getAddress());
+				String[] address=this.splitAddress(patient.getAddress());
+				
+				row.createCell(c++).setCellValue(this.changeNameFormat(patient.getName()));
+				row.createCell(c++).setCellValue(address[0]);
+				row.createCell(c++).setCellValue(address[1]);
+				row.createCell(c++).setCellValue(address[2]);
+				row.createCell(c++).setCellValue(address[3]);
+				}
+				row.createCell(c++).setCellValue(patient.getLocalReportNumber());
+				row.createCell(c++).setCellValue(patient.getCrashSeverity());
+				row.createCell(c++).setCellValue(patient.getReportingAgencyName());
+				row.createCell(c++).setCellValue(patient.getNumberOfUnits());
+				row.createCell(c++).setCellValue(patient.getUnitInError());
+				row.createCell(c++).setCellValue(patient.getCounty());
+				row.createCell(c++).setCellValue(patient.getCityVillageTownship());
+				row.createCell(c++).setCellValue(patient.getCrashDate());
+				row.createCell(c++).setCellValue(patient.getTimeOfCrash());
+				row.createCell(c++).setCellValue(patient.getUnitNumber());
+				row.createCell(c++).setCellValue(patient.getName());
+				row.createCell(c++).setCellValue(patient.getDateOfBirth());
+				row.createCell(c++).setCellValue(age);
+				row.createCell(c++).setCellValue(patient.getGender());
+				row.createCell(c++).setCellValue(patient.getAddress());
+				row.createCell(c++).setCellValue(patient.getPhoneNumber());
+				row.createCell(c++).setCellValue(patient.getInjuries());
+				row.createCell(c++).setCellValue(patient.getEmsAgency());
+				row.createCell(c++).setCellValue(patient.getMedicalFacility());
+				row.createCell(c++).setCellValue(patient.getAtFaultInsuranceCompany());
+				row.createCell(c++).setCellValue(patient.getAtFaultPolicyNumber());
+				row.createCell(c++).setCellValue(patient.getVictimInsuranceCompany());
+				row.createCell(c++).setCellValue(patient.getVictimPolicyNumber());
+				row.createCell(c++).setCellValue("Tier "+patient.getTier());
+				*/
+				
 			
-			row.createCell(c++).setCellValue(this.changeNameFormat(patient.getName()));
-			row.createCell(c++).setCellValue(address[0]);
-			row.createCell(c++).setCellValue(address[1]);
-			row.createCell(c++).setCellValue(address[2]);
-			row.createCell(c++).setCellValue(address[3]);
 			}
-			row.createCell(c++).setCellValue(patient.getLocalReportNumber());
-			row.createCell(c++).setCellValue(patient.getCrashSeverity());
-			row.createCell(c++).setCellValue(patient.getReportingAgencyName());
-			row.createCell(c++).setCellValue(patient.getNumberOfUnits());
-			row.createCell(c++).setCellValue(patient.getUnitInError());
-			row.createCell(c++).setCellValue(patient.getCounty());
-			row.createCell(c++).setCellValue(patient.getCityVillageTownship());
-			row.createCell(c++).setCellValue(patient.getCrashDate());
-			row.createCell(c++).setCellValue(patient.getTimeOfCrash());
-			row.createCell(c++).setCellValue(patient.getUnitNumber());
-			row.createCell(c++).setCellValue(patient.getName());
-			row.createCell(c++).setCellValue(patient.getDateOfBirth());
-			row.createCell(c++).setCellValue(age);
-			row.createCell(c++).setCellValue(patient.getGender());
-			row.createCell(c++).setCellValue(patient.getAddress());
-			row.createCell(c++).setCellValue(patient.getPhoneNumber());
-			row.createCell(c++).setCellValue(patient.getInjuries());
-			row.createCell(c++).setCellValue(patient.getEmsAgency());
-			row.createCell(c++).setCellValue(patient.getMedicalFacility());
-			row.createCell(c++).setCellValue(patient.getAtFaultInsuranceCompany());
-			row.createCell(c++).setCellValue(patient.getAtFaultPolicyNumber());
-			row.createCell(c++).setCellValue(patient.getVictimInsuranceCompany());
-			row.createCell(c++).setCellValue(patient.getVictimPolicyNumber());
-			row.createCell(c++).setCellValue("Tier "+patient.getTier());
-			*/
 			
-		
+		}else if(exportType==InjuryConstants.ACTVITY_LOG_EXPORT){
+			Integer exportFormat=(Integer) model.get("exportFormat");
+			if(exportFormat==1){
+				@SuppressWarnings("unchecked")
+				List<ActivityExportData> activityExportDatas = (List<ActivityExportData>) model.get("activityLogsForms");
+				Sheet sheet = workbook.createSheet("Consolidated Activity Logs");
+				
+				Row row = null;
+				Cell cell = null;
+				int r =0;
+				int c =0;
+				// Header Style 
+				CellStyle style = workbook.createCellStyle();
+				style.setFillForegroundColor(IndexedColors.DARK_BLUE.index);
+				
+				Font font=workbook.createFont();
+				font.setColor(IndexedColors.WHITE.index);
+				
+				style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+				style.setAlignment(CellStyle.ALIGN_CENTER);
+				style.setFont(font);
+				// Header Row
+				row=sheet.createRow(r++);
+				List<String> consolidatedHeader=new ArrayList<String>();
+				consolidatedHeader.add("Username");consolidatedHeader.add("Date");consolidatedHeader.add("IP Address");
+				consolidatedHeader.add("City");consolidatedHeader.add("Region");consolidatedHeader.add("Country");
+				consolidatedHeader.add("Activity");consolidatedHeader.add("No.of Times");consolidatedHeader.add("Total Records");
+				for (String header : consolidatedHeader) {
+					cell=row.createCell(c++);
+					cell.setCellStyle(style);
+					cell.setCellValue(header);
+				}
+				
+				for (int i = 0; i < consolidatedHeader.size(); i++) {
+					sheet.setColumnWidth(i,4000);
+					//sheet.autoSizeColumn(i,true);
+				}
+				
+				boolean isUserName=false,isActivityDate=false,isActivityIpAddress=false;
+				for (ActivityExportData activityExportData : activityExportDatas) {
+					c=0;
+					row=sheet.createRow(r++);
+					cell=row.createCell(c++);
+					cell.setCellValue(activityExportData.getUsername());
+					isUserName=true;
+					for (ActivityDate activityDate : activityExportData.getActivityDates()) {
+						isActivityDate=true;
+						if(!isUserName){
+							c=1;
+							row=sheet.createRow(r++);
+						}
+						cell=row.createCell(c++);
+						cell.setCellValue(activityDate.getAccessDate());
+						for (ActivityIPAddress activityIPAddress : activityDate.getActivityIPAddresses()) {
+							isActivityIpAddress=true;
+							if(!isActivityDate){
+								c=2;
+								row=sheet.createRow(r++);
+							}
+							// Set the Value to 
+							row.createCell(c++).setCellValue(activityIPAddress.getIpAddress());
+							row.createCell(c++).setCellValue(activityIPAddress.getIpCity());
+							row.createCell(c++).setCellValue(activityIPAddress.getIpRegion());
+							row.createCell(c++).setCellValue(activityIPAddress.getIpCountry());
+							for (ActivityDataCount activityDataCount : activityIPAddress.getActivityDataCounts()) {
+								if(!isActivityIpAddress){
+									c=6;
+									row=sheet.createRow(r++);
+								}
+								row.createCell(c++).setCellValue(activityDataCount.getActivity());
+								row.createCell(c++).setCellValue(activityDataCount.getAccessCount());
+								row.createCell(c++).setCellValue(activityDataCount.getNoOfRecordsExported()==null?0:activityDataCount.getNoOfRecordsExported());
+								isActivityIpAddress=false;
+							}
+							isActivityDate=false;
+						}
+						isUserName=false;
+					}
+					
+				}
+			}else if(exportFormat==2){
+				ActivityLogsSearchResult activityLogsSearchResult = (ActivityLogsSearchResult) model.get("activityLogsForms");
+				Sheet sheet = workbook.createSheet("Complete Activity Logs");
+				Row row = null;
+				Cell cell = null;
+				int r =0;
+				int c =0;
+				// Header Style 
+				CellStyle style = workbook.createCellStyle();
+				style.setFillForegroundColor(IndexedColors.DARK_BLUE.index);
+				
+				Font font=workbook.createFont();
+				font.setColor(IndexedColors.WHITE.index);
+				
+				style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+				style.setAlignment(CellStyle.ALIGN_CENTER);
+				style.setFont(font);
+				// Header Row
+				row=sheet.createRow(r++);
+				List<String> completeLogHeader=new ArrayList<String>();
+				completeLogHeader.add("Username");completeLogHeader.add("Activity");completeLogHeader.add("IP Address");
+				completeLogHeader.add("Date");completeLogHeader.add("Start Time");completeLogHeader.add("End Time");
+				completeLogHeader.add("Total Report Exported");
+				for (String header : completeLogHeader) {
+					cell=row.createCell(c++);
+					cell.setCellStyle(style);
+					cell.setCellValue(header);
+				}
+				
+				for (int i = 0; i < completeLogHeader.size(); i++) {
+					sheet.setColumnWidth(i,4000);
+				}
+				
+				for (ActivityLogsForm activityLogsForm  : activityLogsSearchResult.getActivityLogsForms()) {
+					row = sheet.createRow(r++);
+					c = 0;
+					row.createCell(c++).setCellValue(activityLogsForm.getLoginUsername());
+					row.createCell(c++).setCellValue(activityLogsForm.getActivity());
+					row.createCell(c++).setCellValue(activityLogsForm.getIpAddress());
+					row.createCell(c++).setCellValue(activityLogsForm.getAccessDateMonthFormat());
+					row.createCell(c++).setCellValue(activityLogsForm.getAccessInTime());
+					row.createCell(c++).setCellValue(activityLogsForm.getAccessOutTime());
+					row.createCell(c++).setCellValue(activityLogsForm.getRecordsCount()!=null?activityLogsForm.getRecordsCount():0);
+					/*for (String header : completeLogHeader) {
+						row.createCell(c++).setCellValue(this.getCellValueForCompleteActivityLog(header, activityLogsForm));
+					}*/
+				}
+			}
 		}
 		
 		
@@ -599,6 +738,39 @@ public class ExportExcelView extends AbstractExcelView {
   		}
 	  	
 	}
+	
+	// Get Cell Value For Complete Activity Log
+	/*public String getCellValueForCompleteActivityLog(String header,ActivityLogsForm activityLogsForm){
+		String cellValue="";
+		switch (header) {
+		case "Username":
+			cellValue=activityLogsForm.getLoginUsername();
+			break;
+		case "Activity":
+			cellValue=activityLogsForm.getActivity();
+			break;
+		case "IP Address":
+			cellValue=activityLogsForm.getIpAddress();
+			break;
+		case "Date":
+			cellValue=activityLogsForm.getAccessDate();
+			break;
+		case "Start Time":
+			cellValue=activityLogsForm.getAccessInTime();
+			break;
+		case "End Time":
+			cellValue=activityLogsForm.getAccessOutTime();
+			break;
+		case "Total Report Exported":
+			if(activityLogsForm.getRecordsCount()!=null){
+				cellValue=activityLogsForm.getRecordsCount().toString();
+			}
+			break;
+		default:
+			break;
+		}
+		return cellValue;
+	}*/
 }
 
 
