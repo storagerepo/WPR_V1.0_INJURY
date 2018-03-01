@@ -147,9 +147,9 @@ public class ActivityLogsService {
 		return activityLogsDAO.searchActivityLogs(activityLogsSearchForm);
 	}
 
-	public void deleteActivityLogs(Integer id) {
+	public void deleteActivityLogsByDate(Date addedDate) {
 		// TODO Auto-generated method stub
-		
+		activityLogsDAO.deleteActivityLogsByDate(addedDate);
 	}
 
 	// Activity Logs By Session Id

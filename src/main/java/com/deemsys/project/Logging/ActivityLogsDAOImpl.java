@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -323,6 +325,15 @@ public class ActivityLogsDAOImpl implements ActivityLogsDAO{
 		List<ActivityExportDataCount> activityExportDataCounts = criteria.setResultTransformer(new AliasToBeanResultTransformer(ActivityExportDataCount.class)).list();
 		
 		return activityExportDataCounts;
+	}
+
+	@Override
+	public void deleteActivityLogsByDate(Date addedDate) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createSQLQuery("CALL start_purge_activity_logs(:oldDate)");
+		query.setParameter("oldDate", addedDate);
+		query.executeUpdate();
 	}
 
 

@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.deemsys.project.CrashReport.CrashReportService;
+import com.deemsys.project.Logging.ActivityLogsService;
 import com.deemsys.project.Map.SearchClinicsService;
 import com.deemsys.project.PoliceAgency.PoliceAgencyForm;
 import com.deemsys.project.PoliceAgency.PoliceAgencyService;
@@ -48,6 +49,9 @@ public class SchedulerService {
 	
 	@Autowired
 	SearchClinicsService searchClinicsService;
+	
+	@Autowired
+	ActivityLogsService activityLogsService;
 	
 	/**
 	 * You can opt for cron expression or fixedRate or fixedDelay
@@ -131,6 +135,24 @@ public class SchedulerService {
 					System.out.println("Map Search Result Auto Delete Off");
 				}
 				System.out.println("Map Search Result Delete End");
+				
+				// Actvity Logs Delete
+				System.out.println("Activity Logs Delete Start");
+				if(injuryProperties.getProperty("activityLogsDelete").equals("on")){
+					System.out.println("Activity Logs Auto Delete On");
+					if(currentTime==Integer.parseInt(injuryProperties.getProperty("activityLogsDeleteTime"))){
+						System.out.println("Activity Logs Delete Start.....");
+						LocalDate localDate1=new LocalDate().minusMonths(Integer.parseInt(injuryProperties.getProperty("activityLogsMonthBefore")));
+						//String date=localDate1.toString("yyyy-MM-dd");
+						String date="2018-01-23";
+						Date oldDate = new DateTime(date).plusDays(1).minusSeconds(1).toDate();
+						activityLogsService.deleteActivityLogsByDate(oldDate);
+						System.out.println("Activity Logs Delete End.....");
+					}
+				}else{
+					System.out.println("Activity Logs Auto Delete Off");
+				}
+				System.out.println("Activity Logs Delete End");
 				
 			}
 			catch(Exception ex)

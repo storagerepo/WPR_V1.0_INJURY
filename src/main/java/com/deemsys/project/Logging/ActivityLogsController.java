@@ -52,16 +52,6 @@ public class ActivityLogsController {
    		return "/returnPage";
    	}
    
-    
-    @RequestMapping(value="/Admin/deleteActivityLogs",method=RequestMethod.POST)
-   	public String deleteActivityLogs(@RequestParam("id") Integer id,ModelMap model)
-   	{
-    	
-    	activityLogsService.deleteActivityLogs(id);
-    	model.addAttribute("requestSuccess",true);
-   		return "/returnPage";
-   	}
-    
     @RequestMapping(value="/Admin/searchActivityLogs",method=RequestMethod.POST)
    	public String getAllActivityLogss(@RequestBody ActivityLogsSearchForm activityLogsSearchForm,ModelMap model)
    	{
