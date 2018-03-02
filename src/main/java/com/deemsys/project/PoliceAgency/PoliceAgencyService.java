@@ -100,7 +100,7 @@ public class PoliceAgencyService {
 	
 		Integer mapId=policeAgencyDAO.getMaximumMapId(policeAgencyForm.getSchedulerType());
 		//Logic Ends
-		PoliceAgency policeAgency=new PoliceAgency(mapId,countyDAO.get(policeAgencyForm.getCountyId()),policeAgencyForm.getAgencyId(), policeAgencyForm.getName(),policeAgencyForm.getSchedulerType(), 3,  null, 1, policeAgencyForm.getAgencyUrl(), null);
+		PoliceAgency policeAgency=new PoliceAgency(mapId,countyDAO.get(policeAgencyForm.getCountyId()),policeAgencyForm.getAgencyId(), policeAgencyForm.getName(),policeAgencyForm.getSchedulerType(), 3,  new Date(), 1, policeAgencyForm.getAgencyUrl(), null);
 		policeAgencyDAO.save(policeAgency);
 		return null;
 	}
@@ -120,7 +120,7 @@ public class PoliceAgencyService {
 			//List<CrashReport> crashReports=new ArrayList<CrashReport>();
 			Integer mapId=policeAgencyDAO.getMaximumMapId(policeAgencyForm.getSchedulerType());
 			
-			PoliceAgency policeAgency2=new PoliceAgency(mapId,countyDAO.get(policeAgencyForm.getCountyId()) ,policeAgencyForm.getAgencyId(),policeAgencyForm.getName(),policeAgencyForm.getSchedulerType(),policeAgencyForm.getStatus(), null, 1, policeAgencyForm.getAgencyUrl(), null);
+			PoliceAgency policeAgency2=new PoliceAgency(mapId,countyDAO.get(policeAgencyForm.getCountyId()) ,policeAgencyForm.getAgencyId(),policeAgencyForm.getName(),policeAgencyForm.getSchedulerType(),policeAgencyForm.getStatus(), new Date(), 1, policeAgencyForm.getAgencyUrl(), null);
 			
 			policeAgencyDAO.save(policeAgency2);
 			
@@ -203,15 +203,17 @@ public class PoliceAgencyService {
 	}
 	
 	public void updateStatusOfReports(){
-		List<PoliceAgency> policeAgencies = policeAgencyDAO.getActiveList();
+		List<PoliceAgency> policeAgencies = policeAgencyDAO.getAll();
 		Date previousDate = new LocalDate().minusDays(Integer.parseInt(injuryProperties.getProperty("checkingNumberOfDaysBefore"))).toDate();
 		System.out.println("Previous Date--->"+previousDate);
 		for (PoliceAgency policeAgency : policeAgencies) {
 			if(policeAgency.getLastUpdatedDate().compareTo(previousDate)<0){
 				System.out.println("Previous than old date... So update the status");
 				policeAgency.setReportStatus(0);
-				policeAgencyDAO.update(policeAgency);
+			}else{
+				policeAgency.setReportStatus(1);
 			}
+			policeAgencyDAO.update(policeAgency);
 		}
 	}
 	

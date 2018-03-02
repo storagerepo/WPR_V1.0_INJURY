@@ -441,6 +441,11 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 	
 	$scope.assignDealerPopup=function(){
 		$scope.single= false;
+		if($rootScope.isAdmin==6){
+			$scope.optionText="-- Select Dealer --";
+		}else if($rootScope.isAdmin==8){
+			$scope.optionText="-- Select Shop --";
+		}
 		$("#assignDealerModal").modal('show');
 	};
 	

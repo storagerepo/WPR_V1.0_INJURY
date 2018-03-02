@@ -143,8 +143,7 @@ public class SchedulerService {
 					if(currentTime==Integer.parseInt(injuryProperties.getProperty("activityLogsDeleteTime"))){
 						System.out.println("Activity Logs Delete Start.....");
 						LocalDate localDate1=new LocalDate().minusMonths(Integer.parseInt(injuryProperties.getProperty("activityLogsMonthBefore")));
-						//String date=localDate1.toString("yyyy-MM-dd");
-						String date="2018-01-23";
+						String date=localDate1.toString("yyyy-MM-dd");
 						Date oldDate = new DateTime(date).plusDays(1).minusSeconds(1).toDate();
 						activityLogsService.deleteActivityLogsByDate(oldDate);
 						System.out.println("Activity Logs Delete End.....");

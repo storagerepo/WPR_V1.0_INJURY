@@ -614,14 +614,14 @@
 					<form name="myForm" novalidate>
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Assign Dealer</h4>
+							<h4 class="modal-title"><span ng-show="$root.isAdmin==6">Assign Dealer</span><span ng-show="$root.isAdmin==8">Assign Shop</span></h4>
 						</div>
 						<div class="modal-body">
 							<span ng-show="single"> <label>Name</label>&nbsp;&nbsp;<span>{{patientname}}</span>
 								<br /> <br />
-							</span> <label>Choose Dealer</label> <select class="form-control"
+							</span> <label ng-show="$root.isAdmin==6">Choose Dealer</label><label ng-show="$root.isAdmin==8">Choose Shop</label> <select class="form-control"
 								ng-model="myForm.dealerId" required>
-								<option value="">--Select Dealer--</option>
+								<option value="">{{optionText}}</option>
 								<option ng-repeat="dealer in dealerList" ng-if="dealer.status==1"
 									value="{{dealer.callerId}}"
 									ng-selected="{{dealer.callerId === autoDealerData.callerId}}">{{dealer.firstName}}
