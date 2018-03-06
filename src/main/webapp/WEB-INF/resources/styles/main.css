@@ -1072,6 +1072,13 @@ ul.rating {
     float:left;
 }
 
+.custom-alignment-seating-position-s{
+    margin-top: -79px;
+    margin-left: 21%;
+    width: 18%;
+    float: left;
+}
+
 #squaresWaveG{
 	position:relative;
 	width:40px;

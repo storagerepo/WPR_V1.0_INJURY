@@ -2157,7 +2157,7 @@ sbAdminApp.directive('validateIpAddress', function(){
 				}else{
 					return ipRegex.test(modelValue);
 				}
-			}
+			};
 		}
 	};
 });

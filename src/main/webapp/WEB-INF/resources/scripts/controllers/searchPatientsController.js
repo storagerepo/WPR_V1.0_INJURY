@@ -18,13 +18,15 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		//Initialize DropDown
 		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"}, {id: 5, label: "Undetermined"},{id: 0, label: "Others"}];
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
-		
+		$scope.defaultSeatingPosition=[{id:1, label:"Drivers"},{id:2, label:"Passengers"},{id:99, label:"Unknown"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
+		$scope.defaultTypeofUse=[{id:1, label: "1 - Personal"},{id:2, label: "2 - Commercial"},{id:3, label: "3 - Government"},{id:0, label: "Unknown"}];
 		$scope.patient={};
 		$scope.patient.countyId=[{"id":1},{"id":2},{"id":3},{"id":4},{"id":5},{"id":6},{"id":7},{"id":8},{"id":9},{"id":10},{"id":11},{"id":12},{"id":13},{"id":14},{"id":15},{"id":16},{"id":17},{"id":18},{"id":19},{"id":20},{"id":21},{"id":22},{"id":23},{"id":24},{"id":25},{"id":26},{"id":27},{"id":28},{"id":29},{"id":30},{"id":31},{"id":32},{"id":33},{"id":34},{"id":35},{"id":36},{"id":37},{"id":38},{"id":39},{"id":40},{"id":41},{"id":42},{"id":43},{"id":44},{"id":45},{"id":46},{"id":47},{"id":48},{"id":49},{"id":50},{"id":51},{"id":52},{"id":53},{"id":54},{"id":55},{"id":56},{"id":57},{"id":58},{"id":59},{"id":60},{"id":61},{"id":62},{"id":63},{"id":64},{"id":65},{"id":66},{"id":67},{"id":68},{"id":69},{"id":70},{"id":71},{"id":72},{"id":73},{"id":74},{"id":75},{"id":76},{"id":77},{"id":78},{"id":79},{"id":80},{"id":81},{"id":82},{"id":83},{"id":84},{"id":85},{"id":86},{"id":87},{"id":88}];
 		$scope.patient.tier=[{id:1},{id:2},{id:3},{id:4},{id:5},{id:0}];
 		$scope.patient.damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
-		
+		$scope.patient.typeOfUse=[{id:1},{id:2},{id:3},{id:0}];
+		$scope.patient.seatingPosition=[{id:1},{id:2},{id:99}];
 		//Reporting Agency
 		$scope.patient.reportingAgency=[];
 		$scope.reportingAgencyLoaded=false;
@@ -34,7 +36,7 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$scope.patient.crashToDate="";
 		$scope.patient.localReportNumber="";
 		$scope.patient.patientName="";
-		$scope.patient.age=[{id:1},{id:2},{id:4}],
+		$scope.patient.age=[{id:1},{id:2},{id:4}];
 		$scope.patient.callerId=0;
 		$scope.patient.phoneNumber= "";
 		$scope.patient.lawyerId="0";
@@ -123,6 +125,16 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		//Manipulate Damage Scale Array
 		$.each($scope.searchParam.damageScale, function(index,value) {
 			$scope.searchParam.damageScale[index]=value.id;
+		});
+		
+		//Manipulate Type Of Use
+		$.each($scope.searchParam.typeOfUse, function(index,value) {
+			$scope.searchParam.typeOfUse[index]=value.id;
+		});
+		
+		//Manipulate Seating Position
+		$.each($scope.searchParam.seatingPosition, function(index,value) {
+			$scope.searchParam.seatingPosition[index]=value.id;
 		});
 		
 		//Manipulate Reporting Agency Array
@@ -428,6 +440,30 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 				   $scope.disableSearch=false;	
 		   }
 		}, true );
+	
+	// Watch Type of Use
+	$scope.$watch('patient.typeOfUse', function() {
+		if($scope.patient.typeOfUse.length==0){
+			$scope.disableSearch=true;
+			$scope.searchTypeOfUseMinError=true;
+		}else{
+			$scope.searchTypeOfUseMinError=false;
+			if(!$scope.searchCountyMinError)
+				$scope.disableSearch=false;
+		}
+	}, true );
+	
+	//Watch Seating Position
+	$scope.$watch('patient.seatingPosition', function() {
+		if($scope.patient.seatingPosition.length==0){
+			$scope.disableSearch=true;
+			$scope.searchSeatingPositionMinError=true;
+		}else{
+			$scope.searchSeatingPositionMinError=false;
+			if(!$scope.searchCountyMinError)
+				$scope.disableSearch=false;
+		}
+	}, true );
 }]); 
 
 adminApp.directive( 'popoverHtmlUnsafePopup', function () {
