@@ -184,12 +184,13 @@ public class ActivityLogsService {
 		List<ActivityDataCount> activityDataCounts = new ArrayList<ActivityDataCount>();
 		int rowCount=0;
 		int elseRowCount=0;
-		boolean isNewDate=false;
+		boolean isNewDate,isNewIpAddress=false;
 		String username="";
 		String date="";
 		String ipAddress="";
 		for (ActivityExportDataCount activityExportDataCount : activityExportDataCounts) {
 			isNewDate=false;
+			isNewIpAddress=false;
 			if(!username.equals(activityExportDataCount.getUsername())){
 				date="";
 				username= activityExportDataCount.getUsername();
@@ -230,6 +231,7 @@ public class ActivityLogsService {
 				}
 				
 				if(!ipAddress.equals(activityExportDataCount.getIpAddress())){
+					isNewIpAddress=true;
 					ipAddress=activityExportDataCount.getIpAddress();
 					if(elseRowCount!=0){
 						activityIPAddresses.add(activityIPAddress);
@@ -238,8 +240,8 @@ public class ActivityLogsService {
 				}
 				activityDataCount = new ActivityDataCount(activityExportDataCount.getActivity(), activityExportDataCount.getActivityId(), activityExportDataCount.getAccessCount(), activityExportDataCount.getNoOfRecordsExported());
 				activityIPAddress.getActivityDataCounts().add(activityDataCount);
-				if(isNewDate)
-				  activityDate.getActivityIPAddresses().add(activityIPAddress);
+				if(isNewIpAddress)
+					activityDate.getActivityIPAddresses().add(activityIPAddress);
 				
 				elseRowCount++;
 			}
