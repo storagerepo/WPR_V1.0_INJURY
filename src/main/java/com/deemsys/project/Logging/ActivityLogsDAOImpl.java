@@ -206,6 +206,7 @@ public class ActivityLogsDAOImpl implements ActivityLogsDAO{
 		projectionList.add(Projections.property("a1.id.accessDate"),"accessDateMonthFormat");
 		projectionList.add(Projections.property("a1.id.accessInTime"),"accessInTime");
 		projectionList.add(Projections.property("a1.id.accessOutTime"),"accessOutTime");
+		projectionList.add(Projections.property("a1.id.recordsCount"),"recordsCount");
 		projectionList.add(Projections.property("a1.id.description"),"description");
 		projectionList.add(Projections.property("a1.id.status"),"status");
 		criteria.addOrder(Order.desc("a1.id.accessInTime"));
@@ -334,6 +335,20 @@ public class ActivityLogsDAOImpl implements ActivityLogsDAO{
 		Query query = session.createSQLQuery("CALL start_purge_activity_logs(:oldDate)");
 		query.setParameter("oldDate", addedDate);
 		query.executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getActivityLogsByDateForIP(Date accessDate) {
+		// TODO Auto-generated method stub
+		return this.sessionFactory.getCurrentSession().createCriteria(ActivityLogs.class).add(Restrictions.le("id.accessDate", accessDate))
+				.setProjection(Projections.groupProperty("id.ipAddress")).list();
+	}
+
+	@Override
+	public Long getActivityLogsCountByIpAddress(String ipAddress) {
+		// TODO Auto-generated method stub
+		return (Long) this.sessionFactory.getCurrentSession().createCriteria(ActivityLogs.class).add(Restrictions.eq("id.ipAddress", ipAddress)).setProjection(Projections.count("id.ipAddress")).uniqueResult();
 	}
 
 

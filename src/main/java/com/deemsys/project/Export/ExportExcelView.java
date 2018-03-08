@@ -296,7 +296,7 @@ public class ExportExcelView extends AbstractExcelView {
 				List<String> completeLogHeader=new ArrayList<String>();
 				completeLogHeader.add("Username");completeLogHeader.add("Activity");completeLogHeader.add("IP Address");
 				completeLogHeader.add("Date");completeLogHeader.add("Start Time");completeLogHeader.add("End Time");
-				completeLogHeader.add("Total Report Exported");
+				completeLogHeader.add("Total Report Count");
 				for (String header : completeLogHeader) {
 					cell=row.createCell(c++);
 					cell.setCellStyle(style);
@@ -314,8 +314,8 @@ public class ExportExcelView extends AbstractExcelView {
 					row.createCell(c++).setCellValue(activityLogsForm.getActivity());
 					row.createCell(c++).setCellValue(activityLogsForm.getIpAddress());
 					row.createCell(c++).setCellValue(activityLogsForm.getAccessDateMonthFormat());
-					row.createCell(c++).setCellValue(activityLogsForm.getAccessInTime());
-					row.createCell(c++).setCellValue(activityLogsForm.getAccessOutTime());
+					row.createCell(c++).setCellValue(this.getTimeOnlyDateTime(activityLogsForm.getAccessInTime()));
+					row.createCell(c++).setCellValue(this.getTimeOnlyDateTime(activityLogsForm.getAccessOutTime()));
 					row.createCell(c++).setCellValue(activityLogsForm.getRecordsCount()!=null?activityLogsForm.getRecordsCount():0);
 					/*for (String header : completeLogHeader) {
 						row.createCell(c++).setCellValue(this.getCellValueForCompleteActivityLog(header, activityLogsForm));
@@ -737,6 +737,15 @@ public class ExportExcelView extends AbstractExcelView {
   			return phoneNumber;
   		}
 	  	
+	}
+	
+	public String getTimeOnlyDateTime(String dateTime){
+		String timeValue="";
+		if(dateTime!=null&&!dateTime.equals("")){
+			String[] splittedValue=dateTime.split(" ");
+			timeValue=splittedValue[1];
+		}
+		return timeValue;
 	}
 	
 	// Get Cell Value For Complete Activity Log

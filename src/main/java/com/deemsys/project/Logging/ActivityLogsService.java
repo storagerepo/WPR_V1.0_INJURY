@@ -54,6 +54,9 @@ public class ActivityLogsService {
 	@Autowired
 	InjuryProperties injuryProperties;
 	
+	@Autowired
+	IPAddressesDAO ipAddressesDAO;
+	
 	// Merge 
 	public int mergeActivityLogs(ActivityLogsForm activityLogsForm) {
 		// TODO: Convert Form to Entity Here
@@ -149,7 +152,16 @@ public class ActivityLogsService {
 
 	public void deleteActivityLogsByDate(Date addedDate) {
 		// TODO Auto-generated method stub
+		List<String> ipAddress=activityLogsDAO.getActivityLogsByDateForIP(addedDate);
+	
 		activityLogsDAO.deleteActivityLogsByDate(addedDate);
+		for (String ip : ipAddress) {
+			Long ipCount=activityLogsDAO.getActivityLogsCountByIpAddress(ip);
+			if(ipCount==0){
+				ipAddressesDAO.deleteIPAddresses(ip);
+			}
+		}
+		
 	}
 
 	// Activity Logs By Session Id

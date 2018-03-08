@@ -29,6 +29,7 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.io.FileUtils;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1508,7 +1509,6 @@ public class PDFCrashReportReader {
 	public void parsePDFDocument(File file,String crashId) throws Exception{
 		
 				UUID randomUUID=UUID.randomUUID();
-		
 				String fileName="";
 				String uuid="";
 				
@@ -1519,6 +1519,7 @@ public class PDFCrashReportReader {
 					fileName=randomUUID+"_"+ crashId + ".pdf";
 					uuid=randomUUID.toString();
 				}
+				
 				//String fileName=uuid+"_"+ crashId + ".pdf";
 				//Convert PDF data to Parsed JSON
 				PDFCrashReportJson pdfCrashReportJson=null;
@@ -1547,7 +1548,9 @@ public class PDFCrashReportReader {
 				// Check Crash Report is Runner Report
 				CrashReport runnerReportCrashId =this.checkODPSReportWithRunnerReport(pdfCrashReportJson.getFirstPageForm());
 				
-				switch (tierType) {
+			
+				
+			switch (tierType) {
 				case 1:
 					filteredPatientsForms=filterPatientForms(patientsForms);
 					if(filteredPatientsForms.size()==0){
@@ -1858,7 +1861,9 @@ public class PDFCrashReportReader {
 			crashReport.setNumberOfPatients(oldPatientsCount+patientCount);
 			crashReport.setVehicleCount(vehicleCount);
 			LocalDate addedDate = new LocalDate();
+			LocalDateTime addedDateTime = new LocalDateTime();
 			crashReport.setAddedDate(addedDate.toDate());
+			crashReport.setAddedDateTime(addedDateTime.toDate());
 			crashReportDAO.update(crashReport);
 		}
 		
@@ -2160,6 +2165,7 @@ public class PDFCrashReportReader {
 				crashReportDAO.save(crashReport);
 				
 				// Update Last Updated Date
+				policeAgency.setStatus(1);
 				policeAgencyDAO.update(policeAgency);
 			}
 			

@@ -19,4 +19,6 @@ public interface ActivityLogsDAO extends IGenericDAO<ActivityLogs>{
 	public List<ActivityLogs> getActivityLogsByIpAddressAndDate(String ipAddress,Date accessDate);
 	public List<ActivityExportDataCount> exportActivityLogs(ActivityLogsSearchForm activityLogsSearchForm);
 	public void deleteActivityLogsByDate(Date addedDate);
+	public List<String> getActivityLogsByDateForIP(Date accessDate);
+	public Long getActivityLogsCountByIpAddress(String ipAddress);
 }
