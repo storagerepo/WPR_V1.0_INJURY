@@ -2033,7 +2033,7 @@ public class PDFCrashReportReader {
 					Integer numberOfPatients=0;
 					Integer vehicleCount=0;
 					CrashReport crashReport=new CrashReport(runnerCrashReportForm.getDocNumber(), crashReportError, policeAgency, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-								 new Date(), numberOfPatients, vehicleCount, fileName, null, isRunnerReport, new Date(), 1, null, new Date(), null, null, null);
+								 new Date(), numberOfPatients, vehicleCount, fileName, null, isRunnerReport, new Date(), 1, new Date(), new Date(), null, null, null);
 					
 					
 					crashReportDAO.save(crashReport);
@@ -2073,7 +2073,6 @@ public class PDFCrashReportReader {
 			String fileName="";
 			// Police Agency
 			PoliceAgency policeAgency = policeAgencyDAO.get(runnerCrashReportForm.getReportFrom());
-			policeAgency.setLastUpdatedDate(new Date());
 			County county= countyDAO.get(policeAgency.getCounty().getCountyId());
 			CrashReportError crashReportError=crashReportErrorDAO.get(crashReportErrorId);
 			
@@ -2089,11 +2088,15 @@ public class PDFCrashReportReader {
 						}else{
 							fileName="CrashReport_"+ crashId + ".pdf";
 						}
+						policeAgency.setLastUpdatedDate(new Date());
+						policeAgency.setReportStatus(1);
 					}else{
 						isSaveReport=false;
 						status=0;
 					}
 				}else{
+					policeAgency.setLastUpdatedDate(new Date());
+					policeAgency.setReportStatus(1);
 					isSaveReport=false;
 					status=2;
 				}
@@ -2160,12 +2163,11 @@ public class PDFCrashReportReader {
 				Integer numberOfPatients=0;
 				Integer vehicleCount=0;
 				CrashReport crashReport=new CrashReport(crashId, crashReportError, policeAgency, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-							 new Date(), numberOfPatients, vehicleCount, fileName, null, isRunnerReport, new Date(), 1, null, new Date(), null, null, null);
+							 new Date(), numberOfPatients, vehicleCount, fileName, null, isRunnerReport, new Date(), 1, new Date(), new Date(), null, null, null);
 				
 				crashReportDAO.save(crashReport);
 				
 				// Update Last Updated Date
-				policeAgency.setStatus(1);
 				policeAgencyDAO.update(policeAgency);
 			}
 			

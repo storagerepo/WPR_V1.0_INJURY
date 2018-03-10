@@ -493,18 +493,26 @@
 					<div class="form-group passenger-type pull-right">
 						<div class="btn-group" data-toggle="buttons">
 							<label class="btn btn-default unit-toggle-label"
-								ng-class="{active:patientDetails.seatingPosition!='1' || patientDetails.seatingPosition==null}"
-								ng-disabled="patientDetails.seatingPosition=='1'"> <input
+								ng-class="{active:patientDetails.seatingPosition!='1' && patientDetails.seatingPosition!=null && patientDetails.seatingPosition!='99' && patientDetails.seatingPosition!='18' && patientDetails.seatingPosition!=''}"
+								ng-disabled="patientDetails.seatingPosition=='1' || patientDetails.seatingPosition==null || patientDetails.seatingPosition=='99' || patientDetails.seatingPosition=='18' || patientDetails.seatingPosition==''"> <input
 								type="radio" name="unit"
 								ng-model="patientDetails.seatingPosition" id="option1"
 								autocomplete="off"> Passenger
 							</label> <label class="btn btn-default unit-toggle-label"
 								ng-class="{active:patientDetails.seatingPosition=='1'}"
-								ng-disabled="patientDetails.seatingPosition!='1' || patientDetails.seatingPosition==null">
+								ng-disabled="patientDetails.seatingPosition!='1'">
 								<input type="radio" name="unit"
 								ng-model="patientDetails.seatingPosition"
 								ng-selected="patientDetails.seatingPosition=='1'" id="option2"
 								autocomplete="off"> &nbsp;&nbsp;Driver&nbsp;&nbsp;
+							</label>
+							<label class="btn btn-default unit-toggle-label"
+								ng-class="{active:patientDetails.seatingPosition=='99' || patientDetails.seatingPosition=='18' || patientDetails.seatingPosition=='' || patientDetails.seatingPosition==null}"
+								ng-disabled="patientDetails.seatingPosition!='99' && patientDetails.seatingPosition!='18' && patientDetails.seatingPosition!=null && patientDetails.seatingPosition!=''">
+								<input type="radio" name="unit"
+								ng-model="patientDetails.seatingPosition"
+								ng-selected="patientDetails.seatingPosition=='1'" id="option3"
+								autocomplete="off"> &nbsp;&nbsp;Unknown&nbsp;&nbsp;
 							</label>
 						</div>
 					</div>
@@ -535,6 +543,10 @@
 						<tr>
 							<td class="col-md-3"><b>Unit Number</b></td>
 							<td class="col-md-3">{{patientDetails.unitNumber}}</td>
+							<td class="col-md-3"><b>Type of Use</b></td>
+							<td class="col-md-3">{{patientDetails.typeOfUseName}}</td>
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>Damage Scale</b></td>
 							<td class="col-md-3">{{patientDetails.damageScale==1?"1 -
 								None":patientDetails.damageScale==2?"2 -
@@ -542,65 +554,53 @@
 								Functional":patientDetails.damageScale==4?"4 -
 								Disabling":patientDetails.damageScale==9?"9 - Unknown":"Not
 								Available"}}</td>
-
-
-						</tr>
-						<tr>
 							<td class="col-md-3"><b>Number of Units</b></td>
 							<td class="col-md-3">{{patientDetails.numberOfUnits}}</td>
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>Units in Error</b></td>
 							<td class="col-md-3">{{patientDetails.unitInError}}</td>
-
-
-
-						</tr>
-						<tr>
 							<td class="col-md-3"><b>Local Report Number</b></td>
 							<td class="col-md-3">{{patientDetails.localReportNumber}}</td>
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>Injuries</b></td>
 							<td class="col-md-3">{{patientDetails.injuriesName}}</td>
-
-							</td>
-						</tr>
-						<tr>
 							<td class="col-md-3"><b>Crash Severity</b></td>
 							<td class="col-md-3">{{patientDetails.crashSeverityName}}
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>Crash Date</b></td>
 							<td class="col-md-3">{{patientDetails.crashDate}}</td>
-
-						</tr>
-						<tr>
-
 							<td class="col-md-3"><b>Time of Crash</b></td>
 							<td class="col-md-3">{{patientDetails.timeOfCrash}}</td>
+						</tr>
+
+						<tr>
 							<td class="col-md-3"><b>EMS Agency</b></td>
 							<td class="col-md-3">{{patientDetails.emsAgency}}</td>
-
-						</tr>
-
-						<tr>
 							<td class="col-md-3"><b>Report Agency Name</b></td>
 							<td class="col-md-3">{{patientDetails.reportingAgencyName}}</td>
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>County</b></td>
 							<td class="col-md-3">{{patientDetails.county}}</td>
-
-						</tr>
-						<tr>
 							<td class="col-md-3"><b>City Village Township</b></td>
 							<td class="col-md-3">{{patientDetails.cityVillageTownship}}</td>
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>Medical Facility</b></td>
 							<td class="col-md-3">{{patientDetails.medicalFacility}}</td>
-
-						</tr>
-						<tr>
 							<td class="col-md-3"><b>At Fault INS. Company</b></td>
 							<td class="col-md-3">{{patientDetails.atFaultInsuranceCompany}}</td>
-							<td class="col-md-3"><b>At Fault Policy Number</b></td>
-							<td class="col-md-3">{{patientDetails.atFaultPolicyNumber}}</td>
 						</tr>
 						<tr>
+							<td class="col-md-3"><b>At Fault Policy Number</b></td>
+							<td class="col-md-3">{{patientDetails.atFaultPolicyNumber}}</td>
 							<td class="col-md-3"><b>Victim INS. Company</b></td>
 							<td class="col-md-3">{{patientDetails.victimInsuranceCompany}}</td>
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>Victim Policy Number</b></td>
 							<td class="col-md-3">{{patientDetails.victimPolicyNumber}}</td>
 						</tr>

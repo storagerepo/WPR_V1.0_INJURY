@@ -2170,7 +2170,7 @@ sbAdminApp.directive('validateWebsite', function() {
         restrict: '',
         link: function(scope, elm, attrs, ngModel) {
             ngModel.$validators.validateWebsite = function(modelValue) {
-                return  WEBSITE_WITH_HTTP.test(modelValue);
+                return  WEBSITE_NO_HTTP.test(modelValue);
             };
         }
     };

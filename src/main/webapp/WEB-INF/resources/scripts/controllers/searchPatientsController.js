@@ -224,6 +224,23 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 						    default:
 						        break;
 							};
+							switch(value2.typeOfUse) {
+						    case 1:
+						    	value2.typeOfUseName="1 - Personal";
+						        break;
+						    case 2:
+						    	value2.typeOfUseName="2 - Commercial";
+						        break;
+						    case 3:
+						    	value2.typeOfUseName="3 - Government";
+						        break;
+						    case 0:
+						    	value2.typeOfUseName="Unknown";
+						        break;
+						    default:
+						    	value2.typeOfUseName="Unknown";
+						        break;
+							};
 							
 						});
 					
