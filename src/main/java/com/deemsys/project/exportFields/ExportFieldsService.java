@@ -41,7 +41,7 @@ public class ExportFieldsService {
 		String role=loginService.getCurrentRole();
 		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
 			exportFieldss=exportFieldsDAO.getCallerLawyerExportFields();
-		}else if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+		}else if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)){
 			exportFieldss=exportFieldsDAO.getAutoDealerAllFields();
 		}
 		
@@ -79,7 +79,7 @@ public class ExportFieldsService {
 		String role=loginService.getCurrentRole();
 		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
 			exportFieldss=exportFieldsDAO.getStandardExportFields();
-		}else if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)){
+		}else if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)){
 			exportFieldss=exportFieldsDAO.getAutoDealerStandardExportFields();
 		}
 		
