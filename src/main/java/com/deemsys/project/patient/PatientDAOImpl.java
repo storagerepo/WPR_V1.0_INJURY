@@ -578,10 +578,10 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	}
 	
 	
-	//Common Constrain Local Report Number isOwner condition for Dealer Interface
-	if(callerPatientSearchForm.getLocalReportNumber()!=null&&!callerPatientSearchForm.getLocalReportNumber().equals("")&&callerPatientSearchForm.getIsOwner()!=1){
-	Criterion localReportNumberCriterion=Restrictions.like("cr.localReportNumber", callerPatientSearchForm.getLocalReportNumber(),MatchMode.START);
-	criteria.add(localReportNumberCriterion);
+	//Common Constrain Local Report Number
+	if(callerPatientSearchForm.getLocalReportNumber()!=null&&!callerPatientSearchForm.getLocalReportNumber().equals("")){
+		Criterion localReportNumberCriterion=Restrictions.like("cr.localReportNumber", callerPatientSearchForm.getLocalReportNumber(),MatchMode.START);
+		criteria.add(localReportNumberCriterion);
 	}
 	
 	//Common Constrain Reporting Agency
@@ -611,18 +611,22 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	// Vehicle Constraints
 	if(role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)||role.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE)){
 		
-		if(callerPatientSearchForm.getVehicleMake()!=null&&!callerPatientSearchForm.getVehicleMake().equals("")){
+		if(callerPatientSearchForm.getVehicleMake()!=null&&!callerPatientSearchForm.getVehicleMake().equals("")&&callerPatientSearchForm.getIsRunnerReport()!=1){
 			Criterion vehicleMakeCriterion=Restrictions.like("vma1.abbreviation", callerPatientSearchForm.getVehicleMake(),MatchMode.ANYWHERE);
 			criteria.add(vehicleMakeCriterion);
 		}
-		if(callerPatientSearchForm.getVehicleYear()!=null&&!callerPatientSearchForm.getVehicleYear().equals("")){
+		if(callerPatientSearchForm.getVehicleYear()!=null&&!callerPatientSearchForm.getVehicleYear().equals("")&&callerPatientSearchForm.getIsRunnerReport()!=1){
 			Criterion vehicleYearCriterion=Restrictions.like("t1.vehicleYear", callerPatientSearchForm.getVehicleYear(),MatchMode.ANYWHERE);
 			criteria.add(vehicleYearCriterion);
 		}
 		
 	}
 	
-	// Is Owner Criterion 0 - Patients 1 - Vehicle Owner
+	// Checking for runner report with owner status 1 - to change isowner value to 0
+	if(callerPatientSearchForm.getIsRunnerReport()==1){
+		callerPatientSearchForm.setIsOwner(0);
+	}
+	// Is Owner Criterion 0 - Patients, 1 - Vehicle Owner
 	Criterion isOwnerCriterion=Restrictions.eq("t1.isOwner", callerPatientSearchForm.getIsOwner());
 	criteria.add(isOwnerCriterion);
 	

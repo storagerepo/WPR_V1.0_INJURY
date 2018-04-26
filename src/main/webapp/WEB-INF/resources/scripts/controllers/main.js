@@ -142,11 +142,18 @@ adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHa
 				  {
 				  	$("#changePasswordModal").modal('hide');
 				  	Flash.create('success', "You have Successfully Changed!");
+				  	$scope.checkPasswordChangedStatus();
 				  }
 		
 		});
 	};
 	
+	$scope.checkPasswordChangedStatus=function(){
+		requestHandler.getRequest("checkPasswordChangedStatus.json","").then( function(response) {
+			$rootScope.passwordChangedStatus=response.data.status;
+		     
+		   });
+	};
 	
   });
 

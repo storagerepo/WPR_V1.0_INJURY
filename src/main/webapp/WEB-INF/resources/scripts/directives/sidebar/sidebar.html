@@ -117,10 +117,10 @@
             
         
             <!-- Common To all -->
-             <li ui-sref-active="active" ng-show="{{($root.isAdmin==2||$root.isAdmin==3||$root.isAdmin==6) && $root.productToken!=''}}">
+             <li ui-sref-active="active" ng-show="{{($root.isAdmin==2||$root.isAdmin==3||$root.isAdmin==6||$root.isAdmin==8) && $root.productToken!=''}}">
                 <a ui-sref="dashboard.payment"><i ng-cloak class="fa fa-money fa-fw"></i> Payment<span></span></a>
             </li>
-              <li ui-sref-active="active" ng-show="{{$root.isAdmin==2||$root.isAdmin==3||$root.isAdmin==6}}">
+              <li ui-sref-active="active" ng-show="{{$root.isAdmin==2||$root.isAdmin==3||$root.isAdmin==6||$root.isAdmin==8}}">
                 <a ui-sref="dashboard.userPreferrence({fid:$root.userPrefenceTabStatus})"><i ng-cloak class="fa fa-wrench fa-fw"></i> Settings<span></span></a>
             </li>
              <li ui-sref-active="active" ng-show="{{$root.isAdmin!=1}}">

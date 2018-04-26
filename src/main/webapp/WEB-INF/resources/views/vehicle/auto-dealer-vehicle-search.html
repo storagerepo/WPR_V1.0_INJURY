@@ -3,7 +3,7 @@
 <script src="resources/components/datetime/datetimepicker.js"></script>
 <script src="resources/components/datetime/moment.js"></script>
 <div ng-cloak>
-	<div class="row">
+	<div class="row" ng-init="showSearch=1">
 		<div class="col-lg-12">
 			<div class="form-group passenger-type pull-right margin-top35">
 				<label>Report Type:</label>
@@ -11,23 +11,26 @@
 					<label class="btn btn-default" btn-radio="0"
 						ng-model="vehicle.isRunnerReport" ng-disabled="isLoading"> Normal <span
 						class="glyphicon glyphicon-file"></span>
-					</label> <!-- <label class="btn btn-default" btn-radio="1"
+					</label> <label class="btn btn-default" btn-radio="1"
 						ng-model="vehicle.isRunnerReport" ng-disabled="isLoading"> Runner <span
 						class="glyphicon glyphicon-file"></span>
-					</label> -->
+					</label>
 					<label class="btn btn-default" btn-radio="3"
 					ng-model="vehicle.isRunnerReport" ng-disabled="isLoading"> Scanned <span
 					class="glyphicon glyphicon-file"></span>
 				</label>
 				</div>
 			</div>
-			<div flash-message="2000" class="col-md-5 pull-right margin-top35"></div>
-			<h2 class="page-header">Search Vehicles</h2>
+			<div flash-message="2000" class="col-md-4 pull-right margin-top35"></div>
+			<h2 class="page-header">Search Vehicles	<span ng-show="showSearch==0" ng-click="showSearch=1"><a href="" class="btn btn-xs btn-primary"><i class="fa fa-chevron-circle-down"></i> Show Search</a> </span>
+			<span ng-show="showSearch==1" ng-click="showSearch=0"><a href="" class="btn btn-xs btn-primary"><i class="fa fa-chevron-circle-up"></i> Hide Search</a> </span></h2>	
+			
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
 	<!-- /.row -->
 	<div class="row">
+	<div class="col-md-12 search-background" ng-show="showSearch==1">
 		<form name="vehicleSearchForm" novalidate ng-cloak>
 			<div class="col-md-12 no-padding">
 				<div class="col-md-5ths">
@@ -123,21 +126,21 @@
 					events="reportingAgencyEvents">
 					</div>
 				</div> -->
-				<div ng-class="vehicle.isRunnerReport!=3?'col-md-5ths':'col-md-5ths'" ng-show="vehicle.isRunnerReport==3">
+				<div ng-class="vehicle.isRunnerReport!=3?'col-md-5ths':'col-md-5ths'">
 					<label>Local Report Number</label> <input type="text"
 						name="localReportNumber" class="form-control input-sm"
 						ng-model="vehicle.localReportNumber"
 						placeholder="Local Report Number">
 
 				</div>
-				<div ng-class="vehicle.isRunnerReport!=3?'col-md-5ths':'col-md-5ths'" ng-show="vehicle.isRunnerReport!=3">
+				<div ng-class="vehicle.isRunnerReport!=3?'col-md-5ths':'col-md-5ths'" ng-show="vehicle.isRunnerReport==0">
 					<label>Vehicle Make</label> <input type="text"
 						name="vehicleMake" class="form-control input-sm"
 						ng-model="vehicle.vehicleMake"
 						placeholder="Vehicle Make">
 
 				</div>
-				<div ng-class="vehicle.isRunnerReport!=3?'col-md-5ths':'col-md-5ths'" ng-show="vehicle.isRunnerReport!=3">
+				<div ng-class="vehicle.isRunnerReport!=3?'col-md-5ths':'col-md-5ths'" ng-show="vehicle.isRunnerReport==0">
 					<label>Vehicle Year</label> <input type="text"
 						name="vehicleYear" class="form-control input-sm"
 						ng-model="vehicle.vehicleYear"
@@ -145,7 +148,7 @@
 
 				</div>
 				
-				<div class="col-md-5ths" ng-show="vehicle.isRunnerReport!=3">
+				<div class="col-md-5ths" ng-show="vehicle.isRunnerReport==0">
 					<label>Damage Scale</label>&nbsp;<a href=""
 						class="some-popover-link" data-placement="right"
 						data-original-title="" data-toggle="popover" title="Damage Scale"
@@ -167,23 +170,17 @@
 					</select>
 				</div>
 				
-				
-				<div class="col-md-2ths">
-					<label>&nbsp;</label>
-					<div>
-						<a class="btn btn-success hint--top"
+				<div class="col-md-3ths pull-right" style="padding-top:20px;">
+					<a class="btn btn-success"
 							ng-class="{'button-disable':vehicleSearchForm.$invalid}"
 							ng-disabled='vehicleSearchForm.$invalid||disableSearch'
-							ng-click="searchPatients()" data-hint="Search"><i
-							class="fa fa-search"></i></a> <a class="btn btn-danger hint--top"
-							ng-click="resetSearchData()" data-hint="Reset"><i
-							class="fa fa-undo"></i></a>
-					</div>
+							ng-click="searchPatients()">Search</a> 
+							<a class="btn btn-danger" ng-click="resetSearchData()">Reset</a>
 				</div>
 			</div>
-
-			<div class="col-md-12">
-				<div class="col-md-12 no-padding hr-tag-alter"></div>
+			</div>
+			<div class="col-md-12 no-padding">
+				
 				<div class="col-md-6 no-padding">
 					<a href="" ng-disabled="isCleanCheckbox()||vehicle.isArchived==1"
 						ng-click="assignDealerPopup()" class="btn btn-sm btn-success" ng-show="vehicle.isRunnerReport!=3&&($root.isAdmin==6||$root.isAdmin==8)"><span ng-show="$root.isAdmin==6">Assign
@@ -242,7 +239,7 @@
 
 				<div class="col-md-12 no-padding hr-tag-alter"></div>
 			</div>
-			<div class="col-md-12">
+			<div class="col-md-12 no-padding">
 				<div class="col-md-12 archive-filter"
 					ng-show="vehicle.isArchived==1">
 					<div class="col-md-3"></div>
@@ -290,22 +287,23 @@
 				</div>
 			</div>
 		</form>
-		<div class="col-md-12" ng-show="vehicle.isRunnerReport!=3">
+		<div class="col-md-12 no-padding" ng-show="vehicle.isRunnerReport!=3">
 			<table class="table table-bordered persist-area" ng-cloak>
 				<thead class="persist-header">
 					<tr>
 						<th width="2%"><input ng-change="isChecked()"
 							ng-model="isCheckedAllPatients" type="checkbox" id="checkAll"></th>
-						<th width="15%">Client Name <br />
+						<th width="13%">Client Name <br />
 						<span class="client-name">(Last, First, Middle)</span></th>
 						<th width="6%">Age</th>
 						<th width="6%">Unit / Damage</th>
 						<th width="7%">County</th>
+						<th width="13%">Address</th>
+						<th width="6%" ng-show="vehicle.isRunnerReport!=1">Make</th>
+						<th width="6%" ng-show="vehicle.isRunnerReport!=1">Year</th>
+						<th width="13%" ng-show="vehicle.isRunnerReport!=1">VIN</th>
 						<th width="8%" ng-show="$root.isAdmin==6||$root.isAdmin==8"><span ng-show="$root.isAdmin==6">Dealer</span><span ng-show="$root.isAdmin==8">Shop</span></th>
-						<th width="15%">Address</th>
-						<th width="6%">Make</th>
-						<th width="6%">Year</th>
-						<th width="15%">VIN</th>
+						<th width="6%">Status</th>
 						<th width="8%" ng-show="vehicle.isArchived==1" ng-cloak>Archived
 							On</th>
 						<th width="5%">Actions</th>
@@ -330,8 +328,9 @@
 						<th></th>
 						<th ng-show="$root.isAdmin==6||$root.isAdmin==8"></th>
 						<th></th>
-						<th></th>
-						<th></th>
+						<th ng-show="vehicle.isRunnerReport!=1"></th>
+						<th ng-show="vehicle.isRunnerReport!=1"></th>
+						<th ng-show="vehicle.isRunnerReport!=1"></th>
 						<th></th>
 						<th ng-show="vehicle.isArchived==1"></th>
 						<th><a href="" ng-click="exportToExcel()"
@@ -351,7 +350,7 @@
 							ng-model="isCheckedAllGroupArchivePatients" ng-true-value="true"
 							ng-false-value="false" type="checkbox"
 							id="{{resultMainData.archivedDate}}"></td>
-						<td colspan="12"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
+						<td colspan="13"><span><b>Archive Date: </b>{{resultMainData.archivedDate}}</span></td>
 					</tr>
 					<tr ng-repeat-start="resultData in resultMainData.searchResult" ng-class="resultData.isRunnerReport==4?'group-header-back-convert':'group-header-back'">
 						<td colspan="1"><input
@@ -359,7 +358,7 @@
 							ng-model="isCheckedAllGroupPatients" ng-true-value="true"
 							ng-false-value="false" type="checkbox"
 							id="{{resultData.localReportNumber}}{{resultMainData.archivedDate}}"></td>
-						<td colspan="11"><span><b>Local Report No:</b>
+						<td colspan="12"><span><b>Local Report No:</b>
 								{{resultData.localReportNumber}} </span><span
 							class="badge badge-warning hint--top"
 							ng-show="resultData.isRunnerReport==2" data-hint="Runner Report">R</span>
@@ -371,9 +370,9 @@
 								ng-show="resultData.isRunnerReport==4&&resultData.directReportStatus==2" data-hint="Status: Do-Not-Call">DNC</span>
 							<span class="pull-right"><span><b>Crash
 										Date: </b>{{resultData.crashDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Added
-										Date: </b>{{resultData.addedDate}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Vehicle
+										Date: </b>{{resultData.addedDate}}</span><span ng-show="resultData.isRunnerReport!=1">&nbsp;&nbsp;|&nbsp;&nbsp;<span><b>Vehicle
 										Count:</b></span>&nbsp;&nbsp;<span class="hint--top patient-count-circle"
-								data-hint="{{resultData.vehicleCount}} Vehicles">{{resultData.vehicleCount}}</span>&nbsp;&nbsp;&nbsp;</span></td>
+								data-hint="{{resultData.vehicleCount}} Vehicles">{{resultData.vehicleCount}}</span>&nbsp;&nbsp;&nbsp;</span></span></td>
 					</tr>
 					<tr
 						dir-paginate="autoDealerData in resultData.patientSearchLists|itemsPerPage:vehicle.itemsPerPage"
@@ -455,25 +454,25 @@
 						</span> <span
 							ng-show="autoDealerData.unitNumber=='' || autoDealerData.unitNumber==null">-</span></td>
 						<td title="County">{{autoDealerData.county}}</td>
-						<td title="Dealer Name" ng-show="$root.isAdmin==6||$root.isAdmin==8"><span
-							ng-if="autoDealerData.callerLasttName==null && autoDealerData.callerLastName==null">N/A</span>{{autoDealerData.callerFirstName}}&nbsp;{{autoDealerData.callerLastName}}</td>
-
 						<td title="Address"><span
 							ng-show="autoDealerData.address!='' && autoDealerData.address!=null">{{autoDealerData.address}}</span><span
 							ng-show="autoDealerData.address=='' || autoDealerData.address==null">-</span></td>
 
-						<td><span
+						<td title="Make" ng-show="vehicle.isRunnerReport!=1"><span
 							ng-show="autoDealerData.vehicleMake!='' && autoDealerData.vehicleMake!=null">
 								{{autoDealerData.vehicleMake}}</span>
 								<span
 							ng-show="autoDealerData.vehicleMake=='' && autoDealerData.vehicleMake==null">
 								-</span></td>
-						<td>
+						<td title="Year" ng-show="vehicle.isRunnerReport!=1">
 								<span ng-show="autoDealerData.vehicleYear!='' && autoDealerData.vehicleYear!=null">{{autoDealerData.vehicleYear}}</span>
 								<span
 							ng-show="autoDealerData.vehicleYear=='' && autoDealerData.vehicleYear==null">
 								-</span></td>
-						<td title="Status">{{autoDealerData.vin}}</td>
+						<td title="VIN" ng-show="vehicle.isRunnerReport!=1">{{autoDealerData.vin}}</td>
+						<td title="Dealer Name" ng-show="$root.isAdmin==6||$root.isAdmin==8"><span
+							ng-if="autoDealerData.callerLasttName==null && autoDealerData.callerLastName==null">N/A</span>{{autoDealerData.callerFirstName}}&nbsp;{{autoDealerData.callerLastName}}</td>
+						<td title="Status">{{autoDealerData.patientStatusName}}</td>
 						<td title="Archived On" ng-show="vehicle.isArchived==1" ng-cloak>{{autoDealerData.archivedDateTime}}</td>
 						<td><a href="{{autoDealerData.crashReportFileName}}" ng-cloak
 							target="_blank" class="btn btn-xs btn-info hint--top"
@@ -503,7 +502,7 @@
 					<tr ng-repeat-end=""></tr>
 					<tr ng-repeat-end=""></tr>
 					<tr ng-show="totalRecords==0">
-						<td colspan="12"><center>
+						<td colspan="13"><center>
 								<strong>No Records Found!!!</strong>
 							</center></td>
 					</tr>
@@ -528,7 +527,7 @@
 		</div>
 
 	<!-- Direct Runner Report  -->
-		<div class="col-md-12" ng-show="vehicle.isRunnerReport==3">
+		<div class="col-md-12 no-padding" ng-show="vehicle.isRunnerReport==3">
 			<table class="table table-bordered" ng-cloak>
 				<thead>
 					<tr>

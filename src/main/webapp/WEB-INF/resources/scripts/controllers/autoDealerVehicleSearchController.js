@@ -390,11 +390,15 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 	 $scope.selectGroup=function(id,archiveDate){
 			$.each($scope.autoDealerVehicleSearchData, function(index,value) {
 				$.each(value.searchResult, function(index1,value1) {
+					var loopCount=value1.vehicleCount;
+					if($scope.vehicle.isRunnerReport==1){
+						loopCount=value1.numberOfPatients;
+					}
 					if(archiveDate!=''){
 						if(value.archivedDate==archiveDate){
 							if(value1.localReportNumber==id.resultData.localReportNumber){
 								var i=0;
-								for(i;i<value1.vehicleCount;i++){
+								for(i;i<loopCount;i++){
 									if(value1.patientSearchLists[i]!=undefined)
 									  value1.patientSearchLists[i].selected=id.isCheckedAllGroupPatients;
 								}
@@ -404,7 +408,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 						if(value.archivedDate==archiveDate){
 							if(value1.localReportNumber==id.resultData.localReportNumber){
 								var i=0;
-								for(i;i<value1.vehicleCount;i++){
+								for(i;i<loopCount;i++){
 									if(value1.patientSearchLists[i]!=undefined)
 									  value1.patientSearchLists[i].selected=id.isCheckedAllGroupPatients;
 								}
@@ -421,10 +425,14 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 	 $scope.selectArchiveGroup=function(id,archiveDate){
 			$.each($scope.autoDealerVehicleSearchData, function(index,value) {
 				$.each(value.searchResult, function(index1,value1) {
+					var loopCount=value1.vehicleCount;
+					if($scope.vehicle.isRunnerReport==1){
+						loopCount=value1.numberOfPatients;
+					}
 					if(archiveDate!=''){
 						if(value.archivedDate==archiveDate){
 							var i=0;
-							for(i;i<value1.vehicleCount;i++){
+							for(i;i<loopCount;i++){
 								if(value1.patientSearchLists[i]!=undefined){
 									/*var changedLocalReportNumber=value1.patientSearchLists[i].localReportNumber.replace( /(\.|\(|\)|\ )/g, "\\$1" );
 									var changeDate=archiveDate.replace(/(\/)/g,"\\$1");*/
@@ -973,7 +981,7 @@ $scope.archivedToDateRequired=false;
  	};
 	
 	//Watch Age Filter
-	$scope.$watch('patient.age' , function() {	
+	$scope.$watch('vehicle.age' , function() {	
 		if($scope.vehicle.age.length!=0){
 			angular.copy($scope.vehicle.age,$scope.ageFilterCurrentSelection);
 		}else{
@@ -1023,7 +1031,7 @@ $scope.archivedToDateRequired=false;
 							$scope.vehicle.countyId.push({"id":value.countyId});
 						});
 					}else{
-						if($rootScope.isAdmin==6){
+						if($rootScope.isAdmin==6||$rootScope.isAdmin==8){
 							$state.go('dashboard.userPreferrence',{fid:1});
 						}else{
 							alert("Not done with Preference, Please Contact Manager to set up.");
