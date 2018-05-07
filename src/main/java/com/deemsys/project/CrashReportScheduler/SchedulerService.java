@@ -144,7 +144,9 @@ public class SchedulerService {
 						System.out.println("Activity Logs Delete Start.....");
 						LocalDate localDate1=new LocalDate().minusMonths(Integer.parseInt(injuryProperties.getProperty("activityLogsMonthBefore")));
 						String date=localDate1.toString("yyyy-MM-dd");
+						System.out.println("date to delete---->"+date);
 						Date oldDate = new DateTime(date).plusDays(1).minusSeconds(1).toDate();
+						System.out.println("date to delete---->"+oldDate);
 						activityLogsService.deleteActivityLogsByDate(oldDate);
 						System.out.println("Activity Logs Delete End.....");
 					}
@@ -163,7 +165,7 @@ public class SchedulerService {
 	}
 	
 	// Schedule At Everyday start
-	@Scheduled(cron="0 0 0 * * ?")
+	@Scheduled(cron="0 0 0/1 * * ?")
 	public void doScheduleForMissingReports() {
 		worker.work();
 		try

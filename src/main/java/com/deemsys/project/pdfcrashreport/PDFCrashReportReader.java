@@ -2030,6 +2030,7 @@ public class PDFCrashReportReader {
 					
 					PoliceAgency policeAgency = policeAgencyDAO.get(reportFromMapId);
 					policeAgency.setLastUpdatedDate(new Date());
+					policeAgency.setReportStatus(1);
 					Integer numberOfPatients=0;
 					Integer vehicleCount=0;
 					CrashReport crashReport=new CrashReport(runnerCrashReportForm.getDocNumber(), crashReportError, policeAgency, county, localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 

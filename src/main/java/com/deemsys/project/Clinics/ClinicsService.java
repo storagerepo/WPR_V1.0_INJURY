@@ -159,10 +159,10 @@ public class ClinicsService {
 		List<Clinic> clinicses = new ArrayList<Clinic>();
 		String role=loginService.getCurrentRole();
 		Integer callerAdminId=0;
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)){
 			callerAdminId=callerAdminDAO.getCallerAdminByUserId(callerService.getCurrentUserId()).getCallerAdminId();
 			clinicses = clinicsDAO.getClinicsByCallerAdmin(callerAdminId);
-		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)){
 			callerAdminId=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId();
 			clinicses = clinicsDAO.getEnabledClinicsListsByCallerAdmin(callerAdminId);
 		}
@@ -332,9 +332,9 @@ public class ClinicsService {
 		List<Clinic> clinicss = new ArrayList<Clinic>();
 		String role=loginService.getCurrentRole();
 		Integer callerAdminId=0;
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)){
 			callerAdminId=callerAdminDAO.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId();
-		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)){
 			callerAdminId=callerService.getCallerByUserId(loginService.getCurrentUserID()).getCallerAdmin().getCallerAdminId();
 		}
 		clinicss = clinicsDAO.getClinicId(callerAdminId);
@@ -359,10 +359,10 @@ public class ClinicsService {
 		Integer noOfClinics = 0;
 		String role=loginService.getCurrentRole();
 		Integer callerAdminId=0;
-		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)){
 			callerAdminId=callerAdminDAO.getCallerAdminByUserId(callerService.getCurrentUserId()).getCallerAdminId();
 			noOfClinics = clinicsDAO.getClinicsByCallerAdmin(callerAdminId).size();
-		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)){
 			callerAdminId=callerService.getCallerByUserId(callerService.getCurrentUserId()).getCallerAdmin().getCallerAdminId();
 			noOfClinics = clinicsDAO.getEnabledClinicsListsByCallerAdmin(callerAdminId).size();
 		}

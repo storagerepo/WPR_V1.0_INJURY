@@ -88,7 +88,7 @@
     
     <!-- Caller Admin Dashboard Starts-->
      <stats  ng-cloak number="{{numberOfCallers}}" comments="Callers" colour="primary" type="user" goto="dashboard.callers" ng-show="{{isAdmin==2}}"></stats>
-   <stats ng-cloak number="{{numberOfClinics}}" comments="Clinics" colour="primary" type="clinic-icon" goto="dashboard.clinic" ng-show="{{isAdmin==2}}"></stats>
+   <stats ng-cloak number="{{numberOfClinics}}" comments="Clinics" colour="primary" type="clinic-icon" goto="dashboard.consumers" ng-show="{{isAdmin==2}}"></stats>
         <stats  ng-cloak number="{{numberOfAppointments}}" comments="Appointments" colour="primary" type="calendar" goto="dashboard.appointment" ng-show="{{isAdmin==2}}"></stats>
         <stats ng-cloak number="{{numberOfPatients}}" comments="Patients" colour="primary" type="patient-icon" goto="dashboard.callerAdminSearchPatients" ng-show="{{isAdmin==2}}"></stats>
       <!-- Caller Admin Dashboard Ends-->   
@@ -96,7 +96,7 @@
       
       <!-- Caller Dashboard Starts -->
        <stats ng-cloak number="{{numberPatients}}" comments="Patients" colour="primary" type="patient-icon" goto="dashboard.CallerSearchPatients" ng-show="{{isAdmin==4}}"></stats>
-        <stats ng-cloak number="{{numberOfClinics}}" comments="Clinics" colour="primary" type="clinic-icon" goto="dashboard.clinics" ng-show="{{isAdmin==4}}"></stats>
+        <stats ng-cloak number="{{numberOfClinics}}" comments="Clinics" colour="primary" type="clinic-icon" goto="dashboard.consumers" ng-show="{{isAdmin==4}}"></stats>
       <!-- Caller Dashboard Ends -->
       
       <!-- Lawyer Dashboard Starts -->
@@ -105,12 +105,12 @@
       
       
        <!-- Auto Dealer Manager Dashboard Starts-->
-    <div class="col-lg-12" style="height:470px;" ng-show="{{isAdmin==6 || isAdmin==8}}">
+    <div class="col-lg-12" style="height:470px;" ng-show="{{isAdmin==6}}">
     <div class="col-lg-12" style="margin-top:60px;">
     <div class="col-lg-2 col-md-6"></div>
     <div class="col-lg-3 col-md-6">
     <div ng-cloak class="panel panel-primary" style="min-height:300px;">
-     <a ng-cloak ui-sref="{{isAdmin==6?'dashboard.autoDealer':'dashboard.shops'}}">
+     <a ng-cloak ui-sref="dashboard.autoDealer">
         <div class="panel-heading" style="min-height:300px;">
             <div class="row">
                 <div class="col-xs-12 text-center dealer-icon" style="min-height:180px;">
@@ -125,7 +125,7 @@
 							<div id="squaresWaveG_2" class="squaresWaveG"></div>
 							<div id="squaresWaveG_3" class="squaresWaveG"></div>
 					</div></div>
-                    <div ng-cloak><span ng-show="{{isAdmin==6}}">Dealers</span><span ng-show="{{isAdmin==8}}">Shops</span></div>
+                    <div ng-cloak>Dealers</div>
                 </div>
             </div>
         </div>
@@ -171,8 +171,16 @@
  </div>  
   
  <!--  Auto Dealer Dashboard Starts -->
+ <stats ng-cloak number="{{numberOfClinics}}" comments="Shops" colour="primary" type="dealer-icon" goto="dashboard.consumers" ng-show="{{isAdmin==9}}"></stats>
   <stats ng-cloak number="{{numberOfVehicles}}" comments="Vehicles" colour="primary" type="vehicle-icon" goto="dashboard.autoDealerVehicleSearch" ng-show="{{isAdmin==7||isAdmin==9}}"></stats>
  <!--  Auto Dealer Dashboard Ends -->
+ 
+ <!-- Body Shop Starts -->
+   <stats ng-cloak number="{{numberOfDealers}}" comments="Callers" colour="primary" type="user" goto="dashboard.bcallers" ng-show="{{isAdmin==8}}"></stats>
+   <stats ng-cloak number="{{numberOfClinics}}" comments="Shops" colour="primary" type="dealer-icon" goto="dashboard.consumers" ng-show="{{isAdmin==8}}"></stats>
+   <stats ng-cloak number="{{numberOfAppointments}}" comments="Appointments" colour="primary" type="calendar" goto="dashboard.appointment" ng-show="{{isAdmin==8}}"></stats>
+   <stats ng-cloak number="{{numberOfVehicles}}" comments="Vehicles" colour="primary" type="vehicle-icon" goto="dashboard.autoDealerVehicleSearch" ng-show="{{isAdmin==8}}"></stats>
+<!-- Body Shop Ends -->
 </div>
       
     <!-- Auto Dealer Manager Dashboard Ends-->

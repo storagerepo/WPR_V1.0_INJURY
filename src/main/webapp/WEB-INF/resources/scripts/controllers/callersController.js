@@ -24,11 +24,11 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
     	$scope.addButtonText="Add Dealer";
     	$scope.hintText="Dealer";
     }else if($scope.roleId==9){
-    	$scope.addLink="dashboard.add-shop";
-    	$scope.editLink="edit-shop";
-    	$scope.headingText="Shops";
-    	$scope.addButtonText="Add Shop";
-    	$scope.hintText="Shop";
+    	$scope.addLink="dashboard.add-bcaller";
+    	$scope.editLink="edit-bcaller";
+    	$scope.headingText="Callers";
+    	$scope.addButtonText="Add Caller";
+    	$scope.hintText="Caller";
     }
     
     $scope.getCallersList=function(){
@@ -79,12 +79,10 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
 				if(response.data.isDeleteable==true){
 					$("#deleteCallerConfirmOne").modal("hide");
 					$('.modal-backdrop').hide();
-					 if($scope.roleId==4){
+					 if($scope.roleId==4||$scope.roleId==9){
 						 Flash.create('success', "You have Successfully Deleted the Caller!");
 					 }else if($scope.roleId==7){
 						 Flash.create('success', "You have Successfully Deleted the Dealer!");
-					 }else if($scope.roleId==9){
-						 Flash.create('success', "You have Successfully Deleted the Shop!");
 					 }
 					
 					$scope.getCallersList();
@@ -99,12 +97,10 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
 						requestHandler.postRequest("CAdmin/deleteCallerWithMap.json?callerId="+callerId,"").then(function(response) {
 							$("#deleteCallerConfirmTwo").modal("hide");
 							$('.modal-backdrop').hide();
-							 if($scope.roleId==4){
+							 if($scope.roleId==4||$scope.roleId==9){
 								 Flash.create('success', "You have Successfully Deleted the Caller!");
 							 }else if($scope.roleId==7){
 								 Flash.create('success', "You have Successfully Deleted the Dealer!");
-							 }else if($scope.roleId==9){
-								 Flash.create('success', "You have Successfully Deleted the Shop!");
 							 }
 							$scope.getCallersList();
 							$(function(){
@@ -129,15 +125,14 @@ adminApp.controller('SaveCallerController', function($http,$state,$scope,$locati
 	$scope.requiredValue= false;
 	
 	$scope.roleId=$state.current.roleId;
+	$scope.detailsText="Enter Caller Details";
     if($scope.roleId==4){
     	$scope.backLink="dashboard.callers";
-    	$scope.detailsText="Enter Caller Details";
     }else if($scope.roleId==7){
     	$scope.backLink="dashboard.autoDealer";
     	$scope.detailsText="Enter Dealer Details";
     }else if($scope.roleId==9){
-    	$scope.backLink="dashboard.shops";
-    	$scope.detailsText="Enter Shop Details";
+    	$scope.backLink="dashboard.bcallers";
     }
 	
 	$scope.selectedCounties=function(countyId){
@@ -180,7 +175,7 @@ adminApp.controller('SaveCallerController', function($http,$state,$scope,$locati
 				   }else if($scope.roleId==7){
 					   $location.path('dashboard/autoDealer');
 				   }else if($scope.roleId==9){
-					   $location.path('dashboard/shops');
+					   $location.path('dashboard/bcallers');
 				   }
 				  
 				});
@@ -206,8 +201,8 @@ adminApp.controller('EditCallerController', function($http,$state,$location,$sco
     	$scope.backLink="dashboard.autoDealer";
     	$scope.detailsText="Enter Dealer Details";
     }else if($scope.roleId==9){
-    	$scope.backLink="dashboard.shops";
-    	$scope.detailsText="Enter Shop Details";
+    	$scope.backLink="dashboard.bcallers";
+    	$scope.detailsText="Enter Caller Details";
     }
 	
 	var callerOriginal="";
@@ -224,7 +219,7 @@ adminApp.controller('EditCallerController', function($http,$state,$location,$sco
 			}else if($scope.roleId==7){
 				$location.path('dashboard/autoDealer');
 			}else if($scope.roleId==9){
-				$location.path('dashboard/shops');
+				$location.path('dashboard/bcallers');
 			}
 		});
 	};

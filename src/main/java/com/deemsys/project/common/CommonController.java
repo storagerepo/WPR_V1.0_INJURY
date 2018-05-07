@@ -364,16 +364,29 @@ public class CommonController {
 		}else if(currentRoleId.equals(InjuryConstants.INJURY_LAWYER_ROLE_ID)){
 			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
-		}else if(currentRoleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)||currentRoleId.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE_ID)){
+		}else if(currentRoleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
 			dashboardCount.add(callerService.getNoOfCallers());
 			callerPatientSearchForm.setIsOwner(1);
 			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 			dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
-		}else if(currentRoleId.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE_ID)||currentRoleId.equals(InjuryConstants.INJURY_SHOP_ROLE_ID)){
+		}else if(currentRoleId.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE_ID)){
+			callerPatientSearchForm.setIsOwner(1);
+			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
+		}else if(currentRoleId.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE_ID)){
+			dashboardCount.add(callerService.getNoOfCallers());
+			dashboardCount.add(clinicsService.getNoOfClinics());
+	    	dashboardCount.add(appointmentsService.getNoOfAppointments());
+			callerPatientSearchForm.setIsOwner(1);
+			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
+			dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
+		}else if(currentRoleId.equals(InjuryConstants.INJURY_SHOP_ROLE_ID)){
+			dashboardCount.add(clinicsService.getNoOfClinics());
 			callerPatientSearchForm.setIsOwner(1);
 			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
 		}
+		
 		
 		model.addAttribute("dashboardCount",dashboardCount);
     	model.addAttribute("requestSuccess",true);

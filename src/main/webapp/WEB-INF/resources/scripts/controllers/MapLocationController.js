@@ -1,8 +1,26 @@
 var adminApp=angular.module('sbAdminApp',['requestModule','searchModule','uiGmapgoogle-maps','gm','flash']);
 
-adminApp.controller('showNearByClinicController',function($scope,$log,$stateParams,requestHandler,searchService,$compile,$q,$timeout,Flash){
+adminApp.controller('showNearByClinicController',function($rootScope,$scope,$log,$stateParams,requestHandler,searchService,$compile,$q,$timeout,Flash){
 	
 	$scope.init=function(){
+		$scope.titleText="View Near By Clinics";
+		$scope.clientNameText="Patient Name";
+		$scope.clinicNameText="Clinic Name";
+		$scope.detailsHeadText="Clinic & Doctor Details";
+		$scope.detailsDoctorText="Doctors List";
+		$scope.detailsNoDoctorText="No Doctors added";
+		$scope.doctorIcon="fa-user-md";
+		$scope.patientText="Patient";
+		if($rootScope.isAdmin==8||$rootScope.isAdmin==9){
+			$scope.titleText="View Near By Shops";
+			$scope.clientNameText="Client Name";
+			$scope.clinicNameText="Shop Name";
+			$scope.detailsHeadText="Shop & Mechanic Details";
+			$scope.detailsDoctorText="Mechanics List";
+			$scope.detailsNoDoctorText="No Mechanic added";
+			$scope.doctorIcon="fa-wrench";
+			$scope.patientText="Client";
+		}
 		$scope.searchRange=25;
 		$scope.clinicsForms="";
 		$scope.lat="";
@@ -66,7 +84,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     			correctedLong:$scope.lng,
     			searchBy:searchFrom
     	};
-    	requestHandler.postRequest("Caller/getNearByClincs.json.json",$scope.clinicSearchForm).then( function(response) {
+    	requestHandler.postRequest("Caller/getNearByClincs.json",$scope.clinicSearchForm).then( function(response) {
     		$scope.isUpdated=1;
     		$scope.getPatient();
     		$scope.autocomplete="";
@@ -93,7 +111,7 @@ adminApp.controller('showNearByClinicController',function($scope,$log,$statePara
     		patientMarker = {
 	    	        latitude: clinicLocationForm.centerLatitude,
 	    	        longitude: clinicLocationForm.centerLongitude,
-	    	        title: "Patient Location",
+	    	        title: $scope.patientText+" Location",
 	   	           	icon:'resources/images/map/map_icon_yellow.png',
 	   	           	show:false
 	   	          };

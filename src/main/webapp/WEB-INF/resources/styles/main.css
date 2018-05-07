@@ -1079,6 +1079,15 @@ ul.rating {
     float: left;
 }
 
+/* Search Background */
+.search-background{
+	background-color: rgb(229, 240, 250); 
+	margin-bottom: 5px; 
+	padding:5px;
+	border:1px solid rgb(140, 136, 136);
+}
+
+
 #squaresWaveG{
 	position:relative;
 	width:40px;
@@ -1185,14 +1194,6 @@ ul.rating {
 		-ms-animation-delay:1.0015s;
 		-webkit-animation-delay:1.0015s;
 		-moz-animation-delay:1.0015s;
-}
-
-/* Search Background */
-.search-background{
-	background-color: rgb(229, 240, 250); 
-	margin-bottom: 5px; 
-	padding:5px;
-	border:1px solid rgb(140, 136, 136);
 }
 
 @keyframes bounce_squaresWaveG{

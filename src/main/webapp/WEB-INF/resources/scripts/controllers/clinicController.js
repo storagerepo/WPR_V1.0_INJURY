@@ -1,16 +1,33 @@
 var adminApp=angular.module('sbAdminApp', ['requestModule','flash']);
 
-adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash){
+adminApp.controller('ShowClinicController',function($rootScope,$scope,requestHandler,Flash){
 	$scope.noOfRows="25";
 	$scope.sortKey='clinicName';
-
+	if($rootScope.isAdmin==2||$rootScope.isAdmin==4){
+		$scope.headText="Clinics";
+		$scope.addButtonText="Add Clinic";
+		$scope.tableHeadText="Clinic Name";
+		$scope.detailsHeadText="Clinic & Doctor Details";
+		$scope.detailsDoctorText="Doctors List";
+		$scope.detailsNoDoctorText="No Doctors added";
+		$scope.doctorIcon="fa-user-md";
+	}else if($rootScope.isAdmin==8||$rootScope.isAdmin==9){
+		$scope.headText="Shops";
+		$scope.addButtonText="Add Shop";
+		$scope.tableHeadText="Shop Name";
+		$scope.detailsHeadText="Shop & Mechanic Details";
+		$scope.detailsDoctorText="Mechanics List";
+		$scope.detailsNoDoctorText="No Mechanic added";
+		$scope.doctorIcon="fa-wrench";
+	}
+	
 	$scope.sort = function(keyname){
 		$scope.sortKey = keyname;   //set the sortKey to the param passed
 	    $scope.reverse = !$scope.reverse; //if true make it false and vice versa
 	};
 	    
 	$scope.getClinicList=function() {
-		 requestHandler.getRequest("CAdmin/getAllClinics.json","").then(function(results){
+		 requestHandler.getRequest("Caller/getAllClinics.json","").then(function(results){
 		 	 $scope.clinics= results.data.clinicsForm;
 		 });
 	};
@@ -18,7 +35,7 @@ adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash)
 	$scope.getClinicList();
 	
 	$scope.viewClinicDetails=function(clinicId) {
-		 requestHandler.getRequest("CAdmin/getClinicDetails.json?clinicId="+clinicId,"").then(function(results){
+		 requestHandler.getRequest("Caller/getClinicDetails.json?clinicId="+clinicId,"").then(function(results){
 		 	 $scope.clinicDetails= results.data.clinicsForm;
 		 	 $("#viewClinicDetails").modal('show');
 		  });
@@ -86,13 +103,30 @@ adminApp.controller('ShowClinicController',function($scope,requestHandler,Flash)
 
 
 
-adminApp.controller('SaveClinicController',function($scope,$location,requestHandler,Flash){
+adminApp.controller('SaveClinicController',function($rootScope,$scope,$location,requestHandler,Flash){
 	
 	$scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
 	$scope.satError=false;$scope.isError=false;
 	$scope.options=true;
+	$scope.backButtonText="Back to the list";
+	if($rootScope.isAdmin==2||$rootScope.isAdmin==3){
+		$scope.title="Add Clinic & Doctor";
+		$scope.headDetailText="Enter Clinic & Doctor Details";
+		$scope.labelHeadText="Clinic Name";
+		$scope.detailsDoctorText="Doctors Details";
+		$scope.doctorButtonText="Add One More Doctor";
+		$scope.doctorLabelText="Doctor Name";
+		$scope.isShowDoctorTitle=true;
+	}else if($rootScope.isAdmin==8||$rootScope.isAdmin==9){
+		$scope.title="Add Shop & Mechanic";
+		$scope.headDetailText="Enter Shop & Mechanic Details";
+		$scope.labelHeadText="Shop Name";
+		$scope.detailsDoctorText="Mechanics Details";
+		$scope.doctorButtonText="Add One More Mechanic";
+		$scope.doctorLabelText="Mechanic Name";
+		$scope.isShowDoctorTitle=false;
+	}
 	
-	$scope.title="Add Clinic & Doctor";
 	$scope.clinic={};
 	$scope.clinic.doctorsForms=[{doctorName:"",titleDr:"",titleDc:""}];
 	$scope.addDoctorInput=function(){
@@ -107,7 +141,7 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 	$scope.saveClinic=function(){
 		requestHandler.postRequest("CAdmin/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
 			Flash.create('success', "You have Successfully Added!");
-				  $location.path('dashboard/clinic');
+				  $location.path('dashboard/consumers');
 		});
 	};
  
@@ -263,13 +297,30 @@ adminApp.controller('SaveClinicController',function($scope,$location,requestHand
 	
 });
 
-adminApp.controller('EditClinicController',function($scope,$stateParams,$location,requestHandler,Flash){
+adminApp.controller('EditClinicController',function($rootScope,$scope,$stateParams,$location,requestHandler,Flash){
 	$scope.sunError=false;$scope.monError=false;$scope.tueError=false;$scope.wedError=false;$scope.thuError=false;$scope.friError=false;
 	$scope.satError=false;$scope.isError=false;
 	$scope.clinic={};
 	$scope.clinic.doctorsForms=[];
 	$scope.options=false;
-	$scope.title="Edit Clinic & Doctor";
+	$scope.backButtonText="Back to the list";
+	if($rootScope.isAdmin==2||$rootScope.isAdmin==3){
+		$scope.title="Edit Clinic & Doctor";
+		$scope.headDetailText="Enter Clinic & Doctor Details";
+		$scope.labelHeadText="Clinic Name";
+		$scope.detailsDoctorText="Doctors Details";
+		$scope.doctorLabelText="Doctor Name";
+		$scope.doctorButtonText="Add One More Doctor";
+		$scope.isShowDoctorTitle=true;
+	}else if($rootScope.isAdmin==8||$rootScope.isAdmin==9){
+		$scope.title="Add Shop & Mechanic";
+		$scope.headDetailText="Enter Shop & Mechanic Details";
+		$scope.labelHeadText="Shop Name";
+		$scope.detailsDoctorText="Mechanics Details";
+		$scope.doctorLabelText="Mechanic Name";
+		$scope.doctorButtonText="Add One More Mechanic";
+		$scope.isShowDoctorTitle=false;
+	}
 	var clinicOriginal="";
 		requestHandler.getRequest("CAdmin/getClinic.json?clinicId="+$stateParams.id,"").then(function(response){
 			
@@ -347,7 +398,7 @@ adminApp.controller('EditClinicController',function($scope,$stateParams,$locatio
 		$scope.updateClinic=function(){
 			requestHandler.postRequest("CAdmin/saveOrUpdateClinic.json",$scope.clinic).then(function(response){
 				Flash.create('success', "You have Successfully Updated!");
-					  $location.path('dashboard/clinic');
+					  $location.path('dashboard/consumers');
 			
 			});
 		};

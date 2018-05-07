@@ -134,7 +134,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 								    	value2.patientStatusName="Active";
 								        break;
 								    case 2:
-								    	value2.patientStatusName="Not Interested/Injured";
+								    	value2.patientStatusName="Not Interested";
 								        break;
 								    case 3:
 								    	value2.patientStatusName="Voice Mail";
@@ -735,8 +735,192 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 
 	};
 	
+	// Call Logs
+	 $scope.getClinics=function(){
+		   	requestHandler.getRequest("Caller/getClinicId.json","").then( function(response) {
+					
+				     $scope.clinic= response.data.clinicsForms;
+				 
+				     });
+		   };
+	// Doctor List For Call Logs
+	$scope.getDoctors=function(){
+		if($scope.calllogs.appointmentsForm.clinicId==null){
+		   	$scope.calllogs.appointmentsForm.clinicId="";
+		}
+		if($scope.calllogs.appointmentsForm.clinicId!=""){
+		   	requestHandler.getRequest("getNameByClinicId.json?clinicId="+$scope.calllogs.appointmentsForm.clinicId,"").then( function(response) {
+				$scope.doctor= response.data.doctorsForm;
+			});
+		}
+		   	
+	};
+	
+	// Add Call Logs Button Enable and Disable
+	$scope.enableCallLogsButton=function(localReportNumber,archiveDate){
+		var isChecked=false;
+		var changedLocalReportNumber=localReportNumber.replace( /(\.|\(|\)|\ )/g, "\\$1" );
+		var changeDate=archiveDate.replace(/(\/)/g,"\\$1");
+		 $.each($scope.autoDealerVehicleSearchData, function(index,value) {
+			 $.each(value.searchResult,function(index1,value1){
+				 if(archiveDate!=''){
+					 if(value.archivedDate==archiveDate){
+						 if(value1.localReportNumber==localReportNumber){
+								$.each(value1.patientSearchLists,function(index2,value2){
+									if(value2.selected==true){
+										isChecked=true;
+									}
+								});
+							}
+					 }
+				 }else{
+					 if(value1.localReportNumber==localReportNumber){
+							$.each(value1.patientSearchLists,function(index2,value2){
+								if(value2.selected==true){
+									isChecked=true;
+								}
+							});
+						}
+				 }
+				 
+				
+			 });
+				
+			});
+		 if(isChecked){
+			 $("#addCallLog"+changedLocalReportNumber+changeDate+"").removeAttr("disabled",false);
+		 }else{
+			$("#addCallLog"+changedLocalReportNumber+changeDate+"").attr("disabled",true);
+		 }
+	};
+
+	// Call Logs Add Modal
+	$scope.addModel=function(id,archiveDate)
+	{
+	  var patientIdArray=[];
+	  $.each($scope.autoDealerVehicleSearchData, function(index,value) {
+		  $.each(value.searchResult,function(index1,value1){
+			  if(archiveDate!=''){
+				  if(value.archivedDate==archiveDate){
+					  if(value1.localReportNumber==id.resultData.localReportNumber){
+							$.each(value1.patientSearchLists,function(index2,value2){
+								if(value2.selected==true){
+									patientIdArray.push(value2.patientId);
+								}
+								});
+						}
+				  }
+			  }else{
+				  if(value1.localReportNumber==id.resultData.localReportNumber){
+						$.each(value1.patientSearchLists,function(index2,value2){
+							if(value2.selected==true){
+								patientIdArray.push(value2.patientId);
+							}
+							});
+					}
+			  }
+		  });
+			
+		});
+	  if(patientIdArray.length==0){
+		  alert("Select Atleast one.");
+	  }else{
+	  
+	  	$scope.title="Add Call Log";
+	  	$scope.options=true;
+		$scope.callLogForm.$setPristine();
+		$scope.calllogs={};
+		$scope.calllogs.multiplePatientId=patientIdArray;
+		$scope.isAlert=false;
+		$scope.calllogs.appointmentsForm={};
+		$scope.calllogs.timeStamp=moment().format('MM/DD/YYYY h:mm A');
+		
+		$("#calllogsModel").modal("show");
+	  }
+	};
+	
+	// Single Patient Add Call log From View Call Log
+	$scope.addModelFromViewCallLog=function(id)
+	{
+	  var patientIdArray=[];
+		  
+	    patientIdArray.push(id);
+	  	$scope.title="Add Call Log";
+		$scope.options=true;
+		$scope.callLogForm.$setPristine();
+		$scope.calllogs={};
+		$scope.calllogs.multiplePatientId=patientIdArray;
+		$scope.isAlert=false;
+		$scope.calllogs.appointmentsForm={};
+		$scope.calllogs.timeStamp=moment().format('MM/DD/YYYY h:mm A');
+	  $('#viewCallLogsListModal')
+        .modal('hide')
+        .on('hidden.bs.modal', function (e) {
+           
+			$("#calllogsModel").modal("show");
+         $(this).off('hidden.bs.modal'); // Remove the 'on' event binding
+            
+        });
+	};
+	
+	$scope.save=function()
+	{
+		
+		$("#calllogsModel").modal("hide");
+		$('.modal-backdrop').hide();
+		requestHandler.postRequest("Caller/saveUpdateCallLogs.json",$scope.calllogs)
+			.then(function(response)
+				{
+				Flash.create("success","You have Successfully Added!");
+				$scope.searchItems($scope.mainSearchParam);
+				$scope.loadCountyByPreference();
+				angular.copy($scope.mainSearchParam,$scope.patient);
+				$(function(){
+					$("html,body").scrollTop(0);
+				});
+			});
+		
+	};
+	
+	// View Call Log List
+	$scope.viewCallLogsList=function(patientId,name,localReportNumber){
+		 $scope.callLogPatientId=patientId;
+		 $scope.callLogPatientName=name;
+		 $scope.callLogLocalReportNumber=localReportNumber;
+   	  requestHandler.getRequest("Caller/getAllCallLogss.json?patientId="+patientId,"").then( function(response) {
+ 	    	$scope.callLogs= response.data.callLogsForms;
+ 	    	 $.each($scope.callLogs,function(index,value) {
+ 		    	 switch(value.response) {
+ 		    	    case 2:
+ 		    	        value.response="Not Interested";
+ 		    	        break;
+ 		    	    case 3:
+ 		    	    	value.response="Voice mail";
+ 		    	        break;
+ 		    	    case 4:
+ 		    	    	value.response="Appointment Scheduled";
+ 		    	    	break;
+ 		    	    case 5:
+ 		    	    	value.response="Do not call";
+ 		    	    	break;
+ 		    	    case 8:
+		    	    	value.response="Call Back";
+		    	    	break;
+ 		    	    case 9:
+		    	    	value.response="Unable To Reach";
+		    	    	break;
+ 		    	    default:
+ 		    	    	break;
+ 		    	} 
+ 		     });
+ 	    	 $("#viewCallLogsListModal").modal('show');
+ 	  });	
+   };
+
+	
 	$scope.init=function(){
 
+	
 		//Initialize DropDown
 			
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
@@ -813,6 +997,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 			$scope.isSelectedAddedFromDate=false;
 		}
 		
+		$scope.getClinics();
 	};
 	
 	$scope.init();
@@ -1065,6 +1250,12 @@ $scope.archivedToDateRequired=false;
 		$scope.autoDealerVehicleSearchData="";
 		$scope.totalRecords=0;
 		$scope.directRunnerReportSearchData="";
+	};
+	
+	
+	// View Near By Clinics
+	$scope.viewNearByClinic=function(patientId){
+		$window.open('#/dashboard/viewlocations/'+patientId,'Crash Reports Online','width=1200,height=600,scrollbars=1');
 	};
 	
 	// Print Reports

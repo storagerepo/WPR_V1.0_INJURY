@@ -106,7 +106,7 @@ adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHa
 			   $scope.numberPatients=response.data.numberOfAssignedPatiets;
 		   });*/
 	   } 
-	   else if($rootScope.isAdmin==6||$rootScope.isAdmin==8){
+	   else if($rootScope.isAdmin==6){
 		   requestHandler.getRequest("dashboardCount.json","").then( function(response) {
 			   $scope.numberOfDealers=response.data.dashboardCount[0];
 			   $scope.numberOfVehicles=response.data.dashboardCount[1];
@@ -117,9 +117,24 @@ adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHa
 		   requestHandler.getRequest("CAdmin/getNumberOfCallers.json","").then( function(response) {
 			   $scope.numberOfDealers=response.data.numberOfCallers;
 		   });*/
-	 } else if($rootScope.isAdmin==7||$rootScope.isAdmin==9){
+	 } else if($rootScope.isAdmin==7){
 		 requestHandler.getRequest("dashboardCount.json","").then( function(response) {
 			   $scope.numberOfVehicles=response.data.dashboardCount[0];
+		   });
+		/*   requestHandler.getRequest("Caller/getNumberOfAssignedVehicles.json","").then( function(response) {
+			   $scope.numberOfVehicles= response.data.numberOfAssignedVehicles;
+		   });*/
+	 } else if($rootScope.isAdmin==8){
+		   requestHandler.getRequest("dashboardCount.json","").then( function(response) {
+			   $scope.numberOfDealers=response.data.dashboardCount[0];
+			   $scope.numberOfClinics=response.data.dashboardCount[1];
+			   $scope.numberOfAppointments=response.data.dashboardCount[2];
+			   $scope.numberOfVehicles=response.data.dashboardCount[3];
+		   });
+	 } else if($rootScope.isAdmin==9){
+		 requestHandler.getRequest("dashboardCount.json","").then( function(response) {
+			   $scope.numberOfClinics=response.data.dashboardCount[0];
+			   $scope.numberOfVehicles=response.data.dashboardCount[1];
 		   });
 		/*   requestHandler.getRequest("Caller/getNumberOfAssignedVehicles.json","").then( function(response) {
 			   $scope.numberOfVehicles= response.data.numberOfAssignedVehicles;

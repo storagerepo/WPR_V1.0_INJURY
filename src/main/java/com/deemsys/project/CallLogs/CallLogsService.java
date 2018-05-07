@@ -124,11 +124,11 @@ public class CallLogsService {
 		String role=loginService.getCurrentRole();
 		Integer callerId=0;
 		Integer callerAdminId=0;
-		if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)){
+		if(role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)){
 			Caller caller=callerService.getCallerByUserId(loginService.getCurrentUserID());
 			callerId=caller.getCallerId();
 			callerAdminId=caller.getCallerAdmin().getCallerAdminId();
-		}else if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)){
+		}else if(role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)){
 			callerAdminId=callerAdminService.getCallerAdminByUserId(loginService.getCurrentUserID()).getCallerAdminId();
 		}
 		List<CallLogsForm> callLogsForms=callLogsDAO.getCallLogsByPatientIdAndCallerAdminIdAndCallerId(patientId, callerAdminId, callerId);
@@ -175,11 +175,11 @@ public class CallLogsService {
 		Caller caller = null;
 		CallerAdmin callerAdmin = new CallerAdmin();
 		String role = loginService.getCurrentRole();
-		if (role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)) {
+		if (role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)) {
 			// Caller Admin
 			callerAdmin = callerAdminDAO.getCallerAdminByUserId(loginService
 					.getCurrentUserID());
-		} else if (role.equals(InjuryConstants.INJURY_CALLER_ROLE)) {
+		} else if (role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)) {
 			// Caller
 			caller = callerService.getCallerByUserId(loginService
 					.getCurrentUserID());
@@ -248,11 +248,11 @@ public class CallLogsService {
 		Caller caller = null;
 		CallerAdmin callerAdmin = new CallerAdmin();
 		String role = loginService.getCurrentRole();
-		if (role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)) {
+		if (role.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE)||role.equals(InjuryConstants.INJURY_BODY_SHOP_OWNER_ROLE)) {
 			// Caller Admin
 			callerAdmin = callerAdminDAO.getCallerAdminByUserId(loginService
 					.getCurrentUserID());
-		} else if (role.equals(InjuryConstants.INJURY_CALLER_ROLE)) {
+		} else if (role.equals(InjuryConstants.INJURY_CALLER_ROLE)||role.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE)||role.equals(InjuryConstants.INJURY_SHOP_ROLE)) {
 			// Caller
 			caller = callerService.getCallerByUserId(loginService
 					.getCurrentUserID());

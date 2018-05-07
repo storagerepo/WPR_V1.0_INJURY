@@ -57,12 +57,12 @@ sbAdminApp
 															break;
 														}
 														case 403: {
-															window.location.href = window.location.origin+"/Injury/logout?sessionout";
+														window.location.href = window.location.origin+"/Injury/logout?sessionout";
 															break;
 														}
 														case 500: {
 															alert("Please try again!");
-														    window.location.href = window.location.origin+"/Injury/logout";
+														   window.location.href = window.location.origin+"/Injury/logout";
 															break;
 														}
 														default: {
@@ -316,7 +316,7 @@ sbAdminApp
 											})
 									// End Staff
 									.state(
-											'dashboard.clinics',
+											'dashboard.consumer',
 											{
 												resolve : {
 													loadMyFile : function(
@@ -330,11 +330,11 @@ sbAdminApp
 												},
 												controller : 'CallerClinicController',
 												templateUrl : 'views/clinic/clinic.html',
-												url : '/clinics'
+												url : '/consumer'
 											})
 											
 									.state(
-											'dashboard.clinic',
+											'dashboard.consumers',
 											{
 												resolve : {
 													loadMyFile : function(
@@ -348,11 +348,11 @@ sbAdminApp
 												},
 												controller : 'ShowClinicController',
 												templateUrl : 'views/clinic/clinic.html',
-												url : '/clinic'
+												url : '/consumers'
 											})
 											
 									.state(
-											'dashboard.add-clinic',
+											'dashboard.add-consumer',
 											{
 												resolve : {
 													loadMyFile : function(
@@ -371,11 +371,11 @@ sbAdminApp
 												},
 												controller : 'SaveClinicController',
 												templateUrl : 'views/clinic/add-clinic.html',
-												url : '/add-clinic'
+												url : '/add-consumer'
 
 											})
 									.state(
-											'dashboard.edit-clinic/:id',
+											'dashboard.edit-consumer/:id',
 											{
 												resolve : {
 													loadMyFile : function(
@@ -394,7 +394,7 @@ sbAdminApp
 												},
 												controller : 'EditClinicController',
 												templateUrl : 'views/clinic/add-clinic.html',
-												url : '/edit-clinic/:id'
+												url : '/edit-consumer/:id'
 
 											})
 									// Start Doctor
@@ -1479,7 +1479,7 @@ sbAdminApp
 									// Auto Dealer Ends
 									// Shops Starts
 									.state(
-											'dashboard.shops',
+											'dashboard.bcallers',
 											{
 												resolve : {
 													loadMyFile : function(
@@ -1495,12 +1495,12 @@ sbAdminApp
 												},
 												controller : 'ShowCallersController',
 												templateUrl : 'views/caller/view-callers.html',
-												url : '/shops',
+												url : '/bcallers',
 												roleId:9,
 
 											})
 									.state(
-											'dashboard.add-shop',
+											'dashboard.add-bcaller',
 											{
 
 												resolve : {
@@ -1517,12 +1517,12 @@ sbAdminApp
 												},
 												controller : 'SaveCallerController',
 												templateUrl : 'views/caller/add-caller.html',
-												url : '/add-shop',
-												title : 'Add Shop',
+												url : '/add-bcaller',
+												title : 'Add Caller',
 												roleId:9,
 											})
 									.state(
-											'dashboard.edit-shop/:callerId',
+											'dashboard.edit-bcaller/:callerId',
 											{
 
 												resolve : {
@@ -1538,8 +1538,8 @@ sbAdminApp
 												},
 												controller : 'EditCallerController',
 												templateUrl : 'views/caller/add-caller.html',
-												url : '/edit-shop/:callerId',
-												title : 'Edit Shop',
+												url : '/edit-bcaller/:callerId',
+												title : 'Edit Caller',
 												roleId:9,
 											})
 									// Shops Ends

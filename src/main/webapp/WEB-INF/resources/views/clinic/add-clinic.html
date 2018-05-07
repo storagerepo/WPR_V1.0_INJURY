@@ -3,7 +3,7 @@
 <script src="resources/components/datetime/moment.js"></script>
     <div class="row" ng-cloak>
     <div class="col-lg-12">
-        <a ui-sref="dashboard.clinic" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> Back to the list</a>
+        <a ui-sref="dashboard.consumers" class="btn-sm btn-primary pull-right margin-top-40"><i class="fa fa-arrow-circle-left fa-lg"></i> {{backButtonText}}</a>
         <h2 ng-cloak class="page-header">{{title}}&nbsp;-&nbsp;{{clinic.clinicName}}</span></h2>
     </div>
     
@@ -16,7 +16,7 @@
    
         <div class="panel panel-default">
             <div class="panel-heading">
-                Enter Clinic & Doctor Details
+                {{headDetailText}}
                 <span class="pull-right"><span class="redText">*</span> Required Fields</span>
             </div>
             <!-- /.panel-heading -->
@@ -24,7 +24,7 @@
                 <div class="dataTable_wrapper">
                     <div class="col-md-12 no-padding">
                                 <div class="col-md-6">
-                                    <span class="redText">*</span> <label>Clinic Name</label>
+                                    <span class="redText">*</span> <label>{{labelHeadText}}</label>
                                     <input type="text" name="clinicName" class="form-control" ng-model="clinic.clinicName" placeholder="Clinic Name" required maxlength="80">
                                     <span class="error-container" ng-show="myForm.clinicName.$dirty && myForm.clinicName.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter ClinicName</span>
@@ -598,30 +598,30 @@
                              </div>
                              <div class="col-md-12 no-padding">
                               <div class="col-md-12">
-                              <label>Doctor Details</label>
+                              <label>{{detailsDoctorText}}</label>
                               </div>
                                </div>
                              <div class="col-md-12 no-padding">
                              <div class="col-md-6"></div>
-                              	<div class="col-md-6"><br/><button class="btn btn-sm btn-primary pull-right" ng-click="addDoctorInput()"><i class="fa fa-plus-circle fa-lg"></i> Add One more Doctor</button> <br/></div>
+                              	<div class="col-md-6"><br/><button class="btn btn-sm btn-primary pull-right" ng-click="addDoctorInput()"><i class="fa fa-plus-circle fa-lg"></i> {{doctorButtonText}}</button> <br/></div>
                               </div>
                               <div class="col-md-12"><hr></div>
                                <div class="col-md-12" ng-repeat="doctorInput in clinic.doctorsForms">
                                <div class="col-md-2">
-                                 <label>Doctor Name</label>
+                                 <label>{{doctorLabelText}}</label>
                                 </div>
                                 <div class="col-md-3">
                                 <input type="hidden" ng-model="doctorInput.id"/>
-                                <input type="text" name="doctorName{{$index}}" ng-model="doctorInput.doctorName" class="form-control" placeholder="Doctor Name" validate-name required  maxlength="25"/>
+                                <input type="text" name="doctorName{{$index}}" ng-model="doctorInput.doctorName" class="form-control" placeholder="{{doctorLabelText}}" validate-name required  maxlength="25"/>
                                 <span class="error-container" ng-show="myForm.doctorName{{$index}}.$dirty && myForm.doctorName{{$index}}.$invalid">
                                 <span ng-cloak style="color:red" ng-show="myForm.doctorName{{$index}}.$error.required">Please Enter Doctor Name</span>
                                 <span ng-cloak style="color:red" ng-show="!myForm.doctorName{{$index}}.$error.required&&myForm.doctorName{{$index}}.$error.validateName">Enter Valid Doctor Name</span>
                                 </span>
                                 </div>
-                                <div class="col-md-2">
-                                 <label>Doctor Title</label>
+                                <div class="col-md-2" ng-show="isShowDoctorTitle">
+                                 <label>{{doctorTitleText}}</label>
                                  </div>
-                                 <div class="col-md-2">
+                                 <div class="col-md-2" ng-show="isShowDoctorTitle">
                                     <input type="checkbox" name="doctorTitleDR" ng-model="doctorInput.titleDr" ng-true-value="1" ng-false-value="0"/> DR &nbsp;&nbsp;
                                     <input type="checkbox" name="doctorTitleDC" ng-model="doctorInput.titleDc" ng-true-value="1" ng-false-value="0"/> DC
                                 </div>
@@ -636,7 +636,7 @@
             <div class="text-right" style="margin-right:30px;">
                 <a class="btn btn-success" ng-show='options' ng-class="{'button-disable':myForm.$invalid || isError}" ng-disabled='myForm.$invalid || isError' ng-click="saveClinic()">Save</a>
             	 <a class="btn btn-success" ng-show='!options' ng-class="{'button-disable':myForm.$invalid || isClean() || isError}" ng-disabled='isClean() || myForm.$invalid || isError' ng-click="updateClinic()">Update</a>
-              <a ui-sref="dashboard.clinic"  class="btn btn-danger" >Cancel</a><br/><br/>
+              <a ui-sref="dashboard.consumers"  class="btn btn-danger" >Cancel</a><br/><br/>
            </div>
             <!-- /.panel-body -->
         </div>
