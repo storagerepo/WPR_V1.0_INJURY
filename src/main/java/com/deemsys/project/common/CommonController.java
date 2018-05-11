@@ -366,10 +366,13 @@ public class CommonController {
 	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
 		}else if(currentRoleId.equals(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID)){
 			dashboardCount.add(callerService.getNoOfCallers());
+			dashboardCount.add(clinicsService.getNoOfClinics());
+	    	dashboardCount.add(appointmentsService.getNoOfAppointments());
 			callerPatientSearchForm.setIsOwner(1);
 			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 			dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
 		}else if(currentRoleId.equals(InjuryConstants.INJURY_AUTO_DEALER_ROLE_ID)){
+			dashboardCount.add(clinicsService.getNoOfClinics());
 			callerPatientSearchForm.setIsOwner(1);
 			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());

@@ -1413,7 +1413,7 @@ sbAdminApp
 									// Caller Ends
 									// Auto Dealer Starts
 									.state(
-											'dashboard.autoDealer',
+											'dashboard.autoCaller',
 											{
 												resolve : {
 													loadMyFile : function(
@@ -1429,12 +1429,12 @@ sbAdminApp
 												},
 												controller : 'ShowCallersController',
 												templateUrl : 'views/caller/view-callers.html',
-												url : '/autoDealer',
+												url : '/autoCaller',
 												roleId:7,
 
 											})
 									.state(
-											'dashboard.addAutoDealer',
+											'dashboard.addAutoCaller',
 											{
 
 												resolve : {
@@ -1451,12 +1451,12 @@ sbAdminApp
 												},
 												controller : 'SaveCallerController',
 												templateUrl : 'views/caller/add-caller.html',
-												url : '/addAutoDealer',
-												title : 'Add Dealer',
+												url : '/addAutoCaller',
+												title : 'Add Caller',
 												roleId:7,
 											})
 									.state(
-											'dashboard.editAutoDealer/:callerId',
+											'dashboard.editAutoCaller/:callerId',
 											{
 
 												resolve : {
@@ -1472,8 +1472,8 @@ sbAdminApp
 												},
 												controller : 'EditCallerController',
 												templateUrl : 'views/caller/add-caller.html',
-												url : '/editAutoDealer/:callerId',
-												title : 'Edit Dealer',
+												url : '/editAutoCaller/:callerId',
+												title : 'Edit Caller',
 												roleId:7,
 											})
 									// Auto Dealer Ends

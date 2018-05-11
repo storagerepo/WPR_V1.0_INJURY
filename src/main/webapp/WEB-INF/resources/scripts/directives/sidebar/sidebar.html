@@ -101,7 +101,10 @@
             
             <!-- Auto Dealer Manager -->
              <li ui-sref-active="active" ng-show="{{$root.isAdmin==6}}">
-                <a ui-sref="dashboard.autoDealer"><span ng-cloak class="dealer-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Dealer</a>
+                <a ui-sref="dashboard.autoCaller"><span ng-cloak class="fa fa-user fa-fw">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Callers</a>
+            </li>
+             <li ui-sref-active="active" ng-show="{{$root.isAdmin==6||$root.isAdmin==7}}">
+                <a ui-sref="dashboard.consumers"><span ng-cloak class="dealer-icon-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Dealers</a>
             </li>
              <!-- Shop Body Owners -->
              <li ui-sref-active="active" ng-show="{{$root.isAdmin==8}}">
@@ -116,7 +119,7 @@
             </li>
             
             <!-- Common for Caller Centers and Body Shop Owners -->
-        	<li ui-sref-active="active" ng-show="{{$root.isAdmin==2 || $root.isAdmin==8}}">
+        	<li ui-sref-active="active" ng-show="{{$root.isAdmin==2 || $root.isAdmin==8 ||$root.isAdmin==6}}">
                 <a ui-sref="dashboard.appointment"><i ng-cloak class="fa fa-calendar fa-fw"></i> Appointments<span></span></a>
             </li>
         

@@ -20,6 +20,15 @@ adminApp.controller('showNearByClinicController',function($rootScope,$scope,$log
 			$scope.detailsNoDoctorText="No Mechanic added";
 			$scope.doctorIcon="fa-wrench";
 			$scope.patientText="Client";
+		}else if($rootScope.isAdmin==6||$rootScope.isAdmin==7){
+			$scope.titleText="View Near By Dealers";
+			$scope.clientNameText="Client Name";
+			$scope.clinicNameText="Dealer Name";
+			$scope.detailsHeadText="Dealer & Manager Details";
+			$scope.detailsDoctorText="MAnagers List";
+			$scope.detailsNoDoctorText="No Manager added";
+			$scope.doctorIcon="fa-user-plus";
+			$scope.patientText="Client";
 		}
 		$scope.searchRange=25;
 		$scope.clinicsForms="";

@@ -11,24 +11,18 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
     
     $scope.sortKey = 'username';
     $scope.roleId=$state.current.roleId;
+    $scope.headingText="Callers";
+    $scope.addButtonText="Add Caller";
+    $scope.hintText="Caller";
     if($scope.roleId==4){
     	$scope.addLink="dashboard.addCaller";
     	$scope.editLink="EditCaller";
-    	$scope.headingText="Callers";
-    	$scope.addButtonText="Add Caller";
-    	$scope.hintText="Caller";
     }else if($scope.roleId==7){
-    	$scope.addLink="dashboard.addAutoDealer";
-    	$scope.editLink="editAutoDealer";
-    	$scope.headingText="Dealers";
-    	$scope.addButtonText="Add Dealer";
-    	$scope.hintText="Dealer";
+    	$scope.addLink="dashboard.addAutoCaller";
+    	$scope.editLink="editAutoCaller";
     }else if($scope.roleId==9){
     	$scope.addLink="dashboard.add-bcaller";
     	$scope.editLink="edit-bcaller";
-    	$scope.headingText="Callers";
-    	$scope.addButtonText="Add Caller";
-    	$scope.hintText="Caller";
     }
     
     $scope.getCallersList=function(){
@@ -79,12 +73,7 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
 				if(response.data.isDeleteable==true){
 					$("#deleteCallerConfirmOne").modal("hide");
 					$('.modal-backdrop').hide();
-					 if($scope.roleId==4||$scope.roleId==9){
-						 Flash.create('success', "You have Successfully Deleted the Caller!");
-					 }else if($scope.roleId==7){
-						 Flash.create('success', "You have Successfully Deleted the Dealer!");
-					 }
-					
+					Flash.create('success', "You have Successfully Deleted the Caller!");
 					$scope.getCallersList();
 					$(function(){
 						$("html,body").scrollTop(0);
@@ -97,11 +86,7 @@ adminApp.controller('ShowCallersController',function($http,$state,$scope,request
 						requestHandler.postRequest("CAdmin/deleteCallerWithMap.json?callerId="+callerId,"").then(function(response) {
 							$("#deleteCallerConfirmTwo").modal("hide");
 							$('.modal-backdrop').hide();
-							 if($scope.roleId==4||$scope.roleId==9){
-								 Flash.create('success', "You have Successfully Deleted the Caller!");
-							 }else if($scope.roleId==7){
-								 Flash.create('success', "You have Successfully Deleted the Dealer!");
-							 }
+							 Flash.create('success', "You have Successfully Deleted the Caller!");
 							$scope.getCallersList();
 							$(function(){
 								$("html,body").scrollTop(0);
@@ -129,8 +114,7 @@ adminApp.controller('SaveCallerController', function($http,$state,$scope,$locati
     if($scope.roleId==4){
     	$scope.backLink="dashboard.callers";
     }else if($scope.roleId==7){
-    	$scope.backLink="dashboard.autoDealer";
-    	$scope.detailsText="Enter Dealer Details";
+    	$scope.backLink="dashboard.autoCaller";
     }else if($scope.roleId==9){
     	$scope.backLink="dashboard.bcallers";
     }
@@ -173,7 +157,7 @@ adminApp.controller('SaveCallerController', function($http,$state,$scope,$locati
 				  if($scope.roleId==4){
 					   $location.path('dashboard/Callers');
 				   }else if($scope.roleId==7){
-					   $location.path('dashboard/autoDealer');
+					   $location.path('dashboard/autoCaller');
 				   }else if($scope.roleId==9){
 					   $location.path('dashboard/bcallers');
 				   }
@@ -194,15 +178,13 @@ adminApp.controller('EditCallerController', function($http,$state,$location,$sco
 	$scope.isAdd=false;
 	
 	$scope.roleId=$state.current.roleId;
+	$scope.detailsText="Enter Caller Details";
     if($scope.roleId==4){
     	$scope.backLink="dashboard.callers";
-    	$scope.detailsText="Enter Caller Details";
     }else if($scope.roleId==7){
-    	$scope.backLink="dashboard.autoDealer";
-    	$scope.detailsText="Enter Dealer Details";
+    	$scope.backLink="dashboard.autoCaller";
     }else if($scope.roleId==9){
     	$scope.backLink="dashboard.bcallers";
-    	$scope.detailsText="Enter Caller Details";
     }
 	
 	var callerOriginal="";
@@ -217,7 +199,7 @@ adminApp.controller('EditCallerController', function($http,$state,$location,$sco
 			if($scope.roleId==4){
 				$location.path('dashboard/Callers');
 			}else if($scope.roleId==7){
-				$location.path('dashboard/autoDealer');
+				$location.path('dashboard/autoCaller');
 			}else if($scope.roleId==9){
 				$location.path('dashboard/bcallers');
 			}

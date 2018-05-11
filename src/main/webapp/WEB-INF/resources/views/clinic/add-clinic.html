@@ -25,9 +25,9 @@
                     <div class="col-md-12 no-padding">
                                 <div class="col-md-6">
                                     <span class="redText">*</span> <label>{{labelHeadText}}</label>
-                                    <input type="text" name="clinicName" class="form-control" ng-model="clinic.clinicName" placeholder="Clinic Name" required maxlength="80">
+                                    <input type="text" name="clinicName" class="form-control" ng-model="clinic.clinicName" placeholder="{{labelHeadText}}" required maxlength="80">
                                     <span class="error-container" ng-show="myForm.clinicName.$dirty && myForm.clinicName.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter ClinicName</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.clinicName.$error.required">Please Enter {{labelHeadText}}</span>
                               </span><br>
                                  </div>    
                                  <div class="col-md-6">
@@ -614,8 +614,8 @@
                                 <input type="hidden" ng-model="doctorInput.id"/>
                                 <input type="text" name="doctorName{{$index}}" ng-model="doctorInput.doctorName" class="form-control" placeholder="{{doctorLabelText}}" validate-name required  maxlength="25"/>
                                 <span class="error-container" ng-show="myForm.doctorName{{$index}}.$dirty && myForm.doctorName{{$index}}.$invalid">
-                                <span ng-cloak style="color:red" ng-show="myForm.doctorName{{$index}}.$error.required">Please Enter Doctor Name</span>
-                                <span ng-cloak style="color:red" ng-show="!myForm.doctorName{{$index}}.$error.required&&myForm.doctorName{{$index}}.$error.validateName">Enter Valid Doctor Name</span>
+                                <span ng-cloak style="color:red" ng-show="myForm.doctorName{{$index}}.$error.required">Please Enter {{doctorLabelText}}</span>
+                                <span ng-cloak style="color:red" ng-show="!myForm.doctorName{{$index}}.$error.required&&myForm.doctorName{{$index}}.$error.validateName">Enter Valid {{doctorLabelText}}</span>
                                 </span>
                                 </div>
                                 <div class="col-md-2" ng-show="isShowDoctorTitle">

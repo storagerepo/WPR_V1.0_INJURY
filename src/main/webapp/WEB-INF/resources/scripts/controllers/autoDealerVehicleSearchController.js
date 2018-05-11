@@ -449,11 +449,7 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 	
 	$scope.assignDealerPopup=function(){
 		$scope.single= false;
-		if($rootScope.isAdmin==6){
-			$scope.optionText="-- Select Dealer --";
-		}else if($rootScope.isAdmin==8){
-			$scope.optionText="-- Select Shop --";
-		}
+		$scope.myForm.dealerId="";
 		$("#assignDealerModal").modal('show');
 	};
 	
@@ -917,6 +913,25 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
  	  });	
    };
 
+   // View Appointment From Call Logs
+   $scope.viewAppointments=function(appointmentId)
+	{
+	if(appointmentId==null)
+		{
+		 $scope.appointments={};
+		 $scope.appointments.notavailable=true;
+		}
+	else{
+	requestHandler.getRequest("Caller/getAppointments.json?appointmentId="+appointmentId,"").then( function(response) {
+		
+		    $scope.appointments=response.data.appointmentsForm;
+		    $scope.appointments.notavailable=false;
+	  });
+	}	
+		 $("#viewAppointmentsModal").modal("show");
+		 
+	
+	};
 	
 	$scope.init=function(){
 
@@ -997,7 +1012,15 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 			$scope.isSelectedAddedFromDate=false;
 		}
 		
+		$scope.shopText="Dealer";
+		$scope.mechanicText="Manager";
+		if($rootScope.isAdmin==8||$rootScope.isAdmin==9){
+			$scope.shopText="Shop";
+			$scope.mechanicText="Mechanic";
+		}
+		
 		$scope.getClinics();
+		
 	};
 	
 	$scope.init();

@@ -36,6 +36,15 @@ adminApp.controller('ShowAppointmentsCtrl', function($rootScope,$scope,$http,$lo
 			$scope.detailsDoctorText="Mechanics List";
 			$scope.detailsNoDoctorText="No Mechanic added";
 			$scope.doctorIcon="fa-wrench";
+		}else if($rootScope.isAdmin==6){
+			$scope.patientTableText="Client Name";
+			$scope.clinicTableText="Dealer Name";
+			$scope.patientLabelText="Client";
+			$scope.clinicLabelText="Dealer";
+			$scope.detailsHeadText="Dealer & Manager Details";
+			$scope.detailsDoctorText="Managers List";
+			$scope.detailsNoDoctorText="No Manager added";
+			$scope.doctorIcon="fa-user-plus";
 		}
 	};
 	$scope.searchAppointments=function(){

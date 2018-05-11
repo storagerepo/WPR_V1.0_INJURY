@@ -109,7 +109,9 @@ adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHa
 	   else if($rootScope.isAdmin==6){
 		   requestHandler.getRequest("dashboardCount.json","").then( function(response) {
 			   $scope.numberOfDealers=response.data.dashboardCount[0];
-			   $scope.numberOfVehicles=response.data.dashboardCount[1];
+			   $scope.numberOfClinics=response.data.dashboardCount[1];
+			   $scope.numberOfAppointments=response.data.dashboardCount[2];
+			   $scope.numberOfVehicles=response.data.dashboardCount[3];
 		   });
 		   /*requestHandler.getRequest("Patient/getNumberOfVehicles.json","").then( function(response) {
 			   $scope.numberOfVehicles= response.data.numberOfVehicles;
@@ -119,6 +121,7 @@ adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHa
 		   });*/
 	 } else if($rootScope.isAdmin==7){
 		 requestHandler.getRequest("dashboardCount.json","").then( function(response) {
+			   $scope.numberOfClinics=response.data.dashboardCount[0];
 			   $scope.numberOfVehicles=response.data.dashboardCount[0];
 		   });
 		/*   requestHandler.getRequest("Caller/getNumberOfAssignedVehicles.json","").then( function(response) {

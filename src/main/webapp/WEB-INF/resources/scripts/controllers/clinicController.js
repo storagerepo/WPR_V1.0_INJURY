@@ -19,6 +19,14 @@ adminApp.controller('ShowClinicController',function($rootScope,$scope,requestHan
 		$scope.detailsDoctorText="Mechanics List";
 		$scope.detailsNoDoctorText="No Mechanic added";
 		$scope.doctorIcon="fa-wrench";
+	}else if($rootScope.isAdmin==6||$rootScope.isAdmin==7){
+		$scope.headText="Dealers";
+		$scope.addButtonText="Add Dealer";
+		$scope.tableHeadText="Dealer Name";
+		$scope.detailsHeadText="Dealer & Manager Details";
+		$scope.detailsDoctorText="Managers List";
+		$scope.detailsNoDoctorText="No Manager added";
+		$scope.doctorIcon="fa-user-plus";
 	}
 	
 	$scope.sort = function(keyname){
@@ -124,6 +132,14 @@ adminApp.controller('SaveClinicController',function($rootScope,$scope,$location,
 		$scope.detailsDoctorText="Mechanics Details";
 		$scope.doctorButtonText="Add One More Mechanic";
 		$scope.doctorLabelText="Mechanic Name";
+		$scope.isShowDoctorTitle=false;
+	}else if($rootScope.isAdmin==6||$rootScope.isAdmin==7){
+		$scope.title="Add Dealer & Manager";
+		$scope.headDetailText="Enter Dealer & Manager Details";
+		$scope.labelHeadText="Dealer Name";
+		$scope.detailsDoctorText="Managers Details";
+		$scope.doctorButtonText="Add One More Manager";
+		$scope.doctorLabelText="Manager Name";
 		$scope.isShowDoctorTitle=false;
 	}
 	
@@ -319,6 +335,14 @@ adminApp.controller('EditClinicController',function($rootScope,$scope,$statePara
 		$scope.detailsDoctorText="Mechanics Details";
 		$scope.doctorLabelText="Mechanic Name";
 		$scope.doctorButtonText="Add One More Mechanic";
+		$scope.isShowDoctorTitle=false;
+	}else if($rootScope.isAdmin==6||$rootScope.isAdmin==7){
+		$scope.title="Add Dealer & Manager";
+		$scope.headDetailText="Enter Dealer & Manager Details";
+		$scope.labelHeadText="Dealer Name";
+		$scope.detailsDoctorText="Managers Details";
+		$scope.doctorButtonText="Add One More Manager";
+		$scope.doctorLabelText="Manager Name";
 		$scope.isShowDoctorTitle=false;
 	}
 	var clinicOriginal="";
