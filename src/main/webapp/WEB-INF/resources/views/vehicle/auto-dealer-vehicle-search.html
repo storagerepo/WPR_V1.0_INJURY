@@ -899,7 +899,7 @@
 						ng-show="callLogForm.timeStamp.$dirty && callLogForm.timeStamp.$invalid && !callLogForm.notes.$prestine">
 						<span style="color: red"
 						ng-show="callLogForm.timeStamp.$error.required" id="dateTimeError">Please
-							Enter Date and Time</span>
+							Select a Past Datetime</span>
 					</span> <br /> <input type="hidden" id="patientId" class="form-control"
 						ng-model="calllogs.patientId"> <input type="hidden"
 						id="appointmentId" class="form-control"
@@ -954,7 +954,7 @@
 							ng-show="callLogForm.scheduledDate.$dirty && callLogForm.scheduledDate.$invalid">
 							<span style="color: red"
 							ng-show="callLogForm.scheduledDate.$error.required">Please
-								Enter Date</span>
+								Select a Future Datetime</span>
 						</span>
 					</div>
 					<!-- End Appointment Block -->
@@ -1099,47 +1099,6 @@
 			</div>
 			<div class="modal-footer">
 				<button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-
-</div>
-
-<!--  View Appointments Modal-->
-
-<div class="modal fade" id="viewAppointmentsModal" role="dialog">
-	<div class="modal-dialog">
-
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">View Appointment</h4>
-			</div>
-			<div class="modal-body">
-				<table class="table table-striped table-bordered">
-					<tbody ng-show="!appointments.notavailable">
-						<tr>
-							<td>Scheduled Date & Time</td>
-							<td class="col-md-8">{{appointments.scheduledDateTime}}</td>
-						</tr>
-						<tr>
-							<td>Clinic Name</td>
-							<td class="col-md-8 wrap">{{appointments.clinicName}}</td>
-						</tr>
-					</tbody>
-					<tbody ng-show="appointments.notavailable">
-						<tr>
-							<td colspan="5" align="center">No Appointment Added!</td>
-						</tr>
-					</tbody>
-
-				</table>
-				<div class="modal-footer">
-					<button type="close" class="btn btn-danger" data-dismiss="modal">Close</button>
-
-
-				</div>
 			</div>
 		</div>
 	</div>
@@ -1334,7 +1293,6 @@ $('#appointmentDateTime').datetimepicker({
 	pickTime : true,
 	format : 'MM/DD/YYYY hh:mm A',
 	maxDate : new Date(),
-	inline:true,
 	sideBySide:true
 });
 $('#appointmentDateTime').keydown(function(e) {
@@ -1348,7 +1306,6 @@ $('#scheduledDateTime').datetimepicker({
 	pickTime : true,
 	format : 'MM/DD/YYYY hh:mm A',
 	minDate : new Date(),
-	inline:true,
 	sideBySide:true
 });
 
