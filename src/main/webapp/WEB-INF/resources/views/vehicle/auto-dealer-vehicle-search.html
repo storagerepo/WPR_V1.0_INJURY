@@ -711,6 +711,12 @@
 								Available"}}</td>
 						</tr>
 						<tr>
+							<td class="col-md-3"><b>Local Report Number</b></td>
+							<td class="col-md-3">{{patientDetails.localReportNumber}}</td>
+							<td class="col-md-3"><b>Reporting Agency</b></td>
+							<td class="col-md-3">{{patientDetails.reportingAgencyName}}</td>
+						</tr>
+						<tr>
 							<td class="col-md-3"><b>Vehicle Make</b></td>
 							<td class="col-md-3">{{patientDetails.vehicleMake}}</td>
 							<td class="col-md-3"><b>Vehicle Year</b></td>
@@ -899,7 +905,7 @@
 						ng-show="callLogForm.timeStamp.$dirty && callLogForm.timeStamp.$invalid && !callLogForm.notes.$prestine">
 						<span style="color: red"
 						ng-show="callLogForm.timeStamp.$error.required" id="dateTimeError">Please
-							Select a Past Datetime</span>
+							Select a Past Date and Time</span>
 					</span> <br /> <input type="hidden" id="patientId" class="form-control"
 						ng-model="calllogs.patientId"> <input type="hidden"
 						id="appointmentId" class="form-control"
@@ -954,7 +960,7 @@
 							ng-show="callLogForm.scheduledDate.$dirty && callLogForm.scheduledDate.$invalid">
 							<span style="color: red"
 							ng-show="callLogForm.scheduledDate.$error.required">Please
-								Select a Future Datetime</span>
+								Select a Future Date and Time</span>
 						</span>
 					</div>
 					<!-- End Appointment Block -->
@@ -1293,7 +1299,6 @@ $('#appointmentDateTime').datetimepicker({
 	pickTime : true,
 	format : 'MM/DD/YYYY hh:mm A',
 	maxDate : new Date(),
-	sideBySide:true
 });
 $('#appointmentDateTime').keydown(function(e) {
 	e.preventDefault();
@@ -1305,8 +1310,7 @@ $('#appointmentDateTime').bind("cut copy paste", function(e) {
 $('#scheduledDateTime').datetimepicker({
 	pickTime : true,
 	format : 'MM/DD/YYYY hh:mm A',
-	minDate : new Date(),
-	sideBySide:true
+	minDate : new Date()
 });
 
 $('#scheduledDateTime').keydown(function(e) {
