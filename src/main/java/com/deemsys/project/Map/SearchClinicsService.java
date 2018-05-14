@@ -135,7 +135,7 @@ public class SearchClinicsService {
 		clinicsForms=this.getFilteredClinicByNormalDistanceCalculation(clinics, convertedRange, correctedLatBigDecimal, correctedLongBigDecimal);
 		
 		// Check Whether Driving Distance Enabled
-		if(callerAdmin.getIsDrivingDistance()==1){
+		if(callerAdmin.getIsDrivingDistance()!=null&&callerAdmin.getIsDrivingDistance()==1){
 			List<PatientNearbyClinicSearchResult> patientNearbyClinicSearchResults=patientNearbyClinicSearchResultDAO.getSearchResultByPatientId(correctedLatBigDecimal,correctedLongBigDecimal);
 			// Origins
 			String origin = correctedLatBigDecimal+","+correctedLongBigDecimal;
