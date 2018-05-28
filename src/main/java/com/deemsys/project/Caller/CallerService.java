@@ -318,12 +318,8 @@ public class CallerService {
 	}
 	
 	// Get No Of Callers Under Caller Admin
-	public Integer getNoOfCallers() {
-		List<Caller> callers = new ArrayList<Caller>();
-		Integer callerAdminId=callerAdminDAO.getCallerAdminByUserId(getCurrentUserId()).getCallerAdminId();
-		callers=callerDAO.getCallerByCallerAdminId(callerAdminId);
-
-		return callers.size();
+	public Integer getNoOfCallers() {		
+		return callerDAO.getCallersByCalleradminUserId(getCurrentUserId()).intValue();
 
 	}
 

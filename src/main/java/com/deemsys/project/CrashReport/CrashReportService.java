@@ -100,6 +100,10 @@ public class CrashReportService {
 		return crashReportForm;
 	}
 	
+	public Integer getNoOfCrashReports(){
+		return crashReportDAO.getNoOfCrashReports();
+	}
+	
 	//Merge an Entry (Save or Update)
 	public int mergeCrashReport(CrashReportForm crashReportForm)
 	{

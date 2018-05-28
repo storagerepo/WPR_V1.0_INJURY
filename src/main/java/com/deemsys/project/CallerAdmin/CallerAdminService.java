@@ -291,14 +291,13 @@ public class CallerAdminService {
 	
 	// Get Number of Caller Admin
 	public Integer getNumberOfCallerAdmins(){
-		List<CallerAdminForm> callerAdminForms=callerAdminDAO.getCallerAdminListByRoleId(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID);
-		return callerAdminForms.size();
+		return callerAdminDAO.getNoOfCallerAdmins(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID);
 	}
 	
 	// Get Number of Manager
-	public Integer getNumberOfManagers(){
-		List<CallerAdminForm> callerAdminForms=callerAdminDAO.getCallerAdminListByRoleId(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID);
-		return callerAdminForms.size();
+	public Integer getNumberOfManagers(){		
+		//Utilizing Same function for Auto Manager
+		return callerAdminDAO.getNoOfCallerAdmins(InjuryConstants.INJURY_AUTO_MANAGER_ROLE_ID);
 	}
 	
 	//Get Caller Admin by User Id

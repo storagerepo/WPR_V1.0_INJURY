@@ -457,4 +457,16 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		query.executeUpdate();
 	}
 
+	@Override
+	public Integer getNoOfCrashReports() {
+		// TODO Auto-generated method stub
+		Session session=this.sessionFactory.getCurrentSession();
+		
+		Criteria criteria=session.createCriteria(CrashReport.class);		
+		criteria.createAlias("county", "c1");
+		criteria.setProjection(Projections.rowCount());
+		
+		return ((Long) criteria.uniqueResult()).intValue();
+	}
+
 }

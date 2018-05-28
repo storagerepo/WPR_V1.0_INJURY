@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -326,13 +328,21 @@ public class LawyersService {
 
 	// Get Number of Lawyers Under Lawyer Admin
 	public Integer getNumberOfLawyers() {
-		Integer numberOfLawyers = 0;
-		Integer currentUserId = callerService.getCurrentUserId();
-		Integer lawyerAdminId=lawyerAdminService.getLawyerAdminIdByUserId(currentUserId).getLawyerAdminId();
-		numberOfLawyers = lawyersDAO.getLawyersByLawyerAdmin(lawyerAdminId).size();
-		return numberOfLawyers;
+		// Get No Of Callers Under Caller Admin
+		return lawyersDAO.getLawyersByLawyeradminUserId(getCurrentUserId()).intValue();
 	}
 
+	// get Current User Id
+	public Integer getCurrentUserId() {
+		User user = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		String username = user.getUsername();
+		System.out.println(username);
+		Users users = usersDAO.getByUserName(username);
+		return users.getUserId();
+	}
+	
+	
 	// Get Patient By Lawyer
 	public List<PatientForm> getPatientByLawyer(Integer lawyerId) {
 

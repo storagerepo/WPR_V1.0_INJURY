@@ -11,4 +11,6 @@ public interface LawyersDAO extends IGenericDAO<Lawyer> {
 
 	public Lawyer getLawyersByUserId(Integer userId);
 
+	public Long getLawyersByLawyeradminUserId(Integer userId);
+
 }

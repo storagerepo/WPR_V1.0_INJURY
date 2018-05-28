@@ -251,6 +251,22 @@ public class PatientService {
 
 		return patients.size();
 	}
+  
+  	//Function to get Total Patients by Super Admin
+	public Long getTotalNoOfPatients(){
+		return patientDAO.getNoOfPatients();
+	}	
+  
+	public Integer getNoOfPatientsByCallerAdmin(Integer id) {
+			// get Caller Id
+			return patientDAO.getNoOfPatientsByCallerAdmin(id).intValue();
+	}
+	
+
+	public Integer getNoOfPatientsByLawyerAdmin(Integer id) {
+			// get Caller Id
+			return patientDAO.getNoOfPatientsByLawyerAdmin(id).intValue();
+	}
 
 	public Integer releasePatientFromCaller(Integer id) {
 		/*List<Patient> patient = patientDAO.getPatientListByCallerId(id);
@@ -384,8 +400,7 @@ public class PatientService {
 		patientGroupedSearchResult=getFormattedSearchResult(patientDAO.searchPatientsByCAdmin(callerPatientSearchForm,false),callerPatientSearchForm.getIsArchived());
 			
 		return patientGroupedSearchResult;
-	}	
-		
+	}		
 		
 	//Patient -> Patient Form	
 	public PatientForm getPatientForm(Patient patient) {

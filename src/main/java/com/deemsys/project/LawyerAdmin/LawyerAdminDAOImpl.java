@@ -3,9 +3,11 @@ package com.deemsys.project.LawyerAdmin;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -157,6 +159,19 @@ public class LawyerAdminDAOImpl implements LawyerAdminDAO {
 		// TODO Auto-generated method stub
 		return this.get(lawyerAdminId).getUsers().getUserId();
 		
+	}
+
+	@Override
+	public Integer getNoOfLawyerAdmins(Integer roleId) {
+		// TODO Auto-generated method stub
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(LawyerAdmin.class,"c1");
+		criteria.createAlias("c1.users", "u1");
+		criteria.createAlias("u1.roles", "r1");
+		//Condition
+		criteria.add(Restrictions.eq("r1.roleId", roleId));
+		//Count(*)
+		criteria.setProjection(Projections.rowCount());
+		return ((Long) criteria.uniqueResult()).intValue();
 	}
 
 }

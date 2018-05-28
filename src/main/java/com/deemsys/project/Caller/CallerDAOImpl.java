@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
@@ -212,6 +213,21 @@ public class CallerDAOImpl implements CallerDAO{
 		@SuppressWarnings("unchecked")
 		List<Caller> callers=this.sessionFactory.getCurrentSession().createCriteria(Caller.class).add(Restrictions.and(Restrictions.eq("isDelete", 0),Restrictions.eq("callerAdmin.callerAdminId", callerAdminId))).list();
 		return callers;
+	}
+	
+	@Override
+	public Long getCallersByCalleradminUserId(Integer userId) {
+		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(Caller.class,"c1");		
+		criteria.createAlias("c1.callerAdmin", "c2");
+		criteria.createAlias("c2.users", "u1");
+		
+		criteria.add(Restrictions.and(Restrictions.eq("isDelete", 0),Restrictions.eq("u1.userId", userId)));
+		//Count(*)
+		criteria.setProjection(Projections.rowCount());
+		
+		return (Long) criteria.uniqueResult();
 	}
 
 		

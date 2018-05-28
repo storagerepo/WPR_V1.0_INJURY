@@ -17,6 +17,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -33,7 +34,11 @@ import com.deemsys.project.common.BasicQuery;
 import com.deemsys.project.common.InjuryConstants;
 import com.deemsys.project.entity.Appointments;
 import com.deemsys.project.entity.CallLog;
+import com.deemsys.project.entity.CallerAdminCountyMap;
+import com.deemsys.project.entity.LawyerAdminCountyMap;
 import com.deemsys.project.entity.Patient;
+import com.deemsys.project.entity.PatientCallerAdminMap;
+import com.deemsys.project.entity.PatientLawyerAdminMap;
 import com.deemsys.project.login.LoginService;
 
 /**
@@ -1017,5 +1022,69 @@ public Integer checkVehicleMakeMappedToPatients(String make) {
 	}
 }
 
+@Override
+public Long getNoOfPatients() {
+	// TODO Auto-generated method stub
+	Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(Patient.class,"p1");
+	criteria.add(Restrictions.eq("p1.isOwner", 0));
+	
+	//count(*)
+	criteria.setProjection(Projections.rowCount());
+	
+	return (Long) criteria.uniqueResult();
+}
+
+@Override
+public Long getNoOfPatientsByCallerAdmin(Integer id) {
+	// TODO Auto-generated method stub
+	Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(Patient.class,"p1");
+	
+	//Detached
+	DetachedCriteria subcribedCounties = DetachedCriteria.forClass(CallerAdminCountyMap.class, "cc")
+		    .add(Restrictions.eq("cc.id.callerAdminId",id))
+		    .setProjection(Projections.projectionList().add(Projections.property("cc.id.countyId"),"county_id"));
+	criteria.add(Subqueries.propertyIn("p1.county.countyId", subcribedCounties));
+	
+	criteria.add(Restrictions.eq("p1.isOwner", 0));	
+	
+	//count(*)
+	criteria.setProjection(Projections.rowCount());
+	
+	// TODO Auto-generated method stub
+	Criteria mapcriteria=this.sessionFactory.getCurrentSession().createCriteria(PatientCallerAdminMap.class,"pmap");
+	mapcriteria.add(Restrictions.eq("pmap.id.callerAdminId", id));
+	mapcriteria.add(Restrictions.eq("pmap.isArchived",1));
+	
+	//Count(*)
+	mapcriteria.setProjection(Projections.rowCount());
+	
+	return (Long) criteria.uniqueResult()-(Long) mapcriteria.uniqueResult();
+	}
+	@Override
+	public Long getNoOfPatientsByLawyerAdmin(Integer id) {
+		// TODO Auto-generated method stub
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(Patient.class,"p1");
+		
+		//Detached
+		DetachedCriteria subcribedCounties = DetachedCriteria.forClass(LawyerAdminCountyMap.class, "cc")
+			    .add(Restrictions.eq("cc.id.lawyerAdminId",id))
+			    .setProjection(Projections.projectionList().add(Projections.property("cc.id.countyId"),"county_id"));
+		criteria.add(Subqueries.propertyIn("p1.county.countyId", subcribedCounties));
+		
+		criteria.add(Restrictions.eq("p1.isOwner", 0));	
+		
+		//count(*)
+		criteria.setProjection(Projections.rowCount());
+		
+		// TODO Auto-generated method stub
+		Criteria mapcriteria=this.sessionFactory.getCurrentSession().createCriteria(PatientLawyerAdminMap.class,"pmap");
+		mapcriteria.add(Restrictions.eq("pmap.id.lawyerAdminId", id));
+		mapcriteria.add(Restrictions.eq("pmap.isArchived",1));
+		
+		//Count(*)
+		mapcriteria.setProjection(Projections.rowCount());
+		
+		return (Long) criteria.uniqueResult()-(Long) mapcriteria.uniqueResult();
+		}
 
 }

@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -196,6 +197,19 @@ public class CallerAdminDAOImpl implements CallerAdminDAO{
 		criteria.setProjection(projectionList);
 		
 		return criteria.add(Restrictions.eq("r1.roleId", roleId)).setResultTransformer(new AliasToBeanResultTransformer(CallerAdminForm.class)).list();
+	}
+
+	@Override
+	public Integer getNoOfCallerAdmins(Integer roleId) {
+		// TODO Auto-generated method stub
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(CallerAdmin.class,"c1");
+		criteria.createAlias("c1.users", "u1");
+		criteria.createAlias("u1.roles", "r1");
+		//Condition
+		criteria.add(Restrictions.eq("r1.roleId", roleId));
+		//Count(*)
+		criteria.setProjection(Projections.rowCount());
+		return ((Long) criteria.uniqueResult()).intValue();
 	}
 
 }

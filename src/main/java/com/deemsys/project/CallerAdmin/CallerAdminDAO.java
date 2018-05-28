@@ -14,4 +14,5 @@ public interface CallerAdminDAO extends IGenericDAO<CallerAdmin>{
 	public Integer getUserIdByCallerAdminId(Integer callerAdminId);
 	public CallerAdmin getCallerAdminByUserId(Integer userId);
 	public List<CallerAdminForm> getCallerAdminListByRoleId(Integer roleId);
+	public Integer getNoOfCallerAdmins(Integer roleId);
 }

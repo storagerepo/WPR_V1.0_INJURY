@@ -3,13 +3,16 @@ package com.deemsys.project.Lawyers;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deemsys.project.common.BasicQuery;
+import com.deemsys.project.entity.Caller;
 import com.deemsys.project.entity.Lawyer;
 
 @Repository
@@ -157,6 +160,21 @@ public class LawyersDAOImpl implements LawyersDAO {
 				.createCriteria(Lawyer.class)
 				.add(Restrictions.eq("users.userId", userId)).uniqueResult();
 		return lawyers;
+	}
+	
+	@Override
+	public Long getLawyersByLawyeradminUserId(Integer userId) {
+		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(Lawyer.class,"l1");		
+		criteria.createAlias("l1.lawyerAdmin", "l2");
+		criteria.createAlias("l2.users", "u1");
+		
+		criteria.add(Restrictions.eq("u1.userId", userId));
+		//Count(*)
+		criteria.setProjection(Projections.rowCount());
+		
+		return (Long) criteria.uniqueResult();
 	}
 
 }

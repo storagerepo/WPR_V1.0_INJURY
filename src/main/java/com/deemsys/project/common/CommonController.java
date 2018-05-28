@@ -341,22 +341,20 @@ public class CommonController {
     	CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "",new String[]{},"", new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{},-1,"","",0,null,null);
 		if(currentRoleId.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE_ID)){
 			dashboardCount.add(callerAdminService.getNumberOfCallerAdmins());
-	    	dashboardCount.add(lawyerAdminService.getNumberOfLawyerAdmin());
-	    	CrashReportSearchForm crashReportSearchForm=new CrashReportSearchForm("", "", "", "",new Integer[]{}, "", "", "", 1, 10,-1,null,null,null,null,0,"","",-1,null);
-	    	dashboardCount.add(crashReportService.searchCrashReports(crashReportSearchForm).getTotalNoOfRecords().intValue());
-	    	PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
-	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
+	    	dashboardCount.add(lawyerAdminService.getNoOfLawyerAdmins());
+	    	dashboardCount.add(crashReportService.getNoOfCrashReports());
+	    	dashboardCount.add(patientService.getTotalNoOfPatients().intValue());
 			dashboardCount.add(callerAdminService.getNumberOfManagers());
 	    }else if(currentRoleId.equals(InjuryConstants.INJURY_CALLER_ADMIN_ROLE_ID)){
+			CallerAdmin callerAdmin=callerAdminService.getCallerAdminByUserId(callerService.getCurrentUserId());
 			dashboardCount.add(callerService.getNoOfCallers());
 			dashboardCount.add(clinicsService.getNoOfClinics());
-	    	dashboardCount.add(appointmentsService.getNoOfAppointments());
-	    	PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
-	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
+	    	dashboardCount.add(appointmentsService.getNoOfAppointments());	    	
+	    	dashboardCount.add(patientService.getNoOfPatientsByCallerAdmin(callerAdmin.getCallerAdminId()));
 		}else if(currentRoleId.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID)){
+			LawyerAdmin lawyerAdmin=lawyerAdminService.getLawyerAdminIdByUserId(lawyersService.getCurrentUserId());
 			dashboardCount.add(lawyersService.getNumberOfLawyers());
-			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
-	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());
+			dashboardCount.add(patientService.getNoOfPatientsByLawyerAdmin(lawyerAdmin.getLawyerAdminId()));
 		}else if(currentRoleId.equals(InjuryConstants.INJURY_CALLER_ROLE_ID)){
 			PatientGroupedSearchResult patientSearchResult=patientService.getCurrentPatientList(callerPatientSearchForm);
 	    	dashboardCount.add(patientSearchResult.getTotalNoOfRecord().intValue());

@@ -81,6 +81,11 @@ public class LawyerAdminService {
 
 		return lawyerAdminForms;
 	}
+	
+	//Get No. Of Lawyer Admin
+	public Integer getNoOfLawyerAdmins() {
+		return lawyerAdminDAO.getNoOfLawyerAdmins(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE_ID);
+	}
 
 	// Get Particular Entry
 	public LawyerAdminForm getLawyerAdmin(Integer getId) {

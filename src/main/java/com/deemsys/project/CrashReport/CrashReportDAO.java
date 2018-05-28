@@ -33,4 +33,6 @@ public interface CrashReportDAO extends IGenericDAO<CrashReport>{
 	public void updateMapId(PoliceAgency oldPoliceAgency,PoliceAgency newPoliceAgency);
 	
 	public void backupSixMonthOldDataByStoredProcedure(String date);
+	
+	public Integer getNoOfCrashReports();
 }

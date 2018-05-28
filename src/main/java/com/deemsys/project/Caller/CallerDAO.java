@@ -31,4 +31,6 @@ public interface CallerDAO extends IGenericDAO<Caller> {
 	
 	public List<Caller> getCallerByCallerAdminId(Integer callerAdminId);
 
+	public Long getCallersByCalleradminUserId(Integer userId);
+
 }
