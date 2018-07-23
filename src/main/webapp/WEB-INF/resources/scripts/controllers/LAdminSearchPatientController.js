@@ -5,9 +5,12 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	$scope.crashSearchData="";
 	$scope.lAdminPatientSearchData=$scope.patientSearchDataOrginal=[];
 	$scope.isCheckedAllPatients=false;
+	// Export Excel
 	$scope.exportButtonText="Export to Excel";
 	$scope.exportButton=false;
 	$scope.isExportPatientSelected=true;
+	$scope.isExcludeState=false;
+	
 	$scope.ageFilterCurrentSelection=[];
 	$scope.setScrollDown=false;
 	$scope.loadingCounties=true;
@@ -1042,6 +1045,7 @@ $scope.archivedToDateRequired=false;
 		$scope.searchParam.formatType=$scope.formatType;
 		$scope.searchParam.exportType=$scope.exportType;
 		$scope.searchParam.exportPatientIds=$scope.exportPatientIds;
+		$scope.searchParam.excludeState=$scope.isExcludeState;
 		requestHandler.postExportRequest('Patient/exportExcel.xlsx',$scope.searchParam).success(function(responseData){
 			 var blob = new Blob([responseData], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
 			 FileSaver.saveAs(blob,"Export_"+moment().format('YYYY-MM-DD')+".xlsx");

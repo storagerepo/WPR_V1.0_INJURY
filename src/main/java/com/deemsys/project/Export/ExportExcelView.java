@@ -50,13 +50,12 @@ public class ExportExcelView extends AbstractExcelView {
 		
 		Integer exportType=(Integer) model.get("exportType");
 		if(exportType==InjuryConstants.PATIENT_EXPORT){
+			// Exclude State Option
+			boolean isExcludeState = (boolean) model.get("isExcludeState");
 			PatientSearchResultSet patientSearchResultSet=(PatientSearchResultSet)model.get("patientSearchResultSet");
 			System.out.println("Export Excel Total Records--->"+patientSearchResultSet.getPatientSearchLists().size());
 			System.out.println("Session Id---->>"+request.getSession().getId());
-			// Activity Of Export Excel
-			Integer activityId=2;
-			ActivityLogsForm activityLogsForm = new ActivityLogsForm(request.getSession().getId(), "", null, loginService.getCurrentUsername(), null, "", activityId, "", null, InjuryConstants.getRemoteAddr(request), "", InjuryConstants.convertMonthFormat(new Date()), InjuryConstants.convertUSAFormatWithTime(new Date()), "", patientSearchResultSet.getPatientSearchLists().size(), patientSearchResultSet.getPatientSearchLists().size()+" Records Exported", 1);
-			activityLogsService.saveActivityLogs(activityLogsForm);
+			
 			List<PatientSearchList> patientSearchLists=patientSearchResultSet.getPatientSearchLists();
 			@SuppressWarnings("unchecked")
 			List<ExportFieldsForm> exportFieldsForms = (List<ExportFieldsForm>) model.get("userExportPrefenceHeaders");
@@ -146,16 +145,37 @@ public class ExportExcelView extends AbstractExcelView {
 			  sheet.autoSizeColumn(i, true);
 			
 			//Create data cell
+			Integer exportCount=0;
 			for(PatientSearchList patient:patientSearchLists){
-				
-				row = sheet.createRow(r++);
-				c = 0;
-				for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
-					String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue(),exportFieldsForm.getFormat());
-					row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
+				if(isExcludeState){
+					String[] state=this.splitAddress(patient.getAddress());
+					if(state[2]==null&&state[2].equals("")){
+						row = sheet.createRow(r++);
+						c = 0;
+						for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
+							String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue(),exportFieldsForm.getFormat());
+							row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
+						}
+						exportCount++;
+					}else if(state[2].equals("OH")){
+						row = sheet.createRow(r++);
+						c = 0;
+						for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
+							String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue(),exportFieldsForm.getFormat());
+							row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
+						}
+						exportCount++;
+					}
+				}else{
+					row = sheet.createRow(r++);
+					c = 0;
+					for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
+						String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue(),exportFieldsForm.getFormat());
+						row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
+					}
 				}
 				
-			/*	if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
+				/*	if(role.equals(InjuryConstants.INJURY_LAWYER_ROLE)||role.equals(InjuryConstants.INJURY_LAWYER_ADMIN_ROLE)){
 
 				String[] address=this.splitAddress(patient.getAddress());
 				
@@ -190,9 +210,14 @@ public class ExportExcelView extends AbstractExcelView {
 				row.createCell(c++).setCellValue(patient.getVictimPolicyNumber());
 				row.createCell(c++).setCellValue("Tier "+patient.getTier());
 				*/
-				
-			
 			}
+			// Activity Of Export Excel
+			if(!isExcludeState){
+				exportCount=patientSearchLists.size();
+			}
+			Integer activityId=2;
+			ActivityLogsForm activityLogsForm = new ActivityLogsForm(request.getSession().getId(), "", null, loginService.getCurrentUsername(), null, "", activityId, "", null, InjuryConstants.getRemoteAddr(request), "", InjuryConstants.convertMonthFormat(new Date()), InjuryConstants.convertUSAFormatWithTime(new Date()), "", exportCount, exportCount+" Records Exported", 1);
+			activityLogsService.saveActivityLogs(activityLogsForm);
 			
 		}else if(exportType==InjuryConstants.ACTVITY_LOG_EXPORT){
 			Integer exportFormat=(Integer) model.get("exportFormat");

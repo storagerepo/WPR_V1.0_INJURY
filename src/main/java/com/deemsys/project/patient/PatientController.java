@@ -3,8 +3,11 @@ package com.deemsys.project.patient;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -141,7 +144,7 @@ public class PatientController {
 
 	// Upload PDF file
 	@RequestMapping(value = "/importReportByCrashId", method = RequestMethod.POST)
-	public String readCrashReportFromURLByCrashId(@RequestParam("crashId") List<String> crashReportId, ModelMap model)
+	public String readCrashReportFromURLByCrashId(@RequestParam("crashId") List<String> crashReportId,@RequestParam("addedDate") String addedDate, ModelMap model)
 				throws IOException {
 		List<ImportCrashReportStatus> importCrashReportStatusList = new ArrayList<ImportCrashReportStatus>();
 		for (String crashId : crashReportId) {
@@ -149,7 +152,7 @@ public class PatientController {
 			try {
 				//crashReportReader.parsePDFDocument(crashReportReader.getPDFFile(crashReportId), Integer.parseInt(crashReportId));
 					if(!crashReportReader.isCrashIdAvailable(crashId)){
-						boolean fileStatus=crashReportReader.importPDFFile(crashId);
+						boolean fileStatus=crashReportReader.importPDFFile(crashId,addedDate);
 						if(fileStatus){
 							importCrashReportStatus.setMessage("Imported Successfully");
 						}else{
@@ -211,11 +214,11 @@ public class PatientController {
 	//Upload Crash Id Notepad
 	  @RequestMapping(value = "/Caller/uploadCrashIdNotepad" ,method = RequestMethod.POST)
 	  public @ResponseBody String uploadCrashIdNotepad(
-			  @RequestParam("file") MultipartFile file,ModelMap model) throws IOException {
+			  @RequestParam("file") MultipartFile file,@RequestParam("addedDate") String addedDate,ModelMap model) throws IOException {
 		 
 		  List<String> crashIdList=crashReportReader.getCrashIdList(file);
 		  for (String crashId : crashIdList) {
-			crashReportReader.downloadPDFFile(crashId);
+			crashReportReader.downloadPDFFile(crashId,addedDate);
 		  }
 		  return "success";
 	  }
@@ -402,6 +405,7 @@ public class PatientController {
 		System.out.println("total Records--->"+patientSearchResultSet.getTotalNoOfRecords());
 		model.addAttribute("patientSearchResultSet",patientSearchResultSet);
 		model.addAttribute("exportType",InjuryConstants.PATIENT_EXPORT);
+		model.addAttribute("isExcludeState",callerPatientSearchForm.isExcludeState());
 		return "ok";
 		
 	}
@@ -504,16 +508,16 @@ public class PatientController {
 		return "/returnPage";
 	}
     
-    @RequestMapping(value = "/debugParsingPdf", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/debugParsingPdf", method = RequestMethod.GET)
 	public String debugParsePDF(@RequestParam("fileName") String fileName,
-			ModelMap model) {
+			@RequestParam("addedDate") String addedDate,ModelMap model) {
 		try {
-			crashReportReader.parsePDFDocument(new File("C:\\wamp\\www\\InjuryCrashReports\\"+fileName+".pdf"), fileName);
+			crashReportReader.parsePDFDocument(new File("C:\\wamp\\www\\InjuryCrashReports\\"+fileName+".pdf"), fileName, addedDate);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "/returnPage";
-	}
+	}*/
     
 }
