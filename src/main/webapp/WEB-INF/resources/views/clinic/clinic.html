@@ -61,13 +61,13 @@
 						<a href="" ng-cloak ng-click="viewClinicDetails(clinic.clinicId)" class="btn btn-xs btn-primary hint--top" data-hint="View">
 							<i class="glyphicon glyphicon-eye-open"></i>
 						</a>
-						<a href="#/dashboard/edit-consumer/{{clinic.clinicId}}" ng-cloak data-hint="Edit" class="btn btn-xs btn-warning hint--top" ng-show="{{isAdmin==2}}||{{isAdmin==8}}">
+						<a href="#/dashboard/edit-consumer/{{clinic.clinicId}}" ng-cloak data-hint="Edit" class="btn btn-xs btn-warning hint--top" ng-show="{{isAdmin==2}}||{{isAdmin==6}}||{{isAdmin==8}}">
 							<i class="glyphicon glyphicon-edit"></i>
 						</a>
-						<a href="" ng-cloak ng-show="clinic.status==1 && ({{isAdmin==2}}||{{isAdmin==8}})" ng-click="enableOrDisbaleClinic(clinic.clinicId)" class="btn btn-xs btn-success hint--top" data-hint="Disable">
+						<a href="" ng-cloak ng-show="clinic.status==1 && ({{isAdmin==2}}||{{isAdmin==6}}||{{isAdmin==8}})" ng-click="enableOrDisbaleClinic(clinic.clinicId)" class="btn btn-xs btn-success hint--top" data-hint="Disable">
 							<i class="fa fa-unlock-alt"></i>
 						</a>
-						<a href="" ng-cloak ng-show="clinic.status==0 && ({{isAdmin==2}}||{{isAdmin==8}})" ng-click="enableOrDisbaleClinic(clinic.clinicId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable">
+						<a href="" ng-cloak ng-show="clinic.status==0 && ({{isAdmin==2}}||{{isAdmin==6}}||{{isAdmin==8}})" ng-click="enableOrDisbaleClinic(clinic.clinicId)" class="btn btn-xs btn-danger hint--top" data-hint="Enable">
 							<i class="fa fa-lock"></i>
 						</a>
 						<!-- <span ng-cloak ng-show="clinic.status==1 && {{isAdmin==4}}"  class="patient-count-circle-green">Enabled</span>

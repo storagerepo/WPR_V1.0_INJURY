@@ -122,7 +122,7 @@ adminApp.controller('MainCtrl', function($scope,$state,$position,$http,requestHa
 	 } else if($rootScope.isAdmin==7){
 		 requestHandler.getRequest("dashboardCount.json","").then( function(response) {
 			   $scope.numberOfClinics=response.data.dashboardCount[0];
-			   $scope.numberOfVehicles=response.data.dashboardCount[0];
+			   $scope.numberOfVehicles=response.data.dashboardCount[1];
 		   });
 		/*   requestHandler.getRequest("Caller/getNumberOfAssignedVehicles.json","").then( function(response) {
 			   $scope.numberOfVehicles= response.data.numberOfAssignedVehicles;
