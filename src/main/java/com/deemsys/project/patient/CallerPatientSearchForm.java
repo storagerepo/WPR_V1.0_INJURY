@@ -39,6 +39,7 @@ public class CallerPatientSearchForm {
 	// Export Excel
 	private Integer exportType;
 	private String[] exportPatientIds;
+	private boolean excludeState;
 	
 	public Integer getCallerAdminId() {
 		return callerAdminId;
@@ -246,7 +247,12 @@ public class CallerPatientSearchForm {
 	public void setExportPatientIds(String[] exportPatientIds) {
 		this.exportPatientIds = exportPatientIds;
 	}
-	
+	public boolean isExcludeState() {
+		return excludeState;
+	}
+	public void setExcludeState(boolean excludeState) {
+		this.excludeState = excludeState;
+	}
 	public CallerPatientSearchForm(Integer callerAdminId, Integer countyId[],
 			Integer tier[], Integer patientStatus, String crashFromDate,Integer numberOfDays,
 			String crashToDate, String localReportNumber,String[] reportingAgency,String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived,String archivedFromDate, String archivedToDate,
