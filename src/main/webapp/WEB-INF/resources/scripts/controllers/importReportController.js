@@ -16,7 +16,7 @@ adminApp.controller('ImportReportsController',function($http,$state,$scope,reque
 		if($scope.reportType==1){
 			$scope.buttonText="Importing....";
 			$scope.buttonDisable=true;
-			requestHandler.postRequest("importReportByCrashId.json?crashId="+$scope.crashId,"").then(function(response){
+			requestHandler.postRequest("importReportByCrashId.json?crashId="+$scope.crashId+"&addedDate="+new Date(),"").then(function(response){
 				$scope.buttonText="Import Report";
 				$scope.buttonDisable=false;
 				if(response.data.requestSuccess){

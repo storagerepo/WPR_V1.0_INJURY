@@ -508,7 +508,7 @@ public class PatientController {
 		return "/returnPage";
 	}
     
-    /*@RequestMapping(value = "/debugParsingPdf", method = RequestMethod.GET)
+    @RequestMapping(value = "/debugParsingPdf", method = RequestMethod.GET)
 	public String debugParsePDF(@RequestParam("fileName") String fileName,
 			@RequestParam("addedDate") String addedDate,ModelMap model) {
 		try {
@@ -518,6 +518,6 @@ public class PatientController {
 			e.printStackTrace();
 		}
 		return "/returnPage";
-	}*/
+	}
     
 }

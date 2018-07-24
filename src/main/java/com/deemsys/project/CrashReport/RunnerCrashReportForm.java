@@ -11,6 +11,7 @@ public class RunnerCrashReportForm {
 	private String docImageFileName;
 	private String localReportNumber;
 	private String crashDate;
+	private String addedDate;
 	private String county;
 	private String filePath;
 	private Integer reportFrom;
@@ -43,6 +44,12 @@ public class RunnerCrashReportForm {
 	}
 	public void setCrashDate(String crashDate) {
 		this.crashDate = crashDate;
+	}
+	public String getAddedDate() {
+		return addedDate;
+	}
+	public void setAddedDate(String addedDate) {
+		this.addedDate = addedDate;
 	}
 	public String getCounty() {
 		return county;
@@ -90,12 +97,13 @@ public class RunnerCrashReportForm {
 	}
 	
 	public RunnerCrashReportForm(String docNumber, String docImageFileName, String localReportNumber, String crashDate,
-			String county, String filePath, Integer reportFrom, String reportPrefixCode, List<PatientForm> patientForms) {
+			String addedDate, String county, String filePath, Integer reportFrom, String reportPrefixCode, List<PatientForm> patientForms) {
 		super();
 		this.docNumber = docNumber;
 		this.docImageFileName = docImageFileName;
 		this.localReportNumber = localReportNumber;
 		this.crashDate = crashDate;
+		this.addedDate = addedDate;
 		this.county = county;
 		this.filePath = filePath;
 		this.reportFrom = reportFrom;

@@ -3,6 +3,7 @@ package com.deemsys.project.patient;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -486,9 +487,10 @@ public class PatientService {
 		}
 	}
 	
-	//Date 
-	LocalDate addedDate=new LocalDate();
-	
+	//Check Added Date
+	Date addedDate=new Date();
+	if(patientForm.getAddedDate()!=null&&!patientForm.getAddedDate().equals(""))
+		addedDate=InjuryConstants.convertYearFormat(patientForm.getAddedDate());
 	//Mapping
 	Patient patient = new Patient(patientForm.getPatientId(),crashReport, county,
 			vehicleMakeAbbreviation,
@@ -498,7 +500,7 @@ public class PatientService {
 			patientForm.getReportingAgencyName(),
 			patientForm.getNumberOfUnits(), patientForm.getUnitInError(),
 			 patientForm.getCityVillageTownship(),
-			InjuryConstants.convertYearFormat(patientForm.getCrashDate()), addedDate.toDate(),
+			InjuryConstants.convertYearFormat(patientForm.getCrashDate()), addedDate,
 			patientForm.getTimeOfCrash(), patientForm.getUnitNumber(),
 			patientForm.getName(), patientForm.getDateOfBirth(),patientForm.getAge(),
 			patientForm.getGender(), patientForm.getAddress(),
