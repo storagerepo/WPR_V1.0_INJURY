@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<div flash-message="2000" class="col-md-4 pull-right margin-top35"></div>
-		<h2 class="page-header">Search Clients<span><span ng-show="showSearch==0" ng-click="showSearch=1"><a href="" class="btn btn-xs btn-primary"><i class="fa fa-chevron-circle-down"></i> Show Search</a> </span>
+		<h2 class="page-header">Search Clients<span><span ng-show="showSearch==0" ng-click="showSearch=1">&nbsp;<a href="" class="btn btn-xs btn-primary"><i class="fa fa-chevron-circle-down"></i> Show Search</a> </span>
 			<span ng-show="showSearch==1" ng-click="showSearch=0"><a href="" class="btn btn-xs btn-primary"><i class="fa fa-chevron-circle-up"></i> Hide Search</a> </span></span></h2>
 	</div>
 	<!-- /.col-lg-12 -->
@@ -174,6 +174,13 @@
 						ng-show="searchSeatingPositionMinError">&nbsp;&nbsp;Select one</span>
 					<div ng-dropdown-multiselect="" options="defaultSeatingPosition" 
 						selected-model="patient.seatingPosition"
+						extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==3}"></div>
+				</div>
+		<div ng-show="patient.isRunnerReport!=3" ng-class="patient.isRunnerReport==0?'col-md-5ths':'custom-alignment-injuries-l'">
+					<label>Injuries</label><span class="error-class"
+						ng-show="injuriesMinError">&nbsp;&nbsp;Select one</span>
+					<div ng-dropdown-multiselect="" options="defaultInjuries" 
+						selected-model="patient.injuries"
 						extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==3}"></div>
 				</div>
 		<div class="col-md-5ths pull-right">

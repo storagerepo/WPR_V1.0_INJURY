@@ -338,7 +338,7 @@ public class CommonController {
     public String getDashboardCount(ModelMap model){
     	Integer currentRoleId=loginService.getCurrentRoleId();
     	List<Integer> dashboardCount = new ArrayList<Integer>();
-    	CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "",new String[]{},"", new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{},-1,"","",0,null,null);
+    	CallerPatientSearchForm callerPatientSearchForm=new CallerPatientSearchForm(0, new Integer[]{}, new Integer[]{}, 7, "", 0, "", "",new String[]{},"", new Integer[]{}, 0, 0, 0, "", 1, 10, "", "",0,"","",-1,new Integer[]{},-1,"","",0,null,null,null);
 		if(currentRoleId.equals(InjuryConstants.INJURY_SUPER_ADMIN_ROLE_ID)){
 			dashboardCount.add(callerAdminService.getNumberOfCallerAdmins());
 	    	dashboardCount.add(lawyerAdminService.getNoOfLawyerAdmins());

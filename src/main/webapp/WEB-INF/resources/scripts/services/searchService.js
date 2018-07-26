@@ -27,6 +27,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
 	var directReportStatus="-1";
 	var reportingAgencyListType="1";
+	var injuries=[{id:1},{id:2},{id:3},{id:4},{id:0}];
 	
 	// Vehicle Search
 	var vehicleMake="";
@@ -292,6 +293,12 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	this.setSeatingPosition=function(seatingPositionInput){
 		seatingPosition=seatingPositionInput;
 	};
+	this.getInjuries=function(){
+		return injuries;
+	};
+	this.setInjuries=function(injuriesInput){
+		injuries=injuriesInput;
+	};
 	// For Swapping Patient Name from Last, First, Middle to First, Middle, Middle
 	this.spiltAndSwapName=function(patientName){
 		var swapName="";
@@ -428,6 +435,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		vehicleYear="";
 		typeOfUse=[{id:1},{id:2},{id:3},{id:0}];
 		seatingPosition=[{id:1},{id:2},{id:99}];
+		injuries=[{id:1},{id:2},{id:3},{id:4},{id:0}];
 		return true;
 	};
 	

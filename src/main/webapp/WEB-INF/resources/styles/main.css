@@ -1060,7 +1060,7 @@ ul.rating {
 
 .custom-alignment-seating-position{
 	margin-top: -76px;
-    margin-left: 41.1%;
+    margin-left: 40.6%;
     width:19%;
     float:left;
 }
@@ -1075,6 +1075,27 @@ ul.rating {
 .custom-alignment-seating-position-s{
     margin-top: -79px;
     margin-left: 21%;
+    width: 18%;
+    float: left;
+}
+
+.custom-alignment-injuries-la{
+	margin-top: -76px;
+    margin-left: 60.7%;
+    width:19%;
+    float:left;
+}
+
+.custom-alignment-injuries-l{
+	margin-top: -76px;
+    margin-left: 41%;
+    width:18%;
+    float:left;
+}
+
+.custom-alignment-injuries-s{
+    margin-top: -79px;
+    margin-left: 41%;
     width: 18%;
     float: left;
 }

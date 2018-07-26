@@ -1188,17 +1188,23 @@ public class PDFCrashReportReader {
 						PatientForm patientsForm=getPatientForm(motoristPageForm, firstPageForm,reportUnitPageForms,addedDate);
 						if(patientsForm!=null){
 							if(patientsForm.getUnitNumber().equals(firstPageForm.getUnitInError())){
-								if(patientsForm.getInjuries()!=null){
-								if(!patientsForm.getInjuries().equals("5")){
+								/*
+								 * Removed the Injuries Fatal Conditions
+								 * if(patientsForm.getInjuries()!=null){
+									if(!patientsForm.getInjuries().equals("5")){
 									patientsForm.setTier(4);
 									patientsForms.add(patientsForm);
 									}
 								}else{
 									patientsForm.setTier(4);
 									patientsForms.add(patientsForm);
-								}
+								}*/
+								patientsForm.setTier(4);
+								patientsForms.add(patientsForm);
 							}else{
-								if(patientsForm.getInjuries()!=null){
+								/*
+								 * Removed the Injuries Fatal Conditions
+								 * if(patientsForm.getInjuries()!=null){
 									if(!patientsForm.getInjuries().equals("5")){
 											patientsForm.setTier(1);
 											patientsForms.add(patientsForm);
@@ -1207,7 +1213,9 @@ public class PDFCrashReportReader {
 								else{
 											patientsForm.setTier(1);
 											patientsForms.add(patientsForm);
-								}
+								}*/
+								patientsForm.setTier(1);
+								patientsForms.add(patientsForm);
 							}
 						}
 					}else{
@@ -1237,7 +1245,9 @@ public class PDFCrashReportReader {
 							if(motoristPageForm.getUnitNumber()!=null){
 								if(motoristPageForm.getUnitNumber().equals(reportUnitPageForm.getUnitNumber())){							
 									PatientForm patientsForm=getPatientForm(motoristPageForm,firstPageForm,reportUnitPageForms,addedDate);
-									if(patientsForm.getInjuries()!=null){
+									/*
+									 * Removed the Injuries Fatal Conditions
+									 * if(patientsForm.getInjuries()!=null){
 										if(!patientsForm.getInjuries().equals("5")){
 											patientsForm.setTier(2);
 											patientsForms.add(patientsForm);
@@ -1245,7 +1255,9 @@ public class PDFCrashReportReader {
 									}else{
 											patientsForm.setTier(2);
 											patientsForms.add(patientsForm);
-									}
+									}*/
+									patientsForm.setTier(2);
+									patientsForms.add(patientsForm);
 								}
 							}else{
 								// Unit Number is Not Mentioned in Motorist Page improper details in Motorist page
@@ -1265,7 +1277,9 @@ public class PDFCrashReportReader {
 			for (ReportMotoristPageForm motoristPageForm : pdfCrashReportJson
 						.getReportMotoristPageForms()) {
 				if(motoristPageForm.getUnitNumber()!=null){
-					if(motoristPageForm.getInjuries()!=null){
+					/*
+					 * Removed the Injuries Fatal Conditions
+					 * if(motoristPageForm.getInjuries()!=null){
 						if(!motoristPageForm.getInjuries().equals("5")){
 							PatientForm patientsForm=getPatientForm(motoristPageForm,firstPageForm,reportUnitPageForms,addedDate);
 							if(patientsForm!=null){
@@ -1288,6 +1302,11 @@ public class PDFCrashReportReader {
 								patientsForms.add(patientsForm);
 							}
 						}
+					}*/
+					PatientForm patientsForm=getPatientForm(motoristPageForm,firstPageForm,reportUnitPageForms,addedDate);
+					if(patientsForm!=null){
+						patientsForm.setTier(3);
+						patientsForms.add(patientsForm);
 					}
 				}else{
 					// Unit Number is Not Mentioned in Motorist Page improper details in Motorist page

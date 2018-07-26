@@ -148,6 +148,12 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 			$scope.searchParam.seatingPosition[index]=value.id;
 		});
 		
+		// Manipulate Injuries
+		$.each($scope.searchParam.injuries, function(index,value){
+			$scope.searchParam.injuries[index]=value.id;
+		});
+		
+		
 		//Reset Check Box - Scanned
 		$scope.isCheckedAllDirectReport=false;
 		
@@ -331,6 +337,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 	searchService.setReportingAgencyListType($scope.reportingAgencyListType);
 	searchService.setTypeOfUse(angular.copy($scope.patient.typeOfUse));
 	searchService.setSeatingPosition(angular.copy($scope.patient.seatingPosition));
+	searchService.setInjuries(angular.copy($scope.patient.injuries));
 	};
 	
 	$scope.secoundarySearchPatient=function(){
@@ -819,6 +826,7 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
 		$scope.defaultSeatingPosition=[{id:1, label:"Drivers"},{id:2, label:"Passengers"},{id:99, label:"Unknown"}];
+		$scope.defaultInjuries=[{id:1, label:"No Injury/None Reporte"},{id:2, label:"Possible"},{id:3, label:"Non-Incapacitating"},{id:4, label:"Incapacitating"},{id:5, label:"Fatal"},{id:0, label:"Unknown"}];
 		$scope.reportingAgencyList=[];
 		
 		$scope.patient={};
@@ -830,12 +838,14 @@ adminApp.controller('LAdminSearchPatientsController', ['$rootScope','$scope','re
 		$scope.patient.typeOfUse=[];
 		$scope.patient.isOwner=0;
 		$scope.patient.reportingAgency=[];
+		$scope.patient.injuries=[];
 		$scope.reportingAgencyLoaded=false;
 		angular.copy(searchService.getCounty(),$scope.patient.countyId);
 		angular.copy(searchService.getTier(),$scope.patient.tier);
 		angular.copy(searchService.getDamageScale(),$scope.patient.damageScale);
 		angular.copy(searchService.getTypeOfUse(),$scope.patient.typeOfUse);
 		angular.copy(searchService.getSeatingPosition(),$scope.patient.seatingPosition);
+		angular.copy(searchService.getInjuries(),$scope.patient.injuries);
 		$scope.patient.crashFromDate=searchService.getCrashFromDate();
 		$scope.patient.crashToDate=searchService.getCrashToDate();
 		$scope.patient.localReportNumber=searchService.getLocalReportNumber();
@@ -1282,6 +1292,18 @@ $scope.archivedToDateRequired=false;
 			   $scope.searchDamageScaleMinError=true;
 		   }else{
 			   $scope.searchDamageScaleMinError=false;
+			   if(!$scope.searchCountyMinError)
+				   $scope.disableSearch=false;	
+		   }
+		}, true );
+	
+	// Watch Injuries Filter
+	$scope.$watch('patient.injuries' , function() {		
+		   if($scope.patient.injuries.length==0){
+			   $scope.disableSearch=true;
+			   $scope.injuriesMinError=true;
+		   }else{
+			   $scope.injuriesMinError=false;
 			   if(!$scope.searchCountyMinError)
 				   $scope.disableSearch=false;	
 		   }

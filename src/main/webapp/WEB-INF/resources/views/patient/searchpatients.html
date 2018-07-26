@@ -203,6 +203,13 @@
 							selected-model="patient.seatingPosition"
 							extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==3}"></div>
 					</div>
+					<div ng-show="patient.isRunnerReport!=3" ng-class="patient.isRunnerReport==0?'col-md-5ths':'custom-alignment-injuries-s'">
+					<label>Injuries</label><span class="error-class"
+						ng-show="injuriesMinError">&nbsp;&nbsp;Select one</span>
+					<div ng-dropdown-multiselect="" options="defaultInjuries" 
+						selected-model="patient.injuries"
+						extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==3}"></div>
+					</div>
 					<div class="col-md-5ths no-padding pull-right">
 						<div class="col-md-12">
 							<label>&nbsp;</label>

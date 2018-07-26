@@ -29,6 +29,7 @@ public class CallerPatientSearchForm {
 	private Integer[] damageScale; 
 	private Integer directReportStatus;
 	private Integer[] seatingPosition;
+	private String[] injuries;
 	
 	// Vehicle Search
 	private String vehicleMake;
@@ -235,6 +236,12 @@ public class CallerPatientSearchForm {
 	public void setSeatingPosition(Integer[] seatingPosition) {
 		this.seatingPosition = seatingPosition;
 	}
+	public String[] getInjuries() {
+		return injuries;
+	}
+	public void setInjuries(String[] injuries) {
+		this.injuries = injuries;
+	}
 	public Integer getExportType() {
 		return exportType;
 	}
@@ -257,7 +264,7 @@ public class CallerPatientSearchForm {
 			Integer tier[], Integer patientStatus, String crashFromDate,Integer numberOfDays,
 			String crashToDate, String localReportNumber,String[] reportingAgency,String patientName,Integer age[],Integer callerId,Integer lawyerAdminId,Integer lawyerId,String phoneNumber,Integer pageNumber,Integer itemsPerPage,String addedOnFromDate,String addedOnToDate,Integer isArchived,String archivedFromDate, String archivedToDate,
 			Integer isRunnerReport,Integer[] damageScale,Integer directReportStatus,String vehicleMake, String vehicleYear, Integer isOwner, 
-			Integer[] typeOfUse, Integer[] seatingPostion) {
+			Integer[] typeOfUse, Integer[] seatingPostion, String[] injuries) {
 		super();
 		this.callerAdminId = callerAdminId;
 		this.countyId = countyId;
@@ -289,6 +296,7 @@ public class CallerPatientSearchForm {
 		this.isOwner = isOwner;
 		this.typeOfUse = typeOfUse;
 		this.seatingPosition = seatingPostion;
+		this.injuries = injuries;
 	}
 	public CallerPatientSearchForm() {
 		super();

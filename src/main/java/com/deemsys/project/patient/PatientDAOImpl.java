@@ -544,6 +544,30 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		criteria.add(typeOfUseDisjunction);
 	}
 	
+	// Common Constraints for Injuries
+	if(callerPatientSearchForm.getInjuries()!=null&&!callerPatientSearchForm.getInjuries().equals("")&&callerPatientSearchForm.getIsRunnerReport()!=-1&&callerPatientSearchForm.getIsRunnerReport()!=3){
+		Disjunction injuriesDisjunction = Restrictions.disjunction();
+		if(ArrayUtils.contains(callerPatientSearchForm.getInjuries(), "1")){
+			injuriesDisjunction.add(Restrictions.eq("t1.injuries", "1"));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getInjuries(), "2")){
+			injuriesDisjunction.add(Restrictions.eq("t1.injuries", "2"));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getInjuries(), "3")){
+			injuriesDisjunction.add(Restrictions.eq("t1.injuries", "3"));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getInjuries(), "4")){
+			injuriesDisjunction.add(Restrictions.eq("t1.injuries", "4"));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getInjuries(), "5")){
+			injuriesDisjunction.add(Restrictions.eq("t1.injuries", "5"));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getInjuries(), "0")){
+			injuriesDisjunction.add(Restrictions.or(Restrictions.eq("t1.injuries","6"), Restrictions.isNull("t1.injuries")));
+		}
+		criteria.add(injuriesDisjunction);
+	}
+	
 	//Common Constrains - Crash Date
 	callerPatientSearchForm.setNumberOfDays(0);
 	if(!callerPatientSearchForm.getCrashFromDate().equals("")){		

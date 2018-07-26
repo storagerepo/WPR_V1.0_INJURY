@@ -21,12 +21,14 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$scope.defaultSeatingPosition=[{id:1, label:"Drivers"},{id:2, label:"Passengers"},{id:99, label:"Unknown"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
 		$scope.defaultTypeofUse=[{id:1, label: "1 - Personal"},{id:2, label: "2 - Commercial"},{id:3, label: "3 - Government"},{id:0, label: "Unknown"}];
+		$scope.defaultInjuries=[{id:1, label:"No Injury/None Reporte"},{id:2, label:"Possible"},{id:3, label:"Non-Incapacitating"},{id:4, label:"Incapacitating"},{id:5, label:"Fatal"},{id:0, label:"Unknown"}];
 		$scope.patient={};
 		$scope.patient.countyId=[{"id":1},{"id":2},{"id":3},{"id":4},{"id":5},{"id":6},{"id":7},{"id":8},{"id":9},{"id":10},{"id":11},{"id":12},{"id":13},{"id":14},{"id":15},{"id":16},{"id":17},{"id":18},{"id":19},{"id":20},{"id":21},{"id":22},{"id":23},{"id":24},{"id":25},{"id":26},{"id":27},{"id":28},{"id":29},{"id":30},{"id":31},{"id":32},{"id":33},{"id":34},{"id":35},{"id":36},{"id":37},{"id":38},{"id":39},{"id":40},{"id":41},{"id":42},{"id":43},{"id":44},{"id":45},{"id":46},{"id":47},{"id":48},{"id":49},{"id":50},{"id":51},{"id":52},{"id":53},{"id":54},{"id":55},{"id":56},{"id":57},{"id":58},{"id":59},{"id":60},{"id":61},{"id":62},{"id":63},{"id":64},{"id":65},{"id":66},{"id":67},{"id":68},{"id":69},{"id":70},{"id":71},{"id":72},{"id":73},{"id":74},{"id":75},{"id":76},{"id":77},{"id":78},{"id":79},{"id":80},{"id":81},{"id":82},{"id":83},{"id":84},{"id":85},{"id":86},{"id":87},{"id":88}];
 		$scope.patient.tier=[{id:1},{id:2},{id:3},{id:4},{id:5},{id:0}];
 		$scope.patient.damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
 		$scope.patient.typeOfUse=[{id:1},{id:2},{id:3},{id:0}];
 		$scope.patient.seatingPosition=[{id:1},{id:2},{id:99}];
+		$scope.patient.injuries=[{id:1},{id:2},{id:3},{id:4},{id:5},{id:0}];
 		//Reporting Agency
 		$scope.patient.reportingAgency=[];
 		$scope.reportingAgencyLoaded=false;
@@ -141,6 +143,12 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$.each($scope.searchParam.reportingAgency, function(index,value) {
 			$scope.searchParam.reportingAgency[index]=value.id;
 		});
+		
+		// Manipulate Injuries
+		$.each($scope.searchParam.injuries, function(index,value){
+			$scope.searchParam.injuries[index]=value.id;
+		});
+		
 		
 		var defer=$q.defer();
 		
@@ -481,6 +489,17 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 				$scope.disableSearch=false;
 		}
 	}, true );
+	//Watch Injury Filter
+	$scope.$watch('patient.injuries' , function() {		
+		   if($scope.patient.injuries.length==0){
+			   $scope.disableSearch=true;
+			   $scope.injuriesMinError=true;
+		   }else{
+			   $scope.injuriesMinError=false;
+			   if(!$scope.searchCountyMinError)
+				   $scope.disableSearch=false;	
+		   }
+		}, true );
 }]); 
 
 adminApp.directive( 'popoverHtmlUnsafePopup', function () {

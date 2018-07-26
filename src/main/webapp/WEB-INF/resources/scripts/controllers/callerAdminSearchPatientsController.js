@@ -6,9 +6,11 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 	$scope.patientSearchData=$scope.patientSearchDataOrginal=[];
 	$scope.isSelectedAddedFromDate=true;
 	$scope.isSelectedCrashFromDate=true;
+	// Export Excel
 	$scope.exportButtonText="Export to Excel";
 	$scope.exportButton=false;
 	$scope.isExportPatientSelected=true;
+	
 	$scope.setScrollDown=false;
 	$scope.ageFilterCurrentSelection=[];
 	// User Preference Status
@@ -27,16 +29,19 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"},{id: 5, label: "Undetermined"},{id: 0, label: "Others"}];	
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
+		$scope.defaultInjuries=[{id:1, label:"No Injury/None Reporte"},{id:2, label:"Possible"},{id:3, label:"Non-Incapacitating"},{id:4, label:"Incapacitating"},{id:5, label:"Fatal"},{id:0, label:"Unknown"}];
 		
 		$scope.patient={};
 		$scope.patient.countyId=[];
 		$scope.patient.reportingAgency=[];
 		$scope.patient.tier=[];
 		$scope.patient.damageScale=[];
+		$scope.patient.injuries=[];
 		$scope.patient.isOwner=0;
 		angular.copy(searchService.getCounty(),$scope.patient.countyId);
 		angular.copy(searchService.getTier(),$scope.patient.tier);
 		angular.copy(searchService.getDamageScale(),$scope.patient.damageScale);
+		angular.copy(searchService.getInjuries(),$scope.patient.injuries);
 		$scope.patient.crashFromDate=searchService.getCrashFromDate();
 		$scope.patient.crashToDate=searchService.getCrashToDate();
 		$scope.patient.localReportNumber=searchService.getLocalReportNumber();
@@ -531,6 +536,11 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			$scope.searchParam.reportingAgency[index]=value.id;
 		});
 		
+		// Manipulate Injuries Array
+		$.each($scope.searchParam.injuries, function(index,value){
+			$scope.searchParam.injuries[index]=value.id;
+		});
+		
 		//Reset Check Box - Scanned
 		$scope.isCheckedAllDirectReport=false;
 		
@@ -716,6 +726,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		searchService.setCountyListType($scope.countyListType);
 		searchService.setDamageScale(angular.copy($scope.patient.damageScale));
 		searchService.setDirectReportStatus($scope.patient.directReportStatus);
+		searchService.setInjuries(angular.copy($scope.patient.injuries));
 	};
 	
 	
@@ -1313,6 +1324,18 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			   $scope.searchDamageScaleMinError=true;
 		   }else{
 			   $scope.searchDamageScaleMinError=false;
+			   if(!$scope.searchCountyMinError)
+				   $scope.disableSearch=false;	
+		   }
+		}, true );
+	
+	//Watch Injury Filter
+	$scope.$watch('patient.injuries' , function() {		
+		   if($scope.patient.injuries.length==0){
+			   $scope.disableSearch=true;
+			   $scope.injuriesMinError=true;
+		   }else{
+			   $scope.injuriesMinError=false;
 			   if(!$scope.searchCountyMinError)
 				   $scope.disableSearch=false;	
 		   }
