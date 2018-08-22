@@ -520,8 +520,11 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		}
 		if(ArrayUtils.contains(callerPatientSearchForm.getSeatingPosition(), 99)){
 			Criterion seatingPositionCriterion = Restrictions.or(Restrictions.eq("t1.seatingPosition","99"), Restrictions.isNull("t1.seatingPosition"));
-			Criterion seatingPositionNotAvailableCriterion = Restrictions.or(Restrictions.eq("t1.seatingPosition","18"), Restrictions.eq("t1.seatingPosition", ""));
+			Criterion seatingPositionNotAvailableCriterion = Restrictions.eq("t1.seatingPosition","18");
 			seatingPositionDisjunction.add(Restrictions.or(seatingPositionCriterion,seatingPositionNotAvailableCriterion));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getSeatingPosition(),0)){
+			seatingPositionDisjunction.add(Restrictions.eq("t1.seatingPosition", ""));
 		}
 		criteria.add(seatingPositionDisjunction);
 	}
@@ -564,6 +567,9 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 		}
 		if(ArrayUtils.contains(callerPatientSearchForm.getInjuries(), "0")){
 			injuriesDisjunction.add(Restrictions.or(Restrictions.eq("t1.injuries","6"), Restrictions.isNull("t1.injuries")));
+		}
+		if(ArrayUtils.contains(callerPatientSearchForm.getInjuries(), "7")){
+			injuriesDisjunction.add(Restrictions.eq("t1.injuries", ""));
 		}
 		criteria.add(injuriesDisjunction);
 	}

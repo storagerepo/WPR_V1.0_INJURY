@@ -29,7 +29,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"},{id: 5, label: "Undetermined"},{id: 0, label: "Others"}];	
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
-		$scope.defaultInjuries=[{id:1, label:"No Injury/None Reporte"},{id:2, label:"Possible"},{id:3, label:"Non-Incapacitating"},{id:4, label:"Incapacitating"},{id:5, label:"Fatal"},{id:0, label:"Unknown"}];
+		$scope.defaultInjuries=[{id:1, label:"No Injury/None Reporte"},{id:2, label:"Possible"},{id:3, label:"Non-Incapacitating"},{id:4, label:"Incapacitating"},{id:5, label:"Fatal"},{id:0, label:"Unknown"},{id:7,label: "Not Provided"}];
 		
 		$scope.patient={};
 		$scope.patient.countyId=[];

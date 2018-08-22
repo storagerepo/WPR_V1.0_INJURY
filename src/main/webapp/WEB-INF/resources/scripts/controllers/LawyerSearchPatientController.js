@@ -722,8 +722,8 @@ adminApp.controller('LawyerSearchPatientsController', ['$scope','requestHandler'
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
 		$scope.defaultTypeofUse=[{id:1, label: "Personal"},{id:2, label: "Commercial"},{id:3, label: "Government"},{id:0, label: "Unknown"}];
-		$scope.defaultSeatingPosition=[{id:1, label:"Drivers"},{id:2, label:"Passengers"},{id:99, label:"Unknown"}];
-		$scope.defaultInjuries=[{id:1, label:"No Injury/None Reporte"},{id:2, label:"Possible"},{id:3, label:"Non-Incapacitating"},{id:4, label:"Incapacitating"},{id:5, label:"Fatal"},{id:0, label:"Unknown"}];
+		$scope.defaultSeatingPosition=[{id:1, label:"Drivers"},{id:2, label:"Passengers"},{id:99, label:"Unknown"},{id:0,label:"Not Provided"}];
+		$scope.defaultInjuries=[{id:1, label:"No Injury/None Reporte"},{id:2, label:"Possible"},{id:3, label:"Non-Incapacitating"},{id:4, label:"Incapacitating"},{id:5, label:"Fatal"},{id:0, label:"Unknown"},{id:7,label: "Not Provided"}];
 		$scope.patient={};
 		$scope.totalRecords=0;
 		$scope.lAdminPatientSearchData="";
