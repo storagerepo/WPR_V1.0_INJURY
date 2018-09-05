@@ -992,7 +992,7 @@ public class PDFCrashReportReader {
 									}
 								} else if (motoristPage.get(index - 26>0?index-26:0).equals(
 										"INJURIES")) {
-									if(motoristPage.get(index-21).length()>5){
+									if(this.isCharacterValue(motoristPage.get(index-21))&&motoristPage.get(index-21).length()>0){
 										motoristPageForm.setInjuries(motoristPage
 												.get(index - 25));
 										if (motoristPage.get(index - 22).equals(
@@ -1100,6 +1100,10 @@ public class PDFCrashReportReader {
 
 	}
 
+	public boolean isCharacterValue(String inputValue){
+		return inputValue.matches("[a-zA-Z]+");
+	}
+	
 	public Integer getReportType(PDFCrashReportJson pdfCrashReportJson) {
 
 		// #1 Tire 1 Patient
