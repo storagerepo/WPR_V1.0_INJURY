@@ -19,6 +19,7 @@ public class PoliceAgencyForm {
 	private String lastUpdatedDate;
 	private Integer reportStatus;
 	private String agencyUrl;
+	private Integer reportParsingType;
 	
 	public Integer getMapId() {
 		return mapId;
@@ -81,8 +82,15 @@ public class PoliceAgencyForm {
 	public void setAgencyUrl(String agencyUrl) {
 		this.agencyUrl = agencyUrl;
 	}
+	public Integer getReportParsingType() {
+		return reportParsingType;
+	}
+	public void setReportParsingType(Integer reportParsingType) {
+		this.reportParsingType = reportParsingType;
+	}
 	public PoliceAgencyForm(Integer mapId, Integer countyId,String countyName, Integer agencyId,
-			String name, Integer schedulerType, Integer status, String lastUpdatedDate, Integer reportStatus, String agencyUrl) {
+			String name, Integer schedulerType, Integer status, String lastUpdatedDate, Integer reportStatus, String agencyUrl,
+			Integer reportParsingType) {
 		super();
 		this.mapId = mapId;
 		this.countyId = countyId;
@@ -94,6 +102,7 @@ public class PoliceAgencyForm {
 		this.lastUpdatedDate = lastUpdatedDate;
 		this.reportStatus = reportStatus;
 		this.agencyUrl = agencyUrl;
+		this.reportParsingType = reportParsingType;
 	}
 	
 	public PoliceAgencyForm() {

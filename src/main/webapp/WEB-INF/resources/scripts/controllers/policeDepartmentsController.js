@@ -193,6 +193,8 @@ adminApp
 										}
 										$scope.policeAgencyForm.schedulerType = $scope.policeAgencyForm.schedulerType
 												.toString();
+										$scope.policeAgencyForm.reportParsingType = $scope.policeAgencyForm.reportParsingType
+										.toString();
 										policeDepartmentOriginal = angular
 												.copy($scope.policeAgencyForm);
 									});

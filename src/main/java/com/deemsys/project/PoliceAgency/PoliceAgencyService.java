@@ -53,7 +53,7 @@ public class PoliceAgencyService {
 		policeAgencys=policeAgencyDAO.getAll();
 		
 		for (PoliceAgency policeAgency : policeAgencys) {
-			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(),policeAgency.getCounty().getName(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getSchedulerType(), policeAgency.getStatus(),InjuryConstants.convertMonthFormat(policeAgency.getLastUpdatedDate()),policeAgency.getReportStatus(),policeAgency.getAgencyUrl());
+			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(),policeAgency.getCounty().getName(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getSchedulerType(), policeAgency.getStatus(),InjuryConstants.convertMonthFormat(policeAgency.getLastUpdatedDate()),policeAgency.getReportStatus(),policeAgency.getAgencyUrl(),policeAgency.getReportParsingType());
 			policeAgencyForms.add(agencyForm);
 		}
 		
@@ -69,7 +69,7 @@ public class PoliceAgencyService {
 		
 		
 		
-		PoliceAgencyForm policeAgencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(),policeAgency.getCounty().getName(), policeAgency.getAgencyId(), policeAgency.getName(),policeAgency.getSchedulerType(), policeAgency.getStatus(),InjuryConstants.convertMonthFormat(policeAgency.getLastUpdatedDate()),policeAgency.getReportStatus(),policeAgency.getAgencyUrl());
+		PoliceAgencyForm policeAgencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(),policeAgency.getCounty().getName(), policeAgency.getAgencyId(), policeAgency.getName(),policeAgency.getSchedulerType(), policeAgency.getStatus(),InjuryConstants.convertMonthFormat(policeAgency.getLastUpdatedDate()),policeAgency.getReportStatus(),policeAgency.getAgencyUrl(), policeAgency.getReportParsingType());
 		
 		
 		return policeAgencyForm;
@@ -100,7 +100,7 @@ public class PoliceAgencyService {
 	
 		Integer mapId=policeAgencyDAO.getMaximumMapId(policeAgencyForm.getSchedulerType());
 		//Logic Ends
-		PoliceAgency policeAgency=new PoliceAgency(mapId,countyDAO.get(policeAgencyForm.getCountyId()),policeAgencyForm.getAgencyId(), policeAgencyForm.getName(),policeAgencyForm.getSchedulerType(), 3,  new Date(), 1, policeAgencyForm.getAgencyUrl(), null);
+		PoliceAgency policeAgency=new PoliceAgency(mapId,countyDAO.get(policeAgencyForm.getCountyId()),policeAgencyForm.getAgencyId(), policeAgencyForm.getName(),policeAgencyForm.getSchedulerType(), 3,  new Date(), 1, policeAgencyForm.getAgencyUrl(), policeAgencyForm.getReportParsingType(), null);
 		policeAgencyDAO.save(policeAgency);
 		return null;
 	}
@@ -120,7 +120,7 @@ public class PoliceAgencyService {
 			//List<CrashReport> crashReports=new ArrayList<CrashReport>();
 			Integer mapId=policeAgencyDAO.getMaximumMapId(policeAgencyForm.getSchedulerType());
 			
-			PoliceAgency policeAgency2=new PoliceAgency(mapId,countyDAO.get(policeAgencyForm.getCountyId()) ,policeAgencyForm.getAgencyId(),policeAgencyForm.getName(),policeAgencyForm.getSchedulerType(),policeAgencyForm.getStatus(), new Date(), 1, policeAgencyForm.getAgencyUrl(), null);
+			PoliceAgency policeAgency2=new PoliceAgency(mapId,countyDAO.get(policeAgencyForm.getCountyId()) ,policeAgencyForm.getAgencyId(),policeAgencyForm.getName(),policeAgencyForm.getSchedulerType(),policeAgencyForm.getStatus(), new Date(), 1, policeAgencyForm.getAgencyUrl(), policeAgencyForm.getReportParsingType(), null);
 			
 			policeAgencyDAO.save(policeAgency2);
 			
@@ -137,6 +137,7 @@ public class PoliceAgencyService {
 			policeAgency.setSchedulerType(policeAgencyForm.getSchedulerType());
 			policeAgency.setStatus(policeAgencyForm.getStatus());
 			policeAgency.setAgencyUrl(policeAgencyForm.getAgencyUrl());
+			policeAgency.setReportParsingType(policeAgencyForm.getReportParsingType());
 			policeAgency.setCrashReports(null);
 			
 			policeAgencyDAO.update(policeAgency);
@@ -169,7 +170,7 @@ public class PoliceAgencyService {
 		List<PoliceAgencyForm> policeAgencyForms = new ArrayList<PoliceAgencyForm>();
 		List<PoliceAgency> policeAgencies = policeAgencyDAO.getPoliceAgenciesBystatus(status);
 		for (PoliceAgency policeAgency : policeAgencies) {
-			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(),policeAgency.getCounty().getName(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getSchedulerType(), policeAgency.getStatus(),InjuryConstants.convertMonthFormat(policeAgency.getLastUpdatedDate()),policeAgency.getReportStatus(),policeAgency.getAgencyUrl());
+			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(),policeAgency.getCounty().getName(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getSchedulerType(), policeAgency.getStatus(),InjuryConstants.convertMonthFormat(policeAgency.getLastUpdatedDate()),policeAgency.getReportStatus(),policeAgency.getAgencyUrl(), policeAgency.getReportParsingType());
 			policeAgencyForms.add(agencyForm);
 		}
 		
@@ -180,7 +181,7 @@ public class PoliceAgencyService {
 		List<PoliceAgencyForm> policeAgencyForms = new ArrayList<PoliceAgencyForm>();
 		List<PoliceAgency> policeAgencies = policeAgencyDAO.getPoliceAgenciesForScheduler(schedulerType);
 		for (PoliceAgency policeAgency : policeAgencies) {
-			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(),policeAgency.getCounty().getName(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getSchedulerType(), policeAgency.getStatus(),InjuryConstants.convertMonthFormat(policeAgency.getLastUpdatedDate()),policeAgency.getReportStatus(),policeAgency.getAgencyUrl());
+			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(),policeAgency.getCounty().getName(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getSchedulerType(), policeAgency.getStatus(),InjuryConstants.convertMonthFormat(policeAgency.getLastUpdatedDate()),policeAgency.getReportStatus(),policeAgency.getAgencyUrl(), policeAgency.getReportParsingType());
 			policeAgencyForms.add(agencyForm);
 		}
 		
@@ -195,7 +196,7 @@ public class PoliceAgencyService {
 		policeAgencys=policeAgencyDAO.searchPoliceDepartments(countyParam,reportPullingParam,reportStatus);
 		
 		for (PoliceAgency policeAgency : policeAgencys) {
-			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(),policeAgency.getCounty().getName(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getSchedulerType(), policeAgency.getStatus(), InjuryConstants.convertMonthFormat(policeAgency.getLastUpdatedDate()), policeAgency.getReportStatus(), policeAgency.getAgencyUrl());
+			PoliceAgencyForm agencyForm=new PoliceAgencyForm(policeAgency.getMapId(), policeAgency.getCounty().getCountyId(),policeAgency.getCounty().getName(), policeAgency.getAgencyId(), policeAgency.getName(), policeAgency.getSchedulerType(), policeAgency.getStatus(), InjuryConstants.convertMonthFormat(policeAgency.getLastUpdatedDate()), policeAgency.getReportStatus(), policeAgency.getAgencyUrl(), policeAgency.getReportParsingType());
 			policeAgencyForms.add(agencyForm);
 		}
 		

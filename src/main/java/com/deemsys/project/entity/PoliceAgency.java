@@ -32,6 +32,7 @@ public class PoliceAgency implements java.io.Serializable {
 	private Date lastUpdatedDate;
 	private Integer reportStatus;
 	private String agencyUrl;
+	private Integer reportParsingType;
 	private Set<CrashReport> crashReports = new HashSet<CrashReport>(0);
 
 	public PoliceAgency() {
@@ -44,7 +45,7 @@ public class PoliceAgency implements java.io.Serializable {
 	public PoliceAgency(int mapId, County county, Integer agencyId,
 			String name, Integer schedulerType, Integer status,
 			Date lastUpdatedDate, Integer reportStatus, String agencyUrl,
-			Set<CrashReport> crashReports) {
+			Integer reportParsingType, Set<CrashReport> crashReports) {
 		super();
 		this.mapId = mapId;
 		this.county = county;
@@ -55,6 +56,7 @@ public class PoliceAgency implements java.io.Serializable {
 		this.lastUpdatedDate = lastUpdatedDate;
 		this.reportStatus = reportStatus;
 		this.agencyUrl = agencyUrl;
+		this.reportParsingType = reportParsingType;
 		this.crashReports = crashReports;
 	}
 
@@ -151,4 +153,13 @@ public class PoliceAgency implements java.io.Serializable {
 		this.agencyUrl = agencyUrl;
 	}
 
+	@Column(name="report_parsing_type")
+	public Integer getReportParsingType() {
+		return reportParsingType;
+	}
+
+	public void setReportParsingType(Integer reportParsingType) {
+		this.reportParsingType = reportParsingType;
+	}
+	
 }

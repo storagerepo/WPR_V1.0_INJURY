@@ -512,7 +512,7 @@ public class PatientController {
 	public String debugParsePDF(@RequestParam("fileName") String fileName,
 			@RequestParam("addedDate") String addedDate,ModelMap model) {
 		try {
-			crashReportReader.parsePDFDocument(new File("C:\\wamp\\www\\InjuryCrashReports\\"+fileName+".pdf"), fileName, addedDate);
+			crashReportReader.parsePDFDocument(new File("C:\\wamp\\www\\InjuryCrashReports\\"+fileName+".pdf"), fileName, addedDate, null,0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

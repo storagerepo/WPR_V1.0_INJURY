@@ -167,11 +167,10 @@ public class CrashReportService {
 	}
 	
 	// Get Crash Report Form Details from PdfJson Form
-	public CrashReportForm getCrashReportFormDetails(ReportFirstPageForm reportFirstPageForm, String addedDate, String crashId,String filePath,Integer crashReportErrorId,Integer numberOfPatients,Integer vehicleCount){
+	public CrashReportForm getCrashReportFormDetails(ReportFirstPageForm reportFirstPageForm, String addedDate, String crashId,String filePath,Integer crashReportErrorId,Integer numberOfPatients,Integer vehicleCount,Integer reportFromId){
 		Integer isRunnerReport=0;
-		Integer reportFrom=0;
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), reportFirstPageForm.getLocalReportNumber(), crashId.toString(), reportFirstPageForm.getCrashDate(), reportFirstPageForm.getCounty(),
-				addedDate, filePath,numberOfPatients, vehicleCount, isRunnerReport, null, 1, reportFrom, InjuryConstants.convertYearFormatWithTimeByDate(addedDate), null);
+				addedDate, filePath,numberOfPatients, vehicleCount, isRunnerReport, null, 1, reportFromId, InjuryConstants.convertYearFormatWithTimeByDate(addedDate), null);
 		return crashReportForm;
 	}
 	
@@ -366,7 +365,7 @@ public class CrashReportService {
 	
 	public int savePoliceDepartmentReport(PoliceDepartmentRunnerDirectReports departmentRunnerDirectReports) throws Exception{
 		
-		return pdfCrashReportReader.saveDirectRunnerCrashReport(new RunnerCrashReportForm(UUID.randomUUID().toString().replaceAll("-", ""), null,departmentRunnerDirectReports.getLocalReportNumber(), departmentRunnerDirectReports.getCrashDate(), new Date().toString(), departmentRunnerDirectReports.getCountyId().toString(), departmentRunnerDirectReports.getPdfUrl(), departmentRunnerDirectReports.getMapId(), null, null),1);
+		return pdfCrashReportReader.saveRunnerDirectOrScannedReport(new RunnerCrashReportForm(UUID.randomUUID().toString().replaceAll("-", ""), null,departmentRunnerDirectReports.getLocalReportNumber(), departmentRunnerDirectReports.getCrashDate(), new Date().toString(), departmentRunnerDirectReports.getCountyId().toString(), departmentRunnerDirectReports.getPdfUrl(), departmentRunnerDirectReports.getMapId(), null, null));
 	}
 	
 	public void backupSixMonthOldReportsDataByStoredProcedure(String date){

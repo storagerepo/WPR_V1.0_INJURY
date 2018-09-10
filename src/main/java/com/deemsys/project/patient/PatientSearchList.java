@@ -75,7 +75,8 @@ public class PatientSearchList extends InjuryProperties{
 	private String policeDepartmentBucketURL="https://cdn.trafficcrashreports.org/runner-reports/";
 	private String policeDepartmentFolder="/reports/";
 	private String reportFromDeemsys="1";
-	private String bucketURL="https://cdn.crashreportsonline.com/crashreports/";
+	//private String bucketURL="https://cdn.crashreportsonline.com/crashreports/";
+	private String bucketURL="http://192.168.1.48/InjuryCrashReports/";
 	
 	public String getPatientId() {
 		return patientId;
