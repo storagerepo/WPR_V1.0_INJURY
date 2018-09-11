@@ -29,6 +29,9 @@ public class ReportFirstPageForm {
 		this.crashDate = crashDate;
 		this.timeOfCrash = timeOfCrash;
 	}
+	  public ReportFirstPageForm(){
+		  
+	  }
 
 	public String getLocalReportNumber() {
 		return localReportNumber;

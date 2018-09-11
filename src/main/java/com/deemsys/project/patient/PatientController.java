@@ -38,6 +38,7 @@ import com.deemsys.project.exportFields.ExportFieldsService;
 import com.deemsys.project.login.LoginService;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
+import com.deemsys.project.pdfcrashreport.PdfParserOne;
 import com.deemsys.project.userExportPreferences.UserExportPreferencesService;
 
 /**
@@ -86,6 +87,9 @@ public class PatientController {
 	
 	@Autowired
 	PatientCallerService patientCallerService;
+	
+	@Autowired
+	PdfParserOne pdfParserOne;
 
 	@RequestMapping(value = { "/Patient/getAllPatients",
 			"/Caller/getAllPatients" }, method = RequestMethod.GET)
@@ -520,4 +524,13 @@ public class PatientController {
 		return "/returnPage";
 	}
     
+    @RequestMapping(value="/development/readScannedReportsData",headers = "content-type=multipart/form-data",method=RequestMethod.POST)
+    public @ResponseBody
+    PDFCrashReportJson readScannedReportsData(
+			@RequestParam("file") MultipartFile file, ModelMap model)
+			throws IOException {
+    	File savedFile=pdfParserOne.saveFile(file);
+    	return pdfParserOne.parsePdfFromFile(savedFile);
+		
+    }
 }

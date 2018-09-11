@@ -113,6 +113,9 @@ public class ReportUnitPageForm {
 		this.licensePlatNumber = licensePlatNumber;
 		this.typeOfUse = typeOfUse;
 	}
+	public ReportUnitPageForm(){
+		
+	}
     
 		public static Comparator<ReportUnitPageForm> ReportUnitPageComparitor 
 			    = new Comparator<ReportUnitPageForm>() {
