@@ -86,7 +86,20 @@ public class PdfParserOne {
 			//Unit datas
 			List<ReportUnitPageForm> reportUnitPageForms=new ArrayList<ReportUnitPageForm>();
 			List<ReportMotoristPageForm> reportMotoristPageForms=new ArrayList<ReportMotoristPageForm>();
-			for(int i = 2; i <= Integer.parseInt(reportFirstPageForm.getNumberOfUnits())+1; i++){
+			Integer IncrementPage=0;
+			for(int i = 2; i <= Integer.parseInt(reportFirstPageForm.getNumberOfUnits())+1+IncrementPage; i++){
+				String[] unitPageCoordinates=injuryProperties.getProperty("findUnitPage").split(",");
+				Rectangle rect=new Rectangle(Double.parseDouble(unitPageCoordinates[0]), Double.parseDouble(unitPageCoordinates[1]), 
+						Double.parseDouble(unitPageCoordinates[2]), Double.parseDouble(unitPageCoordinates[3]));
+				RenderFilter[] unitPageFilter = {new RegionTextRenderFilter(rect)};
+				TextExtractionStrategy unitStrategy;
+				unitStrategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), unitPageFilter);
+				String pdfText1 = PdfTextExtractor.getTextFromPage(reader, i, unitStrategy);
+				if(pdfText1.equals("OHIO TRAFFIC ACCIDENT - DIAGRAM/NARRITIVE CONTINUATION")){
+					IncrementPage=IncrementPage+1;
+					continue;
+				}
+				else{
 					ReportUnitPageForm reportUnitPageForm=new ReportUnitPageForm();
 					String[] UnitPropertyNames={"driverUnitNumber","ownerName","ownerPhoneNumber","ownerDamageScale","ownerAddress",
 							"licensePlateNumber","VIN","noOfOccupants","vehicleYear","vehcileMake","insuranceCompany",
@@ -145,8 +158,9 @@ public class PdfParserOne {
 					}
 					reportUnitPageForms.add(reportUnitPageForm);
 			}
+			}
 				
-				for(int j=Integer.parseInt(reportFirstPageForm.getNumberOfUnits())+2;j<=reader.getNumberOfPages();j++){
+				for(int j=Integer.parseInt(reportFirstPageForm.getNumberOfUnits())+2+IncrementPage;j<=reader.getNumberOfPages();j++){
 					String[] coordinates=injuryProperties.getProperty("findOccupantOrMotorist").split(",");
 					Rectangle rectangle=new Rectangle(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]), 
 							Double.parseDouble(coordinates[2]), Double.parseDouble(coordinates[3]));
@@ -157,37 +171,37 @@ public class PdfParserOne {
 					String[][] occupantsArray=new String[5][];
 					if(!pdfText.equals("")&&(pdfText.equals("OH")||pdfText.equals("WA")&&!pdfText.matches("[0-9]+"))){
 						
-					occupantsArray= new String[][]{{"occupantOneUnitNumber","occupantOneName","occupantOneDateOfBirth","occupantOneAge",
+					occupantsArray= new String[][]{{"occupantOneUnitNumber","occupantOneName","occupantOneDateOfBirth","occupantOnePatientAge",
 						"occupantOneGender","occupantOneAddress","occupantOnePhoneNumber","occupantOneInjury","occupantOneEMSAgency",
 						"occupantOneMedicalFacility","occupantOneSeatingPosition"},
-						{"occupantTwoUnitNumber","occupantTwoName","occupantTwoDateOfBirth","occupantTwoAge",
+						{"occupantTwoUnitNumber","occupantTwoName","occupantTwoDateOfBirth","occupantTwoPatientAge",
 							"occupantTwoGender","occupantTwoAddress","occupantTwoPhoneNumber","occupantTwoInjury","occupantTwoEMSAgency",
 							"occupantTwoMedicalFacility","occupantTwoSeatingPosition"},
-						{"occupantThreeUnitNumber","occupantThreeName","occupantThreeDateOfBirth","occupantThreeAge",
+						{"occupantThreeUnitNumber","occupantThreeName","occupantThreeDateOfBirth","occupantThreePatientAge",
 							"occupantThreeGender","occupantThreeAddress","occupantThreePhoneNumber","occupantThreeInjury","occupantThreeEMSAgency",
 							"occupantThreeMedicalFacility","occupantThreeSeatingPosition"},
-						{"occupantFourUnitNumber","occupantFourName","occupantFourDateOfBirth","occupantFourAge",
+						{"occupantFourUnitNumber","occupantFourName","occupantFourDateOfBirth","occupantFourPatientAge",
 							"occupantFourGender","occupantFourAddress","occupantFourPhoneNumber","occupantFourInjury","occupantFourEMSAgency",
 							"occupantFourMedicalFacility","occupantFourSeatingPosition"}};
 					}
 					else if(!pdfText.equals("OH")||!pdfText.equals("WA")){
 						
-					occupantsArray=new String[][]{{"occupantFiveUnitNumber","occupantFiveName","occupantFiveDateOfBirth","occupantFiveAge",
+					occupantsArray=new String[][]{{"occupantFiveUnitNumber","occupantFiveName","occupantFiveDateOfBirth","occupantFivePatientAge",
 						"occupantFiveGender","occupantFiveAddress","occupantFivePhoneNumber","occupantFiveInjury","occupantFiveEMSAgency",
 						"occupantFiveMedicalFacility","occupantFiveSeatingPosition"},
-						{"occupantSixUnitNumber","occupantSixName","occupantSixDateOfBirth","occupantSixAge",
+						{"occupantSixUnitNumber","occupantSixName","occupantSixDateOfBirth","occupantSixPatientAge",
 							"occupantSixGender","occupantSixAddress","occupantSixPhoneNumber","occupantSixInjury","occupantSixEMSAgency",
 							"occupantSixMedicalFacility","occupantSixSeatingPosition"},
-						{"occupantSevenUnitNumber","occupantSevenName","occupantSevenDateOfBirth","occupantSevenAge",
+						{"occupantSevenUnitNumber","occupantSevenName","occupantSevenDateOfBirth","occupantSevenPatientAge",
 							"occupantSevenGender","occupantSevenAddress","occupantSevenPhoneNumber","occupantSevenInjury","occupantSevenEMSAgency",
 							"occupantSevenMedicalFacility","occupantSevenSeatingPosition"},
-						{"occupantEightUnitNumber","occupantEightName","occupantEightDateOfBirth","occupantEightAge",
+						{"occupantEightUnitNumber","occupantEightName","occupantEightDateOfBirth","occupantEightPatientAge",
 							"occupantEightGender","occupantEightAddress","occupantEightPhoneNumber","occupantEightInjury","occupantEightEMSAgency",
 							"occupantEightMedicalFacility","occupantEightSeatingPosition"},
-						{"occupantNineUnitNumber","occupantNineName","occupantNineDateOfBirth","occupantNineAge",
+						{"occupantNineUnitNumber","occupantNineName","occupantNineDateOfBirth","occupantNinePatientAge",
 							"occupantNineGender","occupantNineAddress","occupantNinePhoneNumber","occupantNineInjury","occupantNineEMSAgency",
 							"occupantNineMedicalFacility","occupantNineSeatingPosition"},
-						{"occupantTenUnitNumber","occupantTenName","occupantTenDateOfBirth","occupantTenAge",
+						{"occupantTenUnitNumber","occupantTenName","occupantTenDateOfBirth","occupantTenPatientAge",
 							"occupantTenGender","occupantTenAddress","occupantTenPhoneNumber","occupantTenInjury","occupantTenEMSAgency",
 							"occupantTenMedicalFacility","occupantTenSeatingPosition"}};
 					}
@@ -225,7 +239,7 @@ public class PdfParserOne {
 			strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), unitFilter);
 			pdfText = PdfTextExtractor.getTextFromPage(reader, i, strategy);
 			if(occupantPropertyName.contains("UnitNumber")){
-				if(pdfText.equals("")||pdfText==null){
+				if(pdfText.equals("")||pdfText==null||!this.skipUnwantedSpaces(pdfText).matches("[0-9]+")){
 					countToSkipOccupant=countToSkipOccupant+1;
 				}
 				else if(!pdfText.equals("")){
@@ -264,7 +278,7 @@ public class PdfParserOne {
 					reportMotoristPageForm.setDateOfBirth(pdfText);
 				}
 			}
-			if(occupantPropertyName.contains("Age")){
+			if(occupantPropertyName.contains("PatientAge")){
 				if(!pdfText.equals("")){
 					reportMotoristPageForm.setAge(pdfText);
 				}
