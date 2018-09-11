@@ -50,6 +50,50 @@ public class InjuryConstants {
 	public static Integer PATIENT_EXPORT=1;
 	public static Integer ACTVITY_LOG_EXPORT=2;
 	
+	//1st level scanned reports credentials
+	public static String[][] MOTORIST_PAGE_COORDINATES={
+			{ "occupantOneUnitNumber", "occupantOneName", "occupantOneDateOfBirth",
+				"occupantOnePatientAge", "occupantOneGender", "occupantOneAddress",
+				"occupantOnePhoneNumber", "occupantOneInjury", "occupantOneEMSAgency",
+				"occupantOneMedicalFacility", "occupantOneSeatingPosition" },
+		{ "occupantTwoUnitNumber", "occupantTwoName", "occupantTwoDateOfBirth",
+				"occupantTwoPatientAge", "occupantTwoGender", "occupantTwoAddress",
+				"occupantTwoPhoneNumber", "occupantTwoInjury", "occupantTwoEMSAgency",
+				"occupantTwoMedicalFacility", "occupantTwoSeatingPosition" },
+		{ "occupantThreeUnitNumber", "occupantThreeName", "occupantThreeDateOfBirth",
+				"occupantThreePatientAge", "occupantThreeGender", "occupantThreeAddress",
+				"occupantThreePhoneNumber", "occupantThreeInjury", "occupantThreeEMSAgency",
+				"occupantThreeMedicalFacility", "occupantThreeSeatingPosition" },
+		{ "occupantFourUnitNumber", "occupantFourName", "occupantFourDateOfBirth",
+				"occupantFourPatientAge", "occupantFourGender", "occupantFourAddress",
+				"occupantFourPhoneNumber", "occupantFourInjury", "occupantFourEMSAgency",
+				"occupantFourMedicalFacility", "occupantFourSeatingPosition" } 
+				};
+	public static String[][] OCCUPANT_PAGE_COORDINATES={
+			{ "occupantFiveUnitNumber", "occupantFiveName", "occupantFiveDateOfBirth",
+				"occupantFivePatientAge", "occupantFiveGender", "occupantFiveAddress",
+				"occupantFivePhoneNumber", "occupantFiveInjury", "occupantFiveEMSAgency",
+				"occupantFiveMedicalFacility", "occupantFiveSeatingPosition" },
+		{ "occupantSixUnitNumber", "occupantSixName", "occupantSixDateOfBirth",
+				"occupantSixPatientAge", "occupantSixGender", "occupantSixAddress",
+				"occupantSixPhoneNumber", "occupantSixInjury", "occupantSixEMSAgency",
+				"occupantSixMedicalFacility", "occupantSixSeatingPosition" },
+		{ "occupantSevenUnitNumber", "occupantSevenName", "occupantSevenDateOfBirth",
+				"occupantSevenPatientAge", "occupantSevenGender", "occupantSevenAddress",
+				"occupantSevenPhoneNumber", "occupantSevenInjury", "occupantSevenEMSAgency",
+				"occupantSevenMedicalFacility", "occupantSevenSeatingPosition" },
+		{ "occupantEightUnitNumber", "occupantEightName", "occupantEightDateOfBirth",
+				"occupantEightPatientAge", "occupantEightGender", "occupantEightAddress",
+				"occupantEightPhoneNumber", "occupantEightInjury", "occupantEightEMSAgency",
+				"occupantEightMedicalFacility", "occupantEightSeatingPosition" },
+		{ "occupantNineUnitNumber", "occupantNineName", "occupantNineDateOfBirth",
+				"occupantNinePatientAge", "occupantNineGender", "occupantNineAddress",
+				"occupantNinePhoneNumber", "occupantNineInjury", "occupantNineEMSAgency",
+				"occupantNineMedicalFacility", "occupantNineSeatingPosition" },
+		{ "occupantTenUnitNumber", "occupantTenName", "occupantTenDateOfBirth",
+				"occupantTenPatientAge", "occupantTenGender", "occupantTenAddress",
+				"occupantTenPhoneNumber", "occupantTenInjury", "occupantTenEMSAgency",
+				"occupantTenMedicalFacility", "occupantTenSeatingPosition" } };
 	// Convert Date To Year Format
 	public static Date convertYearFormat(String date)
 	{   SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");
