@@ -23,7 +23,7 @@ import com.itextpdf.text.pdf.parser.RenderFilter;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 
 @Service
-public class PdfParserOne {
+public class PdfParserTwo {
 
 	@Autowired
 	InjuryProperties injuryProperties;
@@ -38,15 +38,15 @@ public class PdfParserOne {
 					"reportingAgencyName", "numberOfUnits", "unitInError", "county", "cityVillageTownship", "crashDate",
 					"crashTime" };
 			for (String propertyName : propertyNames) {
-				String[] propertyCoordinates = injuryProperties.getProperty(propertyName).split(",");
+				String[] propertyCoordinates = injuryProperties.getParserTwoProperty(propertyName).split(",");
 				Rectangle rect = new Rectangle(Double.parseDouble(propertyCoordinates[0]),
 						Double.parseDouble(propertyCoordinates[1]), Double.parseDouble(propertyCoordinates[2]),
 						Double.parseDouble(propertyCoordinates[3]));
 				RenderFilter[] filter = { new RegionTextRenderFilter(rect) };
-				String pdfText = "";
 				TextExtractionStrategy strategy;
 				strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), filter);
-				pdfText = PdfTextExtractor.getTextFromPage(reader, 1, strategy);
+				String pdfText = "";
+				pdfText = PdfTextExtractor.getTextFromPage(reader, 1, strategy );
 				switch (propertyName) {
 				case "localReportNumber":
 					reportFirstPageForm.setLocalReportNumber(this.skipUnwantedSpaces(pdfText));
@@ -55,7 +55,7 @@ public class PdfParserOne {
 					reportFirstPageForm.setCrashSeverity(pdfText);
 					break;
 				case "reportingAgencyCode":
-					reportFirstPageForm.setReportingAgencyNCIC(pdfText);
+					reportFirstPageForm.setReportingAgencyNCIC(this.skipUnwantedSpaces(pdfText));
 					break;
 				case "reportingAgencyName":
 					reportFirstPageForm.setReportingAgencyName(pdfText);
@@ -71,10 +71,10 @@ public class PdfParserOne {
 					reportFirstPageForm.setCounty(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
 					break;
 				case "cityVillageTownship":
-					reportFirstPageForm.setCityVillageTownship(pdfText);
+					reportFirstPageForm.setCityVillageTownship(pdfText.replaceAll("( +)"," "));
 					break;
 				case "crashDate":
-					reportFirstPageForm.setCrashDate(pdfText);
+					reportFirstPageForm.setCrashDate(this.frameDateOfBirth(pdfText));
 					break;
 				case "crashTime":
 					reportFirstPageForm.setTimeOfCrash(this.frameTimeOfCrash(this.skipUnwantedSpaces(pdfText)));
@@ -89,27 +89,23 @@ public class PdfParserOne {
 			// Unit datas
 			List<ReportUnitPageForm> reportUnitPageForms = new ArrayList<ReportUnitPageForm>();
 			List<ReportMotoristPageForm> reportMotoristPageForms = new ArrayList<ReportMotoristPageForm>();
-			Integer IncrementPage = 0;
-			for (int i = 2; i <= Integer.parseInt(reportFirstPageForm.getNumberOfUnits()) + 1 + IncrementPage; i++) {
-				String[] unitPageCoordinates = injuryProperties.getProperty("findUnitPage").split(",");
-				Rectangle rect = new Rectangle(Double.parseDouble(unitPageCoordinates[0]),
-						Double.parseDouble(unitPageCoordinates[1]), Double.parseDouble(unitPageCoordinates[2]),
-						Double.parseDouble(unitPageCoordinates[3]));
+			for (int i = 2; i <= reader.getNumberOfPages(); i++) {
+				String[] pageCoordinates = injuryProperties.getParserTwoProperty("labelToFindPage").split(",");
+				Rectangle rect = new Rectangle(Double.parseDouble(pageCoordinates[0]),
+						Double.parseDouble(pageCoordinates[1]), Double.parseDouble(pageCoordinates[2]),
+						Double.parseDouble(pageCoordinates[3]));
 				RenderFilter[] unitPageFilter = { new RegionTextRenderFilter(rect) };
 				TextExtractionStrategy unitStrategy;
 				unitStrategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), unitPageFilter);
 				String pdfText1 = PdfTextExtractor.getTextFromPage(reader, i, unitStrategy);
-				if (pdfText1.equals("OHIO TRAFFIC ACCIDENT - DIAGRAM/NARRITIVE CONTINUATION")
-						|| this.findUnitPage(i, reader)) {
-					IncrementPage = IncrementPage + 1;
-					continue;
-				} else {
+				if (this.skipUnwantedSpaces(pdfText1).equals("Unit")) {
 					ReportUnitPageForm reportUnitPageForm = new ReportUnitPageForm();
 					String[] UnitPropertyNames = { "driverUnitNumber", "ownerName", "ownerPhoneNumber",
 							"ownerDamageScale", "ownerAddress", "licensePlateNumber", "VIN", "noOfOccupants",
 							"vehicleYear", "vehcileMake", "insuranceCompany", "policyNumber", "typeOfUse" };
 					for (String propertyName : UnitPropertyNames) {
-						String[] unitPropertyCoordinates = injuryProperties.getProperty(propertyName).split(",");
+						String[] unitPropertyCoordinates = injuryProperties.getParserTwoProperty(propertyName)
+								.split(",");
 						Rectangle rectangle = new Rectangle(Double.parseDouble(unitPropertyCoordinates[0]),
 								Double.parseDouble(unitPropertyCoordinates[1]),
 								Double.parseDouble(unitPropertyCoordinates[2]),
@@ -133,20 +129,20 @@ public class PdfParserOne {
 							reportUnitPageForm.setDamageScale(pdfText);
 							break;
 						case "ownerAddress":
-							reportUnitPageForm.setOwnerAddress(pdfText);
+							reportUnitPageForm.setOwnerAddress(pdfText.replaceAll("( +)"," "));
 							break;
 						case "licensePlateNumber":
 							reportUnitPageForm.setLicensePlatNumber(pdfText);
 							break;
 						case "VIN":
-							reportUnitPageForm.setVIN(pdfText);
+							reportUnitPageForm.setVIN(this.skipUnwantedSpaces(pdfText));
 							break;
 						case "noOfOccupants":
 							reportUnitPageForm
 									.setOccupants(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
 							break;
 						case "vehicleYear":
-							reportUnitPageForm.setVehicleYear(pdfText);
+							reportUnitPageForm.setVehicleYear(this.skipUnwantedSpaces(pdfText));
 							break;
 						case "vehcileMake":
 							reportUnitPageForm.setVehicleMake(pdfText);
@@ -165,40 +161,35 @@ public class PdfParserOne {
 						}
 					}
 					reportUnitPageForms.add(reportUnitPageForm);
-				}
-			}
 
-			for (int j = Integer.parseInt(reportFirstPageForm.getNumberOfUnits()) + 2 + IncrementPage; j <= reader
-					.getNumberOfPages(); j++) {
-				String[] coordinates = injuryProperties.getProperty("findOccupantOrMotorist").split(",");
-				Rectangle rectangle = new Rectangle(Double.parseDouble(coordinates[0]),
-						Double.parseDouble(coordinates[1]), Double.parseDouble(coordinates[2]),
-						Double.parseDouble(coordinates[3]));
-				RenderFilter[] unitFilter = { new RegionTextRenderFilter(rectangle) };
-				TextExtractionStrategy strategy;
-				strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), unitFilter);
-				String pdfText = PdfTextExtractor.getTextFromPage(reader, j, strategy);
-				String[][] occupantsArray = new String[5][];
-				if (!pdfText.equals("") && ((pdfText.equals("OH") || pdfText.equals("WA"))
-						|| (!pdfText.matches("[0-9]+") && pdfText.length() == 2))) {
+				} else if (this.skipUnwantedSpaces(pdfText1).equals("Occupant/WitnessAddendum")
+						|| this.skipUnwantedSpaces(pdfText1).equals("Motorist/Non-Motorist/Occupant")) {
+					String[][] occupantsArray = new String[5][];
 
-					occupantsArray = InjuryConstants.MOTORIST_PAGE_COORDINATES_PARSER_ONE;
-				} else {
-					occupantsArray = InjuryConstants.OCCUPANT_PAGE_COORDINATES_PARSER_ONE;
-				}
-				for (int n = 0; n < occupantsArray.length; n++) {
-					ReportMotoristPageForm reportMotoristPageForm = new ReportMotoristPageForm();
-					reportMotoristPageForm = this.processOccupantDetails(j, reader, occupantsArray[n]);
-					if (reportMotoristPageForm != null) {
-						reportMotoristPageForms.add(reportMotoristPageForm);
+					if (this.skipUnwantedSpaces(pdfText1).equals("Motorist/Non-Motorist/Occupant")) {
+						occupantsArray = InjuryConstants.MOTORIST_PAGE_COORDINATES_PARSER_TWO;
+					} else if (this.skipUnwantedSpaces(pdfText1).equals("Occupant/WitnessAddendum")) {
+						occupantsArray = InjuryConstants.OCCUPANT_PAGE_COORDINATES_PARSER_TWO;
 					}
+					for (int n = 0; n < occupantsArray.length; n++) {
+						ReportMotoristPageForm reportMotoristPageForm = new ReportMotoristPageForm();
+						reportMotoristPageForm = this.processOccupantDetails(i, reader, occupantsArray[n]);
+						if ((!reportMotoristPageForm.getAdddressCityStateZip().replaceAll(",", "").replaceAll(" ", "").equals("")&&reportMotoristPageForm.getAdddressCityStateZip().replaceAll(",", "").replaceAll(" ", "")!=null)&&
+								(!reportMotoristPageForm.getContactPhone().replaceAll(" ", "").equals("")&&reportMotoristPageForm.getContactPhone().replaceAll(" ", "")!=null)&&
+								(!reportMotoristPageForm.getUnitNumber().replaceAll(" ", "").equals("")&&reportMotoristPageForm.getUnitNumber().replaceAll(" ", "")!=null)&&
+								(!reportMotoristPageForm.getName().replaceAll(" ", "").equals("")&&reportMotoristPageForm.getName().replaceAll(" ", "")!=null)) {
+							reportMotoristPageForms.add(reportMotoristPageForm);
+						}
+					}
+				} else {
+					continue;
 				}
 			}
-
 			// setting unit data
 			pdfCrashReportJson.setReportUnitPageForms(reportUnitPageForms);
 			// setting occupant details
 			pdfCrashReportJson.setReportMotoristPageForms(reportMotoristPageForms);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -209,9 +200,10 @@ public class PdfParserOne {
 	public ReportMotoristPageForm processOccupantDetails(int i, PdfReader reader, String[] occupantArray)
 			throws IOException {
 		ReportMotoristPageForm reportMotoristPageForm = new ReportMotoristPageForm();
-		Integer countToSkipOccupant = 0;
+		String address="";
 		for (String occupantPropertyName : occupantArray) {
-			String[] occupantPropertyCoordinates = injuryProperties.getProperty(occupantPropertyName).split(",");
+			String[] occupantPropertyCoordinates = injuryProperties.getParserTwoProperty(occupantPropertyName)
+					.split(",");
 			Rectangle rectangle = new Rectangle(Double.parseDouble(occupantPropertyCoordinates[0]),
 					Double.parseDouble(occupantPropertyCoordinates[1]),
 					Double.parseDouble(occupantPropertyCoordinates[2]),
@@ -222,72 +214,50 @@ public class PdfParserOne {
 			strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), unitFilter);
 			pdfText = PdfTextExtractor.getTextFromPage(reader, i, strategy);
 			if (occupantPropertyName.contains("UnitNumber")) {
-				if (pdfText.equals("") || pdfText == null || !this.skipUnwantedSpaces(pdfText).matches("[0-9]+")) {
-					countToSkipOccupant = countToSkipOccupant + 1;
-				} else if (!pdfText.equals("")) {
-					reportMotoristPageForm
-							.setUnitNumber(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
-				}
+					reportMotoristPageForm.setUnitNumber(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
 			}
-			if (occupantPropertyName.contains("Name")) {
-				if (pdfText.equals("") || pdfText == null) {
-					countToSkipOccupant = countToSkipOccupant + 1;
-				} else if (!pdfText.equals("")) {
-					reportMotoristPageForm.setName(pdfText);
-				}
+			if (occupantPropertyName.contains("PatientName")) {
+					reportMotoristPageForm.setName(this.frameNameOfOccupant(pdfText));
 			}
 			if (occupantPropertyName.contains("Address")) {
-				if (pdfText.equals("") || pdfText == null) {
-					countToSkipOccupant = countToSkipOccupant + 1;
-				} else if (!pdfText.equals("")) {
-					reportMotoristPageForm.setAdddressCityStateZip(pdfText);
+					if(occupantPropertyName.contains("AddressDoorNo")){
+					address=pdfText;
+					}
+					if(occupantPropertyName.contains("AddressStreetName")){
+						address=address+","+pdfText;
+					}
+					if(occupantPropertyName.contains("AddressCity")){
+						address=address+","+pdfText;
+					}
+					if(occupantPropertyName.contains("AddressState")){
+						address=address+" "+pdfText;
+						reportMotoristPageForm.setAdddressCityStateZip(address.replaceAll("( +)"," "));
 				}
+				
 			}
 			if (occupantPropertyName.contains("PhoneNumber")) {
-				if (pdfText.equals("") || pdfText == null) {
-					countToSkipOccupant = countToSkipOccupant + 1;
-					if (countToSkipOccupant == 4) {
-						return null;
-					}
-				} else if (!pdfText.equals("")) {
-					reportMotoristPageForm.setContactPhone(pdfText);
-				}
+					reportMotoristPageForm.setContactPhone(pdfText);	
 			}
 			if (occupantPropertyName.contains("DateOfBirth")) {
-				if (!pdfText.equals("")) {
-					reportMotoristPageForm.setDateOfBirth(pdfText);
-				}
+					reportMotoristPageForm.setDateOfBirth(this.frameDateOfBirth(pdfText));
 			}
 			if (occupantPropertyName.contains("PatientAge")) {
-				if (!pdfText.equals("")) {
 					reportMotoristPageForm.setAge(pdfText);
-				}
-			}
+	}
 			if (occupantPropertyName.contains("Gender")) {
-				if (!pdfText.equals("")) {
 					reportMotoristPageForm.setGender(pdfText);
-				}
 			}
 			if (occupantPropertyName.contains("Injury")) {
-				if (!pdfText.equals("")) {
 					reportMotoristPageForm.setInjuries(pdfText);
-				}
 			}
 			if (occupantPropertyName.contains("EMSAgency")) {
-				if (!pdfText.equals("")) {
 					reportMotoristPageForm.setEmsAgency(pdfText);
-				}
 			}
 			if (occupantPropertyName.contains("MedicalFacility")) {
-				if (!pdfText.equals("")) {
 					reportMotoristPageForm.setMedicalFacility(pdfText);
-				}
 			}
 			if (occupantPropertyName.contains("SeatingPosition")) {
-				if (!pdfText.equals("")) {
-					reportMotoristPageForm
-							.setSeatingPosition(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
-				}
+					reportMotoristPageForm.setSeatingPosition(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
 			}
 		}
 		return reportMotoristPageForm;
@@ -331,44 +301,27 @@ public class PdfParserOne {
 		return inputString;
 	}
 
-	// Check whether unit page or not
-	public boolean findUnitPage(Integer i, PdfReader reader) throws IOException {
-		String[] properties = { "noOfOccupants", "lpState", "vehicleYear" };
-		String occupants = "";
-		String lpState = "";
-		String vehicleYear = "";
-		for (String propertyName : properties) {
-			String[] unitPropertyCoordinates = injuryProperties.getProperty(propertyName).split(",");
-			Rectangle rectangle = new Rectangle(Double.parseDouble(unitPropertyCoordinates[0]),
-					Double.parseDouble(unitPropertyCoordinates[1]), Double.parseDouble(unitPropertyCoordinates[2]),
-					Double.parseDouble(unitPropertyCoordinates[3]));
-			RenderFilter[] unitFilter = { new RegionTextRenderFilter(rectangle) };
-			TextExtractionStrategy strategy;
-			strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), unitFilter);
-			String pdfText = PdfTextExtractor.getTextFromPage(reader, i, strategy);
-			switch (propertyName) {
-			case "noOfOccupants":
-				occupants = pdfText;
-				break;
-			case "lpState":
-				lpState = pdfText;
-				break;
-			case "vehicleYear":
-				vehicleYear = pdfText;
-				break;
-			default:
-				break;
+	public String frameDateOfBirth(String inputString) {
+		String outputString = "";
+		if (!inputString.equals("")) {
+			inputString = this.skipUnwantedSpaces(inputString);
+			if (inputString.contains("\n")) {
+				if (inputString.indexOf("\n") > 3) {
+					inputString = inputString.replace("\n", "");
+				} else if (inputString.indexOf("\n") < 3) {
+					inputString = inputString.substring(inputString.indexOf("\n")+1, inputString.length()) + inputString.substring(0, inputString.indexOf("\n"));
+				}
 			}
+			outputString = inputString.substring(0, 2) + "/" + inputString.substring(2, 4) + "/"
+					+ inputString.substring(4, inputString.length());
 		}
-		if (this.skipUnwantedSpaces(occupants).matches("[0-9]+")
-				|| (!this.skipUnwantedSpaces(lpState).matches("[0-9]+")
-						&& this.skipUnwantedSpaces(lpState).length() == 2)
-				|| (this.skipUnwantedSpaces(vehicleYear).matches("[0-9]+")
-						|| this.skipUnwantedSpaces(vehicleYear).length() == 4)) {
-			return false;
-		} else {
-			return true;
+		return outputString;
+	}
+	public String frameNameOfOccupant(String inputString){
+		
+		if(inputString.contains("\n")){
+			inputString=inputString.substring(inputString.indexOf("\n")+1,inputString.length())+inputString.substring(0, inputString.indexOf("\n")).replaceAll("( +)"," ");
 		}
-
+		return inputString;
 	}
 }
