@@ -71,12 +71,14 @@ public class PatientSearchList extends InjuryProperties{
 	private Integer typeOfUse;
 	
 	//Initialize Properties
-	private String runnerBucketURL="https://cdn.crashreportsonline.com/runner-reports/";
-	private String policeDepartmentBucketURL="https://cdn.trafficcrashreports.org/runner-reports/";
+	//private String runnerBucketURL="https://cdn.crashreportsonline.com/runner-reports/";
+	//private String policeDepartmentBucketURL="https://cdn.trafficcrashreports.org/runner-reports/";
 	private String policeDepartmentFolder="/reports/";
 	private String reportFromDeemsys="1";
 	//private String bucketURL="https://cdn.crashreportsonline.com/crashreports/";
 	private String bucketURL="http://192.168.1.48/InjuryCrashReports/";
+	private String runnerBucketURL="http://192.168.1.48/InjuryCrashReports/";
+	private String policeDepartmentBucketURL="http://192.168.1.48/InjuryCrashReports/";
 	
 	public String getPatientId() {
 		return patientId;

@@ -90,6 +90,9 @@ public class PDFCrashReportReader {
 	@Autowired
 	PoliceAgencyDAO policeAgencyDAO;
 	
+	@Autowired
+	PdfParserOne pdfParserOne;
+	
 	protected static Logger logger = LoggerFactory.getLogger("service");
 
 	/**
@@ -1367,6 +1370,9 @@ public class PDFCrashReportReader {
 				patientsForm.setReportingAgencyName(firstPageForm
 						.getReportingAgencyName());
 				patientsForm.setCounty(firstPageForm.getCounty());
+				if(firstPageForm.getCounty().matches("[0-9]+")){
+					patientsForm.setCountyId(Integer.parseInt(firstPageForm.getCounty()));
+				}
 				patientsForm.setNumberOfUnits(firstPageForm.getNumberOfUnits());
 				patientsForm.setUnitInError(firstPageForm.getUnitInError());
 				patientsForm.setCityVillageTownship(firstPageForm
@@ -1420,6 +1426,9 @@ public class PDFCrashReportReader {
 				patientsForm.setReportingAgencyName(firstPageForm
 						.getReportingAgencyName());
 				patientsForm.setCounty(firstPageForm.getCounty());
+				if(firstPageForm.getCounty().matches("[0-9]+")){
+					patientsForm.setCountyId(Integer.parseInt(firstPageForm.getCounty()));
+				}
 				patientsForm.setNumberOfUnits(firstPageForm.getNumberOfUnits());
 				patientsForm.setUnitInError(firstPageForm.getUnitInError());
 				patientsForm.setCityVillageTownship(firstPageForm
@@ -1466,6 +1475,9 @@ public class PDFCrashReportReader {
 			patientForm.setReportingAgencyName(reportFirstPageForm
 					.getReportingAgencyName());
 			patientForm.setCounty(reportFirstPageForm.getCounty());
+			if(reportFirstPageForm.getCounty().matches("[0-9]+")){
+				patientForm.setCountyId(Integer.parseInt(reportFirstPageForm.getCounty()));
+			}
 			patientForm.setNumberOfUnits(reportFirstPageForm.getNumberOfUnits());
 			patientForm.setUnitInError(reportFirstPageForm.getUnitInError());
 			patientForm.setCityVillageTownship(reportFirstPageForm
@@ -1952,7 +1964,14 @@ public class PDFCrashReportReader {
 	// Check ODPS Report With Runner Report
 	public CrashReport checkODPSReportWithRunnerReport(ReportFirstPageForm reportFirstPageForm){
 		Long oldReportCount=crashReportDAO.getLocalReportNumberCount(reportFirstPageForm.getLocalReportNumber());
-		Integer countyId=countyDAO.getCountyByName(crashReportService.splitCountyName(reportFirstPageForm.getCounty())).getCountyId();
+		County county=countyDAO.getCountyByName(crashReportService.splitCountyName(reportFirstPageForm.getCounty()));
+		Integer countyId=0;
+		if(county!=null){
+			countyId=countyDAO.getCountyByName(crashReportService.splitCountyName(reportFirstPageForm.getCounty())).getCountyId();
+		}else{
+			countyId=Integer.parseInt(reportFirstPageForm.getCounty());
+		}
+		
 		CrashReport crashReport=null;
 		Integer isCheckAll=0;
 		for (int i = 0; i <=oldReportCount; i++) {
@@ -2129,6 +2148,7 @@ public class PDFCrashReportReader {
 					status=2;
 				}
 			}else if(policeAgency.getReportParsingType()==2){
+				System.out.println("Type One Parser");
 				if(!this.isDirectReportAlreadyAvailable(runnerCrashReportForm)){
 					file=getPDFFile(crashId,runnerCrashReportForm.getDocImageFileName(),3,runnerCrashReportForm.getFilePath());
 					if(file.length()>2000){//2000 File Size refers an crash report not found exception
@@ -2140,10 +2160,9 @@ public class PDFCrashReportReader {
 							fileName="CrashReport_"+ crashId + ".pdf";
 						}
 						// Split Tier and Save the details
-						List<ReportUnitPageForm> reportUnitPage = new ArrayList<ReportUnitPageForm>();
-						List<ReportMotoristPageForm> motoristPageForms = new ArrayList<ReportMotoristPageForm>();
-						PDFCrashReportJson pdfCrashReportJson = new PDFCrashReportJson(null, reportUnitPage, motoristPageForms);
-						this.parsePDFDocument(null,crashId,new Date().toString(),pdfCrashReportJson,policeAgency.getMapId());
+						PDFCrashReportJson pdfCrashReportJson = pdfParserOne.parsePdfFromFile(file);
+						System.out.println(pdfCrashReportJson);
+						this.parsePDFDocument(null,crashId,runnerCrashReportForm.getAddedDate(),pdfCrashReportJson,policeAgency.getMapId());
 						
 						policeAgency.setLastUpdatedDate(new Date());
 						policeAgency.setReportStatus(1);
@@ -2207,6 +2226,7 @@ public class PDFCrashReportReader {
 			}
 			
 		}catch(Exception e){
+			e.printStackTrace();
 			throw e;
 		}
 		

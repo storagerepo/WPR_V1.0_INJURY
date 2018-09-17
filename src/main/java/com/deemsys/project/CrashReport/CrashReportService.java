@@ -120,7 +120,12 @@ public class CrashReportService {
 	{
 		//TODO: Convert Form to Entity Here	
 		//Logic Starts
-		County county= countyDAO.getCountyByName(this.splitCountyName(crashReportForm.getCounty()));
+		County county = null;
+		if(crashReportForm.getCounty().matches("[0-9]+")){
+			county= countyDAO.get(Integer.parseInt(crashReportForm.getCounty()));
+		}else{
+			county= countyDAO.getCountyByName(this.splitCountyName(crashReportForm.getCounty()));
+		}
 		CrashReportError crashReportError=crashReportErrorDAO.get(Integer.parseInt(crashReportForm.getCrashReportError()));
 		String localReportNumber=crashReportForm.getLocalReportNumber();
 		if(crashReportDAO.getCrashReportCountByLocalReportNumber(localReportNumber)>0){
@@ -365,7 +370,7 @@ public class CrashReportService {
 	
 	public int savePoliceDepartmentReport(PoliceDepartmentRunnerDirectReports departmentRunnerDirectReports) throws Exception{
 		
-		return pdfCrashReportReader.saveRunnerDirectOrScannedReport(new RunnerCrashReportForm(UUID.randomUUID().toString().replaceAll("-", ""), null,departmentRunnerDirectReports.getLocalReportNumber(), departmentRunnerDirectReports.getCrashDate(), new Date().toString(), departmentRunnerDirectReports.getCountyId().toString(), departmentRunnerDirectReports.getPdfUrl(), departmentRunnerDirectReports.getMapId(), null, null));
+		return pdfCrashReportReader.saveRunnerDirectOrScannedReport(new RunnerCrashReportForm(UUID.randomUUID().toString().replaceAll("-", ""), null,departmentRunnerDirectReports.getLocalReportNumber(), departmentRunnerDirectReports.getCrashDate(), InjuryConstants.getCurrentDateTime(), departmentRunnerDirectReports.getCountyId().toString(), departmentRunnerDirectReports.getPdfUrl(), departmentRunnerDirectReports.getMapId(), null, null));
 	}
 	
 	public void backupSixMonthOldReportsDataByStoredProcedure(String date){

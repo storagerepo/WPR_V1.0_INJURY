@@ -2,6 +2,7 @@ package com.deemsys.project.patient;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -346,10 +347,11 @@ public class PatientController {
 	}
 	
 	
-	@RequestMapping(value = { "/Caller/checkRead" }, method = RequestMethod.GET)
-	public @ResponseBody String getAllPatientsByLimit(ModelMap model) {
-		
-		return injuryProperties.getProperty("tempFolder");
+	@RequestMapping(value = { "/checkDate" }, method = RequestMethod.GET)
+	public @ResponseBody String getAllPatientsByLimit(ModelMap model,@RequestParam("date") String date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		System.out.println(sdf.format(new Date()));
+		return InjuryConstants.getCurrentDateTime();
 	}
 	
 	@RequestMapping(value = { "/Patient/searchPatients" }, method = RequestMethod.POST)

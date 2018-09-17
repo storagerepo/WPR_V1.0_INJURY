@@ -301,7 +301,7 @@ public class InjuryConstants {
 		return dateformat;
 	}
 	
-	// Convert To Year Format With Time By Date
+	// Convert To Year Format With Time By Date time
 	public static Date convertYearFormatWithTimeByDate(String date) {
 		SimpleDateFormat monthFormat = new SimpleDateFormat(
 				"MM/dd/yyyy HH:mm:ss");
@@ -319,6 +319,13 @@ public class InjuryConstants {
 		return dateformat;
 	}
 
+	// Get Current Date Time
+	public static String getCurrentDateTime(){
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return sdf.format(new Date());
+	}
+	
+	
 	// Convert To USA Month Format With Time
 	public static String convertUSAFormatWithTimeAMPM(String date) {
 		String convertedDateTime = "";
