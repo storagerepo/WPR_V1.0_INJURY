@@ -1072,18 +1072,24 @@ public class PDFCrashReportReader {
 						// improper details in Motorist page
 						PatientForm patientsForm = getPatientForm(motoristPageForm, firstPageForm, reportUnitPageForms,
 								addedDate);
-						patientsForm.setTier(0);
-						patientsForms.add(patientsForm);
+						if(patientsForm!=null){
+							patientsForm.setTier(0);
+							patientsForms.add(patientsForm);
+						}
+						
 					}
 
 				}
 			} else {
 				PatientForm patientsForm = getPatientForm(null, firstPageForm, reportUnitPageForms, addedDate);
-				patientsForm.setTier(0);
-				patientsForm.setIsOwner(0);
-				// Occupants Or Motorist Details is Not Available
-				patientsForm.setIsOccupantAvailable(0);
-				patientsForms.add(patientsForm);
+				if(patientsForm!=null){
+					patientsForm.setTier(0);
+					patientsForm.setIsOwner(0);
+					// Occupants Or Motorist Details is Not Available
+					patientsForm.setIsOccupantAvailable(0);
+					patientsForms.add(patientsForm);	
+				}
+				
 			}
 
 		} else if (tier == 2) {
@@ -1106,16 +1112,22 @@ public class PDFCrashReportReader {
 									 * patientsForm.setTier(2);
 									 * patientsForms.add(patientsForm); }
 									 */
-									patientsForm.setTier(2);
-									patientsForms.add(patientsForm);
+									if(patientsForm!=null){
+										patientsForm.setTier(2);
+										patientsForms.add(patientsForm);
+									}
+									
 								}
 							} else {
 								// Unit Number is Not Mentioned in Motorist Page
 								// improper details in Motorist page
 								PatientForm patientsForm = getPatientForm(motoristPageForm, firstPageForm,
 										reportUnitPageForms, addedDate);
-								patientsForm.setTier(0);
-								patientsForms.add(patientsForm);
+								if(patientsForm!=null){
+									patientsForm.setTier(0);
+									patientsForms.add(patientsForm);
+								}
+								
 							}
 						}
 					} else {
@@ -1157,8 +1169,11 @@ public class PDFCrashReportReader {
 					// details in Motorist page
 					PatientForm patientsForm = getPatientForm(motoristPageForm, firstPageForm, reportUnitPageForms,
 							addedDate);
-					patientsForm.setTier(0);
-					patientsForms.add(patientsForm);
+					if(patientsForm!=null){
+						patientsForm.setTier(0);
+						patientsForms.add(patientsForm);
+					}
+					
 				}
 
 			}
@@ -1175,10 +1190,13 @@ public class PDFCrashReportReader {
 				}
 			} else {
 				PatientForm patientsForm = getPatientForm(null, firstPageForm, reportUnitPageForms, addedDate);
-				patientsForm.setTier(0);
-				patientsForm.setIsOwner(0);
-				patientsForm.setIsOccupantAvailable(0);
-				patientsForms.add(patientsForm);
+				if(patientsForm!=null){
+					patientsForm.setTier(0);
+					patientsForm.setIsOwner(0);
+					patientsForm.setIsOccupantAvailable(0);
+					patientsForms.add(patientsForm);
+				}
+				
 			}
 		}
 		return patientsForms;
@@ -1189,7 +1207,6 @@ public class PDFCrashReportReader {
 
 		PatientForm patientsForm = new PatientForm();
 		if (motoristPageForm != null) {
-			if (motoristPageForm.getUnitNumber()!=null && !motoristPageForm.getName().startsWith("Report #")) {
 				patientsForm.setName(motoristPageForm.getName());
 
 				patientsForm.setDateOfBirth(motoristPageForm.getDateOfBirth());
@@ -1265,10 +1282,7 @@ public class PDFCrashReportReader {
 				patientsForm.setIsRunnerReport(0);
 				patientsForm.setIsOwner(0);
 				patientsForm.setIsOccupantAvailable(1);
-			}
-			else{
-				return null;
-			}
+			
 		} else {
 			patientsForm.setLocalReportNumber(firstPageForm.getLocalReportNumber());
 			patientsForm.setCrashSeverity(firstPageForm.getCrashSeverity());

@@ -27,6 +27,23 @@ public class InjuryProperties {
 		return propertyValue;
 	}
 	
+	//Get property for Type 1 Parser data
+		public String getParserOneProperty(String propertyName){
+			String propertyValue="";
+			try {
+				Properties prop = new Properties();
+				InputStream input=null;	
+				input=this.getClass().getResourceAsStream("/typeoneparser.properties");
+				prop.load(input);
+				propertyValue=prop.getProperty(propertyName);
+				//  tooclose Input Stream Propeties file, 
+	            input.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+			return propertyValue;
+		}
+		
 	//Get property for Type 2 Parser data
 	public String getParserTwoProperty(String propertyName){
 		String propertyValue="";
