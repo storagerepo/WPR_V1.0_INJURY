@@ -1211,7 +1211,7 @@ public class PDFCrashReportReader {
 
 				patientsForm.setDateOfBirth(motoristPageForm.getDateOfBirth());
 
-				if (motoristPageForm.getAge() != null)
+				if (motoristPageForm.getAge() != null && !motoristPageForm.getAge().equals(""))
 					patientsForm.setAge(Integer.parseInt(motoristPageForm.getAge()));
 				else
 					patientsForm.setAge(null);
@@ -1235,7 +1235,7 @@ public class PDFCrashReportReader {
 				patientsForm.setCityVillageTownship(firstPageForm.getCityVillageTownship());
 				patientsForm.setCrashDate(firstPageForm.getCrashDate());
 				patientsForm.setTimeOfCrash(firstPageForm.getTimeOfCrash());
-				if (motoristPageForm.getUnitNumber() != null) {
+				if (motoristPageForm.getUnitNumber() != null && !motoristPageForm.getUnitNumber().equals("")) {
 					patientsForm.setUnitNumber(motoristPageForm.getUnitNumber().trim());
 					/*
 					 * if(Integer.parseInt(firstPageForm.getNumberOfUnits())>=
@@ -1264,7 +1264,10 @@ public class PDFCrashReportReader {
 							} else {
 								patientsForm.setDamageScale(null);
 							}
-							patientsForm.setTypeOfUse(Integer.parseInt(reportUnitPageForm.getTypeOfUse()));
+							if(reportUnitPageForm.getTypeOfUse()!=null&&!reportUnitPageForm.getTypeOfUse().equals(""))
+								patientsForm.setTypeOfUse(Integer.parseInt(reportUnitPageForm.getTypeOfUse()));
+							else
+								patientsForm.setTypeOfUse(null);
 						}
 					}
 				}

@@ -124,7 +124,7 @@ public class PdfParserOne {
 									.setUnitNumber(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
 							break;
 						case "ownerName":
-							reportUnitPageForm.setOwnerName(pdfText);
+							reportUnitPageForm.setOwnerName(this.formatName(pdfText));
 							break;
 						case "ownerPhoneNumber":
 							reportUnitPageForm.setOwnerPhoneNumber(pdfText);
@@ -230,7 +230,7 @@ public class PdfParserOne {
 				if(pdfText.startsWith("Report #")){
 					return null;
 				}else{
-					reportMotoristPageForm.setName(pdfText);
+					reportMotoristPageForm.setName(this.formatName(pdfText));
 				}	
 				}
 			if (occupantPropertyName.contains("Address")){
@@ -342,6 +342,24 @@ public class PdfParserOne {
 		}
 
 	}
+	// Format Name
+	public String formatName(String inputValue){
+		String[] splittedName = inputValue.split(" ");
+		String outputValue="";
+		for (int j = 0; j < splittedName.length; j++) {
+			// Last Name
+			if(j==0){
+				outputValue=splittedName[0];
+			}// First Name
+			else if(j==1){
+				outputValue=outputValue+", "+splittedName[1];
+			}// Middle Name
+			else{
+				outputValue=outputValue+", "+splittedName[j];
+			}
+		}
+		return outputValue;
+	}
 	// Verify the address format
 		public String formatAddress(String inputValue){
 			String outputValue="";
@@ -375,6 +393,9 @@ public class PdfParserOne {
 			for(int k=0;k<addressSplitted.length; k++ ){
 				if(defaultStreetForms.contains(addressSplitted[k])){
 					StreetName=addressSplitted[k];
+					if(defaultStreetForms.contains(addressSplitted[k+1])){
+						StreetName=addressSplitted[k+1];
+					}
 					break;
 				}
 			}

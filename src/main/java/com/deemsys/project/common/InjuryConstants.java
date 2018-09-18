@@ -696,6 +696,20 @@ public class InjuryConstants {
 		defaultStreetForms.add("WALKS");
 		return defaultStreetForms;
 	}
+	// Suffix of Names
+	public static List<String> getNamesSuffix() {
+		List<String> nameSuffixes = new ArrayList<String>();
+		nameSuffixes.add("i");
+		nameSuffixes.add("ii");
+		nameSuffixes.add("iii");
+		nameSuffixes.add("iv");
+		nameSuffixes.add("jr");
+		nameSuffixes.add("sr");
+		nameSuffixes.add("ret");
+		nameSuffixes.add("esq");
+		return nameSuffixes;
+	}
+
 	// Convert Date To Year Format
 	public static Date convertYearFormat(String date)
 	{   SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");
