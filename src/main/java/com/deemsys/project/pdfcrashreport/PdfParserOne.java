@@ -366,20 +366,38 @@ public class PdfParserOne {
 			if(!inputValue.equals("")){
 				String[] addressSplitted=inputValue.replaceAll("\\s+", " ").split(" ");
 				Integer cityIndex=this.findCityIndex(inputValue);
-				for (int i = 0; i < addressSplitted.length-2; i++) {
+				Integer indexToSubtract=0;
+				if(addressSplitted.length>=3){
+					if(this.isState(addressSplitted[addressSplitted.length-2])&&this.isZipcode(addressSplitted[addressSplitted.length-1])){
+						indexToSubtract=2;
+					}
+					else if(this.isState(addressSplitted[addressSplitted.length-1])||this.isZipcode(addressSplitted[addressSplitted.length-1])){
+						indexToSubtract=1;
+					}
+				}
+				for (int i = 0; i < addressSplitted.length-indexToSubtract; i++) {
 					outputValue=outputValue+" "+addressSplitted[i];
 				}
 				StringBuilder str=new StringBuilder(outputValue.trim());
-				str.insert(cityIndex, ",");
-				outputValue=str+", "+addressSplitted[addressSplitted.length-2]+", "+addressSplitted[addressSplitted.length-1];
+				if(cityIndex!=0){
+					str.insert(cityIndex, ",");
+				}
+				if(indexToSubtract==2){
+					outputValue=str+", "+addressSplitted[addressSplitted.length-2]+", "+addressSplitted[addressSplitted.length-1];
+				}
+				else if(indexToSubtract==1){
+					outputValue=str+", "+addressSplitted[addressSplitted.length-1];
+				}
+				else if(indexToSubtract==0){
+					outputValue=str.toString();
+				}
 			}
 			return outputValue;
-			
 		}
 		
 		//Check for Zipcode
 		public boolean isZipcode(String checkStr){
-			if(checkStr.matches("\\d+")&&checkStr.length()==5){
+			if(checkStr.matches("\\d+")&&(checkStr.length()==5)||(checkStr.length()==4)){
 				return true;
 			}else{
 				return false;

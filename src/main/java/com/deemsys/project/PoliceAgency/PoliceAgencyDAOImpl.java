@@ -148,10 +148,17 @@ public class PoliceAgencyDAOImpl implements PoliceAgencyDAO{
 	public List<PoliceAgency> getPoliceAgenciesBystatus(Integer status) {
 		// TODO Auto-generated method stub
 		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(PoliceAgency.class);
+		List<Integer> reportParsingType=new ArrayList<Integer>();
 		if(status==3){
-			criteria.add(Restrictions.or(Restrictions.eq("status", status), Restrictions.eq("mapId", 0)));
-		}else{
-			criteria.add(Restrictions.eq("status", status));
+			reportParsingType.add(1);
+			criteria.add(Restrictions.or(Restrictions.isNull("reportParsingType"),Restrictions.in("reportParsingType", reportParsingType)));
+		}else if(status==0){
+			reportParsingType.add(1);
+			reportParsingType.add(0);
+			criteria.add(Restrictions.or(Restrictions.isNull("reportParsingType"), Restrictions.not(Restrictions.in("reportParsingType", reportParsingType))));
+		}
+		else{
+			criteria.add(Restrictions.eq("reportParsingType", 0));
 		}
 		return criteria.list();
 	}
