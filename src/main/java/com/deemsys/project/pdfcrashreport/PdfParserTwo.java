@@ -174,10 +174,8 @@ public class PdfParserTwo {
 					for (int n = 0; n < occupantsArray.length; n++) {
 						ReportMotoristPageForm reportMotoristPageForm = new ReportMotoristPageForm();
 						reportMotoristPageForm = this.processOccupantDetails(i, reader, occupantsArray[n]);
-						if ((!reportMotoristPageForm.getAdddressCityStateZip().replaceAll(",", "").replaceAll(" ", "").equals("")&&reportMotoristPageForm.getAdddressCityStateZip().replaceAll(",", "").replaceAll(" ", "")!=null)&&
-								(!reportMotoristPageForm.getContactPhone().replaceAll(" ", "").equals("")&&reportMotoristPageForm.getContactPhone().replaceAll(" ", "")!=null)&&
-								(!reportMotoristPageForm.getUnitNumber().replaceAll(" ", "").equals("")&&reportMotoristPageForm.getUnitNumber().replaceAll(" ", "")!=null)&&
-								(!reportMotoristPageForm.getName().replaceAll(" ", "").equals("")&&reportMotoristPageForm.getName().replaceAll(" ", "")!=null)) {
+						if((reportMotoristPageForm.getUnitNumber()!=null&&!reportMotoristPageForm.getUnitNumber().equals(""))&&(reportMotoristPageForm.getName()!=null&&!reportMotoristPageForm.getName().replaceAll(",", "").replaceAll(" ", "").equals(""))&&((reportMotoristPageForm.getAdddressCityStateZip()!=null&& !reportMotoristPageForm.getAdddressCityStateZip().replaceAll(",", "").replaceAll(" ", "").equals(""))||(reportMotoristPageForm.getContactPhone()!=null&&!reportMotoristPageForm.getContactPhone().equals(""))))
+							{
 							reportMotoristPageForms.add(reportMotoristPageForm);
 						}
 					}

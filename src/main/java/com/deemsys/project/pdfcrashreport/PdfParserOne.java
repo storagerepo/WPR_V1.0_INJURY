@@ -189,9 +189,12 @@ public class PdfParserOne {
 				for (int n = 0; n < occupantsArray.length; n++) {
 					ReportMotoristPageForm reportMotoristPageForm = new ReportMotoristPageForm();
 					reportMotoristPageForm = this.processOccupantDetails(j, reader, occupantsArray[n]);
-					if (reportMotoristPageForm != null) {
+					if(reportMotoristPageForm!=null){
+					if((reportMotoristPageForm.getUnitNumber()!=null&&!reportMotoristPageForm.getUnitNumber().equals(""))&&(reportMotoristPageForm.getName()!=null&&!reportMotoristPageForm.getName().replaceAll(",", "").replaceAll(" ", "").equals(""))&&((reportMotoristPageForm.getAdddressCityStateZip()!=null&& !reportMotoristPageForm.getAdddressCityStateZip().replaceAll(",", "").replaceAll(" ", "").equals(""))||(reportMotoristPageForm.getContactPhone()!=null&&!reportMotoristPageForm.getContactPhone().equals(""))))
+					{
 						reportMotoristPageForms.add(reportMotoristPageForm);
 					}
+				}
 				}
 			}
 
