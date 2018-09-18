@@ -170,7 +170,12 @@ public class PdfParserOne {
 
 			for (int j = Integer.parseInt(reportFirstPageForm.getNumberOfUnits()) + 2 + IncrementPage; j <= reader
 					.getNumberOfPages(); j++) {
-				String[] coordinates = injuryProperties.getParserOneProperty("findOccupantOrMotorist").split(",");
+				String[] findMotoristOrOccupant={"stateCoordinate1","stateCoordinate2","localReportNumberCoordinate"};
+				String StateCondition1="";
+				String StateCondition2="";
+				String LocalReportNumber="";
+				for(String property:findMotoristOrOccupant){
+				String[] coordinates = injuryProperties.getParserOneProperty(property).split(",");
 				Rectangle rectangle = new Rectangle(Double.parseDouble(coordinates[0]),
 						Double.parseDouble(coordinates[1]), Double.parseDouble(coordinates[2]),
 						Double.parseDouble(coordinates[3]));
@@ -178,12 +183,29 @@ public class PdfParserOne {
 				TextExtractionStrategy strategy;
 				strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), unitFilter);
 				String pdfText = PdfTextExtractor.getTextFromPage(reader, j, strategy);
+				switch (property) {
+				case "stateCoordinate1":	
+					StateCondition1=pdfText;
+					break;
+				case "stateCoordinate2":
+					StateCondition2=pdfText;
+					break;
+				case "localReportNumberCoordinate":
+					LocalReportNumber=pdfText;
+					break;
+				default:
+					break;
+				}
+				}
 				String[][] occupantsArray = new String[5][];
-				if (!pdfText.equals("") && ((pdfText.equals("OH") || pdfText.equals("WA"))
-						|| (!pdfText.matches("[0-9]+") && pdfText.length() == 2))) {
-
+				if ((!StateCondition1.equals("") && ((StateCondition1.equals("OH") || StateCondition1.equals("WA"))
+						|| (!StateCondition1.matches("[0-9]+") && StateCondition1.length() == 2)))||(!StateCondition2.equals("") && ((StateCondition2.equals("OH") || StateCondition2.equals("WA"))
+								|| (!StateCondition2.matches("[0-9]+") && StateCondition2.length() == 2)))) {
 					occupantsArray = InjuryConstants.MOTORIST_PAGE_COORDINATES_PARSER_ONE;
-				} else {
+				}else if(!LocalReportNumber.equals("")&&!LocalReportNumber.equals(".F.")) {
+					occupantsArray = InjuryConstants.MOTORIST_PAGE_COORDINATES_PARSER_ONE;
+				}
+				else {
 					occupantsArray = InjuryConstants.OCCUPANT_PAGE_COORDINATES_PARSER_ONE;
 				}
 				for (int n = 0; n < occupantsArray.length; n++) {
