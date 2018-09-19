@@ -175,7 +175,7 @@ public class CrashReportDAOImpl implements CrashReportDAO{
 		
 		//Check Local Report Number
 		if(!crashReportSearchForm.getLocalReportNumber().equals("")){
-			criteria.add(Restrictions.like("localReportNumber", crashReportSearchForm.getLocalReportNumber(),MatchMode.ANYWHERE));
+			criteria.add(Restrictions.or(Restrictions.like("localReportNumber", crashReportSearchForm.getLocalReportNumber(),MatchMode.ANYWHERE), Restrictions.like("localReportNumberSearch", crashReportSearchForm.getLocalReportNumber(),MatchMode.ANYWHERE)));
 		}
 		if(crashReportSearchForm.getCountyId().length>0){
 			criteria.add(Restrictions.in("c1.countyId",crashReportSearchForm.getCountyId()));

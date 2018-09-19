@@ -39,6 +39,7 @@ public class CrashReport implements java.io.Serializable {
 	private Integer status;
 	private Date addedDateTime;
 	private Date runnerReportAddedDateTime;
+	private String localReportNumberSearch;
 	private Set<DirectReportCallerAdminMap> directReportCallerAdminMaps = new HashSet<DirectReportCallerAdminMap>(
 			0);
 	private Set<Patient> patients = new HashSet<Patient>(0);
@@ -57,7 +58,7 @@ public class CrashReport implements java.io.Serializable {
 			Date crashDate, Date addedDate, Integer numberOfPatients,
 			Integer vehicleCount, String filePath, String oldFilePath,
 			Integer isRunnerReport, Date runnerReportAddedDate, Integer status,
-			Date addedDateTime, Date runnerReportAddedDateTime,
+			Date addedDateTime, Date runnerReportAddedDateTime,String localReportNumberSearch,
 			Set<DirectReportCallerAdminMap> directReportCallerAdminMaps,
 			Set<Patient> patients,
 			Set<DirectReportLawyerAdminMap> directReportLawyerAdminMaps) {
@@ -77,6 +78,7 @@ public class CrashReport implements java.io.Serializable {
 		this.status = status;
 		this.addedDateTime = addedDateTime;
 		this.runnerReportAddedDateTime = runnerReportAddedDateTime;
+		this.localReportNumberSearch = localReportNumberSearch;
 		this.directReportCallerAdminMaps = directReportCallerAdminMaps;
 		this.patients = patients;
 		this.directReportLawyerAdminMaps = directReportLawyerAdminMaps;
@@ -214,7 +216,16 @@ public class CrashReport implements java.io.Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	
+	@Column(name = "local_report_number_search", length = 45)
+	public String getLocalReportNumberSearch() {
+		return this.localReportNumberSearch;
+	}
 
+	public void setLocalReportNumberSearch(String localReportNumberSearch) {
+		this.localReportNumberSearch = localReportNumberSearch;
+	}
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="added_date_time", length=19)
 	public Date getAddedDateTime() {

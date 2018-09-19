@@ -615,7 +615,7 @@ public PatientSearchResultSet searchPatientsByCAdmin(
 	
 	//Common Constrain Local Report Number
 	if(callerPatientSearchForm.getLocalReportNumber()!=null&&!callerPatientSearchForm.getLocalReportNumber().equals("")){
-		Criterion localReportNumberCriterion=Restrictions.like("cr.localReportNumber", callerPatientSearchForm.getLocalReportNumber(),MatchMode.START);
+		Criterion localReportNumberCriterion=Restrictions.or(Restrictions.like("cr.localReportNumber", callerPatientSearchForm.getLocalReportNumber(),MatchMode.START), Restrictions.like("cr.localReportNumberSearch", callerPatientSearchForm.getLocalReportNumber(),MatchMode.START));
 		criteria.add(localReportNumberCriterion);
 	}
 	
