@@ -91,6 +91,9 @@ public class PDFCrashReportReader {
 
 	@Autowired
 	PdfParserOne pdfParserOne;
+	
+	@Autowired
+	PdfParserTwo pdfParserTwo;
 
 	protected static Logger logger = LoggerFactory.getLogger("service");
 
@@ -221,7 +224,7 @@ public class PDFCrashReportReader {
 			// this.updateCrashId(String.valueOf(Integer.parseInt(crashId)+1));
 			CrashReportError crashReportError = crashReportErrorDAO.get(12);
 			crashReportDAO.save(new CrashReport(crashId, crashReportError, null, null, "", null, new Date(), 0, 0, "",
-					"", 0, null, 0, null, null, null, null, null));
+					"", 0, null, 0, null, null,null, null, null, null));
 			System.out.println("Failed" + e.toString());
 		}
 		return true;
@@ -1998,7 +2001,7 @@ public class PDFCrashReportReader {
 							InjuryConstants.convertYearFormat(runnerCrashReportForm.getAddedDate()), numberOfPatients,
 							vehicleCount, fileName, null, isRunnerReport, new Date(), 1,
 							InjuryConstants.convertYearFormatWithTimeByDate(runnerCrashReportForm.getAddedDate()),
-							InjuryConstants.convertYearFormatWithTimeByDate(runnerCrashReportForm.getAddedDate()), null,
+							InjuryConstants.convertYearFormatWithTimeByDate(runnerCrashReportForm.getAddedDate()),localReportNumber.replaceAll(" ", "").trim(), null,
 							null, null);
 
 					crashReportDAO.save(crashReport);
@@ -2108,10 +2111,40 @@ public class PDFCrashReportReader {
 					status = 2;
 				}
 			} else if (policeAgency.getReportParsingType() == 3) {
-				// Values with PDF File
+				System.out.println("Type Two Parser");
 				if (!this.isDirectReportAlreadyAvailable(runnerCrashReportForm)) {
-					// Save PDF FILE and Set FileName, File
+					file = getPDFFile(crashId, runnerCrashReportForm.getDocImageFileName(), 3,
+							runnerCrashReportForm.getFilePath());
+					if (file.length() > 2000) {// 2000 File Size refers an crash
+												// report not found exception
+						// Parse the PDF
+						// 16 - Direct Runner Crash Reports
+						if (Integer.parseInt(injuryProperties.getProperty("env")) == 1) {
+							fileName = crashId + ".pdf";
+						} else {
+							fileName = "CrashReport_" + crashId + ".pdf";
+						}
+						// Split Tier and Save the details
+						PDFCrashReportJson pdfCrashReportJson = pdfParserTwo.parsePdfFromFile(file);
+						System.out.println(pdfCrashReportJson);
+						this.parsePDFDocument(null, crashId, runnerCrashReportForm.getAddedDate(), pdfCrashReportJson,
+								policeAgency.getMapId());
+
+						policeAgency.setLastUpdatedDate(new Date());
+						policeAgency.setReportStatus(1);
+						// Update Last Updated Date
+						policeAgencyDAO.update(policeAgency);
+						// We will save report on parsing methods it self
+						isSaveReport = false;
+					} else {
+						isSaveReport = false;
+						status = 0;
+					}
 				} else {
+					policeAgency.setLastUpdatedDate(new Date());
+					policeAgency.setReportStatus(1);
+					// Update Last Updated Date
+					policeAgencyDAO.update(policeAgency);
 					isSaveReport = false;
 					status = 2;
 				}
@@ -2146,7 +2179,7 @@ public class PDFCrashReportReader {
 						InjuryConstants.convertYearFormat(runnerCrashReportForm.getAddedDate()), numberOfPatients,
 						vehicleCount, fileName, null, isRunnerReport, new Date(), 1,
 						InjuryConstants.convertYearFormatWithTimeByDate(runnerCrashReportForm.getAddedDate()),
-						InjuryConstants.convertYearFormatWithTimeByDate(runnerCrashReportForm.getAddedDate()), null,
+						InjuryConstants.convertYearFormatWithTimeByDate(runnerCrashReportForm.getAddedDate()),localReportNumber.replaceAll(" ", "").trim(), null,
 						null, null);
 
 				crashReportDAO.save(crashReport);
