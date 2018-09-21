@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -74,7 +75,7 @@ public class PdfParserOne {
 					reportFirstPageForm.setCityVillageTownship(pdfText);
 					break;
 				case "crashDate":
-					reportFirstPageForm.setCrashDate(pdfText);
+					reportFirstPageForm.setCrashDate(this.formatDate(pdfText));
 					break;
 				case "crashTime":
 					reportFirstPageForm.setTimeOfCrash(this.frameTimeOfCrash(this.skipUnwantedSpaces(pdfText)));
@@ -109,7 +110,8 @@ public class PdfParserOne {
 							"ownerDamageScale", "ownerAddress", "licensePlateNumber", "VIN", "noOfOccupants",
 							"vehicleYear", "vehcileMake", "insuranceCompany", "policyNumber", "typeOfUse" };
 					for (String propertyName : UnitPropertyNames) {
-						String[] unitPropertyCoordinates = injuryProperties.getParserOneProperty(propertyName).split(",");
+						String[] unitPropertyCoordinates = injuryProperties.getParserOneProperty(propertyName)
+								.split(",");
 						Rectangle rectangle = new Rectangle(Double.parseDouble(unitPropertyCoordinates[0]),
 								Double.parseDouble(unitPropertyCoordinates[1]),
 								Double.parseDouble(unitPropertyCoordinates[2]),
@@ -170,47 +172,54 @@ public class PdfParserOne {
 
 			for (int j = Integer.parseInt(reportFirstPageForm.getNumberOfUnits()) + 2 + IncrementPage; j <= reader
 					.getNumberOfPages(); j++) {
-				String[] findMotoristOrOccupant={"stateCoordinate1","stateCoordinate2"};
-				String StateCondition1="";
-				String StateCondition2="";
-				for(String property:findMotoristOrOccupant){
-				String[] coordinates = injuryProperties.getParserOneProperty(property).split(",");
-				Rectangle rectangle = new Rectangle(Double.parseDouble(coordinates[0]),
-						Double.parseDouble(coordinates[1]), Double.parseDouble(coordinates[2]),
-						Double.parseDouble(coordinates[3]));
-				RenderFilter[] unitFilter = { new RegionTextRenderFilter(rectangle) };
-				TextExtractionStrategy strategy;
-				strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), unitFilter);
-				String pdfText = PdfTextExtractor.getTextFromPage(reader, j, strategy);
-				switch (property) {
-				case "stateCoordinate1":	
-					StateCondition1=pdfText;
-					break;
-				case "stateCoordinate2":
-					StateCondition2=pdfText;
-					break;
-				default:
-					break;
-				}
+				String[] findMotoristOrOccupant = { "stateCoordinate1", "stateCoordinate2" };
+				String StateCondition1 = "";
+				String StateCondition2 = "";
+				for (String property : findMotoristOrOccupant) {
+					String[] coordinates = injuryProperties.getParserOneProperty(property).split(",");
+					Rectangle rectangle = new Rectangle(Double.parseDouble(coordinates[0]),
+							Double.parseDouble(coordinates[1]), Double.parseDouble(coordinates[2]),
+							Double.parseDouble(coordinates[3]));
+					RenderFilter[] unitFilter = { new RegionTextRenderFilter(rectangle) };
+					TextExtractionStrategy strategy;
+					strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), unitFilter);
+					String pdfText = PdfTextExtractor.getTextFromPage(reader, j, strategy);
+					switch (property) {
+					case "stateCoordinate1":
+						StateCondition1 = pdfText;
+						break;
+					case "stateCoordinate2":
+						StateCondition2 = pdfText;
+						break;
+					default:
+						break;
+					}
 				}
 				String[][] occupantsArray = new String[5][];
 				if ((!StateCondition1.equals("") && ((StateCondition1.equals("OH") || StateCondition1.equals("WA"))
-						|| (!StateCondition1.matches("[0-9]+") && StateCondition1.length() == 2)))||(!StateCondition2.equals("") && ((StateCondition2.equals("OH") || StateCondition2.equals("WA"))
-								|| (!StateCondition2.matches("[0-9]+") && StateCondition2.length() == 2)))) {
+						|| (!StateCondition1.matches("[0-9]+") && StateCondition1.length() == 2)))
+						|| (!StateCondition2.equals("")
+								&& ((StateCondition2.equals("OH") || StateCondition2.equals("WA"))
+										|| (!StateCondition2.matches("[0-9]+") && StateCondition2.length() == 2)))) {
 					occupantsArray = InjuryConstants.MOTORIST_PAGE_COORDINATES_PARSER_ONE;
-				}
-				else {
+				} else {
 					occupantsArray = InjuryConstants.OCCUPANT_PAGE_COORDINATES_PARSER_ONE;
 				}
 				for (int n = 0; n < occupantsArray.length; n++) {
 					ReportMotoristPageForm reportMotoristPageForm = new ReportMotoristPageForm();
 					reportMotoristPageForm = this.processOccupantDetails(j, reader, occupantsArray[n]);
-					if(reportMotoristPageForm!=null){
-					if((reportMotoristPageForm.getUnitNumber()!=null&&!reportMotoristPageForm.getUnitNumber().equals(""))&&(reportMotoristPageForm.getName()!=null&&!reportMotoristPageForm.getName().replaceAll(",", "").replaceAll(" ", "").equals(""))&&((reportMotoristPageForm.getAdddressCityStateZip()!=null&& !reportMotoristPageForm.getAdddressCityStateZip().replaceAll(",", "").replaceAll(" ", "").equals(""))||(reportMotoristPageForm.getContactPhone()!=null&&!reportMotoristPageForm.getContactPhone().equals(""))))
-					{
-						reportMotoristPageForms.add(reportMotoristPageForm);
+					if (reportMotoristPageForm != null) {
+						if ((reportMotoristPageForm.getUnitNumber() != null
+								&& !reportMotoristPageForm.getUnitNumber().equals(""))
+								&& (reportMotoristPageForm.getName() != null && !reportMotoristPageForm.getName()
+										.replaceAll(",", "").replaceAll(" ", "").equals(""))
+								&& ((reportMotoristPageForm.getAdddressCityStateZip() != null && !reportMotoristPageForm
+										.getAdddressCityStateZip().replaceAll(",", "").replaceAll(" ", "").equals(""))
+										|| (reportMotoristPageForm.getContactPhone() != null
+												&& !reportMotoristPageForm.getContactPhone().equals("")))) {
+							reportMotoristPageForms.add(reportMotoristPageForm);
+						}
 					}
-				}
 				}
 			}
 
@@ -229,7 +238,8 @@ public class PdfParserOne {
 			throws IOException {
 		ReportMotoristPageForm reportMotoristPageForm = new ReportMotoristPageForm();
 		for (String occupantPropertyName : occupantArray) {
-			String[] occupantPropertyCoordinates = injuryProperties.getParserOneProperty(occupantPropertyName).split(",");
+			String[] occupantPropertyCoordinates = injuryProperties.getParserOneProperty(occupantPropertyName)
+					.split(",");
 			Rectangle rectangle = new Rectangle(Double.parseDouble(occupantPropertyCoordinates[0]),
 					Double.parseDouble(occupantPropertyCoordinates[1]),
 					Double.parseDouble(occupantPropertyCoordinates[2]),
@@ -241,40 +251,41 @@ public class PdfParserOne {
 			pdfText = PdfTextExtractor.getTextFromPage(reader, i, strategy);
 			if (occupantPropertyName.contains("UnitNumber")) {
 				reportMotoristPageForm.setUnitNumber(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
-				}
+			}
 			if (occupantPropertyName.contains("Name")) {
-				if(pdfText.startsWith("Report #")){
+				if (pdfText.startsWith("Report #")) {
 					return null;
-				}else{
+				} else {
 					reportMotoristPageForm.setName(this.formatName(pdfText));
-				}	
 				}
-			if (occupantPropertyName.contains("Address")){
-					reportMotoristPageForm.setAdddressCityStateZip(this.formatAddress(pdfText));
+			}
+			if (occupantPropertyName.contains("Address")) {
+				reportMotoristPageForm.setAdddressCityStateZip(this.formatAddress(pdfText));
 			}
 			if (occupantPropertyName.contains("PhoneNumber")) {
-					reportMotoristPageForm.setContactPhone(pdfText);
+				reportMotoristPageForm.setContactPhone(pdfText);
 			}
 			if (occupantPropertyName.contains("DateOfBirth")) {
-					reportMotoristPageForm.setDateOfBirth(pdfText);
+				reportMotoristPageForm.setDateOfBirth(pdfText);
 			}
 			if (occupantPropertyName.contains("PatientAge")) {
-					reportMotoristPageForm.setAge(pdfText);
+				reportMotoristPageForm.setAge(pdfText);
 			}
 			if (occupantPropertyName.contains("Gender")) {
-					reportMotoristPageForm.setGender(pdfText);
+				reportMotoristPageForm.setGender(pdfText);
 			}
-			if (occupantPropertyName.contains("Injury")){
-					reportMotoristPageForm.setInjuries(pdfText);
+			if (occupantPropertyName.contains("Injury")) {
+				reportMotoristPageForm.setInjuries(pdfText);
 			}
-			if (occupantPropertyName.contains("EMSAgency")){
-					reportMotoristPageForm.setEmsAgency(pdfText);
+			if (occupantPropertyName.contains("EMSAgency")) {
+				reportMotoristPageForm.setEmsAgency(pdfText);
 			}
 			if (occupantPropertyName.contains("MedicalFacility")) {
-					reportMotoristPageForm.setMedicalFacility(pdfText);
+				reportMotoristPageForm.setMedicalFacility(pdfText);
 			}
 			if (occupantPropertyName.contains("SeatingPosition")) {
-					reportMotoristPageForm.setSeatingPosition(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
+				reportMotoristPageForm
+						.setSeatingPosition(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
 			}
 		}
 		return reportMotoristPageForm;
@@ -358,91 +369,134 @@ public class PdfParserOne {
 		}
 
 	}
+
 	// Format Name
-	public String formatName(String inputValue){
+	public String formatName(String inputValue) {
 		String[] splittedName = inputValue.split(" ");
-		String outputValue="";
+		String outputValue = "";
 		for (int j = 0; j < splittedName.length; j++) {
 			// Last Name
-			if(j==0){
-				outputValue=splittedName[0];
-			}// First Name
-			else if(j==1){
-				outputValue=outputValue+", "+splittedName[1];
-			}// Middle Name
-			else{
-				outputValue=outputValue+", "+splittedName[j];
+			if (j == 0) {
+				outputValue = splittedName[0];
+			} // First Name
+			else if (j == 1) {
+				outputValue = outputValue + ", " + splittedName[1];
+			} // Middle Name
+			else {
+				outputValue = outputValue + ", " + splittedName[j];
 			}
 		}
 		return outputValue;
 	}
+
 	// Verify the address format
-		public String formatAddress(String inputValue){
-			String outputValue="";
-			if(!inputValue.equals("")){
-				String[] addressSplitted=inputValue.replaceAll("\\s+", " ").split(" ");
-				Integer cityIndex=this.findCityIndex(inputValue);
-				Integer indexToSubtract=0;
-				if(addressSplitted.length>=3){
-					if(this.isState(addressSplitted[addressSplitted.length-2])&&this.isZipcode(addressSplitted[addressSplitted.length-1])){
-						indexToSubtract=2;
-					}
-					else if(this.isState(addressSplitted[addressSplitted.length-1])||this.isZipcode(addressSplitted[addressSplitted.length-1])){
-						indexToSubtract=1;
-					}
-				}
-				for (int i = 0; i < addressSplitted.length-indexToSubtract; i++) {
-					outputValue=outputValue+" "+addressSplitted[i];
-				}
-				StringBuilder str=new StringBuilder(outputValue.trim());
-				if(cityIndex!=0){
-					str.insert(cityIndex, ",");
-				}
-				if(indexToSubtract==2){
-					outputValue=str+", "+addressSplitted[addressSplitted.length-2]+", "+addressSplitted[addressSplitted.length-1];
-				}
-				else if(indexToSubtract==1){
-					outputValue=str+", "+addressSplitted[addressSplitted.length-1];
-				}
-				else if(indexToSubtract==0){
-					outputValue=str.toString();
+	public String formatAddress(String inputValue) {
+		String outputValue = "";
+		if (!inputValue.equals("")) {
+			String[] addressSplitted = inputValue.replaceAll("\\s+", " ").split(" ");
+			Integer cityIndex = this.findCityIndex(inputValue);
+			Integer indexToSubtract = 0;
+			if (addressSplitted.length >= 3) {
+				if (this.isState(addressSplitted[addressSplitted.length - 2])
+						&& this.isZipcode(addressSplitted[addressSplitted.length - 1])) {
+					indexToSubtract = 2;
+				} else if (this.isState(addressSplitted[addressSplitted.length - 1])
+						|| this.isZipcode(addressSplitted[addressSplitted.length - 1])) {
+					indexToSubtract = 1;
 				}
 			}
-			return outputValue;
+			for (int i = 0; i < addressSplitted.length - indexToSubtract; i++) {
+				outputValue = outputValue + " " + addressSplitted[i];
+			}
+			StringBuilder str = new StringBuilder(outputValue.trim());
+			if (cityIndex != 0) {
+				str.insert(cityIndex, ",");
+			}
+			if (indexToSubtract == 2) {
+				outputValue = str + ", " + addressSplitted[addressSplitted.length - 2] + ", "
+						+ addressSplitted[addressSplitted.length - 1];
+			} else if (indexToSubtract == 1) {
+				outputValue = str + ", " + addressSplitted[addressSplitted.length - 1];
+			} else if (indexToSubtract == 0) {
+				outputValue = str.toString();
+			}
 		}
-		
-		//Check for Zipcode
-		public boolean isZipcode(String checkStr){
-			if(checkStr.matches("\\d+")&&(checkStr.length()==5)||(checkStr.length()==4)){
-				return true;
-			}else{
-				return false;
-			}		
+		return outputValue;
+	}
+
+	// Check for Zipcode
+	public boolean isZipcode(String checkStr) {
+		if (checkStr.matches("\\d+") && (checkStr.length() == 5) || (checkStr.length() == 4)) {
+			return true;
+		} else {
+			return false;
 		}
-		//Find city Index
-		public Integer findCityIndex(String inputValue){
-			String[] addressSplitted=inputValue.replaceAll("\\s+", " ").split(" ");
-			List<String> defaultStreetForms=InjuryConstants.getDefaultStreetForms();
-			String StreetName="";
-			for(int k=0;k<addressSplitted.length; k++ ){
-				if(defaultStreetForms.contains(addressSplitted[k])){
-					StreetName=addressSplitted[k];
-					if(defaultStreetForms.contains(addressSplitted[k+1])){
-						StreetName=addressSplitted[k+1];
+	}
+
+	// Find city Index
+	public Integer findCityIndex(String inputValue) {
+		String[] addressSplitted = inputValue.replaceAll("\\s+", " ").split(" ");
+		List<String> defaultStreetForms = InjuryConstants.getDefaultStreetForms();
+		// List<String>
+		// CitiesWithKeywordsSameAsStreets=InjuryConstants.CitiesWithKeywordsSameAsStreets();
+		// List<String> matchedCount=new ArrayList<String>();
+		String StreetName = "";
+		Integer indexToUseComma = 0;
+		for (int k = 0; k < addressSplitted.length; k++) {
+			if (defaultStreetForms.contains(addressSplitted[k].toString().replaceAll("\\.", "").trim())) {
+
+				StreetName = addressSplitted[k];
+				if (addressSplitted[k + 1].replaceAll("-", "").replaceAll(" ", "").matches("[0-9]+")) {
+					StreetName = addressSplitted[k + 1];
+					if (defaultStreetForms.contains(addressSplitted[k + 2].toString().replaceAll("\\.", "").trim())) {
+						StreetName = addressSplitted[k + 2];
 					}
-					break;
 				}
-			}
-			Integer indexToUseComma=inputValue.indexOf(StreetName)+StreetName.length();
-			return indexToUseComma;
-		}
-		
-		//Check for State
-		public boolean isState(String checkStr){
-			if(checkStr.matches("[a-zA-Z]+")&&checkStr.length()==2){
-				return true;
-			}else{
-				return false;
+				if (defaultStreetForms.contains(addressSplitted[k + 1].toString().replaceAll("\\.", "").trim())) {
+					StreetName = addressSplitted[k + 1];
+					if (addressSplitted[k + 2].replaceAll("-", "").replaceAll(" ", "").matches("[0-9]+")) {
+						StreetName = addressSplitted[k + 2];
+					}
+				}
+				break;
 			}
 		}
+		indexToUseComma = inputValue.indexOf(StreetName) + StreetName.length();
+		return indexToUseComma;
+		/*
+		 * if(defaultStreetForms.contains(addressSplitted[k].toString().
+		 * replaceAll("\\.", "").trim())){
+		 * if(CitiesWithKeywordsSameAsStreets.contains(addressSplitted[k-1].
+		 * toString().replaceAll("\\.", "").toLowerCase().trim())){
+		 * indexToUseComma=inputValue.indexOf(addressSplitted[k-1])-1; return
+		 * indexToUseComma; } else{ matchedCount.add(addressSplitted[k]); } }
+		 * 
+		 * } if(matchedCount.size()>0){ String
+		 * nextValueInArray=addressSplitted[ArrayUtils.indexOf(addressSplitted,
+		 * matchedCount.get(matchedCount.size()-1))+1];
+		 * if(nextValueInArray.matches("[0-9]+")){
+		 * indexToUseComma=inputValue.lastIndexOf(nextValueInArray)+
+		 * nextValueInArray.length(); } else{
+		 * indexToUseComma=inputValue.lastIndexOf(matchedCount.get(matchedCount.
+		 * size()-1))+matchedCount.get(matchedCount.size()-1).length(); } }
+		 * return indexToUseComma;
+		 */
+	}
+
+	// Check for State
+	public boolean isState(String checkStr) {
+		if (checkStr.matches("[a-zA-Z]+") && checkStr.length() == 2) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	//Format date
+	public String formatDate(String date){
+		String[] dateSplitted=date.split("/");
+		if(dateSplitted[2].length()==2){
+			date=dateSplitted[0]+"/"+dateSplitted[1]+"/20"+dateSplitted[2];
+		}
+		return date;
+	}
 }
