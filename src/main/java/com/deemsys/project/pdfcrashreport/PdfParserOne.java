@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.criteria.CriteriaBuilder.In;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -174,9 +176,16 @@ public class PdfParserOne {
 
 			for (int j = Integer.parseInt(reportFirstPageForm.getNumberOfUnits()) + 2 + IncrementPage; j <= reader
 					.getNumberOfPages(); j++) {
-				String[] findMotoristOrOccupant = { "stateCoordinate1", "stateCoordinate2" };
+				String[] findMotoristOrOccupant = { "stateCoordinate1", "stateCoordinate2", "driverLicenceCoordinate1",
+						"driverLicenceCoordinate2", "LocalReportNumberCondition", "driverConditionCoordinate1",
+						"driverConditionCoordinate2" };
 				String StateCondition1 = "";
 				String StateCondition2 = "";
+				String DriverLicence1 = "";
+				String DriverLicence2 = "";
+				String LocalReportNumberCondition = "";
+				String DriverCondition1 = "";
+				String DriverCondition2 = "";
 				for (String property : findMotoristOrOccupant) {
 					String[] coordinates = injuryProperties.getParserOneProperty(property).split(",");
 					Rectangle rectangle = new Rectangle(Double.parseDouble(coordinates[0]),
@@ -193,16 +202,29 @@ public class PdfParserOne {
 					case "stateCoordinate2":
 						StateCondition2 = pdfText;
 						break;
+					case "driverLicenceCoordinate1":
+						DriverLicence1 = pdfText;
+						break;
+					case "driverLicenceCoordinate2":
+						DriverLicence2 = pdfText;
+						break;
+					case "LocalReportNumberCondition":
+						LocalReportNumberCondition = this.skipUnwantedSpaces(pdfText);
+						break;
+					case "driverConditionCoordinate2":
+						DriverCondition1 = pdfText;
+						break;
+					case "driverConditionCoordinate1":
+						DriverCondition2 = pdfText;
+						break;
 					default:
 						break;
 					}
 				}
 				String[][] occupantsArray = new String[5][];
-				if ((!StateCondition1.equals("") && ((StateCondition1.equals("OH") || StateCondition1.equals("WA"))
-						|| (!StateCondition1.matches("[0-9]+") && StateCondition1.length() == 2)))
-						|| (!StateCondition2.equals("")
-								&& ((StateCondition2.equals("OH") || StateCondition2.equals("WA"))
-										|| (!StateCondition2.matches("[0-9]+") && StateCondition2.length() == 2)))) {
+				if (this.findWhetherMotoristPage(StateCondition1, StateCondition2, DriverLicence1, DriverLicence2,
+						LocalReportNumberCondition, reportFirstPageForm.getLocalReportNumber(), DriverCondition1,
+						DriverCondition2)) {
 					occupantsArray = InjuryConstants.MOTORIST_PAGE_COORDINATES_PARSER_ONE;
 				} else {
 					occupantsArray = InjuryConstants.OCCUPANT_PAGE_COORDINATES_PARSER_ONE;
@@ -464,8 +486,9 @@ public class PdfParserOne {
 			 */
 
 			if (defaultStreetForms.contains(addressSplitted[k].toString().replaceAll("\\.", "").trim())) {
-				if ((addressSplitted[k+1].equals("OH"))||(addressSplitted[k + 1].length()==2 && this.isZipcode(addressSplitted[k+2]) )) {
-					indexToUseComma = inputValue.lastIndexOf(addressSplitted[k - 2])+addressSplitted[k-2].length();
+				if ((addressSplitted[k + 1].equals("OH"))
+						|| (addressSplitted[k + 1].length() == 2 && this.isZipcode(addressSplitted[k + 2]))) {
+					indexToUseComma = inputValue.lastIndexOf(addressSplitted[k - 2]) + addressSplitted[k - 2].length();
 					return indexToUseComma;
 				} else {
 					matchedCount.add(addressSplitted[k]);
@@ -473,24 +496,23 @@ public class PdfParserOne {
 			}
 		}
 		if (matchedCount.size() > 0) {
-			
+
 			String nextValueInArray = addressSplitted[ArrayUtils.indexOf(addressSplitted,
 					matchedCount.get(matchedCount.size() - 1)) + 1];
-			
+
 			if (nextValueInArray.matches("[0-9]+")) {
 				// Matches the Exact Word in String
-				Pattern pattern = Pattern.compile("\\b"+nextValueInArray+"\\b");
+				Pattern pattern = Pattern.compile("\\b" + nextValueInArray + "\\b");
 				Matcher matcher = pattern.matcher(inputValue);
-				while(matcher.find()){
+				while (matcher.find()) {
 					indexToUseComma = matcher.start() + nextValueInArray.length();
 				}
 			} else {
 				// Matches the Exact Word in String
-				Pattern pattern = Pattern.compile("\\b"+matchedCount.get(matchedCount.size() - 1)+"\\b");
+				Pattern pattern = Pattern.compile("\\b" + matchedCount.get(matchedCount.size() - 1) + "\\b");
 				Matcher matcher = pattern.matcher(inputValue);
-				while(matcher.find()){
-					indexToUseComma = matcher.start()
-							+ matchedCount.get(matchedCount.size() - 1).length();
+				while (matcher.find()) {
+					indexToUseComma = matcher.start() + matchedCount.get(matchedCount.size() - 1).length();
 				}
 			}
 		}
@@ -514,5 +536,39 @@ public class PdfParserOne {
 			date = dateSplitted[0] + "/" + dateSplitted[1] + "/20" + dateSplitted[2];
 		}
 		return date;
+	}
+
+	// find whether motorist page
+	public boolean findWhetherMotoristPage(String StateCondition1, String StateCondition2, String DriverLicence1,
+			String DriverLicence2, String LocalReportNumberCondition, String localReportNumberToCompare,
+			String DriverCondition1, String DriverCondition2) {
+		if (!StateCondition1.equals("") && ((StateCondition1.equals("OH") || StateCondition1.equals("WA"))
+				|| (!StateCondition1.matches("[0-9]+") && StateCondition1.length() == 2))) {
+			return true;
+		}
+
+		if (!StateCondition2.equals("") && ((StateCondition2.equals("OH") || StateCondition2.equals("WA"))
+				|| (!StateCondition2.matches("[0-9]+") && StateCondition2.length() == 2))) {
+			return true;
+		}
+		if ((!DriverLicence1.equals("") && (DriverLicence1.matches("[0-9]+")
+				&& Integer.parseInt(this.removeZeroBeforeNumbers(DriverLicence1)) <= 5))
+				|| (!DriverLicence2.equals("") && (DriverLicence2.matches("[0-9]+")
+						&& Integer.parseInt(this.removeZeroBeforeNumbers(DriverLicence2)) <= 5))) {
+			return true;
+		}
+		if ((!DriverCondition1.equals("") && (DriverCondition1.matches("[0-9]+")
+				&& Integer.parseInt(this.removeZeroBeforeNumbers(DriverCondition1)) <= 7))
+				|| (!DriverCondition2.equals("") && (DriverCondition2.matches("[0-9]+")
+						&& Integer.parseInt(this.removeZeroBeforeNumbers(DriverCondition2)) <= 7))) {
+			return true;
+		}
+		if (!LocalReportNumberCondition.equals("")
+				&& !LocalReportNumberCondition.replaceAll("\\.", "").trim().equals("F")
+				&& LocalReportNumberCondition.equals(localReportNumberToCompare)) {
+			return true;
+		}
+		
+		return false;
 	}
 }
