@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -471,13 +473,25 @@ public class PdfParserOne {
 			}
 		}
 		if (matchedCount.size() > 0) {
+			
 			String nextValueInArray = addressSplitted[ArrayUtils.indexOf(addressSplitted,
 					matchedCount.get(matchedCount.size() - 1)) + 1];
+			
 			if (nextValueInArray.matches("[0-9]+")) {
-				indexToUseComma = inputValue.lastIndexOf(nextValueInArray) + nextValueInArray.length();
+				// Matches the Exact Word in String
+				Pattern pattern = Pattern.compile("\\b"+nextValueInArray+"\\b");
+				Matcher matcher = pattern.matcher(inputValue);
+				while(matcher.find()){
+					indexToUseComma = matcher.start() + nextValueInArray.length();
+				}
 			} else {
-				indexToUseComma = inputValue.lastIndexOf(matchedCount.get(matchedCount.size() - 1))
-						+ matchedCount.get(matchedCount.size() - 1).length();
+				// Matches the Exact Word in String
+				Pattern pattern = Pattern.compile("\\b"+matchedCount.get(matchedCount.size() - 1)+"\\b");
+				Matcher matcher = pattern.matcher(inputValue);
+				while(matcher.find()){
+					indexToUseComma = matcher.start()
+							+ matchedCount.get(matchedCount.size() - 1).length();
+				}
 			}
 		}
 		return indexToUseComma;
