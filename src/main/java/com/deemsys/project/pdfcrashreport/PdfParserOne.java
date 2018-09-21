@@ -408,7 +408,7 @@ public class PdfParserOne {
 			for (int i = 0; i < addressSplitted.length - indexToSubtract; i++) {
 				outputValue = outputValue + " " + addressSplitted[i];
 			}
-			StringBuilder str = new StringBuilder(outputValue.trim());
+			StringBuilder str = new StringBuilder(outputValue.trim().replaceAll("\\s+", " "));
 			if (cityIndex != 0) {
 				str.insert(cityIndex, ",");
 			}
@@ -426,7 +426,7 @@ public class PdfParserOne {
 
 	// Check for Zipcode
 	public boolean isZipcode(String checkStr) {
-		if (checkStr.matches("\\d+") && (checkStr.length() == 5) || (checkStr.length() == 4)) {
+		if (checkStr.matches("\\d+") && (checkStr.length() == 5 || checkStr.length() == 4)) {
 			return true;
 		} else {
 			return false;
@@ -439,48 +439,49 @@ public class PdfParserOne {
 		List<String> defaultStreetForms = InjuryConstants.getDefaultStreetForms();
 		// List<String>
 		// CitiesWithKeywordsSameAsStreets=InjuryConstants.CitiesWithKeywordsSameAsStreets();
-		// List<String> matchedCount=new ArrayList<String>();
-		String StreetName = "";
+		List<String> matchedCount = new ArrayList<String>();
 		Integer indexToUseComma = 0;
 		for (int k = 0; k < addressSplitted.length; k++) {
-			if (defaultStreetForms.contains(addressSplitted[k].toString().replaceAll("\\.", "").trim())) {
+			/*
+			 * if (defaultStreetForms.contains(addressSplitted[k].toString().
+			 * replaceAll("\\.", "").trim())) {
+			 * 
+			 * StreetName = addressSplitted[k]; if (addressSplitted[k +
+			 * 1].replaceAll("-", "").replaceAll(" ", "").matches("[0-9]+")) {
+			 * StreetName = addressSplitted[k + 1]; if
+			 * (defaultStreetForms.contains(addressSplitted[k +
+			 * 2].toString().replaceAll("\\.", "").trim())) { StreetName =
+			 * addressSplitted[k + 2]; } } if
+			 * (defaultStreetForms.contains(addressSplitted[k +
+			 * 1].toString().replaceAll("\\.", "").trim())) { StreetName =
+			 * addressSplitted[k + 1]; if (addressSplitted[k +
+			 * 2].replaceAll("-", "").replaceAll(" ", "").matches("[0-9]+")) {
+			 * StreetName = addressSplitted[k + 2]; } } break; } }
+			 * indexToUseComma = inputValue.indexOf(StreetName) +
+			 * StreetName.length(); return indexToUseComma;
+			 */
 
-				StreetName = addressSplitted[k];
-				if (addressSplitted[k + 1].replaceAll("-", "").replaceAll(" ", "").matches("[0-9]+")) {
-					StreetName = addressSplitted[k + 1];
-					if (defaultStreetForms.contains(addressSplitted[k + 2].toString().replaceAll("\\.", "").trim())) {
-						StreetName = addressSplitted[k + 2];
-					}
+			if (defaultStreetForms.contains(addressSplitted[k].toString().replaceAll("\\.", "").trim())) {
+				if ((addressSplitted[k+1].equals("OH"))||(addressSplitted[k + 1].length()==2 && this.isZipcode(addressSplitted[k+2]) )) {
+					indexToUseComma = inputValue.lastIndexOf(addressSplitted[k - 2])+addressSplitted[k-2].length();
+					return indexToUseComma;
+				} else {
+					matchedCount.add(addressSplitted[k]);
 				}
-				if (defaultStreetForms.contains(addressSplitted[k + 1].toString().replaceAll("\\.", "").trim())) {
-					StreetName = addressSplitted[k + 1];
-					if (addressSplitted[k + 2].replaceAll("-", "").replaceAll(" ", "").matches("[0-9]+")) {
-						StreetName = addressSplitted[k + 2];
-					}
-				}
-				break;
 			}
 		}
-		indexToUseComma = inputValue.indexOf(StreetName) + StreetName.length();
+		if (matchedCount.size() > 0) {
+			String nextValueInArray = addressSplitted[ArrayUtils.indexOf(addressSplitted,
+					matchedCount.get(matchedCount.size() - 1)) + 1];
+			if (nextValueInArray.matches("[0-9]+")) {
+				indexToUseComma = inputValue.lastIndexOf(nextValueInArray) + nextValueInArray.length();
+			} else {
+				indexToUseComma = inputValue.lastIndexOf(matchedCount.get(matchedCount.size() - 1))
+						+ matchedCount.get(matchedCount.size() - 1).length();
+			}
+		}
 		return indexToUseComma;
-		/*
-		 * if(defaultStreetForms.contains(addressSplitted[k].toString().
-		 * replaceAll("\\.", "").trim())){
-		 * if(CitiesWithKeywordsSameAsStreets.contains(addressSplitted[k-1].
-		 * toString().replaceAll("\\.", "").toLowerCase().trim())){
-		 * indexToUseComma=inputValue.indexOf(addressSplitted[k-1])-1; return
-		 * indexToUseComma; } else{ matchedCount.add(addressSplitted[k]); } }
-		 * 
-		 * } if(matchedCount.size()>0){ String
-		 * nextValueInArray=addressSplitted[ArrayUtils.indexOf(addressSplitted,
-		 * matchedCount.get(matchedCount.size()-1))+1];
-		 * if(nextValueInArray.matches("[0-9]+")){
-		 * indexToUseComma=inputValue.lastIndexOf(nextValueInArray)+
-		 * nextValueInArray.length(); } else{
-		 * indexToUseComma=inputValue.lastIndexOf(matchedCount.get(matchedCount.
-		 * size()-1))+matchedCount.get(matchedCount.size()-1).length(); } }
-		 * return indexToUseComma;
-		 */
+
 	}
 
 	// Check for State
@@ -491,11 +492,12 @@ public class PdfParserOne {
 			return false;
 		}
 	}
-	//Format date
-	public String formatDate(String date){
-		String[] dateSplitted=date.split("/");
-		if(dateSplitted[2].length()==2){
-			date=dateSplitted[0]+"/"+dateSplitted[1]+"/20"+dateSplitted[2];
+
+	// Format date
+	public String formatDate(String date) {
+		String[] dateSplitted = date.split("/");
+		if (dateSplitted[2].length() == 2) {
+			date = dateSplitted[0] + "/" + dateSplitted[1] + "/20" + dateSplitted[2];
 		}
 		return date;
 	}
