@@ -57,12 +57,12 @@ sbAdminApp
 															break;
 														}
 														case 403: {
-														window.location.href = window.location.origin+"/Injury/logout?sessionout";
+															window.location.href = window.location.origin+"/Injury/logout?sessionout";
 															break;
 														}
 														case 500: {
 															alert("Please try again!");
-														   window.location.href = window.location.origin+"/Injury/logout";
+														    window.location.href = window.location.origin+"/Injury/logout";
 															break;
 														}
 														default: {
@@ -2164,14 +2164,53 @@ sbAdminApp.directive('validateIpAddress', function(){
 
 sbAdminApp.directive('validateWebsite', function() {
     var WEBSITE_WITH_HTTP = /^http(s)?:\/\/(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+    var WEBSITE_WITH_HTTPS_HTTP = /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})?$/;
     var WEBSITE_NO_HTTP = /^(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
     return {
         require: 'ngModel',
         restrict: '',
         link: function(scope, elm, attrs, ngModel) {
             ngModel.$validators.validateWebsite = function(modelValue) {
-                return  WEBSITE_NO_HTTP.test(modelValue);
+                return  WEBSITE_WITH_HTTPS_HTTP.test(modelValue);
             };
+        }
+    };
+});
+
+sbAdminApp.directive('datetimez', function(){
+    return {
+        require: '?ngModel',
+        restrict: 'A',
+        link: function(scope, element, attrs, ngModel){
+            if(!ngModel) return;  
+          
+            ngModel.$render = function(){
+                element.val( ngModel.$viewValue || '' );
+            };
+          
+            function read() {
+                var value = element.val();
+                ngModel.$setViewValue(value);
+                //console.log(scope.dueDate);
+            }
+            
+            var options = scope.$eval(attrs.datetimez) || {};
+            if(element.next().is('.input-group-addon')) {
+            	var parentElm = $(element).parent();
+           /*   parentElm.datetimepicker(options);*/
+          
+              parentElm.on('dp.change', function(){
+                 scope.$apply(read);
+              });
+            } else {
+             /* element.datetimepicker(options);*/
+          
+              element.on('dp.change', function(){
+                 scope.$apply(read);
+              });
+            }
+          
+            read();
         }
     };
 });
