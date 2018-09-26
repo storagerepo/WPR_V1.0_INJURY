@@ -161,7 +161,7 @@ public class PdfParserTwo {
 						}
 					}
 					reportUnitPageForms.add(reportUnitPageForm);
-
+					// Occupant/Motorist Page
 				} else if (this.skipUnwantedSpaces(pdfText1).equals("Occupant/WitnessAddendum")
 						|| this.skipUnwantedSpaces(pdfText1).equals("Motorist/Non-Motorist/Occupant")) {
 					String[][] occupantsArray = new String[5][];
@@ -201,6 +201,7 @@ public class PdfParserTwo {
 		return pdfCrashReportJson;
 	}
 
+	// Process occupant details
 	public ReportMotoristPageForm processOccupantDetails(int i, PdfReader reader, String[] occupantArray)
 			throws IOException {
 		ReportMotoristPageForm reportMotoristPageForm = new ReportMotoristPageForm();
@@ -306,6 +307,7 @@ public class PdfParserTwo {
 		return inputString;
 	}
 
+	// Frame Date of Birth since it comes along with "/n"
 	public String frameDateOfBirth(String inputString) {
 		String outputString = "";
 		if (!inputString.equals("")) {
@@ -324,6 +326,7 @@ public class PdfParserTwo {
 		return outputString;
 	}
 
+	// Process name of occupant since it comes along with "/n"
 	public String frameNameOfOccupant(String inputString) {
 
 		if (!inputString.equals("")) {

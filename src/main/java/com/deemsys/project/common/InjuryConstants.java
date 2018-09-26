@@ -13,144 +13,129 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.RandomStringUtils;
 import org.joda.time.LocalDate;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+
 public class InjuryConstants {
-	
-	
-	public static Integer INJURY_SUPER_ADMIN_ROLE_ID=1;
-	public static Integer INJURY_CALLER_ADMIN_ROLE_ID=2;
-	public static Integer INJURY_LAWYER_ADMIN_ROLE_ID=3;
-	public static Integer INJURY_CALLER_ROLE_ID=4;
-	public static Integer INJURY_LAWYER_ROLE_ID=5;
-	public static Integer INJURY_AUTO_MANAGER_ROLE_ID=6;
-	public static Integer INJURY_AUTO_DEALER_ROLE_ID=7;
-	public static Integer INJURY_BODY_SHOP_OWNER_ROLE_ID=8;
-	public static Integer INJURY_SHOP_ROLE_ID=9;
-	
-	public static String INJURY_SUPER_ADMIN_ROLE="ROLE_SUPER_ADMIN";
-	public static String INJURY_CALLER_ADMIN_ROLE="ROLE_CALLER_ADMIN";
-	public static String INJURY_LAWYER_ADMIN_ROLE="ROLE_LAWYER_ADMIN";
-	public static String INJURY_CALLER_ROLE="ROLE_CALLER";
-	public static String INJURY_LAWYER_ROLE="ROLE_LAWYER";
-	public static String INJURY_AUTO_MANAGER_ROLE="ROLE_AUTO_MANAGER";
-	public static String INJURY_AUTO_DEALER_ROLE="ROLE_AUTO_DEALER";
-	public static String INJURY_BODY_SHOP_OWNER_ROLE="ROLE_BODY_SHOP_OWNER";
-	public static String INJURY_SHOP_ROLE="ROLE_SHOP";
-	
-	//Look up Preference Type
-	public static Integer COUNTY_LOOKUP=1;
-	public static Integer TIER_LOOKUP=2;
-	public static Integer AGE_LOOKUP=3;
-	public static Integer REPORTING_AGENCY_LOOKUP=4;
-	
+
+	public static Integer INJURY_SUPER_ADMIN_ROLE_ID = 1;
+	public static Integer INJURY_CALLER_ADMIN_ROLE_ID = 2;
+	public static Integer INJURY_LAWYER_ADMIN_ROLE_ID = 3;
+	public static Integer INJURY_CALLER_ROLE_ID = 4;
+	public static Integer INJURY_LAWYER_ROLE_ID = 5;
+	public static Integer INJURY_AUTO_MANAGER_ROLE_ID = 6;
+	public static Integer INJURY_AUTO_DEALER_ROLE_ID = 7;
+	public static Integer INJURY_BODY_SHOP_OWNER_ROLE_ID = 8;
+	public static Integer INJURY_SHOP_ROLE_ID = 9;
+
+	public static String INJURY_SUPER_ADMIN_ROLE = "ROLE_SUPER_ADMIN";
+	public static String INJURY_CALLER_ADMIN_ROLE = "ROLE_CALLER_ADMIN";
+	public static String INJURY_LAWYER_ADMIN_ROLE = "ROLE_LAWYER_ADMIN";
+	public static String INJURY_CALLER_ROLE = "ROLE_CALLER";
+	public static String INJURY_LAWYER_ROLE = "ROLE_LAWYER";
+	public static String INJURY_AUTO_MANAGER_ROLE = "ROLE_AUTO_MANAGER";
+	public static String INJURY_AUTO_DEALER_ROLE = "ROLE_AUTO_DEALER";
+	public static String INJURY_BODY_SHOP_OWNER_ROLE = "ROLE_BODY_SHOP_OWNER";
+	public static String INJURY_SHOP_ROLE = "ROLE_SHOP";
+
+	// Look up Preference Type
+	public static Integer COUNTY_LOOKUP = 1;
+	public static Integer TIER_LOOKUP = 2;
+	public static Integer AGE_LOOKUP = 3;
+	public static Integer REPORTING_AGENCY_LOOKUP = 4;
+
 	// Reporting Agency Code Separator
-	public static String REPORTING_AGENCY_CODE_SEPARATOR="-";
-	public static String REPORTING_AGENCY_NAME_SEPARATOR="-";
-	
+	public static String REPORTING_AGENCY_CODE_SEPARATOR = "-";
+	public static String REPORTING_AGENCY_NAME_SEPARATOR = "-";
+
 	// Export Excel Type
-	public static Integer PATIENT_EXPORT=1;
-	public static Integer ACTVITY_LOG_EXPORT=2;
-	
-	//1st level scanned reports credentials
-	//1st level scanned reports credentials
-		public static String[][] MOTORIST_PAGE_COORDINATES_PARSER_ONE={
-				{ "occupantOneUnitNumber", "occupantOneName", "occupantOneDateOfBirth",
-					"occupantOnePatientAge", "occupantOneGender", "occupantOneAddress",
-					"occupantOnePhoneNumber", "occupantOneInjury", "occupantOneEMSAgency",
-					"occupantOneMedicalFacility", "occupantOneSeatingPosition" },
-			{ "occupantTwoUnitNumber", "occupantTwoName", "occupantTwoDateOfBirth",
-					"occupantTwoPatientAge", "occupantTwoGender", "occupantTwoAddress",
-					"occupantTwoPhoneNumber", "occupantTwoInjury", "occupantTwoEMSAgency",
-					"occupantTwoMedicalFacility", "occupantTwoSeatingPosition" },
-			{ "occupantThreeUnitNumber", "occupantThreeName", "occupantThreeDateOfBirth",
-					"occupantThreePatientAge", "occupantThreeGender", "occupantThreeAddress",
+	public static Integer PATIENT_EXPORT = 1;
+	public static Integer ACTVITY_LOG_EXPORT = 2;
+
+	// 1st level scanned reports credentials
+	// 1st level scanned reports credentials
+	public static String[][] MOTORIST_PAGE_COORDINATES_PARSER_ONE = {
+			{ "occupantOneUnitNumber", "occupantOneName", "occupantOneDateOfBirth", "occupantOnePatientAge",
+					"occupantOneGender", "occupantOneAddress", "occupantOnePhoneNumber", "occupantOneInjury",
+					"occupantOneEMSAgency", "occupantOneMedicalFacility", "occupantOneSeatingPosition" },
+			{ "occupantTwoUnitNumber", "occupantTwoName", "occupantTwoDateOfBirth", "occupantTwoPatientAge",
+					"occupantTwoGender", "occupantTwoAddress", "occupantTwoPhoneNumber", "occupantTwoInjury",
+					"occupantTwoEMSAgency", "occupantTwoMedicalFacility", "occupantTwoSeatingPosition" },
+			{ "occupantThreeUnitNumber", "occupantThreeName", "occupantThreeDateOfBirth", "occupantThreePatientAge",
+					"occupantThreeGender", "occupantThreeAddress", "occupantThreePhoneNumber", "occupantThreeInjury",
+					"occupantThreeEMSAgency", "occupantThreeMedicalFacility", "occupantThreeSeatingPosition" },
+			{ "occupantFourUnitNumber", "occupantFourName", "occupantFourDateOfBirth", "occupantFourPatientAge",
+					"occupantFourGender", "occupantFourAddress", "occupantFourPhoneNumber", "occupantFourInjury",
+					"occupantFourEMSAgency", "occupantFourMedicalFacility", "occupantFourSeatingPosition" } };
+	public static String[][] OCCUPANT_PAGE_COORDINATES_PARSER_ONE = {
+			{ "occupantFiveUnitNumber", "occupantFiveName", "occupantFiveDateOfBirth", "occupantFivePatientAge",
+					"occupantFiveGender", "occupantFiveAddress", "occupantFivePhoneNumber", "occupantFiveInjury",
+					"occupantFiveEMSAgency", "occupantFiveMedicalFacility", "occupantFiveSeatingPosition" },
+			{ "occupantSixUnitNumber", "occupantSixName", "occupantSixDateOfBirth", "occupantSixPatientAge",
+					"occupantSixGender", "occupantSixAddress", "occupantSixPhoneNumber", "occupantSixInjury",
+					"occupantSixEMSAgency", "occupantSixMedicalFacility", "occupantSixSeatingPosition" },
+			{ "occupantSevenUnitNumber", "occupantSevenName", "occupantSevenDateOfBirth", "occupantSevenPatientAge",
+					"occupantSevenGender", "occupantSevenAddress", "occupantSevenPhoneNumber", "occupantSevenInjury",
+					"occupantSevenEMSAgency", "occupantSevenMedicalFacility", "occupantSevenSeatingPosition" },
+			{ "occupantEightUnitNumber", "occupantEightName", "occupantEightDateOfBirth", "occupantEightPatientAge",
+					"occupantEightGender", "occupantEightAddress", "occupantEightPhoneNumber", "occupantEightInjury",
+					"occupantEightEMSAgency", "occupantEightMedicalFacility", "occupantEightSeatingPosition" },
+			{ "occupantNineUnitNumber", "occupantNineName", "occupantNineDateOfBirth", "occupantNinePatientAge",
+					"occupantNineGender", "occupantNineAddress", "occupantNinePhoneNumber", "occupantNineInjury",
+					"occupantNineEMSAgency", "occupantNineMedicalFacility", "occupantNineSeatingPosition" },
+			{ "occupantTenUnitNumber", "occupantTenName", "occupantTenDateOfBirth", "occupantTenPatientAge",
+					"occupantTenGender", "occupantTenAddress", "occupantTenPhoneNumber", "occupantTenInjury",
+					"occupantTenEMSAgency", "occupantTenMedicalFacility", "occupantTenSeatingPosition" } };
+	// second level reports coordinates
+	public static String[][] MOTORIST_PAGE_COORDINATES_PARSER_TWO = {
+			{ "occupantOneUnitNumber", "occupantOnePatientName", "occupantOneDateOfBirth", "occupantOnePatientAge",
+					"occupantOneGender", "occupantOneAddressDoorNo", "occupantOneAddressStreetName",
+					"occupantOneAddressCity", "occupantOneAddressState", "occupantOnePhoneNumber", "occupantOneInjury",
+					"occupantOneEMSAgency", "occupantOneMedicalFacility", "occupantOneSeatingPosition" },
+			{ "occupantTwoUnitNumber", "occupantTwoPatientName", "occupantTwoDateOfBirth", "occupantTwoPatientAge",
+					"occupantTwoGender", "occupantTwoAddressDoorNo", "occupantTwoAddressStreetName",
+					"occupantTwoAddressCity", "occupantTwoAddressState", "occupantTwoPhoneNumber", "occupantTwoInjury",
+					"occupantTwoEMSAgency", "occupantTwoMedicalFacility", "occupantTwoSeatingPosition" },
+			{ "occupantThreeUnitNumber", "occupantThreePatientName", "occupantThreeDateOfBirth",
+					"occupantThreePatientAge", "occupantThreeGender", "occupantThreeAddressDoorNo",
+					"occupantThreeAddressStreetName", "occupantThreeAddressCity", "occupantThreeAddressState",
 					"occupantThreePhoneNumber", "occupantThreeInjury", "occupantThreeEMSAgency",
 					"occupantThreeMedicalFacility", "occupantThreeSeatingPosition" },
-			{ "occupantFourUnitNumber", "occupantFourName", "occupantFourDateOfBirth",
-					"occupantFourPatientAge", "occupantFourGender", "occupantFourAddress",
-					"occupantFourPhoneNumber", "occupantFourInjury", "occupantFourEMSAgency",
-					"occupantFourMedicalFacility", "occupantFourSeatingPosition" } 
-					};
-		public static String[][] OCCUPANT_PAGE_COORDINATES_PARSER_ONE={
-				{ "occupantFiveUnitNumber", "occupantFiveName", "occupantFiveDateOfBirth",
-					"occupantFivePatientAge", "occupantFiveGender", "occupantFiveAddress",
-					"occupantFivePhoneNumber", "occupantFiveInjury", "occupantFiveEMSAgency",
-					"occupantFiveMedicalFacility", "occupantFiveSeatingPosition" },
-			{ "occupantSixUnitNumber", "occupantSixName", "occupantSixDateOfBirth",
-					"occupantSixPatientAge", "occupantSixGender", "occupantSixAddress",
-					"occupantSixPhoneNumber", "occupantSixInjury", "occupantSixEMSAgency",
-					"occupantSixMedicalFacility", "occupantSixSeatingPosition" },
-			{ "occupantSevenUnitNumber", "occupantSevenName", "occupantSevenDateOfBirth",
-					"occupantSevenPatientAge", "occupantSevenGender", "occupantSevenAddress",
+			{ "occupantFourUnitNumber", "occupantFourPatientName", "occupantFourDateOfBirth", "occupantFourPatientAge",
+					"occupantFourGender", "occupantFourAddressDoorNo", "occupantFourAddressStreetName",
+					"occupantFourAddressCity", "occupantFourAddressState", "occupantFourPhoneNumber",
+					"occupantFourInjury", "occupantFourEMSAgency", "occupantFourMedicalFacility",
+					"occupantFourSeatingPosition" } };
+	public static String[][] OCCUPANT_PAGE_COORDINATES_PARSER_TWO = {
+			{ "occupantFiveUnitNumber", "occupantFivePatientName", "occupantFiveDateOfBirth", "occupantFivePatientAge",
+					"occupantFiveGender", "occupantFiveAddressDoorNo", "occupantFiveAddressStreetName",
+					"occupantFiveAddressCity", "occupantFiveAddressState", "occupantFivePhoneNumber",
+					"occupantFiveInjury", "occupantFiveEMSAgency", "occupantFiveMedicalFacility",
+					"occupantFiveSeatingPosition" },
+			{ "occupantSixUnitNumber", "occupantSixPatientName", "occupantSixDateOfBirth", "occupantSixPatientAge",
+					"occupantSixGender", "occupantSixAddressDoorNo", "occupantSixAddressStreetName",
+					"occupantSixAddressCity", "occupantSixAddressState", "occupantSixPhoneNumber", "occupantSixInjury",
+					"occupantSixEMSAgency", "occupantSixMedicalFacility", "occupantSixSeatingPosition" },
+			{ "occupantSevenUnitNumber", "occupantSevenPatientName", "occupantSevenDateOfBirth",
+					"occupantSevenPatientAge", "occupantSevenGender", "occupantSevenAddressDoorNo",
+					"occupantSevenAddressStreetName", "occupantSevenAddressCity", "occupantSevenAddressState",
 					"occupantSevenPhoneNumber", "occupantSevenInjury", "occupantSevenEMSAgency",
 					"occupantSevenMedicalFacility", "occupantSevenSeatingPosition" },
-			{ "occupantEightUnitNumber", "occupantEightName", "occupantEightDateOfBirth",
-					"occupantEightPatientAge", "occupantEightGender", "occupantEightAddress",
+			{ "occupantEightUnitNumber", "occupantEightPatientName", "occupantEightDateOfBirth",
+					"occupantEightPatientAge", "occupantEightGender", "occupantEightAddressDoorNo",
+					"occupantEightAddressStreetName", "occupantEightAddressCity", "occupantEightAddressState",
 					"occupantEightPhoneNumber", "occupantEightInjury", "occupantEightEMSAgency",
 					"occupantEightMedicalFacility", "occupantEightSeatingPosition" },
-			{ "occupantNineUnitNumber", "occupantNineName", "occupantNineDateOfBirth",
-					"occupantNinePatientAge", "occupantNineGender", "occupantNineAddress",
-					"occupantNinePhoneNumber", "occupantNineInjury", "occupantNineEMSAgency",
-					"occupantNineMedicalFacility", "occupantNineSeatingPosition" },
-			{ "occupantTenUnitNumber", "occupantTenName", "occupantTenDateOfBirth",
-					"occupantTenPatientAge", "occupantTenGender", "occupantTenAddress",
-					"occupantTenPhoneNumber", "occupantTenInjury", "occupantTenEMSAgency",
-					"occupantTenMedicalFacility", "occupantTenSeatingPosition" } };
-		//second level reports coordinates
-	public static String[][] MOTORIST_PAGE_COORDINATES_PARSER_TWO={
-			{ "occupantOneUnitNumber", "occupantOnePatientName", "occupantOneDateOfBirth",
-				"occupantOnePatientAge", "occupantOneGender", "occupantOneAddressDoorNo",
-				"occupantOneAddressStreetName","occupantOneAddressCity","occupantOneAddressState",
-				"occupantOnePhoneNumber", "occupantOneInjury", "occupantOneEMSAgency",
-				"occupantOneMedicalFacility", "occupantOneSeatingPosition" },
-		{ "occupantTwoUnitNumber", "occupantTwoPatientName", "occupantTwoDateOfBirth",
-				"occupantTwoPatientAge", "occupantTwoGender","occupantTwoAddressDoorNo",
-				"occupantTwoAddressStreetName","occupantTwoAddressCity","occupantTwoAddressState",
-				"occupantTwoPhoneNumber", "occupantTwoInjury", "occupantTwoEMSAgency",
-				"occupantTwoMedicalFacility", "occupantTwoSeatingPosition" },
-		{ "occupantThreeUnitNumber", "occupantThreePatientName", "occupantThreeDateOfBirth",
-				"occupantThreePatientAge", "occupantThreeGender","occupantThreeAddressDoorNo",
-				"occupantThreeAddressStreetName","occupantThreeAddressCity","occupantThreeAddressState",
-				"occupantThreePhoneNumber", "occupantThreeInjury", "occupantThreeEMSAgency",
-				"occupantThreeMedicalFacility", "occupantThreeSeatingPosition" },
-		{ "occupantFourUnitNumber", "occupantFourPatientName", "occupantFourDateOfBirth",
-				"occupantFourPatientAge", "occupantFourGender","occupantFourAddressDoorNo",
-				"occupantFourAddressStreetName","occupantFourAddressCity","occupantFourAddressState",
-				"occupantFourPhoneNumber", "occupantFourInjury", "occupantFourEMSAgency",
-				"occupantFourMedicalFacility", "occupantFourSeatingPosition" } 
-				};
-	public static String[][] OCCUPANT_PAGE_COORDINATES_PARSER_TWO={
-			{ "occupantFiveUnitNumber", "occupantFivePatientName", "occupantFiveDateOfBirth",
-				"occupantFivePatientAge", "occupantFiveGender","occupantFiveAddressDoorNo",
-				"occupantFiveAddressStreetName","occupantFiveAddressCity","occupantFiveAddressState",
-				"occupantFivePhoneNumber", "occupantFiveInjury", "occupantFiveEMSAgency",
-				"occupantFiveMedicalFacility", "occupantFiveSeatingPosition" },
-		{ "occupantSixUnitNumber", "occupantSixPatientName", "occupantSixDateOfBirth",
-				"occupantSixPatientAge", "occupantSixGender","occupantSixAddressDoorNo",
-				"occupantSixAddressStreetName","occupantSixAddressCity","occupantSixAddressState",
-				"occupantSixPhoneNumber", "occupantSixInjury", "occupantSixEMSAgency",
-				"occupantSixMedicalFacility", "occupantSixSeatingPosition" },
-		{ "occupantSevenUnitNumber", "occupantSevenPatientName", "occupantSevenDateOfBirth",
-				"occupantSevenPatientAge", "occupantSevenGender","occupantSevenAddressDoorNo",
-				"occupantSevenAddressStreetName","occupantSevenAddressCity","occupantSevenAddressState",
-				"occupantSevenPhoneNumber", "occupantSevenInjury", "occupantSevenEMSAgency",
-				"occupantSevenMedicalFacility", "occupantSevenSeatingPosition" },
-		{ "occupantEightUnitNumber", "occupantEightPatientName", "occupantEightDateOfBirth",
-				"occupantEightPatientAge", "occupantEightGender","occupantEightAddressDoorNo",
-				"occupantEightAddressStreetName","occupantEightAddressCity","occupantEightAddressState",
-				"occupantEightPhoneNumber", "occupantEightInjury", "occupantEightEMSAgency",
-				"occupantEightMedicalFacility", "occupantEightSeatingPosition" },
-		{ "occupantNineUnitNumber", "occupantNinePatientName", "occupantNineDateOfBirth",
-				"occupantNinePatientAge", "occupantNineGender","occupantNineAddressDoorNo",
-				"occupantNineAddressStreetName","occupantNineAddressCity","occupantNineAddressState",
-				"occupantNinePhoneNumber", "occupantNineInjury", "occupantNineEMSAgency",
-				"occupantNineMedicalFacility", "occupantNineSeatingPosition" },
-		{ "occupantTenUnitNumber", "occupantTenPatientName", "occupantTenDateOfBirth",
-				"occupantTenPatientAge", "occupantTenGender","occupantTenAddressDoorNo",
-				"occupantTenAddressStreetName","occupantTenAddressCity","occupantTenAddressState",
-				"occupantTenPhoneNumber", "occupantTenInjury", "occupantTenEMSAgency",
-				"occupantTenMedicalFacility", "occupantTenSeatingPosition" } };
-	
-	//Default street short forms
+			{ "occupantNineUnitNumber", "occupantNinePatientName", "occupantNineDateOfBirth", "occupantNinePatientAge",
+					"occupantNineGender", "occupantNineAddressDoorNo", "occupantNineAddressStreetName",
+					"occupantNineAddressCity", "occupantNineAddressState", "occupantNinePhoneNumber",
+					"occupantNineInjury", "occupantNineEMSAgency", "occupantNineMedicalFacility",
+					"occupantNineSeatingPosition" },
+			{ "occupantTenUnitNumber", "occupantTenPatientName", "occupantTenDateOfBirth", "occupantTenPatientAge",
+					"occupantTenGender", "occupantTenAddressDoorNo", "occupantTenAddressStreetName",
+					"occupantTenAddressCity", "occupantTenAddressState", "occupantTenPhoneNumber", "occupantTenInjury",
+					"occupantTenEMSAgency", "occupantTenMedicalFacility", "occupantTenSeatingPosition" } };
+
+	// Default street short forms
 	public static List<String> getDefaultStreetForms() {
 		List<String> defaultStreetForms = new ArrayList<String>();
 		defaultStreetForms.add("ALLEE");
@@ -161,6 +146,7 @@ public class InjuryConstants {
 		defaultStreetForms.add("ANNEX");
 		defaultStreetForms.add("ANNX");
 		defaultStreetForms.add("ANX");
+		defaultStreetForms.add("APT");
 		defaultStreetForms.add("ARC");
 		defaultStreetForms.add("ARCADE");
 		defaultStreetForms.add("AV");
@@ -274,17 +260,17 @@ public class InjuryConstants {
 		defaultStreetForms.add("DL");
 		defaultStreetForms.add("DAM");
 		defaultStreetForms.add("DM");
-		//divide
+		// divide
 		defaultStreetForms.add("DIV");
 		defaultStreetForms.add("DIVIDE");
 		defaultStreetForms.add("DV");
 		defaultStreetForms.add("DVD");
-		//Drive
+		// Drive
 		defaultStreetForms.add("DR");
 		defaultStreetForms.add("DRIV");
 		defaultStreetForms.add("DRIVE");
 		defaultStreetForms.add("DRV");
-		//Drives
+		// Drives
 		defaultStreetForms.add("DRIVES");
 		defaultStreetForms.add("DRS");
 		defaultStreetForms.add("ESTATE");
@@ -367,20 +353,20 @@ public class InjuryConstants {
 		defaultStreetForms.add("HARBORS");
 		defaultStreetForms.add("HAVEN");
 		defaultStreetForms.add("HVN");
-		//Heights
+		// Heights
 		defaultStreetForms.add("HT");
 		defaultStreetForms.add("HTS");
-		//Highway
+		// Highway
 		defaultStreetForms.add("HIGHWAY");
 		defaultStreetForms.add("HIGHWY");
 		defaultStreetForms.add("HIWAY");
 		defaultStreetForms.add("HIWY");
 		defaultStreetForms.add("HWAY");
 		defaultStreetForms.add("HWY");
-		//Hill
+		// Hill
 		defaultStreetForms.add("HILL");
 		defaultStreetForms.add("HL");
-		//HILLS
+		// HILLS
 		defaultStreetForms.add("HILLS");
 		defaultStreetForms.add("HLS");
 		defaultStreetForms.add("HLLW");
@@ -389,24 +375,24 @@ public class InjuryConstants {
 		defaultStreetForms.add("HOLW");
 		defaultStreetForms.add("HOLWS");
 		defaultStreetForms.add("INLT");
-		//ISLAND
+		// ISLAND
 		defaultStreetForms.add("IS");
 		defaultStreetForms.add("ISLAND");
 		defaultStreetForms.add("ISLND");
-		//Islands
+		// Islands
 		defaultStreetForms.add("ISLANDS");
 		defaultStreetForms.add("ISLNDS");
 		defaultStreetForms.add("ISS");
 		defaultStreetForms.add("ISLE");
 		defaultStreetForms.add("ISLES");
-		//Junction
+		// Junction
 		defaultStreetForms.add("JCT");
 		defaultStreetForms.add("JCTION");
 		defaultStreetForms.add("JCTN");
 		defaultStreetForms.add("JUNCTION");
 		defaultStreetForms.add("JUNCTN");
 		defaultStreetForms.add("JUNCTON");
-		//Junctions
+		// Junctions
 		defaultStreetForms.add("JCTNS");
 		defaultStreetForms.add("JCTS");
 		defaultStreetForms.add("JUNCTIONS");
@@ -419,17 +405,17 @@ public class InjuryConstants {
 		defaultStreetForms.add("KNOLL");
 		defaultStreetForms.add("KNLS");
 		defaultStreetForms.add("KNOLLS");
-		//Lake
+		// Lake
 		defaultStreetForms.add("LK");
 		defaultStreetForms.add("LAKE");
-		//Lakes
+		// Lakes
 		defaultStreetForms.add("LKS");
 		defaultStreetForms.add("LAKES");
 		defaultStreetForms.add("LAND");
 		defaultStreetForms.add("LANDING");
 		defaultStreetForms.add("LNDG");
 		defaultStreetForms.add("LNDNG");
-		//LANE
+		// LANE
 		defaultStreetForms.add("LANE");
 		defaultStreetForms.add("LN");
 		defaultStreetForms.add("LGT");
@@ -462,14 +448,14 @@ public class InjuryConstants {
 		defaultStreetForms.add("MILLS");
 		defaultStreetForms.add("MISSN");
 		defaultStreetForms.add("MSSN");
-		//Motorway
+		// Motorway
 		defaultStreetForms.add("MOTORWAY");
 		defaultStreetForms.add("MTWY");
-		//Mount
+		// Mount
 		defaultStreetForms.add("MNT");
 		defaultStreetForms.add("MT");
 		defaultStreetForms.add("MOUNT");
-		//Mountain
+		// Mountain
 		defaultStreetForms.add("MNTAIN");
 		defaultStreetForms.add("MNTN");
 		defaultStreetForms.add("MOUNTAIN");
@@ -486,25 +472,25 @@ public class InjuryConstants {
 		defaultStreetForms.add("OVAL");
 		defaultStreetForms.add("OVL");
 		defaultStreetForms.add("OVERPASS");
-		//PARK
+		// PARK
 		defaultStreetForms.add("PARK");
 		defaultStreetForms.add("PRK");
 		defaultStreetForms.add("PARKS");
-		//Parkway
+		// Parkway
 		defaultStreetForms.add("PARKWAY");
 		defaultStreetForms.add("PARKWY");
 		defaultStreetForms.add("PKWAY");
 		defaultStreetForms.add("PKWY");
 		defaultStreetForms.add("PKY");
-		//PARKWAYS
+		// PARKWAYS
 		defaultStreetForms.add("PARKWAYS");
 		defaultStreetForms.add("PKWYS");
-		//Pass
+		// Pass
 		defaultStreetForms.add("PASS");
-		//Passage
+		// Passage
 		defaultStreetForms.add("PASSAGE");
 		defaultStreetForms.add("PSGE");
-		//PATH
+		// PATH
 		defaultStreetForms.add("PATH");
 		defaultStreetForms.add("PATHS");
 		defaultStreetForms.add("PIKE");
@@ -520,16 +506,16 @@ public class InjuryConstants {
 		defaultStreetForms.add("PLAZA");
 		defaultStreetForms.add("PLZ");
 		defaultStreetForms.add("PLZA");
-		//Point
+		// Point
 		defaultStreetForms.add("POINT");
 		defaultStreetForms.add("PT");
-		//Points
+		// Points
 		defaultStreetForms.add("POINTS");
 		defaultStreetForms.add("PTS");
-		//PORT
+		// PORT
 		defaultStreetForms.add("PORT");
 		defaultStreetForms.add("PRT");
-		//PORTS
+		// PORTS
 		defaultStreetForms.add("PORTS");
 		defaultStreetForms.add("PRTS");
 		defaultStreetForms.add("PR");
@@ -555,12 +541,12 @@ public class InjuryConstants {
 		defaultStreetForms.add("RIDGE");
 		defaultStreetForms.add("RDGS");
 		defaultStreetForms.add("RIDGES");
-		//River
+		// River
 		defaultStreetForms.add("RIV");
 		defaultStreetForms.add("RIVER");
 		defaultStreetForms.add("RVR");
 		defaultStreetForms.add("RIVR");
-		//Road
+		// Road
 		defaultStreetForms.add("RD");
 		defaultStreetForms.add("ROAD");
 		defaultStreetForms.add("ROADS");
@@ -616,7 +602,7 @@ public class InjuryConstants {
 		defaultStreetForms.add("SUMIT");
 		defaultStreetForms.add("SUMITT");
 		defaultStreetForms.add("SUMMIT");
-		//STREET
+		// STREET
 		defaultStreetForms.add("STREET");
 		defaultStreetForms.add("STRT");
 		defaultStreetForms.add("ST");
@@ -691,11 +677,12 @@ public class InjuryConstants {
 		defaultStreetForms.add("WELL");
 		defaultStreetForms.add("WELLS");
 		defaultStreetForms.add("WLS");
-		//Walk
+		// Walk
 		defaultStreetForms.add("WALK");
 		defaultStreetForms.add("WALKS");
 		return defaultStreetForms;
 	}
+	
 	// Suffix of Names
 	public static List<String> getNamesSuffix() {
 		List<String> nameSuffixes = new ArrayList<String>();
@@ -709,15 +696,77 @@ public class InjuryConstants {
 		nameSuffixes.add("esq");
 		return nameSuffixes;
 	}
-
+	public static List<String> getStatesList(){
+		List<String> stateList=new ArrayList<String>();
+		stateList.add("AL");
+		stateList.add("AK");
+		stateList.add("AZ");
+		stateList.add("AR");
+		stateList.add("CA");
+		stateList.add("CO");
+		stateList.add("CT");
+		stateList.add("DE");
+		stateList.add("FL");
+		stateList.add("GA");
+		stateList.add("HI");
+		stateList.add("ID");
+		stateList.add("IL");
+		stateList.add("IN");
+		stateList.add("IA");
+		stateList.add("KS");
+		stateList.add("KY");
+		stateList.add("LA");
+		stateList.add("ME");
+		stateList.add("MD");
+		stateList.add("MA");
+		stateList.add("MI");
+		stateList.add("MN");
+		stateList.add("MS");
+		stateList.add("MO");
+		stateList.add("MT");
+		stateList.add("NE");
+		stateList.add("NV");
+		stateList.add("NH");
+		stateList.add("NJ");
+		stateList.add("NM");
+		stateList.add("NY");
+		stateList.add("NC");
+		stateList.add("ND");
+		stateList.add("OH");
+		stateList.add("OK");
+		stateList.add("OR");
+		stateList.add("PA");
+		stateList.add("RI");
+		stateList.add("SC");
+		stateList.add("SD");
+		stateList.add("TN");
+		stateList.add("TX");
+		stateList.add("UT");
+		stateList.add("VT");
+		stateList.add("VA");
+		stateList.add("WA");
+		stateList.add("WV");
+		stateList.add("WI");
+		stateList.add("WY");
+		stateList.add("AS");
+		stateList.add("DC");
+		stateList.add("FM");
+		stateList.add("GU");
+		stateList.add("MH");
+		stateList.add("MP");
+		stateList.add("PW");
+		stateList.add("PR");
+		stateList.add("VI");
+		return stateList;
+	}
 	// Convert Date To Year Format
-	public static Date convertYearFormat(String date)
-	{   SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");
+	public static Date convertYearFormat(String date) {
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");
 		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateformat=new Date();
+		Date dateformat = new Date();
 		try {
 			dateformat = monthFormat.parse(date);
-			dateformat=yearFormat.parse(yearFormat.format(dateformat));
+			dateformat = yearFormat.parse(yearFormat.format(dateformat));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -725,33 +774,32 @@ public class InjuryConstants {
 
 		return dateformat;
 	}
-	
+
 	// Convert Date To Year Format
-	public static Date convertDateFromDateAndTime(String date)
-	{   SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
+	public static Date convertDateFromDateAndTime(String date) {
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
 		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateformat=new Date();
+		Date dateformat = new Date();
 		try {
 			dateformat = monthFormat.parse(date);
-			dateformat=yearFormat.parse(yearFormat.format(dateformat));
+			dateformat = yearFormat.parse(yearFormat.format(dateformat));
 		} catch (ParseException e) {
-				// TODO Auto-generated catch block
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return dateformat;
 	}
-	
-	// Convert DateTime to Date Format
-	public static Date convertDateTimetoDateFormat(Date date)
-	{
-	SimpleDateFormat DateTimeFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	SimpleDateFormat DateFormat=new SimpleDateFormat("yyyy-MM-dd");
 
-		Date dateformat=new Date();
+	// Convert DateTime to Date Format
+	public static Date convertDateTimetoDateFormat(Date date) {
+		SimpleDateFormat DateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		Date dateformat = new Date();
 		try {
 			dateformat = DateTimeFormat.parse(DateTimeFormat.format(date));
-			dateformat=DateFormat.parse(DateFormat.format(dateformat));
+			dateformat = DateFormat.parse(DateFormat.format(dateformat));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -759,7 +807,7 @@ public class InjuryConstants {
 
 		return dateformat;
 	}
-	
+
 	// Convert Date to USA Date Format
 	public static Date convertDatetoUSDateFormat(Date date) {
 		SimpleDateFormat DateTimeFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -829,10 +877,8 @@ public class InjuryConstants {
 
 	// Convert To USA Month Format With Time
 	public static String convertUSAFormatWithTime(Date date) {
-		SimpleDateFormat monthFormat = new SimpleDateFormat(
-				"MM/dd/yyyy HH:mm:ss");
-		SimpleDateFormat yearFormat = new SimpleDateFormat(
-				"yyyy-MM-dd hh:mm:ss aa");
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
 		Date dateformat = new Date();
 		try {
 			dateformat = yearFormat.parse(yearFormat.format(date));
@@ -846,10 +892,8 @@ public class InjuryConstants {
 
 	// Convert To Year Format With Time
 	public static Date convertYearFormatWithTime(String date) {
-		SimpleDateFormat monthFormat = new SimpleDateFormat(
-				"MM/dd/yyyy hh:mm:ss aa");
-		SimpleDateFormat yearFormat = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date dateformat = new Date();
 		try {
 			dateformat = monthFormat.parse(date);
@@ -861,13 +905,11 @@ public class InjuryConstants {
 
 		return dateformat;
 	}
-	
+
 	// Convert To Year Format With Time By Date time
 	public static Date convertYearFormatWithTimeByDate(String date) {
-		SimpleDateFormat monthFormat = new SimpleDateFormat(
-				"MM/dd/yyyy HH:mm:ss");
-		SimpleDateFormat yearFormat = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date dateformat = new Date();
 		try {
 			dateformat = monthFormat.parse(date);
@@ -881,19 +923,16 @@ public class InjuryConstants {
 	}
 
 	// Get Current Date Time
-	public static String getCurrentDateTime(){
+	public static String getCurrentDateTime() {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		return sdf.format(new Date());
 	}
-	
-	
+
 	// Convert To USA Month Format With Time
 	public static String convertUSAFormatWithTimeAMPM(String date) {
 		String convertedDateTime = "";
-		SimpleDateFormat monthFormat = new SimpleDateFormat(
-				"MM/dd/yyyy HH:mm:ss");
-		SimpleDateFormat frontMonthFormat = new SimpleDateFormat(
-				"MM/dd/yyyy hh:mm:ss aa");
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat frontMonthFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
 		Date dateformat = new Date();
 		try {
 			if (date != null && !date.equals("")) {
@@ -965,8 +1004,7 @@ public class InjuryConstants {
 	}
 
 	// Get To Date By adding Number Of Days to From Date
-	public static String getToDateByAddingNumberOfDays(String fromDate,
-			Integer numberOfDays) {
+	public static String getToDateByAddingNumberOfDays(String fromDate, Integer numberOfDays) {
 		String toDate = "";
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		try {
@@ -1002,8 +1040,7 @@ public class InjuryConstants {
 	// Generate Random String with Alpha For Password
 	public String genereateRandomPassword() {
 		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
-		String pwd = RandomStringUtils.random(15, 0, 0, false, false,
-				characters.toCharArray(), new SecureRandom());
+		String pwd = RandomStringUtils.random(15, 0, 0, false, false, characters.toCharArray(), new SecureRandom());
 		return pwd;
 	}
 
@@ -1029,7 +1066,7 @@ public class InjuryConstants {
 		} else if (currentRole.equals(INJURY_SHOP_ROLE)) {
 			roleText = "Shop";
 		}
-		
+
 		return roleText;
 	}
 
@@ -1085,115 +1122,110 @@ public class InjuryConstants {
 
 		return outputArray;
 	}
-	
+
 	// Substring Lat and Long
-	public static String subStringLatandLang(BigDecimal inputValue){
-		if(inputValue!=null){
-			String subStringValue=inputValue.toString();
-			if(subStringValue.length()>=8){
-				return subStringValue.substring(0, subStringValue.indexOf(".")+6);
-			}else{
+	public static String subStringLatandLang(BigDecimal inputValue) {
+		if (inputValue != null) {
+			String subStringValue = inputValue.toString();
+			if (subStringValue.length() >= 8) {
+				return subStringValue.substring(0, subStringValue.indexOf(".") + 6);
+			} else {
 				return subStringValue;
 			}
-		}else{
+		} else {
 			return "";
 		}
 	}
 
 	// Split Address
-	public static String[] splitAddress(String address){
-		// Index Position of Address 0 - Street Address, 1- City, 2 - State, 3 - ZipCode
-		String resultAddress[]=new String[10];
-		if(address!=null){
-			String[] splittedAddress=address.split(",");
-			if(splittedAddress.length==1){
-				resultAddress[0]=splittedAddress[0].trim();
-			}
-			else if(splittedAddress.length==2){
-				
-				if(isZipcode(splittedAddress[1].trim())){
-					resultAddress[0]=splittedAddress[0].trim();
-					resultAddress[3]=splittedAddress[1].trim();
-				}else if(isState(splittedAddress[1].trim())){
-					resultAddress[0]=splittedAddress[0].trim();
-					resultAddress[2]=splittedAddress[1].trim();
-				}else{
-					resultAddress[0]=splittedAddress[0].trim();
-					resultAddress[1]=splittedAddress[1].trim();
-				}			
+	public static String[] splitAddress(String address) {
+		// Index Position of Address 0 - Street Address, 1- City, 2 - State, 3 -
+		// ZipCode
+		String resultAddress[] = new String[10];
+		if (address != null) {
+			String[] splittedAddress = address.split(",");
+			if (splittedAddress.length == 1) {
+				resultAddress[0] = splittedAddress[0].trim();
+			} else if (splittedAddress.length == 2) {
 
-			}else if(splittedAddress.length==3){
-				if(isZipcode(splittedAddress[2].trim())){
-					resultAddress[0]=splittedAddress[0].trim();
-					resultAddress[1]=splittedAddress[1].trim();
-					resultAddress[3]=splittedAddress[2].trim();
-				}else{
-				resultAddress[0]=splittedAddress[0].trim();
-				resultAddress[1]=splittedAddress[1].trim();
-				resultAddress[2]=splittedAddress[2].trim();
+				if (isZipcode(splittedAddress[1].trim())) {
+					resultAddress[0] = splittedAddress[0].trim();
+					resultAddress[3] = splittedAddress[1].trim();
+				} else if (isState(splittedAddress[1].trim())) {
+					resultAddress[0] = splittedAddress[0].trim();
+					resultAddress[2] = splittedAddress[1].trim();
+				} else {
+					resultAddress[0] = splittedAddress[0].trim();
+					resultAddress[1] = splittedAddress[1].trim();
 				}
-			}else if(splittedAddress.length==4){
-				resultAddress[0]=splittedAddress[0].trim();
-				resultAddress[1]=splittedAddress[1].trim();
-				resultAddress[2]=splittedAddress[2].trim();
-				resultAddress[3]=splittedAddress[3].trim();
-			}else if(splittedAddress.length>4){
-				
-				resultAddress[3]=splittedAddress[splittedAddress.length-1].trim();
-				resultAddress[2]=splittedAddress[splittedAddress.length-2].trim();
-				resultAddress[1]=splittedAddress[splittedAddress.length-3].trim();
-				resultAddress[0]="";
-				for(int i=0;i<=splittedAddress.length-4;i++){
-					if(i!=0){
-						resultAddress[0]+=",";
+
+			} else if (splittedAddress.length == 3) {
+				if (isZipcode(splittedAddress[2].trim())) {
+					resultAddress[0] = splittedAddress[0].trim();
+					resultAddress[1] = splittedAddress[1].trim();
+					resultAddress[3] = splittedAddress[2].trim();
+				} else {
+					resultAddress[0] = splittedAddress[0].trim();
+					resultAddress[1] = splittedAddress[1].trim();
+					resultAddress[2] = splittedAddress[2].trim();
+				}
+			} else if (splittedAddress.length == 4) {
+				resultAddress[0] = splittedAddress[0].trim();
+				resultAddress[1] = splittedAddress[1].trim();
+				resultAddress[2] = splittedAddress[2].trim();
+				resultAddress[3] = splittedAddress[3].trim();
+			} else if (splittedAddress.length > 4) {
+
+				resultAddress[3] = splittedAddress[splittedAddress.length - 1].trim();
+				resultAddress[2] = splittedAddress[splittedAddress.length - 2].trim();
+				resultAddress[1] = splittedAddress[splittedAddress.length - 3].trim();
+				resultAddress[0] = "";
+				for (int i = 0; i <= splittedAddress.length - 4; i++) {
+					if (i != 0) {
+						resultAddress[0] += ",";
 					}
-					resultAddress[0]+=splittedAddress[i].trim();
+					resultAddress[0] += splittedAddress[i].trim();
 				}
-				
+
 			}
-			
+
 		}
-		
+
 		return resultAddress;
 	}
-	
-	//Check for Zipcode
-	public static boolean isZipcode(String checkStr){
-		if(checkStr.matches("\\d+")&&checkStr.length()==5){
+
+	// Check for Zipcode
+	public static boolean isZipcode(String checkStr) {
+		if (checkStr.matches("\\d+") && checkStr.length() == 5) {
 			return true;
-		}else{
-			return false;
-		}		
-	}
-	
-	//Check for State
-	public static boolean isState(String checkStr){
-		if(checkStr.matches("[a-zA-Z]+")&&checkStr.length()==2){
-			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
-	
+
+	// Check for State
+	public static boolean isState(String checkStr) {
+		if (checkStr.matches("[a-zA-Z]+") && checkStr.length() == 2) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	// Get IP Address From Request
 	public static String getRemoteAddr(HttpServletRequest request) {
-		/*final String[] IP_HEADER_CANDIDATES = { 
-		    "X-Forwarded-For",
-		    "Proxy-Client-IP",
-		    "WL-Proxy-Client-IP",
-		    "HTTP_X_FORWARDED_FOR",
-		    "HTTP_X_FORWARDED",
-		    "HTTP_X_CLUSTER_CLIENT_IP",
-		    "HTTP_CLIENT_IP",
-		    "HTTP_FORWARDED_FOR",
-		    "HTTP_FORWARDED",
-		    "HTTP_VIA",
-		    "REMOTE_ADDR" };"unknown".equalsIgnoreCase(ip)*/
-	    String ipFromHeader = request.getHeader("X-FORWARDED-FOR");
-	    if (ipFromHeader != null && ipFromHeader.length() > 0) {
-	        System.out.println("ip from proxy - X-FORWARDED-FOR : " + ipFromHeader);
-	        return ipFromHeader;
-	    }
-	    return request.getRemoteAddr();
+		/*
+		 * final String[] IP_HEADER_CANDIDATES = { "X-Forwarded-For",
+		 * "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_X_FORWARDED_FOR",
+		 * "HTTP_X_FORWARDED", "HTTP_X_CLUSTER_CLIENT_IP", "HTTP_CLIENT_IP",
+		 * "HTTP_FORWARDED_FOR", "HTTP_FORWARDED", "HTTP_VIA", "REMOTE_ADDR"
+		 * };"unknown".equalsIgnoreCase(ip)
+		 */
+		String ipFromHeader = request.getHeader("X-FORWARDED-FOR");
+		if (ipFromHeader != null && ipFromHeader.length() > 0) {
+			System.out.println("ip from proxy - X-FORWARDED-FOR : " + ipFromHeader);
+			return ipFromHeader;
+		}
+		return request.getRemoteAddr();
 	}
 }

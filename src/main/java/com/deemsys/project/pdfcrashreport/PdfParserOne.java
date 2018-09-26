@@ -94,6 +94,7 @@ public class PdfParserOne {
 			// Unit datas
 			List<ReportUnitPageForm> reportUnitPageForms = new ArrayList<ReportUnitPageForm>();
 			List<ReportMotoristPageForm> reportMotoristPageForms = new ArrayList<ReportMotoristPageForm>();
+			// We will increment this if any page other than unit page occurs
 			Integer IncrementPage = 0;
 			for (int i = 2; i <= Integer.parseInt(reportFirstPageForm.getNumberOfUnits()) + 1 + IncrementPage; i++) {
 				String[] unitPageCoordinates = injuryProperties.getParserOneProperty("findUnitPage").split(",");
@@ -106,6 +107,7 @@ public class PdfParserOne {
 				String pdfText1 = PdfTextExtractor.getTextFromPage(reader, i, unitStrategy);
 				if (pdfText1.equals("OHIO TRAFFIC ACCIDENT - DIAGRAM/NARRITIVE CONTINUATION")
 						|| this.findUnitPage(i, reader)) {
+					// Not a unit page increment integer to skip current page
 					IncrementPage = IncrementPage + 1;
 					continue;
 				} else {
@@ -173,7 +175,8 @@ public class PdfParserOne {
 					reportUnitPageForms.add(reportUnitPageForm);
 				}
 			}
-
+			// Find and Process Motorist/occupant page based on the number of
+			// units and Incrementpage Variable
 			for (int j = Integer.parseInt(reportFirstPageForm.getNumberOfUnits()) + 2 + IncrementPage; j <= reader
 					.getNumberOfPages(); j++) {
 				String[] findMotoristOrOccupant = { "stateCoordinate1", "stateCoordinate2", "driverLicenceCoordinate1",
@@ -258,6 +261,7 @@ public class PdfParserOne {
 		return pdfCrashReportJson;
 	}
 
+	// Process occupant details
 	public ReportMotoristPageForm processOccupantDetails(int i, PdfReader reader, String[] occupantArray)
 			throws IOException {
 		ReportMotoristPageForm reportMotoristPageForm = new ReportMotoristPageForm();
@@ -359,6 +363,7 @@ public class PdfParserOne {
 		String occupants = "";
 		String lpState = "";
 		String vehicleYear = "";
+		String damageScale = "";
 		for (String propertyName : properties) {
 			String[] unitPropertyCoordinates = injuryProperties.getParserOneProperty(propertyName).split(",");
 			Rectangle rectangle = new Rectangle(Double.parseDouble(unitPropertyCoordinates[0]),
@@ -378,6 +383,9 @@ public class PdfParserOne {
 			case "vehicleYear":
 				vehicleYear = pdfText;
 				break;
+			/*case "ownerDamageScale":
+				damageScale = pdfText;
+				break;*/
 			default:
 				break;
 			}
@@ -386,7 +394,8 @@ public class PdfParserOne {
 				|| (!this.skipUnwantedSpaces(lpState).matches("[0-9]+")
 						&& this.skipUnwantedSpaces(lpState).length() == 2)
 				|| (this.skipUnwantedSpaces(vehicleYear).matches("[0-9]+")
-						|| this.skipUnwantedSpaces(vehicleYear).length() == 4)) {
+						|| this.skipUnwantedSpaces(vehicleYear).length() == 4)
+				/*|| (this.skipUnwantedSpaces(damageScale).length() == 1 && damageScale.matches("[0-9]+")*/)) {
 			return false;
 		} else {
 			return true;
@@ -418,14 +427,18 @@ public class PdfParserOne {
 		String outputValue = "";
 		if (!inputValue.equals("")) {
 			String[] addressSplitted = inputValue.replaceAll("\\s+", " ").split(" ");
+			// Passing input address to find city index
 			Integer cityIndex = this.findCityIndex(inputValue);
+			// We will cut the array from backwards based on this value
 			Integer indexToSubtract = 0;
 			if (addressSplitted.length >= 3) {
+				// If both state and zip code is available
 				if (this.isState(addressSplitted[addressSplitted.length - 2])
 						&& this.isZipcode(addressSplitted[addressSplitted.length - 1])) {
 					indexToSubtract = 2;
 				} else if (this.isState(addressSplitted[addressSplitted.length - 1])
 						|| this.isZipcode(addressSplitted[addressSplitted.length - 1])) {
+					// If either state or zipcode available
 					indexToSubtract = 1;
 				}
 			}
@@ -437,9 +450,11 @@ public class PdfParserOne {
 				str.insert(cityIndex, ",");
 			}
 			if (indexToSubtract == 2) {
+				// Merge state and zip after processing address string
 				outputValue = str + ", " + addressSplitted[addressSplitted.length - 2] + ", "
 						+ addressSplitted[addressSplitted.length - 1];
 			} else if (indexToSubtract == 1) {
+				// Merge either State or zip with address string
 				outputValue = str + ", " + addressSplitted[addressSplitted.length - 1];
 			} else if (indexToSubtract == 0) {
 				outputValue = str.toString();
@@ -450,7 +465,12 @@ public class PdfParserOne {
 
 	// Check for Zipcode
 	public boolean isZipcode(String checkStr) {
-		if (checkStr.matches("\\d+") && (checkStr.length() == 5 || checkStr.length() == 4)) {
+		if (checkStr.contains("-")) {
+			// For format like 04420-1212
+			String checkString[] = checkStr.split("-");
+			return (checkString[0].matches("\\d+") && (checkString[0].length() <= 5));
+		}
+		if (checkStr.matches("\\d+") && (checkStr.length() <= 5)) {
 			return true;
 		} else {
 			return false;
@@ -461,55 +481,41 @@ public class PdfParserOne {
 	public Integer findCityIndex(String inputValue) {
 		String[] addressSplitted = inputValue.replaceAll("\\s+", " ").split(" ");
 		List<String> defaultStreetForms = InjuryConstants.getDefaultStreetForms();
-		// List<String>
-		// CitiesWithKeywordsSameAsStreets=InjuryConstants.CitiesWithKeywordsSameAsStreets();
 		List<String> matchedCount = new ArrayList<String>();
 		Integer indexToUseComma = 0;
 		for (int k = 0; k < addressSplitted.length; k++) {
-			/*
-			 * if (defaultStreetForms.contains(addressSplitted[k].toString().
-			 * replaceAll("\\.", "").trim())) {
-			 * 
-			 * StreetName = addressSplitted[k]; if (addressSplitted[k +
-			 * 1].replaceAll("-", "").replaceAll(" ", "").matches("[0-9]+")) {
-			 * StreetName = addressSplitted[k + 1]; if
-			 * (defaultStreetForms.contains(addressSplitted[k +
-			 * 2].toString().replaceAll("\\.", "").trim())) { StreetName =
-			 * addressSplitted[k + 2]; } } if
-			 * (defaultStreetForms.contains(addressSplitted[k +
-			 * 1].toString().replaceAll("\\.", "").trim())) { StreetName =
-			 * addressSplitted[k + 1]; if (addressSplitted[k +
-			 * 2].replaceAll("-", "").replaceAll(" ", "").matches("[0-9]+")) {
-			 * StreetName = addressSplitted[k + 2]; } } break; } }
-			 * indexToUseComma = inputValue.indexOf(StreetName) +
-			 * StreetName.length(); return indexToUseComma;
-			 */
-
 			if (defaultStreetForms.contains(addressSplitted[k].toString().replaceAll("\\.", "").trim())) {
-				if ((addressSplitted[k + 1].equals("OH"))
-						|| (addressSplitted[k + 1].length() == 2 && this.isZipcode(addressSplitted[k + 2]))) {
-					indexToUseComma = inputValue.lastIndexOf(addressSplitted[k - 2]) + addressSplitted[k - 2].length();
+				if (k < addressSplitted.length - 1
+						&& ((this.isState(addressSplitted[k + 1]) || this.isZipcode(addressSplitted[k + 2])))) {
+					// Matches the Exact Word in String
+					Pattern pattern = Pattern.compile("(?<!\\w)" + Pattern.quote(addressSplitted[k - 2]) + "(?!\\w)");
+					Matcher matcher = pattern.matcher(inputValue);
+					while (matcher.find()) {
+						indexToUseComma = matcher.start() + addressSplitted[k - 2].length();
+					}
 					return indexToUseComma;
-				} else {
+				} else if (k != addressSplitted.length - 1) {
 					matchedCount.add(addressSplitted[k]);
 				}
 			}
 		}
+		// Array where we pushed matching words
 		if (matchedCount.size() > 0) {
-
+			// Fetching next value of last value from address array to process
 			String nextValueInArray = addressSplitted[ArrayUtils.indexOf(addressSplitted,
 					matchedCount.get(matchedCount.size() - 1)) + 1];
-
-			if (nextValueInArray.matches("[0-9]+")) {
+			// for the format--- RD 123,Wake,oh,44
+			if (nextValueInArray.matches("[0-9]+") || nextValueInArray.length() <= 3) {
 				// Matches the Exact Word in String
-				Pattern pattern = Pattern.compile("\\b" + nextValueInArray + "\\b");
+				Pattern pattern = Pattern.compile("(?<!\\w)" + Pattern.quote(nextValueInArray) + "(?!\\w)");
 				Matcher matcher = pattern.matcher(inputValue);
 				while (matcher.find()) {
 					indexToUseComma = matcher.start() + nextValueInArray.length();
 				}
 			} else {
 				// Matches the Exact Word in String
-				Pattern pattern = Pattern.compile("\\b" + matchedCount.get(matchedCount.size() - 1) + "\\b");
+				Pattern pattern = Pattern
+						.compile("(?<!\\w)" + Pattern.quote(matchedCount.get(matchedCount.size() - 1)) + "(?!\\w)");
 				Matcher matcher = pattern.matcher(inputValue);
 				while (matcher.find()) {
 					indexToUseComma = matcher.start() + matchedCount.get(matchedCount.size() - 1).length();
@@ -522,7 +528,8 @@ public class PdfParserOne {
 
 	// Check for State
 	public boolean isState(String checkStr) {
-		if (checkStr.matches("[a-zA-Z]+") && checkStr.length() == 2) {
+		List<String> statesList = InjuryConstants.getStatesList();
+		if (!checkStr.equals("") && statesList.contains(checkStr)) {
 			return true;
 		} else {
 			return false;
@@ -542,13 +549,11 @@ public class PdfParserOne {
 	public boolean findWhetherMotoristPage(String StateCondition1, String StateCondition2, String DriverLicence1,
 			String DriverLicence2, String LocalReportNumberCondition, String localReportNumberToCompare,
 			String DriverCondition1, String DriverCondition2) {
-		if (!StateCondition1.equals("") && ((StateCondition1.equals("OH") || StateCondition1.equals("WA"))
-				|| (!StateCondition1.matches("[0-9]+") && StateCondition1.length() == 2))) {
+		if (!StateCondition1.equals("") && (this.isState(StateCondition1))) {
 			return true;
 		}
 
-		if (!StateCondition2.equals("") && ((StateCondition2.equals("OH") || StateCondition2.equals("WA"))
-				|| (!StateCondition2.matches("[0-9]+") && StateCondition2.length() == 2))) {
+		if (!StateCondition2.equals("") && (this.isState(StateCondition2))) {
 			return true;
 		}
 		if ((!DriverLicence1.equals("") && (DriverLicence1.matches("[0-9]+")
@@ -568,7 +573,7 @@ public class PdfParserOne {
 				&& LocalReportNumberCondition.equals(localReportNumberToCompare)) {
 			return true;
 		}
-		
+
 		return false;
 	}
 }
