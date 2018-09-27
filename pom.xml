@@ -286,8 +286,19 @@
 		<dependency>
   	    <groupId>org.apache.pdfbox</groupId>
    	   <artifactId>pdfbox</artifactId>
-   	   <version>1.8.10</version>
+   	   <version>2.0.6</version>
   	</dependency>
+  	<!-- https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j -->
+	<dependency>
+	    <groupId>net.sourceforge.tess4j</groupId>
+	    <artifactId>tess4j</artifactId>
+	    <version>4.0.0</version>
+	</dependency>
+  	<dependency>
+    	<groupId>com.github.jai-imageio</groupId>
+    	<artifactId>jai-imageio-core</artifactId>
+    	<version>1.4.0</version>
+	</dependency>
 		<!-- End PDF Process -->
 	            
 	            <!-- iText PDF -->
@@ -361,8 +372,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<encoding>UTF8</encoding>
 				</configuration>
 				<inherited>true</inherited>
