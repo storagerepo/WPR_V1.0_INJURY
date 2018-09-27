@@ -759,6 +759,21 @@ public class InjuryConstants {
 		stateList.add("VI");
 		return stateList;
 	}
+	// Unit Labels
+	public static List<String> getUnitLabels() {
+		List<String> unitLabels = new ArrayList<String>();
+		unitLabels.add("U NET");
+		unitLabels.add("UNIT");
+		return unitLabels;
+	}
+	// Motorist Labels
+	public static List<String> getMotoristLabels() {
+		List<String> motoristLabels = new ArrayList<String>();
+		motoristLabels.add("OCCUPANT\nIVIOTORIST/\nNON-IVIOTORIST/");
+		motoristLabels.add("/\nIVloTORIST NON-Motorist\nOCCUPANT\n/");
+		motoristLabels.add("IVIOTORIST/ NON-IVIOTORIST/ OCCUPANT");
+		return motoristLabels;
+	}
 	// Convert Date To Year Format
 	public static Date convertYearFormat(String date) {
 		SimpleDateFormat monthFormat = new SimpleDateFormat("MM/dd/yyyy");

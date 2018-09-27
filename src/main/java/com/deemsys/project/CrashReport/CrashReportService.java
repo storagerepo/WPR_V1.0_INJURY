@@ -175,7 +175,7 @@ public class CrashReportService {
 	public CrashReportForm getCrashReportFormDetails(ReportFirstPageForm reportFirstPageForm, String addedDate, String crashId,String filePath,Integer crashReportErrorId,Integer numberOfPatients,Integer vehicleCount,Integer reportFromId){
 		Integer isRunnerReport=0;
 		CrashReportForm crashReportForm=new CrashReportForm(crashReportErrorId.toString(), reportFirstPageForm.getLocalReportNumber(), crashId.toString(), reportFirstPageForm.getCrashDate(), reportFirstPageForm.getCounty(),
-				addedDate, filePath,numberOfPatients, vehicleCount, isRunnerReport, null, 1, reportFromId, InjuryConstants.convertYearFormatWithTimeByDate(addedDate), null);
+				addedDate, filePath,numberOfPatients, vehicleCount, isRunnerReport, null, 1, reportFromId, InjuryConstants.convertYearFormatWithTimeByDate(addedDate), InjuryConstants.convertYearFormatWithTimeByDate(addedDate));
 		return crashReportForm;
 	}
 	

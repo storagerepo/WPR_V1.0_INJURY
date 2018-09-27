@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.tess4j.TesseractException;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,8 @@ import com.deemsys.project.login.LoginService;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportJson;
 import com.deemsys.project.pdfcrashreport.PDFCrashReportReader;
 import com.deemsys.project.pdfcrashreport.PdfParserOne;
+import com.deemsys.project.pdfcrashreport.PdfParserOneTesseract;
+import com.deemsys.project.pdfcrashreport.ScannedParser;
 import com.deemsys.project.userExportPreferences.UserExportPreferencesService;
 
 /**
@@ -91,6 +95,12 @@ public class PatientController {
 	
 	@Autowired
 	PdfParserOne pdfParserOne;
+	
+	@Autowired
+	ScannedParser scannedParser;
+	
+	@Autowired
+	PdfParserOneTesseract parserOneTesseract;
 
 	@RequestMapping(value = { "/Patient/getAllPatients",
 			"/Caller/getAllPatients" }, method = RequestMethod.GET)
@@ -529,10 +539,28 @@ public class PatientController {
     @RequestMapping(value="/development/readScannedReportsData",headers = "content-type=multipart/form-data",method=RequestMethod.POST)
     public @ResponseBody
     PDFCrashReportJson readScannedReportsData(
-			@RequestParam("file") MultipartFile file, ModelMap model)
-			throws IOException {
+			@RequestParam("file") MultipartFile file, ModelMap model) {
     	File savedFile=pdfParserOne.saveFile(file);
-    	return pdfParserOne.parsePdfFromFile(savedFile);
+    	try {
+			return parserOneTesseract.parsePdfFromFile(savedFile);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 		
     }
+    
+    @RequestMapping(value = "/convertScannedToNormalPDF", headers = "content-type=multipart/form-data", method = RequestMethod.POST)
+	public @ResponseBody String convertScannedToNormal(@RequestParam("file") MultipartFile file, ModelMap model)
+			throws IOException {
+		try {
+			return scannedParser.convertToSearchablePDF(file);
+		} catch (TesseractException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+	}
 }

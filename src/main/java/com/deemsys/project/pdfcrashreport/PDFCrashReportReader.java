@@ -94,6 +94,9 @@ public class PDFCrashReportReader {
 	
 	@Autowired
 	PdfParserTwo pdfParserTwo;
+	
+	@Autowired
+	PdfParserOneTesseract parserOneTesseract;
 
 	protected static Logger logger = LoggerFactory.getLogger("service");
 
@@ -2087,8 +2090,7 @@ public class PDFCrashReportReader {
 							fileName = "CrashReport_" + crashId + ".pdf";
 						}
 						// Split Tier and Save the details
-						PDFCrashReportJson pdfCrashReportJson = pdfParserOne.parsePdfFromFile(file);
-						System.out.println(pdfCrashReportJson);
+						PDFCrashReportJson pdfCrashReportJson = parserOneTesseract.parsePdfFromFile(file);
 						this.parsePDFDocument(null, crashId, runnerCrashReportForm.getAddedDate(), pdfCrashReportJson,
 								policeAgency.getMapId());
 

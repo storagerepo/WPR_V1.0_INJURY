@@ -1,5 +1,6 @@
 package com.deemsys.project.Export;
 
+import java.awt.print.Pageable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
@@ -62,7 +63,7 @@ public class PrintPDFFiles {
 		    	System.out.println("Printer Found");
 		    	PDDocument document = PDDocument.load(new File("D:/Works/Learning/Report Location.pdf"));
 		    	PrinterJob job = PrinterJob.getPrinterJob();
-			    job.setPageable(document);
+			    job.setPageable((Pageable) document);
 			    job.setPrintService(printService);
 			    job.print();
 			    document.close();
