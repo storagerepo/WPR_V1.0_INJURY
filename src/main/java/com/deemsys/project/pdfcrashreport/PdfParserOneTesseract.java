@@ -33,97 +33,106 @@ public class PdfParserOneTesseract {
 
 	@Autowired
 	InjuryProperties injuryProperties;
-	
+
 	@Autowired
 	ScannedParser scannedParser;
 
-	public PDFCrashReportJson parsePdfFromFile(File file) throws Exception {
+	public PDFCrashReportJson parsePdfFromFile(File file, ReportFirstPageForm firstPageForm) throws Exception {
 		PDFCrashReportJson pdfCrashReportJson = new PDFCrashReportJson(null, null, null);
 		try {
 			ReportFirstPageForm reportFirstPageForm = new ReportFirstPageForm();
 			FileInputStream fileInputStream = new FileInputStream(file);
 			PdfReader reader = new PdfReader(fileInputStream);
-			String[] propertyNames = { "localReportNumber", "crashSeverity", "reportingAgencyCode",
-					"reportingAgencyName", "numberOfUnits", "unitInError", "county", "cityVillageTownship", "crashDate",
-					"crashTime" };
-			for (String propertyName : propertyNames) {
-				String[] propertyCoordinates = injuryProperties.getParserOneProperty(propertyName).split(",");
-				Rectangle rect = new Rectangle(Double.parseDouble(propertyCoordinates[0]),
-						Double.parseDouble(propertyCoordinates[1]), Double.parseDouble(propertyCoordinates[2]),
-						Double.parseDouble(propertyCoordinates[3]));
-				RenderFilter[] filter = { new RegionTextRenderFilter(rect) };
-				String pdfText = "";
-				TextExtractionStrategy strategy;
-				strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), filter);
-				pdfText = PdfTextExtractor.getTextFromPage(reader, 1, strategy);
-				switch (propertyName) {
-				case "localReportNumber":
-					reportFirstPageForm.setLocalReportNumber(this.skipUnwantedSpaces(pdfText));
-					break;
-				case "crashSeverity":
-					reportFirstPageForm.setCrashSeverity(pdfText);
-					break;
-				case "reportingAgencyCode":
-					reportFirstPageForm.setReportingAgencyNCIC(pdfText);
-					break;
-				case "reportingAgencyName":
-					reportFirstPageForm.setReportingAgencyName(pdfText);
-					break;
-				case "numberOfUnits":
-					reportFirstPageForm
-							.setNumberOfUnits(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
-					break;
-				case "unitInError":
-					reportFirstPageForm.setUnitInError(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
-					break;
-				case "county":
-					reportFirstPageForm.setCounty(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
-					break;
-				case "cityVillageTownship":
-					reportFirstPageForm.setCityVillageTownship(pdfText);
-					break;
-				case "crashDate":
-					reportFirstPageForm.setCrashDate(this.formatDate(pdfText));
-					break;
-				case "crashTime":
-					reportFirstPageForm.setTimeOfCrash(this.frameTimeOfCrash(this.skipUnwantedSpaces(pdfText)));
-					break;
-				default:
-					break;
+
+			if (firstPageForm == null) {
+				String[] propertyNames = { "localReportNumber", "crashSeverity", "reportingAgencyCode",
+						"reportingAgencyName", "numberOfUnits", "unitInError", "county", "cityVillageTownship",
+						"crashDate", "crashTime" };
+				for (String propertyName : propertyNames) {
+					String[] propertyCoordinates = injuryProperties.getParserOneProperty(propertyName).split(",");
+					Rectangle rect = new Rectangle(Double.parseDouble(propertyCoordinates[0]),
+							Double.parseDouble(propertyCoordinates[1]), Double.parseDouble(propertyCoordinates[2]),
+							Double.parseDouble(propertyCoordinates[3]));
+					RenderFilter[] filter = { new RegionTextRenderFilter(rect) };
+					String pdfText = "";
+					TextExtractionStrategy strategy;
+					strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), filter);
+					pdfText = PdfTextExtractor.getTextFromPage(reader, 1, strategy);
+					switch (propertyName) {
+					case "localReportNumber":
+						reportFirstPageForm.setLocalReportNumber(this.skipUnwantedSpaces(pdfText));
+						break;
+					case "crashSeverity":
+						reportFirstPageForm.setCrashSeverity(pdfText);
+						break;
+					case "reportingAgencyCode":
+						reportFirstPageForm.setReportingAgencyNCIC(pdfText);
+						break;
+					case "reportingAgencyName":
+						reportFirstPageForm.setReportingAgencyName(pdfText);
+						break;
+					case "numberOfUnits":
+						reportFirstPageForm
+								.setNumberOfUnits(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
+						break;
+					case "unitInError":
+						reportFirstPageForm
+								.setUnitInError(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
+						break;
+					case "county":
+						reportFirstPageForm.setCounty(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
+						break;
+					case "cityVillageTownship":
+						reportFirstPageForm.setCityVillageTownship(pdfText);
+						break;
+					case "crashDate":
+						reportFirstPageForm.setCrashDate(this.formatDate(pdfText));
+						break;
+					case "crashTime":
+						reportFirstPageForm.setTimeOfCrash(this.frameTimeOfCrash(this.skipUnwantedSpaces(pdfText)));
+						break;
+					default:
+						break;
+					}
 				}
+				// setting first page values
+				pdfCrashReportJson.setFirstPageForm(reportFirstPageForm);
+			} else {
+				pdfCrashReportJson.setFirstPageForm(firstPageForm);
 			}
-			// setting first page values
-			pdfCrashReportJson.setFirstPageForm(reportFirstPageForm);
 
 			//
 			String fileLocation = scannedParser.convertToSearchablePDF(file);
-			Map<String, List<Integer>> pageNumbers=this.getPageNumbers(fileLocation);
+			Map<String, List<Integer>> pageNumbers = this.getPageNumbers(fileLocation);
+			if(pageNumbers.get("motorist").isEmpty()&&pageNumbers.get("occupant").isEmpty()){
+				//since motorist and occupant page details is empty we are passing this to save directly in service page
+				return pdfCrashReportJson;
+			}
 			Iterator<Entry<String, List<Integer>>> it = pageNumbers.entrySet().iterator();
-			List<Integer> unitPages=new ArrayList<Integer>();
-			List<Integer> motoristPages=new ArrayList<Integer>();
-			List<Integer> occupantPages=new ArrayList<Integer>();
-			while(it.hasNext()){
-				Map.Entry<String, List<Integer>> pageMap= (Map.Entry<String, List<Integer>>) it.next();
-				if(pageMap.getKey().equals("unit")){
-					unitPages=pageMap.getValue();
-				}else if(pageMap.getKey().equals("motorist")){
-					motoristPages=pageMap.getValue();
-				}else if(pageMap.getKey().equals("occupant")){
-					occupantPages=pageMap.getValue();
+			List<Integer> unitPages = new ArrayList<Integer>();
+			List<Integer> motoristPages = new ArrayList<Integer>();
+			List<Integer> occupantPages = new ArrayList<Integer>();
+			while (it.hasNext()) {
+				Map.Entry<String, List<Integer>> pageMap = (Map.Entry<String, List<Integer>>) it.next();
+				if (pageMap.getKey().equals("unit")) {
+					unitPages = pageMap.getValue();
+				} else if (pageMap.getKey().equals("motorist")) {
+					motoristPages = pageMap.getValue();
+				} else if (pageMap.getKey().equals("occupant")) {
+					occupantPages = pageMap.getValue();
 				}
 			}
-			
+
 			// Unit datas
 			List<ReportUnitPageForm> reportUnitPageForms = new ArrayList<ReportUnitPageForm>();
 			List<ReportMotoristPageForm> reportMotoristPageForms = new ArrayList<ReportMotoristPageForm>();
 			for (int i = 0; i < unitPages.size(); i++) {
 				ReportUnitPageForm reportUnitPageForm = new ReportUnitPageForm();
-				String[] UnitPropertyNames = { "driverUnitNumber", "ownerName", "ownerPhoneNumber",
-						"ownerDamageScale", "ownerAddress", "licensePlateNumber", "VIN", "noOfOccupants",
-						"vehicleYear", "vehcileMake", "insuranceCompany", "policyNumber", "typeOfUse" };
+				String[] UnitPropertyNames = { "driverUnitNumber", "ownerName", "ownerPhoneNumber", "ownerDamageScale",
+						"ownerAddress", "licensePlateNumber", "VIN", "noOfOccupants", "vehicleYear", "vehcileMake",
+						"insuranceCompany", "policyNumber", "typeOfUse" };
 				for (String propertyName : UnitPropertyNames) {
-					String[] unitPropertyCoordinates = injuryProperties.getParserOneProperty(propertyName)
-							.split(",");
+					String[] unitPropertyCoordinates = injuryProperties.getParserOneProperty(propertyName).split(",");
 					Rectangle rectangle = new Rectangle(Double.parseDouble(unitPropertyCoordinates[0]),
 							Double.parseDouble(unitPropertyCoordinates[1]),
 							Double.parseDouble(unitPropertyCoordinates[2]),
@@ -156,8 +165,7 @@ public class PdfParserOneTesseract {
 						reportUnitPageForm.setVIN(pdfText);
 						break;
 					case "noOfOccupants":
-						reportUnitPageForm
-								.setOccupants(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
+						reportUnitPageForm.setOccupants(this.removeZeroBeforeNumbers(this.skipUnwantedSpaces(pdfText)));
 						break;
 					case "vehicleYear":
 						reportUnitPageForm.setVehicleYear(pdfText);
@@ -180,15 +188,16 @@ public class PdfParserOneTesseract {
 				}
 				reportUnitPageForms.add(reportUnitPageForm);
 			}
-			
+
 			// Motorist Details
 			for (int j = 0; j < motoristPages.size(); j++) {
-			
+
 				String[][] occupantsArray = new String[5][];
 				occupantsArray = InjuryConstants.MOTORIST_PAGE_COORDINATES_PARSER_ONE;
 				for (int n = 0; n < occupantsArray.length; n++) {
 					ReportMotoristPageForm reportMotoristPageForm = new ReportMotoristPageForm();
-					reportMotoristPageForm = this.processOccupantDetails(motoristPages.get(j), reader, occupantsArray[n]);
+					reportMotoristPageForm = this.processOccupantDetails(motoristPages.get(j), reader,
+							occupantsArray[n]);
 					if (reportMotoristPageForm != null) {
 						if ((reportMotoristPageForm.getUnitNumber() != null
 								&& !reportMotoristPageForm.getUnitNumber().equals(""))
@@ -206,12 +215,13 @@ public class PdfParserOneTesseract {
 
 			// Occupants Details
 			for (int j = 0; j < occupantPages.size(); j++) {
-				
+
 				String[][] occupantsArray = new String[5][];
 				occupantsArray = InjuryConstants.OCCUPANT_PAGE_COORDINATES_PARSER_ONE;
 				for (int n = 0; n < occupantsArray.length; n++) {
 					ReportMotoristPageForm reportMotoristPageForm = new ReportMotoristPageForm();
-					reportMotoristPageForm = this.processOccupantDetails(occupantPages.get(j), reader, occupantsArray[n]);
+					reportMotoristPageForm = this.processOccupantDetails(occupantPages.get(j), reader,
+							occupantsArray[n]);
 					if (reportMotoristPageForm != null) {
 						if ((reportMotoristPageForm.getUnitNumber() != null
 								&& !reportMotoristPageForm.getUnitNumber().equals(""))
@@ -292,7 +302,6 @@ public class PdfParserOneTesseract {
 			}
 		}
 		return reportMotoristPageForm;
-
 	}
 
 	// Save File
@@ -334,7 +343,7 @@ public class PdfParserOneTesseract {
 
 	// Check whether unit page or not
 	public boolean findUnitPage(Integer i, PdfReader reader) throws IOException {
-		String[] properties = { "noOfOccupants", "lpState", "vehicleYear","ownerDamageScale"};
+		String[] properties = { "noOfOccupants", "lpState", "vehicleYear", "ownerDamageScale" };
 		String occupants = "";
 		String lpState = "";
 		String vehicleYear = "";
@@ -371,7 +380,7 @@ public class PdfParserOneTesseract {
 				|| (this.skipUnwantedSpaces(vehicleYear).matches("[0-9]+")
 						&& this.skipUnwantedSpaces(vehicleYear).length() == 4)
 				|| (this.skipUnwantedSpaces(damageScale).matches("[0-9]+")
-								&& this.skipUnwantedSpaces(damageScale).length() == 1)) {
+						&& this.skipUnwantedSpaces(damageScale).length() == 1)) {
 			return false;
 		} else {
 			return true;
@@ -439,7 +448,6 @@ public class PdfParserOneTesseract {
 		return outputValue;
 	}
 
-
 	// Check for Zipcode
 	public boolean isZipcode(String checkStr) {
 		if (checkStr.matches("\\d+") && (checkStr.length() == 5 || checkStr.length() == 4)) {
@@ -497,9 +505,11 @@ public class PdfParserOneTesseract {
 		return indexToUseComma;
 
 	}
+
 	// Check for State
 	public boolean isState(String checkStr) {
-		if (checkStr.matches("[a-zA-Z]+") && checkStr.length() == 2) {
+		List<String> statesList = InjuryConstants.getStatesList();
+		if (statesList.contains(checkStr)) {
 			return true;
 		} else {
 			return false;
@@ -545,54 +555,71 @@ public class PdfParserOneTesseract {
 				&& LocalReportNumberCondition.equals(localReportNumberToCompare)) {
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	// Get Page Numbers
-	public Map<String, List<Integer>> getPageNumbers(String fileLocation){
-		Map<String, List<Integer>> pageNumbers = new HashMap<String,List<Integer>>();
-		try{
+	public Map<String, List<Integer>> getPageNumbers(String fileLocation) {
+		Map<String, List<Integer>> pageNumbers = new HashMap<String, List<Integer>>();
+		try {
 			File file = new File(fileLocation);
 			FileInputStream fileInputStream = new FileInputStream(file);
 			PdfReader reader = new PdfReader(fileInputStream);
-			
-			List<Integer> unitPageNumbers=new ArrayList<Integer>();
-			List<Integer> motoristPageNumbers=new ArrayList<Integer>();
-			List<Integer> occupantPageNumbers=new ArrayList<Integer>();
+
+			List<Integer> unitPageNumbers = new ArrayList<Integer>();
+			List<Integer> motoristPageNumbers = new ArrayList<Integer>();
+			List<Integer> occupantPageNumbers = new ArrayList<Integer>();
+			String unitLabel = "";
+			String motoristLabel = "";
+			String occupantLabel = "";
 			for (int i = 2; i <= reader.getNumberOfPages(); i++) {
-				String[] unitPageCoordinates = injuryProperties.getParserOneProperty("unitLabel").split(",");
-				Rectangle rect = new Rectangle(Double.parseDouble(unitPageCoordinates[0]),
-						Double.parseDouble(unitPageCoordinates[1]), Double.parseDouble(unitPageCoordinates[2]),
-						Double.parseDouble(unitPageCoordinates[3]));
-				RenderFilter[] filter = { new RegionTextRenderFilter(rect) };
-				String pdfText = "";
-				TextExtractionStrategy strategy;
-				strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), filter);
-				pdfText = PdfTextExtractor.getTextFromPage(reader, i, strategy);
-				if(InjuryConstants.getUnitLabels().contains(pdfText)){
-					unitPageNumbers.add(i);
-				}else if(InjuryConstants.getMotoristLabels().contains(pdfText)){
-					motoristPageNumbers.add(i);
-				}else{
-					unitPageCoordinates = injuryProperties.getParserOneProperty("occupantLabel").split(",");
-					rect = new Rectangle(Double.parseDouble(unitPageCoordinates[0]),
+				String[] labelProperties = { "unitLabel", "motoristPageLabel", "occupantLabel" };
+				for (String property : labelProperties) {
+					String[] unitPageCoordinates = injuryProperties.getParserOneProperty(property).split(",");
+					Rectangle rect = new Rectangle(Double.parseDouble(unitPageCoordinates[0]),
 							Double.parseDouble(unitPageCoordinates[1]), Double.parseDouble(unitPageCoordinates[2]),
 							Double.parseDouble(unitPageCoordinates[3]));
-					RenderFilter[] filter1 = { new RegionTextRenderFilter(rect) };
-					strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), filter1);
+					RenderFilter[] filter = { new RegionTextRenderFilter(rect) };
+					String pdfText = "";
+					TextExtractionStrategy strategy;
+					strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), filter);
 					pdfText = PdfTextExtractor.getTextFromPage(reader, i, strategy);
-					if(pdfText.equals("10 - Steerer Section oF Cas (Truck)")){
-						occupantPageNumbers.add(i);
+					switch (property) {
+					case "unitLabel":
+						unitLabel = pdfText;
+						break;
+					case "motoristPageLabel":
+						motoristLabel=pdfText;
+						if(pdfText.contains("\n")){
+							motoristLabel = pdfText.replaceAll("\n", "");
+						}	
+						break;
+					case "occupantLabel":
+						occupantLabel = pdfText;
+						break;
+					default:
+						break;
 					}
 				}
+				if (InjuryConstants.getUnitLabels().contains(unitLabel)) {
+					unitPageNumbers.add(i);
+				} else if (InjuryConstants.getMotoristLabels().contains(unitLabel)
+						|| InjuryConstants.getMotoristLabels().contains(motoristLabel)) {
+					motoristPageNumbers.add(i);
+				} else if (occupantLabel.equals("10 - Steerer Section oF Cas (Truck)")) {
+					occupantPageNumbers.add(i);
+				}
 			}
+			
 			pageNumbers.put("unit", unitPageNumbers);
 			pageNumbers.put("motorist", motoristPageNumbers);
 			pageNumbers.put("occupant", occupantPageNumbers);
 			return pageNumbers;
-		}catch(Exception e){
-			
+		} catch (
+
+		Exception e) {
+
 		}
 		return null;
 	}

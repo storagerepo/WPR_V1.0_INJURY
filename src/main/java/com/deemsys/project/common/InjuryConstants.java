@@ -764,6 +764,7 @@ public class InjuryConstants {
 		List<String> unitLabels = new ArrayList<String>();
 		unitLabels.add("U NET");
 		unitLabels.add("UNIT");
+		unitLabels.add("U N ET]");
 		return unitLabels;
 	}
 	// Motorist Labels
@@ -772,6 +773,8 @@ public class InjuryConstants {
 		motoristLabels.add("OCCUPANT\nIVIOTORIST/\nNON-IVIOTORIST/");
 		motoristLabels.add("/\nIVloTORIST NON-Motorist\nOCCUPANT\n/");
 		motoristLabels.add("IVIOTORIST/ NON-IVIOTORIST/ OCCUPANT");
+		motoristLabels.add("Conpition");
+		motoristLabels.add("BE");
 		return motoristLabels;
 	}
 	// Convert Date To Year Format

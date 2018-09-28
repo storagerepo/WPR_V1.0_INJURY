@@ -51,6 +51,7 @@ public class ScannedParser {
         String destFlder=injuryProperties.getProperty("tempFolderTesseract")+injuryProperties.getProperty("tesseractDataConverted")+file.getName().substring(0,file.getName().indexOf("."));
         instance.createDocuments(pngImageFiles.getAbsolutePath(),destFlder, list);
         return destFlder+".pdf";
+		//return "D:/InjuryCrashReports/converted/beachwood_2.pdf";
 	}
 	
 }

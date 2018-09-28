@@ -2089,17 +2089,22 @@ public class PDFCrashReportReader {
 						} else {
 							fileName = "CrashReport_" + crashId + ".pdf";
 						}
-						// Split Tier and Save the details
-						PDFCrashReportJson pdfCrashReportJson = parserOneTesseract.parsePdfFromFile(file);
-						this.parsePDFDocument(null, crashId, runnerCrashReportForm.getAddedDate(), pdfCrashReportJson,
-								policeAgency.getMapId());
-
 						policeAgency.setLastUpdatedDate(new Date());
 						policeAgency.setReportStatus(1);
-						// Update Last Updated Date
-						policeAgencyDAO.update(policeAgency);
-						// We will save report on parsing methods it self
-						isSaveReport = false;
+						// Split Tier and Save the details
+						PDFCrashReportJson pdfCrashReportJson = pdfParserOne.parsePdfFromFile(file);
+						if(pdfCrashReportJson.getReportMotoristPageForms()==null){
+							isSaveReport=true;
+						}
+						else{
+							this.parsePDFDocument(null, crashId, runnerCrashReportForm.getAddedDate(), pdfCrashReportJson,
+									policeAgency.getMapId());
+							// Update Last Updated Date
+							policeAgencyDAO.update(policeAgency);
+							// We will save report on parsing methods it self
+							isSaveReport = false;
+						}
+						
 					} else {
 						isSaveReport = false;
 						status = 0;

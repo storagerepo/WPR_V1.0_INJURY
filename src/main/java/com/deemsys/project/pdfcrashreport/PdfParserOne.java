@@ -32,8 +32,11 @@ public class PdfParserOne {
 
 	@Autowired
 	InjuryProperties injuryProperties;
+	
+	@Autowired
+	PdfParserOneTesseract pdfParserOneTesseract;
 
-	public PDFCrashReportJson parsePdfFromFile(File file) throws IOException {
+	public PDFCrashReportJson parsePdfFromFile(File file) throws Exception {
 		PDFCrashReportJson pdfCrashReportJson = new PDFCrashReportJson(null, null, null);
 		try {
 			ReportFirstPageForm reportFirstPageForm = new ReportFirstPageForm();
@@ -105,11 +108,13 @@ public class PdfParserOne {
 				TextExtractionStrategy unitStrategy;
 				unitStrategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), unitPageFilter);
 				String pdfText1 = PdfTextExtractor.getTextFromPage(reader, i, unitStrategy);
-				if (pdfText1.equals("OHIO TRAFFIC ACCIDENT - DIAGRAM/NARRITIVE CONTINUATION")
-						|| this.findUnitPage(i, reader)) {
+				if (pdfText1.equals("OHIO TRAFFIC ACCIDENT - DIAGRAM/NARRITIVE CONTINUATION")) {
 					// Not a unit page increment integer to skip current page
 					IncrementPage = IncrementPage + 1;
 					continue;
+					}
+					else if(!this.findUnitPage(i, reader)){
+					return pdfParserOneTesseract.parsePdfFromFile(file,reportFirstPageForm);
 				} else {
 					ReportUnitPageForm reportUnitPageForm = new ReportUnitPageForm();
 					String[] UnitPropertyNames = { "driverUnitNumber", "ownerName", "ownerPhoneNumber",
@@ -359,7 +364,7 @@ public class PdfParserOne {
 
 	// Check whether unit page or not
 	public boolean findUnitPage(Integer i, PdfReader reader) throws IOException {
-		String[] properties = { "noOfOccupants", "lpState", "vehicleYear" };
+		/*String[] properties = { "noOfOccupants", "lpState", "vehicleYear" , "ownerDamageScale"};
 		String occupants = "";
 		String lpState = "";
 		String vehicleYear = "";
@@ -380,26 +385,24 @@ public class PdfParserOne {
 			case "lpState":
 				lpState = pdfText;
 				break;
-			case "vehicleYear":
+			case "vehicleYear":		
 				vehicleYear = pdfText;
 				break;
-			/*case "ownerDamageScale":
+			case "ownerDamageScale":
 				damageScale = pdfText;
-				break;*/
+				break;
 			default:
 				break;
 			}
 		}
 		if (this.skipUnwantedSpaces(occupants).matches("[0-9]+")
-				|| (!this.skipUnwantedSpaces(lpState).matches("[0-9]+")
-						&& this.skipUnwantedSpaces(lpState).length() == 2)
-				|| (this.skipUnwantedSpaces(vehicleYear).matches("[0-9]+")
-						|| this.skipUnwantedSpaces(vehicleYear).length() == 4)
+				|| (this.isState(lpState))
+				|| (this.skipUnwantedSpaces(vehicleYear).matches("[0-9]+") && this.skipUnwantedSpaces(vehicleYear).length() == 4)
 				|| (this.skipUnwantedSpaces(damageScale).length() == 1 && damageScale.matches("[0-9]+"))) {
-			return false;
-		} else {
 			return true;
-		}
+		} else {*/
+			return false;
+		/*}*/
 
 	}
 

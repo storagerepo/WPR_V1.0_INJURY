@@ -542,7 +542,7 @@ public class PatientController {
 			@RequestParam("file") MultipartFile file, ModelMap model) {
     	File savedFile=pdfParserOne.saveFile(file);
     	try {
-			return parserOneTesseract.parsePdfFromFile(savedFile);
+			return pdfParserOne.parsePdfFromFile(savedFile);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
