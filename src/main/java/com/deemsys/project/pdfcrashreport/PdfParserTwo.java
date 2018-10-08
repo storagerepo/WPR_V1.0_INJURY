@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +130,7 @@ public class PdfParserTwo {
 							reportUnitPageForm.setDamageScale(pdfText.replaceAll("[^\\d]", ""));
 							break;
 						case "ownerAddress":
-							reportUnitPageForm.setOwnerAddress(pdfText.replaceAll("( +)", " "));
+							reportUnitPageForm.setOwnerAddress(this.frameOwnerAddress(reader, i));
 							break;
 						case "licensePlateNumber":
 							reportUnitPageForm.setLicensePlatNumber(pdfText);
@@ -189,6 +190,8 @@ public class PdfParserTwo {
 					continue;
 				}
 			}
+			// Sorting unit data before adding it to Json
+			Collections.sort(reportUnitPageForms, ReportUnitPageForm.ReportUnitPageComparitor);
 			// setting unit data
 			pdfCrashReportJson.setReportUnitPageForms(reportUnitPageForms);
 			// setting occupant details
@@ -229,13 +232,13 @@ public class PdfParserTwo {
 					address = pdfText;
 				}
 				if (occupantPropertyName.contains("AddressStreetName")) {
-					address = address + "," + pdfText;
+					address = address + " " + pdfText;
 				}
 				if (occupantPropertyName.contains("AddressCity")) {
-					address = address + "," + pdfText;
+					address = address.trim() + "," + pdfText;
 				}
 				if (occupantPropertyName.contains("AddressState")) {
-					address = address + " " + pdfText;
+					address = address + "," + pdfText;
 					reportMotoristPageForm.setAdddressCityStateZip(address.replaceAll("( +)", " "));
 				}
 
@@ -298,11 +301,13 @@ public class PdfParserTwo {
 	// Structure the Time of crash
 	public String frameTimeOfCrash(String inputString) {
 
-		if (inputString.lastIndexOf(":") == inputString.length() - 1) {
-			inputString = inputString.substring(0, inputString.length() - 1);
-		}
-		if (inputString.indexOf(":") == -1) {
-			inputString = inputString.substring(0, 2) + ":" + inputString.substring(2, inputString.length());
+		if(!inputString.equals("")){
+			if (inputString.lastIndexOf(":") == inputString.length() - 1) {
+				inputString = inputString.substring(0, inputString.length() - 1);
+			}
+			if (inputString.indexOf(":") == -1) {
+				inputString = inputString.substring(0, 2) + ":" + inputString.substring(2, inputString.length());
+			}	
 		}
 		return inputString;
 	}
@@ -347,5 +352,45 @@ public class PdfParserTwo {
 
 		}
 		return inputString;
+	}
+
+	public String frameOwnerAddress(PdfReader reader, Integer pageNo) throws IOException {
+		String[] AddressPropertyNames = { "ownerAddressDoorNo", "ownerAddressStreetName", "ownerAddressCity",
+				"ownerAddressState" };
+		String address="";
+		for (String propertyName : AddressPropertyNames) {
+			String[] AddressPropertyCoordinates = injuryProperties.getParserTwoProperty(propertyName).split(",");
+			Rectangle rectangle = new Rectangle(Double.parseDouble(AddressPropertyCoordinates[0]),
+					Double.parseDouble(AddressPropertyCoordinates[1]),
+					Double.parseDouble(AddressPropertyCoordinates[2]),
+					Double.parseDouble(AddressPropertyCoordinates[3]));
+			RenderFilter[] unitFilter = { new RegionTextRenderFilter(rectangle) };
+			TextExtractionStrategy strategy;
+			strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), unitFilter);
+			String pdfText = PdfTextExtractor.getTextFromPage(reader, pageNo, strategy);
+			switch (propertyName) {
+			case "ownerAddressDoorNo":
+				address=pdfText;
+				break;
+			case "ownerAddressStreetName":
+				address=address+" "+pdfText;
+				break;
+			case "ownerAddressCity":
+				address=address.trim()+","+pdfText;
+				break;
+			case "ownerAddressState":
+				address=address+","+pdfText;
+				break;
+			default:
+				break;
+			}
+
+		}
+		if(!address.replaceAll("\\,", "").replaceAll(" ", "").equals("")){
+			address=address.replaceAll("( +)", " ");
+		}else{
+			address="";
+		}
+		return address;
 	}
 }

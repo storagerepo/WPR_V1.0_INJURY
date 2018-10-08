@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -254,7 +255,8 @@ public class PdfParserOne {
 					}
 				}
 			}
-
+			//Sorting unit data before adding it to Json
+			Collections.sort(reportUnitPageForms,ReportUnitPageForm.ReportUnitPageComparitor);
 			// setting unit data
 			pdfCrashReportJson.setReportUnitPageForms(reportUnitPageForms);
 			// setting occupant details
@@ -364,7 +366,7 @@ public class PdfParserOne {
 
 	// Check whether unit page or not
 	public boolean findUnitPage(Integer i, PdfReader reader) throws IOException {
-		String[] properties = { "noOfOccupants", "lpState", "vehicleYear" , "ownerDamageScale"};
+		/*String[] properties = { "noOfOccupants", "lpState", "vehicleYear" , "ownerDamageScale"};
 		String occupants = "";
 		String lpState = "";
 		String vehicleYear = "";
@@ -403,7 +405,7 @@ public class PdfParserOne {
 		} else {
 			return false;
 		}
-
+*/return false;
 	}
 
 	// Format Name
