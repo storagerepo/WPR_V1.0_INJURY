@@ -366,7 +366,7 @@ public class PdfParserOne {
 
 	// Check whether unit page or not
 	public boolean findUnitPage(Integer i, PdfReader reader) throws IOException {
-		/*String[] properties = { "noOfOccupants", "lpState", "vehicleYear" , "ownerDamageScale"};
+		String[] properties = { "noOfOccupants", "lpState", "vehicleYear" , "ownerDamageScale"};
 		String occupants = "";
 		String lpState = "";
 		String vehicleYear = "";
@@ -405,7 +405,6 @@ public class PdfParserOne {
 		} else {
 			return false;
 		}
-*/return false;
 	}
 
 	// Format Name
