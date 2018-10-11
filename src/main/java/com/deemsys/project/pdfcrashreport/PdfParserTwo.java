@@ -124,7 +124,7 @@ public class PdfParserTwo {
 							reportUnitPageForm.setOwnerName(pdfText);
 							break;
 						case "ownerPhoneNumber":
-							reportUnitPageForm.setOwnerPhoneNumber(pdfText);
+							reportUnitPageForm.setOwnerPhoneNumber(pdfText.replaceAll("[a-zA-Z]", "").trim());
 							break;
 						case "ownerDamageScale":
 							reportUnitPageForm.setDamageScale(pdfText.replaceAll("[^\\d]", ""));

@@ -1384,7 +1384,7 @@ public class PDFCrashReportReader {
 			ReportMotoristPageForm motoristPageForm = this.compareUnitPageWithMotoristPage(reportUnitPageForm,
 					reportMotoristPageForms);
 			if (motoristPageForm != null) {
-				if (motoristPageForm.getAge() != null && !motoristPageForm.equals(""))
+				if (motoristPageForm.getAge() != null && !motoristPageForm.getAge().equals(""))
 					patientForm.setAge(Integer.parseInt(motoristPageForm.getAge()));
 
 				patientForm.setGender(motoristPageForm.getGender());
