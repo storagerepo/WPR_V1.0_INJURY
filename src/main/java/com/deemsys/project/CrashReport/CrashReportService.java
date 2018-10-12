@@ -138,7 +138,7 @@ public class CrashReportService {
 		
 		CrashReport crashReport=new CrashReport(crashReportForm.getCrashId(), crashReportError, policeAgency, county, localReportNumber,  InjuryConstants.convertYearFormat(crashReportForm.getCrashDate()), 
 					 InjuryConstants.convertYearFormat(crashReportForm.getAddedDate()), crashReportForm.getNumberOfPatients(), crashReportForm.getVehicleCount(), crashReportForm.getFilePath(), null, crashReportForm.getIsRunnerReport(),  null, 1, 
-					 crashReportForm.getAddedDateTime(), crashReportForm.getRunnerReportAddedDateTime(),localReportNumber.replaceAll(" ", "").trim() ,null, null, null);
+					 crashReportForm.getAddedDateTime(), crashReportForm.getRunnerReportAddedDateTime(),localReportNumber.replaceAll("[^0-9A-Za-z]","").trim() ,null, null, null);
 		
 		//Logic Ends
 		crashReportDAO.save(crashReport);
@@ -274,7 +274,7 @@ public class CrashReportService {
 		policeAgency.setLastUpdatedDate(new Date());
 		policeAgencyDAO.update(policeAgency);
 		CrashReport crashReport=new CrashReport(crashId, crashReportError, policeAgency, county, localReportNumber,  InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()), 
-					 new Date(), numberOfPatients, vehicleCount, runnerCrashReportForm.getFilePath(), null, isRunnerReport, new Date(), 1, null, new Date(),localReportNumber.replaceAll(" ", "").trim(), null,null,null);
+					 new Date(), numberOfPatients, vehicleCount, runnerCrashReportForm.getFilePath(), null, isRunnerReport, new Date(), 1, null, new Date(),localReportNumber.replaceAll("[^0-9A-Za-z]","").trim(), null,null,null);
 		
 		
 		CrashReport crashReportExist=this.checkRunnerReportWithODPSReport(runnerCrashReportForm);
