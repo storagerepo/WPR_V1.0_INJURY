@@ -159,19 +159,19 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 								};
 								switch(value2.injuries) {
 							    case "1":
-							    	value2.injuriesName="No Injury/None Reported";
+							    	value2.injuriesName="Fatal";
 							        break;
 							    case "2":
-							    	value2.injuriesName="Possible";
+							    	value2.injuriesName="Suspected Serious Injury";
 							        break;
 							    case "3":
-							    	value2.injuriesName="Non-Incapacitating";
+							    	value2.injuriesName="Suspected Minor Injury";
 							        break;
 							    case "4":
-							    	value2.injuriesName="Incapacitating";
+							    	value2.injuriesName="Possible Injury";
 							        break;
 							    case "5":
-							    	value2.injuriesName="Fatal";
+							    	value2.injuriesName="No Apparent Injury";
 							        break;
 							    case "6":
 							    	value2.injuriesName="Not Available";
@@ -184,15 +184,39 @@ adminApp.controller('AutoDealerVehicleSearchController', ['$rootScope','$scope',
 							    	value2.crashSeverityName="Fatal";
 							        break;
 							    case "2":
-							    	value2.crashSeverityName="Injury";
+							    	value2.crashSeverityName="Serious Injury Suspected";
 							        break;
 							    case "3":
-							    	value2.crashSeverityName="PDO";
+							    	value2.crashSeverityName="Minor Injury Suspected";
 							        break;
 							    case "4":
-							    	value2.crashSeverityName="Not Available";
+							    	value2.crashSeverityName="Injury Possible";
+							        break;
+							    case "5":
+							    	value2.crashSeverityName="PDO";
+							        break;
+							    case "6":
+							    	value2.crashSeverityName="N/A";
 							        break;
 							    default:
+							    	value2.crashSeverityName="N/A";
+							        break;
+								};
+								switch(value2.typeOfUse) {
+							    case 1:
+							    	value2.typeOfUseName="1 - Commercial";
+							        break;
+							    case 2:
+							    	value2.typeOfUseName="2 - Government";
+							        break;
+							    case 3:
+							    	value2.typeOfUseName="3 - In Emergency Response";
+							        break;
+							    case 0:
+							    	value2.typeOfUseName="Unknown";
+							        break;
+							    default:
+							    	value2.typeOfUseName="Unknown";
 							        break;
 								};
 								

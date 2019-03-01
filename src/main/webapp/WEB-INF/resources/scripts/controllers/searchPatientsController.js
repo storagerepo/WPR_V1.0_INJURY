@@ -20,8 +20,8 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
 		$scope.defaultSeatingPosition=[{id:1, label:"Drivers"},{id:2, label:"Passengers"},{id:99, label:"Unknown"},{id:0,label:"Not Provided"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
-		$scope.defaultTypeofUse=[{id:1, label: "1 - Personal"},{id:2, label: "2 - Commercial"},{id:3, label: "3 - Government"},{id:0, label: "Unknown"}];
-		$scope.defaultInjuries=[{id:1, label:"No Injury/None Reporte"},{id:2, label:"Possible"},{id:3, label:"Non-Incapacitating"},{id:4, label:"Incapacitating"},{id:5, label:"Fatal"},{id:0, label:"Unknown"},{id:7,label: "Not Provided"}];
+		$scope.defaultTypeofUse=[{id:1, label: "1 - Commercial"},{id:2, label: "2 - Goverment"},{id:3, label: "3 - Emergency Resp."},{id:0, label: "Unknown"}];
+		$scope.defaultInjuries=[{id:1, label:"Fatal"},{id:2, label:"Serious Injury"},{id:3, label:"Minor Injury"},{id:4, label:"Possible Injury"},{id:5, label:"No Apparent Injury"},{id:0, label:"Unknown"},{id:7,label: "Not Provided"}];
 		$scope.patient={};
 		$scope.patient.countyId=[{"id":1},{"id":2},{"id":3},{"id":4},{"id":5},{"id":6},{"id":7},{"id":8},{"id":9},{"id":10},{"id":11},{"id":12},{"id":13},{"id":14},{"id":15},{"id":16},{"id":17},{"id":18},{"id":19},{"id":20},{"id":21},{"id":22},{"id":23},{"id":24},{"id":25},{"id":26},{"id":27},{"id":28},{"id":29},{"id":30},{"id":31},{"id":32},{"id":33},{"id":34},{"id":35},{"id":36},{"id":37},{"id":38},{"id":39},{"id":40},{"id":41},{"id":42},{"id":43},{"id":44},{"id":45},{"id":46},{"id":47},{"id":48},{"id":49},{"id":50},{"id":51},{"id":52},{"id":53},{"id":54},{"id":55},{"id":56},{"id":57},{"id":58},{"id":59},{"id":60},{"id":61},{"id":62},{"id":63},{"id":64},{"id":65},{"id":66},{"id":67},{"id":68},{"id":69},{"id":70},{"id":71},{"id":72},{"id":73},{"id":74},{"id":75},{"id":76},{"id":77},{"id":78},{"id":79},{"id":80},{"id":81},{"id":82},{"id":83},{"id":84},{"id":85},{"id":86},{"id":87},{"id":88}];
 		$scope.patient.tier=[{id:1},{id:2},{id:3},{id:4},{id:5},{id:0}];
@@ -196,19 +196,19 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 							};
 							switch(value2.injuries) {
 						    case "1":
-						    	value2.injuriesName="No Injury/None Reported";
+						    	value2.injuriesName="Fatal";
 						        break;
 						    case "2":
-						    	value2.injuriesName="Possible";
+						    	value2.injuriesName="Suspected Serious Injury";
 						        break;
 						    case "3":
-						    	value2.injuriesName="Non-Incapacitating";
+						    	value2.injuriesName="Suspected Minor Injury";
 						        break;
 						    case "4":
-						    	value2.injuriesName="Incapacitating";
+						    	value2.injuriesName="Possible Injury";
 						        break;
 						    case "5":
-						    	value2.injuriesName="Fatal";
+						    	value2.injuriesName="No Apparent Injury";
 						        break;
 						    case "6":
 						    	value2.injuriesName="Not Available";
@@ -221,26 +221,33 @@ adminApp.controller('searchPatientsController', ['$q','$scope','requestHandler',
 						    	value2.crashSeverityName="Fatal";
 						        break;
 						    case "2":
-						    	value2.crashSeverityName="Injury";
+						    	value2.crashSeverityName="Serious Injury Suspected";
 						        break;
 						    case "3":
-						    	value2.crashSeverityName="PDO";
+						    	value2.crashSeverityName="Minor Injury Suspected";
 						        break;
 						    case "4":
-						    	value2.crashSeverityName="Not Available";
+						    	value2.crashSeverityName="Injury Possible";
+						        break;
+						    case "5":
+						    	value2.crashSeverityName="PDO";
+						        break;
+						    case "6":
+						    	value2.crashSeverityName="N/A";
 						        break;
 						    default:
+						    	value2.crashSeverityName="N/A";
 						        break;
 							};
 							switch(value2.typeOfUse) {
 						    case 1:
-						    	value2.typeOfUseName="1 - Personal";
+						    	value2.typeOfUseName="1 - Commercial";
 						        break;
 						    case 2:
-						    	value2.typeOfUseName="2 - Commercial";
+						    	value2.typeOfUseName="2 - Government";
 						        break;
 						    case 3:
-						    	value2.typeOfUseName="3 - Government";
+						    	value2.typeOfUseName="3 - In Emergency Response";
 						        break;
 						    case 0:
 						    	value2.typeOfUseName="Unknown";

@@ -27,7 +27,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 	var damageScale=[{id:1},{id:2},{id:3},{id:4},{id:9},{id:5}];
 	var directReportStatus="-1";
 	var reportingAgencyListType="1";
-	var injuries=[{id:1},{id:2},{id:3},{id:4},{id:0},{id:7}];
+	var injuries=[{id:5},{id:2},{id:3},{id:4},{id:0},{id:7}];
 	
 	// Vehicle Search
 	var vehicleMake="";
@@ -435,7 +435,7 @@ adminApp.service('searchService',function($rootScope,requestHandler){
 		vehicleYear="";
 		typeOfUse=[{id:1},{id:2},{id:3},{id:0}];
 		seatingPosition=[{id:1},{id:2},{id:99},{id:0}];
-		injuries=[{id:1},{id:2},{id:3},{id:4},{id:0},{id:7}];
+		injuries=[{id:5},{id:2},{id:3},{id:4},{id:0},{id:7}];
 		return true;
 	};
 	

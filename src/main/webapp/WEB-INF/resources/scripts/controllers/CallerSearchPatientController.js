@@ -167,19 +167,19 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 								};
 								switch(value2.injuries) {
 							    case "1":
-							    	value2.injuriesName="No Injury/None Reported";
+							    	value2.injuriesName="Fatal";
 							        break;
 							    case "2":
-							    	value2.injuriesName="Possible";
+							    	value2.injuriesName="Suspected Serious Injury";
 							        break;
 							    case "3":
-							    	value2.injuriesName="Non-Incapacitating";
+							    	value2.injuriesName="Suspected Minor Injury";
 							        break;
 							    case "4":
-							    	value2.injuriesName="Incapacitating";
+							    	value2.injuriesName="Possible Injury";
 							        break;
 							    case "5":
-							    	value2.injuriesName="Fatal";
+							    	value2.injuriesName="No Apparent Injury";
 							        break;
 							    case "6":
 							    	value2.injuriesName="Not Available";
@@ -192,15 +192,39 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 							    	value2.crashSeverityName="Fatal";
 							        break;
 							    case "2":
-							    	value2.crashSeverityName="Injury";
+							    	value2.crashSeverityName="Serious Injury Suspected";
 							        break;
 							    case "3":
-							    	value2.crashSeverityName="PDO";
+							    	value2.crashSeverityName="Minor Injury Suspected";
 							        break;
 							    case "4":
-							    	value2.crashSeverityName="Not Available";
+							    	value2.crashSeverityName="Injury Possible";
+							        break;
+							    case "5":
+							    	value2.crashSeverityName="PDO";
+							        break;
+							    case "6":
+							    	value2.crashSeverityName="N/A";
 							        break;
 							    default:
+							    	value2.crashSeverityName="N/A";
+							        break;
+								};
+								switch(value2.typeOfUse) {
+							    case 1:
+							    	value2.typeOfUseName="1 - Commercial";
+							        break;
+							    case 2:
+							    	value2.typeOfUseName="2 - Government";
+							        break;
+							    case 3:
+							    	value2.typeOfUseName="3 - In Emergency Response";
+							        break;
+							    case 0:
+							    	value2.typeOfUseName="Unknown";
+							        break;
+							    default:
+							    	value2.typeOfUseName="Unknown";
 							        break;
 								};
 								
@@ -700,7 +724,7 @@ adminApp.controller('CallerSearchPatientsController', ['$q','$rootScope','$scope
 		$scope.defaultTiers=[{id: 1, label: "Tier 1"}, {id: 2, label: "Tier 2"}, {id: 3, label: "Tier 3"}, {id: 4, label: "Tier 4"}, {id: 5, label: "Undetermined"}, {id: 0, label: "Others"}];	
 		$scope.defaultAge=[{id:1,label:"Adults"},{id:2,label:"Minors"},{id:4,label:"Not Known"}];
 		$scope.defaultDamageScale=[{id: 1, label: "None",legendClass:"badge-success",haveLegend:true},{id: 2, label: "Minor",legendClass:"badge-yellow",haveLegend:true},{id: 3, label: "Functional",legendClass:"badge-primary",haveLegend:true},{id: 4, label: "Disabling",legendClass:"badge-danger",haveLegend:true},{id: 9, label: "Unknown",legendClass:"badge-default",haveLegend:true},{id: 5, label: "N/A",haveLegend:false}];
-		$scope.defaultInjuries=[{id:1, label:"No Injury/None Reporte"},{id:2, label:"Possible"},{id:3, label:"Non-Incapacitating"},{id:4, label:"Incapacitating"},{id:5, label:"Fatal"},{id:0, label:"Unknown"},{id:7,label: "Not Provided"}];
+		$scope.defaultInjuries=[{id:1, label:"Fatal"},{id:2, label:"Serious Injury"},{id:3, label:"Minor Injury"},{id:4, label:"Possible Injury"},{id:5, label:"No Apparent Injury"},{id:0, label:"Unknown"},{id:7,label: "Not Provided"}];
 		
 		$scope.patient={};
 		$scope.patient.countyId=[];
