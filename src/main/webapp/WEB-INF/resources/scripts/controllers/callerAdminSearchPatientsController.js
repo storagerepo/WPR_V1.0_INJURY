@@ -1455,6 +1455,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 						}
 					
 					});
+					$scope.modeOfPrinting="1";
 					$("#selectPrinterModal").modal("show");
 				}else{
 					alert("Something went wrong!!!");
@@ -1470,6 +1471,7 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 		$scope.sendingReportsList=[];
 		$scope.sendingReportsList.printerId=$scope.printerId;
 		$scope.sendingReportsList.xsrf=$scope.xsrf;
+		$scope.sendingReportsList.modeOfPrinting=$scope.modeOfPrinting;
 		if($scope.patient.isRunnerReport==3){
 			$.each($scope.directRunnerReportSearchData, function(index,value) {
 				$.each(value.crashReportForms, function(index1,value1) {
@@ -1482,15 +1484,22 @@ adminApp.controller('searchPatientsController', ['$q','$rootScope','$scope','$ht
 			var localReportNumber="";
 			$.each($scope.patientSearchData, function(index,value) {
 				$.each(value.searchResult, function(index1,value1) {
+					console.log(value1.patientSearchLists);
 					$.each(value1.patientSearchLists,function(index2,value2){
 						if(value2.selected==true){
-							if(localReportNumber!=value2.localReportNumber){
-								$scope.sendingReportsList.push({"localReportNumber":value2.localReportNumber,"fileName":value2.crashReportFileName,"printStatus":0});
-								localReportNumber=value1.localReportNumber;
+							if($scope.modeOfPrinting!="1"){
+								$scope.sendingReportsList.push({"localReportNumber":value2.localReportNumber,"clientName":value2.name,"fileName":value2.crashReportFileName,"printStatus":0});
 							}
-							else
-								console.log("available");
-						}
+							else{
+								if(localReportNumber!=value2.localReportNumber){
+									$scope.sendingReportsList.push({"localReportNumber":value2.localReportNumber,"fileName":value2.crashReportFileName,"printStatus":0});
+									localReportNumber=value1.localReportNumber;
+								}
+								else
+									console.log("available");
+							}	
+							}
+							
 						});
 				});
 				

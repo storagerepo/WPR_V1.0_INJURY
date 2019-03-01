@@ -15,7 +15,8 @@
 			    <table class="table table-stripped">
 			    <thead>
 			    <tr>
-			    <th>Local Report Number</th>
+			    <th>Local Report Number</th> 
+			    <th ng-if='printReportsList.modeOfPrinting=="2"'>Client Name</th>
 			    <th>Status</th>
 			    <th>Actions</th>
 			    </tr>
@@ -23,6 +24,7 @@
 			    <tbody>
 			    <tr ng-repeat="printReports in printReportsList">
 			    <td>{{printReports.localReportNumber}}</td>
+			    <td ng-if='printReportsList.modeOfPrinting=="2"'>{{printReports.clientName}}</td>
 			    <td><span class="warningText" ng-show="printReports.printStatus==0">Waiting</span><span class="primaryText" ng-show="printReports.printStatus==1">Sending...</span><span class="warningText" ng-show="printReports.printStatus==2">Queued</span><span class="primaryText" ng-show="printReports.printStatus==3">In Progress</span><span class="successText" ng-show="printReports.printStatus==4">Completed</span><span class="errorText" ng-show="printReports.printStatus==5">Failed</span><span class="errorText" ng-show="printReports.printStatus==6">Stopped</span><span class="successText" ng-show="printReports.printStatus==7">Already in Printing List (or) Printed</span></td>
 			    <td><span ng-show="printReports.printStatus==0"><a class="btn btn-sm btn-danger" ng-click="removeReports($index)"><i class="fa fa-trash"></i></a></span></td>
 			    </tr>
