@@ -13,7 +13,9 @@ adminApp.controller('PrintReportsController',function($rootScope,$scope,$statePa
 	$scope.printReportsNotSubmitted=[];
 	var promise=$timeout();
 	$scope.addPrintJob=function(){
+		var localReportNumber=""
 		$.each($scope.printReportsList,function(index,value){
+			if(value.localReportNumber!=localReportNumber){
 			promise=promise.then(function(){
 				if(value.printStatus==0 && $scope.isPrintStopped==false){
 					$.each($scope.printReportsList,function(index1,value1){
@@ -27,6 +29,7 @@ adminApp.controller('PrintReportsController',function($rootScope,$scope,$statePa
 							printJob.contentType='url';
 							printJob.content=value.fileName;
 							printJob.accessToken=$scope.printReportsList.xsrf;
+							console.log(printJob);
 							requestHandler.postRequest("/submitPrintJob.json",printJob).then(function(response){
 								if(response.data.success){
 									value.jobId=response.data.job.id;
@@ -54,7 +57,8 @@ adminApp.controller('PrintReportsController',function($rootScope,$scope,$statePa
 				}
 				return $timeout(4000);
 			});
-			
+			localReportNumber=value.localReportNumber;
+			}
 		});
 	};
 	
