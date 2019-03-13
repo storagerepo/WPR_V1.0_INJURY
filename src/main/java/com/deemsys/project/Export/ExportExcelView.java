@@ -51,7 +51,7 @@ public class ExportExcelView extends AbstractExcelView {
 		Integer exportType=(Integer) model.get("exportType");
 		if(exportType==InjuryConstants.PATIENT_EXPORT){
 			// Exclude State Option
-			boolean isExcludeState = (boolean) model.get("isExcludeState");
+			boolean isExcludeState = (Boolean) model.get("isExcludeState");
 			PatientSearchResultSet patientSearchResultSet=(PatientSearchResultSet)model.get("patientSearchResultSet");
 			System.out.println("Export Excel Total Records--->"+patientSearchResultSet.getPatientSearchLists().size());
 			System.out.println("Session Id---->>"+request.getSession().getId());
@@ -149,23 +149,25 @@ public class ExportExcelView extends AbstractExcelView {
 			for(PatientSearchList patient:patientSearchLists){
 				if(isExcludeState){
 					String[] state=this.splitAddress(patient.getAddress());
-					if(state[2]==null&&state[2].equals("")){
-						row = sheet.createRow(r++);
-						c = 0;
-						for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
-							String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue(),exportFieldsForm.getFormat());
-							row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
+					if(state[2]!=null){
+						if(state[2].equals("")){
+							row = sheet.createRow(r++);
+							c = 0;
+							for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
+								String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue(),exportFieldsForm.getFormat());
+								row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
+							}
+							exportCount++;
+						}else if(state[2].equals("OH")){
+							row = sheet.createRow(r++);
+							c = 0;
+							for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
+								String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue(),exportFieldsForm.getFormat());
+								row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
+							}
+							exportCount++;
 						}
-						exportCount++;
-					}else if(state[2].equals("OH")){
-						row = sheet.createRow(r++);
-						c = 0;
-						for (ExportFieldsForm exportFieldsForm : exportFieldsForms) {
-							String cellValue=this.getCellValueFromPatient(patient,exportFieldsForm.getFieldId(),exportFieldsForm.getDefaultValue(),exportFieldsForm.getFormat());
-							row.createCell(c++).setCellValue(cellValue==null ? "":cellValue);
-						}
-						exportCount++;
-					}
+					}					
 				}else{
 					row = sheet.createRow(r++);
 					c = 0;
