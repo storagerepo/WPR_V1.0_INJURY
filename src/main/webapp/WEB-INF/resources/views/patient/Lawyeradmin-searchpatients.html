@@ -119,11 +119,13 @@
 			</div>
 
 			<div class="col-md-12 no-padding">
-			<div class="col-md-5ths" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
-				<label>Reporting Agency</label> <div ng-dropdown-multiselect="" preference-list="reportingAgencyListType"
+			<div class="col-md-5ths reportingAgencyDiv" ng-show="patient.isRunnerReport!=3&&patient.isRunnerReport!=1">
+				<label>Reporting Agency</label><small class="loaderSpan pull-right hidden text-muted" style="padding-top:5px">Loading...</small>
+				<small class="selectingSpan pull-right hidden text-muted" style="padding-top:5px">Selecting...</small>
+				<small class="DeselectingSpan pull-right hidden text-muted" style="padding-top:5px">Deselecting...</small><div ng-dropdown-multiselect="" preference-list="reportingAgencyListType"
 					options="reportingAgencyList"   selected-model="patient.reportingAgency" 
 					extra-settings="{idProp:'code',displayProp:'reportingAgencyName',smartButtonMaxItems:'0',enableSearch:true,optionClass:'multidrop-option-class',scrollable:true,scrollableHeight:'300px',buttonDefaultText:'Select Reporting Agency',showPreferenceOption:true,radioButtonName:'reportingAgencyPreference',preferenceAllText:'All',preferenceSetText:'Preferred',disable:patient.isRunnerReport==1||patient.isRunnerReport==3}"
-					events="reportingAgencyEvents">
+					events="reportingAgencyEvents" ng-click="loadMoreAgencies()">
 					</div>
 					<span class="error-class"
 						ng-show="searchReportingAgencyMinError">&nbsp;&nbsp;Select at least
@@ -201,7 +203,7 @@
 						selected-model="patient.injuries"
 						extra-settings="{smartButtonMaxItems:'0',disable:patient.isRunnerReport==3}"></div>
 				</div>
-				<div class="col-md-3ths pull-right">
+				<div class="col-md-3ths pull-right searchButtonDiv">
 					<label>&nbsp;</label>
 					<div>
 						<a class="btn btn-success hint--top"
