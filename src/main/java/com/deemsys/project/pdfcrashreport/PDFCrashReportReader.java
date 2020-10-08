@@ -360,6 +360,7 @@ public class PDFCrashReportReader {
 
 			URL url = new URL(pdfAccessURL);
 			httpURLConnection = (HttpURLConnection) url.openConnection();
+			httpURLConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
 			// httpURLConnection.addRequestProperty("User-Agent", "Mozilla/5.0
 			// (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like
 			// Gecko) Chrome/59.0.3071.115 Safari/537.36");
@@ -372,7 +373,8 @@ public class PDFCrashReportReader {
 					String filePath = injuryProperties.getProperty("tempFolder") + "CrashReport_" + crashId + ".pdf";
 					try {
 
-						InputStream in = url.openStream();
+						//InputStream in = url.openStream();
+						InputStream in = httpURLConnection.getInputStream();
 						Files.copy(in, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
 						in.close();
 						file = new File(filePath);
@@ -2181,6 +2183,8 @@ public class PDFCrashReportReader {
 
 				Integer numberOfPatients = 0;
 				Integer vehicleCount = 0;
+				
+				runnerCrashReportForm.setAddedDate(InjuryConstants.getCurrentDateTime());
 				CrashReport crashReport = new CrashReport(crashId, crashReportError, policeAgency, county,
 						localReportNumber, InjuryConstants.convertYearFormat(runnerCrashReportForm.getCrashDate()),
 						InjuryConstants.convertYearFormat(runnerCrashReportForm.getAddedDate()), numberOfPatients,

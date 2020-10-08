@@ -3,8 +3,8 @@ var myApp=angular.module("requestModule",[]);
 myApp.factory("requestHandler",['$http',function($http){
     
     var requestObj={};
-    //var appURL=window.location.origin+"/";
-    var appURL=window.location.origin+"/Injury/";
+    var appURL=window.location.origin+"/";
+   //var appURL=window.location.origin+"/Injury/";
     
     
     requestObj.getURL=function(){

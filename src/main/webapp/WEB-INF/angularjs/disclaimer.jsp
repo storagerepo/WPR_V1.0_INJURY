@@ -54,7 +54,7 @@ Product information is based solely on material received from suppliers.</p>
 var disclaimerApp=angular.module('disclaimerApp',[]);
 disclaimerApp.controller('disclaimerController',function($scope,$http,$window){
 	$scope.agreeDisclaimer=function(){
-		 requestURL="/Injury/updateDisclaimerStatus.json";
+		 requestURL="/updateDisclaimerStatus.json";
 	        $http.post(requestURL,'').then(function (response) {
 	                if(response.data.requestSuccess){
 	                	$window.location.reload();
